@@ -1,13 +1,12 @@
 //
 //  Locator.h
-//  ParticleTracking_OpenFOAM
 //
 //  Created by Tomás Aquino on 09/03/2022.
 //  Copyright © 2022 Tomás Aquino. All rights reserved.
 //
 
-#ifndef Locator_h
-#define Locator_h
+#ifndef Locator_OF_h
+#define Locator_OF_h
 
 #include <boost/iterator/counting_iterator.hpp>
 #include <fieldTypes.H>
@@ -97,4 +96,4 @@ namespace ptof
 }
 
 
-#endif /* Locator_h */
+#endif /* Locator_OF_h */

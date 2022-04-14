@@ -1,6 +1,5 @@
 //
 //  Advection.h
-//  ParticleTracking_OpenFOAM
 //
 //  Created by Tomás Aquino on 09/03/2022.
 //  Copyright © 2022 Tomás Aquino. All rights reserved.

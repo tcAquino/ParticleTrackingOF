@@ -14,18 +14,21 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_decay_catalytic;
+  using namespace ptof::model_advection_diffusion_decay;
   
   if (argc >= 2
       &&
       (std::string(argv[1]) == "--help"
-       ||std::string(argv[1]) == "-h") )
+       ||std::string(argv[1]) == "-h"))
   {
     std::cout <<
       "--------------------------------------------------\n"
       "ParticleTrackingOF\n"
+      "--------------------------------------------------\n";
+    std::cout << std::endl;
+    std::cout <<
       "--------------------------------------------------\n"
-      "Executable parameters (pass '' for default in [])\n"
+      "Executable parameters (pass '' for default in []):\n"
       "--------------------------------------------------\n"
       "- Cases directory [../cases]\n"
       "- Name of case\n"

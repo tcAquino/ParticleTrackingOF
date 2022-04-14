@@ -1,13 +1,12 @@
 //
 //  Models.h
-//  ParticleTracking_OpenFOAM
 //
 //  Created by Tomás Aquino on 22/02/2022.
 //  Copyright © 2022 Tomás Aquino. All rights reserved.
 //
 
-#ifndef Models_PT_OF_h
-#define Models_PT_OF_h
+#ifndef Models_OF_h
+#define Models_OF_h
 
 #include <cmath>
 #include <cstddef>
@@ -376,8 +375,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry<
-      2,
+    using Geometry = Geometry<2,
       ImplementedBoundaryConditionSets::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = StateDim<Geometry::dim, Info, double, double, std::size_t>;
@@ -571,4 +569,4 @@ namespace ptof
 }
 
 
-#endif /* Models_PT_OF_h */
+#endif /* Models_OF_h */

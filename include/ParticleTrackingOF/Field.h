@@ -1,6 +1,5 @@
 //
 //  Field.h
-//  ParticleTracking_OpenFOAM
 //
 //  Created by Tomás Aquino on 16/02/2022.
 //  Copyright © 2022 Tomás Aquino. All rights reserved.

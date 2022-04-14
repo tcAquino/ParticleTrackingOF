@@ -16,9 +16,12 @@
 #include <cstdlib>
 #include <fstream>
 #include <functional>
+#include <ios>
 #include <iostream>
+#include <list>
 #include <regex>
 #include <stdexcept>
+#include <sstream>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -26,6 +29,31 @@
 
 namespace useful
 {
+  // Convert string to bool
+  bool stob(std::string const& string)
+  {
+    if (string == "true" || string == "1")
+      return true;
+    if (string == "false" || string == "0")
+      return false;
+    throw std::runtime_error{
+      "Expected true or false, got"
+      + string };
+  }
+  
+  // Convert bool to string
+  std::string btos(bool val, bool boolalpha = 1)
+  {
+    std::ostringstream stream;
+    if (boolalpha)
+      stream << std::boolalpha;
+    else
+      stream << std::noboolalpha;
+    stream << val;
+    
+    return stream.str();
+  }
+  
   // Check if string is empty
   // Strings are considered empty if they hold:
   // - Nothing
@@ -36,6 +64,16 @@ namespace useful
     return str == ""
       || str == "''"
       || str == R"("")";
+  }
+  
+  // Change extension after last dot
+  // Note: new_extension should include dot if wanted
+  std::string change_extension
+  (std::string const& filename,
+   std::string const& new_extension)
+  {
+    return filename.substr(0, filename.find_last_of('.'))
+      + new_extension;
   }
   
   // Expand environment variables
@@ -666,7 +704,7 @@ namespace useful
     container.pop_back();
   }
   
-  // Copy pointer to end element of vector to position, then delete end element
+  // Swap-erase all elements at positions in list
   template <typename Container, typename List>
   void swap_erase(Container& container, List& positions)
   {
@@ -674,8 +712,20 @@ namespace useful
     for (auto const position : positions)
       swap_erase(container, position);
   }
+  
+  // Swap-erase all elements satisfying criterium
+  template <typename Container, typename Criterium>
+  void swap_erase_if(Container& container, Criterium criterium)
+  {
+    std::list<std::size_t> to_delete;
+    for (std::size_t ii = 0; ii < container.size(); ++ii)
+      if (criterium(container[ii]))
+        to_delete.push_back(ii);
+    
+    swap_erase(container, to_delete);
+  }
 
-  // Copy pointer to end element of vector to position, then delete end element
+  // Copy position to end element of vector to position, then delete end element
   template <typename Container>
   void swap_delete(Container& container, std::size_t position)
   {
@@ -685,7 +735,7 @@ namespace useful
     container.pop_back();
   }
   
-  // Copy pointer to end element of vector to position, then delete end element
+  // Swap-delete all elements at positions in list
   template <typename Container, typename List>
   void swap_delete(Container& container, List& positions)
   {
@@ -694,6 +744,7 @@ namespace useful
       swap_delete(container, position);
   }
   
+  // Count lines in file
   std::size_t countlines(FILE *fin)
   {
     std::size_t lines = 0;
@@ -738,42 +789,52 @@ namespace useful
   bool isnan(T const& val)
   { return val != val; }
 
+  // For loop over tuple
   template <typename Tuple, typename F, std::size_t ...Indices>
-  void for_each_impl(Tuple const& tuple, F f, std::index_sequence< Indices... >)
+  void for_each_impl(Tuple const& tuple, F f, std::index_sequence<Indices...>)
   {
     using swallow = int[];
     (void)swallow{ 1, (f(std::get<Indices>(tuple)), void(), int{})... };
   }
 
+  // For loop over tuple
   template <typename Tuple, typename F>
   void for_each(Tuple const& tuple, F f)
   {
-    constexpr std::size_t N = std::tuple_size< std::remove_reference_t< Tuple > >::value;
-    for_each_impl(tuple, f, std::make_index_sequence< N >{});
+    constexpr std::size_t N
+      = std::tuple_size<std::remove_reference_t<Tuple>>::value;
+    for_each_impl(tuple, f, std::make_index_sequence<N>{});
   }
 
+  // For loop over tuple
   template <typename Tuple, typename F, std::size_t ...Indices>
-  void for_each_impl(Tuple&& tuple, F&& f, std::index_sequence< Indices... >)
+  void for_each_impl
+  (Tuple&& tuple, F&& f, std::index_sequence<Indices...>)
   {
     using swallow = int[];
-    (void)swallow{ 1, (f(std::get< Indices >(std::forward< Tuple >(tuple))), void(), int{})... };
+    (void)swallow{ 1, (f(std::get<Indices>(std::forward<Tuple>(tuple))),
+                       void(),
+                       int{})... };
   }
 
+  // For loop over tuple
   template <typename Tuple, typename F>
   void for_each(Tuple&& tuple, F&& f)
   {
-    constexpr std::size_t N = std::tuple_size< std::remove_reference_t< Tuple > >::value;
-    for_each_impl(std::forward<Tuple>(tuple), std::forward<F>(f),  std::make_index_sequence<N>{});
+    constexpr std::size_t N = std::tuple_size<std::remove_reference_t<Tuple>>::value;
+    for_each_impl(std::forward<Tuple>(tuple),
+                  std::forward<F>(f),
+                  std::make_index_sequence<N>{});
   }
 
   // Indices for template metamagic
   template <std::size_t... Indices>
   struct indices
-  { using next = indices< Indices..., sizeof...(Indices) >; };
+  { using next = indices<Indices..., sizeof...(Indices)>; };
 
   template <std::size_t size>
   struct build_indices
-  { using type = typename build_indices< size - 1 >::type::next; };
+  { using type = typename build_indices<size-1>::type::next; };
 
   template <>
   struct build_indices< 0 >

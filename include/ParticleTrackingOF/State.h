@@ -1,6 +1,5 @@
 //
-//  State_OF.h
-//  ParticleTracking_OpenFOAM
+//  State.h
 //
 //  Created by Tomás Aquino on 21/02/2022.
 //  Copyright © 2022 Tomás Aquino. All rights reserved.

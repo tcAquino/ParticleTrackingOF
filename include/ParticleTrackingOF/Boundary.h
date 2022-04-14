@@ -1,6 +1,5 @@
 //
-//  Boundary_OF.h
-//  ParticleTracking_OpenFOAM
+//  Boundary.h
 //
 //  Created by Tomás Aquino on 17/02/2022.
 //  Copyright © 2022 Tomás Aquino. All rights reserved.
