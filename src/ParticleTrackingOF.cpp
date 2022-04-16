@@ -14,7 +14,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_decay;
+  using namespace ptof::model_advection_diffusion;
   
   if (useful::check_options_help(argc, argv))
   {

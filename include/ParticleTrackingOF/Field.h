@@ -144,7 +144,7 @@ namespace ptof
             << position[0] << ", "
             << position[1] << ", "
             << position[2] << ")"
-            << " outside mesh. Assigning zero.";
+            << " outside mesh; assigning zero\n";
         return 1;
       }
       return 0;
