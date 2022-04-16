@@ -16,10 +16,7 @@ int main(int argc, char * argv[])
 {
   using namespace ptof::model_advection_diffusion_decay;
   
-  if (argc >= 2
-      &&
-      (std::string(argv[1]) == "--help"
-       ||std::string(argv[1]) == "-h"))
+  if (useful::check_options_help(argc, argv))
   {
     std::cout <<
       "--------------------------------------------------\n"

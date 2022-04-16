@@ -63,7 +63,9 @@ namespace ptof
   {
     return ptof::Field_LinearInterpolation_OF{
       std::forward<Field>(field),
-      geometry.locator };
+      geometry.locator,
+      FieldOptions::Warn{}
+    };
   };
 }
 

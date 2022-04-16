@@ -10,6 +10,7 @@
 
 #include <fieldTypes.H>
 #include <interpolationCellPoint.H>
+#include <iostream>
 #include "general/useful.h"
 #include "ParticleTrackingOF/useful.h"
 
@@ -17,8 +18,17 @@ namespace ptof
 {
   // Linear interpolation of field data
   // based on OpenFOAM routines
+  
+  namespace FieldOptions
+  {
+    using NoCheck = useful::Selector<int, 0>;
+    using Check = useful::Selector<int, 1>;
+    using Warn = useful::Selector<int, 2>;
+  }
+  
   template
-  <typename Field, typename Locator>
+  <typename Field, typename Locator,
+  bool check_if_outside, bool warn_if_outside>
   class Field_LinearInterpolation_OF
   {
   public:
@@ -30,9 +40,23 @@ namespace ptof
     using Scalar = Foam::scalar;
     using Index = Foam::label;
     
-    // Construct
+    // Construct without bounds checking and without bounds warning
     Field_LinearInterpolation_OF
-    (Field&& field, Locator&& locator)
+    (Field&& field, Locator&& locator, FieldOptions::NoCheck)
+    : field{ std::forward<Field>(field) }
+    , locator{ std::forward<Locator>(locator) }
+    {}
+    
+    // Construct with bounds checking and without bounds warning
+    Field_LinearInterpolation_OF
+    (Field&& field, Locator&& locator, FieldOptions::Check)
+    : field{ std::forward<Field>(field) }
+    , locator{ std::forward<Locator>(locator) }
+    {}
+    
+    // Construct with bounds checking and with bounds warning
+    Field_LinearInterpolation_OF
+    (Field&& field, Locator&& locator, FieldOptions::Warn)
     : field{ std::forward<Field>(field) }
     , locator{ std::forward<Locator>(locator) }
     {}
@@ -40,6 +64,10 @@ namespace ptof
     // Interpolate field according to 3D position and mesh cell
     auto operator()(Point const& position, Index cell) const
     {
+      if constexpr (check_if_outside)
+        if (check_bounds(position, cell))
+          return Vector::zero;
+      
       return interpolant.interpolate(position, cell);
     }
     
@@ -52,7 +80,8 @@ namespace ptof
     // Interpolate field according to 2D position and mesh cell
     auto operator()(Point2D const& position, Index cell) const
     {
-      auto interp = interpolant.interpolate(make_point(position), cell);
+      auto interp = this->operator()(make_point(position), cell);
+      
       return Vector2D{ interp[0], interp[1] };
     }
     
@@ -65,7 +94,7 @@ namespace ptof
     // Interpolate field according to 1D position and mesh cell
     auto operator()(Scalar position, Index cell) const
     {
-      return interpolant.interpolate(make_point(position), cell)[0];
+      return this->operator()(make_point(position), cell)[0];
     }
     
     // Interpolate field according to scalar position
@@ -101,13 +130,47 @@ namespace ptof
     
     // Interpolation object
     Foam::interpolationCellPoint<Foam::vector> interpolant{ field };
+    
+    //Bounds checking
+    bool check_bounds
+    (Point const& position, Index cell) const
+    {
+      if (cell == -1)
+      {
+        if constexpr (warn_if_outside)
+          std::cerr
+            << "Warning: Requested field value at position "
+            << "("
+            << position[0] << ", "
+            << position[1] << ", "
+            << position[2] << ")"
+            << " outside mesh. Assigning zero.";
+        return 1;
+      }
+      return 0;
+    }
   };
   template
   <typename Field, typename Locator>
   Field_LinearInterpolation_OF
-  (Field&&, Locator&&) ->
+  (Field&&, Locator&&,
+   FieldOptions::NoCheck) ->
   Field_LinearInterpolation_OF
-  <Field, Locator>;
+  <Field, Locator, 0, 0>;
+  template
+  <typename Field, typename Locator>
+  Field_LinearInterpolation_OF
+  (Field&&, Locator&&,
+   FieldOptions::Check) ->
+  Field_LinearInterpolation_OF
+  <Field, Locator, 1, 0>;
+  template
+  <typename Field, typename Locator>
+  Field_LinearInterpolation_OF
+  (Field&&, Locator&&,
+   FieldOptions::Warn) ->
+  Field_LinearInterpolation_OF
+  <Field, Locator, 1, 1>;
 }
 
 

@@ -516,8 +516,8 @@ namespace ptof
         "- Measure spacing: " << params.measure_spacing << "\n"
         "- Minimum measurement time: " << params.time_min << "\n"
         "- Maximum measurement time: " << std::to_string(params.time_max) << "\n"
-        "- Measurement types:\n";
-      useful::print(output, params.to_measure, 1);
+        "- Measurement types:";
+      useful::print(output, params.to_measure, 1, "\n\t");
       output << "\n";
       output <<
         "--------------------------------------------------\n";

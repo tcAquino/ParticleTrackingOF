@@ -148,7 +148,9 @@ namespace useful
       string.substr(string.size() - suffix.size()) == suffix;
   }
   
-  
+  // Split string into vector of strings
+  // Split at instances of delimeter
+  // Empty entries can be included or discarded
   std::vector<std::string> split
   (std::string const& string, std::string const& delimiter = " ",
    bool empty_entries = false)
@@ -173,6 +175,7 @@ namespace useful
     return tokens;
   }
   
+  // Throw exception for parsing a file line
   auto parse_error
   (std::string const& filename, std::string const& line)
   {
@@ -181,36 +184,43 @@ namespace useful
       "\nin file " + filename };
   }
   
+  // Throw exception for parsing a file
   auto parse_error_file(std::string const& filename)
   {
     return std::runtime_error{
       "Could not parse file " + filename };
   }
   
+  // Throw exception for parsing a line
   auto parse_error_line(std::string const& line)
   {
     return std::runtime_error{
       "Could not parse line\n" + line };
   }
   
+  // Throw exception for opening a file for reading
   auto open_read_error(std::string const& filename)
   {
     return std::runtime_error{
       "Could not open file " + filename + " for reading" };
   }
   
+  // Throw exception for opening a file for writing
   auto open_write_error(std::string const& filename)
   {
     return std::runtime_error{
       "Could not open file " + filename + " for writing" };
   }
   
+  // Throw exception for unexpected contents in file
   auto bad_file_contents(std::string const& filename)
   {
     return std::runtime_error{
       "Innapropriate contents in file " + filename };
   }
   
+  // Throw exception for finding end of a file
+  // before expected string
   auto bad_eof
   (std::string const& filename, std::string const& string)
   {
@@ -219,17 +229,28 @@ namespace useful
       filename + " before " + string + " was found" };
   }
   
+  // Throw exception for bad parameters
   auto bad_parameters()
   {
     return std::invalid_argument{ "Inappropriate parameters" };
   }
   
+  // Throw exception for bad parameters and suggest help
   auto bad_parameters_help()
   {
     return std::invalid_argument{ "Inappropriate parameters"
       " (-h or --help for help)" };
   }
   
+  // Check command line options for help flag
+  bool check_options_help(int argc, const char* const argv[])
+  {
+    return argc == 2 &&
+      (std::string(argv[1]) == "--help" ||
+       std::string(argv[1]) == "-h");
+  }
+  
+  // Open file for reading
   std::ifstream open_read(std::string const& filename)
   {
     std::ifstream file(filename);
@@ -239,6 +260,7 @@ namespace useful
     return file;
   }
   
+  // Open file for writing
   std::ofstream open_write(std::string const& filename)
   {
     std::ofstream file(filename);
@@ -348,6 +370,7 @@ namespace useful
   
   // From Passer By's answer here:
   // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
+  // Check whether class can call sqrt
   template <typename = void, typename... Args>
   struct can_call_sqrt : std::false_type {};
   template <typename... Args>
@@ -356,7 +379,7 @@ namespace useful
   : std::true_type {};
   template <typename... Args>
   inline constexpr bool can_call_sqrt_v = can_call_sqrt<void, Args...>::value;
-  
+  // Check whether class can call abs
   template <typename = void, typename... Args>
   struct can_call_abs : std::false_type {};
   template <typename... Args>
@@ -369,7 +392,7 @@ namespace useful
   
   // From Richard Hodges's answer here:
   // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
-  
+  // Check whether classes can be used with binary operator
   template<class X, class Y, class Op>
   struct op_valid_impl
   {
@@ -383,9 +406,8 @@ namespace useful
       using type = decltype(test<Op, X, Y>(0));
 
   };
-
   template<class X, class Y, class Op> using op_valid = typename op_valid_impl<X, Y, Op>::type;
-
+  // Operators not in std::
   namespace notstd {
 
       struct left_shift {
@@ -411,7 +433,6 @@ namespace useful
       };
 
   }
-
   template<class X, class Y> using has_equality = op_valid<X, Y, std::equal_to<>>;
   template<class X, class Y> using has_inequality = op_valid<X, Y, std::not_equal_to<>>;
   template<class X, class Y> using has_less_than = op_valid<X, Y, std::less<>>;
@@ -427,12 +448,15 @@ namespace useful
   template<class X, class Y> using has_multiplies = op_valid<X, Y, std::multiplies<>>;
   template<class X, class Y> using has_divides = op_valid<X, Y, std::divides<>>;
   
-  
-  
+  // Check whether container contains value
+  // Container must be sorted according to comp_less,
+  // equality is checked using comp_eq
   template <typename T, typename U, typename Comp_less, typename Comp_eq>
   bool contains
-  (const std::vector<T>& container, U const& val,
-   Comp_less comp_less, Comp_eq comp_eq)
+  (std::vector<T> const& container,
+   U const& val,
+   Comp_less comp_less = std::less<void>{},
+   Comp_eq comp_eq = std::equal_to<void>{})
   {
     auto it = std::lower_bound(
           container.begin(),
@@ -447,6 +471,7 @@ namespace useful
   template <typename T> int sgn(T val)
   { return (T(0) < val) - (val < T(0)); }
 
+  // Class holding const object
   template <typename Object_Type, typename Return_Type = Object_Type>
   struct StoreConst
   {
@@ -457,6 +482,7 @@ namespace useful
     const Object_Type obj;
   };
 
+  // Class holding object
   template <typename Object_Type, typename Return_Type = Object_Type>
   struct Store
   {
@@ -467,6 +493,7 @@ namespace useful
     Object_Type obj;
   };
 
+  // Class holding nothing
   struct Empty
   {
     template <typename ...Args>
@@ -474,6 +501,7 @@ namespace useful
     Empty(){}
   };
   
+  // Print container
   template <typename Stream, typename Container>
   void print
   (Stream& stream, Container const& container,
@@ -497,7 +525,8 @@ namespace useful
     }
   }
   
-  auto read
+  // Read contents of file as a sequence of doubles
+  std::vector<double> read
   (std::string const& filename)
   {
     std::ifstream file{ filename };
@@ -512,6 +541,7 @@ namespace useful
     return vals;
   }
   
+  // Functor that does nothing
   struct DoNothing
   {
     template <typename ...Args>
@@ -519,6 +549,7 @@ namespace useful
     {}
   };
 
+  // Functor that always returns false
   struct DoFalse
   {
     template <typename ...Args>
@@ -526,6 +557,7 @@ namespace useful
     { return false; }
   };
   
+  // Functor that always returns true
   struct DoTrue
   {
     template <typename ...Args>
@@ -533,6 +565,7 @@ namespace useful
     { return true; }
   };
 
+  // Make an object passing a parameters object
   template <typename Object, typename Params>
   Object Create(Params const& parameters = useful::Empty())
   {
@@ -542,6 +575,8 @@ namespace useful
     return tracker;
   }
   
+  // Functor to make objects of given type,
+  // passing arbitrary parameters
   template <typename Object>
   class Maker
   {
@@ -550,11 +585,13 @@ namespace useful
     { return Object{ args... }; }
   };
 
+  // Functor to make an object on the heap,
+  // passing arbitrary parameters
   template <typename T>
   struct Creator
   {
-    typedef T value_type;
-    typedef T* pointer;
+    using value_type = T;
+    using pointer = T*;
 
     pointer operator() (void) const
     { return (new T ()); }
@@ -563,6 +600,7 @@ namespace useful
     { return (new T(param)); }
   };
 
+  // Functor to return back an argument without change
   template <typename Object_Type>
   struct Forward
   {
@@ -570,6 +608,7 @@ namespace useful
     { return object; }
   };
 
+  // Functor to return const reference to an argument
   template <typename Object_Type>
   struct Forward_ref
   {
@@ -577,69 +616,17 @@ namespace useful
     { return object; }
   };
 
-  struct Bin
-  {
-    double left_edge;
-    double right_edge;
-
-    double mean() const
-    { return (left_edge + right_edge)/2.; }
-
-    double width() const
-    { return right_edge - left_edge; }
-  };
-  
-  template
-  <typename Value, typename Container_boundaries, typename Container>
-  void bin(Value const& value, Container_boundaries const& boundaries, Container& hist)
-  {
-    if (value < boundaries[0])
-    {
-      ++hist[0];
-      return;
-    }
-    if (value >= boundaries[boundaries.size()-1])
-    {
-      ++hist[boundaries.size()-2];
-      return;
-    }
-    
-    auto upper_edge = std::upper_bound(std::begin(boundaries),
-                                       std::end(boundaries),
-                                       value);
-    std::size_t idx = upper_edge - std::begin(boundaries);
-    ++hist[idx-1];
-  }
-  
-  template
-  <typename Value, typename Container_boundaries, typename Container, typename Compare>
-  void bin(Value const& value, Container_boundaries const& boundaries, Container const& hist, Compare comp)
-  {
-    if (comp(value, boundaries[0]))
-    {
-      ++hist[0];
-      return;
-    }
-    if (!comp(value, boundaries[boundaries.size()-1]))
-    {
-      ++hist[boundaries.size()-2];
-      return;
-    }
-    
-    auto upper_edge = std::upper_bound(std::begin(boundaries),
-                                       std::end(boundaries),
-                                       value);
-    std::size_t idx = upper_edge - std::begin(boundaries);
-    ++hist[idx-1];
-  }
-
+  // Types for selecting function implementations
+  // at compile time
   template <typename TT> struct Selector_t{};
   template <typename TT, TT(val)> struct Selector{};
 
+  // Ensure reference type
   template <typename T>
   T& ensure_ref(T const* obj)
   { return *obj; }
 
+  // Ensure reference type
   template <typename T>
   T& ensure_ref(T const& obj)
   { return obj; }
@@ -662,17 +649,19 @@ namespace useful
     }
   };
 
+  // Combining seed with object hash
   template <typename T>
-  void hash_combine(std::size_t & seed, T const& v)
+  void hash_combine(std::size_t& seed, T const& v)
   {
     std::hash<T> hasher;
     seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
   }
 
+  // Hash for std::pair
   template <typename S, typename T>
   struct hash_pair
   {
-    std::size_t operator()(const std::pair< S, T > & v) const
+    std::size_t operator()(std::pair<S,T > const& v) const
     {
       std::size_t seed = 0;
       hash_combine(seed, v.first);
@@ -783,21 +772,18 @@ namespace useful
   // has_method<template, types...> is true iff template <types...> is valid
   template <template <class...> class Z, class...Ts>
   using has_method=details::has_method<Z,types<Ts...>>;
-
   // Implemented here because some versions of gcc have trouble with the standard one
   template <typename T>
   bool isnan(T const& val)
   { return val != val; }
-
-  // For loop over tuple
+  
+  // Apply function to each element of tuple
   template <typename Tuple, typename F, std::size_t ...Indices>
   void for_each_impl(Tuple const& tuple, F f, std::index_sequence<Indices...>)
   {
     using swallow = int[];
     (void)swallow{ 1, (f(std::get<Indices>(tuple)), void(), int{})... };
   }
-
-  // For loop over tuple
   template <typename Tuple, typename F>
   void for_each(Tuple const& tuple, F f)
   {
@@ -805,8 +791,6 @@ namespace useful
       = std::tuple_size<std::remove_reference_t<Tuple>>::value;
     for_each_impl(tuple, f, std::make_index_sequence<N>{});
   }
-
-  // For loop over tuple
   template <typename Tuple, typename F, std::size_t ...Indices>
   void for_each_impl
   (Tuple&& tuple, F&& f, std::index_sequence<Indices...>)
@@ -816,8 +800,6 @@ namespace useful
                        void(),
                        int{})... };
   }
-
-  // For loop over tuple
   template <typename Tuple, typename F>
   void for_each(Tuple&& tuple, F&& f)
   {
@@ -831,11 +813,9 @@ namespace useful
   template <std::size_t... Indices>
   struct indices
   { using next = indices<Indices..., sizeof...(Indices)>; };
-
   template <std::size_t size>
   struct build_indices
   { using type = typename build_indices<size-1>::type::next; };
-
   template <>
   struct build_indices< 0 >
   { using type = indices<>; };
