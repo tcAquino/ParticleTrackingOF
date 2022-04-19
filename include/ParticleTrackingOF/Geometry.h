@@ -25,7 +25,7 @@ namespace ptof
   // Keep track of names of
   // types of boundary condition sets
   // for different types of simulations
-  struct ImplementedBoundaryConditionSets
+  struct BoundaryConditionSet
   {
     // Implemented types
     enum class Type
@@ -43,10 +43,9 @@ namespace ptof
     { return type_to_name.at(type); }
     
     // Check if name exists
-    static bool exists(std::string const& name)
+    static bool contains(std::string const& name)
     { return name_to_type.count(name); }
     
-  private:
     // Map names to types
     inline static const
     std::unordered_map<std::string, Type> name_to_type
@@ -71,7 +70,7 @@ namespace ptof
   // for different types of dynamics
   template
   <std::size_t dim_val,
-  ImplementedBoundaryConditionSets::Type dynamics>
+  BoundaryConditionSet::Type dynamics>
   struct Geometry
   {
     static constexpr std::size_t dim{ dim_val };
@@ -84,7 +83,7 @@ namespace ptof
     using BoundaryInfo
       = std::conditional_t<
           dynamics
-            == ImplementedBoundaryConditionSets::Type::transport,
+            == BoundaryConditionSet::Type::transport,
           Store_Absorbed,
           Store_Absorbed_Reinjections>;
     
@@ -108,20 +107,20 @@ namespace ptof
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics
-                    == ImplementedBoundaryConditionSets::Type::transport)
+                    == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           ptof::get_boundary_conditions(directories.dir_boundaryconditions
                                         + "/boundary_conditions_"
-                                        + ImplementedBoundaryConditionSets::name(dynamics)
+                                        + BoundaryConditionSet::name(dynamics)
                                         + ".dat"),
           mesh_search,
           BoundaryInfo{} };
       if constexpr (dynamics
-                    == ImplementedBoundaryConditionSets::Type::firstpassage)
+                    == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           ptof::get_boundary_conditions(directories.dir_boundaryconditions
                                         + "/boundary_conditions_"
-                                        + ImplementedBoundaryConditionSets::name(dynamics)
+                                        + BoundaryConditionSet::name(dynamics)
                                         + ".dat"),
           mesh_search,
           BoundaryInfo{},
@@ -129,7 +128,7 @@ namespace ptof
         };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
-          + ImplementedBoundaryConditionSets::name(dynamics)
+          + BoundaryConditionSet::name(dynamics)
           + " not supported" };
     }
     
@@ -142,14 +141,14 @@ namespace ptof
         "Geometry\n"
         "--------------------------------------------------\n"
         "Spatial dimension: " + std::to_string(dim) + "\n"
-        "Boundary conditions for: " + ImplementedBoundaryConditionSets::name(dynamics) + "\n"
+        "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
         "\tabsorbing: Absorbing\n"
         "\tinfo: Information upon crossing\n"
         "\tcustom: ";
       output <<
-        (ImplementedBoundaryConditionSets::name(dynamics) == "transport"
+        (BoundaryConditionSet::name(dynamics) == "transport"
          ? "No effect\n"
          : "Reinject according to initial condition\n");
       output <<

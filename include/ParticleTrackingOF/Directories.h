@@ -108,7 +108,6 @@ namespace ptof
     }
     
   private:
-    
     // Make OpenFOAM Time instance given Directories information
     Foam::Time makeRunTime(Directories const& directories)
     {

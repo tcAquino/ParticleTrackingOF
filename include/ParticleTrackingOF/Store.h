@@ -19,14 +19,14 @@ namespace ptof
     template
     <typename State,
     typename Intersection,
-    ImplementedBoundaryConditions::Type type>
+    BoundaryCondition::Type type>
     void operator()
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-     ImplementedBoundaryConditions::Type,
+     BoundaryCondition::Type,
      type>) const
     {
       store_info_type(state, implemented.name(type));
@@ -39,14 +39,14 @@ namespace ptof
     template
     <typename State,
     typename Intersection,
-    ImplementedBoundaryConditions::Type type>
+    BoundaryCondition::Type type>
     void operator()
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
+      BoundaryCondition::Type,
       type>) const
     {}
   };
@@ -57,14 +57,14 @@ namespace ptof
     template
     <typename State,
     typename Intersection,
-    ImplementedBoundaryConditions::Type type>
+    BoundaryCondition::Type type>
     void operator()
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
+      BoundaryCondition::Type,
       type>) const
     {}
     
@@ -75,10 +75,10 @@ namespace ptof
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
-      ImplementedBoundaryConditions::Type::absorbing>) const
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::absorbing>) const
     {
       store_info_absorbed(state);
     }
@@ -91,14 +91,14 @@ namespace ptof
     template
     <typename State,
     typename Intersection,
-    ImplementedBoundaryConditions::Type type>
+    BoundaryCondition::Type type>
     void operator()
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
+      BoundaryCondition::Type,
       type>) const
     {}
     
@@ -109,10 +109,10 @@ namespace ptof
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
-      ImplementedBoundaryConditions::Type::absorbing>) const
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::absorbing>) const
     {
       store_info_absorbed(state);
     }
@@ -124,10 +124,10 @@ namespace ptof
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
-      ImplementedBoundaryConditions::Type::custom>) const
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::custom>) const
     {
       store_info_reinjections(state);
     }
@@ -139,14 +139,14 @@ namespace ptof
     template
     <typename State,
     typename Intersection,
-    ImplementedBoundaryConditions::Type type>
+    BoundaryCondition::Type type>
     void operator()
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
+      BoundaryCondition::Type,
       type>) const
     {}
     
@@ -157,10 +157,10 @@ namespace ptof
     (State& state,
      State const& state_old,
      Intersection const& intersection,
-     ImplementedBoundaryConditions const& implemented,
+     BoundaryCondition const& implemented,
      useful::Selector<
-      ImplementedBoundaryConditions::Type,
-      ImplementedBoundaryConditions::Type::info>) const
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::info>) const
     {
       store_info_type(state, "info");
       store_info_contact(state, intersection.rawPoint());

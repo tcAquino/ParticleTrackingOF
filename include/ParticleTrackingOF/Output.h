@@ -23,6 +23,7 @@
 
 namespace ptof
 {
+  // Compute number of absorbed particles
   template <typename Subject>
   auto nr_absorbed(Subject const& subject)
   {
@@ -33,6 +34,7 @@ namespace ptof
     return absorbed;
   };
   
+  // Compute total mass
   template <typename Subject>
   auto mass(Subject const& subject)
   {
@@ -43,6 +45,7 @@ namespace ptof
     return mass;
   };
   
+  // Compute mean position (weighted by mass)
   template <typename Subject>
   auto position_mean(Subject const& subject)
   {
@@ -57,6 +60,7 @@ namespace ptof
     return position_mean/mass(subject);
   };
   
+  // Compute second moment of position (weighted by mass)
   template <typename Subject>
   auto position_second_moment(Subject const& subject)
   {
@@ -75,6 +79,7 @@ namespace ptof
     return second_moment/mass(subject);
   };
   
+  // Compute position variance (weighted by mass)
   template <typename Subject>
   auto position_variance(Subject const& subject)
   {
@@ -84,9 +89,320 @@ namespace ptof
     return (position_second_moment(subject)-position_mean_sq)/mass(subject);
   };
   
-  // Output object to handle implemented output options
-  struct Output_Cases
+  // Keep track of names and
+  // types of end criteria
+  struct EndCriterium
   {
+    // Implemented types
+    enum class Type
+    {
+      time,
+      time_max,
+      mass_below,
+      mass_above,
+      all_absorbed,
+      one_absorbed,
+      fraction_absorbed
+    };
+    
+    // Type from name
+    static auto type(std::string const& name)
+    { return name_to_type.at(name); }
+    
+    // Name from type
+    static auto name(Type type)
+    { return type_to_name.at(type); }
+    
+    // Check if name exists
+    static bool exists(std::string const& name)
+    { return name_to_type.count(name); }
+    
+    // Map names to types
+    inline static const
+    std::unordered_map<std::string, Type> name_to_type
+    {
+      { "time", Type::time },
+      { "time_max", Type::time_max },
+      { "mass_below", Type::mass_below },
+      { "mass_above", Type::mass_above },
+      { "all_absorbed", Type::all_absorbed },
+      { "one_absorbed", Type::one_absorbed },
+      { "fraction_absorbed", Type::fraction_absorbed }
+    };
+    
+    // Map types to names
+    inline static const
+    std::unordered_map<Type, std::string> type_to_name
+    {
+      { Type::time, "time" },
+      { Type::time_max, "time_max" },
+      { Type::mass_below, "mass_below" },
+      { Type::mass_above, "mass_above" },
+      { Type::all_absorbed, "all_absorbed" },
+      { Type::one_absorbed, "one_absorbed" },
+      { Type::fraction_absorbed, "fraction_absorbed" }
+    };
+  };
+  
+  // Keep track of names and
+  // types of measure spacing
+  struct MeasureSpacing
+  {
+    // Implemented types
+    enum class Type
+    {
+      linear,
+      log,
+      step
+    };
+    
+    // Type from name
+    static auto type(std::string const& name)
+    { return name_to_type.at(name); }
+    
+    // Name from type
+    static auto name(Type type)
+    { return type_to_name.at(type); }
+    
+    // Check if name exists
+    static bool exists(std::string const& name)
+    { return name_to_type.count(name); }
+    
+    // Map names to types
+    inline static const
+    std::unordered_map<std::string, Type> name_to_type
+    {
+      { "linear", Type::linear },
+      { "log", Type::log },
+      { "step", Type::step }
+    };
+    
+    // Map types to names
+    inline static const
+    std::unordered_map<Type, std::string> type_to_name
+    {
+      { Type::linear, "linear" },
+      { Type::log, "log" },
+      { Type::step, "step" }
+    };
+  };
+  
+  // Keep track of names and
+  // types of measure spacing units (scaling)
+  struct MeasureSpacingUnits
+  {
+    // Implemented types
+    enum class Type
+    {
+      diffusion,
+      advection,
+      reaction,
+      arbitrary
+    };
+    
+    // Type from name
+    static auto type(std::string const& name)
+    { return name_to_type.at(name); }
+    
+    // Name from type
+    static auto name(Type type)
+    { return type_to_name.at(type); }
+    
+    // Check if name exists
+    static bool exists(std::string const& name)
+    { return name_to_type.count(name); }
+    
+    // Map names to types
+    inline static const
+    std::unordered_map<std::string, Type>
+    name_to_type
+    {
+      { "diffusion", Type::diffusion },
+      { "advection", Type::advection },
+      { "reaction", Type::reaction },
+      { "arbitrary", Type::arbitrary }
+    };
+    
+    // Map types to names
+    inline static const
+    std::unordered_map<Type, std::string>
+    type_to_name
+    {
+      { Type::diffusion, "diffusion" },
+      { Type::advection, "advection" },
+      { Type::reaction, "reaction" },
+      { Type::arbitrary, "arbitrary" }
+    };
+  };
+  
+  // Keep track of measurement types
+  struct Measure
+  {
+    // Implemented types
+    enum class Type
+    {
+      position,
+      position_mean,
+      position_second_moment,
+      position_variance,
+      mass,
+      absorption_time
+    };
+    
+    // Type from name
+    static auto type(std::string const& name)
+    { return name_to_type.at(name); }
+    
+    // Name from type
+    static auto name(Type type)
+    { return type_to_name.at(type); }
+    
+    // Check if name exists
+    static bool exists(std::string const& name)
+    { return name_to_type.count(name); }
+    
+    // Map names to types
+    inline static const
+    std::unordered_map<std::string, Type>
+    name_to_type
+    {
+      { "position", Type::position },
+      { "position_mean", Type::position_mean },
+      { "position_second_moment", Type::position_second_moment },
+      { "position_variance", Type::position_variance },
+      { "mass", Type::mass },
+      { "absorption_time", Type::absorption_time }
+    };
+    
+    // Map types to names
+    inline static const
+    std::unordered_map<Type, std::string>
+    type_to_name
+    {
+      { Type::position, "position" },
+      { Type::position_mean, "position_mean" },
+      { Type::position_second_moment, "position_second_moment" },
+      { Type::position_variance, "position_variance" },
+      { Type::mass, "mass" },
+      { Type::absorption_time, "absorption_time" }
+    };
+  };
+  
+  // Polymorphic criteria
+  template <typename Subject>
+  struct Criterium
+  {
+    virtual bool operator()
+    (Subject const& subject, double time) const;
+    
+    virtual ~Criterium()
+    {}
+    
+  protected:
+    Criterium()
+    {}
+  };
+  
+  // Check if time is greater than value
+  template <typename Subject>
+  struct Criterium_time final : Criterium<Subject>
+  {
+    Criterium_time(double end_value)
+    : end_value{ end_value }
+    {}
+    
+    bool operator()
+    (Subject const& subject, double time) const override
+    {
+      return time > end_value;
+    }
+      
+    double end_value;
+  };
+  
+  // Check if mass is less than or equal to value
+  template <typename Subject>
+  struct Criterium_mass_below final : Criterium<Subject>
+  {
+    Criterium_mass_below(double end_value)
+    : end_value{ end_value }
+    {}
+    
+    bool operator()
+    (Subject const& subject, double time) const override
+    {
+      return mass(subject) <= end_value;
+    }
+      
+    double end_value;
+  };
+  
+  // Check if mass is greater than or equal to value
+  template <typename Subject>
+  struct Criterium_mass_above final : Criterium<Subject>
+  {
+    Criterium_mass_above(double end_value)
+    : end_value{ end_value }
+    {}
+    
+    bool operator()
+    (Subject const& subject, double time) const override
+    {
+      return mass(subject) >= end_value;
+    }
+      
+    double end_value;
+  };
+  
+  // Check if all particles have been absorbed
+  template <typename Subject>
+  struct Criterium_all_absorbed final : Criterium<Subject>
+  {
+    Criterium_all_absorbed()
+    {}
+    
+    bool operator()
+    (Subject const& subject, double time) const override
+    {
+      return nr_absorbed(subject) == subject.size();
+    }
+  };
+  
+  // Check if at least one particle has been absorbed
+  template <typename Subject>
+  struct Criterium_one_absorbed final : Criterium<Subject>
+  {
+    Criterium_one_absorbed()
+    {}
+    
+    bool operator()(Subject const& subject, double time) const
+    {
+      return nr_absorbed(subject) > 0;
+    }
+  };
+  
+  // Check if at a least a given fraction of particles have been absorbed
+  template <typename Subject>
+  struct Criterium_fraction_absorbed final : Criterium<Subject>
+  {
+    Criterium_fraction_absorbed(double end_value)
+    : end_value{ end_value }
+    {}
+    
+    bool operator()
+    (Subject const& subject, double time) const override
+    {
+      return nr_absorbed(subject) >= end_value*subject.size();
+    }
+      
+    double end_value;
+  };
+  
+  // Output object to handle implemented output options
+  template <typename Subject>
+  class Output_Cases
+  {
+  public:
     // Output parameters
     struct Parameters
     {
@@ -99,7 +415,7 @@ namespace ptof
       double time_min;
       double time_max;
       double time_increment;
-      std::vector<std::string> to_measure;
+      std::vector<std::string> measure_names;
       
       // Get Output parameters from Directories info,
       // parameter set name, transport parameters,
@@ -118,109 +434,11 @@ namespace ptof
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_output_"
                                        + name + ".dat");
-        
-        // Get run number identifier
         useful::read(input, run_nr);
-        
-        // Set end simulation criterium
-        useful::read(input, end_criterium);
-        if (end_criterium == "time")
-        {
-          useful::read(input, end_value);
-        }
-        else if (end_criterium == "time_max")
-        {}
-        else if (end_criterium == "mass_below")
-        {
-          useful::read(input, end_value);
-        }
-        else if (end_criterium == "mass_above")
-        {
-          useful::read(input, end_value);
-        }
-        else if (end_criterium == "all_absorbed")
-        {}
-        else if (end_criterium == "one_absorbed")
-        {}
-        else if (end_criterium == "fraction_absorbed")
-        {
-          useful::read(input, end_value);
-        }
-        else
-        throw std::runtime_error{
-          std::string("End criterium ")
-          + end_criterium
-          + " not supported"
-        };
-        
-        // Set output time units
-        useful::read(input, time_units);
-        time_unit_factor = 1.;
-        if (time_units == "diffusion")
-        {
-          time_unit_factor = params_transport.diffusion_time;
-        }
-        else if (time_units == "advection")
-        {
-          time_unit_factor = params_transport.advection_time;
-        }
-        else if (time_units == "reaction")
-        {
-          time_unit_factor = params_reaction.reaction_time;
-        }
-        else if (time_units == "unscaled")
-        {}
-        else
-          throw std::runtime_error{
-            std::string("Time units ")
-            + time_units
-            + " not supported"
-          };
-        
-        // Set spacing type mesurements
-        useful::read(input, measure_spacing);
-        useful::read(input, time_min);
-        time_min *= time_unit_factor;
-        if (measure_spacing == "step")
-        {
-          useful::read(input, time_increment);
-          time_increment *= time_unit_factor;
-          time_max = std::numeric_limits<double>::infinity();
-        }
-        else if (measure_spacing == "linear")
-        {
-          useful::read(input, time_max);
-          time_max *= time_unit_factor;
-          std::size_t nr_measures;
-          useful::read(input, nr_measures);
-          time_increment = (time_max - time_min)/(nr_measures - 1);
-        }
-        else if (measure_spacing == "log")
-        {
-          useful::read(input, time_max);
-          time_max *= time_unit_factor;
-          std::size_t nr_measures;
-          useful::read(input, nr_measures);
-          time_increment = std::pow(time_max/time_min, 1./(nr_measures - 1));
-        }
-        else
-          throw std::runtime_error{
-            std::string("Measure spacing ")
-            + measure_spacing
-            + " not supported"
-          };
-        
-        // Get requested output types
-        while (1)
-        {
-          std::string measurement;
-          input >> measurement;
-          if (!input.fail())
-            to_measure.push_back(measurement);
-          else
-            break;
-        }
-        
+        read_end_criterium(input);
+        read_measure_spacing(input,
+                             params_transport, params_reaction);
+        read_output_types(input);
         input.close();
       }
       
@@ -263,6 +481,152 @@ namespace ptof
           "\tabsorption_time: Particle absorption times and masses at end of dynamics\n"
           "--------------------------------------------------\n";
       }
+      
+    private:
+      // Read end criterium from input stream
+      template <typename IStream>
+      void read_end_criterium(IStream& input)
+      {
+        useful::read(input, end_criterium);
+        switch (EndCriterium::type(end_criterium))
+        {
+          case EndCriterium::Type::time:
+          {
+            useful::read(input, end_value);
+            break;
+          }
+          case EndCriterium::Type::time_max:
+            break;
+          case EndCriterium::Type::mass_below:
+          {
+            useful::read(input, end_value);
+            break;
+          }
+          case EndCriterium::Type::mass_above:
+          {
+            useful::read(input, end_value);
+            break;
+          }
+          case EndCriterium::Type::all_absorbed:
+            break;
+          case EndCriterium::Type::one_absorbed:
+            break;
+          case EndCriterium::Type::fraction_absorbed:
+          {
+            useful::read(input, end_value);
+            break;
+          }
+          default:
+            throw std::runtime_error{
+              std::string("End criterium ")
+              + end_criterium
+              + " not supported" };
+        }
+      }
+      
+      // Read measure spacing time units from input stream
+      template <typename IStream,
+      typename TransportParameters,
+      typename ReactionParameters>
+      void read_time_units
+      (IStream& input,
+       TransportParameters const& params_transport,
+       ReactionParameters const& params_reaction)
+      {
+        useful::read(input, time_units);
+        switch (MeasureSpacingUnits::type(time_units))
+        {
+          case MeasureSpacingUnits::Type::diffusion:
+          {
+            time_unit_factor = params_transport.diffusion_time;
+            break;
+          }
+          case MeasureSpacingUnits::Type::advection:
+          {
+            time_unit_factor = params_transport.advection_time;
+            break;
+          }
+          case MeasureSpacingUnits::Type::reaction:
+          {
+            time_unit_factor = params_reaction.reaction_time;
+            break;
+          }
+          case MeasureSpacingUnits::Type::arbitrary:
+          {
+            time_unit_factor = 1.;
+            break;
+          }
+          default:
+            throw std::runtime_error{
+              std::string("Measure spacing units ")
+              + time_units
+              + " not supported" };
+        }
+      }
+      
+      // Read measure spacing type from input stream
+      template <typename IStream,
+      typename TransportParameters,
+      typename ReactionParameters>
+      void read_measure_spacing
+      (IStream& input,
+       TransportParameters const& params_transport,
+       ReactionParameters const& params_reaction)
+      {
+        read_time_units(input, params_transport, params_reaction);
+        useful::read(input, measure_spacing);
+        useful::read(input, time_min);
+        time_min *= time_unit_factor;
+        switch (MeasureSpacing::type(measure_spacing))
+        {
+          case MeasureSpacing::Type::step:
+          {
+            useful::read(input, time_increment);
+            time_increment *= time_unit_factor;
+            time_max = std::numeric_limits<double>::infinity();
+            break;
+          }
+          case MeasureSpacing::Type::linear:
+          {
+            useful::read(input, time_max);
+            time_max *= time_unit_factor;
+            std::size_t nr_measures;
+            useful::read(input, nr_measures);
+            time_increment = (time_max - time_min)/(nr_measures - 1);
+            break;
+          }
+          case MeasureSpacing::Type::log:
+          {
+            useful::read(input, time_max);
+            time_max *= time_unit_factor;
+            std::size_t nr_measures;
+            useful::read(input, nr_measures);
+            time_increment = std::pow(time_max/time_min, 1./(nr_measures - 1));
+            break;
+          }
+          default:
+            throw std::runtime_error{
+              std::string("Measure spacing ")
+              + measure_spacing
+              + " not supported" };
+        }
+      }
+      
+      // Read measure spacing type from input stream
+      template <typename IStream>
+      void read_output_types
+      (IStream& input)
+      {
+        while (1)
+        {
+          std::string measurement;
+          input >> measurement;
+          if (!input.fail())
+            measure_names.push_back(measurement);
+          else
+            break;
+        }
+      }
     };
     
     // Construct given directory information,
@@ -270,238 +634,83 @@ namespace ptof
     // and identifier for output filenames
     // Optionaly set output precision and delimiter character
     Output_Cases
-    (Directories const& directories,
+    (Subject const& subject,
+     Directories const& directories,
      Parameters params,
      std::string const& identifier,
      int precision = 8, std::string delimiter = "\t")
     : params{ params }
-    , delimiter{ delimiter }
+    , subject{ subject }
     {
-      // Set up output streams for requested output types
-      if (std::any_of(params.to_measure.begin(), params.to_measure.end(),
-                      [](std::string const& string)
-                      { return string == "position"; }))
-      {
-        output_position = open_write(directories, identifier,
-                                     "position");
-        output_position << std::setprecision(precision)
-                        << std::scientific;
-      }
-      if (std::any_of(params.to_measure.begin(), params.to_measure.end(),
-                      [](std::string const& string)
-                      { return string == "position_mean"; }))
-      {
-        output_position_mean = open_write(directories, identifier,
-                                          "position_mean");
-        output_position_mean << std::setprecision(precision)
-                             << std::scientific;
-      }
-      if (std::any_of(params.to_measure.begin(), params.to_measure.end(),
-                      [](std::string const& string)
-                      { return string == "position_second_moment"; }))
-      {
-        output_position_second_moment = open_write(directories, identifier,
-                                                   "position_second_moment");
-        output_position_second_moment << std::setprecision(precision)
-                                      << std::scientific;
-      }
-      if (std::any_of(params.to_measure.begin(), params.to_measure.end(),
-                      [](std::string const& string)
-                      { return string == "position_variance"; }))
-      {
-        output_position_variance = open_write(directories, identifier,
-                                              "position_variance");
-        output_position_variance << std::setprecision(precision)
-                                 << std::scientific;
-      }
-      if (std::any_of(params.to_measure.begin(), params.to_measure.end(),
-                      [](std::string const& string)
-                      { return string == "absorption_time"; }))
-      {
-        output_absorption_time = open_write(directories, identifier,
-                                            "absorption_time");
-        output_absorption_time << std::setprecision(precision)
-                               << std::scientific;
-      }
-      if (std::any_of(params.to_measure.begin(), params.to_measure.end(),
-                      [](std::string const& string)
-                      { return string == "mass"; }))
-      {
-        output_mass = open_write(directories, identifier,
-                                 "mass");
-        output_mass << std::setprecision(precision)
-                               << std::scientific;
-      }
-    }
-    
-    // Destructor: close any open output streams
-    ~Output_Cases()
-    {
-      if (output_position.is_open())
-        output_position.close();
-      if (output_position_mean.is_open())
-        output_position_mean.close();
-      if (output_position_second_moment.is_open())
-        output_position_second_moment.close();
-      if (output_position_variance.is_open())
-        output_position_variance.close();
-      if (output_absorption_time.is_open())
-        output_absorption_time.close();
-      if (output_mass.is_open())
-        output_mass.close();
+      set_measure_types(directories,
+                        identifier,
+                        precision,
+                        delimiter);
+      set_end_criterium();
+      set_next_measure_time();
     }
     
     // Check if end simulation criterium is satisfied
-    template <typename Subject>
-    bool done(Subject const& subject, double time) const
+    bool done(double time) const
     {
-      if (params.end_criterium == "time")
-      {
-        return time > params.end_value;
-      }
-      else if (params.end_criterium == "time_max")
-      {
-        return time > params.time_max;
-      }
-      else if (params.end_criterium == "mass_below")
-      {
-       return mass(subject) <= params.end_value;
-      }
-      else if (params.end_criterium == "mass_above")
-      {
-        return mass(subject) >= params.end_value;
-      }
-      else if (params.end_criterium == "all_absorbed")
-      {
-        return nr_absorbed(subject) == subject.size();
-      }
-      else if (params.end_criterium == "one_absorbed")
-      {
-        return nr_absorbed(subject) > 0;
-      }
-      else if (params.end_criterium == "fraction_absorbed")
-      {
-        return nr_absorbed(subject) >= params.end_value*subject.size();
-      }
-      else
-        throw std::runtime_error{
-          std::string("End criterium ")
-          + params.end_criterium
-          + " not supported"
-      };
+      return end_criterium->operator()(subject, time);
     }
 
+    // Set time of next measurement
+    void set_next_measure_time()
+    {
+      switch (MeasureSpacing::type(params.measure_spacing))
+      {
+        case MeasureSpacing::Type::step:
+        {
+          next_measure = std::make_unique<
+            NextMeasureTime_step>(params);
+          break;
+        }
+        case MeasureSpacing::Type::linear:
+        {
+          next_measure = std::make_unique<
+            NextMeasureTime_linear>(params);
+          break;
+        }
+        case MeasureSpacing::Type::log:
+        {
+          next_measure = std::make_unique<
+            NextMeasureTime_log>(params);
+          break;
+        }
+        default:
+          throw std::runtime_error{
+            std::string("Measure spacing ")
+            + params.measure_spacing
+            + " not supported" };
+      }
+    }
+    
     // Get time of next measurement
     double next_measure_time() const
     {
-      if (params.measure_spacing == "step")
-      {
-        return params.time_min + next_measure*params.time_increment;
-      }
-      else if (params.measure_spacing == "linear")
-      {
-        double next_time = params.time_min*
-          std::pow(params.time_increment, next_measure);
-        return next_time > params.time_max
-          ? std::numeric_limits<double>::infinity()
-          : next_time;
-      }
-      else if (params.measure_spacing == "log")
-      {
-        double next_time = params.time_min
-          + next_measure*params.time_increment;
-        return next_time > params.time_max
-          ? std::numeric_limits<double>::infinity()
-          : next_time;
-      }
-      else
-        throw std::runtime_error{
-          std::string("Measure spacing ")
-          + params.measure_spacing
-          + " not supported"
-        };
+      return next_measure->time();
     }
         
     // Output requested measurements at given time
     // Advance to next measurement
-    template <typename Subject>
-    void operator()(Subject const& subject, double time)
+    void operator()(double time)
     {
-      ++next_measure;
-      
-      if (output_position.is_open())
-      {
-        output_position << time;
-        for (auto const& part : subject.particles())
-        {
-          auto const& state = part.state_new();
-          if (!state.info.absorbed)
-          {
-            useful::print(output_position, state.position, 1, delimiter);
-            output_position << delimiter << state.mass;
-          }
-        }
-        output_position << "\n";
-      }
-      if (output_position_mean.is_open())
-      {
-        output_position_mean << time;
-        useful::print(output_position_mean,
-                      position_mean(subject), 1, delimiter);
-        output_position_mean << "\n";
-      }
-      if (output_position_second_moment.is_open())
-      {
-        output_position_second_moment << time;
-        useful::print(output_position_second_moment,
-                      position_second_moment(subject), 1, delimiter);
-        output_position_second_moment << "\n";
-      }
-      if (output_position_variance.is_open())
-      {
-        output_position_variance << time;
-        useful::print(output_position_variance,
-                      position_variance(subject),
-                      1, delimiter);
-        output_position_variance << "\n";
-      }
-      if (output_mass.is_open())
-      {
-        output_mass << time << delimiter
-                    << mass(subject) << "\n";
-      }
+      for (auto const& measure : output_time)
+        measure->operator()(time);
+      next_measure->advance();
     }
     
     // Output current information
-    template <typename Subject>
-    void operator()(Subject const& subject)
+    void operator()()
     {
-      if (output_absorption_time.is_open())
-      {
-        for (auto const& part : subject.particles())
-        {
-          auto const& state = part.state_new();
-          if (state.info.absorbed)
-          {
-            output_absorption_time << state.time << delimiter;
-            output_absorption_time << state.mass << "\n";
-          }
-        }
-      }
+      for (auto const& measure : output)
+        measure->operator()();
     }
     
-    Parameters params;              // Output parameters
-    std::string delimiter;          // Delimiter character for output formatting
-    std::size_t next_measure{ 0 };  // Number of next measurement
+    const Parameters params;  // Output parameters
     
-    // Output streams for different output types
-    std::ofstream output_position;
-    std::ofstream output_position_mean;
-    std::ofstream output_position_second_moment;
-    std::ofstream output_position_variance;
-    std::ofstream output_absorption_time;
-    std::ofstream output_mass;
-        
     // Output information about current object
     template <typename OStream>
     void info_runtime(OStream& output) const
@@ -517,28 +726,490 @@ namespace ptof
         "- Minimum measurement time: " << params.time_min << "\n"
         "- Maximum measurement time: " << std::to_string(params.time_max) << "\n"
         "- Measurement types:";
-      useful::print(output, params.to_measure, 1, "\n\t");
+      useful::print(output, params.measure_names, 1, "\n\t");
       output << "\n";
       output <<
         "--------------------------------------------------\n";
     }
         
-    private:
-      // Open output file for a given output type
-      std::ofstream open_write
-      (Directories const& directories,
-       std::string const& identifier,
-       std::string const& output_name)
+  private:
+    // Open output file for a given output type
+    std::ofstream open_write
+    (Directories const& directories,
+     std::string const& output_name,
+     std::string const& identifier)
+    {
+      return
+        useful::open_write(directories.dir_output
+                           + "/Data"
+                           + "_" + output_name
+                           + "_" + identifier
+                           + "_RUN_" + std::to_string(params.run_nr)
+                           + ".dat");
+    }
+  
+    // Set up output streams for requested output types
+    void set_measure_types
+    (Directories const& directories,
+     std::string const& identifier,
+     int precision = 8,
+     std::string delimiter = "\t")
+    {
+      for (auto const& name : params.measure_names)
       {
-        return
-          useful::open_write(directories.dir_output
-                             + "/Data"
-                             + "_" + output_name
-                             + "_" + identifier
-                             + "_RUN_" + std::to_string(params.run_nr)
-                             + ".dat");
+        switch (Measure::type(name))
+        {
+          case Measure::Type::position:
+          {
+            output_time.emplace_back
+            (std::make_unique<
+              Output_position>(subject,
+                               directories,
+                               "position",
+                               identifier,
+                               params));
+            break;
+          }
+          case Measure::Type::position_mean:
+          {
+            output_time.emplace_back
+            (std::make_unique<
+              Output_position_mean>(subject,
+                                    directories,
+                                    "position_mean",
+                                    identifier,
+                                    params));
+            break;
+          }
+          case Measure::Type::position_second_moment:
+          {
+            output_time.emplace_back
+            (std::make_unique<
+              Output_position_second_moment>(subject,
+                                             directories,
+                                             "position_second_moment",
+                                             identifier,
+                                             params));
+            break;
+          }
+          case Measure::Type::position_variance:
+          {
+            output_time.emplace_back
+            (std::make_unique<
+              Output_position_variance>(subject,
+                                        directories,
+                                        "position_variance",
+                                        identifier,
+                                        params));
+            break;
+          }
+          case Measure::Type::mass:
+          {
+            output_time.emplace_back
+            (std::make_unique<
+              Output_mass>(subject,
+                           directories,
+                           "mass",
+                           identifier,
+                           params));
+            break;
+          }
+          case Measure::Type::absorption_time:
+          {
+            output.emplace_back
+            (std::make_unique<
+              Output_absorption_time>(subject,
+                                      directories,
+                                      "absorption_time",
+                                      identifier,
+                                      params));
+            break;
+          }
+          default:
+            throw std::runtime_error{
+              std::string("Measurement type ")
+              + name
+              + " not supported" };
+        }
       }
+    }
+    
+    // Set end criterium
+    void set_end_criterium()
+    {
+      switch (EndCriterium::type(params.end_criterium))
+      {
+        case EndCriterium::Type::time:
+        {
+          end_criterium = std::make_unique<
+            Criterium_time<Subject>>(params.end_value);
+          break;
+        }
+        case EndCriterium::Type::time_max:
+        {
+          end_criterium = std::make_unique<
+            Criterium_time<Subject>>(params.time_max);
+          break;
+        }
+        case EndCriterium::Type::mass_below:
+        {
+          end_criterium = std::make_unique<
+            Criterium_mass_below<Subject>>(params.end_value);
+          break;
+        }
+        case EndCriterium::Type::mass_above:
+        {
+          end_criterium = std::make_unique<
+            Criterium_mass_above<Subject>>(params.end_value);
+        }
+        case EndCriterium::Type::all_absorbed:
+        {
+          end_criterium = std::make_unique<
+            Criterium_all_absorbed<Subject>>();
+          break;
+        }
+        case EndCriterium::Type::one_absorbed:
+        {
+          end_criterium = std::make_unique<
+            Criterium_one_absorbed<Subject>>();
+          break;
+        }
+        case EndCriterium::Type::fraction_absorbed:
+        {
+          end_criterium = std::make_unique<
+            Criterium_fraction_absorbed<Subject>>(params.end_value);
+          break;
+        }
+        default:
+          throw std::runtime_error{
+            std::string("End criterium ")
+            + params.end_criterium
+            + " not supported" };
+      }
+    }
+    
+    // Polymorphic object to handle next measurement value
+    struct NextMeasureTime
+    {
+      virtual ~NextMeasureTime()
+      {}
+      
+      // Get next measurement time
+      double time() const
+      { return next_time; }
+      
+      // Prepare for next measure
+      void advance()
+      {
+        ++next_measure;
+        set_next_time();
+      }
+      
+    protected:
+      // Base constructor
+      NextMeasureTime
+      (Parameters const& params)
+      : params{ params }
+      , next_time{ params.time_min }
+      {}
+      
+      Parameters const& params; // Output parameters
+      std::size_t next_measure{ 0 }; // Index of next measurement
+      double next_time; // Time of next measurement
+      
+      virtual void set_next_time() = 0;
+    };
+    
+    struct NextMeasureTime_step final : NextMeasureTime
+    {
+      NextMeasureTime_step
+      (Parameters const& params)
+      : NextMeasureTime{ params }
+      {}
+      
+      void set_next_time() override
+      {
+        NextMeasureTime::next_time = NextMeasureTime::params.time_min
+          + NextMeasureTime::next_measure
+          * NextMeasureTime::params.time_increment;
+      }
+    };
+    
+    struct NextMeasureTime_linear final : NextMeasureTime
+    {
+      NextMeasureTime_linear
+      (Parameters const& params)
+      : NextMeasureTime{ params }
+      {}
+      
+      void set_next_time() override
+      {
+        double time = NextMeasureTime::params.time_min
+          + NextMeasureTime::next_measure
+          * NextMeasureTime::params.time_increment;
+        NextMeasureTime::next_time > NextMeasureTime::params.time_max
+          ? std::numeric_limits<double>::infinity()
+          : time;
+      }
+    };
+    
+    struct NextMeasureTime_log final : NextMeasureTime
+    {
+      NextMeasureTime_log
+      (Parameters const& params)
+      : NextMeasureTime{ params }
+      {}
+      
+      void set_next_time() override
+      {
+         double time = NextMeasureTime::params.time_min
+           * std::pow(NextMeasureTime::params.time_increment,
+                      NextMeasureTime::next_measure);
+         NextMeasureTime::next_time > NextMeasureTime::params.time_max
+           ? std::numeric_limits<double>::infinity()
+           : time;
+      }
+    };
+    
+    // Polymorphic output handler for outputting
+    // time and some quantity
+    struct OutputTime
+    {
+      virtual ~OutputTime()
+      { output.close(); }
+      virtual void operator()(double time) = 0;
+      
+    protected:
+      OutputTime
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : subject{ subject }
+      , output{ useful::open_write(directories.dir_output
+        + "/Data"
+        + "_" + output_name
+        + "_" + identifier
+        + "_RUN_" + std::to_string(params.run_nr)
+        + ".dat") }
+      , delimiter{ delimiter }
+      {
+        output << std::setprecision(precision)
+               << std::scientific;
+      }
+      
+      Subject const& subject;
+      std::ofstream output;
+      std::string delimiter;
+    };
+        
+    // Polymorphic output handler for outputting some quantity
+    struct Output
+    {
+      virtual ~Output()
+      { output.close(); }
+      virtual void operator()() = 0;
+      
+    protected:
+      Output
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : subject{ subject }
+      , output{ useful::open_write(directories.dir_output
+        + "/Data"
+        + "_" + output_name
+        + "_" + identifier
+        + "_RUN_" + std::to_string(params.run_nr)
+        + ".dat") }
+      , delimiter{ delimiter }
+      {
+        output << std::setprecision(precision)
+               << std::scientific;
+      }
+      
+      Subject const& subject;
+      std::ofstream output;
+      std::string delimiter;
+    };
+    
+    // Output time, positions, and masses
+    struct Output_position final : OutputTime
+    {
+      Output_position
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, directories, output_name,
+        identifier, params,
+        precision, delimiter }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        for (auto const& part : OutputTime::subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed)
+          {
+            useful::print(OutputTime::output, state.position,
+                          1, OutputTime::delimiter);
+            OutputTime::output << OutputTime::delimiter << state.mass;
+          }
+        }
+        OutputTime::output << "\n";
+      }
+    };
+    
+    // Output time and mean position (weighted by mass)
+    struct Output_position_mean final : OutputTime
+    {
+      Output_position_mean
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, directories, output_name,
+        identifier, params,
+        precision, delimiter }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        useful::print(OutputTime::output,
+                      position_mean(OutputTime::subject),
+                      1, OutputTime::delimiter);
+        OutputTime::output << "\n";
+      }
+    };
+        
+    // Output time and second moment of position (weighted by mass)
+    struct Output_position_second_moment final : OutputTime
+    {
+      Output_position_second_moment
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, directories, output_name,
+        identifier, params,
+        precision, delimiter }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        useful::print(OutputTime::output,
+                      position_second_moment(OutputTime::subject),
+                      1, OutputTime::delimiter);
+        OutputTime::output << "\n";
+      }
+    };
+        
+    // Output time and position variance (weighted by mass)
+    struct Output_position_variance final : OutputTime
+    {
+      Output_position_variance
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, directories, output_name,
+        identifier, params,
+        precision, delimiter }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        useful::print(OutputTime::output,
+                      position_variance(OutputTime::subject),
+                      1, OutputTime::delimiter);
+        OutputTime::output << "\n";
+      }
+    };
+        
+    // Output time and total mass
+    struct Output_mass final : OutputTime
+    {
+      Output_mass
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, directories, output_name,
+        identifier, params,
+        precision, delimiter }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time << OutputTime::delimiter
+                           << mass(OutputTime::subject) << "\n";
+      }
+    };
+        
+    // Output absorption times and masses of absorbed particles
+    struct Output_absorption_time final : Output
+    {
+      Output_absorption_time
+      (Subject const& subject,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : Output{ subject, directories, output_name,
+        identifier, params,
+        precision, delimiter }
+      {}
+      
+      void operator()() override
+      {
+        for (auto const& part : Output::subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (state.info.absorbed)
+          {
+            Output::output << state.time << Output::delimiter;
+            Output::output << state.mass << "\n";
+          }
+        }
+      }
+    };
+    
+    Subject const& subject; // Subject to measure
+    std::unique_ptr<Criterium<Subject>> end_criterium;  // To check if end criterium is met
+    std::unique_ptr<NextMeasureTime> next_measure;      // Handle next measure time
+    std::vector<std::unique_ptr<OutputTime>> output_time; // Handle each output type given time
+    std::vector<std::unique_ptr<Output>> output; // Handle each output type given nothing
   };
 }
-
+        
 #endif /* Output_OF_h */

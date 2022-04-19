@@ -50,7 +50,7 @@ namespace ptof
 
     using Geometry = Geometry<
       2,
-      ImplementedBoundaryConditionSets::Type::transport>;
+      BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
     using State = StateDim<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -253,7 +253,7 @@ namespace ptof
     {
       struct Parameters
       {
-        ImplementedInitialConditions::Type type;
+        InitialConditions::Type type;
         double initial_mass;
         std::size_t nr_particles;
         double distance_wall;
@@ -286,8 +286,8 @@ namespace ptof
                                          + name + ".dat");
           useful::read(input, ic_name);
           verify_initial_condition(ic_name,
-                                   ImplementedInitialConditions{});
-          type = ImplementedInitialConditions::type(ic_name);
+                                   InitialConditions{});
+          type = InitialConditions::type(ic_name);
           useful::read(input, initial_mass);
           useful::read(input, nr_particles);
           input >> time_min;
@@ -351,7 +351,7 @@ namespace ptof
       }
     };
     
-    using Output = ptof::Output_Cases;
+    using Output = ptof::Output_Cases<CTRW>;
   }
   
   namespace model_advection_diffusion_fpt
@@ -376,9 +376,10 @@ namespace ptof
     };
 
     using Geometry = Geometry<2,
-      ImplementedBoundaryConditionSets::Type::firstpassage>;
+      BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
-    using State = StateDim<Geometry::dim, Info, double, double, std::size_t>;
+    using State = StateDim<Geometry::dim,
+      Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion::Solvers;
     using model_advection_diffusion::Transport;
@@ -405,7 +406,7 @@ namespace ptof
       }
     };
     
-    using Output = ptof::Output_Cases;
+    using Output = ptof::Output_Cases<CTRW>;
   }
   
   namespace model_advection_diffusion_decay_catalytic
@@ -430,13 +431,13 @@ namespace ptof
     };
 
     using Geometry = model_advection_diffusion::Geometry;
-    using Info = ptof::Info_Absorbed_Reinjections;
+    using model_advection_diffusion::Info;
     using model_advection_diffusion::State;
     using model_advection_diffusion::CTRW;
     using model_advection_diffusion::Solvers;
     using model_advection_diffusion::Transport;
     using model_advection_diffusion::InitialCondition;
-    using Output = ptof::Output_Cases;
+    using Output = ptof::Output_Cases<CTRW>;
     
     struct Reaction
     {
@@ -494,7 +495,8 @@ namespace ptof
         if (params.initial_distribution == "uniform")
           return Reaction_AFluidPlusASolidtoASolid{
             params.reaction_rate,
-            10.*std::sqrt(2.*params_transport.diff_coeff*params_solvers.time_step),
+            10.*std::sqrt(2.*params_transport.diff_coeff
+                          *params_solvers.time_step),
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
                                                geometry.mesh ),
@@ -513,7 +515,8 @@ namespace ptof
   {
     struct Model
     {
-      inline static const std::string name{ "advection_diffusion_decay" };
+      inline static const std::string name{
+        "advection_diffusion_decay" };
       
       template <typename OStream>
       static void info(OStream& output)
@@ -537,12 +540,13 @@ namespace ptof
     using model_advection_diffusion::Solvers;
     using model_advection_diffusion::Transport;
     using model_advection_diffusion::InitialCondition;
-    using Output = ptof::Output_Cases;
+    using Output = ptof::Output_Cases<CTRW>;
     
     struct Reaction
     {
       using Parameters
-        = model_advection_diffusion_decay_catalytic::Reaction::Parameters;
+        = model_advection_diffusion_decay_catalytic
+          ::Reaction::Parameters;
       
       template
       <typename Geometry,

@@ -14,7 +14,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion;
+  using namespace ptof::model_advection_diffusion_decay_catalytic;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -149,6 +149,7 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Setting up output..." << std::endl;
   std::cout << std::setprecision(2) << std::scientific;
   Output measurer{
+    ctrw,
     directories,
     params_output,
     std::string("M_") + Model::name
@@ -161,10 +162,10 @@ int main(int argc, char * argv[])
       + "_O_" + parameters_output_name };
   measurer.info_runtime(std::cout);
   std::cout << "Done!" << std::endl;
-  
+
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   double current_time = 0.;
-  while (!measurer.done(ctrw, current_time))
+  while (!measurer.done(current_time))
   {
     while (measurer.next_measure_time() <= current_time)
     {
@@ -176,7 +177,7 @@ int main(int argc, char * argv[])
                 << "Fraction not absorbed: "
                 << 1. - double(ptof::nr_absorbed(ctrw))/ctrw.size()
                 << "\n";
-      measurer(ctrw, measurer.next_measure_time());
+      measurer(measurer.next_measure_time());
     }
     current_time += params_solvers.time_step;
     ctrw.step([current_time](CTRW::Particle& part)
@@ -184,8 +185,8 @@ int main(int argc, char * argv[])
                   && !part.state_new().info.absorbed; },
               transitions);
   }
-  measurer(ctrw, current_time);
-  measurer(ctrw);
+  measurer(current_time);
+  measurer();
   std::cout << "Done!" << std::endl;
   
   return 0;

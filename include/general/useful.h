@@ -32,9 +32,11 @@ namespace useful
   // Convert string to bool
   bool stob(std::string const& string)
   {
-    if (string == "true" || string == "1")
+    if (string == "true" || string == "1"
+        || string == "True" || string == "TRUE")
       return true;
-    if (string == "false" || string == "0")
+    if (string == "false" || string == "0"
+        || string == "False" || string == "FALSE")
       return false;
     throw std::runtime_error{
       "Expected true or false, got"
@@ -731,27 +733,6 @@ namespace useful
     positions.sort(std::greater<std::size_t>{});
     for (auto const position : positions)
       swap_delete(container, position);
-  }
-  
-  // Count lines in file
-  std::size_t countlines(FILE *fin)
-  {
-    std::size_t lines = 0;
-    int maxlength = 255;
-    char buffer[ maxlength + 1 ];
-
-    while (fgets(buffer , maxlength + 1 , fin) != NULL)
-    {
-      if (buffer[std::strlen(buffer) - 1] != '\n')
-        throw "Line too long.";
-      ++lines;
-    }
-    if (!feof(fin))
-      throw "Could not reach end of file.";
-
-    rewind(fin);
-
-    return lines;
   }
 
   //	To check if a class has a method

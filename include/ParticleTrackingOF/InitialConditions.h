@@ -23,7 +23,7 @@ namespace ptof
 {
   // Keep track of names and
   // types of initial conditions
-  struct ImplementedInitialConditions
+  struct InitialConditions
   {
     enum class Type
     {
@@ -46,10 +46,9 @@ namespace ptof
     { return type_to_string.at(type); }
     
     // Check if name exists
-    static auto exists(std::string const& name)
+    static auto contains(std::string const& name)
     { return string_to_type.count(name); }
     
-  private:
     // Map names to types
     inline static const
     std::unordered_map<std::string, Type> string_to_type
@@ -398,7 +397,7 @@ namespace ptof
   (std::string const& initial_condition,
    Implemented const& implemented)
   {
-    if (!implemented.exists(initial_condition))
+    if (!implemented.contains(initial_condition))
       throw std::runtime_error{
         std::string("Boundary condition type ")
         + initial_condition
@@ -421,7 +420,7 @@ namespace ptof
     ParticleMaker particle_maker;                       // Makes a particle given a position
     std::mt19937 rng{ std::random_device{}() };         // Random number generator
     
-    private:
+  private:
     struct PositionMaker
     {
       double time = 0.;
@@ -487,37 +486,37 @@ namespace ptof
     template <typename ParticleMakerOther>
     auto make_particles
     (std::size_t nr_particles,
-     ImplementedInitialConditions::Type type,
+     InitialConditions::Type type,
      ParticleMakerOther& particle_maker)
     {
       switch (type)
       {
-        case ImplementedInitialConditions::Type::uniform:
+        case InitialConditions::Type::uniform:
           return uniform(nr_particles, mesh, rng, particle_maker);
-        case ImplementedInitialConditions::Type::flux_weighted:
+        case InitialConditions::Type::flux_weighted:
           return flux_weighted(nr_particles,
                                velocity_field,
                                mesh, rng, particle_maker);
-        case ImplementedInitialConditions::Type::uniform_inlet:
+        case InitialConditions::Type::uniform_inlet:
           return uniform_patches(nr_particles,
                                      { "inlet" },
                                      mesh, rng, particle_maker);
-        case ImplementedInitialConditions::Type::flux_weighted_inlet:
+        case InitialConditions::Type::flux_weighted_inlet:
           return flux_weighted_patches(nr_particles,
                                        { "inlet" },
                                        velocity_field,
                                        mesh, rng, particle_maker);
-        case ImplementedInitialConditions::Type::uniform_solid:
+        case InitialConditions::Type::uniform_solid:
           return uniform_patches(nr_particles,
                                      { "wallFluidSolid" },
                                      mesh, rng, particle_maker);
-        case ImplementedInitialConditions::Type::uniform_near_solid:
+        case InitialConditions::Type::uniform_near_solid:
           return uniform_near_boundary_patches(nr_particles,
                                                    { "wallFluidSolid" },
                                                    params.distance_wall,
                                                    mesh, mesh_search,
                                                    rng, particle_maker);
-        case ImplementedInitialConditions::Type::uniform_inlet_continuous:
+        case InitialConditions::Type::uniform_inlet_continuous:
           return continuous_injection([this]
                                       (std::size_t nr_particles,
                                        ParticleMakerOther& particle_maker)
@@ -530,7 +529,7 @@ namespace ptof
                                       params.time_max,
                                       params.time_step,
                                       particle_maker);
-        case ImplementedInitialConditions::Type::flux_weighted_inlet_continuous:
+        case InitialConditions::Type::flux_weighted_inlet_continuous:
           return continuous_injection([this]
                                       (std::size_t nr_particles,
                                        ParticleMakerOther& particle_maker)
@@ -548,7 +547,7 @@ namespace ptof
         default:
           throw std::runtime_error{
             std::string{ "Initial condition type " }
-            + ImplementedInitialConditions::name(params.type)
+            + InitialConditions::name(params.type)
             + " not supported" };
       }
     }
@@ -562,7 +561,7 @@ namespace ptof
         "--------------------------------------------------\n"
         "Initial condition\n"
         "--------------------------------------------------\n"
-        "Type: " + ImplementedInitialConditions::name(params.type) + "\n"
+        "Type: " + InitialConditions::name(params.type) + "\n"
         "--------------------------------------------------\n";
     }
   };

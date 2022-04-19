@@ -26,7 +26,7 @@ namespace ptof
 {
   // Keep track of names and
   // types of boundary conditions
-  struct ImplementedBoundaryConditions
+  struct BoundaryCondition
   {
     // Implemented types
     enum class Type
@@ -39,31 +39,23 @@ namespace ptof
     };
     
     // Construct with standard 'custom' name
-    ImplementedBoundaryConditions()
+    BoundaryCondition()
     {}
     
-    // Construct with given name for 'custom' type
-    ImplementedBoundaryConditions(std::string const& custom_name)
-    { set_custom_name(custom_name); }
-    
-    // Change the name of 'custom' type
-    void set_custom_name(std::string const& custom_name)
-    { type_to_name[Type::custom] = custom_name; }
-    
     // Type from name
-    auto type(std::string const& name) const
+    static auto type(std::string const& name)
     { return name_to_type.at(name); }
     
     // Name from type
-    auto name(Type type) const
+    static auto name(Type type)
     { return type_to_name.at(type); }
     
     // Check if name exists
-    bool exists(std::string const& name) const
+    static bool contains(std::string const& name)
     { return name_to_type.count(name); }
     
-  private:
     // Map names to types
+    inline static const
     std::unordered_map<std::string, Type> name_to_type
     {
       { "reflecting", Type::reflecting },
@@ -74,6 +66,7 @@ namespace ptof
     };
     
     // Map types to names
+    inline static const
     std::unordered_map<Type, std::string> type_to_name
     {
       { Type::reflecting, "reflecting" },
@@ -161,7 +154,7 @@ namespace ptof
       mesh.boundaryMesh().findPatchID(bc.first, false);
     
     for (auto const& bc : boundary_conditions)
-      if (!implemented.exists(bc.second))
+      if (!implemented.contains(bc.second))
         throw std::runtime_error{
           std::string("Boundary condition type ")
           + bc.second
@@ -292,50 +285,50 @@ namespace ptof
         // Apply the approriate boundary and store associated info
         switch (boundary_condition_types.type(type_name))
         {
-          case ImplementedBoundaryConditions::Type::reflecting:
+          case BoundaryCondition::Type::reflecting:
           {
             store_info(state, state_old, intersection,
                        boundary_condition_types,
                        useful::Selector<
-                        ImplementedBoundaryConditions::Type,
-                        ImplementedBoundaryConditions::Type::reflecting>{});
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::reflecting>{});
             boundary_reflecting(state,
                                 intersection.rawPoint(),
                                 reflection_normal(intersection.index()));
             had_effect = 1;
             break;
           }
-          case ImplementedBoundaryConditions::Type::custom:
+          case BoundaryCondition::Type::custom:
           {
             store_info(state, state_old, intersection,
                        boundary_condition_types,
                        useful::Selector<
-                        ImplementedBoundaryConditions::Type,
-                        ImplementedBoundaryConditions::Type::custom>{});
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::custom>{});
             had_effect += boundary_custom(state, intersection);
             break;
           }
-          case ImplementedBoundaryConditions::Type::info:
+          case BoundaryCondition::Type::info:
           {
             store_info(state, state_old, intersection,
                        boundary_condition_types,
                        useful::Selector<
-                        ImplementedBoundaryConditions::Type,
-                        ImplementedBoundaryConditions::Type::info>{});
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::info>{});
             break;
           }
-          case ImplementedBoundaryConditions::Type::absorbing:
+          case BoundaryCondition::Type::absorbing:
           {
             store_info(state, state_old, intersection,
                        boundary_condition_types,
                        useful::Selector<
-                        ImplementedBoundaryConditions::Type,
-                        ImplementedBoundaryConditions::Type::absorbing>{});
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::absorbing>{});
             boundary_absorbing(state, intersection.rawPoint());
             had_effect = 1;
             break;
           }
-          case ImplementedBoundaryConditions::Type::empty:
+          case BoundaryCondition::Type::empty:
           {}
           default:
             throw std::runtime_error{
@@ -385,9 +378,8 @@ namespace ptof
     Store_Info store_info;            // Object to handle boundary info storing in states
     Boundary_Custom boundary_custom;  // Boundary object to handle 'custom' bc type
     
-    const ImplementedBoundaryConditions
-      boundary_condition_types{
-          boundary_custom.name() }; // Implemnted boundary condition names and types
+    const BoundaryCondition
+      boundary_condition_types{}; // Boundary condition names and types
     
     // Names of patches in mesh
     auto patch_names() const
