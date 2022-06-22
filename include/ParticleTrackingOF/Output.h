@@ -861,6 +861,7 @@ namespace ptof
         {
           end_criterium = std::make_unique<
             Criterium_mass_above<Subject>>(params.end_value);
+          break;
         }
         case EndCriterium::Type::all_absorbed:
         {
