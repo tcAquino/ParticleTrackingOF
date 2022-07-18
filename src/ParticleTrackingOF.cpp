@@ -8,13 +8,14 @@
 #include <cstddef>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <string>
 #include "general/useful.h"
 #include "ParticleTrackingOF/Models.h"
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_decay_catalytic;
+  using namespace ptof::model_bcc_symmetryplanes_advection;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -96,24 +97,32 @@ int main(int argc, char * argv[])
     parameters_initial_condition_name,
     params_transport, params_reaction, params_solvers };
   std::cout << "Done!" << std::endl;
-  std::cout << "\n"  << "Importing output parameters..." << std::endl;
-  Output::Parameters params_output{ directories,
-    parameters_output_name,
-    params_transport, params_reaction, params_solvers };
-  std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up geometry...\n";
-  Geometry geometry{ directories_of };
+  Geometry geometry{ directories_of,
+    params_transport };
   geometry.info_runtime(std::cout);
   std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
-  double average_velocity_magnitude =
-    params_transport.diff_coeff*params_transport.peclet
-      /params_transport.lengthscale;
-  auto velocity_field
-    = Transport::makeVelocityInterpolator(geometry,
-                                          average_velocity_magnitude);
+  double velocity_rescaling = 1.;
+  auto velocity_field = Transport::makeVelocityInterpolator(geometry);
+  if (params_transport.peclet
+      == std::numeric_limits<double>::infinity())
+  {
+    params_transport.advection_time = params_transport.lengthscale/
+    ptof::magnitude_of_average(velocity_field.get_field(), geometry.mesh);
+  }
+  else
+  {
+    double average_velocity_magnitude =
+      params_transport.diff_coeff*params_transport.peclet/
+      params_transport.lengthscale;
+    velocity_rescaling = average_velocity_magnitude/
+      ptof::magnitude_of_average(velocity_field.get_field(),
+                                 geometry.mesh);
+    velocity_field.rescale(velocity_rescaling);
+  }
   std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up reaction..." << std::endl;
@@ -133,6 +142,9 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up boundary conditions...\n";
   auto boundary = geometry.makeBoundary(directories,
+                                        params_transport,
+                                        params_reaction,
+                                        params_solvers,
                                         initial_condition);
   boundary.info_runtime(std::cout);
   std::cout << "Done!" << std::endl;
@@ -146,13 +158,22 @@ int main(int argc, char * argv[])
     reaction };
   std::cout << "Done!" << std::endl;
   
+  std::cout << "\n"  << "Importing output parameters..." << std::endl;
+  Output::Parameters params_output{ directories,
+    parameters_output_name,
+    params_transport, params_reaction, params_solvers,
+    velocity_rescaling };
+  std::cout << "Done!" << std::endl;
+  
   std::cout << "\n" << "Setting up output..." << std::endl;
   std::cout << std::setprecision(2) << std::scientific;
   Output measurer{
     ctrw,
+    velocity_field,
+    geometry,
     directories,
     params_output,
-    std::string("M_") + Model::name
+    "M_" + Model::name
       + "_C_" + case_name
       + "_OF_" + directories_of.case_name
       + "_T_" + parameters_transport_name
@@ -165,6 +186,7 @@ int main(int argc, char * argv[])
 
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   double current_time = 0.;
+  const bool step_in_time = (params_solvers.time_step != 0);
   while (!measurer.done(current_time))
   {
     while (measurer.next_measure_time() <= current_time)
@@ -175,17 +197,29 @@ int main(int argc, char * argv[])
                 << measurer.next_measure_time()/params_output.time_unit_factor
                 << "\n"
                 << "Fraction not absorbed: "
-                << 1. - double(ptof::nr_absorbed(ctrw))/ctrw.size()
+                << 1. - double(ptof::nr_absorbed(ctrw, current_time))/ctrw.size()
                 << "\n";
       measurer(measurer.next_measure_time());
     }
-    current_time += params_solvers.time_step;
-    ctrw.step([current_time](CTRW::Particle& part)
-              { return part.state_new().time < current_time
-                  && !part.state_new().info.absorbed; },
-              transitions);
+    if (step_in_time)
+    {
+      current_time += params_solvers.time_step;
+      ctrw.step([current_time](CTRW::Particle& part)
+                { return part.state_new().time < current_time
+                    && !part.state_new().info.absorbed; },
+                transitions);
+    }
+    else
+    {
+      current_time = measurer.next_measure_time();
+      ctrw.evolve([current_time](CTRW::Particle& part)
+      { return part.state_new().time < current_time
+          && !part.state_new().info.absorbed; },
+                transitions);
+    }
   }
-  measurer(current_time);
+  if (measurer.next_measure_time() <= current_time)
+    measurer(current_time);
   measurer();
   std::cout << "Done!" << std::endl;
   

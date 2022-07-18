@@ -399,7 +399,7 @@ namespace ptof
   {
     if (!implemented.contains(initial_condition))
       throw std::runtime_error{
-        std::string("Boundary condition type ")
+        "Boundary condition type "
         + initial_condition
         + " not supported"
       };

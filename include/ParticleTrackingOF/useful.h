@@ -8,7 +8,9 @@
 #ifndef useful_OF_h
 #define useful_OF_h
 
+#include <type_traits>
 #include <fieldTypes.H>
+
 
 namespace ptof
 {
@@ -75,6 +77,81 @@ namespace ptof
   {
     return mesh.cellCentres()[cell];
   }
+  
+  // Small offset forward given current face and direction
+  template <typename MeshSearch>
+  Foam::vector offset_forward_face
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search)
+  {
+    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    Foam::point const& center = mesh_search.mesh().
+      cellCentres()[owner_cell];
+    Foam::scalar typ_dim = Foam::mag(center - begin);
+    
+    return begin + mesh_search.tol_*typ_dim*
+      direction/Foam::mag(direction);
+  }
+  
+  // Small offset backward given current face and direction
+  template <typename MeshSearch>
+  Foam::vector offset_backward_face
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search)
+  {
+    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    Foam::point const& center = mesh_search.mesh().
+      cellCentres()[owner_cell];
+    Foam::scalar typ_dim = Foam::mag(center - begin);
+    
+    return begin - mesh_search.tol_*typ_dim*
+      direction/Foam::mag(direction);
+  }
+  
+  // Small offset forward
+  // given current cell and direction
+  template <typename MeshSearch>
+  Foam::vector offset_forward_cell
+  (Foam::point const& begin,
+   Foam::label cell,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search)
+  {
+    Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
+    Foam::scalar typ_dim = Foam::mag(center - begin);
+    
+    return begin - mesh_search.tol_*typ_dim*
+      direction/Foam::mag(direction);
+  }
+  
+  // Small offset backward
+  // given current cell and direction
+  template <typename MeshSearch>
+  Foam::vector offset_backward_cell
+  (Foam::point const& begin,
+   Foam::label cell,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search)
+  {
+    Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
+    Foam::scalar typ_dim = Foam::mag(center - begin);
+    
+    return begin - mesh_search.tol_*typ_dim*
+      direction/Foam::mag(direction);
+  }
+  
+  // Check for existence of periodicity info
+  // (to use with State)
+  template <typename State, typename = int>
+  struct Has_periodicity : std::false_type { };
+  template <typename State>
+  struct Has_periodicity
+  <State, decltype((void) State::periodicity, 0)>
+  : std::true_type { };
 }
 
 #endif /* useful_OF_h */

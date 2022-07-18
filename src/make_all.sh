@@ -2,3 +2,8 @@
 ./make.sh advection_diffusion_fpt
 ./make.sh advection_diffusion_decay
 ./make.sh advection_diffusion_decay_catalytic
+./make.sh advection
+./make.sh bcc_cartesian_advection_diffusion
+./make.sh bcc_cartesian_advection
+./make.sh bcc_symmetryplanes_advection_diffusion
+./make.sh bcc_symmetryplanes_advection

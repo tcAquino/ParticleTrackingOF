@@ -10,6 +10,7 @@
 
 #include <cstddef>
 #include <fieldTypes.H>
+#include <vector>
 #include "ParticleTrackingOF/Locator.h"
 #include "general/useful.h"
 
@@ -283,10 +284,10 @@ namespace ptof
                           Info{}, locator, time, mass, tag) };
     }
     
-    Locator const& locator; // Locator to locate particle states in mesh
-    Time time;              // Particle state time
-    Mass mass;              // Particle state mass
-    Tag tag;                // Particle state tag
+    Locator locator; // Locator to locate particle states in mesh
+    Time time;       // Particle state time
+    Mass mass;       // Particle state mass
+    Tag tag;         // Particle state tag
   };
   template <typename Particle, typename Locator>
   ParticleMaker
@@ -314,6 +315,349 @@ namespace ptof
   (useful::Selector_t<Particle>,
    Locator&& locator) ->
   ParticleMaker<Particle, Locator>;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // State for 1D positions with periodicity info
+  template
+  <typename Info_t,
+  typename Time_t = useful::Empty,
+  typename Mass_t = useful::Empty,
+  typename Tag_t = useful::Empty>
+  struct State1D_Periodic
+  {
+    // Typedefs for state quantities
+    using Position = Foam::scalar;
+    using Periodicity = std::vector<int>;
+    using Index = Foam::label;
+    using Info = Info_t;
+    using Time = Time_t;
+    using Mass = Mass_t;
+    using Tag = Tag_t;
+    
+    Position position{ 0. };
+    Periodicity periodicity{ 0 };
+    Index cell{ -1 };
+    Time time{};
+    Mass mass{};
+    Tag tag{};
+    
+    // Set position from 3D position
+    void set_position(Foam::point const& point)
+    { position = point[0]; }
+    
+    // Make position from 3D position
+    static auto make_position(Foam::point const& point)
+    { return point[0]; }
+    
+    Info info{};
+  };
+
+  // State for 2D positions with periodicity info
+  template
+  <typename Info_t,
+  typename Time_t = useful::Empty,
+  typename Mass_t = useful::Empty,
+  typename Tag_t = useful::Empty>
+  struct State2D_Periodic
+  {
+    // Typedefs for state quantities
+    using Position = Foam::Vector2D<Foam::scalar>;
+    using Periodicity = std::vector<int>;
+    using Index = Foam::label;
+    using Info = Info_t;
+    using Time = Time_t;
+    using Mass = Mass_t;
+    using Tag = Tag_t;
+    
+    Position position{ 0., 0. };
+    Periodicity periodicity{ 0, 0 };
+    Index cell{ -1 };
+    Time time{};
+    Mass mass{};
+    Tag tag{};
+    
+    // Set position from 3D position
+    void set_position(Foam::point const& point)
+    {
+      position[0] = point[0];
+      position[1] = point[1];
+    }
+    
+    // Make position from 3D position
+    static auto make_position(Foam::point const& point)
+    { return Position{ point[0], point[1] }; }
+    
+    Info info{};
+  };
+
+  // State for 3D positions with periodicity info
+  template
+  <typename Info_t,
+  typename Time_t = useful::Empty,
+  typename Mass_t = useful::Empty,
+  typename Tag_t = useful::Empty>
+  struct State3D_Periodic
+  {
+    // Typedefs for state quantities
+    using Position = Foam::vector;
+    using Periodicity = std::vector<int>;
+    using Index = Foam::label;
+    using Info = Info_t;
+    using Time = Time_t;
+    using Mass = Mass_t;
+    using Tag = Tag_t;
+    
+    Position position{ 0., 0., 0. };
+    Periodicity periodicity{ 0, 0, 0 };
+    Index cell{ -1 };
+    Time time{};
+    Mass mass{};
+    Tag tag{};
+    
+    // Set position from 3D position
+    void set_position(Foam::point const& point)
+    { position = point; }
+    
+    // Make position from 3D position
+    static auto make_position(Foam::point const& point)
+    { return point; }
+    
+    Info info{};
+  };
+
+  // Make state for 1D positions with periodicity info
+  // Locate mesh cell using Locator object
+  template
+  <typename Info,
+  typename Locator,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  State1D_Periodic<Info, Time, Mass, Tag> make_state
+  (Foam::scalar position,
+   std::vector<int> periodicity,
+   Info info,
+   Locator const& locator,
+   Time time = {},
+   Mass mass = {},
+   Tag tag = {})
+  {
+    Foam::label cell_id = locator(position);
+    if (cell_id == -1)
+      throw std::runtime_error{
+        "Particle initialized outside mesh" };
+    return { position, periodicity, cell_id, time, mass, tag };
+  }
+
+  // Make state for 2D positions with periodicity info
+  // Locate mesh cell using Locator object
+  template
+  <typename Info,
+  typename Locator,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  State2D_Periodic<Info, Time, Mass, Tag> make_state
+  (Foam::Vector2D<Foam::scalar> const& position,
+   std::vector<int> periodicity,
+   Info info,
+   Locator const& locator,
+   Time time = {},
+   Mass mass = {},
+   Tag tag ={})
+  {
+    Foam::label cell_id = locator(position);
+    if (cell_id == -1)
+      throw std::runtime_error{
+        "Particle initialized outside mesh" };
+    return { position, periodicity, cell_id, time, mass, tag };
+  }
+
+  // Make state for 3D positions with periodicity info
+  // Locate mesh cell using Locator object
+  template
+  <typename Info,
+  typename Locator,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  State3D_Periodic<Info, Time, Mass, Tag> make_state
+  (Foam::vector const& position,
+   std::vector<int> periodicity,
+   Info info,
+   Locator const& locator,
+   Time time = {},
+   Mass mass = {},
+   Tag tag = {})
+  {
+    Foam::label cell_id = locator(position);
+    if (cell_id == -1)
+      throw std::runtime_error{
+        "Particle initialized outside mesh" };
+    return { position, periodicity, cell_id, time, mass, tag };
+  }
+  
+  // Make state for 1D positions with periodicity info
+  // with given cell index
+  template
+  <typename Info,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  State1D_Periodic<Info, Time, Mass, Tag> make_state
+  (Foam::scalar position,
+   std::vector<int> periodicity,
+   Info info,
+   Foam::label cell_id,
+   Time time = {},
+   Mass mass = {},
+   Tag tag = {})
+  {
+    return { position, periodicity, cell_id, time, mass, tag };
+  }
+
+  // Make state for 2D positions with given cell index
+  template
+  <typename Info,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  State2D_Periodic<Info, Time, Mass, Tag> make_state
+  (Foam::Vector2D<Foam::scalar> const& position,
+   std::vector<int> periodicity,
+   Foam::label cell_id,
+   Time time = {},
+   Mass mass = {},
+   Tag tag ={})
+  {
+    return { position, periodicity, cell_id, time, mass, tag };
+  }
+
+  // Make state for 3D positions  with periodicity info
+  // with given cell index
+  template
+  <typename Info,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  State3D_Periodic<Info, Time, Mass, Tag> make_state
+  (Foam::vector const& position,
+   std::vector<int> periodicity,
+   Foam::label cell_id,
+   Time time = {},
+   Mass mass = {},
+   Tag tag = {})
+  {
+    return { position, periodicity, cell_id, time, mass, tag };
+  }
+  
+  // Typedef state type templated on spatial dimension
+  // for states with periodicity information
+  template
+  <std::size_t dim, typename Info,
+  typename Time = useful::Empty,
+  typename Mass = useful::Empty,
+  typename Tag = useful::Empty>
+  using StateDim_Periodic = typename std::conditional_t<
+    dim == 3,
+    State3D_Periodic<Info, Time, Mass, Tag>,
+    std::conditional_t<
+      dim == 2,
+      State2D_Periodic<Info, Time, Mass, Tag>,
+      State1D_Periodic<Info, Time, Mass, Tag>>>;
+  
+  // Object to make particles given position
+  // for states with periodicity information
+  template
+  <typename Particle, typename Locator, typename Boundary>
+  struct ParticleMaker_Periodic
+  {
+    // Typedefs for particle state quantities
+    using State = typename Particle::State;
+    using Info = typename State::Info;
+    using Time = typename State::Time;
+    using Mass = typename State::Mass;
+    using Tag = typename State::Tag;
+    
+    // Construct given Locator to find mesh cell,
+    // time, mass, and tag
+    ParticleMaker_Periodic
+    (useful::Selector_t<Particle>,
+     Locator&& locator,
+     Boundary&& boundary,
+     Time time = {},
+     Mass mass = {},
+     Tag tag = {})
+    : locator{ std::forward<Locator>(locator) }
+    , boundary{ std::forward<Boundary>(boundary) }
+    , time{ time }
+    , mass{ mass }
+    , tag{ tag }
+    {}
+    
+    // Make particle given position
+    template <typename Position>
+    Particle operator()
+    (Position const& position)
+    {
+      typename Particle::State state{
+        make_state(State::make_position(position),
+                   std::vector<int>(position.size(), 0),
+                   Info{}, locator, time, mass, tag) };
+      boundary(state);
+      return state;
+    }
+    
+    Locator locator;   // Locator to locate particle states in mesh
+    Boundary boundary; // Boundary to enforce periodicity given state
+    Time time;         // Particle state time
+    Mass mass;         // Particle state mass
+    Tag tag;           // Particle state tag
+  };
+  template
+  <typename Particle, typename Locator, typename Boundary>
+  ParticleMaker_Periodic
+  (useful::Selector_t<Particle>,
+   Locator&& locator,
+   Boundary&& boundary,
+   typename Particle::State::Time,
+   typename Particle::State::Mass,
+   typename Particle::State::Tag) ->
+  ParticleMaker_Periodic<Particle, Locator, Boundary>;
+  template
+  <typename Particle, typename Locator, typename Boundary>
+  ParticleMaker_Periodic
+  (useful::Selector_t<Particle>,
+   Locator&& locator,
+   Boundary&& boundary,
+   typename Particle::State::Time,
+   typename Particle::State::Mass) ->
+  ParticleMaker_Periodic<Particle, Locator, Boundary>;
+  template
+  <typename Particle, typename Locator, typename Boundary>
+  ParticleMaker_Periodic
+  (useful::Selector_t<Particle>,
+   Locator&& locator,
+   Boundary&& boundary,
+   typename Particle::State::Time) ->
+  ParticleMaker_Periodic<Particle, Locator, Boundary>;
+  template
+  <typename Particle, typename Locator, typename Boundary>
+  ParticleMaker_Periodic
+  (useful::Selector_t<Particle>,
+   Locator&& locator,
+   Boundary&& boundary) ->
+  ParticleMaker_Periodic<Particle, Locator, Boundary>;
 }
 
 

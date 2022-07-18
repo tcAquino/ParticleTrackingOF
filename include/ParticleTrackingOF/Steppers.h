@@ -50,14 +50,34 @@ namespace ptof
           ctrw::JumpGenerator_Velocity_State_RK4{
             std::forward<VelocityField>(velocity_field),
             params_solvers.time_step,
-            std::forward<Boundary>(boundary)
-          },
+            std::forward<Boundary>(boundary) },
           ctrw::JumpGenerator_Diffusion{
             params_transport.diff_coeff,
             params_solvers.time_step,
-            dim
-          }
-        };
+            dim } };
+    }
+    
+    // Make purely-advective JumpGenerator
+    // Given velocity field, boundary enforcer,
+    // transport parameters, solver parameters,
+    // and spatial dimension
+    template
+    <typename VelocityField,
+    typename Boundary,
+    typename TransportParameters,
+    typename SolverParameters>
+    static auto makeJumpGenerator_Advection
+    (VelocityField&& velocity_field,
+     Boundary&& boundary,
+     TransportParameters const& params_transport,
+     SolverParameters const& params_solvers,
+     std::size_t dim)
+    {
+      return
+        ctrw::JumpGenerator_Velocity_State_RK4{
+          std::forward<VelocityField>(velocity_field),
+          params_solvers.time_step,
+          std::forward<Boundary>(boundary) };
     }
   };
   

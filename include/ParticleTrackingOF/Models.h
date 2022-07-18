@@ -11,6 +11,7 @@
 #include <cmath>
 #include <cstddef>
 #include <exception>
+#include <limits>
 #include <string>
 #include <type_traits>
 #include "general/useful.h"
@@ -61,7 +62,6 @@ namespace ptof
       
       struct Parameters
       {
-        std::size_t nr_particles;
         double time_step;
         
         template
@@ -184,7 +184,6 @@ namespace ptof
           geometry,
           ptof::get_velocity_data_rescaled(geometry.mesh,
                                            average_velocity_magnitude));
-        
       };
       
       template <typename Geometry>
@@ -345,14 +344,181 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator, time,
+            geometry.locator,
+            time,
             params.initial_mass/params.nr_particles },
           params };
       }
     };
     
-    using Output = ptof::Output_Cases<CTRW>;
+    using VelocityField = VectorField_LinearInterpolation_OF
+    <Foam::volVectorField, Locator_Cell const&, 1, 1>;
+    using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
+  
+  namespace model_advection
+  {
+    struct Model
+    {
+      inline static const std::string name{ "advection" };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Model\n"
+          "--------------------------------------------------\n"
+          "Advective particle tracking\n"
+          "with RK4 stepping for advection\n"
+          "and stochastic Euler stepping for diffusion\n"
+          "--------------------------------------------------\n";
+      }
+    };
+    
+    using model_advection_diffusion::Geometry;
+    using model_advection_diffusion::Info;
+    using model_advection_diffusion::State;
+    using model_advection_diffusion::CTRW;
+    using model_advection_diffusion::Reaction;
+    using model_advection_diffusion::InitialCondition;
+    using model_advection_diffusion::VelocityField;
+    using model_advection_diffusion::Output;
+    
+    struct Solvers
+    {
+      using Steppers = Steppers_Advection_RK4_Diffusion_Euler;
+      
+      struct Parameters
+      {
+        double time_step = 0.;
+        
+        std::size_t nr_particles;
+        double step_length;
+        
+        template
+        <typename TransportParameters,
+        typename ReactionParameters>
+        Parameters
+        (Directories const& directories,
+         std::string const& name,
+         TransportParameters const& params_transport,
+         ReactionParameters const& params_reaction)
+        {
+          double step_length_nondim;
+          auto input = useful::open_read(directories.dir_parameters
+                                         + "/parameters_solvers_"
+                                         + name + ".dat");
+          useful::read(input, step_length_nondim);
+          input.close();
+        }
+        
+        template <typename OStream>
+        static void info(OStream& output)
+        {
+          output <<
+            "--------------------------------------------------\n"
+            "Solver parameters\n"
+            "--------------------------------------------------\n"
+            "- Approximate step length in units of characteristic lengthscale\n"
+            "--------------------------------------------------\n";
+        }
+      };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Solvers\n"
+          "--------------------------------------------------\n"
+          "Advection: RK4\n"
+          "--------------------------------------------------\n";
+      }
+    };
+    
+    struct Transport
+    {
+      struct Parameters
+      {
+        double peclet = std::numeric_limits<double>::infinity();
+        double diff_coeff = 0.;
+        double diffusion_time = std::numeric_limits<double>::infinity();
+        double advection_time = 0.;
+        
+        double lengthscale;
+        
+        Parameters(Directories const& directories, std::string const& name)
+        {
+          auto input = useful::open_read(directories.dir_parameters
+                                         + "/parameters_transport_"
+                                         + name + ".dat");
+          useful::read(input, lengthscale);
+          input.close();
+        }
+        
+        template <typename OStream>
+        static void info(OStream& output)
+        {
+          output <<
+            "--------------------------------------------------\n"
+            "Transport parameters\n"
+            "--------------------------------------------------\n"
+            "- Reference lengthscale\n"
+            "--------------------------------------------------\n";
+        }
+      };
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Boundary>
+      static auto makeTransitions
+      (VelocityField&& velocity_field,
+       Geometry const& geometry,
+       Boundary const& boundary,
+       Parameters const& params_transport,
+       Solvers::Parameters const& params_solvers)
+      {
+        return makeTransportTransitions_Advection<
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_solvers);
+      }
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry, double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(
+          geometry,
+          ptof::get_velocity_data_rescaled(geometry.mesh,
+                                           average_velocity_magnitude));
+      };
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+          geometry,
+          ptof::get_velocity_data(geometry.mesh));
+      };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Transport\n"
+          "--------------------------------------------------\n"
+          "Interpolation: linear\n"
+          "--------------------------------------------------\n";
+      }
+    };
+  };
   
   namespace model_advection_diffusion_fpt
   {
@@ -384,8 +550,11 @@ namespace ptof
     using model_advection_diffusion::Solvers;
     using model_advection_diffusion::Transport;
     using model_advection_diffusion::Reaction;
+    using model_advection_diffusion::VelocityField;
+    using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
-    struct InitialCondition : model_advection_diffusion::InitialCondition
+    struct InitialCondition final
+    : model_advection_diffusion::InitialCondition
     {
       template
       <typename Geometry,
@@ -400,13 +569,12 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator, time,
+            geometry.locator,
+            time,
             params.initial_mass/params.nr_particles },
           params };
       }
     };
-    
-    using Output = ptof::Output_Cases<CTRW>;
   }
   
   namespace model_advection_diffusion_decay_catalytic
@@ -430,14 +598,14 @@ namespace ptof
       }
     };
 
-    using Geometry = model_advection_diffusion::Geometry;
+    using model_advection_diffusion::Geometry;
     using model_advection_diffusion::Info;
     using model_advection_diffusion::State;
     using model_advection_diffusion::CTRW;
     using model_advection_diffusion::Solvers;
     using model_advection_diffusion::Transport;
     using model_advection_diffusion::InitialCondition;
-    using Output = ptof::Output_Cases<CTRW>;
+    using model_advection_diffusion::Output;
     
     struct Reaction
     {
@@ -503,7 +671,7 @@ namespace ptof
             geometry.mesh_search
           };
         throw std::runtime_error{
-          std::string("Initial reactant distribution ")
+          "Initial reactant distribution "
           + params.initial_distribution
           + " not supported"
         };
@@ -533,14 +701,15 @@ namespace ptof
       }
     };
 
-    using Geometry = model_advection_diffusion::Geometry;
-    using Info = model_advection_diffusion::Info;
+    using model_advection_diffusion::Geometry;
+    using model_advection_diffusion::Info;
     using model_advection_diffusion::State;
     using model_advection_diffusion::CTRW;
     using model_advection_diffusion::Solvers;
     using model_advection_diffusion::Transport;
     using model_advection_diffusion::InitialCondition;
-    using Output = ptof::Output_Cases<CTRW>;
+    using model_advection_diffusion::VelocityField;
+    using model_advection_diffusion::Output;
     
     struct Reaction
     {
@@ -569,6 +738,421 @@ namespace ptof
         };
       }
     };
+  }
+  
+  namespace model_bcc_cartesian_advection_diffusion
+  {
+    struct Model
+    {
+      inline static const std::string name{
+        "advection_diffusion_decay" };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Model\n"
+          "--------------------------------------------------\n"
+          "Advective-diffusive particle tracking\n"
+          "in the cartesian primitive cell of\n"
+          "body centered cubic beadpack\n"
+          "--------------------------------------------------\n";
+      }
+    };
+
+    using Geometry = Geometry_Periodic<3,
+      BoundaryConditionSet::Type::transport,
+      BoundaryConditionSet::Type::cartesian>;
+    using model_advection_diffusion::Info;
+    using State = StateDim_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+    using CTRW = ctrw::CTRW<State>;
+    using model_advection_diffusion::Solvers;
+    using model_advection_diffusion::VelocityField;
+    using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    using model_advection_diffusion::Reaction;
+    
+    struct Transport
+    {
+      struct Parameters
+      {
+        double radius;
+        double lengthscale;
+        double peclet;
+        double diff_coeff;
+        
+        double cell_side;
+        std::vector<std::pair<double, double>> primitive_cell_boundaries;
+        double diffusion_time;
+        double advection_time;
+        
+        Parameters(Directories const& directories, std::string const& name)
+        {
+          auto input = useful::open_read(directories.dir_parameters
+                                         + "/parameters_transport_"
+                                         + name + ".dat");
+          useful::read(input, radius);
+          cell_side = 4./std::sqrt(3.)*radius;
+          std::string lengthscale_definition;
+          useful::read(input, lengthscale_definition);
+          if (lengthscale_definition == "radius")
+            lengthscale = radius;
+          else if (lengthscale_definition == "diameter")
+            lengthscale = 2.*radius;
+          else if (lengthscale_definition == "cell_side")
+            lengthscale = cell_side;
+          else if (lengthscale_definition == "custom")
+            useful::read(input, lengthscale);
+          else
+            throw std::runtime_error{
+              std::string("Lengthscale definition")
+              + lengthscale_definition
+              + "not supported" };
+          std::string primitive_cell_location;
+          useful::read(input, primitive_cell_location);
+          if (lengthscale_definition == "centered")
+            primitive_cell_boundaries
+              = std::vector<std::pair<double, double>>
+                (3, { -cell_side/2., cell_side/2. });
+          else if (lengthscale_definition == "corner")
+            primitive_cell_boundaries
+              = std::vector<std::pair<double, double>>
+                (3, { 0., cell_side });
+          else
+            throw std::runtime_error{
+              std::string("Lengthscale definition")
+              + lengthscale_definition
+              + "not supported" };
+          useful::read(input, peclet);
+          useful::read(input, diff_coeff);
+          input.close();
+          
+          diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
+          advection_time = 2.*diffusion_time/peclet;
+        }
+        
+        template <typename OStream>
+        static void info(OStream& output)
+        {
+          output <<
+            "--------------------------------------------------\n"
+            "Transport parameters\n"
+            "--------------------------------------------------\n"
+            "- Bead radius\n"
+            "- Reference length scale definition\n"
+            "\tradius: bead radius\n"
+            "\tdiameter: bead diameter\n"
+            "\tcell_side: primitive cubic cell side\n"
+            "\tcustom: custom value\n"
+            "- Reference length scale value, if defined as custom\n"
+            "- Location of primitive cell:\n"
+            "\tcentered: Centered at the origin\n"
+            "\tcorner: Left bottom corner at the origin\n"
+            "- Peclet number\n"
+            "- Diffusion coefficient\n"
+            "--------------------------------------------------\n";
+        }
+      };
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Boundary>
+      static auto makeTransitions
+      (VelocityField&& velocity_field,
+       Geometry const& geometry,
+       Boundary const& boundary,
+       Parameters const& params_transport,
+       Solvers::Parameters const& params_solvers)
+      {
+        return makeTransportTransitions<
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_solvers);
+      }
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry, double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(
+          geometry,
+          ptof::get_velocity_data_rescaled(geometry.mesh,
+                                           average_velocity_magnitude));
+      };
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+          geometry,
+          ptof::get_velocity_data(geometry.mesh));
+      };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Transport\n"
+          "--------------------------------------------------\n"
+          "Interpolation: linear\n"
+          "--------------------------------------------------\n";
+      }
+    };
+    
+    struct InitialCondition final
+    : model_advection_diffusion::InitialCondition
+    {
+      template
+      <typename Geometry,
+      typename VelocityField>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters params,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker_Periodic{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            geometry.boundary_periodic,
+            time,
+            params.initial_mass/params.nr_particles },
+          params };
+      }
+    };
+  }
+  
+  namespace model_bcc_cartesian_advection
+  {
+    struct Model
+    {
+      inline static const std::string name{
+        "advection_diffusion_decay" };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Model\n"
+          "--------------------------------------------------\n"
+          "Advective particle tracking\n"
+          "in the cartesian primitive cell of\n"
+          "body centered cubic beadpack\n"
+          "--------------------------------------------------\n";
+      }
+    };
+
+    using model_bcc_cartesian_advection_diffusion::Geometry;
+    using model_bcc_cartesian_advection_diffusion::Info;
+    using model_bcc_cartesian_advection_diffusion::State;
+    using model_bcc_cartesian_advection_diffusion::CTRW;
+    using model_advection::Solvers;
+    using model_bcc_cartesian_advection_diffusion::InitialCondition;
+    using model_advection::VelocityField;
+    using model_bcc_cartesian_advection_diffusion::Output;
+    using model_advection::Reaction;
+    
+    struct Transport
+    {
+      struct Parameters
+      {
+        double peclet = std::numeric_limits<double>::infinity();
+        double diff_coeff = 0.;
+        double diffusion_time = std::numeric_limits<double>::infinity();
+        double advection_time = 0.;
+        
+        double radius;
+        double lengthscale;
+        
+        double cell_side;
+        std::vector<std::pair<double, double>> primitive_cell_boundaries;
+        
+        Parameters(Directories const& directories, std::string const& name)
+        {
+          auto input = useful::open_read(directories.dir_parameters
+                                         + "/parameters_transport_"
+                                         + name + ".dat");
+          useful::read(input, radius);
+          cell_side = 4./std::sqrt(3.)*radius;
+          std::string lengthscale_definition;
+          useful::read(input, lengthscale_definition);
+          if (lengthscale_definition == "radius")
+            lengthscale = radius;
+          else if (lengthscale_definition == "diameter")
+            lengthscale = 2.*radius;
+          else if (lengthscale_definition == "cell_side")
+            lengthscale = cell_side;
+          else if (lengthscale_definition == "custom")
+            useful::read(input, lengthscale);
+          else
+            throw std::runtime_error{
+              std::string("Lengthscale definition")
+              + lengthscale_definition
+              + "not supported" };
+          std::string primitive_cell_location;
+          useful::read(input, primitive_cell_location);
+          if (lengthscale_definition == "centered")
+            primitive_cell_boundaries
+              = std::vector<std::pair<double, double>>
+                (3, { -cell_side/2., cell_side/2. });
+          else if (lengthscale_definition == "corner")
+            primitive_cell_boundaries
+              = std::vector<std::pair<double, double>>
+                (3, { 0., cell_side });
+          else
+            throw std::runtime_error{
+              std::string("Lengthscale definition")
+              + lengthscale_definition
+              + "not supported" };
+          input.close();
+        }
+        
+        template <typename OStream>
+        static void info(OStream& output)
+        {
+          output <<
+            "--------------------------------------------------\n"
+            "Transport parameters\n"
+            "--------------------------------------------------\n"
+            "- Bead radius\n"
+            "- Reference length scale definition\n"
+            "\tradius: bead radius\n"
+            "\tdiameter: bead diameter\n"
+            "\tcell_side: primitive cubic cell side\n"
+            "\tcustom: custom value\n"
+            "- Reference length scale value, if defined as custom\n"
+            "- Location of primitive cell:\n"
+            "\tcentered: Centered at the origin\n"
+            "\tcorner: Left bottom corner at the origin\n"
+            "--------------------------------------------------\n";
+        }
+      };
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Boundary>
+      static auto makeTransitions
+      (VelocityField&& velocity_field,
+       Geometry const& geometry,
+       Boundary const& boundary,
+       Parameters const& params_transport,
+       Solvers::Parameters const& params_solvers)
+      {
+        return makeTransportTransitions_Advection<
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_solvers);
+      }
+     
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry, double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(
+          geometry,
+          ptof::get_velocity_data_rescaled(geometry.mesh,
+                                           average_velocity_magnitude));
+      };
+     
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+          geometry,
+          ptof::get_velocity_data(geometry.mesh));
+      };
+     
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Transport\n"
+          "--------------------------------------------------\n"
+          "Interpolation: linear\n"
+          "--------------------------------------------------\n";
+      }
+    };
+  }
+  
+  namespace model_bcc_symmetryplanes_advection_diffusion
+  {
+    struct Model
+    {
+      inline static const std::string name{
+        "advection_diffusion_decay" };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Model\n"
+          "--------------------------------------------------\n"
+          "Advective-diffusive particle tracking\n"
+          "in the minimal unit cell of a\n"
+          "body centered cubic beadpack\n"
+          "--------------------------------------------------\n";
+      }
+    };
+
+    using Geometry = Geometry_Periodic<3,
+      BoundaryConditionSet::Type::transport,
+      BoundaryConditionSet::Type::symmetryplanes>;
+    using model_bcc_cartesian_advection_diffusion::Info;
+    using model_bcc_cartesian_advection_diffusion::State;
+    using model_bcc_cartesian_advection_diffusion::CTRW;
+    using model_bcc_cartesian_advection_diffusion::Solvers;
+    using model_bcc_cartesian_advection_diffusion::Transport;
+    using model_bcc_cartesian_advection_diffusion::InitialCondition;
+    using model_bcc_cartesian_advection_diffusion::VelocityField;
+    using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    using model_bcc_cartesian_advection_diffusion::Reaction;
+  }
+  
+  namespace model_bcc_symmetryplanes_advection
+  {
+    struct Model
+    {
+      inline static const std::string name{
+        "advection_diffusion_decay" };
+      
+      template <typename OStream>
+      static void info(OStream& output)
+      {
+        output <<
+          "--------------------------------------------------\n"
+          "Model\n"
+          "--------------------------------------------------\n"
+          "Advective particle tracking\n"
+          "in the minimal unit cell of a\n"
+          "body centered cubic beadpack\n"
+          "--------------------------------------------------\n";
+      }
+    };
+
+    using model_bcc_symmetryplanes_advection_diffusion::Geometry;
+    using model_bcc_cartesian_advection::Info;
+    using model_bcc_cartesian_advection::State;
+    using model_bcc_cartesian_advection::CTRW;
+    using model_bcc_cartesian_advection::Solvers;
+    using model_bcc_cartesian_advection::Transport;
+    using model_bcc_cartesian_advection::InitialCondition;
+    using model_bcc_cartesian_advection::VelocityField;
+    using model_bcc_symmetryplanes_advection_diffusion::Output;
+    using model_bcc_cartesian_advection::Reaction;
   }
 }
 

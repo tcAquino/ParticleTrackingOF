@@ -592,7 +592,7 @@ namespace ctrw
     template <typename State>
     auto operator() (State const& state)
     {
-      decltype(State::position) jump(dim(), 0.);
+      auto jump = state.position;
       for (std::size_t dd = 0; dd < dim(); ++dd)
         jump[dd] = jump_generator[dd](state);
       

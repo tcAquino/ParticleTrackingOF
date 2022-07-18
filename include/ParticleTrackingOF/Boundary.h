@@ -19,8 +19,8 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include "general/useful.h"
+#include "general/Operations.h"
 #include "ParticleTrackingOF/useful.h"
-#include "Stochastic/CTRW/Boundary.h"
 
 namespace ptof
 {
@@ -156,7 +156,7 @@ namespace ptof
     for (auto const& bc : boundary_conditions)
       if (!implemented.contains(bc.second))
         throw std::runtime_error{
-          std::string("Boundary condition type ")
+          "Boundary condition type "
           + bc.second
           + " not supported"
         };
@@ -268,7 +268,8 @@ namespace ptof
           offset_backward_cell(make_point(state_old.position),
                                state_old.cell,
                                make_point(state.position)
-                                 -make_point(state_old.position)),
+                                 -make_point(state_old.position),
+                               mesh_search),
                                make_point(state.position));
       
       bool had_effect = 0;
@@ -293,7 +294,7 @@ namespace ptof
                         BoundaryCondition::Type,
                         BoundaryCondition::Type::reflecting>{});
             boundary_reflecting(state,
-                                intersection.rawPoint(),
+                                intersection.point(),
                                 reflection_normal(intersection.index()));
             had_effect = 1;
             break;
@@ -324,7 +325,7 @@ namespace ptof
                        useful::Selector<
                         BoundaryCondition::Type,
                         BoundaryCondition::Type::absorbing>{});
-            boundary_absorbing(state, intersection.rawPoint());
+            boundary_absorbing(state, intersection.point());
             had_effect = 1;
             break;
           }
@@ -332,13 +333,13 @@ namespace ptof
           {}
           default:
             throw std::runtime_error{
-              std::string("Boundary condition type ")
+              "Boundary condition type "
               + type_name
               + " not supported"
             };
         }
         
-        if (make_point(state.position) == intersection.rawPoint())
+        if (make_point(state.position) == intersection.point())
           break;
         
         // Find the next intersection with a boundary patch
@@ -395,35 +396,6 @@ namespace ptof
       return unit_normal_inward(face, mesh_search.mesh());
     }
     
-    // Small offset forward given current face and direction
-    Foam::vector offset_forward_face
-    (Foam::point const& begin,
-     Foam::label face,
-     Foam::vector const& direction) const
-    {
-      Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
-      Foam::point const& center = mesh_search.mesh().
-        cellCentres()[owner_cell];
-      Foam::scalar typDim = Foam::mag(center - begin);
-      
-      return begin + mesh_search.tol_*typDim*
-        direction/Foam::mag(direction);
-    }
-    
-    // Small offset backward
-    // given current cell and direction
-    Foam::vector offset_backward_cell
-    (Foam::point const& begin,
-     Foam::label cell,
-     Foam::vector const& direction) const
-    {
-      Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
-      Foam::scalar typDim = Foam::mag(center - begin);
-      
-      return begin - mesh_search.tol_*typDim*
-        direction/Foam::mag(direction);
-    }
-    
     // Find next intersection
     // given current intersection and end of jump
     template <typename Intersection>
@@ -432,9 +404,10 @@ namespace ptof
      Foam::point const& end) const
     {
       return mesh_search.
-        intersection(offset_forward_face(intersection.rawPoint(),
+        intersection(offset_forward_face(intersection.point(),
                                          intersection.index(),
-                                         end-intersection.rawPoint()),
+                                         end-intersection.point(),
+                                         mesh_search),
                      end);
     }
   };
@@ -457,141 +430,87 @@ namespace ptof
    Store_Info&&)->
   Boundary_Cases<MeshSearch, Store_Info, Boundary_DoNothing>;
   
-  // Boundary object for
-  // Periodic boundaries along each dimension
-  // State must define: position (vector type)
-  struct Boundary_Periodic
+  // Periodic image of intersection point
+  template
+  <typename State, typename Intersection,
+  typename Boundary, typename MeshSearch>
+  auto periodic_intersection
+  (State& state_outside,
+   State const& state_image,
+   Intersection const& intersection,
+   Boundary const& boundary,
+   MeshSearch const& mesh_search)
+  {
+    auto displacement = make_point(state_outside.position)-
+      intersection.point();
+    auto offset_pos
+      = offset_forward_face(intersection.point(),
+                            intersection.index(),
+                            displacement,
+                            mesh_search);
+    if (Foam::magSqr(offset_pos - intersection.point())
+        < 0.5*Foam::magSqr(displacement))
+      state_outside.set_position(offset_pos);
+    else
+      state_outside.set_position(intersection.point()+
+                                 0.5*displacement);
+    
+    boundary(state_outside);
+    return mesh_search.
+      intersection(make_point(state_outside.position),
+                   make_point(state_outside.position)
+                   - 2.*(make_point(state_image.position)-
+                         make_point(state_outside.position)));
+  }
+  
+  // Boundary object for periodic boundaries
+  // The templated boundary object should enforce the periodic boundaries
+  template <typename Boundary, typename MeshSearch>
+  struct Boundary_Periodic_OF
   {
     // Construct given boundary positions along each dimension
-    Boundary_Periodic
-    (std::vector<std::pair<double, double>> boundaries)
-    : boundary{ boundaries }
+    Boundary_Periodic_OF
+    (Boundary&& boundary,
+     MeshSearch&& mesh_search)
+    : boundary_periodic{ std::forward<Boundary>(boundary) }
+    , mesh_search{ std::forward<MeshSearch>(mesh_search) }
     {}
     
     // Check if position is out of bounds
     template <typename Position>
     bool outOfBounds(Position const& position) const
     {
-      return boundary.outOfBounds(position);
+      return boundary_periodic.outOfBounds(position);
     }
     
     // Enforce boundary condition
+    // and place intersection at periodic image
     template <typename State, typename Intersection>
-    bool operator() (State& state, Intersection const&) const
+    bool operator() (State& state, Intersection& intersection) const
     {
-      return boundary(state);
+      auto state_outside = state;
+      boundary_periodic(state);
+      intersection
+        = periodic_intersection(state_outside, state,
+                                intersection, boundary_periodic,
+                                mesh_search);
+      if (!intersection.hit())
+        throw std::runtime_error{
+          "Could not find image of periodic boundary intersection" };
+      
+      return 1;
     }
     
     // Custom name of boundary condition type
     std::string name() const
     { return "periodic"; }
     
-    boundary::Periodic boundary;
+    Boundary boundary_periodic;
+    MeshSearch mesh_search;
   };
-  
-  // Boundary object for
-  // Periodic boundaries along each symmetry plane
-  // State must define: position (vector type)
-  template <typename SymmetryPlanes>
-  struct Boundary_Periodic_SymmetryPlanes
-  {
-    // Construct given symmetry plane object,
-    // overall scale factor, and coordinate origin
-    Boundary_Periodic_SymmetryPlanes
-    (SymmetryPlanes symmetry_planes, double scale = 1.,
-     std::vector<double> origin = {})
-    : boundary{ symmetry_planes, scale, origin }
-    {}
-    
-    // Check if position is out of bounds
-    template <typename Position>
-    bool outOfBounds(Position const& position) const
-    {
-      return boundary.outOfBounds(position);
-    }
-    
-    // Enforce boundary condition
-    template <typename State, typename Intersection>
-    bool operator() (State& state, Intersection const&) const
-    {
-      return boundary(state);
-    }
-    
-    // Custom name of boundary condition type
-    std::string name() const
-    { return "periodic"; }
-    
-    boundary::Periodic_SymmetryPlanes<
-      SymmetryPlanes> boundary;
-  };
-  
-  // Boundary object for
-  // Periodic boundaries along each dimension
-  // with information about where position would be outside domain
-  // State must define: position (vector type)
-  //                    periodicity (std::vector<int>) counting how many domains
-  //                                                   have been traveled along each dimension
-  struct Boundary_Periodic_WithOutsideInfo
-  {
-    // Construct given boundary positions along each dimension
-    Boundary_Periodic_WithOutsideInfo
-    (std::vector<std::pair<double, double>> boundaries)
-    : boundary{ boundaries }
-    {}
-    
-    // Check if position is out of bounds
-    template <typename Position>
-    bool outOfBounds(Position const& position) const
-    {
-      return boundary.outOfBounds(position);
-    }
-    
-    // Enforce boundary condition
-    template <typename State, typename Intersection>
-    bool operator() (State& state, Intersection const&) const
-    {
-      return boundary(state);
-    }
-    
-    // Custom name of boundary condition type
-    std::string name() const
-    { return "periodic"; }
-    
-    boundary::Periodic_WithOutsideInfo boundary;
-  };
-  
-  template <typename SymmetryPlanes>
-  struct Boundary_Periodic_SymmetryPlanes_WithOutsideInfo
-  {
-    // Construct given symmetry plane object,
-    // overall scale factor, and coordinate origin
-    Boundary_Periodic_SymmetryPlanes_WithOutsideInfo
-    (SymmetryPlanes symmetry_planes, double scale = 1.,
-     std::vector<double> origin = {})
-    : boundary{ symmetry_planes, scale, origin }
-    {}
-    
-    // Check if position is out of bounds
-    template <typename Position>
-    bool outOfBounds(Position const& position)
-    {
-      return boundary.outOfBounds(position);
-    }
-    
-    // Enforce boundary condition
-    template <typename State, typename Intersection>
-    bool operator() (State& state, Intersection const&) const
-    {
-      return boundary(state);
-    }
-    
-    // Custom name of boundary condition type
-    std::string name() const
-    { return "periodic"; }
-    
-    boundary::Periodic_SymmetryPlanes_WithOutsideInfo<
-      SymmetryPlanes> boundary;
-  };
+  template <typename Boundary, typename MeshSearch>
+  Boundary_Periodic_OF(Boundary&&, MeshSearch&&)
+  ->Boundary_Periodic_OF<Boundary, MeshSearch>;
   
   // Boundary object that reinjects particles according to
   // prescribed initial condition

@@ -80,11 +80,16 @@ namespace operation
   {
     if constexpr (useful::has_plus<Container_1, Container_2>{})
       output = input_1 + input_2;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(input_1[ii]) + value_type(input_2[ii]);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = input_1[ii] + input_2[ii];
     }
   }
 
@@ -111,12 +116,15 @@ namespace operation
   {
     if constexpr (useful::has_minus<Container, Scalar>{})
       output = input - cc;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(input[ii]) - value_type(cc);
     }
+    else
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = input[ii] - value_type(cc);
   }
 
   template <typename Container, typename Scalar>
@@ -142,11 +150,16 @@ namespace operation
   {
     if constexpr (useful::has_minus<Container, Scalar>{})
       output = cc - input;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(cc)-value_type(input[ii]);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = cc-input[ii];
     }
   }
 
@@ -173,11 +186,16 @@ namespace operation
   {
     if constexpr (useful::has_minus<Container_1, Container_2>{})
       output = input_1 - input_2;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(input_1[ii]) - value_type(input_2[ii]);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = input_1[ii] - input_2[ii];
     }
   }
 
@@ -188,7 +206,7 @@ namespace operation
       return input_1 - input_2;
     else
     {
-      Container_1 output(input_1.size());
+      Container_1 output = input_1;
       minus(input_1, input_2, output);
       return output;
     }
@@ -204,11 +222,16 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Scalar, Container>{})
       output = lambda*input;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < input.size(); ++ii)
         output[ii] = value_type(lambda)*value_type(input[ii]);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < input.size(); ++ii)
+        output[ii] = lambda*input[ii];
     }
   }
 
@@ -235,11 +258,16 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Container_1, Container_2>{})
       output = input_1*input_2;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(input_1[ii])*value_type(input_2[ii]);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = input_1[ii]*input_2[ii];
     }
   }
 
@@ -267,11 +295,16 @@ namespace operation
   {
     if constexpr (useful::has_divides<Container, Scalar>{})
       output = input/lambda;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < input.size(); ++ii)
         output[ii] = value_type(input[ii]/lambda);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < input.size(); ++ii)
+        output[ii] = input[ii]/lambda;
     }
   }
 
@@ -299,11 +332,16 @@ namespace operation
   {
     if constexpr (useful::has_divides<Container_1, Container_2>{})
       output = input_1/input_2;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(input_1[ii]/input_2[ii]);
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = input_1[ii]/input_2[ii];
     }
   }
 
@@ -338,12 +376,18 @@ namespace operation
                   && useful::has_multiplies<Type_2, Container_2>{}
                   && useful::has_plus<Container_1, Container_2>{})
       output = lambda_1*input_1 + lambda_2*input_2;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for(size_t ii = 0; ii < output.size(); ++ii)
-        output[ii] = value_type(lambda_1) * input_1[ii]
-        + value_type(lambda_2) * input_2[ii];
+        output[ii] = value_type(lambda_1)*input_1[ii]
+        + value_type(lambda_2)*input_2[ii];
+    }
+    else
+    {
+      for(size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = lambda_1*input_1[ii]
+        + lambda_2*input_2[ii];
     }
   }
 
@@ -382,11 +426,17 @@ namespace operation
     if constexpr (useful::has_multiplies<Type, Container_1>{}
                   && useful::has_plus<Container_1, Container_2>{})
       output = lambda*input_1 + input_2;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for(size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(lambda)*input_1[ii] +
+          input_2[ii];
+    }
+    else
+    {
+      for(size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = lambda*input_1[ii] +
           input_2[ii];
     }
   }
@@ -419,13 +469,16 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Container, Container>{})
       output = input*input;
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = value_type(input[ii])*value_type(input[ii]);
-
-      return output;
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = input[ii]*input[ii];
     }
   }
 
@@ -453,11 +506,16 @@ namespace operation
   {
     if constexpr (useful::can_call_sqrt_v<Container>)
       output = std::sqrt(input);
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii < output.size(); ++ii)
         output[ii] = std::sqrt(value_type(input[ii]));
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = std::sqrt(input[ii]);
     }
   }
 
@@ -489,11 +547,16 @@ namespace operation
     if constexpr (useful::has_multiplies<Container_1, Container_2>{}
                   && useful::has_multiplies<double, Container_1>{})
       output = 0.5*(input_1+input_2);
-    else
+    else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
       for (std::size_t ii = 0; ii <input_1.size(); ++ii)
         output[ii] = (value_type(input_1[ii]) + value_type(input_2[ii]))/2.;
+    }
+    else
+    {
+      for (std::size_t ii = 0; ii <input_1.size(); ++ii)
+        output[ii] = (input_1[ii] + input_2[ii])/2.;
     }
   }
 
@@ -524,9 +587,16 @@ namespace operation
       auto abs = std::abs(input);
       return abs*abs;
     }
-    else
+    else if constexpr (useful::has_value_type<Container>::value)
     {
       typename Container::value_type abs_sq{ 0. };
+      for (auto const& val : input)
+        abs_sq += val*val;
+      return abs_sq;
+    }
+    else
+    {
+      typename std::decay_t<decltype(input[0])> abs_sq{ 0. };
       for (auto const& val : input)
         abs_sq += val*val;
       return abs_sq;
@@ -601,8 +671,8 @@ namespace operation
   template <typename Container>
   auto dot(Container const& input_1, Container const& input_2)
   {
-    typename Container::value_type result{};
-    for(size_t ii = 0; ii < input_1.size(); ++ii)
+    typename std::decay_t<decltype(input_1[0])> result{};
+    for (size_t ii = 0; ii < input_1.size(); ++ii)
       result += input_1[ii] * input_2[ii];
     return result;
   }
@@ -620,18 +690,26 @@ namespace operation
   {
     std::size_t counter = 0;
     for (auto const& vec : input_1)
-      output[counter++] = Dot(vec, input_2);
+      output[counter++] = dot(vec, input_2);
   }
 
   template <typename Container_outer, typename Container_inner>
   auto dot(Container_outer const& input_1, Container_inner const& input_2)
   {
-    Container_inner output(input_2.size());
-    Dot(input_1, input_2, output);
-
-    return output;
+    if constexpr (useful::has_begin<decltype(input_1[0])>::value)
+    {
+      Container_inner output(input_2.size());
+      dot(input_1, input_2, output);
+      return output;
+    }
+    else
+    {
+      typename std::decay_t<decltype(input_1[0])> output{};
+      for (size_t ii = 0; ii < input_1.size(); ++ii)
+        output += input_1[ii] * input_2[ii];
+      return output;
+    }
   }
-  
   
   template <typename Container>
   void rotate
@@ -668,7 +746,7 @@ namespace operation
   (Container const& cont_1, Container const& cont_2,
    std::size_t idx_start, std::size_t idx_end)
   {
-    typename Container::value_type res = 0.;
+    typename std::decay_t<decltype(cont_1[0])> res{};
     for (std::size_t ii = idx_start; ii < idx_end; ++ii)
       res += cont_1[ii]*cont_2[idx_end-1-ii];
     return res;
@@ -680,7 +758,7 @@ namespace operation
   (Container const& cont_1, Container const& cont_2,
    std::size_t idx_start, std::size_t idx_end)
   {
-    typename Container::value_type res = 0.;
+    typename std::decay_t<decltype(cont_1[0])> res{};
     res += 0.5*(cont_1[idx_start]*cont_2[idx_end] + cont_1[idx_end]*cont_2[idx_start]);
     for (std::size_t ii = idx_start + 1; ii < idx_end; ++ii)
       res += cont_1[ii]*cont_2[idx_end-ii];
@@ -691,7 +769,7 @@ namespace operation
   template <typename Container>
   auto hamming(Container const& vec, Container const& other_vec)
   {
-    typename Container::value_type hamming = 0;
+    typename std::decay_t<decltype(vec[0])> hamming{};
     auto it = vec.begin();
     auto other_it = other_vec.begin();
     for (; it != vec.end(); it++, other_it++)

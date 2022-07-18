@@ -15,21 +15,7 @@
 #include "ParticleTrackingOF/Field.h"
 
 namespace ptof
-{
-  // Rescale a volumetric field (set of values associated with mesh cells)
-  // to a given average value
-  template <typename Field, typename Mesh>
-  void rescale_to_average(Field& field, Mesh const& mesh, double average)
-  {
-    Foam::scalar mesh_volume
-      = Foam::sum(mesh.cellVolumes());
-    auto average_weighted_vector_data
-      = Foam::sum(field*mesh.cellVolumes());
-    auto average_data
-      = Foam::mag(average_weighted_vector_data)/mesh_volume;
-    field *= average/average_data;
-  }
-  
+{ 
   // Get the velocity field U
   // from the OpenFOAM case time associated with a mesh
   template <typename Mesh>
@@ -61,7 +47,7 @@ namespace ptof
   auto makeLinearInterpolator
   (Geometry const& geometry, Field&& field)
   {
-    return ptof::Field_LinearInterpolation_OF{
+    return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
       geometry.locator,
       FieldOptions::Warn{}

@@ -281,7 +281,7 @@ namespace boundary
     (Position& position, Projections const& projections) const
     {
       operation::plus_InPlace(position,
-                      operation::times(domain_dimensions, projections));
+                              operation::times(domain_dimensions, projections));
     }
     
   private:
@@ -867,13 +867,15 @@ namespace boundary
     template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
     {
-      auto projections = place_in_unit_cell(state.position, symmetry_planes, scale, origin);
+      auto projections = geometry::place_in_unit_cell(state.position,
+                                                      symmetry_planes,
+                                                      scale, origin);
       
       for (auto const& val : projections)
-      if (val)
-        return true;
+        if (val != 0)
+          return 1;
       
-      return false;
+      return 0;
     }
     
     // Translate position according to symmetry planes
@@ -926,7 +928,9 @@ namespace boundary
     bool outOfBounds(Position const& position) const
     {
       for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
-        if (std::floor(geometry::project(position, symmetry_planes, dd, scale, origin)) != 0.)
+        if (std::floor(geometry::project(position,
+                                         symmetry_planes, dd,
+                                         scale, origin)) != 0.)
           return 1;
       return 0;
     }
@@ -936,7 +940,9 @@ namespace boundary
     bool operator()(State& state, State const& state_old = {}) const
     {
       auto projections =
-        geometry::place_in_unit_cell(state.position, symmetry_planes, scale, origin);
+        geometry::place_in_unit_cell(state.position,
+                                     symmetry_planes,
+                                     scale, origin);
       operation::plus_InPlace(state.periodicity, projections);
       
       for (auto const& val : projections)

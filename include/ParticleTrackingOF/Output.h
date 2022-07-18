@@ -20,73 +20,94 @@
 #include <zero.H>
 #include "general/useful.h"
 #include "ParticleTrackingOF/Directories.h"
+#include "ParticleTrackingOF/Field.h"
+#include "Stochastic/CTRW/StateGetter.h"
 
 namespace ptof
 {
   // Compute number of absorbed particles
   template <typename Subject>
-  auto nr_absorbed(Subject const& subject)
+  auto nr_absorbed
+  (Subject const& subject, double time)
   {
     std::size_t absorbed = 0;
     for (auto const& part : subject.particles())
-      if (part.state_new().info.absorbed)
+      if (part.state_new().info.absorbed
+          && part.state_old().time <= time)
         ++absorbed;
     return absorbed;
   };
   
   // Compute total mass
   template <typename Subject>
-  auto mass(Subject const& subject)
+  auto mass
+  (Subject const& subject, double time)
   {
     double mass = 0.;
     for (auto const& part : subject.particles())
-      if (!part.state_new().info.absorbed)
+      if (!part.state_new().info.absorbed
+          && part.state_old().time <= time)
         mass += part.state_new().mass;
     return mass;
   };
   
   // Compute mean position (weighted by mass)
-  template <typename Subject>
-  auto position_mean(Subject const& subject)
+  template
+  <typename Subject, typename GetterPosition = ctrw::Get_position>
+  auto position_mean
+  (Subject const& subject, double time,
+   GetterPosition getter_position = {})
   {
-    decltype(subject.particles(0).state_new().position)
+    decltype(getter_position(subject.particles(0).state_new()))
       position_mean = Foam::zero{};
     for (auto const& part : subject.particles())
     {
       auto const& state = part.state_new();
-      if (!state.info.absorbed)
-        position_mean += state.mass*state.position;
+      if (!state.info.absorbed
+          && part.state_old().time <= time)
+      {
+        position_mean += state.mass*getter_position(state);
+      }
     }
-    return position_mean/mass(subject);
+    return position_mean/mass(subject, time);
   };
   
   // Compute second moment of position (weighted by mass)
-  template <typename Subject>
-  auto position_second_moment(Subject const& subject)
+  template
+  <typename Subject, typename GetterPosition = ctrw::Get_position>
+  auto position_second_moment
+  (Subject const& subject, double time,
+   GetterPosition getter_position = {})
   {
-    decltype(subject.particles(0).state_new().position)
+    decltype(getter_position(subject.particles(0).state_new()))
       second_moment = Foam::zero{};
     for (auto const& part : subject.particles())
     {
       auto const& state = part.state_new();
-      if (!state.info.absorbed)
+      if (!state.info.absorbed
+          && part.state_old().time <= time)
       {
+        auto position = getter_position(state);
         for (std::size_t dd = 0; dd < second_moment.size(); ++dd)
-          second_moment[dd] += state.position[dd]*state.position[dd];
+          second_moment[dd] += position[dd]*position[dd];
         second_moment *= state.mass;
       }
     }
-    return second_moment/mass(subject);
+    return second_moment/mass(subject, time);
   };
   
   // Compute position variance (weighted by mass)
-  template <typename Subject>
-  auto position_variance(Subject const& subject)
+  template
+  <typename Subject, typename GetterPosition = ctrw::Get_position>
+  auto position_variance
+  (Subject const& subject, double time,
+   GetterPosition getter_position = {})
   {
-    auto position_mean_sq = position_mean(subject);
+    auto position_mean_sq = position_mean(subject, time, getter_position);
     for (std::size_t dd = 0; dd < position_mean_sq.size(); ++dd)
       position_mean_sq[dd] *= position_mean_sq[dd];
-    return (position_second_moment(subject)-position_mean_sq)/mass(subject);
+    return (position_second_moment(subject, time, getter_position)-
+              position_mean_sq)/mass(subject, time);
   };
   
   // Keep track of names and
@@ -246,6 +267,13 @@ namespace ptof
       position_second_moment,
       position_variance,
       mass,
+      velocity,
+      velocity_gradient,
+      pressure,
+      position_periodic,
+      position_mean_periodic,
+      position_second_moment_periodic,
+      position_variance_periodic,
       absorption_time
     };
     
@@ -271,6 +299,13 @@ namespace ptof
       { "position_second_moment", Type::position_second_moment },
       { "position_variance", Type::position_variance },
       { "mass", Type::mass },
+      { "velocity", Type::velocity },
+      { "velocity_gradient", Type::velocity_gradient },
+      { "pressure", Type::pressure },
+      { "position_periodic", Type::position_periodic },
+      { "position_mean_periodic", Type::position_mean_periodic },
+      { "position_second_moment_periodic", Type::position_second_moment_periodic },
+      { "position_variance_periodic", Type::position_variance_periodic },
       { "absorption_time", Type::absorption_time }
     };
     
@@ -284,6 +319,13 @@ namespace ptof
       { Type::position_second_moment, "position_second_moment" },
       { Type::position_variance, "position_variance" },
       { Type::mass, "mass" },
+      { Type::velocity, "velocity" },
+      { Type::velocity_gradient, "velocity_gradient" },
+      { Type::pressure, "pressure" },
+      { Type::position_periodic, "position_periodic" },
+      { Type::position_mean_periodic, "position_mean_periodic" },
+      { Type::position_second_moment_periodic, "position_second_moment_periodic" },
+      { Type::position_variance_periodic, "position_variance_periodic" },
       { Type::absorption_time, "absorption_time" }
     };
   };
@@ -331,7 +373,7 @@ namespace ptof
     bool operator()
     (Subject const& subject, double time) const override
     {
-      return mass(subject) <= end_value;
+      return mass(subject, time) <= end_value;
     }
       
     double end_value;
@@ -348,7 +390,7 @@ namespace ptof
     bool operator()
     (Subject const& subject, double time) const override
     {
-      return mass(subject) >= end_value;
+      return mass(subject, time) >= end_value;
     }
       
     double end_value;
@@ -364,7 +406,7 @@ namespace ptof
     bool operator()
     (Subject const& subject, double time) const override
     {
-      return nr_absorbed(subject) == subject.size();
+      return nr_absorbed(subject, time) == subject.size();
     }
   };
   
@@ -377,7 +419,7 @@ namespace ptof
     
     bool operator()(Subject const& subject, double time) const
     {
-      return nr_absorbed(subject) > 0;
+      return nr_absorbed(subject, time) > 0;
     }
   };
   
@@ -392,20 +434,22 @@ namespace ptof
     bool operator()
     (Subject const& subject, double time) const override
     {
-      return nr_absorbed(subject) >= end_value*subject.size();
+      return nr_absorbed(subject, time) >= end_value*subject.size();
     }
       
     double end_value;
   };
   
   // Output object to handle implemented output options
-  template <typename Subject>
+  template
+  <typename Subject, typename VelocityField, typename Geometry>
   class Output_Cases
   {
   public:
     // Output parameters
     struct Parameters
     {
+      double velocity_rescaling;
       std::size_t run_nr;
       std::string end_criterium;
       double end_value;
@@ -429,7 +473,9 @@ namespace ptof
        std::string const& name,
        TransportParameters const& params_transport,
        ReactionParameters const& params_reaction,
-       SolverParameters const& params_solvers)
+       SolverParameters const& params_solvers,
+       double velocity_rescaling)
+      : velocity_rescaling{ velocity_rescaling }
       {
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_output_"
@@ -635,17 +681,19 @@ namespace ptof
     // Optionaly set output precision and delimiter character
     Output_Cases
     (Subject const& subject,
+     VelocityField const& velocity_field,
+     Geometry const& geometry,
      Directories const& directories,
      Parameters params,
      std::string const& identifier,
      int precision = 8, std::string delimiter = "\t")
     : params{ params }
     , subject{ subject }
+    , velocity_field{ velocity_field }
+    , geometry{ geometry }
     {
-      set_measure_types(directories,
-                        identifier,
-                        precision,
-                        delimiter);
+      set_measure_types(geometry, directories, identifier,
+                        precision, delimiter);
       set_end_criterium();
       set_next_measure_time();
     }
@@ -681,7 +729,7 @@ namespace ptof
         }
         default:
           throw std::runtime_error{
-            std::string("Measure spacing ")
+            "Measure spacing "
             + params.measure_spacing
             + " not supported" };
       }
@@ -750,7 +798,8 @@ namespace ptof
   
     // Set up output streams for requested output types
     void set_measure_types
-    (Directories const& directories,
+    (Geometry const& geometry,
+     Directories const& directories,
      std::string const& identifier,
      int precision = 8,
      std::string delimiter = "\t")
@@ -762,74 +811,143 @@ namespace ptof
           case Measure::Type::position:
           {
             output_time.emplace_back
-            (std::make_unique<
-              Output_position>(subject,
-                               directories,
-                               "position",
-                               identifier,
-                               params));
+            (std::make_unique<Output_position>
+              (subject, velocity_field, geometry,
+               directories, name, identifier, params));
             break;
           }
           case Measure::Type::position_mean:
           {
             output_time.emplace_back
-            (std::make_unique<
-              Output_position_mean>(subject,
-                                    directories,
-                                    "position_mean",
-                                    identifier,
-                                    params));
+            (std::make_unique<Output_position_mean>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
             break;
           }
           case Measure::Type::position_second_moment:
           {
             output_time.emplace_back
-            (std::make_unique<
-              Output_position_second_moment>(subject,
-                                             directories,
-                                             "position_second_moment",
-                                             identifier,
-                                             params));
+            (std::make_unique<Output_position_second_moment>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
             break;
           }
           case Measure::Type::position_variance:
           {
             output_time.emplace_back
-            (std::make_unique<
-              Output_position_variance>(subject,
-                                        directories,
-                                        "position_variance",
-                                        identifier,
-                                        params));
+            (std::make_unique<Output_position_variance>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
             break;
           }
           case Measure::Type::mass:
           {
             output_time.emplace_back
-            (std::make_unique<
-              Output_mass>(subject,
-                           directories,
-                           "mass",
-                           identifier,
-                           params));
+            (std::make_unique<Output_mass>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
+            break;
+          }
+          case Measure::Type::velocity:
+          {
+            output_time.emplace_back
+            (std::make_unique<Output_velocity>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
+            break;
+          }
+          case Measure::Type::velocity_gradient:
+          {
+            output_time.emplace_back
+            (std::make_unique<Output_velocity_gradient>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
+            break;
+          }
+          case Measure::Type::pressure:
+          {
+            output_time.emplace_back
+            (std::make_unique<Output_pressure>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
+            break;
+          }
+          case Measure::Type::position_periodic:
+          {
+            if constexpr (Has_periodicity<
+                          typename Subject::Particle::State>::value
+                          == true)
+              output_time.emplace_back
+              (std::make_unique<Output_position_periodic<
+               decltype(geometry.boundary_periodic)>>
+               (subject, velocity_field, geometry,
+                directories, name, identifier, params));
+            else
+              throw std::runtime_error{
+                std::string("Measurement type ") + name + ": "
+                "Particle state must define periodicity" };
+            break;
+          }
+          case Measure::Type::position_mean_periodic:
+          {
+            if constexpr (Has_periodicity<
+                          typename Subject::Particle::State>::value
+                          == true)
+              output_time.emplace_back
+              (std::make_unique<Output_position_mean_periodic<
+               decltype(geometry.boundary_periodic)>>
+               (subject, velocity_field, geometry,
+                directories, name, identifier, params));
+            else
+              throw std::runtime_error{
+                std::string("Measurement type ") + name + ": "
+                "Particle state must define periodicity" };
+            break;
+          }
+          case Measure::Type::position_second_moment_periodic:
+          {
+            if constexpr (Has_periodicity<
+                          typename Subject::Particle::State>::value
+                          == true)
+              output_time.emplace_back
+              (std::make_unique<Output_position_second_moment_periodic<
+               decltype(geometry.boundary_periodic)>>
+               (subject, velocity_field, geometry,
+                directories, name, identifier, params));
+            else
+              throw std::runtime_error{
+                std::string("Measurement type ") + name + ": "
+                "Particle state must define periodicity" };
+            break;
+          }
+          case Measure::Type::position_variance_periodic:
+          {
+            if constexpr (Has_periodicity<
+                          typename Subject::Particle::State>::value
+                          == true)
+              output_time.emplace_back
+              (std::make_unique<Output_position_variance_periodic<
+               decltype(geometry.boundary_periodic)>>
+               (subject, velocity_field, geometry,
+                directories, name, identifier, params));
+            else
+              throw std::runtime_error{
+                std::string("Measurement type ") + name + ": "
+                "Particle state must define periodicity" };
             break;
           }
           case Measure::Type::absorption_time:
           {
             output.emplace_back
-            (std::make_unique<
-              Output_absorption_time>(subject,
-                                      directories,
-                                      "absorption_time",
-                                      identifier,
-                                      params));
+            (std::make_unique<Output_absorption_time>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params));
             break;
           }
           default:
             throw std::runtime_error{
-              std::string("Measurement type ")
-              + name
-              + " not supported" };
+              std::string("Measurement type ") + name + " "
+              "not supported" };
         }
       }
     }
@@ -983,6 +1101,8 @@ namespace ptof
     protected:
       OutputTime
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
@@ -990,6 +1110,8 @@ namespace ptof
        int precision = 8,
        std::string delimiter = "\t")
       : subject{ subject }
+      , velocity_field{ velocity_field }
+      , geometry{ geometry }
       , output{ useful::open_write(directories.dir_output
         + "/Data"
         + "_" + output_name
@@ -1003,6 +1125,8 @@ namespace ptof
       }
       
       Subject const& subject;
+      VelocityField const& velocity_field;
+      Geometry const& geometry;
       std::ofstream output;
       std::string delimiter;
     };
@@ -1017,6 +1141,8 @@ namespace ptof
     protected:
       Output
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
@@ -1024,6 +1150,8 @@ namespace ptof
        int precision = 8,
        std::string delimiter = "\t")
       : subject{ subject }
+      , velocity_field{ velocity_field }
+      , geometry{ geometry }
       , output{ useful::open_write(directories.dir_output
         + "/Data"
         + "_" + output_name
@@ -1037,23 +1165,28 @@ namespace ptof
       }
       
       Subject const& subject;
+      VelocityField const& velocity_field;
+      Geometry const& geometry;
       std::ofstream output;
       std::string delimiter;
     };
     
-    // Output time, positions, and masses
+    // Output time, tags, positions, and masses
     struct Output_position final : OutputTime
     {
       Output_position
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& params,
        int precision = 8,
        std::string delimiter = "\t")
-      : OutputTime{ subject, directories, output_name,
-        identifier, params,
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
         precision, delimiter }
       {}
       
@@ -1065,6 +1198,7 @@ namespace ptof
           auto const& state = part.state_new();
           if (!state.info.absorbed)
           {
+            OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, state.position,
                           1, OutputTime::delimiter);
             OutputTime::output << OutputTime::delimiter << state.mass;
@@ -1079,14 +1213,17 @@ namespace ptof
     {
       Output_position_mean
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& params,
        int precision = 8,
        std::string delimiter = "\t")
-      : OutputTime{ subject, directories, output_name,
-        identifier, params,
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
         precision, delimiter }
       {}
       
@@ -1094,7 +1231,7 @@ namespace ptof
       {
         OutputTime::output << time;
         useful::print(OutputTime::output,
-                      position_mean(OutputTime::subject),
+                      position_mean(OutputTime::subject, time),
                       1, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
@@ -1105,14 +1242,17 @@ namespace ptof
     {
       Output_position_second_moment
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& params,
        int precision = 8,
        std::string delimiter = "\t")
-      : OutputTime{ subject, directories, output_name,
-        identifier, params,
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
         precision, delimiter }
       {}
       
@@ -1120,7 +1260,7 @@ namespace ptof
       {
         OutputTime::output << time;
         useful::print(OutputTime::output,
-                      position_second_moment(OutputTime::subject),
+                      position_second_moment(OutputTime::subject, time),
                       1, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
@@ -1131,14 +1271,17 @@ namespace ptof
     {
       Output_position_variance
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& params,
        int precision = 8,
        std::string delimiter = "\t")
-      : OutputTime{ subject, directories, output_name,
-        identifier, params,
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
         precision, delimiter }
       {}
       
@@ -1146,7 +1289,7 @@ namespace ptof
       {
         OutputTime::output << time;
         useful::print(OutputTime::output,
-                      position_variance(OutputTime::subject),
+                      position_variance(OutputTime::subject, time),
                       1, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
@@ -1157,37 +1300,359 @@ namespace ptof
     {
       Output_mass
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& params,
        int precision = 8,
        std::string delimiter = "\t")
-      : OutputTime{ subject, directories, output_name,
-        identifier, params,
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
         precision, delimiter }
       {}
       
       void operator()(double time) override
       {
         OutputTime::output << time << OutputTime::delimiter
-                           << mass(OutputTime::subject) << "\n";
+                           << mass(OutputTime::subject, time) << "\n";
       }
     };
         
-    // Output absorption times and masses of absorbed particles
-    struct Output_absorption_time final : Output
+    // Output time, tags, velocities
+    struct Output_velocity final : OutputTime
     {
-      Output_absorption_time
+      Output_velocity
       (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& params,
        int precision = 8,
        std::string delimiter = "\t")
-      : Output{ subject, directories, output_name,
-        identifier, params,
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      {}
+
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        for (auto const& part : OutputTime::subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed)
+          {
+            OutputTime::output << OutputTime::delimiter << state.tag;
+            useful::print(OutputTime::output,
+                          OutputTime::velocity_field(state),
+                          1, OutputTime::delimiter);
+          }
+        }
+        OutputTime::output << "\n";
+      }
+    };
+        
+    // Output time and velocity gradient components
+    // Component output order is xx, xy, xz, yx, yy, yz, zx, zy, zz
+    // Spurious components are omitted if geometry dimension is < 3
+    struct Output_velocity_gradient final : OutputTime
+    {
+      Output_velocity_gradient
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , velocity_gradient{
+        Foam::IOobject{
+          "gradU", geometry.mesh.time().timeName(),
+          geometry.mesh, Foam::IOobject::MUST_READ,
+          Foam::IOobject::NO_WRITE },
+          geometry.mesh }
+      {
+        if (params.velocity_rescaling != 1.)
+          velocity_gradient *= params.velocity_rescaling;
+      }
+
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        for (auto const& part : OutputTime::subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed)
+          {
+            OutputTime::output << OutputTime::delimiter << state.tag;
+            auto cell = OutputTime::geometry.locator(part.state_new());
+            if (cell == -1)
+              useful::print(OutputTime::output,
+                            std::vector<double>(Geometry::dim, 0.),
+                            1, OutputTime::delimiter);
+            else
+            {
+              auto const& grad = velocity_gradient[cell];
+              if constexpr (Geometry::dim == 1)
+              {
+                OutputTime::output << OutputTime::delimiter << grad.xx();
+              }
+              if constexpr (Geometry::dim == 2)
+              {
+                OutputTime::output << OutputTime::delimiter << grad.xx();
+                OutputTime::output << OutputTime::delimiter << grad.xy();
+                OutputTime::output << OutputTime::delimiter << grad.yx();
+                OutputTime::output << OutputTime::delimiter << grad.yy();
+              }
+              if constexpr (Geometry::dim == 3)
+              {
+                OutputTime::output << OutputTime::delimiter << grad.xx();
+                OutputTime::output << OutputTime::delimiter << grad.xy();
+                OutputTime::output << OutputTime::delimiter << grad.xz();
+                OutputTime::output << OutputTime::delimiter << grad.yx();
+                OutputTime::output << OutputTime::delimiter << grad.yy();
+                OutputTime::output << OutputTime::delimiter << grad.yz();
+                OutputTime::output << OutputTime::delimiter << grad.zx();
+                OutputTime::output << OutputTime::delimiter << grad.zy();
+                OutputTime::output << OutputTime::delimiter << grad.zz();
+              }
+            }
+          }
+        }
+        OutputTime::output << "\n";
+      }
+
+      Foam::volTensorField velocity_gradient;
+    };
+        
+    // Output time, tags, and pressures
+    struct Output_pressure final : OutputTime
+    {
+      Output_pressure
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , pressure{
+        { Foam::IOobject{
+          "U", geometry.mesh.time().timeName(),
+          geometry.mesh, Foam::IOobject::MUST_READ,
+          Foam::IOobject::NO_WRITE },
+          geometry.mesh },
+        geometry.locator,
+        FieldOptions::Warn{} }
+      {
+        if (params.velocity_rescaling != 1.)
+          pressure.rescale(params.velocity_rescaling);
+      }
+
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        for (auto const& part : OutputTime::subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed)
+          {
+            OutputTime::output << OutputTime::delimiter << state.tag;
+            useful::print(OutputTime::output, pressure(state),
+                          1, OutputTime::delimiter);
+          }
+        }
+        OutputTime::output << "\n";
+      }
+
+      ptof::ScalarField_LinearInterpolation_OF
+      <Foam::volScalarField, ptof::Locator_Cell const&, 1, 1> pressure;
+    };
+        
+    // Output time, tags, positions, and masses
+    // with position accounting for periodicity
+    template <typename Boundary>
+    struct Output_position_periodic final : OutputTime
+    {
+      Output_position_periodic
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , getter_position{ geometry.boundary_periodic }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        for (auto const& part : OutputTime::subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed)
+          {
+            OutputTime::output << OutputTime::delimiter << state.tag;
+            useful::print(OutputTime::output, getter_position(state),
+                          1, OutputTime::delimiter);
+            OutputTime::output << OutputTime::delimiter << state.mass;
+          }
+        }
+        OutputTime::output << "\n";
+      }
+      
+      ctrw::Get_position_periodic<Boundary const&> getter_position;
+    };
+    
+    // Output time and mean position (weighted by mass)
+    // with position accounting for periodicity
+    template <typename Boundary>
+    struct Output_position_mean_periodic final
+    : OutputTime
+    {
+      Output_position_mean_periodic
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , getter_position{ geometry.boundary_periodic }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        useful::print(OutputTime::output,
+                      position_mean(OutputTime::subject, time,
+                                    getter_position),
+                      1, OutputTime::delimiter);
+        OutputTime::output << "\n";
+      }
+      
+      ctrw::Get_position_periodic<Boundary const&> getter_position;
+    };
+        
+    // Output time and second moment of position (weighted by mass)
+    // with position accounting for periodicity
+    template <typename Boundary>
+    struct Output_position_second_moment_periodic final
+    : OutputTime
+    {
+      Output_position_second_moment_periodic
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , getter_position{ geometry.boundary_periodic }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        useful::print(OutputTime::output,
+                      position_second_moment(OutputTime::subject, time,
+                                             getter_position),
+                      1, OutputTime::delimiter);
+        OutputTime::output << "\n";
+      }
+      
+      ctrw::Get_position_periodic<Boundary const&> getter_position;
+    };
+        
+    // Output time and position variance (weighted by mass)
+    // with position accounting for periodicity
+    template <typename Boundary>
+    struct Output_position_variance_periodic final
+    : OutputTime
+    {
+      Output_position_variance_periodic
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , getter_position{ geometry.boundary_periodic }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        useful::print(OutputTime::output,
+                      position_variance(OutputTime::subject, time,
+                                        getter_position),
+                      1, OutputTime::delimiter);
+        OutputTime::output << "\n";
+      }
+      
+      ctrw::Get_position_periodic<Boundary const&> getter_position;
+    };
+        
+    // Output absorption times, tags, masses of absorbed particles
+    struct Output_absorption_time final : Output
+    {
+      Output_absorption_time
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       int precision = 8,
+       std::string delimiter = "\t")
+      : Output{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
         precision, delimiter }
       {}
       
@@ -1199,6 +1664,7 @@ namespace ptof
           if (state.info.absorbed)
           {
             Output::output << state.time << Output::delimiter;
+            Output::output << state.tag << Output::delimiter;
             Output::output << state.mass << "\n";
           }
         }
@@ -1206,8 +1672,10 @@ namespace ptof
     };
     
     Subject const& subject; // Subject to measure
+    VelocityField const& velocity_field; // Compute velocity from particle state
+    Geometry const& geometry; // Mesh and other domain information
     std::unique_ptr<Criterium<Subject>> end_criterium;  // To check if end criterium is met
-    std::unique_ptr<NextMeasureTime> next_measure;      // Handle next measure time
+    std::unique_ptr<NextMeasureTime> next_measure;  // Handle next measure time
     std::vector<std::unique_ptr<OutputTime>> output_time; // Handle each output type given time
     std::vector<std::unique_ptr<Output>> output; // Handle each output type given nothing
   };

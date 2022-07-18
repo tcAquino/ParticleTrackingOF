@@ -433,6 +433,17 @@ namespace useful
               return std::forward<L>(l) >> std::forward<R>(r);
           }
       };
+    
+      struct operator_and {
+
+          template <class L, class R>
+          constexpr auto operator()(L&& l, R&& r) const
+          noexcept(noexcept(std::forward<L>(l) & std::forward<R>(r)))
+          -> decltype(std::forward<L>(l) & std::forward<R>(r))
+          {
+              return std::forward<L>(l) & std::forward<R>(r);
+          }
+      };
 
   }
   template<class X, class Y> using has_equality = op_valid<X, Y, std::equal_to<>>;
@@ -449,6 +460,25 @@ namespace useful
   template<class X, class Y> using has_minus = op_valid<X, Y, std::minus<>>;
   template<class X, class Y> using has_multiplies = op_valid<X, Y, std::multiplies<>>;
   template<class X, class Y> using has_divides = op_valid<X, Y, std::divides<>>;
+  template<class X, class Y> using has_and = op_valid<X, Y, notstd::operator_and>;
+  
+  // Check if class defines the type value_type
+  // From here: https://gist.github.com/ilya-biryukov/887b7e543b72b49376ed
+  template <class T>
+  class has_value_type
+  {
+      struct One { char a[1]; };
+      struct Two { char a[2]; };
+
+      template <class U>
+      static One foo(typename U::type*);
+
+      template <class U>
+      static Two foo(...);
+
+  public:
+      static const bool value = sizeof(foo<T>(nullptr)) == sizeof(One);
+  };
   
   // Check whether container contains value
   // Container must be sorted according to comp_less,
@@ -753,6 +783,12 @@ namespace useful
   // has_method<template, types...> is true iff template <types...> is valid
   template <template <class...> class Z, class...Ts>
   using has_method=details::has_method<Z,types<Ts...>>;
+  
+  template<class X>
+  using begin_result = decltype(std::declval<X>().begin());
+  template<class X>
+  using has_begin = has_method<begin_result, X>;
+  
   // Implemented here because some versions of gcc have trouble with the standard one
   template <typename T>
   bool isnan(T const& val)
