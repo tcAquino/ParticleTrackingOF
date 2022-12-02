@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_decay;
+  using namespace ptof::model_advection_diffusion;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -227,12 +227,8 @@ int main(int argc, char * argv[])
               << "Fraction not absorbed: "
               << 1. - double(ptof::nr_absorbed(ctrw, current_time))/ctrw.size()
               << "\n";
-    measurer(current_time);
+    measurer(measurer.next_measure_time());
   }
-  std::cout << "Final time "
-            << "[" << params_output.time_units << " times]: "
-            << current_time/params_output.time_unit_factor
-            << "\n";
   measurer();
   
   std::cout << "Done!" << std::endl;
