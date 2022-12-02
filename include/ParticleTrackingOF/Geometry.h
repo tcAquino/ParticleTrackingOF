@@ -66,7 +66,7 @@ namespace ptof
       { Type::transport, "transport" },
       { Type::firstpassage, "firstpassage" },
       { Type::cartesian, "cartesian" },
-      { Type::symmetryplanes, "symmetryplanes"}
+      { Type::symmetryplanes, "symmetryplanes" }
     };
   };
   
