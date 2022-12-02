@@ -119,7 +119,7 @@ namespace ptof
       input.close();
       
       // Use OpenFOAM
-      if (dir == "''")
+      if (useful::empty(dir))
         dir = useful::expand_env("${FOAM_RUN}");
       dir_case = dir + "/" + case_name;
       

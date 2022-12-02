@@ -11,11 +11,12 @@
 #include <limits>
 #include <string>
 #include "general/useful.h"
+#include "ParticleTrackingOF/Directories.h"
 #include "ParticleTrackingOF/Models.h"
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_advection_diffusion;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -192,8 +193,7 @@ int main(int argc, char * argv[])
     while (measurer.next_measure_time() <= current_time)
     {
       std::cout << "Time "
-                << "[" << params_output.time_units << " times]"
-                << ": "
+                << "[" << params_output.time_units << " times]: "
                 << measurer.next_measure_time()/params_output.time_unit_factor
                 << "\n"
                 << "Fraction not absorbed: "
@@ -219,8 +219,22 @@ int main(int argc, char * argv[])
     }
   }
   if (measurer.next_measure_time() <= current_time)
+  {
+    std::cout << "Time "
+              << "[" << params_output.time_units << " times]: "
+              << measurer.next_measure_time()/params_output.time_unit_factor
+              << "\n"
+              << "Fraction not absorbed: "
+              << 1. - double(ptof::nr_absorbed(ctrw, current_time))/ctrw.size()
+              << "\n";
     measurer(current_time);
+  }
+  std::cout << "Final time "
+            << "[" << params_output.time_units << " times]: "
+            << current_time/params_output.time_unit_factor
+            << "\n";
   measurer();
+  
   std::cout << "Done!" << std::endl;
   
   return 0;

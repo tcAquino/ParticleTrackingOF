@@ -9,6 +9,8 @@
 #ifndef TimeGenerator_h
 #define TimeGenerator_h
 
+#include <random>
+
 namespace ctrw
 {
   // A TimeGenerator should implement the following
@@ -33,7 +35,7 @@ namespace ctrw
     using value_type = val_type;
 
     TimeGenerator_Step(val_type dt = 0.)
-    : dt(dt)
+    : dt{ dt }
     {}
 
     void time_step(val_type dt)
@@ -45,6 +47,25 @@ namespace ctrw
     template <typename State = useful::Empty>
     val_type operator()(State const& = {})
     { return dt; }
+  };
+  
+  // Time step according to a given distribution
+  template <typename Dist, typename RNG = std::mt19937>
+  class TimeGenerator_Dist
+  {
+    Dist dist;
+    RNG rng{ std::random_device{}() };
+
+  public:
+    using value_type = decltype(dist(rng));
+
+    TimeGenerator_Dist(Dist dist)
+    : dist{ dist }
+    {}
+
+    template <typename State = useful::Empty>
+    auto operator()(State const& = {})
+    { return dist(rng); }
   };
 }
 

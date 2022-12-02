@@ -112,7 +112,7 @@ namespace ptof
   
   // Keep track of names and
   // types of end criteria
-  struct EndCriterium
+  struct EndCriterion
   {
     // Implemented types
     enum class Type
@@ -218,7 +218,7 @@ namespace ptof
       diffusion,
       advection,
       reaction,
-      arbitrary
+      unscaled
     };
     
     // Type from name
@@ -241,7 +241,7 @@ namespace ptof
       { "diffusion", Type::diffusion },
       { "advection", Type::advection },
       { "reaction", Type::reaction },
-      { "arbitrary", Type::arbitrary }
+      { "unscaled", Type::unscaled }
     };
     
     // Map types to names
@@ -252,7 +252,7 @@ namespace ptof
       { Type::diffusion, "diffusion" },
       { Type::advection, "advection" },
       { Type::reaction, "reaction" },
-      { Type::arbitrary, "arbitrary" }
+      { Type::unscaled, "unscaled" }
     };
   };
   
@@ -332,24 +332,24 @@ namespace ptof
   
   // Polymorphic criteria
   template <typename Subject>
-  struct Criterium
+  struct Criterion
   {
     virtual bool operator()
     (Subject const& subject, double time) const;
     
-    virtual ~Criterium()
+    virtual ~Criterion()
     {}
     
   protected:
-    Criterium()
+    Criterion()
     {}
   };
   
   // Check if time is greater than value
   template <typename Subject>
-  struct Criterium_time final : Criterium<Subject>
+  struct Criterion_time final : Criterion<Subject>
   {
-    Criterium_time(double end_value)
+    Criterion_time(double end_value)
     : end_value{ end_value }
     {}
     
@@ -364,9 +364,9 @@ namespace ptof
   
   // Check if mass is less than or equal to value
   template <typename Subject>
-  struct Criterium_mass_below final : Criterium<Subject>
+  struct Criterion_mass_below final : Criterion<Subject>
   {
-    Criterium_mass_below(double end_value)
+    Criterion_mass_below(double end_value)
     : end_value{ end_value }
     {}
     
@@ -381,9 +381,9 @@ namespace ptof
   
   // Check if mass is greater than or equal to value
   template <typename Subject>
-  struct Criterium_mass_above final : Criterium<Subject>
+  struct Criterion_mass_above final : Criterion<Subject>
   {
-    Criterium_mass_above(double end_value)
+    Criterion_mass_above(double end_value)
     : end_value{ end_value }
     {}
     
@@ -398,9 +398,9 @@ namespace ptof
   
   // Check if all particles have been absorbed
   template <typename Subject>
-  struct Criterium_all_absorbed final : Criterium<Subject>
+  struct Criterion_all_absorbed final : Criterion<Subject>
   {
-    Criterium_all_absorbed()
+    Criterion_all_absorbed()
     {}
     
     bool operator()
@@ -412,9 +412,9 @@ namespace ptof
   
   // Check if at least one particle has been absorbed
   template <typename Subject>
-  struct Criterium_one_absorbed final : Criterium<Subject>
+  struct Criterion_one_absorbed final : Criterion<Subject>
   {
-    Criterium_one_absorbed()
+    Criterion_one_absorbed()
     {}
     
     bool operator()(Subject const& subject, double time) const
@@ -425,9 +425,9 @@ namespace ptof
   
   // Check if at a least a given fraction of particles have been absorbed
   template <typename Subject>
-  struct Criterium_fraction_absorbed final : Criterium<Subject>
+  struct Criterion_fraction_absorbed final : Criterion<Subject>
   {
-    Criterium_fraction_absorbed(double end_value)
+    Criterion_fraction_absorbed(double end_value)
     : end_value{ end_value }
     {}
     
@@ -451,10 +451,10 @@ namespace ptof
     {
       double velocity_rescaling;
       std::size_t run_nr;
-      std::string end_criterium;
-      double end_value;
       std::string time_units;
       double time_unit_factor;
+      std::string end_criterion;
+      double end_value;
       std::string measure_spacing;
       double time_min;
       double time_max;
@@ -481,7 +481,8 @@ namespace ptof
                                        + "/parameters_output_"
                                        + name + ".dat");
         useful::read(input, run_nr);
-        read_end_criterium(input);
+        read_time_units(input, params_transport, params_reaction);
+        read_end_criterion(input);
         read_measure_spacing(input,
                              params_transport, params_reaction);
         read_output_types(input);
@@ -497,7 +498,12 @@ namespace ptof
           "Output parameters\n"
           "--------------------------------------------------\n"
           "- Run number (nonnegative integer to index output)\n"
-          "- End criterium to finish dynamics:\n"
+          "- Time units to rescale measurement times:\n"
+          "\tdiffusion: Rescale by diffusion time\n"
+          "\tadvection: Rescale by reaction time\n"
+          "\treaction: Rescale by reaction time\n"
+          "\tunscaled: Do not rescale\n"
+          "- End criterion to finish dynamics:\n"
           "\ttime: Specified time\n"
           "\ttime_max: Maximum output time\n"
           "\tmass_below: Total mass below value\n"
@@ -505,12 +511,7 @@ namespace ptof
           "\tall_absorbed: All particles absorbed\n"
           "\tone_absorbed: One particle absorbed\n"
           "\tfraction_absorbed: Fraction of particles absorbed\n"
-          "- End value, if required by end criterium\n"
-          "- Time units to rescale measurement times:\n"
-          "\tdiffusion: Rescale by diffusion time\n"
-          "\tadvection: Rescale by reaction time\n"
-          "\treaction: Rescale by reaction time\n"
-          "\tuncscaled: Do not rescale\n"
+          "- End value, if required by end criterion\n"
           "- Measure spacing:\n"
           "\tstep: Linear spacing, specified time step (no maximum time)\n"
           "\tlinear: Linear spacing, specified maximum time and number of measurements\n"
@@ -529,43 +530,44 @@ namespace ptof
       }
       
     private:
-      // Read end criterium from input stream
+      // Read end criterion from input stream
       template <typename IStream>
-      void read_end_criterium(IStream& input)
+      void read_end_criterion(IStream& input)
       {
-        useful::read(input, end_criterium);
-        switch (EndCriterium::type(end_criterium))
+        useful::read(input, end_criterion);
+        switch (EndCriterion::type(end_criterion))
         {
-          case EndCriterium::Type::time:
+          case EndCriterion::Type::time:
+          {
+            useful::read(input, end_value);
+            end_value *= time_unit_factor;
+            break;
+          }
+          case EndCriterion::Type::time_max:
+            break;
+          case EndCriterion::Type::mass_below:
           {
             useful::read(input, end_value);
             break;
           }
-          case EndCriterium::Type::time_max:
-            break;
-          case EndCriterium::Type::mass_below:
+          case EndCriterion::Type::mass_above:
           {
             useful::read(input, end_value);
             break;
           }
-          case EndCriterium::Type::mass_above:
-          {
-            useful::read(input, end_value);
+          case EndCriterion::Type::all_absorbed:
             break;
-          }
-          case EndCriterium::Type::all_absorbed:
+          case EndCriterion::Type::one_absorbed:
             break;
-          case EndCriterium::Type::one_absorbed:
-            break;
-          case EndCriterium::Type::fraction_absorbed:
+          case EndCriterion::Type::fraction_absorbed:
           {
             useful::read(input, end_value);
             break;
           }
           default:
             throw std::runtime_error{
-              std::string("End criterium ")
-              + end_criterium
+              std::string("End criterion ")
+              + end_criterion
               + " not supported" };
         }
       }
@@ -597,7 +599,7 @@ namespace ptof
             time_unit_factor = params_reaction.reaction_time;
             break;
           }
-          case MeasureSpacingUnits::Type::arbitrary:
+          case MeasureSpacingUnits::Type::unscaled:
           {
             time_unit_factor = 1.;
             break;
@@ -619,7 +621,6 @@ namespace ptof
        TransportParameters const& params_transport,
        ReactionParameters const& params_reaction)
       {
-        read_time_units(input, params_transport, params_reaction);
         useful::read(input, measure_spacing);
         useful::read(input, time_min);
         time_min *= time_unit_factor;
@@ -694,14 +695,14 @@ namespace ptof
     {
       set_measure_types(geometry, directories, identifier,
                         precision, delimiter);
-      set_end_criterium();
+      set_end_criterion();
       set_next_measure_time();
     }
     
-    // Check if end simulation criterium is satisfied
+    // Check if end simulation criterion is satisfied
     bool done(double time) const
     {
-      return end_criterium->operator()(subject, time);
+      return end_criterion->operator()(subject, time);
     }
 
     // Set time of next measurement
@@ -768,7 +769,7 @@ namespace ptof
         "Output\n"
         "--------------------------------------------------\n"
         "- Run number: " << params.run_nr << "\n"
-        "- End criterium: " << params.end_criterium << "\n"
+        "- End criterion: " << params.end_criterion << "\n"
         "- Time units: " << params.time_units << "\n"
         "- Measure spacing: " << params.measure_spacing << "\n"
         "- Minimum measurement time: " << params.time_min << "\n"
@@ -952,57 +953,57 @@ namespace ptof
       }
     }
     
-    // Set end criterium
-    void set_end_criterium()
+    // Set end criterion
+    void set_end_criterion()
     {
-      switch (EndCriterium::type(params.end_criterium))
+      switch (EndCriterion::type(params.end_criterion))
       {
-        case EndCriterium::Type::time:
+        case EndCriterion::Type::time:
         {
-          end_criterium = std::make_unique<
-            Criterium_time<Subject>>(params.end_value);
+          end_criterion = std::make_unique<
+            Criterion_time<Subject>>(params.end_value);
           break;
         }
-        case EndCriterium::Type::time_max:
+        case EndCriterion::Type::time_max:
         {
-          end_criterium = std::make_unique<
-            Criterium_time<Subject>>(params.time_max);
+          end_criterion = std::make_unique<
+            Criterion_time<Subject>>(params.time_max);
           break;
         }
-        case EndCriterium::Type::mass_below:
+        case EndCriterion::Type::mass_below:
         {
-          end_criterium = std::make_unique<
-            Criterium_mass_below<Subject>>(params.end_value);
+          end_criterion = std::make_unique<
+            Criterion_mass_below<Subject>>(params.end_value);
           break;
         }
-        case EndCriterium::Type::mass_above:
+        case EndCriterion::Type::mass_above:
         {
-          end_criterium = std::make_unique<
-            Criterium_mass_above<Subject>>(params.end_value);
+          end_criterion = std::make_unique<
+            Criterion_mass_above<Subject>>(params.end_value);
           break;
         }
-        case EndCriterium::Type::all_absorbed:
+        case EndCriterion::Type::all_absorbed:
         {
-          end_criterium = std::make_unique<
-            Criterium_all_absorbed<Subject>>();
+          end_criterion = std::make_unique<
+            Criterion_all_absorbed<Subject>>();
           break;
         }
-        case EndCriterium::Type::one_absorbed:
+        case EndCriterion::Type::one_absorbed:
         {
-          end_criterium = std::make_unique<
-            Criterium_one_absorbed<Subject>>();
+          end_criterion = std::make_unique<
+            Criterion_one_absorbed<Subject>>();
           break;
         }
-        case EndCriterium::Type::fraction_absorbed:
+        case EndCriterion::Type::fraction_absorbed:
         {
-          end_criterium = std::make_unique<
-            Criterium_fraction_absorbed<Subject>>(params.end_value);
+          end_criterion = std::make_unique<
+            Criterion_fraction_absorbed<Subject>>(params.end_value);
           break;
         }
         default:
           throw std::runtime_error{
-            std::string("End criterium ")
-            + params.end_criterium
+            std::string("End criterion ")
+            + params.end_criterion
             + " not supported" };
       }
     }
@@ -1674,7 +1675,7 @@ namespace ptof
     Subject const& subject; // Subject to measure
     VelocityField const& velocity_field; // Compute velocity from particle state
     Geometry const& geometry; // Mesh and other domain information
-    std::unique_ptr<Criterium<Subject>> end_criterium;  // To check if end criterium is met
+    std::unique_ptr<Criterion<Subject>> end_criterion;  // To check if end criterion is met
     std::unique_ptr<NextMeasureTime> next_measure;  // Handle next measure time
     std::vector<std::unique_ptr<OutputTime>> output_time; // Handle each output type given time
     std::vector<std::unique_ptr<Output>> output; // Handle each output type given nothing

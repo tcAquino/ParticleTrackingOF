@@ -149,7 +149,8 @@ namespace ptof
             << position[0] << ", "
             << position[1] << ", "
             << position[2] << ")"
-            << " outside mesh; assigning zero\n";
+            << " outside mesh. Assigning zero"
+            << std::endl;
         return 1;
       }
       return 0;
@@ -297,7 +298,8 @@ namespace ptof
             << position[0] << ", "
             << position[1] << ", "
             << position[2] << ")"
-            << " outside mesh; assigning zero\n";
+            << " outside mesh. Assigning zero"
+            << std::endl;
         return 1;
       }
       return 0;

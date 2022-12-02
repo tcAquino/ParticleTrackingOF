@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = g++
 PTHOFINC = $(FOAM_SRC)
 PTHOFLIB = $(FOAM_LIBBIN)
 PTH = ../include

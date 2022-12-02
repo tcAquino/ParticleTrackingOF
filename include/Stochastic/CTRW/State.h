@@ -69,12 +69,12 @@ namespace ctrw
     {}
     
     State_velocity
-    (Position_t position, Velocity_t velocity,
-     Time_t time = {}, Tag_t tag = {})
-    : position(position)
-    , velocity(velocity)
-    , time(time)
-    , tag(tag)
+    (Position position, Velocity velocity,
+     Time time = {}, Tag tag = {})
+    : position{ position }
+    , velocity{ velocity }
+    , time{ time }
+    , tag{ tag }
     {}
 
     Position position;

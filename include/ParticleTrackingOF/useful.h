@@ -78,7 +78,50 @@ namespace ptof
     return mesh.cellCentres()[cell];
   }
   
-  // Small offset forward given current face and direction
+  // Sometimes the face center associated with a mesh face
+  // is not considered within the cell,
+  // verify this
+  template <typename Mesh, typename MeshSearch>
+  bool face_center_is_in_cell
+  (Foam::label face, Mesh const& mesh, MeshSearch const& mesh_search)
+  {
+    return mesh_search.findCell(face_center(face, mesh_search.mesh()))
+      == mesh.owner()[face];
+  }
+  
+  // Small offset given current face, direction, and begin point
+  template <typename MeshSearch>
+  Foam::vector offset_face
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search)
+  {
+    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    Foam::point const& cell_center = mesh_search.mesh().
+      cellCentres()[owner_cell];
+    Foam::scalar typ_dim = Foam::mag(cell_center - begin);
+    
+    return mesh_search.tol_*typ_dim*
+      direction/Foam::mag(direction);
+  }
+  
+  // Small offset along face normal (outward)
+  // given current face
+  // with face center as begin point
+  template <typename MeshSearch>
+  Foam::vector offset_face
+  (Foam::label face,
+   MeshSearch const& mesh_search)
+  {
+    return offset_face(face_center(face, mesh_search.mesh()),
+                       face,
+                       unit_normal_outward(face, mesh_search.mesh()),
+                       mesh_search);
+  }
+  
+  // Small offset forward from begin
+  // given current face and direction
   template <typename MeshSearch>
   Foam::vector offset_forward_face
   (Foam::point const& begin,
@@ -86,16 +129,12 @@ namespace ptof
    Foam::vector const& direction,
    MeshSearch const& mesh_search)
   {
-    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
-    Foam::point const& center = mesh_search.mesh().
-      cellCentres()[owner_cell];
-    Foam::scalar typ_dim = Foam::mag(center - begin);
-    
-    return begin + mesh_search.tol_*typ_dim*
-      direction/Foam::mag(direction);
+    return begin
+      + offset_face(begin, face, direction, mesh_search);
   }
   
-  // Small offset backward given current face and direction
+  // Small offset backward from begin
+  // given current face and direction
   template <typename MeshSearch>
   Foam::vector offset_backward_face
   (Foam::point const& begin,
@@ -103,16 +142,51 @@ namespace ptof
    Foam::vector const& direction,
    MeshSearch const& mesh_search)
   {
-    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
-    Foam::point const& center = mesh_search.mesh().
-      cellCentres()[owner_cell];
+    return begin
+      - offset_face(begin, face, direction, mesh_search);
+  }
+  
+  // Small offset along face normal (outward)
+  // given current face
+  // with face center as begin point
+  template <typename MeshSearch>
+  Foam::vector offset_outward_face
+  (Foam::label face,
+   MeshSearch const& mesh_search)
+  {
+    return face_center(face, mesh_search.mesh())
+      + offset_face(face, mesh_search);
+  }
+  
+   // Small offset along face normal (inward)
+   // given current face
+   // with face center as begin point
+   template <typename MeshSearch>
+   Foam::vector offset_inward_face
+   (Foam::label face,
+    MeshSearch const& mesh_search)
+   {
+     return face_center(face, mesh_search.mesh())
+      - offset_face(face, mesh_search);
+   }
+  
+  // Small offset
+  // given current cell, direction, and begin point
+  template <typename MeshSearch>
+  Foam::vector offset_cell
+  (Foam::point const& begin,
+   Foam::label cell,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search)
+  {
+    Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
     Foam::scalar typ_dim = Foam::mag(center - begin);
     
-    return begin - mesh_search.tol_*typ_dim*
+    return mesh_search.tol_*typ_dim*
       direction/Foam::mag(direction);
   }
   
-  // Small offset forward
+  // Small offset forward from begin
   // given current cell and direction
   template <typename MeshSearch>
   Foam::vector offset_forward_cell
@@ -121,14 +195,11 @@ namespace ptof
    Foam::vector const& direction,
    MeshSearch const& mesh_search)
   {
-    Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
-    Foam::scalar typ_dim = Foam::mag(center - begin);
-    
-    return begin - mesh_search.tol_*typ_dim*
-      direction/Foam::mag(direction);
+    return begin
+      + offset_cell(begin, cell, direction, mesh_search);
   }
   
-  // Small offset backward
+  // Small offset backward from begin
   // given current cell and direction
   template <typename MeshSearch>
   Foam::vector offset_backward_cell
@@ -137,11 +208,8 @@ namespace ptof
    Foam::vector const& direction,
    MeshSearch const& mesh_search)
   {
-    Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
-    Foam::scalar typ_dim = Foam::mag(center - begin);
-    
-    return begin - mesh_search.tol_*typ_dim*
-      direction/Foam::mag(direction);
+    return begin
+      - offset_cell(begin, cell, direction, mesh_search);
   }
   
   // Check for existence of periodicity info

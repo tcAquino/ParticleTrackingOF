@@ -543,9 +543,9 @@ namespace ctrw
 		template <typename State>
 		void operator()(State& state)
 		{
-			double exposure_time = time_generator();
+			double exposure_time = time_generator(state);
 			reaction(state, exposure_time);
-			state.position += jump_generator();
+			state.position += jump_generator(state);
 			state.time += exposure_time;
 		}
     
@@ -568,6 +568,61 @@ namespace ctrw
   Transitions_Reaction_Position
   (TimeGenerator&&, JumpGenerator&&, Reaction&&) ->
   Transitions_Reaction_Position<TimeGenerator, JumpGenerator, Reaction>;
+  
+  // Update state according to a reaction transition given a time step
+  // returned by a TimeGenerator given state.
+  // If the particle does not react, this is
+  // followed by a change in state.time according to the time step
+  // and a change in position returned by a JumpGenerator given state
+  // Note: JumpGenerator should enforce any boundary conditions
+  template <typename TimeGenerator,
+  typename JumpGenerator, typename Reaction>
+  class Transitions_Reaction_Position_Conditional
+  {
+  public:
+    Transitions_Reaction_Position_Conditional
+    (TimeGenerator&& time_generator,
+     JumpGenerator&& jump_generator,
+     Reaction&& reaction)
+    : time_generator{
+      std::forward<TimeGenerator>(time_generator) }
+    , jump_generator{
+      std::forward<JumpGenerator>(jump_generator) }
+    , reaction{ std::forward<Reaction>(reaction) }
+    {}
+
+    template <typename State>
+    void operator()(State& state)
+    {
+      double exposure_time = time_generator(state);
+      bool reacted = reaction(state, exposure_time);
+      if (!reacted)
+      {
+        state.position += jump_generator(state);
+        state.time += exposure_time;
+      }
+    }
+    
+    auto const& get_time_generator() const
+    { return time_generator; }
+    
+    auto const& get_jump_generator() const
+    { return jump_generator; }
+    
+    auto const& get_reaction() const
+    { return reaction; }
+
+  private:
+    TimeGenerator time_generator;
+    JumpGenerator jump_generator;
+    Reaction reaction;
+  };
+  template <typename TimeGenerator,
+  typename JumpGenerator, typename Reaction>
+  Transitions_Reaction_Position_Conditional
+  (TimeGenerator&&, JumpGenerator&&, Reaction&&) ->
+  Transitions_Reaction_Position_Conditional<
+  TimeGenerator, JumpGenerator, Reaction>;
   
   // If state.run, update state.time by summing contribution returned
   // by TimeGenerator_run object given state, and state.position by

@@ -330,6 +330,41 @@ namespace useful
     return values;
   }
   
+  // Load 3-column file,
+  // first two columns into vector of pairs,
+  // last column into vector of doubles
+  auto load_pair_1
+  (std::string const& filename, std::size_t nr_estimate = 0,
+   std::size_t header_lines = 0, std::string const& delim = " ")
+  {
+    using Value = double;
+    using Container_pair = std::vector<std::pair<Value, Value>>;
+    using Container_scalar = std::vector<Value>;
+    using Output = std::tuple<Container_pair, Container_scalar>;
+    
+    Output output;
+    std::get<0>(output).reserve(nr_estimate);
+    std::get<1>(output).reserve(nr_estimate);
+    
+    auto file = open_read(filename);
+    std::string line;
+    for (std::size_t ll = 0; ll < header_lines; ++ll)
+      getline(file, line);
+    
+    while (getline(file, line))
+    {
+      std::vector<std::string> split_line = split(line, delim);
+      if (split_line.size() != 3)
+        throw parse_error(filename, line);
+      
+      std::get<0>(output).push_back({ std::stod(split_line[0]), std::stod(split_line[1]) });
+      std::get<1>(output).push_back(std::stod(split_line[2]));
+    }
+    file.close();
+    
+    return output;
+  }
+  
   //Load file into vector of vectors of doubles
   auto load(std::string const& filename, std::size_t nr_columns,
             std::size_t nr_estimate = 0,

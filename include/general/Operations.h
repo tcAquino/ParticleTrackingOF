@@ -651,6 +651,62 @@ namespace operation
     return output;
   }
   
+  // Averages of pairs of elements
+  template
+  <typename... TArgs1, typename... TArgs2,
+  template<typename...> typename Container,
+  typename Value_type>
+  void edge_midpoints
+  (Container<std::pair<Value_type, Value_type>, TArgs1...> const& input,
+   Container<Value_type, TArgs2...>& output)
+  {
+    for(size_t ii = 0; ii < input.size(); ++ii)
+      output[ii] = (input[ii].first + input[ii].second)/2.;
+  }
+  
+  template
+  <typename... TArgs,
+  template<typename...> typename Container,
+  typename Value_type>
+  auto edge_midpoints
+  (Container<std::pair<Value_type, Value_type>, TArgs...> const& input)
+  {
+    Container<Value_type, TArgs...> output(input.size());
+    edge_midpoints(input, output);
+    return output;
+  }
+  
+  auto edge_midpoints
+  (std::vector<std::pair<double, double>> const& input)
+  {
+    std::vector<double> output(input.size());
+    edge_midpoints(input, output);
+    return output;
+  }
+  
+  // Averages of pairs of elements
+  template
+  <template<typename> typename Container = std::vector,
+  typename Value_type = double>
+  void widths
+  (Container<std::pair<Value_type, Value_type>> const& input,
+   Container<Value_type>& output)
+  {
+    for(size_t ii = 0; ii < input.size(); ++ii)
+      output[ii] = input.second[ii] - input.first[ii];
+  }
+  
+  template
+  <template<typename> typename Container = std::vector,
+  typename Value_type = double>
+  Container<Value_type> widths
+  (Container<std::pair<Value_type, Value_type>> const& input)
+  {
+    Container<Value_type> output(input.size());
+    widths(input, output);
+    return output;
+  }
+  
   // Differences of adjacent elements
   template <typename Container>
   void diff(Container const& input, Container& output)

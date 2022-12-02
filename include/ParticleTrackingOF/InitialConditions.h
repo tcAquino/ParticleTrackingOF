@@ -145,6 +145,52 @@ namespace ptof
       particles.push_back(particle_maker(cell_center(cell_ids[dist(rng)], mesh)));
     return particles;
   }
+  
+  // Make particle at face center
+  // If face center is not within cell owner,
+  // warn and try
+  // placing particle slight offset towards center
+  // or place particle at center
+  template
+  <typename Mesh,
+  typename MeshSearch,
+  typename ParticleMaker>
+  auto make_particle_at_face_center
+  (Foam::label face,
+   Mesh const& mesh,
+   MeshSearch const& mesh_search,
+   ParticleMaker& particle_maker)
+  {
+    if (face_center_is_in_cell(face, mesh, mesh_search))
+      return particle_maker(face_center(face, mesh));
+    else
+    {
+      auto center = face_center(face, mesh);
+      auto owner_cell = mesh.owner()[face];
+      std::cerr << "Warning: Face center of cell "
+                << face << " at "
+                << "("
+                << center[0] << ", "
+                << center[1] << ", "
+                << center[2] << ")"
+                << " is not within owner cell "
+                << owner_cell << ". "
+                << "Trying small displacement toward cell center... ";
+      auto offset_face_center = offset_inward_face(face, mesh_search);
+      if (mesh_search.findCell(offset_face_center) == owner_cell)
+      {
+        std::cerr << "Success" << std::endl;
+        return particle_maker(offset_face_center);
+      }
+      else
+      {
+        std::cerr << "Failed. "
+                  << "Placing particle at center of owner face"
+                  << std::endl;
+        return particle_maker(cell_center(owner_cell, mesh));
+      }
+    }
+  }
 
   // Make particles randomly uniformly
   // over given mesh cell faces
@@ -152,12 +198,14 @@ namespace ptof
   template
   <typename Container,
   typename Mesh,
+  typename MeshSearch,
   typename RNG,
   typename ParticleMaker>
   auto uniform_faces
   (std::size_t nr_particles,
    Container const& face_ids,
    Mesh const& mesh,
+   MeshSearch const& mesh_search,
    RNG& rng,
    ParticleMaker& particle_maker)
   {
@@ -172,8 +220,9 @@ namespace ptof
     std::vector<Particle> particles;
     particles.reserve(nr_particles);
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
-      particles.push_back(particle_maker(face_center(face_ids[dist(rng)],
-                                                     mesh)));
+      particles.push_back(make_particle_at_face_center(face_ids[dist(rng)],
+                                                       mesh, mesh_search,
+                                                       particle_maker));
     return particles;
   }
   
@@ -185,6 +234,7 @@ namespace ptof
   <typename Container,
   typename VelocityField,
   typename Mesh,
+  typename MeshSearch,
   typename RNG,
   typename ParticleMaker>
   auto flux_weighted_faces
@@ -192,6 +242,7 @@ namespace ptof
    Container const& face_ids,
    VelocityField const& velocity_field,
    Mesh const& mesh,
+   MeshSearch const& mesh_search,
    RNG& rng,
    ParticleMaker& particle_maker)
   { 
@@ -208,8 +259,9 @@ namespace ptof
     std::vector<Particle> particles;
     particles.reserve(nr_particles);
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
-      particles.push_back(particle_maker(face_center(face_ids[dist(rng)],
-                                                     mesh)));
+      particles.push_back(make_particle_at_face_center(face_ids[dist(rng)],
+                                                       mesh, mesh_search,
+                                                       particle_maker));
     return particles;
   }
   
@@ -246,7 +298,7 @@ namespace ptof
       auto unit_normal = unit_normal_inward(face_ids[rand], mesh);
       auto position = face_center(face_ids[rand], mesh);
         + distance*unit_normal;
-      if (mesh_search.findCell(position)
+      if (mesh_search.findCell(position) == -1
           || mesh_search.findNearestBoundaryFace(position)
             != face_ids[rand])
         continue;
@@ -300,18 +352,21 @@ namespace ptof
   // Place particles at center of faces
   template
   <typename Mesh,
+  typename MeshSearch,
   typename RNG,
   typename ParticleMaker>
   auto uniform_patches
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    Mesh const& mesh,
+   MeshSearch const& mesh_search,
    RNG& rng,
    ParticleMaker& particle_maker)
   {
     return uniform_faces(nr_particles,
-                             patches_face_ids(mesh, patch_names),
-                             mesh, rng, particle_maker);
+                         patches_face_ids(mesh, patch_names),
+                         mesh, mesh_search,
+                         rng, particle_maker);
   }
   
   // Make particles with probability proportional
@@ -321,6 +376,7 @@ namespace ptof
   template
   <typename VelocityField,
   typename Mesh,
+  typename MeshSearch,
   typename RNG,
   typename ParticleMaker>
   auto flux_weighted_patches
@@ -328,13 +384,15 @@ namespace ptof
    std::vector<std::string> const& patch_names,
    VelocityField const& velocity_field,
    Mesh const& mesh,
+   MeshSearch const& mesh_search,
    RNG& rng,
    ParticleMaker& particle_maker)
   {
     return flux_weighted_faces(nr_particles,
                                patches_face_ids(mesh, patch_names),
                                velocity_field,
-                               mesh, rng, particle_maker);
+                               mesh, mesh_search,
+                               rng, particle_maker);
   }
   
   // Make particles randomly uniformly
@@ -354,10 +412,10 @@ namespace ptof
    RNG& rng, ParticleMaker particle_maker)
   {
     return uniform_near_boundary_faces(nr_particles,
-                                           patches_face_ids(mesh, patch_names),
-                                           distance,
-                                           mesh, mesh_search,
-                                           rng, particle_maker);
+                                       patches_face_ids(mesh, patch_names),
+                                       distance,
+                                       mesh, mesh_search,
+                                       rng, particle_maker);
   }
   
   // Generate pulse injections
@@ -499,30 +557,34 @@ namespace ptof
                                mesh, rng, particle_maker);
         case InitialConditions::Type::uniform_inlet:
           return uniform_patches(nr_particles,
-                                     { "inlet" },
-                                     mesh, rng, particle_maker);
+                                 { "inlet" },
+                                 mesh, mesh_search,
+                                 rng, particle_maker);
         case InitialConditions::Type::flux_weighted_inlet:
           return flux_weighted_patches(nr_particles,
                                        { "inlet" },
                                        velocity_field,
-                                       mesh, rng, particle_maker);
+                                       mesh, mesh_search,
+                                       rng, particle_maker);
         case InitialConditions::Type::uniform_solid:
           return uniform_patches(nr_particles,
-                                     { "wallFluidSolid" },
-                                     mesh, rng, particle_maker);
+                                 { "wallFluidSolid" },
+                                 mesh, mesh_search,
+                                 rng, particle_maker);
         case InitialConditions::Type::uniform_near_solid:
           return uniform_near_boundary_patches(nr_particles,
-                                                   { "wallFluidSolid" },
-                                                   params.distance_wall,
-                                                   mesh, mesh_search,
-                                                   rng, particle_maker);
+                                               { "wallFluidSolid" },
+                                               params.distance_wall,
+                                               mesh, mesh_search,
+                                               rng, particle_maker);
         case InitialConditions::Type::uniform_inlet_continuous:
           return continuous_injection([this]
                                       (std::size_t nr_particles,
                                        ParticleMakerOther& particle_maker)
                                       { return uniform_patches(nr_particles,
                                                                { "inlet" },
-                                                               mesh, rng,
+                                                               mesh, mesh_search,
+                                                               rng,
                                                                particle_maker); },
                                       nr_particles,
                                       params.time_min,
@@ -536,7 +598,8 @@ namespace ptof
                                       { return flux_weighted_patches(nr_particles,
                                                                      { "inlet" },
                                                                      velocity_field,
-                                                                     mesh, rng,
+                                                                     mesh, mesh_search,
+                                                                     rng,
                                                                      particle_maker); },
                                       nr_particles,
                                       params.time_min,

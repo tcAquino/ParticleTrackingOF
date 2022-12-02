@@ -629,8 +629,8 @@ namespace ctrw
     // Construct given fixed jump size and probability to jump right
     JumpGenerator_RW_1d
     (Distance_type jump_size = 1, double prob_right = 0.5)
-    : jump_size(jump_size)
-    , prob_right(prob_right)
+    : jump_size{ jump_size }
+    , prob_right{ prob_right }
     {}
 
     // Return the jump increment

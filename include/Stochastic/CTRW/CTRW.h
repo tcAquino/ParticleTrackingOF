@@ -119,6 +119,19 @@ namespace ctrw
       for (auto& particle : particle_container)
         particle.transform(transformation);
     }
+    
+    // Apply same transformation to both states of particle
+    template <typename Transformation>
+    void transform_both(Transformation transformation, std::size_t part)
+    { particle_container[part].transform_both(transformation); }
+    
+    // Apply same transformation to both states of all particles
+    template <typename Transformation>
+    void transform_both(Transformation transformation)
+    {
+      for (auto& particle : particle_container)
+        particle.transform_both(transformation);
+    }
 
     // Remove particles satisfying a criterium
     template<typename Criterium>
