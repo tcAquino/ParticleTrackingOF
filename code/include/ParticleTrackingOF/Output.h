@@ -356,7 +356,7 @@ namespace ptof
     bool operator()
     (Subject const& subject, double time) const override
     {
-      return time >= end_value;
+      return time > end_value;
     }
       
     double end_value;
