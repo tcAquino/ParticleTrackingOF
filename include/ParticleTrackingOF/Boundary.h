@@ -457,13 +457,15 @@ namespace ptof
                             intersection.index(),
                             displacement,
                             mesh_search);
-    
-    // Ensure offset position is closer to intersection than outside position
-    // If less than halfway (arbitrary point between the two),
+      
+    // Ensure offset position is closer to
+    // intersection than outside position
+    // If less than halfway
+    // (arbitrary point between the two; 0.25 of mag squared),
     // set outside position to offset position
     // otherwise, use the halfway point
     if (Foam::magSqr(offset_pos - intersection.point())
-        < 0.5*Foam::magSqr(displacement))
+        < 0.25*Foam::magSqr(displacement))
       state_outside.set_position(offset_pos);
     else
       state_outside.set_position(intersection.point()+
