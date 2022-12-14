@@ -100,7 +100,9 @@ namespace ptof
     Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
     Foam::point const& cell_center = mesh_search.mesh().
       cellCentres()[owner_cell];
-    Foam::scalar typ_dim = Foam::mag(cell_center - begin);
+    Foam::scalar typ_dim = Foam::mag(cell_center
+                                     - face_center(face,
+                                                   mesh_search.mesh()));
     
     return mesh_search.tol_*typ_dim*
       direction/Foam::mag(direction);

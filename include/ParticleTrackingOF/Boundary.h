@@ -435,19 +435,33 @@ namespace ptof
   <typename State, typename Intersection,
   typename Boundary, typename MeshSearch>
   auto periodic_intersection
-  (State& state_outside,
+  (State state_outside,
    State const& state_image,
    Intersection const& intersection,
    Boundary const& boundary,
    MeshSearch const& mesh_search)
   {
+    // Compute displacement from intersection to outside position
     auto displacement = make_point(state_outside.position)-
       intersection.point();
+    
+    // Slight offset from intersection towards the outside point
+    // The goal is to find the periodic image
+    // of a point close to the intersection,
+    // so we can find its periodic image within the domain
+    // and then use it to find the periodic image of the intersection
+    // itself. Using a periodic image like this should work also for
+    // non-cartesian symmetry planes.
     auto offset_pos
       = offset_forward_face(intersection.point(),
                             intersection.index(),
                             displacement,
                             mesh_search);
+    
+    // Ensure offset position is closer to intersection than outside position
+    // If less than halfway (arbitrary point between the two),
+    // set outside position to offset position
+    // otherwise, use the halfway point
     if (Foam::magSqr(offset_pos - intersection.point())
         < 0.5*Foam::magSqr(displacement))
       state_outside.set_position(offset_pos);
@@ -455,12 +469,17 @@ namespace ptof
       state_outside.set_position(intersection.point()+
                                  0.5*displacement);
     
+    // Find the periodic image of the offset point
     boundary(state_outside);
+    
+    // Find the periodic image of the intersection by
+    // looking from outside the domain towards the final periodic image
+    // Start at the outside point found by taking
     return mesh_search.
-      intersection(make_point(state_outside.position),
-                   make_point(state_outside.position)
+      intersection(make_point(state_outside.position)
                    - 2.*(make_point(state_image.position)-
-                         make_point(state_outside.position)));
+                         make_point(state_outside.position)),
+                   make_point(state_outside.position));
   }
   
   // Boundary object for periodic boundaries
