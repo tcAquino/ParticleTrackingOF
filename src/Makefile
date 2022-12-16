@@ -1,4 +1,4 @@
-CXX = g++
+CXX = $(WM_COMPILER)
 PTHOFINC = $(FOAM_SRC)
 PTHOFLIB = $(FOAM_LIBBIN)
 PTH = ../include

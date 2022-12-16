@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -46,6 +46,8 @@ int main(int argc, char * argv[])
     ptof::DirectoriesOF::info(std::cout);
     std::cout << std::endl;
     Transport::info(std::cout);
+    std::cout << std::endl;
+    Reaction::info(std::cout);
     std::cout << std::endl;
     Transport::Parameters::info(std::cout);
     std::cout << std::endl;
@@ -80,6 +82,8 @@ int main(int argc, char * argv[])
   ptof::DirectoriesOF directories_of{ directories };
   directories_of.info_runtime(std::cout);
   
+  std::cout << std::setprecision(2) << std::scientific;
+  
   std::cout << "\n" << "Importing transport parameters..." << std::endl;
   Transport::Parameters params_transport{ directories,
     parameters_transport_name };
@@ -100,8 +104,8 @@ int main(int argc, char * argv[])
   std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up geometry...\n";
-  Geometry geometry{ directories_of,
-    params_transport };
+  Geometry geometry{
+    directories_of, directories, params_transport };
   geometry.info_runtime(std::cout);
   std::cout << "Done!" << std::endl;
   
@@ -167,7 +171,6 @@ int main(int argc, char * argv[])
   std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up output..." << std::endl;
-  std::cout << std::setprecision(2) << std::scientific;
   Output measurer{
     ctrw,
     velocity_field,

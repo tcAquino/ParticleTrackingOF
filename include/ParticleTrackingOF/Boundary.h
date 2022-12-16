@@ -32,9 +32,10 @@ namespace ptof
     enum class Type
     {
       reflecting,
+      periodic,
       absorbing,
-      info,
       custom,
+      info,
       empty
     };
     
@@ -59,10 +60,11 @@ namespace ptof
     std::unordered_map<std::string, Type> name_to_type
     {
       { "reflecting", Type::reflecting },
+      { "periodic", Type::periodic },
       { "absorbing", Type::absorbing },
       { "info", Type::info },
       { "custom", Type::custom },
-      { "empty", Type::custom },
+      { "empty", Type::empty },
     };
     
     // Map types to names
@@ -70,6 +72,7 @@ namespace ptof
     std::unordered_map<Type, std::string> type_to_name
     {
       { Type::reflecting, "reflecting" },
+      { Type::periodic, "periodic" },
       { Type::absorbing, "absorbing" },
       { Type::info, "info" },
       { Type::custom, "custom" },
@@ -198,7 +201,21 @@ namespace ptof
     
     // Apply boundary condition (do nothing, return 0 for no effect)
     template <typename State, typename Intersection>
-    bool operator() (State& state, Intersection const&) const
+    bool operator()
+    (State const& state, State const& state_old,
+     Intersection const&) const
+    { return 0; }
+    
+    // Apply boundary condition (do nothing, return 0 for no effect)
+    template <typename State, typename IntersectionOrState>
+    bool operator()
+    (State const& state, IntersectionOrState const&) const
+    { return 0; }
+    
+    // Apply boundary condition (do nothing, return 0 for no effect)
+    template <typename State>
+    bool operator()
+    (State const& state) const
     { return 0; }
     
     // Custom name of boundary condition type
@@ -208,7 +225,8 @@ namespace ptof
   
   // Boundary object to handle implemented boundary types
   template
-  <typename MeshSearch, typename Store_Info, typename Boundary_Custom>
+  <typename MeshSearch, typename Store_Info,
+  typename Boundary_Periodic, typename Boundary_Custom>
   class Boundary_Cases
   {
   public:
@@ -224,10 +242,12 @@ namespace ptof
     (BCs boundary_conditions,
      MeshSearch&& mesh_search,
      Store_Info&& store_info,
+     Boundary_Periodic&& boundary_periodic = Boundary_DoNothing{},
      Boundary_Custom&& boundary_custom = Boundary_DoNothing{})
     : boundary_conditions{ boundary_conditions }
     , mesh_search{ std::forward<MeshSearch>(mesh_search) }
     , store_info{ std::forward<Store_Info>(store_info) }
+    , boundary_periodic{ std::forward<Boundary_Periodic>(boundary_periodic) }
     , boundary_custom{ std::forward<Boundary_Custom>(boundary_custom) }
     {
       add_unspecified_patches(this->boundary_conditions,
@@ -299,23 +319,14 @@ namespace ptof
             had_effect = 1;
             break;
           }
-          case BoundaryCondition::Type::custom:
+          case BoundaryCondition::Type::periodic:
           {
             store_info(state, state_old, intersection,
                        boundary_condition_types,
                        useful::Selector<
                         BoundaryCondition::Type,
-                        BoundaryCondition::Type::custom>{});
-            had_effect += boundary_custom(state, intersection);
-            break;
-          }
-          case BoundaryCondition::Type::info:
-          {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
-                       useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::info>{});
+                        BoundaryCondition::Type::periodic>{});
+            had_effect += boundary_periodic(state, intersection);
             break;
           }
           case BoundaryCondition::Type::absorbing:
@@ -329,6 +340,25 @@ namespace ptof
             had_effect = 1;
             break;
           }
+          case BoundaryCondition::Type::custom:
+          {
+            store_info(state, state_old, intersection,
+                       boundary_condition_types,
+                       useful::Selector<
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::custom>{});
+            had_effect += boundary_custom(state, state_old, intersection);
+            break;
+          }
+          case BoundaryCondition::Type::info:
+          {
+            store_info(state, state_old, intersection,
+                       boundary_condition_types,
+                       useful::Selector<
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::info>{});
+            break;
+          }
           case BoundaryCondition::Type::empty:
           {}
           default:
@@ -339,6 +369,8 @@ namespace ptof
             };
         }
         
+        // Stop if right at the last intersection point
+        // This avoids numerical issues for some edge cases
         if (make_point(state.position) == intersection.point())
           break;
         
@@ -374,10 +406,11 @@ namespace ptof
     }
     
   private:
-    BCs boundary_conditions;          // Patch names and associated bc type names
-    MeshSearch mesh_search;           // Mesh search object to find points, intersections, etc
-    Store_Info store_info;            // Object to handle boundary info storing in states
-    Boundary_Custom boundary_custom;  // Boundary object to handle 'custom' bc type
+    BCs boundary_conditions;              // Patch names and associated bc type names
+    MeshSearch mesh_search;               // Mesh search object to find points, intersections, etc
+    Store_Info store_info;                // Object to handle boundary info storing in states
+    Boundary_Periodic boundary_periodic;  // Boundary object to handle 'periodic' bc type
+    Boundary_Custom boundary_custom;      // Boundary object to handle 'custom' bc type
     
     const BoundaryCondition
       boundary_condition_types{}; // Boundary condition names and types
@@ -414,21 +447,40 @@ namespace ptof
   template
   <typename MeshSearch,
   typename Store_Info,
+  typename Boundary_Periodic,
   typename Boundary_Custom>
   Boundary_Cases
   (typename Boundary_Cases<
-    MeshSearch, Store_Info, Boundary_Custom>::BCs,
+   MeshSearch, Store_Info,
+   Boundary_Periodic, Boundary_Custom>::BCs,
    MeshSearch&&,
    Store_Info&&,
+   Boundary_Periodic&&,
    Boundary_Custom&&)->
-  Boundary_Cases<MeshSearch, Store_Info, Boundary_Custom>;
+  Boundary_Cases<MeshSearch, Store_Info,
+  Boundary_Periodic, Boundary_Custom>;
+  template
+  <typename MeshSearch,
+  typename Store_Info,
+  typename Boundary_Periodic>
+  Boundary_Cases
+  (typename Boundary_Cases<
+   MeshSearch, Store_Info,
+   Boundary_Periodic, Boundary_DoNothing>::BCs,
+   MeshSearch&&,
+   Store_Info&&,
+   Boundary_Periodic&&)->
+  Boundary_Cases<MeshSearch, Store_Info,
+  Boundary_Periodic, Boundary_DoNothing>;
   template <typename MeshSearch, typename Store_Info>
   Boundary_Cases
   (typename Boundary_Cases<
-    MeshSearch, Store_Info, Boundary_DoNothing>::BCs,
+  MeshSearch, Store_Info,
+   Boundary_DoNothing, Boundary_DoNothing>::BCs,
    MeshSearch&&,
    Store_Info&&)->
-  Boundary_Cases<MeshSearch, Store_Info, Boundary_DoNothing>;
+  Boundary_Cases<MeshSearch, Store_Info,
+  Boundary_DoNothing, Boundary_DoNothing>;
   
   // Periodic image of intersection point
   template
@@ -485,7 +537,7 @@ namespace ptof
   }
   
   // Boundary object for periodic boundaries
-  // The templated boundary object should enforce the periodic boundaries
+  // The templated Boundary object should enforce the periodic boundaries
   template <typename Boundary, typename MeshSearch>
   struct Boundary_Periodic_OF
   {
@@ -505,7 +557,7 @@ namespace ptof
     }
     
     // Enforce boundary condition
-    // and place intersection at periodic image
+    // and place intersection at its periodic image
     template <typename State, typename Intersection>
     bool operator() (State& state, Intersection& intersection) const
     {
@@ -521,10 +573,6 @@ namespace ptof
       
       return 1;
     }
-    
-    // Custom name of boundary condition type
-    std::string name() const
-    { return "periodic"; }
     
     Boundary boundary_periodic;
     MeshSearch mesh_search;
@@ -547,7 +595,8 @@ namespace ptof
     
     // Enforce boundary condition
     template <typename State, typename Intersection>
-    bool operator() (State& state, Intersection const&) const
+    bool operator()
+    (State& state, State const&, Intersection const&) const
     {
       state.set_position(initial_condition.make_position());
       return 1;
