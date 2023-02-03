@@ -1,0 +1,176 @@
+/**
+* \file PTOF/Store.h
+* \author Tomás Aquino
+* \date 09/03/2022
+*/
+
+#ifndef PTOF_STORE_H
+#define PTOF_STORE_H
+
+#include "General/Useful.h"
+#include "PTOF/Boundary.h"
+
+namespace ptof
+{
+  /** \struct Store_Type PTOF/Store.h "PTOF/Store.h"
+   * \brief  Store info about last boundary type. */
+  struct Store_Type
+  {
+    template
+    <typename State,
+    typename Intersection,
+    BoundaryCondition::Type type>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+     BoundaryCondition::Type,
+     type>) const
+    {
+      store_info_type(state, implemented.name(type));
+    }
+  };
+
+  /** \struct Store_Nothing PTOF/Store.h "PTOF/Store.h"
+   * \brief Do not store any info. */
+  struct Store_Nothing
+  {
+    template
+    <typename State,
+    typename Intersection,
+    BoundaryCondition::Type type>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      type>) const
+    {}
+  };
+
+  /** \struct Store_Absorbed PTOF/Store.h "PTOF/Store.h"
+   *  \brief Store info about absorption. */
+  struct Store_Absorbed
+  {
+    template
+    <typename State,
+    typename Intersection,
+    BoundaryCondition::Type type>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      type>) const
+    {}
+    
+    template
+    <typename State,
+    typename Intersection>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::absorbing>) const
+    {
+      store_info_absorbed(state);
+    }
+  };
+
+  /** \struct Store_Absorbed_Reinjections PTOF/Store.h "PTOF/Store.h"
+   * \brief Store info about number absorption
+   * and number of reinjections. */
+  struct Store_Absorbed_Reinjections
+  {
+    template
+    <typename State,
+    typename Intersection,
+    BoundaryCondition::Type type>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      type>) const
+    {}
+    
+    template
+    <typename State,
+    typename Intersection>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::absorbing>) const
+    {
+      store_info_absorbed(state);
+    }
+
+    template
+    <typename State,
+    typename Intersection>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::custom>) const
+    {
+      store_info_reinjections(state);
+    }
+  };
+
+  /** \struct Store_Info_Contact PTOF/Store.h "PTOF/Store.h"
+   * \brief Store info about last boundary contact. */
+  struct Store_Info_Contact
+  {
+    template
+    <typename State,
+    typename Intersection,
+    BoundaryCondition::Type type>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      type>) const
+    {}
+    
+    template
+    <typename State,
+    typename Intersection>
+    void operator()
+    (State& state,
+     State const& state_old,
+     Intersection const& intersection,
+     BoundaryCondition const& implemented,
+     useful::Selector<
+      BoundaryCondition::Type,
+      BoundaryCondition::Type::info>) const
+    {
+      store_info_type(state, "info");
+      store_info_contact(state, intersection.rawPoint());
+      store_info_time(state, state.time);
+    }
+  };
+}
+
+#endif /* PTOF_STORE_H */
