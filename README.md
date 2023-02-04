@@ -8,7 +8,7 @@ Required external libraries (all free and open-source):
 - OpenFOAM : CFD software (https://www.openfoam.com/)
 - boost : C++ library implementing useful features and extensions (boost.org)
 
-A compiler compatible with C++17 is required. Note that the same compiler used for OpenFOAM should be used to asvoid (dynamic) linking issues.
+A compiler compatible with C++17 is required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues.
 
 ## Documentation
 
