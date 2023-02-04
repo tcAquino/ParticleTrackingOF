@@ -1,0 +1,6 @@
+<map id="ptof::model_advection_diffusion_2d::InitialCondition" name="ptof::model_advection_diffusion_2d::InitialCondition">
+<area shape="rect" id="node1" title=" " alt="" coords="5,71,220,112"/>
+<area shape="rect" id="node2" href="$d5/dd9/structptof_1_1model__advection__diffusion__fpt__2d_1_1_initial_condition.html" title=" " alt="" coords="279,5,519,47"/>
+<area shape="rect" id="node3" href="$d7/d37/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_initial_condition.html" title=" " alt="" coords="268,71,531,112"/>
+<area shape="rect" id="node4" href="$d2/d1b/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_initial_condition.html" title=" " alt="" coords="292,137,507,193"/>
+</map>
