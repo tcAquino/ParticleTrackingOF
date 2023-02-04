@@ -1,4 +1,0 @@
-<map id="ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, Velocity, Boundary &gt;" name="ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, Velocity, Boundary &gt;">
-<area shape="rect" id="node1" title="Update state.position according to a JumpGenerator object given state with time step according to pre..." alt="" coords="5,109,232,165"/>
-<area shape="rect" id="node2" href="$dd/d2e/classgeometry_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="41,5,196,47"/>
-</map>

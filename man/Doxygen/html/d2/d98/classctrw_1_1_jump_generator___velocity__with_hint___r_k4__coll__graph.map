@@ -1,5 +1,0 @@
-<map id="ctrw::JumpGenerator_Velocity_withHint_RK4&lt; VelocityField, Boundary &gt;" name="ctrw::JumpGenerator_Velocity_withHint_RK4&lt; VelocityField, Boundary &gt;">
-<area shape="rect" id="node1" title="Jump according to a velocity field and time step, using RK4 scheme, with the previous position as a h..." alt="" coords="57,109,263,165"/>
-<area shape="rect" id="node2" href="$dd/d2e/classgeometry_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="5,5,160,47"/>
-<area shape="rect" id="node3" title=" " alt="" coords="185,13,290,39"/>
-</map>

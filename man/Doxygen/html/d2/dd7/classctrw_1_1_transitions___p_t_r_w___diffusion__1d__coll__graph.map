@@ -1,6 +1,0 @@
-<map id="ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary &gt;" name="ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary &gt;">
-<area shape="rect" id="node1" title="Update state.position according to forward&#45;Euler for diffusion in one dimension with prescribed time ..." alt="" coords="316,71,519,112"/>
-<area shape="rect" id="node2" href="$d1/d01/classctrw_1_1_time_generator___step.html" title=" " alt="" coords="5,5,160,47"/>
-<area shape="rect" id="node3" href="$dd/d2e/classgeometry_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="5,71,160,112"/>
-<area shape="rect" id="node4" href="$d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html" title="One dimensional diffusion jumps using Gaussian distribution." alt="" coords="5,136,160,177"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="ptof::Criterion&lt; Subject &gt;" name="ptof::Criterion&lt; Subject &gt;">
-<area shape="rect" id="node1" title="Polymorphic criteria." alt="" coords="5,177,195,203"/>
-<area shape="rect" id="node2" href="$da/d25/structptof_1_1_criterion__all__absorbed.html" title="Check if all particles have been absorbed." alt="" coords="243,5,410,47"/>
-<area shape="rect" id="node3" href="$d4/d26/structptof_1_1_criterion__fraction__absorbed.html" title="Check if at a least a given fraction of particles have been absorbed." alt="" coords="243,71,411,112"/>
-<area shape="rect" id="node4" href="$d0/d36/structptof_1_1_criterion__mass__above.html" title="Check if mass is greater than or equal to value." alt="" coords="250,136,403,177"/>
-<area shape="rect" id="node5" href="$da/df1/structptof_1_1_criterion__mass__below.html" title="Check if mass is less than or equal to value." alt="" coords="250,201,403,243"/>
-<area shape="rect" id="node6" href="$dc/df3/structptof_1_1_criterion__one__absorbed.html" title="Check if at least one particle has been absorbed." alt="" coords="243,267,410,308"/>
-<area shape="rect" id="node7" href="$da/d6e/structptof_1_1_criterion__time.html" title="Check if time is greater than value." alt="" coords="253,332,401,373"/>
-</map>

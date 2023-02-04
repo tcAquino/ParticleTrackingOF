@@ -1,5 +1,0 @@
-<map id="ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt;" name="ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt;">
-<area shape="rect" id="node1" title="Get linearly interpolated position according to function of state.velocity in old state given new sta..." alt="" coords="56,95,253,151"/>
-<area shape="rect" id="node2" href="$da/dad/structctrw_1_1_get__time.html" title="Get state.time given state." alt="" coords="5,5,123,32"/>
-<area shape="rect" id="node3" href="$df/d34/structuseful_1_1_forward.html" title=" " alt="" coords="147,5,343,32"/>
-</map>
