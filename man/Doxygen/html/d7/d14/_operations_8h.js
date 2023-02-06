@@ -72,6 +72,6 @@ var _operations_8h =
     [ "times_scalar", "d7/d14/_operations_8h.html#a68f9f3922acccb2440557f9e25b41afa", null ],
     [ "times_scalar", "d7/d14/_operations_8h.html#adabf17f9bf477a37f76917bfe7a6c982", null ],
     [ "times_scalar_InPlace", "d7/d14/_operations_8h.html#abb8bc4921a7cfee509196a155743166f", null ],
-    [ "widths", "d7/d14/_operations_8h.html#a780b2b66202523429c157d6144c5ba91", null ],
+    [ "widths", "d7/d14/_operations_8h.html#ad4b16fa3f56331492f9e266d671a5ca1", null ],
     [ "widths", "d7/d14/_operations_8h.html#ad8d1fda37a1896f129ea50da804e566f", null ]
 ];

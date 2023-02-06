@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['next_1564',['next',['../d1/d28/structuseful_1_1indices.html#a4d14f6e295d054188dcb1a7cbff4e8cb',1,'useful::indices']]],
-  ['nocheck_1565',['NoCheck',['../d0/d88/namespaceptof_1_1_field_options.html#ac7a025b2fb324253211020f433f22262',1,'ptof::FieldOptions']]]
+  ['locator_1751',['Locator',['../dc/d30/structptof_1_1_geometry.html#af5e28c8bf4f2f8ec85fbb499feb3cef8',1,'ptof::Geometry::Locator()'],['../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7240171e324d7494b248edfe13c63345',1,'ptof::Geometry_Periodic_Cartesian::Locator()'],['../da/d9d/structptof_1_1_geometry___bcc.html#a6c785709594b3322ee2587b6a6f245ed',1,'ptof::Geometry_Bcc::Locator()'],['../dc/d30/structptof_1_1_geometry.html#af5e28c8bf4f2f8ec85fbb499feb3cef8',1,'ptof::Geometry::Locator()'],['../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7240171e324d7494b248edfe13c63345',1,'ptof::Geometry_Periodic_Cartesian::Locator()'],['../da/d9d/structptof_1_1_geometry___bcc.html#a6c785709594b3322ee2587b6a6f245ed',1,'ptof::Geometry_Bcc::Locator()']]]
 ];

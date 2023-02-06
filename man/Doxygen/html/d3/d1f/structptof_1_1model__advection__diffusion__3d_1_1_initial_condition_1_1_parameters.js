@@ -1,6 +1,8 @@
 var structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters =
 [
     [ "Parameters", "d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#adf864c8f424234496279a638588da56f", null ],
+    [ "Parameters", "d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#adf864c8f424234496279a638588da56f", null ],
+    [ "info", "d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#abf7d9a32cedc1c0f364f29da570b7846", null ],
     [ "info", "d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#abf7d9a32cedc1c0f364f29da570b7846", null ],
     [ "distance_wall", "d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#a087e08f2f5b7b0c88cd928dc7c33354e", null ],
     [ "initial_mass", "d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#a9b377fbadbcf8de70fe6a74facefbdad", null ],

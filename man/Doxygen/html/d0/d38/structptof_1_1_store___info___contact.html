@@ -92,10 +92,16 @@ $(document).ready(function(){initNavTree('d0/d38/structptof_1_1_store___info___c
 <p>Store info about last boundary contact.  
  <a href="../../d0/d38/structptof_1_1_store___info___contact.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d4/deb/_store_8h_source.html">PTOF/Store.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d0/d31/_particle_tracking_o_f_2_store_8h_source.html">PTOF/Store.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a144f292c5777044810bfe7cb16f6d0d9"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection , BoundaryCondition::Type type&gt; </td></tr>
+<tr class="memitem:a144f292c5777044810bfe7cb16f6d0d9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d38/structptof_1_1_store___info___contact.html#a144f292c5777044810bfe7cb16f6d0d9">operator()</a> (State &amp;state, State const &amp;state_old, Intersection const &amp;intersection, <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html">BoundaryCondition</a> const &amp;implemented, <a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66f">BoundaryCondition::Type</a>, type &gt;) const</td></tr>
+<tr class="separator:a144f292c5777044810bfe7cb16f6d0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a49285a583ee16c9dfbe70781b6488"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection &gt; </td></tr>
+<tr class="memitem:a97a49285a583ee16c9dfbe70781b6488"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d38/structptof_1_1_store___info___contact.html#a97a49285a583ee16c9dfbe70781b6488">operator()</a> (State &amp;state, State const &amp;state_old, Intersection const &amp;intersection, <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html">BoundaryCondition</a> const &amp;implemented, <a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66f">BoundaryCondition::Type</a>, <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66facaf9b6b99962bf5c2264824231d7a40c">BoundaryCondition::Type::info</a> &gt;) const</td></tr>
+<tr class="separator:a97a49285a583ee16c9dfbe70781b6488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a144f292c5777044810bfe7cb16f6d0d9"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection , BoundaryCondition::Type type&gt; </td></tr>
 <tr class="memitem:a144f292c5777044810bfe7cb16f6d0d9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d38/structptof_1_1_store___info___contact.html#a144f292c5777044810bfe7cb16f6d0d9">operator()</a> (State &amp;state, State const &amp;state_old, Intersection const &amp;intersection, <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html">BoundaryCondition</a> const &amp;implemented, <a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66f">BoundaryCondition::Type</a>, type &gt;) const</td></tr>
 <tr class="separator:a144f292c5777044810bfe7cb16f6d0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,7 +113,63 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Store info about last boundary contact. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a97a49285a583ee16c9dfbe70781b6488"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97a49285a583ee16c9dfbe70781b6488">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a97a49285a583ee16c9dfbe70781b6488">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename State , typename Intersection &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptof::Store_Info_Contact::operator() </td>
+          <td>(</td>
+          <td class="paramtype">State &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">State const &amp;&#160;</td>
+          <td class="paramname"><em>state_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Intersection const &amp;&#160;</td>
+          <td class="paramname"><em>intersection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html">BoundaryCondition</a> const &amp;&#160;</td>
+          <td class="paramname"><em>implemented</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66f">BoundaryCondition::Type</a>, <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66facaf9b6b99962bf5c2264824231d7a40c">BoundaryCondition::Type::info</a> &gt;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a97a49285a583ee16c9dfbe70781b6488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97a49285a583ee16c9dfbe70781b6488">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,7 +225,63 @@ template&lt;typename State , typename Intersection &gt; </div>
 </div>
 </div>
 <a id="a144f292c5777044810bfe7cb16f6d0d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a144f292c5777044810bfe7cb16f6d0d9">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a144f292c5777044810bfe7cb16f6d0d9">&#9670;&nbsp;</a></span>operator()() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename State , typename Intersection , BoundaryCondition::Type type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptof::Store_Info_Contact::operator() </td>
+          <td>(</td>
+          <td class="paramtype">State &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">State const &amp;&#160;</td>
+          <td class="paramname"><em>state_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Intersection const &amp;&#160;</td>
+          <td class="paramname"><em>intersection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html">BoundaryCondition</a> const &amp;&#160;</td>
+          <td class="paramname"><em>implemented</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66f">BoundaryCondition::Type</a>, type &gt;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a144f292c5777044810bfe7cb16f6d0d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a144f292c5777044810bfe7cb16f6d0d9">&#9670;&nbsp;</a></span>operator()() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -219,7 +337,7 @@ template&lt;typename State , typename Intersection , BoundaryCondition::Type typ
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../d4/deb/_store_8h_source.html">Store.h</a></li>
+<li>ParticleTrackingOF/<a class="el" href="../../d0/d31/_particle_tracking_o_f_2_store_8h_source.html">Store.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

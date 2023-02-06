@@ -128,8 +128,13 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html">Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodic boundaries along each symmetry plane with information about where position would be outside domain.  <a href="../../df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d45/structgeometry_1_1_parallelepiped.html">Parallelepiped</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dce/structgeometry_1_1_symmetry_planes___bcc.html">SymmetryPlanes_Bcc</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symmetry plane for bcc packing of unit radius.  <a href="../../da/dce/structgeometry_1_1_symmetry_planes___bcc.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/da0/structgeometry_1_1_symmetry_planes___sc.html">SymmetryPlanes_Sc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,6 +152,33 @@ Functions</h2></td></tr>
 <tr class="memitem:a0cdb7bb36198fbcd845be0a85fa9fbc3"><td class="memTemplParams" colspan="2">template&lt;typename Position  = std::vector&lt;double&gt;, typename Boundaries  = std::vector&lt;std::pair&lt;double, double&gt;&gt;&gt; </td></tr>
 <tr class="memitem:a0cdb7bb36198fbcd845be0a85fa9fbc3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a0cdb7bb36198fbcd845be0a85fa9fbc3">outOfBounds_box</a> (Position const &amp;position, Boundaries const &amp;boundaries)</td></tr>
 <tr class="separator:a0cdb7bb36198fbcd845be0a85fa9fbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab122f3b3a5b7959d6a0a08c34aa7efb3"><td class="memTemplParams" colspan="2">template&lt;typename Container  = std::vector&lt;double&gt;&gt; </td></tr>
+<tr class="memitem:ab122f3b3a5b7959d6a0a08c34aa7efb3"><td class="memTemplItemLeft" align="right" valign="top">Container&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#ab122f3b3a5b7959d6a0a08c34aa7efb3">cartesian2spherical</a> (Container const &amp;cartesian)</td></tr>
+<tr class="separator:ab122f3b3a5b7959d6a0a08c34aa7efb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79a08ed5ccc4259aafd25ee5a61ba9b0"><td class="memTemplParams" colspan="2">template&lt;typename Container  = std::vector&lt;double&gt;&gt; </td></tr>
+<tr class="memitem:a79a08ed5ccc4259aafd25ee5a61ba9b0"><td class="memTemplItemLeft" align="right" valign="top">Container&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a79a08ed5ccc4259aafd25ee5a61ba9b0">spherical2cartesian</a> (std::vector&lt; double &gt; const &amp;spherical)</td></tr>
+<tr class="separator:a79a08ed5ccc4259aafd25ee5a61ba9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b7013b719bccd659a0338eec9ff4f99"><td class="memTemplParams" colspan="2">template&lt;typename Container  = std::vector&lt;double&gt;&gt; </td></tr>
+<tr class="memitem:a8b7013b719bccd659a0338eec9ff4f99"><td class="memTemplItemLeft" align="right" valign="top">Container&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a8b7013b719bccd659a0338eec9ff4f99">cartesian2polar</a> (std::vector&lt; double &gt; const &amp;cartesian)</td></tr>
+<tr class="separator:a8b7013b719bccd659a0338eec9ff4f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d5763f78990da39562e1f12fd324fd3"><td class="memTemplParams" colspan="2">template&lt;typename Container  = std::vector&lt;double&gt;&gt; </td></tr>
+<tr class="memitem:a8d5763f78990da39562e1f12fd324fd3"><td class="memTemplItemLeft" align="right" valign="top">Container&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a8d5763f78990da39562e1f12fd324fd3">polar2cartesian</a> (std::vector&lt; double &gt; const &amp;polar)</td></tr>
+<tr class="separator:a8d5763f78990da39562e1f12fd324fd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d7699dbdfe08674a3a44fed526f3623"><td class="memTemplParams" colspan="2">template&lt;typename CTRW , typename Domain &gt; </td></tr>
+<tr class="memitem:a3d7699dbdfe08674a3a44fed526f3623"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a3d7699dbdfe08674a3a44fed526f3623">out_of_bounds</a> (CTRW const &amp;ctrw, <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> const &amp;domain)</td></tr>
+<tr class="separator:a3d7699dbdfe08674a3a44fed526f3623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad086cd428e32e4ab00c06bc5dfe2d550"><td class="memTemplParams" colspan="2">template&lt;typename Position , typename Sphere &gt; </td></tr>
+<tr class="memitem:ad086cd428e32e4ab00c06bc5dfe2d550"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#ad086cd428e32e4ab00c06bc5dfe2d550">reflectOffSphere_outsideToInside</a> (Position const &amp;position_new, Position const &amp;position_old, <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;sphere, Position &amp;reflected, Position &amp;contact_point)</td></tr>
+<tr class="separator:ad086cd428e32e4ab00c06bc5dfe2d550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e694e2d693eded9ad17b9db37fb6783"><td class="memTemplParams" colspan="2">template&lt;typename Position , typename Sphere &gt; </td></tr>
+<tr class="memitem:a3e694e2d693eded9ad17b9db37fb6783"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a3e694e2d693eded9ad17b9db37fb6783">reflectOffSphere_outsideToInside</a> (Position const &amp;position_new, Position const &amp;position_old, <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;sphere, Position &amp;reflected)</td></tr>
+<tr class="separator:a3e694e2d693eded9ad17b9db37fb6783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98a36981a54776bd7c65fa2e9ea2224a"><td class="memTemplParams" colspan="2">template&lt;typename Position , typename Sphere &gt; </td></tr>
+<tr class="memitem:a98a36981a54776bd7c65fa2e9ea2224a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a98a36981a54776bd7c65fa2e9ea2224a">reflectOffSphere_velocity_outsideToInside</a> (Position const &amp;position_new, Position const &amp;position_old, Position const &amp;velocity_old, <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;sphere, Position &amp;position_reflected, Position &amp;velocity_reflected, Position &amp;contact_point, Position &amp;contact_velocity, double &amp;time_to_contact, double time_step, Position const &amp;acceleration, double restitution_coeff_norm=1., double restitution_coeff_tang=1., double radius=0.)</td></tr>
+<tr class="separator:a98a36981a54776bd7c65fa2e9ea2224a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e27209169857328a5049fe5df4eb503"><td class="memTemplParams" colspan="2">template&lt;typename Position , typename Sphere , typename State , typename Acceleration &gt; </td></tr>
+<tr class="memitem:a2e27209169857328a5049fe5df4eb503"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a2e27209169857328a5049fe5df4eb503">reflectOffSphere_velocity_outsideToInside</a> (Position const &amp;position_new, Position const &amp;position_old, Position const &amp;velocity_old, <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;sphere, Position &amp;position_reflected, Position &amp;velocity_reflected, double time_step, Position acceleration, double restitution_coeff=1., double radius=0.)</td></tr>
+<tr class="separator:a2e27209169857328a5049fe5df4eb503"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a9815f6acd3a7cee748661f747159c8"><td class="memTemplParams" colspan="2">template&lt;typename Position , typename SymmetryPlanes &gt; </td></tr>
 <tr class="memitem:a3a9815f6acd3a7cee748661f747159c8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d5f/namespacegeometry.html#a3a9815f6acd3a7cee748661f747159c8">project</a> (Position const &amp;position, SymmetryPlanes const &amp;symmetry_planes, std::size_t dd, double scale)</td></tr>
 <tr class="separator:a3a9815f6acd3a7cee748661f747159c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,7 +247,6 @@ template&lt;typename Points  = std::vector&lt;std::vector&lt;double&gt;&gt;, typ
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Add periodic velocity point images outside domain if the projection of a point is within a given fraction of the boundary along each symmetry plane, add an image along that plane. </p>
 
 </div>
 </div>
@@ -303,6 +334,76 @@ template&lt;typename Points  = std::vector&lt;std::vector&lt;double&gt;&gt;, typ
       </table>
 </div><div class="memdoc">
 <p>Return displacement to be added to 1d position to reflect it off boundaries. </p>
+
+</div>
+</div>
+<a id="a8b7013b719bccd659a0338eec9ff4f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b7013b719bccd659a0338eec9ff4f99">&#9670;&nbsp;</a></span>cartesian2polar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container  = std::vector&lt;double&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Container geometry::cartesian2polar </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>cartesian</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab122f3b3a5b7959d6a0a08c34aa7efb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab122f3b3a5b7959d6a0a08c34aa7efb3">&#9670;&nbsp;</a></span>cartesian2spherical()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container  = std::vector&lt;double&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Container geometry::cartesian2spherical </td>
+          <td>(</td>
+          <td class="paramtype">Container const &amp;&#160;</td>
+          <td class="paramname"><em>cartesian</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3d7699dbdfe08674a3a44fed526f3623"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d7699dbdfe08674a3a44fed526f3623">&#9670;&nbsp;</a></span>out_of_bounds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename CTRW , typename Domain &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool geometry::out_of_bounds </td>
+          <td>(</td>
+          <td class="paramtype">CTRW const &amp;&#160;</td>
+          <td class="paramname"><em>ctrw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> const &amp;&#160;</td>
+          <td class="paramname"><em>domain</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -438,6 +539,26 @@ template&lt;typename Position , typename SymmetryPlanes , typename Origin &gt; <
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8d5763f78990da39562e1f12fd324fd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d5763f78990da39562e1f12fd324fd3">&#9670;&nbsp;</a></span>polar2cartesian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container  = std::vector&lt;double&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Container geometry::polar2cartesian </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>polar</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -606,6 +727,296 @@ template&lt;typename Position , typename SymmetryPlanes , typename Origin &gt; <
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e694e2d693eded9ad17b9db37fb6783"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e694e2d693eded9ad17b9db37fb6783">&#9670;&nbsp;</a></span>reflectOffSphere_outsideToInside() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Position , typename Sphere &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void geometry::reflectOffSphere_outsideToInside </td>
+          <td>(</td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_new</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;&#160;</td>
+          <td class="paramname"><em>sphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>reflected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad086cd428e32e4ab00c06bc5dfe2d550"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad086cd428e32e4ab00c06bc5dfe2d550">&#9670;&nbsp;</a></span>reflectOffSphere_outsideToInside() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Position , typename Sphere &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void geometry::reflectOffSphere_outsideToInside </td>
+          <td>(</td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_new</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;&#160;</td>
+          <td class="paramname"><em>sphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>reflected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>contact_point</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e27209169857328a5049fe5df4eb503"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e27209169857328a5049fe5df4eb503">&#9670;&nbsp;</a></span>reflectOffSphere_velocity_outsideToInside() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Position , typename Sphere , typename State , typename Acceleration &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void geometry::reflectOffSphere_velocity_outsideToInside </td>
+          <td>(</td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_new</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>velocity_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;&#160;</td>
+          <td class="paramname"><em>sphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>position_reflected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>velocity_reflected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time_step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position&#160;</td>
+          <td class="paramname"><em>acceleration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>restitution_coeff</em> = <code>1.</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>radius</em> = <code>0.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a98a36981a54776bd7c65fa2e9ea2224a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98a36981a54776bd7c65fa2e9ea2224a">&#9670;&nbsp;</a></span>reflectOffSphere_velocity_outsideToInside() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Position , typename Sphere &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void geometry::reflectOffSphere_velocity_outsideToInside </td>
+          <td>(</td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_new</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>velocity_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">Sphere</a> const &amp;&#160;</td>
+          <td class="paramname"><em>sphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>position_reflected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>velocity_reflected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>contact_point</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position &amp;&#160;</td>
+          <td class="paramname"><em>contact_velocity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>time_to_contact</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time_step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>acceleration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>restitution_coeff_norm</em> = <code>1.</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>restitution_coeff_tang</em> = <code>1.</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>radius</em> = <code>0.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a79a08ed5ccc4259aafd25ee5a61ba9b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79a08ed5ccc4259aafd25ee5a61ba9b0">&#9670;&nbsp;</a></span>spherical2cartesian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container  = std::vector&lt;double&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Container geometry::spherical2cartesian </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>spherical</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">

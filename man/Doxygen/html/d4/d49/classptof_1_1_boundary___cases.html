@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('d4/d49/classptof_1_1_boundary___cases.
 <p>Boundary object to handle implemented boundary types.  
  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../dd/da3/_p_t_o_f_2_boundary_8h_source.html">PTOF/Boundary.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d3/d0d/_particle_tracking_o_f_2_boundary_8h_source.html">PTOF/Boundary.h</a>&quot;</code></p>
 <div class="dynheader">
 Collaboration diagram for ptof::Boundary_Cases&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;:</div>
 <div class="dyncontent">
@@ -108,6 +108,8 @@ Collaboration diagram for ptof::Boundary_Cases&lt; MeshSearch, Store_Info, Bound
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:a49b04f4d1de694503fa4f1c09f08d4d6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a49b04f4d1de694503fa4f1c09f08d4d6">BCs</a> = std::unordered_map&lt; std::string, std::string &gt;</td></tr>
+<tr class="separator:a49b04f4d1de694503fa4f1c09f08d4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49b04f4d1de694503fa4f1c09f08d4d6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a49b04f4d1de694503fa4f1c09f08d4d6">BCs</a> = std::unordered_map&lt; std::string, std::string &gt;</td></tr>
 <tr class="separator:a49b04f4d1de694503fa4f1c09f08d4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -124,9 +126,29 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a92eb7785ec327e032ed185edf5e03a38"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:a92eb7785ec327e032ed185edf5e03a38"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a92eb7785ec327e032ed185edf5e03a38">info_runtime</a> (OStream &amp;output) const</td></tr>
 <tr class="separator:a92eb7785ec327e032ed185edf5e03a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a465cbb0150bcca665e9ee2dc29886273"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a465cbb0150bcca665e9ee2dc29886273">Boundary_Cases</a> (<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a49b04f4d1de694503fa4f1c09f08d4d6">BCs</a> <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#afaa08ee5fb31358cb88936760dc33039">boundary_conditions</a>, MeshSearch &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a74f0f20661d71b2a2b2793bfa89b7a9e">mesh_search</a>, Store_Info &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a883869f98ba46c2b1b0d43c9c26f9aee">store_info</a>, Boundary_Periodic &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#aa00cf39ee3830929433a5b0b87cbf2fd">boundary_periodic</a>=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, Boundary_Custom &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#aba5971ce06d047ad761578e103223a8a">boundary_custom</a>=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{})</td></tr>
+<tr class="separator:a465cbb0150bcca665e9ee2dc29886273"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74913b174370e83d0f389ec5ec203e71"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
+<tr class="memitem:a74913b174370e83d0f389ec5ec203e71"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a74913b174370e83d0f389ec5ec203e71">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="separator:a74913b174370e83d0f389ec5ec203e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f61600012b79cf3902daaacde7552ad"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:a7f61600012b79cf3902daaacde7552ad"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a7f61600012b79cf3902daaacde7552ad">operator()</a> (State &amp;state, State const &amp;state_old={}) const</td></tr>
+<tr class="separator:a7f61600012b79cf3902daaacde7552ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92eb7785ec327e032ed185edf5e03a38"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
+<tr class="memitem:a92eb7785ec327e032ed185edf5e03a38"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a92eb7785ec327e032ed185edf5e03a38">info_runtime</a> (OStream &amp;output) const</td></tr>
+<tr class="separator:a92eb7785ec327e032ed185edf5e03a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:a2b872642f08a2cf5379dc89fef166b16"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a2b872642f08a2cf5379dc89fef166b16">patch_names</a> () const</td></tr>
+<tr class="separator:a2b872642f08a2cf5379dc89fef166b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac98b26b1e2243f22fdc6477d0eca3c60"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac98b26b1e2243f22fdc6477d0eca3c60">patch_name</a> (std::size_t patch) const</td></tr>
+<tr class="separator:ac98b26b1e2243f22fdc6477d0eca3c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c22aaec94043f220503a2a722526241"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5c22aaec94043f220503a2a722526241">reflection_normal</a> (Foam::label face) const</td></tr>
+<tr class="separator:a5c22aaec94043f220503a2a722526241"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd679c9473d91f250d6245ff5bfe3ba"><td class="memTemplParams" colspan="2">template&lt;typename Intersection &gt; </td></tr>
+<tr class="memitem:a8bd679c9473d91f250d6245ff5bfe3ba"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a8bd679c9473d91f250d6245ff5bfe3ba">next_intersection</a> (Intersection const &amp;intersection, Foam::point const &amp;end) const</td></tr>
+<tr class="separator:a8bd679c9473d91f250d6245ff5bfe3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b872642f08a2cf5379dc89fef166b16"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a2b872642f08a2cf5379dc89fef166b16">patch_names</a> () const</td></tr>
 <tr class="separator:a2b872642f08a2cf5379dc89fef166b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac98b26b1e2243f22fdc6477d0eca3c60"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac98b26b1e2243f22fdc6477d0eca3c60">patch_name</a> (std::size_t patch) const</td></tr>
@@ -159,7 +181,23 @@ class ptof::Boundary_Cases&lt; MeshSearch, Store_Info, Boundary_Periodic, Bounda
 <p>Boundary object to handle implemented boundary types. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a49b04f4d1de694503fa4f1c09f08d4d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49b04f4d1de694503fa4f1c09f08d4d6">&#9670;&nbsp;</a></span>BCs</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a49b04f4d1de694503fa4f1c09f08d4d6">&#9670;&nbsp;</a></span>BCs <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a49b04f4d1de694503fa4f1c09f08d4d6">BCs</a> =  std::unordered_map&lt;std::string, std::string&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a49b04f4d1de694503fa4f1c09f08d4d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49b04f4d1de694503fa4f1c09f08d4d6">&#9670;&nbsp;</a></span>BCs <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +215,63 @@ template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Period
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a465cbb0150bcca665e9ee2dc29886273"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a465cbb0150bcca665e9ee2dc29886273">&#9670;&nbsp;</a></span>Boundary_Cases()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a465cbb0150bcca665e9ee2dc29886273">&#9670;&nbsp;</a></span>Boundary_Cases() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">Boundary_Cases</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a49b04f4d1de694503fa4f1c09f08d4d6">BCs</a>&#160;</td>
+          <td class="paramname"><em>boundary_conditions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MeshSearch &amp;&amp;&#160;</td>
+          <td class="paramname"><em>mesh_search</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Store_Info &amp;&amp;&#160;</td>
+          <td class="paramname"><em>store_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Boundary_Periodic &amp;&amp;&#160;</td>
+          <td class="paramname"><em>boundary_periodic</em> = <code><a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Boundary_Custom &amp;&amp;&#160;</td>
+          <td class="paramname"><em>boundary_custom</em> = <code><a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a465cbb0150bcca665e9ee2dc29886273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a465cbb0150bcca665e9ee2dc29886273">&#9670;&nbsp;</a></span>Boundary_Cases() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +333,37 @@ template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Period
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a92eb7785ec327e032ed185edf5e03a38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92eb7785ec327e032ed185edf5e03a38">&#9670;&nbsp;</a></span>info_runtime()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a92eb7785ec327e032ed185edf5e03a38">&#9670;&nbsp;</a></span>info_runtime() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<div class="memtemplate">
+template&lt;typename OStream &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::info_runtime </td>
+          <td>(</td>
+          <td class="paramtype">OStream &amp;&#160;</td>
+          <td class="paramname"><em>output</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a92eb7785ec327e032ed185edf5e03a38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92eb7785ec327e032ed185edf5e03a38">&#9670;&nbsp;</a></span>info_runtime() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +394,47 @@ template&lt;typename OStream &gt; </div>
 </div>
 </div>
 <a id="a8bd679c9473d91f250d6245ff5bfe3ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bd679c9473d91f250d6245ff5bfe3ba">&#9670;&nbsp;</a></span>next_intersection()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bd679c9473d91f250d6245ff5bfe3ba">&#9670;&nbsp;</a></span>next_intersection() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<div class="memtemplate">
+template&lt;typename Intersection &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::next_intersection </td>
+          <td>(</td>
+          <td class="paramtype">Intersection const &amp;&#160;</td>
+          <td class="paramname"><em>intersection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Foam::point const &amp;&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8bd679c9473d91f250d6245ff5bfe3ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bd679c9473d91f250d6245ff5bfe3ba">&#9670;&nbsp;</a></span>next_intersection() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +475,47 @@ template&lt;typename Intersection &gt; </div>
 </div>
 </div>
 <a id="a7f61600012b79cf3902daaacde7552ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f61600012b79cf3902daaacde7552ad">&#9670;&nbsp;</a></span>operator()()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f61600012b79cf3902daaacde7552ad">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<div class="memtemplate">
+template&lt;typename State &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">State &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">State const &amp;&#160;</td>
+          <td class="paramname"><em>state_old</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7f61600012b79cf3902daaacde7552ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f61600012b79cf3902daaacde7552ad">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -354,7 +558,37 @@ template&lt;typename State &gt; </div>
 </div>
 </div>
 <a id="a74913b174370e83d0f389ec5ec203e71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74913b174370e83d0f389ec5ec203e71">&#9670;&nbsp;</a></span>outOfBounds()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a74913b174370e83d0f389ec5ec203e71">&#9670;&nbsp;</a></span>outOfBounds() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<div class="memtemplate">
+template&lt;typename Position &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::outOfBounds </td>
+          <td>(</td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a74913b174370e83d0f389ec5ec203e71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74913b174370e83d0f389ec5ec203e71">&#9670;&nbsp;</a></span>outOfBounds() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +619,35 @@ template&lt;typename Position &gt; </div>
 </div>
 </div>
 <a id="ac98b26b1e2243f22fdc6477d0eca3c60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac98b26b1e2243f22fdc6477d0eca3c60">&#9670;&nbsp;</a></span>patch_name()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac98b26b1e2243f22fdc6477d0eca3c60">&#9670;&nbsp;</a></span>patch_name() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::patch_name </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>patch</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac98b26b1e2243f22fdc6477d0eca3c60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac98b26b1e2243f22fdc6477d0eca3c60">&#9670;&nbsp;</a></span>patch_name() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +676,34 @@ template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Period
 </div>
 </div>
 <a id="a2b872642f08a2cf5379dc89fef166b16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b872642f08a2cf5379dc89fef166b16">&#9670;&nbsp;</a></span>patch_names()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b872642f08a2cf5379dc89fef166b16">&#9670;&nbsp;</a></span>patch_names() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::patch_names </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2b872642f08a2cf5379dc89fef166b16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b872642f08a2cf5379dc89fef166b16">&#9670;&nbsp;</a></span>patch_names() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -442,7 +731,35 @@ template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Period
 </div>
 </div>
 <a id="a5c22aaec94043f220503a2a722526241"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c22aaec94043f220503a2a722526241">&#9670;&nbsp;</a></span>reflection_normal()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c22aaec94043f220503a2a722526241">&#9670;&nbsp;</a></span>reflection_normal() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;::reflection_normal </td>
+          <td>(</td>
+          <td class="paramtype">Foam::label&#160;</td>
+          <td class="paramname"><em>face</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5c22aaec94043f220503a2a722526241"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c22aaec94043f220503a2a722526241">&#9670;&nbsp;</a></span>reflection_normal() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -625,7 +942,7 @@ template&lt;typename MeshSearch , typename Store_Info , typename Boundary_Period
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../dd/da3/_p_t_o_f_2_boundary_8h_source.html">Boundary.h</a></li>
+<li>ParticleTrackingOF/<a class="el" href="../../d3/d0d/_particle_tracking_o_f_2_boundary_8h_source.html">Boundary.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

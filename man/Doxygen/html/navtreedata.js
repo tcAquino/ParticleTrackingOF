@@ -42,7 +42,7 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", "functions_vars" ],
-        [ "Typedefs", "functions_type.html", null ],
+        [ "Typedefs", "functions_type.html", "functions_type" ],
         [ "Enumerations", "functions_enum.html", null ]
       ] ]
     ] ],
@@ -55,16 +55,20 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d1/d82/structptof_1_1_directories_o_f.html#a6bf70e8ca1c07f41ec6e8e4a1123d7fb",
-"d2/dd2/classctrw_1_1_c_t_r_w.html#a5d2f69ff6a005c210c39ea179689c7a9",
-"d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html#a1b7177585ff33728376d55d7a5387a88",
-"d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a5822b663e2186b9fbaff041224523fdb",
-"d8/d2a/structptof_1_1model__advection__diffusion__fpt__3d_1_1_model.html#a1d231043bbd43f5aaa362bb4a5891ee8",
-"d9/d28/structctrw_1_1_state__position.html#a33d81d95385855ff47e0d873e7976d15",
-"db/dc2/structptof_1_1model__advection__2d_1_1_transport.html#a140bf87c59738049653a32722be8f6df",
-"dd/d0d/structptof_1_1_end_criterion.html#a355fd58170c228bc1ff0d1d2d1a5acd2",
-"df/d1d/namespaceuseful.html#a2068aee74632211d1ab23ec9c51b669f",
-"namespacemembers_b.html"
+"d1/d40/classctrw_1_1_jump_generator___velocity__with_hint.html#a269c9af53c7295f28714762370ee2a9d",
+"d2/d80/structptof_1_1_measure_spacing_units.html#a45689f18d2082d42aaac8d95956bb339",
+"d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html#a5607f308e1f2d99fbb9b66e7eaaf1940",
+"d4/d74/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__fpt.html",
+"d5/daa/structptof_1_1model__advection__diffusion__decay__catalytic__3d_1_1_reaction_1_1_parameters.html",
+"d6/dc4/_particle_tracking_o_f_2_models_8h.html#abfa1ef3298d8500eb9dc2d0e61e4209b",
+"d7/dda/structctrw_1_1_get__position__periodic__cartesian.html#aed225e6c26eef95f732fbd7c4c2d9e4d",
+"d9/d1a/structctrw_1_1_get__velocity__property.html#a3848e4159172707bdea6b927d7733fb4",
+"da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a141a85a5b1776bc8c239c7e9bce4b408",
+"dc/d30/structptof_1_1_geometry.html#a0fffe048c94e91b70e1bd8cd70d00f6f",
+"dd/d08/structctrw_1_1_get__old.html#ae49e37cf0bacf9b5f1ec975242c08656",
+"de/d46/structptof_1_1model__advection__diffusion__decay__catalytic__3d_1_1_reaction.html",
+"df/d1d/namespaceuseful.html#aa83a9553ab0f9e0cb71e9fd4c4c7bc5c",
+"functions_func_b.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

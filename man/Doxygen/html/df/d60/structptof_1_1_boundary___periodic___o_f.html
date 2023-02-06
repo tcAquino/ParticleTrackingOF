@@ -93,10 +93,18 @@ $(document).ready(function(){initNavTree('df/d60/structptof_1_1_boundary___perio
 <p>Boundary object for periodic boundaries. The templated boundary object should enforce the periodic boundaries.  
  <a href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../dd/da3/_p_t_o_f_2_boundary_8h_source.html">PTOF/Boundary.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d3/d0d/_particle_tracking_o_f_2_boundary_8h_source.html">PTOF/Boundary.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a99952e26d12d4d670af239f6c212d144"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#a99952e26d12d4d670af239f6c212d144">Boundary_Periodic_OF</a> (Boundary &amp;&amp;boundary, MeshSearch &amp;&amp;<a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#a9fee405e35f4d916dc9c2f5d4abf0a58">mesh_search</a>)</td></tr>
+<tr class="separator:a99952e26d12d4d670af239f6c212d144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbb0d37e6224a11782be6f467c378804"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
+<tr class="memitem:afbb0d37e6224a11782be6f467c378804"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#afbb0d37e6224a11782be6f467c378804">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="separator:afbb0d37e6224a11782be6f467c378804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa42d2617917de571687f5c05927d343"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection &gt; </td></tr>
+<tr class="memitem:afa42d2617917de571687f5c05927d343"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#afa42d2617917de571687f5c05927d343">operator()</a> (State &amp;state, Intersection &amp;intersection) const</td></tr>
+<tr class="separator:afa42d2617917de571687f5c05927d343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99952e26d12d4d670af239f6c212d144"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#a99952e26d12d4d670af239f6c212d144">Boundary_Periodic_OF</a> (Boundary &amp;&amp;boundary, MeshSearch &amp;&amp;<a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html#a9fee405e35f4d916dc9c2f5d4abf0a58">mesh_search</a>)</td></tr>
 <tr class="separator:a99952e26d12d4d670af239f6c212d144"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbb0d37e6224a11782be6f467c378804"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
@@ -120,7 +128,45 @@ struct ptof::Boundary_Periodic_OF&lt; Boundary, MeshSearch &gt;</h3>
 <p>Boundary object for periodic boundaries. The templated boundary object should enforce the periodic boundaries. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a99952e26d12d4d670af239f6c212d144"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99952e26d12d4d670af239f6c212d144">&#9670;&nbsp;</a></span>Boundary_Periodic_OF()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a99952e26d12d4d670af239f6c212d144">&#9670;&nbsp;</a></span>Boundary_Periodic_OF() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Boundary , typename MeshSearch &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html">ptof::Boundary_Periodic_OF</a>&lt; Boundary, MeshSearch &gt;::<a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html">Boundary_Periodic_OF</a> </td>
+          <td>(</td>
+          <td class="paramtype">Boundary &amp;&amp;&#160;</td>
+          <td class="paramname"><em>boundary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MeshSearch &amp;&amp;&#160;</td>
+          <td class="paramname"><em>mesh_search</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a99952e26d12d4d670af239f6c212d144"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99952e26d12d4d670af239f6c212d144">&#9670;&nbsp;</a></span>Boundary_Periodic_OF() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,7 +206,47 @@ template&lt;typename Boundary , typename MeshSearch &gt; </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="afa42d2617917de571687f5c05927d343"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa42d2617917de571687f5c05927d343">&#9670;&nbsp;</a></span>operator()()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afa42d2617917de571687f5c05927d343">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Boundary , typename MeshSearch &gt; </div>
+<div class="memtemplate">
+template&lt;typename State , typename Intersection &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html">ptof::Boundary_Periodic_OF</a>&lt; Boundary, MeshSearch &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">State &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Intersection &amp;&#160;</td>
+          <td class="paramname"><em>intersection</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afa42d2617917de571687f5c05927d343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa42d2617917de571687f5c05927d343">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,7 +287,37 @@ template&lt;typename State , typename Intersection &gt; </div>
 </div>
 </div>
 <a id="afbb0d37e6224a11782be6f467c378804"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbb0d37e6224a11782be6f467c378804">&#9670;&nbsp;</a></span>outOfBounds()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afbb0d37e6224a11782be6f467c378804">&#9670;&nbsp;</a></span>outOfBounds() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Boundary , typename MeshSearch &gt; </div>
+<div class="memtemplate">
+template&lt;typename Position &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../df/d60/structptof_1_1_boundary___periodic___o_f.html">ptof::Boundary_Periodic_OF</a>&lt; Boundary, MeshSearch &gt;::outOfBounds </td>
+          <td>(</td>
+          <td class="paramtype">Position const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afbb0d37e6224a11782be6f467c378804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbb0d37e6224a11782be6f467c378804">&#9670;&nbsp;</a></span>outOfBounds() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,7 +381,7 @@ template&lt;typename Boundary , typename MeshSearch &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../dd/da3/_p_t_o_f_2_boundary_8h_source.html">Boundary.h</a></li>
+<li>ParticleTrackingOF/<a class="el" href="../../d3/d0d/_particle_tracking_o_f_2_boundary_8h_source.html">Boundary.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

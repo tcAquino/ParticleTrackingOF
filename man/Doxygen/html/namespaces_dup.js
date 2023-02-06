@@ -8,6 +8,19 @@ var namespaces_dup =
     [ "ctrw", "d8/d34/namespacectrw.html", "d8/d34/namespacectrw" ],
     [ "FieldOptions", "d5/d33/namespace_field_options.html", null ],
     [ "geometry", "d5/d5f/namespacegeometry.html", "d5/d5f/namespacegeometry" ],
+    [ "grid", "d9/d48/namespacegrid.html", "d9/d48/namespacegrid" ],
+    [ "modular", "da/d32/namespacemodular.html", [
+      [ "circMinus", "da/d32/namespacemodular.html#a643d0959ac1436296d4bf1801c946d18", null ],
+      [ "circMinus", "da/d32/namespacemodular.html#afdbe629ef066e6d197505c3eb7700076", null ],
+      [ "circPlus", "da/d32/namespacemodular.html#ab867d011fd1cf10aae8eb6a8db251545", null ],
+      [ "circPlus", "da/d32/namespacemodular.html#abe4c260da8826c5178841288084f668c", null ],
+      [ "convert", "da/d32/namespacemodular.html#a1a636ea75848db4d34fb09f926c3d16e", null ],
+      [ "convert", "da/d32/namespacemodular.html#a06bfd3d3e6cce73064fc93d32fb1ff90", null ],
+      [ "increment", "da/d32/namespacemodular.html#a751c3fd158800664390ee07d8932ae03", null ],
+      [ "increment", "da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc", null ],
+      [ "indexToPosition", "da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0", null ],
+      [ "positionToIndex", "da/d32/namespacemodular.html#ac097f25f765cb8774d3f147089590743", null ]
+    ] ],
     [ "operation", "dc/dc5/namespaceoperation.html", [
       [ "abs", "dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab", null ],
       [ "abs_sq", "dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78", null ],
@@ -81,7 +94,7 @@ var namespaces_dup =
       [ "times_scalar", "dc/dc5/namespaceoperation.html#a68f9f3922acccb2440557f9e25b41afa", null ],
       [ "times_scalar", "dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982", null ],
       [ "times_scalar_InPlace", "dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f", null ],
-      [ "widths", "dc/dc5/namespaceoperation.html#a780b2b66202523429c157d6144c5ba91", null ],
+      [ "widths", "dc/dc5/namespaceoperation.html#ad4b16fa3f56331492f9e266d671a5ca1", null ],
       [ "widths", "dc/dc5/namespaceoperation.html#ad8d1fda37a1896f129ea50da804e566f", null ]
     ] ],
     [ "ptof", "d2/dd1/namespaceptof.html", "d2/dd1/namespaceptof" ],

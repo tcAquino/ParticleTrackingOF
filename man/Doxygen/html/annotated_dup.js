@@ -81,8 +81,17 @@ var annotated_dup =
       [ "Boundary_Open_RadialReflecting_3d", "d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html", "d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d" ],
       [ "Boundary_Periodic_SymmetryPlanes", "d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes.html", "d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes" ],
       [ "Boundary_Periodic_SymmetryPlanes_WithOutsideInfo", "df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html", "df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info" ],
+      [ "Parallelepiped", "d4/d45/structgeometry_1_1_parallelepiped.html", "d4/d45/structgeometry_1_1_parallelepiped" ],
+      [ "Sphere", "d5/da0/structgeometry_1_1_sphere.html", "d5/da0/structgeometry_1_1_sphere" ],
+      [ "Domain", "d5/db2/structgeometry_1_1_domain.html", "d5/db2/structgeometry_1_1_domain" ],
       [ "SymmetryPlanes_Bcc", "da/dce/structgeometry_1_1_symmetry_planes___bcc.html", "da/dce/structgeometry_1_1_symmetry_planes___bcc" ],
       [ "SymmetryPlanes_Sc", "d4/da0/structgeometry_1_1_symmetry_planes___sc.html", "d4/da0/structgeometry_1_1_symmetry_planes___sc" ]
+    ] ],
+    [ "grid", "d9/d48/namespacegrid.html", [
+      [ "RegularGrid", "dc/d43/classgrid_1_1_regular_grid.html", "dc/d43/classgrid_1_1_regular_grid" ],
+      [ "KDTree_Grid", "d1/dfe/classgrid_1_1_k_d_tree___grid.html", "d1/dfe/classgrid_1_1_k_d_tree___grid" ],
+      [ "KDTree_Grid_Mask", "db/d0a/classgrid_1_1_k_d_tree___grid___mask.html", "db/d0a/classgrid_1_1_k_d_tree___grid___mask" ],
+      [ "Grid_void_solid", "d2/d87/classgrid_1_1_grid__void__solid.html", "d2/d87/classgrid_1_1_grid__void__solid" ]
     ] ],
     [ "ptof", "d2/dd1/namespaceptof.html", [
       [ "model_advection_2d", "d6/d86/namespaceptof_1_1model__advection__2d.html", [
@@ -262,6 +271,7 @@ var annotated_dup =
         [ "right_shift", "db/dc9/structuseful_1_1notstd_1_1right__shift.html", "db/dc9/structuseful_1_1notstd_1_1right__shift" ],
         [ "operator_and", "dd/d5e/structuseful_1_1notstd_1_1operator__and.html", "dd/d5e/structuseful_1_1notstd_1_1operator__and" ]
       ] ],
+      [ "MultiArray", "dc/d1a/classuseful_1_1_multi_array.html", "dc/d1a/classuseful_1_1_multi_array" ],
       [ "can_call_sqrt", "d8/d23/structuseful_1_1can__call__sqrt.html", null ],
       [ "can_call_sqrt< std::void_t< decltype(std::sqrt(std::declval< Args >()...))>, Args... >", "d7/d36/structuseful_1_1can__call__sqrt_3_01std_1_1void__t_3_01decltype_07std_1_1sqrt_07std_1_1declval_3f39161ab8e763816eedc8e73fc5ae026.html", null ],
       [ "can_call_abs", "d9/d78/structuseful_1_1can__call__abs.html", null ],

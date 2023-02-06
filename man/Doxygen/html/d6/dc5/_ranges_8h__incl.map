@@ -1,6 +1,5 @@
-<map id="General/Ranges.h" name="General/Ranges.h">
-<area shape="rect" id="node1" title=" " alt="" coords="78,5,215,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,91,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="115,80,178,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="202,80,265,107"/>
+<map id="general/Ranges.h" name="general/Ranges.h">
+<area shape="rect" id="node1" title=" " alt="" coords="19,5,153,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,68,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="93,80,178,107"/>
 </map>

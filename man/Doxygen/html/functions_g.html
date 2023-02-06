@@ -92,9 +92,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="dc/d30/structptof_1_1_geometry.html#a7628263ab5358129345ba6dc058eaacd">ptof::Geometry&lt; dim_val, dynamics &gt;</a>
 </li>
 <li>geometry
-: <a class="el" href="d5/de8/classptof_1_1_output___cases.html#a259332557f35b46c3dcfdf12f41f7be4">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;</a>
-, <a class="el" href="d0/d91/structptof_1_1_output___cases_1_1_output.html#a93b3613e76999b14fdb85225a8079246">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output</a>
-, <a class="el" href="d2/d71/structptof_1_1_output___cases_1_1_output_time.html#a6f3c7ecb85f8f474804e229683cb4a37">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::OutputTime</a>
+: <a class="el" href="d5/de8/classptof_1_1_output___cases.html#a488bb31773559a21d77abd9262e619f9">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;</a>
+, <a class="el" href="d0/d91/structptof_1_1_output___cases_1_1_output.html#a1d8a852585d7ac4348e438d092db9c52">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output</a>
+, <a class="el" href="d2/d71/structptof_1_1_output___cases_1_1_output_time.html#a9460a2521c71cb8acaaa3f998a9265bf">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::OutputTime</a>
 </li>
 <li>Geometry_Bcc()
 : <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ad42c781f347dd2d2c0abe596b1353e9e">ptof::Geometry_Bcc&lt; dim_val, dynamics, periodicity_type &gt;</a>
@@ -125,12 +125,19 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 , <a class="el" href="d4/d94/classctrw_1_1_transitions___time___position.html#a4875fa60d608e67c70d696e179d5d8ea">ctrw::Transitions_Time_Position&lt; TimeGenerator, JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#a34ada128464d4506e27933f9d9050405">ctrw::Transitions_Velocity_Acceleration&lt; Acceleration, Boundary &gt;</a>
 </li>
+<li>get_center()
+: <a class="el" href="d4/d45/structgeometry_1_1_parallelepiped.html#a7cf5a8623c89d750c674962b3768bf1f">geometry::Parallelepiped&lt; Position_t &gt;</a>
+, <a class="el" href="d5/da0/structgeometry_1_1_sphere.html#a33a9a51e72bdba8a47c80a976ffa89f2">geometry::Sphere&lt; Position_t &gt;</a>
+</li>
 <li>get_field()
 : <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a17a429f0198cac13955fe5c6a0308e62">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside &gt;</a>
 , <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac5c1e6dd0c62510b3ed4c6030db6abdf">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside &gt;</a>
 </li>
 <li>Get_from_particle()
 : <a class="el" href="dd/db1/structctrw_1_1_get__from__particle.html#a10d737a909a5e362a719bab2cca5c0e9">ctrw::Get_from_particle&lt; Getter &gt;</a>
+</li>
+<li>get_half_dimensions()
+: <a class="el" href="d4/d45/structgeometry_1_1_parallelepiped.html#a86c42d8b97b2dd98aa24d687944208aa">geometry::Parallelepiped&lt; Position_t &gt;</a>
 </li>
 <li>get_jump_generator()
 : <a class="el" href="df/deb/classctrw_1_1_transitions___locate___time___position.html#a12f24bbdc32b7a73046a2c47c038ab3b">ctrw::Transitions_Locate_Time_Position&lt; Locator, TimeGenerator, JumpGenerator, Boundary &gt;</a>
@@ -249,13 +256,20 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="d9/d1a/structctrw_1_1_get__velocity__property.html#a3848e4159172707bdea6b927d7733fb4">ctrw::Get_velocity_property&lt; Property &gt;</a>
 </li>
 <li>getter_position
-: <a class="el" href="d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html#a2ce3dbf8b3611009d516743de6cf469c">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_mean_periodic&lt; Boundary &gt;</a>
-, <a class="el" href="d3/d84/structptof_1_1_output___cases_1_1_output__position__periodic.html#aff9ac90c23a249878ed8737e6f43ba7f">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_periodic&lt; Boundary &gt;</a>
-, <a class="el" href="da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic.html#a99d76ab3f65ea670ac12b01d753738cb">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_second_moment_periodic&lt; Boundary &gt;</a>
-, <a class="el" href="d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic.html#ab64fc17756dc19a178a83699a9ce96de">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_variance_periodic&lt; Boundary &gt;</a>
+: <a class="el" href="d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html#aa39f3eb2c4948d68704bdfd7dfb7a8c3">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_mean_periodic&lt; Boundary &gt;</a>
+, <a class="el" href="d3/d84/structptof_1_1_output___cases_1_1_output__position__periodic.html#a381be528cac090be1987be3be44577c6">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_periodic&lt; Boundary &gt;</a>
+, <a class="el" href="da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic.html#ad42adbb1e3783f01fce1a9a106f5364b">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_second_moment_periodic&lt; Boundary &gt;</a>
+, <a class="el" href="d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic.html#aa9e3405896bd0ab471aee359640082fd">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_variance_periodic&lt; Boundary &gt;</a>
 </li>
 <li>gradient
 : <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a22713161b875b4356b0689c813935d00">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient &gt;</a>
+</li>
+<li>grid
+: <a class="el" href="d1/dfe/classgrid_1_1_k_d_tree___grid.html#ab9dbfd1b4894c26c79a18bd062b6b002">grid::KDTree_Grid&lt; Grid, dim &gt;</a>
+, <a class="el" href="db/d0a/classgrid_1_1_k_d_tree___grid___mask.html#ab7045798d5539aff89ba8aade609d0ca">grid::KDTree_Grid_Mask&lt; Grid, dim &gt;</a>
+</li>
+<li>Grid_void_solid()
+: <a class="el" href="d2/d87/classgrid_1_1_grid__void__solid.html#a65f1a7b548aa483047e995e5a90c0615">grid::Grid_void_solid</a>
 </li>
 </ul>
 </div><!-- contents -->

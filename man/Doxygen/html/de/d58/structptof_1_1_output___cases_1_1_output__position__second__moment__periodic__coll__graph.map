@@ -1,5 +1,5 @@
 <map id="ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_second_moment_periodic&lt; Boundary &gt;" name="ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_second_moment_periodic&lt; Boundary &gt;">
-<area shape="rect" id="node1" title="Output time and second moment of position (weighted by mass) with position accounting for periodicity..." alt="" coords="879,85,1167,156"/>
+<area shape="rect" id="node1" title="Output time and second moment of position (weighted by mass) with position accounting for periodicity..." alt="" coords="879,23,1167,93"/>
 <area shape="rect" id="node2" href="$d2/d71/structptof_1_1_output___cases_1_1_output_time.html" title="Polymorphic output handler for outputting time and some quantity." alt="" coords="537,30,728,86"/>
 <area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title=" " alt="" coords="237,5,397,47"/>
 <area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="5,13,140,39"/>

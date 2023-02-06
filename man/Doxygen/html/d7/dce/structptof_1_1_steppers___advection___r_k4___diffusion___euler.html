@@ -92,10 +92,19 @@ $(document).ready(function(){initNavTree('d7/dce/structptof_1_1_steppers___advec
 <p>Time steppers for RK4 advection and stochastic forward Euler diffusion.  
  <a href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d0/dd9/_steppers_8h_source.html">PTOF/Steppers.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d5/dda/_particle_tracking_o_f_2_steppers_8h_source.html">PTOF/Steppers.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:abb249c7cd15fb1af396a7f88a9a7883e"><td class="memTemplParams" colspan="2">template&lt;typename Parameters &gt; </td></tr>
+<tr class="memitem:abb249c7cd15fb1af396a7f88a9a7883e"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#abb249c7cd15fb1af396a7f88a9a7883e">makeTimeGenerator</a> (Parameters const &amp;params)</td></tr>
+<tr class="separator:abb249c7cd15fb1af396a7f88a9a7883e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a373e95071e591811bf8456a4a5e5fc68"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </td></tr>
+<tr class="memitem:a373e95071e591811bf8456a4a5e5fc68"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a373e95071e591811bf8456a4a5e5fc68">makeJumpGenerator</a> (VelocityField &amp;&amp;velocity_field, Boundary &amp;&amp;boundary, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers, std::size_t dim)</td></tr>
+<tr class="separator:a373e95071e591811bf8456a4a5e5fc68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3617473840cdd4ace60ad4fd9451014e"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </td></tr>
+<tr class="memitem:a3617473840cdd4ace60ad4fd9451014e"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a3617473840cdd4ace60ad4fd9451014e">makeJumpGenerator_Advection</a> (VelocityField &amp;&amp;velocity_field, Boundary &amp;&amp;boundary, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers, std::size_t dim)</td></tr>
+<tr class="separator:a3617473840cdd4ace60ad4fd9451014e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb249c7cd15fb1af396a7f88a9a7883e"><td class="memTemplParams" colspan="2">template&lt;typename Parameters &gt; </td></tr>
 <tr class="memitem:abb249c7cd15fb1af396a7f88a9a7883e"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#abb249c7cd15fb1af396a7f88a9a7883e">makeTimeGenerator</a> (Parameters const &amp;params)</td></tr>
 <tr class="separator:abb249c7cd15fb1af396a7f88a9a7883e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,7 +119,63 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Time steppers for RK4 advection and stochastic forward Euler diffusion. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a373e95071e591811bf8456a4a5e5fc68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a373e95071e591811bf8456a4a5e5fc68">&#9670;&nbsp;</a></span>makeJumpGenerator()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a373e95071e591811bf8456a4a5e5fc68">&#9670;&nbsp;</a></span>makeJumpGenerator() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto ptof::Steppers_Advection_RK4_Diffusion_Euler::makeJumpGenerator </td>
+          <td>(</td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Boundary &amp;&amp;&#160;</td>
+          <td class="paramname"><em>boundary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TransportParameters const &amp;&#160;</td>
+          <td class="paramname"><em>params_transport</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SolverParameters const &amp;&#160;</td>
+          <td class="paramname"><em>params_solvers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>dim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a373e95071e591811bf8456a4a5e5fc68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a373e95071e591811bf8456a4a5e5fc68">&#9670;&nbsp;</a></span>makeJumpGenerator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,7 +238,63 @@ template&lt;typename VelocityField , typename Boundary , typename TransportParam
 </div>
 </div>
 <a id="a3617473840cdd4ace60ad4fd9451014e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3617473840cdd4ace60ad4fd9451014e">&#9670;&nbsp;</a></span>makeJumpGenerator_Advection()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3617473840cdd4ace60ad4fd9451014e">&#9670;&nbsp;</a></span>makeJumpGenerator_Advection() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto ptof::Steppers_Advection_RK4_Diffusion_Euler::makeJumpGenerator_Advection </td>
+          <td>(</td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Boundary &amp;&amp;&#160;</td>
+          <td class="paramname"><em>boundary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TransportParameters const &amp;&#160;</td>
+          <td class="paramname"><em>params_transport</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SolverParameters const &amp;&#160;</td>
+          <td class="paramname"><em>params_solvers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>dim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3617473840cdd4ace60ad4fd9451014e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3617473840cdd4ace60ad4fd9451014e">&#9670;&nbsp;</a></span>makeJumpGenerator_Advection() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,7 +357,35 @@ template&lt;typename VelocityField , typename Boundary , typename TransportParam
 </div>
 </div>
 <a id="abb249c7cd15fb1af396a7f88a9a7883e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb249c7cd15fb1af396a7f88a9a7883e">&#9670;&nbsp;</a></span>makeTimeGenerator()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abb249c7cd15fb1af396a7f88a9a7883e">&#9670;&nbsp;</a></span>makeTimeGenerator() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Parameters &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto ptof::Steppers_Advection_RK4_Diffusion_Euler::makeTimeGenerator </td>
+          <td>(</td>
+          <td class="paramtype">Parameters const &amp;&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abb249c7cd15fb1af396a7f88a9a7883e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb249c7cd15fb1af396a7f88a9a7883e">&#9670;&nbsp;</a></span>makeTimeGenerator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,7 +414,7 @@ template&lt;typename Parameters &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../d0/dd9/_steppers_8h_source.html">Steppers.h</a></li>
+<li>ParticleTrackingOF/<a class="el" href="../../d5/dda/_particle_tracking_o_f_2_steppers_8h_source.html">Steppers.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

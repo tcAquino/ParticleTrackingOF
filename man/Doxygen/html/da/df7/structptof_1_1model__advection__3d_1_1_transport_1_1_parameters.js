@@ -1,6 +1,8 @@
 var structptof_1_1model__advection__3d_1_1_transport_1_1_parameters =
 [
     [ "Parameters", "da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a66ace75735741b1e077ccb285b3cd727", null ],
+    [ "Parameters", "da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a66ace75735741b1e077ccb285b3cd727", null ],
+    [ "info", "da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a141a85a5b1776bc8c239c7e9bce4b408", null ],
     [ "info", "da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a141a85a5b1776bc8c239c7e9bce4b408", null ],
     [ "advection_time", "da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a7213beb36bf287a7cdd0835b0b41c090", null ],
     [ "diff_coeff", "da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#ae4d5b00e7de616411ba52bcb5ee5ca68", null ],
