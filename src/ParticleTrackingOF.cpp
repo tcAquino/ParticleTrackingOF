@@ -1,22 +1,19 @@
-//
-//  ParticleTrackingOF.cpp
-//
-//  Created by Tomás Aquino on 16/02/2022.
-//  Copyright © 2022 Tomás Aquino. All rights reserved.
-//
+// File: ParticleTrackingOF.cpp
+// Author: Tomás Aquino
+// Date: 16/02/2022
 
 #include <cstddef>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 #include <string>
-#include "general/useful.h"
-#include "ParticleTrackingOF/Directories.h"
-#include "ParticleTrackingOF/Models.h"
+#include "General/Useful.h"
+#include "PTOF/Directories.h"
+#include "PTOF/Models.h"
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt;
+  using namespace ptof::model_advection_diffusion_fpt_2d;
   
   if (useful::check_options_help(argc, argv))
   {

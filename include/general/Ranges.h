@@ -1,18 +1,17 @@
-//
-// Ranges.h
-// general
-//
-// Created by Tomas Aquino on 8/6/19.
-// Copyright © 2019 Tomas Aquino. All rights reserved.
-//
+/**
+* \file General/Ranges.h
+* \author Tomás Aquino
+* \date 08/06/2016
+*/
 
 // Initialize and set containers to ranges
 
-#ifndef Ranges_h
-#define Ranges_h
+#ifndef GENERAL_RANGES_H
+#define GENERAL_RANGES_H
 
-#include <cmath>
 #include <algorithm>
+#include <cmath>
+#include <vector>
 
 namespace range
 {

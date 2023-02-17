@@ -1,14 +1,13 @@
-//
-// useful.h
-//
-// Created on: Mar 15, 2011
-// Author: tomas
-//
+/**
+* \file General/Useful.h
+* \author Tomás Aquino
+* \date 03/15/2011
+*/
 
 // Miscelaneous collection of useful objects and algorithms
 
-#ifndef USEFUL_H_
-#define USEFUL_H_
+#ifndef GENERAL_USEFUL_H
+#define GENERAL_USEFUL_H
 
 #include <algorithm>
 #include <cmath>
@@ -39,7 +38,7 @@ namespace useful
         || string == "False" || string == "FALSE")
       return false;
     throw std::runtime_error{
-      "Expected true or false, got"
+      "Expected true or false, got "
       + string };
   }
   
@@ -140,19 +139,20 @@ namespace useful
     return it != container.end() && *it == val;
   }
   
-  // Split string
+  // Helper to split string
   // Adapted from Beder Acosta Borges's answer here:
   // https://stackoverflow.com/questions/14265581/
   // parse-split-a-string-in-c-using-string-delimiter-standard-c
-  bool endsWith(const std::string& string, const std::string& suffix)
+  bool ends_with(const std::string& string, const std::string& suffix)
   {
     return string.size() >= suffix.size() &&
       string.substr(string.size() - suffix.size()) == suffix;
   }
-  
   // Split string into vector of strings
   // Split at instances of delimeter
   // Empty entries can be included or discarded
+  // Adapted from Beder Acosta Borges's answer here:
+  // https://stackoverflow.com/questions/14265581/
   std::vector<std::string> split
   (std::string const& string, std::string const& delimiter = " ",
    bool empty_entries = false)
@@ -171,7 +171,7 @@ namespace useful
     }
 
     if (empty_entries &&
-        (string.empty() || endsWith(string, delimiter)))
+        (string.empty() || ends_with(string, delimiter)))
       tokens.push_back("");
 
     return tokens;
@@ -873,4 +873,4 @@ namespace useful
   { using type = indices<>; };
 }
 
-#endif /* USEFUL_H_ */
+#endif /* GENERAL_USEFUL_H */

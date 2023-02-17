@@ -88,7 +88,7 @@ namespace ctrw
    * \brief Jump according to a velocity field and time step (forward Euler).
    * 
    * State must define: 
-   * - position  */
+   * - position */
   template <typename VelocityField>
   class JumpGenerator_Velocity
   {
@@ -96,56 +96,6 @@ namespace ctrw
     /** Construct given the velocity field as a function of position
      * and the time step. */
     JumpGenerator_Velocity
-    (VelocityField&& velocity_field, double dt)
-    : velocity_field{ std::forward<VelocityField>(velocity_field) }
-    , dt{ dt }
-    {}
-
-    /** Set the time step. */
-    void time_step(double dt)
-    { this->dt = dt; }
-
-    /** Get the time step. */
-    double time_step() const
-    { return dt; }
-
-    /** Return the jump increment. */
-    template <typename State>
-    auto operator() (State const& state)
-    {
-      return operation::times_scalar(dt, velocity(state));
-    }
-    
-    /** Get the velocity. */
-    template <typename State>
-    auto velocity(State const& state) const
-    {
-      return velocity_field(state.position);
-    }
-    
-    auto const& get_velocity_field() const
-    { return velocity_field; }
-    
-  private:
-    VelocityField velocity_field;  /**< Velocity as a function of position. */
-    double dt;                     /**< Time step.                          */
-  };
-  template <typename VelocityField>
-  JumpGenerator_Velocity(VelocityField&&, double)
-  -> JumpGenerator_Velocity<VelocityField>;
-  
-  /** \class JumpGenerator_Velocity_State CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
-   * \brief Jump according to a velocity field and time step (forward Euler).
-   * 
-   * State must define: 
-   * - position */
-  template <typename VelocityField>
-  class JumpGenerator_Velocity_State
-  {
-  public:
-    /** Construct given the velocity field as a function of position
-     * and the time step. */
-    JumpGenerator_Velocity_State
     (VelocityField&& velocity_field, double dt)
     : velocity_field{ std::forward<VelocityField>(velocity_field) }
     , dt{ dt }
@@ -181,78 +131,8 @@ namespace ctrw
     double dt;                     /**< Time step.                       */
   };
   template <typename VelocityField>
-  JumpGenerator_Velocity_State(VelocityField&&, double)
-  -> JumpGenerator_Velocity_State<VelocityField>;
-  
-  /** \class JumpGenerator_Velocity_withHint CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
-   * \brief Jump according to a velocity field and time step (forward Euler)
-   * with the previous position as a hint to locate
-   * the current position for velocity interpolation.
-   * 
-   * State must define:  
-   * - position
-   * - tag (to identify particles for hints) \n
-   *  Note: Particle number and tags must remain fixed. */
-  template <typename VelocityField>
-  class JumpGenerator_Velocity_withHint
-  {
-  public:
-    /** Construct given the velocity field as a function of position,
-     * the time step, and the nr of particles, for which hints will be stored. */
-    JumpGenerator_Velocity_withHint
-    (VelocityField&& velocity_field, double dt, std::size_t nr_particles)
-    : velocity_field{ std::forward<VelocityField>(velocity_field) }
-    , dt{ dt }
-    , hint(nr_particles)
-    {}
-
-    /** Set the time step. */
-    void time_step(double dt)
-    { this->dt = dt; }
-
-    /** Set the time step. */
-    double time_step() const
-    { return dt; }
-
-    /** Return the jump increment. */
-    template <typename State>
-    auto operator() (State const& state)
-    {
-      locate(state);
-      return operation::times_scalar(dt, velocity(state));
-    }
-    
-    /** Get the velocity (without updating hint). */
-    template <typename State>
-    auto velocity(State const& state) const
-    {
-      return velocity_field(state.position, hint[state.tag]);
-    }
-    
-    /** Update location hint. */
-    template <typename State>
-    void locate(State const& state)
-    {
-      hint[state.tag] =
-        velocity_field.locate(state.position, hint[state.tag]);
-    }
-    
-    auto const& get_velocity_field() const
-    { return velocity_field; }
-    
-  private:
-    VelocityField velocity_field;  /**< Velocity as a function of position. */
-    double dt;                     /**< Time step.                          */
-    
-    using Hint =
-      typename std::remove_reference<VelocityField>::
-      type::Hint;            /**< Hint type.               */
-    std::vector<Hint> hint;  /**< Hints for each particle. */
-  };
-  template <typename VelocityField>
-  JumpGenerator_Velocity_withHint
-  (VelocityField&&, double, std::size_t)
-  -> JumpGenerator_Velocity_withHint<VelocityField>;
+  JumpGenerator_Velocity(VelocityField&&, double)
+  -> JumpGenerator_Velocity<VelocityField>;
   
   /** \class JumpGenerator_Velocity_RK4 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
    * \brief Jump according to a velocity field and time step, using RK4 scheme. 
@@ -267,81 +147,6 @@ namespace ctrw
     /** Construct given the velocity field as a function of position,
      * the time step, and the boundary to enforce boundary conditions. */
     JumpGenerator_Velocity_RK4
-    (VelocityField&& velocity_field, double dt, Boundary&& boundary = {})
-    : velocity_field{ std::forward<VelocityField>(velocity_field) }
-    , dt{ dt }
-    , boundary{ std::forward<Boundary>(boundary) }
-    {}
-
-    /** Set the time step.*/
-    void time_step(double dt)
-    { this->dt = dt; }
-
-    /** Get the time step.*/
-    double time_step() const
-    { return dt; }
-
-    /** Return the jump increment.*/
-    template <typename State>
-    auto operator() (State const& state)
-    {
-      auto state_intermediate = state;
-      
-      auto k1 = velocity(state);
-      operation::linearOp(dt/2., k1, state.position,
-                          state_intermediate.position);
-      boundary(state_intermediate, state);
-      auto k2 = velocity(state_intermediate);
-      operation::linearOp(dt/2., k2, state.position,
-                          state_intermediate.position);
-      boundary(state_intermediate, state);
-      auto k3 = velocity(state_intermediate);
-      operation::linearOp(dt, k3, state.position,
-                          state_intermediate.position);
-      boundary(state_intermediate, state);
-      auto k4 = velocity(state_intermediate);
-      
-      auto jump = operation::plus(k1, k4);
-      operation::linearOp(2., k2, jump, jump);
-      operation::linearOp(2., k3, jump, jump);
-      operation::times_scalar_InPlace(dt/6., jump);
-      
-      return jump;
-    }
-    
-    /** Get the velocity.*/
-    template <typename State>
-    auto velocity(State const& state) const
-    {
-      return velocity_field(state.position);
-    }
-    
-    auto const& get_velocity_field() const
-    { return velocity_field; }
-    
-  private:
-    VelocityField velocity_field;  /**< Velocity as a function of position.*/
-    double dt;                     /**< Time step.                         */
-    Boundary boundary;             /**< Boundary conditions.               */
-  };
-  template <typename VelocityField, typename Boundary>
-  JumpGenerator_Velocity_RK4
-  (VelocityField&&, double, Boundary&&)
-  -> JumpGenerator_Velocity_RK4<VelocityField, Boundary>;
-  
-  /** \class JumpGenerator_Velocity_State_RK4 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
-   * \brief Jump according to a velocity field and time step, using RK4 scheme. 
-   * 
-   * Boundary conditions are enforced in predictor-corrector steps. \n
-   *  State must define: 
-   * - position */
-  template <typename VelocityField, typename Boundary = geometry::Boundary_DoNothing>
-  class JumpGenerator_Velocity_State_RK4
-  {
-  public:
-    /** Construct given the velocity field as a function of position,
-     * the time step, and the boundary to enforce boundary conditions. */
-    JumpGenerator_Velocity_State_RK4
     (VelocityField&& velocity_field, double dt, Boundary&& boundary = {})
     : velocity_field{ std::forward<VelocityField>(velocity_field) }
     , dt{ dt }
@@ -398,108 +203,13 @@ namespace ctrw
     
   private:
     VelocityField velocity_field;  /**< Velocity as a function of state.*/
-    double dt;                     /**< Time step                      .*/
-    Boundary boundary;             /**< Boundary conditions             */
+    double dt;                     /**< Time step.                      */
+    Boundary boundary;             /**< Boundary conditions.             */
   };
   template <typename VelocityField, typename Boundary>
-  JumpGenerator_Velocity_State_RK4
+  JumpGenerator_Velocity_RK4
   (VelocityField&&, double, Boundary&&)
-  -> JumpGenerator_Velocity_State_RK4<VelocityField, Boundary>;
-  
-  /** \class JumpGenerator_Velocity_withHint_RK4 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
-   * \brief Jump according to a velocity field and time step, using RK4 scheme,
-   * with the previous position as a hint to locate
-   * the current position for velocity interpolation.
-   * 
-   * State must define:
-   * - position
-   * - tag (to identify particles for hints) \n
-   * Note: Particle number and tags must remain fixed. */
-  template
-  <typename VelocityField, typename Boundary = geometry::Boundary_DoNothing>
-  class JumpGenerator_Velocity_withHint_RK4
-  {
-  public:
-    /** Construct given the velocity field as a function of position,
-     * the time step, the nr of particles, for which hints will be stored,
-     * and the boundary to enforce boundary conditions. */
-    JumpGenerator_Velocity_withHint_RK4
-    (VelocityField&& velocity_field, double dt,
-     std::size_t nr_particles, Boundary&& boundary = {})
-    : velocity_field{ std::forward<VelocityField>(velocity_field) }
-    , dt{ dt }
-    , hint(nr_particles)
-    , boundary{ std::forward<Boundary>(boundary) }
-    {}
-
-    /** Set the time step.*/
-    void time_step(double dt)
-    { this->dt = dt; }
-
-    /** Get the time step.*/
-    double time_step() const
-    { return dt; }
-    
-    /** Get the jump increment.*/
-    template <typename State>
-    auto operator() (State const& state)
-    {
-      auto state_intermediate = state;
-      locate(state);
-      
-      auto k1 = velocity(state);
-      operation::linearOp(dt/2., k1, state.position,
-                          state_intermediate.position);
-      boundary(state_intermediate, state);
-      auto k2 = velocity(state_intermediate);
-      operation::linearOp(dt/2., k2, state.position,
-                          state_intermediate.position);
-      boundary(state_intermediate, state);
-      auto k3 = velocity(state_intermediate);
-      operation::linearOp(dt, k3, state.position,
-                          state_intermediate.position);
-      boundary(state_intermediate, state);
-      auto k4 = velocity(state_intermediate);
-      auto jump = operation::plus(k1, k4);
-      operation::linearOp_InPlace(1., jump, 2., k2);
-      operation::linearOp_InPlace(1., jump, 2., k3);
-      operation::times_scalar_InPlace(dt/6., jump);
-  
-      return jump;
-    }
-    
-    /** Get the velocity (without updating hint).*/
-    template <typename State>
-    auto velocity(State const& state) const
-    {
-      return velocity_field(state.position, hint[state.tag]);
-    }
-    
-    /** Update location hint.*/
-    template <typename State>
-    void locate(State const& state)
-    {
-      hint[state.tag] =
-        velocity_field.locate(state.position, hint[state.tag]);
-    }
-    
-    auto const& get_velocity_field() const
-    { return velocity_field; }
-    
-  private:
-    VelocityField velocity_field;  /**< Velocity as a function of position.*/
-    double dt;                     /**< Time step.  */ 
-    
-    using Hint =
-      typename std::remove_reference<VelocityField>::type::Hint;  /**< Hint type. */
-    std::vector<Hint> hint;
-    
-    Boundary boundary;
-  };
-  template <typename VelocityField, typename Boundary>
-  JumpGenerator_Velocity_withHint_RK4
-  (VelocityField&&, double, std::size_t, Boundary&&) ->
-  JumpGenerator_Velocity_withHint_RK4<VelocityField, Boundary>;
+  -> JumpGenerator_Velocity_RK4<VelocityField, Boundary>;
   
   /** \class JumpGenerator_Diffusion_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
    * \brief One dimensional diffusion jumps using Gaussian distribution. */
@@ -795,8 +505,8 @@ namespace ctrw
   {
   public:
     /** Return the orientation increment. */
-    template <typename State>
-    double operator() (State const& state)
+    template <typename State = useful::Empty>
+    double operator() (State const& state = {})
     { return constants::pi; }
   };
 }

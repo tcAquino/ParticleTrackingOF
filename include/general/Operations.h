@@ -1,29 +1,28 @@
-//
-// Operations.h
-// general
-//
-// Created by Tomas Aquino on 8/6/19.
-// Copyright © 2019 Tomas Aquino. All rights reserved.
-//
+/**
+* \file General/Operations.h
+* \author Tomás Aquino
+* \date 08/06/2019
+*/
 
 // Miscelaneous operations on containers
 // Notes:
 //    Many methods assume containers with consistent sizes are passed in
 //    Many methods require random access and operator []
-//    Some operations involve casting.
-//    The latter are spelled out explicitly for clarity and to avoid warnings
+//    Some operations involve casting;
+//    the latter are spelled out explicitly for clarity and to avoid warnings
 //    In most cases, the return value type is the type of the first container
 
-#ifndef Operations_h
-#define Operations_h
+#ifndef GENERAL_OPERATIONS_H
+#define GENERAL_OPERATIONS_H
 
 #include <cmath>
 #include <functional>
-#include "general/useful.h"
+#include <vector>
+#include "General/Useful.h"
 
 namespace operation
 {
-  // Sum of elements
+  /** Sum of elements */
   template <typename Container>
   auto sum(Container const& input)
   {
@@ -33,7 +32,7 @@ namespace operation
     return output;
   }
 
-  // Product of elements
+  /** Product of elements */
   template <typename Container>
   auto prod(Container const& input)
   {
@@ -43,7 +42,7 @@ namespace operation
     return output;
   }
 
-  // Element-wise sum of scalar
+  /** Element-wise sum of scalar */
   template <typename Container, typename Scalar, typename Container_out>
   void plus_scalar(Container const& input, Scalar cc, Container_out& output)
   {
@@ -74,7 +73,7 @@ namespace operation
   void plus_scalar_InPlace(Container& input, Scalar cc)
   { plus_scalar(input, cc, input); }
 
-  // Element-wise sum
+  /** Element-wise sum */
   template <typename Container_1, typename Container_2, typename Container_out>
   void plus(Container_1 const& input_1, Container_2 const& input_2, Container_out& output)
   {
@@ -216,7 +215,7 @@ namespace operation
   void minus_InPlace(Container_1& input_1, Container_2 const& input_2)
   { minus(input_1, input_2, input_1); }
 
-  // Element-wise multiplication by scalar
+  /** Element-wise multiplication by scalar */
   template <typename Container, typename Scalar, typename Container_out>
   void times_scalar(Scalar lambda, Container const& input, Container_out& output)
   {
@@ -252,7 +251,7 @@ namespace operation
   void times_scalar_InPlace(Scalar lambda, Container& input)
   { times_scalar(lambda, input, input); }
 
-  // Element-wise multiplication
+  /** Element-wise multiplication */
   template <typename Container_1, typename Container_2, typename Container_out>
   void times(Container_1 const& input_1, Container_2 const& input_2, Container_out& output)
   {
@@ -289,7 +288,7 @@ namespace operation
   void times_InPlace(Container_1& input_1, Container_2 const& input_2)
   { times(input_1, input_2, input_1); }
 
-  // Element-wise division by scalar
+  /** Element-wise division by scalar */
   template <typename Container, typename Scalar, typename Container_out>
   void div_scalar(Container const& input, Scalar lambda, Container_out& output)
   {
@@ -326,7 +325,7 @@ namespace operation
   void div_scalar_InPlace(Container& input, Scalar lambda)
   { div_scalar(input, lambda, input); }
 
-  // Element-wise division
+  /** Element-wise division */
   template <typename Container_1, typename Container_2, typename Container_out>
   void div(Container_1 const& input_1, Container_2 const& input_2, Container_out& output)
   {
@@ -363,7 +362,7 @@ namespace operation
   void div_InPlace(Container_1& input_1, Container_2 const& input_2)
   { div(input_1, input_2, input_1); }
 
-  // lambda_1*input_1 + lambda_2*input2
+  /** lambda_1*input_1 + lambda_2*input2 */
   template <typename Container_1, typename Type_1,
   typename Container_2, typename Type_2,
   typename Container_out>
@@ -416,7 +415,7 @@ namespace operation
    Type_2 lambda_2, Container_2 const& input_2)
   { linearOp(lambda_1, input_1, lambda_2, input_2, input_1); }
 
-  // lambda*input_1 + input2
+  /** lambda*input_1 + input2 */
   template <typename Container_1, typename Type,
   typename Container_2, typename Container_out>
   void linearOp
@@ -463,7 +462,7 @@ namespace operation
   (Type lambda, Container_1& input_1, Container_2 const& input_2)
   { linearOp(lambda, input_1, input_2, input_1); }
 
-  // Element-wise square
+  /** Element-wise square */
   template <typename Container, typename Container_out>
   void square(Container const& input, Container_out& output)
   {
@@ -500,7 +499,7 @@ namespace operation
   void square_InPlace(Container& input)
   { square(input, input); }
 
-  // Element-wise square root
+  /** Element-wise square root */
   template <typename Container, typename Container_out>
   void sqrt(Container const& input, Container_out& output)
   {
@@ -537,7 +536,7 @@ namespace operation
   void sqrt_InPlace(Container& input)
   { sqrt(input, input); }
 
-  // Element-wise mean of two vectors
+  /** Element-wise mean of two vectors */
   template <typename Container_1, typename Container_2,
   typename Container_out>
   void mean
@@ -578,7 +577,7 @@ namespace operation
   void mean_InPlace(Container const& input_1, Container const& input_2)
   { mean(input_1, input_2, input_1); }
 
-  // Euclidean norm squared
+  /** Euclidean norm squared */
   template <typename Container>
   auto abs_sq(Container const& input)
   {
@@ -603,7 +602,7 @@ namespace operation
     }
   }
 
-  // Euclidean norm
+  /** Euclidean norm */
   template <typename Container>
   auto abs(Container const& input)
   {
@@ -635,7 +634,7 @@ namespace operation
     return result;
   }
   
-  // Averages of adjacent elements
+  /** Averages of adjacent elements */
   template <typename Container>
   void midpoints(Container const& input, Container& output)
   {
@@ -651,7 +650,7 @@ namespace operation
     return output;
   }
   
-  // Averages of pairs of elements
+  /** Averages of pairs of elements */
   template
   <typename... TArgs1, typename... TArgs2,
   template<typename...> typename Container,
@@ -684,7 +683,7 @@ namespace operation
     return output;
   }
   
-  // Averages of pairs of elements
+  /** Averages of pairs of elements */
   template
   <template<typename> typename Container = std::vector,
   typename Value_type = double>
@@ -707,7 +706,7 @@ namespace operation
     return output;
   }
   
-  // Differences of adjacent elements
+  /** Differences of adjacent elements */
   template <typename Container>
   void diff(Container const& input, Container& output)
   {
@@ -723,7 +722,7 @@ namespace operation
     return output;
   }
 
-  // Dot product
+  /** Dot product */
   template <typename Container>
   auto dot(Container const& input_1, Container const& input_2)
   {
@@ -733,13 +732,13 @@ namespace operation
     return result;
   }
   
-  // Dot product
+  /** Dot product */
   auto dot(double input_1, double input_2)
   {
     return input_1*input_2;
   }
 
-  // Container of containers dotted into container, = sum_j (input_1)_{ij} (input_2)_j
+  /** Container of containers dotted into container, = sum_j (input_1)_{ij} (input_2)_j */
   template <typename Container_outer, typename Container_inner>
   void dot
   (Container_outer const& input_1, Container_inner const& input_2, Container_inner& output)
@@ -786,7 +785,7 @@ namespace operation
     return output;
   }
 
-  // Total number of elements in a container of containers
+  /** Total number of elements in a container of containers */
   template< template<class> class Container_outer, typename Container_inner >
   std::size_t nr_elements(Container_outer<Container_inner> const& vv)
   {
@@ -796,7 +795,7 @@ namespace operation
     return nr_elements;
   }
 
-  // Convolution sum
+  /** Convolution sum */
   template <typename Container>
   typename Container::value_type convolution
   (Container const& cont_1, Container const& cont_2,
@@ -808,7 +807,7 @@ namespace operation
     return res;
   }
 
-  // Convolution integral using trapezoidal rule
+  /** Convolution integral using trapezoidal rule */
   template <typename Container>
   typename Container::value_type convolution_trap
   (Container const& cont_1, Container const& cont_2,
@@ -821,7 +820,7 @@ namespace operation
     return res;
   }
 
-  // Hamming distance
+  /** Hamming distance */
   template <typename Container>
   auto hamming(Container const& vec, Container const& other_vec)
   {
@@ -833,22 +832,22 @@ namespace operation
     return hamming;
   }
   
-  // Euclidean distance squared
+  /** Euclidean distance squared */
   template <typename Container>
   double dist_sq(Container const& vec, Container const& other_vec)
   {
     return abs_sq(operation::minus(vec, other_vec));
   }
   
-  // Euclidean distance
+  /** Euclidean distance */
   template <typename Container>
   double dist(Container const& vec, Container const& other_vec)
   {
     return abs(operation::minus(vec, other_vec));
   }
   
-  // Get component,
-  // with overloads to work for dd=0 with some basic types
+  /** Get component,
+   * with overloads to work for dd=0 with some basic types */
   template <std::size_t dd, typename Container>
   auto project(Container const& container)
   { return container[dd]; }
@@ -883,4 +882,4 @@ namespace operation
 }
 
 
-#endif /* Operations_h */
+#endif /* GENERAL_OPERATIONS_H */

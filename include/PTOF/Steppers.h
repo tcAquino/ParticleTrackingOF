@@ -50,7 +50,7 @@ namespace ptof
     {
       return
         ctrw::JumpGenerator_Add{
-          ctrw::JumpGenerator_Velocity_State_RK4{
+          ctrw::JumpGenerator_Velocity_RK4{
             std::forward<VelocityField>(velocity_field),
             params_solvers.time_step,
             std::forward<Boundary>(boundary) },
@@ -80,7 +80,7 @@ namespace ptof
      std::size_t dim)
     {
       return
-        ctrw::JumpGenerator_Velocity_State_RK4{
+        ctrw::JumpGenerator_Velocity_RK4{
           std::forward<VelocityField>(velocity_field),
           params_solvers.time_step,
           std::forward<Boundary>(boundary) };
@@ -123,7 +123,7 @@ namespace ptof
     {
       return
         ctrw::JumpGenerator_Add{
-          ctrw::JumpGenerator_Velocity_State{
+          ctrw::JumpGenerator_Velocity{
             std::forward<VelocityField>(velocity_field),
             params_solvers.time_step,
             std::forward<Boundary>(boundary)
