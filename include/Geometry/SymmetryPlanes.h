@@ -9,7 +9,7 @@
 #define SymmetryPlanes_h
 
 #include <cmath>
-#include "general/Operations.h"
+#include "General/Operations.h"
 
 namespace geometry
 {

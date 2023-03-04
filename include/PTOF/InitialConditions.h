@@ -7,13 +7,16 @@
 #ifndef PTOF_INITIALCONDITIONS_H
 #define PTOF_INITIALCONDITIONS_H
 
-#include <cstddef>
 #include <algorithm>
+#include <cstddef>
 #include <cmath>
+#include <exception>
 #include <numeric>
 #include <random>
+#include <string>
 #include <unordered_map>
 #include <vector>
+#include <boost/algorithm/string.hpp>
 #include <fvMesh.H>
 #include "PTOF/Boundary.h"
 #include "PTOF/Useful.h"
@@ -34,7 +37,10 @@ namespace ptof
       uniform_inlet,                  /**< Homogeneous at the inlet.                              */
       flux_weighted_inlet,            /**< Flux-weighted at the inlet.                            */
       uniform_solid,                  /**< Homogeneous at the solid surface.                      */
-      uniform_near_solid,             /**< Homogeneous at a fixed distance to the solid interface.*/ 
+      uniform_near_solid,             /**< Homogeneous at a fixed distance to the solid interface.*/
+      uniform_region_cartesian,       /**< Homogeneous in a Cartesian region        */
+      flux_weighted_region_cartesian, /**< Flux-weighted in a Cartesian region        */
+      prescribed_positions,           /**< Prescribed positions                               */
       uniform_inlet_continuous,       /**< Continuous injection homogeneous at the inlet.         */
       flux_weighted_inlet_continuous, /**< Continuous injection flux-weighted at the inlet.       */
     };
@@ -61,6 +67,9 @@ namespace ptof
       { "flux_weighted_inlet", Type::flux_weighted_inlet },
       { "uniform_solid", Type::uniform_solid },
       { "uniform_near_solid", Type::uniform_near_solid },
+      { "uniform_region_cartesian", Type::uniform_region_cartesian },
+      { "flux_weighted_region_cartesian", Type::flux_weighted_region_cartesian },
+      { "prescribed_positions", Type::prescribed_positions },
       { "uniform_inlet_continuous", Type::uniform_inlet_continuous },
       { "flux_weighted_inlet_continuous", Type::flux_weighted_inlet_continuous }
     };
@@ -75,6 +84,9 @@ namespace ptof
       { Type::flux_weighted_inlet, "flux_weighted_inlet" },
       { Type::uniform_solid, "uniform_solid" },
       { Type::uniform_near_solid, "uniform_near_solid" },
+      { Type::uniform_region_cartesian, "uniform_region_cartesian" },
+      { Type::flux_weighted_region_cartesian, "flux_weighted_region_cartesian" },
+      { Type::flux_weighted_region_cartesian, "prescribed_positions" },
       { Type::uniform_inlet_continuous, "uniform_inlet_continuous" },
       { Type::flux_weighted_inlet_continuous, "flux_weighted_inlet_continuous" }
     };
@@ -95,7 +107,11 @@ namespace ptof
    RNG& rng,
    ParticleMaker& particle_maker)
   {
-    /** Weigh probabilities with cell volumes. */
+    if (cell_ids.size() == 0 && nr_particles != 0)
+      throw std::runtime_error{
+        "No available cells to place particles" };
+    
+    // Weigh probabilities with cell volumes.s
     std::vector<double> weights;
     weights.reserve(cell_ids.size());
     for (auto cell : cell_ids)
@@ -129,8 +145,12 @@ namespace ptof
    RNG& rng,
    ParticleMaker& particle_maker)
   {
-    /** Weigh probabilities with cell volumes
-     * and velocity magnitudes at center. */
+    // Weigh probabilities with cell volumes
+    // and velocity magnitudes at center.
+    if (cell_ids.size() == 0 && nr_particles != 0)
+      throw std::runtime_error{
+        "No available cells to place particles" };
+    
     std::vector<double> weights;
     weights.reserve(cell_ids.size());
     for (auto cell : cell_ids)
@@ -209,6 +229,10 @@ namespace ptof
    RNG& rng,
    ParticleMaker& particle_maker)
   {
+    if (face_ids.size() == 0 && nr_particles != 0)
+      throw std::runtime_error{
+        "No available faces to place particles" };
+    
     std::vector<double> weights;
     weights.reserve(face_ids.size());
     for (auto face : face_ids)
@@ -245,7 +269,11 @@ namespace ptof
    MeshSearch const& mesh_search,
    RNG& rng,
    ParticleMaker& particle_maker)
-  { 
+  {
+    if (face_ids.size() == 0 && nr_particles != 0)
+      throw std::runtime_error{
+        "No available faces to place particles" };
+    
     std::vector<double> weights;
     weights.reserve(face_ids.size());
     for (auto face : face_ids)
@@ -282,6 +310,10 @@ namespace ptof
    RNG& rng,
    ParticleMaker& particle_maker)
   {
+    if (face_ids.size() == 0 && nr_particles != 0)
+      throw std::runtime_error{
+        "No available faces to place particles" };
+    
     std::vector<double> weights;
     weights.reserve(face_ids.size());
     for (auto face : face_ids)
@@ -463,6 +495,73 @@ namespace ptof
       };
   }
   
+  /** Make particles at prescribed positions. */
+  template <typename Positions, typename ParticleMaker>
+  auto prescribed_positions
+  (std::size_t nr_particles,
+   Positions const& position_data,
+   ParticleMaker& particle_maker)
+  {
+    using Particle = decltype(particle_maker(Foam::point{}));
+    std::vector<Particle> particles;
+    particles.reserve(nr_particles);
+    for (std::size_t pp = 0; pp < nr_particles; ++pp)
+      particles.push_back(particle_maker(make_point(position_data[pp])));
+    
+    return particles;
+  }
+  
+  /** Make particles at prescribed positions. */
+  template <typename Positions, typename ParticleMaker>
+  auto prescribed_positions
+  (Positions const& position_data,
+   ParticleMaker& particle_maker)
+  {
+    return prescribed_positions(position_data.size(),
+                                position_data, particle_maker);
+  }
+  
+  /** Make particles at prescribed positions. */
+  template <typename ParticleMaker>
+  auto prescribed_positions
+  (std::size_t nr_particles,
+   std::string filename_position_data,
+   ParticleMaker& particle_maker)
+  {
+    auto input = useful::open_read(filename_position_data);
+    
+    std::vector<std::vector<double>> position_data;
+    position_data.reserve(nr_particles);
+    for (std::size_t pp = 0; pp < nr_particles; ++pp)
+    {
+      std::string line;
+      std::getline(input, line);
+      std::vector<std::string> split_line;
+      boost::trim_if(line, boost::is_any_of("\t,|\r "));
+      boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
+                              boost::token_compress_on);
+      position_data.emplace_back();
+      position_data.back().reserve(split_line.size());
+      for (auto const& position_component : split_line)
+        position_data.back().push_back(std::stod(position_component));
+    }
+    input.close();
+    
+    if (nr_particles == 0)
+      nr_particles = position_data.size();
+    
+    return prescribed_positions(nr_particles, position_data, particle_maker);
+  }
+  
+  /** Make particles at prescribed positions. */
+  template <typename ParticleMaker>
+  auto prescribed_positions
+  (std::string filename_position_data,
+   ParticleMaker& particle_maker)
+  {
+    return prescribed_positions(0, filename_position_data, particle_maker);
+  }
+  
   /** \class InitialCondition_Cases PTOF/InitialConditions.h "PTOF/InitialConditions.h"
    *  \brief InitialCondition object to handle implemented
    * initial condition types. */
@@ -485,6 +584,7 @@ namespace ptof
       double time = 0.;
       auto operator()(Foam::point const& position)
       { return position; }
+      
     } position_maker;
  
   public:
@@ -578,6 +678,22 @@ namespace ptof
                                                params.distance_wall,
                                                mesh, mesh_search,
                                                rng, particle_maker);
+        case InitialConditions::Type::uniform_region_cartesian:
+          return uniform_cells(nr_particles,
+                               cell_ids_region_cartesian(params.region_boundaries,
+                                                         mesh, mesh_search),
+                               mesh, rng, particle_maker);
+        case InitialConditions::Type::flux_weighted_region_cartesian:
+          return flux_weighted_cells(nr_particles,
+                                     cell_ids_region_cartesian(params.region_boundaries,
+                                                               mesh, mesh_search),
+                                     velocity_field,
+                                     mesh,
+                                     rng, particle_maker);
+        case InitialConditions::Type::prescribed_positions:
+          return prescribed_positions(nr_particles,
+                                      params.position_data,
+                                      particle_maker);
         case InitialConditions::Type::uniform_inlet_continuous:
           return continuous_injection([this]
                                       (std::size_t nr_particles,

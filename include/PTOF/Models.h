@@ -13,6 +13,7 @@
 #include <limits>
 #include <string>
 #include <type_traits>
+#include <boost/algorithm/string.hpp>
 #include <meshSearch.H>
 #include "CTRW/CTRW.h"
 #include "General/Useful.h"
@@ -267,6 +268,8 @@ namespace ptof
         double initial_mass;
         std::size_t nr_particles;
         double distance_wall;
+        std::vector<std::pair<double, double>> region_boundaries;
+        std::string position_data;
         
         double time_step_accuracy_adv;
         double time_step_accuracy_diff;
@@ -298,6 +301,27 @@ namespace ptof
           verify_initial_condition(ic_name,
                                    InitialConditions{});
           type = InitialConditions::type(ic_name);
+          if (type == InitialConditions::Type::uniform_region_cartesian ||
+              type == InitialConditions::Type::flux_weighted_region_cartesian)
+          {
+            input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::string line;
+            std::getline(input, line);
+            std::vector<std::string> split_line;
+            boost::trim_if(line, boost::is_any_of("\t,|\r "));
+            boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
+                                    boost::token_compress_on);
+            if (split_line.size()%2 != 0)
+              std::runtime_error{
+                "Initial condition region boundaries must come in pairs" };
+            for (std::size_t ii = 0; ii < split_line.size(); ii += 2)
+            {
+              region_boundaries.push_back( {
+                std::stod(split_line[ii]), std::stod(split_line[ii+1]) } );
+            }
+          }
+          if (type == InitialConditions::Type::prescribed_positions)
+            useful::read(input, position_data);
           useful::read(input, initial_mass);
           useful::read(input, nr_particles);
           input >> time_min;
@@ -414,11 +438,10 @@ namespace ptof
          TransportParameters const& params_transport,
          ReactionParameters const& params_reaction)
         {
-          double step_length_nondim;
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, step_length_nondim);
+          useful::read(input, step_length);
           input.close();
         }
         
@@ -1166,89 +1189,9 @@ namespace ptof
       }
     };
     
-    struct InitialCondition
+    struct InitialCondition final
+    : model_advection_diffusion_2d::InitialCondition
     {
-      struct Parameters
-      {
-        InitialConditions::Type type;
-        double initial_mass;
-        std::size_t nr_particles;
-        double distance_wall;
-        
-        double time_step_accuracy_adv;
-        double time_step_accuracy_diff;
-        double time_step_accuracy_react;
-        
-        double time_min{ 0. };
-        double time_max{ 1. };
-        double time_step{ 1. };
-        
-        template
-        <typename TransportParameters,
-        typename ReactionParameters,
-        typename SolverParameters>
-        Parameters
-        (Directories const& directories,
-         std::string const& name,
-         TransportParameters const& params_transport,
-         ReactionParameters const& params_reaction,
-         SolverParameters const& params_solvers)
-        : distance_wall{
-          10.*std::sqrt(2.*params_transport.diff_coeff*
-                        params_solvers.time_step) }
-        {
-          std::string ic_name;
-          auto input = useful::open_read(directories.dir_parameters
-                                         + "/parameters_initial_condition_"
-                                         + name + ".dat");
-          useful::read(input, ic_name);
-          verify_initial_condition(ic_name,
-                                   InitialConditions{});
-          type = InitialConditions::type(ic_name);
-          useful::read(input, initial_mass);
-          useful::read(input, nr_particles);
-          input >> time_min;
-          if (input.fail())
-            return;
-          useful::read(input, time_max);
-          useful::read(input, time_step_accuracy_adv);
-          useful::read(input, time_step_accuracy_diff);
-          useful::read(input, time_step_accuracy_react);
-          
-          time_step =
-            std::min({
-              time_step_accuracy_adv*params_transport.advection_time,
-              time_step_accuracy_diff*params_transport.diffusion_time,
-              time_step_accuracy_react*params_reaction.reaction_time });
-        }
-        
-        template <typename OStream>
-        static void info(OStream& output)
-        {
-          output <<
-            "--------------------------------------------------\n"
-            "Initial condition parameters (pass '' for default in [])\n"
-            "--------------------------------------------------\n"
-            "- Initial condition type:\n"
-            "\tuniform: Homogeneous throughout the domain\n"
-            "\tflux_weighted: Flux-weighted throughout the domain\n"
-            "\tuniform_inlet: Homogeneous at the inlet\n"
-            "\tflux_weighted_inlet: Flux-weighted at the inlet\n"
-            "\tuniform_solid: Homogeneous at the solid surface\n"
-            "\tuniform_near_solid: Homogeneous at a fixed distance to the solid interface\n"
-            "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
-            "\tflux_weighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
-            "- Total transported mass in each injection discretization\n"
-            "- Number of Lagrangian particles in each injection discretization\n"
-            "- Initial injection time [0.]\n"
-            "- Final injection time [1.]\n"
-            "- Maximum timestep in units of advection time [unit time step]\n"
-            "- Maximum timestep in units of diffusion time [unit time step]\n"
-            "- Maximum timestep in units of reaction time [unit time step]\n"
-            "--------------------------------------------------\n";
-        }
-      };
-      
       template
       <typename Geometry,
       typename VelocityField>
@@ -1321,11 +1264,10 @@ namespace ptof
          TransportParameters const& params_transport,
          ReactionParameters const& params_reaction)
         {
-          double step_length_nondim;
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, step_length_nondim);
+          useful::read(input, step_length);
           input.close();
         }
         
@@ -1469,7 +1411,7 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
-    : model_advection_diffusion_3d::InitialCondition
+    : model_advection_diffusion_2d::InitialCondition
     {
       template
       <typename Geometry,
@@ -1696,7 +1638,7 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
-    : model_advection_diffusion_3d::InitialCondition
+    : model_advection_diffusion_2d::InitialCondition
     {
       template
       <typename Geometry,

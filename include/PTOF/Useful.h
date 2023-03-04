@@ -25,9 +25,21 @@ namespace ptof
     return Foam::point{ point, 0., 0. };
   }
 
-  /** Make 3D point 3D point (simple copy). */
+  /** Make 3D point from 3D point (simple copy). */
   auto make_point(Foam::point const& point)
   { return point; }
+  
+  /** Make point from vector (simple copy). */
+  Foam::point make_point(std::vector<double> const& point)
+  {
+    if (point.size() >= 3)
+      return { point[0], point[1], point[2] };
+    if (point.size() == 2)
+      return Foam::point{ point[0], point[1], 0. };
+    if (point.size() == 1)
+      return Foam::point{ point[0], 0., 0. };
+    return { 0., 0., 0. };
+  }
   
   /** Unit normal at boundary face, pointing outward. */
   template <typename Mesh>

@@ -42,7 +42,7 @@ namespace ptof
     { position = point[0]; }
     
     /** Make position from 3D position. */
-    static auto make_position(Foam::point const& point)
+    static Position make_position(Foam::point const& point)
     { return point[0]; }
     
     Info info{};
@@ -78,7 +78,7 @@ namespace ptof
     }
     
     /** Make position from 3D position. */
-    static auto make_position(Foam::point const& point)
+    static Position make_position(Foam::point const& point)
     { return Position{ point[0], point[1] }; }
     
     Info info{};
@@ -111,7 +111,7 @@ namespace ptof
     { position = point; }
     
     /** Make position from 3D position. */
-    static auto make_position(Foam::point const& point)
+    static Position make_position(Foam::point const& point)
     { return point; }
     
     Info info{};
@@ -345,7 +345,7 @@ namespace ptof
     { position = point[0]; }
     
     /** Make position from 3D position. */
-    static auto make_position(Foam::point const& point)
+    static Position make_position(Foam::point const& point)
     { return point[0]; }
     
     Info info{};
@@ -383,7 +383,7 @@ namespace ptof
     }
     
     /** Make position from 3D position. */
-    static auto make_position(Foam::point const& point)
+    static Position make_position(Foam::point const& point)
     { return Position{ point[0], point[1] }; }
     
     Info info{};
@@ -418,7 +418,7 @@ namespace ptof
     { position = point; }
     
     /** Make position from 3D position. */
-    static auto make_position(Foam::point const& point)
+    static Position make_position(Foam::point const& point)
     { return point; }
     
     Info info{};

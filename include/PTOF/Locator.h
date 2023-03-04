@@ -93,6 +93,58 @@ namespace ptof
     }
     return face_ids;
   }
+  
+  /** Get cell indexes of mesh within cartesian region. */
+  template <typename Mesh, typename MeshSearch>
+  auto cell_ids_region_cartesian
+  (std::vector<std::pair<double, double>> boundaries,
+   Mesh const& mesh,
+   MeshSearch const& mesh_search)
+  {
+    // Identify degenerate dimensions
+    // (if some minimum and maximum boundary values are equal,
+    // the Cartesian region has lower dimension than the space)
+    std::vector<std::size_t> degenerate_dimensions;
+    std::vector<std::size_t> non_degenerate_dimensions;
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
+      if (boundaries[dd].first == boundaries[dd].second)
+        degenerate_dimensions.push_back(dd);
+      else
+        non_degenerate_dimensions.push_back(dd);
+    
+    std::vector<Foam::label> cell_ids;
+    for (Foam::label cc = 0; cc < mesh.nCells(); ++cc)
+    {
+      auto center = cell_center(cc, mesh);
+      
+      bool cell_is_within_non_degenerate_boundaries = 1;
+      for (auto dd : non_degenerate_dimensions)
+      {
+        if (center[dd] < boundaries[dd].first ||
+            center[dd] > boundaries[dd].second)
+        {
+          cell_is_within_non_degenerate_boundaries = 0;
+          break;
+        }
+      }
+      if (!cell_is_within_non_degenerate_boundaries)
+        continue;
+      if (degenerate_dimensions.size() == 0)
+        cell_ids.push_back(cc);
+      
+      // Consider a position equal to the cell center of the candidate cell
+      // but with components along the degenerate dimension
+      // equal to the prescribed value. If it is in the
+      // mesh, include it in the region
+      for (auto dd : degenerate_dimensions)
+        center[dd] = degenerate_dimensions[dd];
+      auto cell_id = mesh_search.findCell(center);
+      if (cell_id != -1)
+        cell_ids.push_back(cell_id);
+    }
+
+    return cell_ids;
+  }
 }
 
 
