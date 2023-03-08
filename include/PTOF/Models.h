@@ -271,10 +271,10 @@ namespace ptof
         std::vector<std::pair<double, double>> region_boundaries;
         std::string position_data;
         
+        // Time step parameters for continuous injection discretization
         double time_step_accuracy_adv;
         double time_step_accuracy_diff;
         double time_step_accuracy_react;
-        
         double time_min{ 0. };
         double time_max{ 1. };
         double time_step{ 1. };
@@ -425,8 +425,6 @@ namespace ptof
       struct Parameters
       {
         double time_step = 0.;
-        
-        std::size_t nr_particles;
         double step_length;
         
         template
@@ -1251,8 +1249,6 @@ namespace ptof
       struct Parameters
       {
         double time_step = 0.;
-        
-        std::size_t nr_particles;
         double step_length;
         
         template
