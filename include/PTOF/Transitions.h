@@ -8,6 +8,7 @@
 #define PTOF_TRANSITIONS_H
 
 #include "CTRW/Transitions.h"
+#include "PTOF/TimeStepAdaptor.h"
 
 namespace ptof
 {
@@ -29,13 +30,19 @@ namespace ptof
   auto makeTransportTransitions
   (VelocityField&& velocity_field,
    Geometry const& geometry,
-   Boundary const& boundary,
+   Boundary& boundary,
    TransportParameters const& params_transport,
    SolverParameters const& params_solvers)
   {
     return
-      ctrw::Transitions_Locate_Time_Position{
-        velocity_field.get_locator(),
+      ctrw::Transitions_AdaptiveTimeStep_Time_Position{
+        TimeStepAdaptor_CellSize_SurfaceReaction{
+          geometry,
+          velocity_field,
+          boundary.reaction,
+          params_transport,
+          params_solvers
+        },
         Steppers::makeTimeGenerator(params_solvers),
         Steppers::makeJumpGenerator(std::forward<VelocityField>(velocity_field),
                                     boundary,
@@ -63,15 +70,19 @@ namespace ptof
   auto makeTransportTransitions_Advection
   (VelocityField&& velocity_field,
    Geometry const& geometry,
-   Boundary const& boundary,
+   Boundary& boundary,
    TransportParameters const& params_transport,
    SolverParameters const& params_solvers)
   {
     return
-      ctrw::Transitions_Locate_Time_Position{
-        velocity_field.get_locator(),
-        [&velocity_field, &params_solvers](auto state){
-          return params_solvers.step_length/Foam::mag(velocity_field(state)); },
+      ctrw::Transitions_AdaptiveTimeStep_Time_Position{
+        TimeStepAdaptor_CellSize_SurfaceReaction{
+          geometry,
+          velocity_field,
+          boundary.reaction,
+          params_transport,
+          params_solvers },
+        Steppers::makeTimeGenerator(params_solvers),
         Steppers::makeJumpGenerator_Advection(std::forward<VelocityField>(velocity_field),
                                               boundary,
                                               params_transport,

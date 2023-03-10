@@ -79,9 +79,36 @@ namespace ctrw
     auto const& get_jump_generator_2() const
     { return jump_generator_2; }
     
+    void time_step(double time_step)
+    {
+      if constexpr (has_time_step_setter<JumpGenerator_1>::value)
+        jump_generator_1.time_step(time_step);
+      if constexpr (has_time_step_setter<JumpGenerator_2>::value)
+        jump_generator_2.time_step(time_step);
+    }
+    
   private:
     JumpGenerator_1 jump_generator_1;
     JumpGenerator_2 jump_generator_2;
+    
+    private:
+    // Check if type T has member function void time_step(double)
+    // Adapted from kispaljr's answer here:
+    // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
+    template <typename T> struct has_time_step_setter
+    {
+        typedef char (&Yes)[1];
+        typedef char (&No)[2];
+
+        template<class U>
+        static Yes test(U* data,
+                        typename std::enable_if<std::is_void<
+                          decltype(data->time_step(0.))>::value>::type* = 0);
+        static No test(...);
+        static const bool value =
+          sizeof(Yes) ==
+            sizeof(has_time_step_setter::test((typename std::remove_reference<T>::type*)0));
+    };
   };
   
   /** \class JumpGenerator_Velocity CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"

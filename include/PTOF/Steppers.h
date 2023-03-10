@@ -8,6 +8,7 @@
 #define PTOF_STEPPERS_H
 
 #include <cstddef>
+#include <type_traits>
 #include <utility>
 #include "CTRW/JumpGenerator.h"
 #include "CTRW/TimeGenerator.h"
@@ -23,10 +24,9 @@ namespace ptof
     template <typename Parameters>
     static auto makeTimeGenerator(Parameters const& params)
     {
-      return
-        ctrw::TimeGenerator_Step{
-          params.time_step
-        };
+      if constexpr (has_time_step<Parameters>::value)
+        return ctrw::TimeGenerator_Step{ params.time_step };
+      return ctrw::TimeGenerator_Step{ 0. };
     }
     
     /** Make advection--diffusion JumpGenerator.
@@ -48,15 +48,26 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
+      if constexpr (has_time_step<SolverParameters>::value)
+        return
+          ctrw::JumpGenerator_Add{
+            ctrw::JumpGenerator_Velocity_RK4{
+              std::forward<VelocityField>(velocity_field),
+              params_solvers.time_step,
+              std::forward<Boundary>(boundary) },
+            ctrw::JumpGenerator_Diffusion{
+              params_transport.diff_coeff,
+              params_solvers.time_step,
+              dim } };
       return
         ctrw::JumpGenerator_Add{
           ctrw::JumpGenerator_Velocity_RK4{
             std::forward<VelocityField>(velocity_field),
-            params_solvers.time_step,
+            0.,
             std::forward<Boundary>(boundary) },
           ctrw::JumpGenerator_Diffusion{
             params_transport.diff_coeff,
-            params_solvers.time_step,
+            0.,
             dim } };
     }
     
@@ -79,12 +90,36 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
+      if constexpr (has_time_step<SolverParameters>::value)
+        return
+          ctrw::JumpGenerator_Velocity_RK4{
+            std::forward<VelocityField>(velocity_field),
+            params_solvers.time_step,
+            std::forward<Boundary>(boundary) };
       return
         ctrw::JumpGenerator_Velocity_RK4{
           std::forward<VelocityField>(velocity_field),
-          params_solvers.time_step,
+          0.,
           std::forward<Boundary>(boundary) };
     }
+    
+  private:
+    // Check if type T has member double time_step
+    // Adapted from kispaljr's answer here:
+    // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
+    template <typename T> struct has_time_step
+    {
+        typedef char (&Yes)[1];
+        typedef char (&No)[2];
+
+        template<class U>
+        static Yes test(U* data,
+                        typename std::enable_if<std::is_same<
+                          double,
+                          decltype(data->time_step)>::value>::type* = 0);
+        static No test(...);
+        static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
+    };
   };
   
   /** \struct Steppers_Advection_Euler_Diffusion_Euler PTOF/Steppers.h "PTOF/Steppers.h"
@@ -96,10 +131,10 @@ namespace ptof
     template <typename Parameters>
     static auto makeTimeGenerator(Parameters const& params)
     {
-      return
-        ctrw::TimeGenerator_Step{
-          params.time_step
-        };
+//      if constexpr (std::is_member_pointer_v<decltype(&Parameters::time_step)>)
+//        return ctrw::TimeGenerator_Step{ params.time_step };
+//      else
+        return ctrw::TimeGenerator_Step{ 0. };
     }
     
     /** Make advection--diffusion JumpGenerator.
@@ -121,20 +156,74 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
+      if constexpr (has_time_step<SolverParameters>::value)
+        return
+          ctrw::JumpGenerator_Add{
+            ctrw::JumpGenerator_Velocity{
+              std::forward<VelocityField>(velocity_field),
+              params_solvers.time_step },
+            ctrw::JumpGenerator_Diffusion{
+              params_transport.diff_coeff,
+              params_solvers.time_step,
+              dim } };
       return
         ctrw::JumpGenerator_Add{
           ctrw::JumpGenerator_Velocity{
             std::forward<VelocityField>(velocity_field),
-            params_solvers.time_step,
-            std::forward<Boundary>(boundary)
-          },
+            0. },
           ctrw::JumpGenerator_Diffusion{
             params_transport.diff_coeff,
-            params_solvers.time_step,
-            dim
-          }
-        };
+            0.,
+            dim } };
     }
+    
+    /** Make advection JumpGenerator.
+     * Given:
+     * - velocity field;
+     * - boundary enforcer;
+     * - transport parameters;
+     * - solver parameters;
+     * - spatial dimension. */
+    template
+    <typename VelocityField,
+    typename Boundary,
+    typename TransportParameters,
+    typename SolverParameters>
+    static auto makeJumpGenerator_Advection
+    (VelocityField&& velocity_field,
+     Boundary&& boundary,
+     TransportParameters const& params_transport,
+     SolverParameters const& params_solvers,
+     std::size_t dim)
+    {
+      if constexpr (has_time_step<SolverParameters>::value)
+        return
+          ctrw::JumpGenerator_Velocity{
+            std::forward<VelocityField>(velocity_field),
+            params_solvers.time_step };
+      return
+        ctrw::JumpGenerator_Velocity{
+          std::forward<VelocityField>(velocity_field),
+          0. };
+    }
+    
+  private:
+    // Check if type T has member double time_step
+    // Adapted from kispaljr's answer here:
+    // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
+    template <typename T> struct has_time_step
+    {
+        typedef char (&Yes)[1];
+        typedef char (&No)[2];
+
+        template<class U>
+        static Yes test(U* data,
+                        typename std::enable_if<std::is_same<
+                          double,
+                          decltype(data->time_step)>::value>::type* = 0);
+        static No test(...);
+        static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
+    };
   };
 }
 

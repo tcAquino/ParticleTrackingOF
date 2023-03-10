@@ -137,22 +137,25 @@ namespace ptof
     <typename TransportParameters,
     typename ReactionParameters,
     typename SolverParameters,
+    typename SurfaceReaction,
     typename Parameters = useful::Empty>
     auto makeBoundary
     (Directories const& directories,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
+     SurfaceReaction&& reaction,
      Parameters&& parameters = {}) const
     {
-      if constexpr (dynamics
-                    == BoundaryConditionSet::Type::transport)
+      if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
-          BoundaryInfo{} };
-      if constexpr (dynamics
-                    == BoundaryConditionSet::Type::firstpassage)
+          BoundaryInfo{},
+          Boundary_DoNothing{},
+          Boundary_DoNothing{},
+          std::forward<SurfaceReaction>(reaction) };
+      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
@@ -248,25 +251,27 @@ namespace ptof
     <typename TransportParameters,
     typename ReactionParameters,
     typename SolverParameters,
+    typename SurfaceReaction,
     typename Parameters = useful::Empty>
     auto makeBoundary
     (Directories const& directories,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     Parameters&& parameters = {})
+     SurfaceReaction&& reaction,
+     Parameters&& parameters = {}) const
     {
-      if constexpr (dynamics
-                    == BoundaryConditionSet::Type::transport)
+      if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            mesh_search } };
-      if constexpr (dynamics
-                    == BoundaryConditionSet::Type::firstpassage)
+            mesh_search },
+          Boundary_DoNothing{},
+          std::forward<SurfaceReaction>(reaction) };
+      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
@@ -499,25 +504,27 @@ namespace ptof
     <typename TransportParameters,
     typename ReactionParameters,
     typename SolverParameters,
+    typename SurfaceReaction,
     typename Parameters = useful::Empty>
     auto makeBoundary
     (Directories const& directories,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     Parameters&& parameters = {})
+     SurfaceReaction&& reaction,
+     Parameters&& parameters = {}) const
     {
-      if constexpr (dynamics
-                    == BoundaryConditionSet::Type::transport)
+      if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            mesh_search } };
-      if constexpr (dynamics
-                    == BoundaryConditionSet::Type::firstpassage)
+            mesh_search },
+          Boundary_DoNothing{},
+          std::forward<SurfaceReaction>(reaction) };
+      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,

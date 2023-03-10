@@ -7,6 +7,8 @@
 #ifndef PTOF_LOCATOR_H
 #define PTOF_LOCATOR_H
 
+#include <set>
+#include <vector>
 #include <boost/iterator/counting_iterator.hpp>
 #include <fieldTypes.H>
 #include <meshSearch.H>
@@ -59,8 +61,9 @@ namespace ptof
     auto operator()
     (State const& state) const
     {
-      return mesh_search.findCell(make_point(state.position),
-                                  state.cell);
+      mesh_search.findCell(make_point(state.position),
+                           state.cell);
+      return state.cell;
     }
     
     private:
@@ -112,7 +115,7 @@ namespace ptof
       else
         non_degenerate_dimensions.push_back(dd);
     
-    std::vector<Foam::label> cell_ids;
+    std::set<Foam::label> cell_ids;
     for (Foam::label cc = 0; cc < mesh.nCells(); ++cc)
     {
       auto center = cell_center(cc, mesh);
@@ -130,7 +133,7 @@ namespace ptof
       if (!cell_is_within_non_degenerate_boundaries)
         continue;
       if (degenerate_dimensions.size() == 0)
-        cell_ids.push_back(cc);
+        cell_ids.insert(cc);
       
       // Consider a position equal to the cell center of the candidate cell
       // but with components along the degenerate dimension
@@ -140,10 +143,11 @@ namespace ptof
         center[dd] = degenerate_dimensions[dd];
       auto cell_id = mesh_search.findCell(center);
       if (cell_id != -1)
-        cell_ids.push_back(cell_id);
+        cell_ids.insert(cell_id);
     }
 
-    return cell_ids;
+    std::vector<Foam::label> cells(cell_ids.begin(), cell_ids.end());
+    return cells;
   }
 }
 

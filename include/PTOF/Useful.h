@@ -320,6 +320,23 @@ namespace ptof
     return (position_second_moment(subject, time, getter_position)-
               position_mean_sq)/mass(subject, time);
   };
+  
+  // Check if type T has member double time_step
+  // Adapted from kispaljr's answer here:
+  // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
+  template <typename T> struct has_time_step
+  {
+      typedef char (&Yes)[1];
+      typedef char (&No)[2];
+
+      template<class U>
+      static Yes test(U* data,
+                      typename std::enable_if<std::is_same<
+                        double,
+                        decltype(data->time_step)>::value>::type* = 0);
+      static No test(...);
+      static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
+  };
 }
 
 #endif /* PTOF_USEFUL_H */

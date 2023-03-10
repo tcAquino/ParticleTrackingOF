@@ -107,24 +107,12 @@ int main(int argc, char * argv[])
   std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
-  double velocity_rescaling = 1.;
   auto velocity_field = Transport::makeVelocityInterpolator(geometry);
-  if (params_transport.peclet
-      == std::numeric_limits<double>::infinity())
-  {
-    params_transport.advection_time = params_transport.lengthscale/
-    ptof::magnitude_of_average(velocity_field.get_field(), geometry.mesh);
-  }
-  else
-  {
-    double average_velocity_magnitude =
-      params_transport.diff_coeff*params_transport.peclet/
-      params_transport.lengthscale;
-    velocity_rescaling = average_velocity_magnitude/
-      ptof::magnitude_of_average(velocity_field.get_field(),
-                                 geometry.mesh);
-    velocity_field.rescale(velocity_rescaling);
-  }
+  double average_velocity_magnitude = params_transport.lengthscale/params_transport.advection_time;
+  double velocity_rescaling = average_velocity_magnitude/
+    ptof::magnitude_of_average(velocity_field.get_field(),
+                               geometry.mesh);
+  velocity_field.rescale(velocity_rescaling);
   std::cout << "Done!" << std::endl;
   
   std::cout << "\n" << "Setting up reaction..." << std::endl;
@@ -147,6 +135,11 @@ int main(int argc, char * argv[])
                                         params_transport,
                                         params_reaction,
                                         params_solvers,
+                                        Reaction::makeSurfaceReaction(
+                                          geometry,
+                                          params_reaction,
+                                          params_transport,
+                                          params_solvers),
                                         initial_condition);
   boundary.info_runtime(std::cout);
   std::cout << "Done!" << std::endl;
@@ -187,7 +180,6 @@ int main(int argc, char * argv[])
 
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   double current_time = 0.;
-  const bool step_in_time = (params_solvers.time_step != 0);
   while (!measurer.done(current_time))
   {
     while (measurer.next_measure_time() <= current_time)
@@ -201,23 +193,11 @@ int main(int argc, char * argv[])
                 << "\n";
       measurer(measurer.next_measure_time());
     }
-    if (step_in_time)
-    {
-      current_time += params_solvers.time_step;
-      ctrw.step([current_time](CTRW::Particle& part)
+    current_time = measurer.next_measure_time();
+    ctrw.evolve([current_time](CTRW::Particle& part)
                 { return part.state_new().time < current_time
                     && !part.state_new().info.absorbed; },
-                transitions);
-    }
-    else
-    {
-      current_time = measurer.next_measure_time();
-      ctrw.evolve([current_time](CTRW::Particle& part)
-      { return part.state_new().time < current_time
-          && !part.state_new().info.absorbed; },
-                transitions);
-    }
-  }
+                transitions); }
   if (measurer.next_measure_time() <= current_time)
   {
     std::cout << "Time "

@@ -75,8 +75,10 @@ namespace ctrw
   (TimeGenerator&&, JumpGenerator&&, Boundary&&) ->
   Transitions_Time_Position<TimeGenerator, JumpGenerator, Boundary>;
   
-  /** \class Transitions_Locate_Time_Position CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state.position and state.time
+  /** \class Transitions_AdaptiveTimeStep_Time_Position CTRW/Transitions.h "CTRW/Transitions.h"
+   *  \brief
+   * Choose time step based on state
+   * Update state.position and state.time
    * by summing quantities returned by a
    * JumpGenerator and a TimeGenerator object given state. 
    * 
@@ -84,17 +86,17 @@ namespace ctrw
    * Locate all particles in cells before jumping. \n
    * State must define: 
    * - cell */
-  template <typename Locator, typename TimeGenerator, typename JumpGenerator,
+  template <typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator,
   typename Boundary = geometry::Boundary_DoNothing>
-  class Transitions_Locate_Time_Position
+  class Transitions_AdaptiveTimeStep_Time_Position
   {
   public:
-    Transitions_Locate_Time_Position
-    (Locator&& locator,
+    Transitions_AdaptiveTimeStep_Time_Position
+    (TimeStepAdaptor&& time_step_adaptor,
      TimeGenerator&& time_generator,
      JumpGenerator&& jump_generator,
      Boundary&& boundary = {})
-    : locator{ std::forward<Locator>(locator) }
+    : time_step_adaptor{ std::forward<TimeStepAdaptor>(time_step_adaptor) }
     , time_generator{ std::forward<TimeGenerator>(time_generator) }
     , jump_generator{ std::forward<JumpGenerator>(jump_generator) }
     , boundary{ std::forward<Boundary>(boundary) }
@@ -104,7 +106,7 @@ namespace ctrw
     void operator() (State& state)
     {
       auto state_old = state;
-      state.cell = locator(state);
+      time_step_adaptor(state, time_generator, jump_generator);
       operation::plus_InPlace(state.position, jump_generator(state));
       state.time += time_generator(state);
       boundary(state, state_old);
@@ -118,18 +120,22 @@ namespace ctrw
     
     auto const& get_boundary() const
     { return boundary; }
+    
+    double time_step() const
+    { return time_step_adaptor.time_step(); }
 
   private:
-    Locator locator;
+    TimeStepAdaptor time_step_adaptor;
     TimeGenerator time_generator;
     JumpGenerator jump_generator;
     Boundary boundary;
   };
-  template <typename Locator, typename TimeGenerator, typename JumpGenerator,
+  template <typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator,
   typename Boundary>
-  Transitions_Locate_Time_Position
-  (Locator&&, TimeGenerator&&, JumpGenerator&&, Boundary&&) ->
-  Transitions_Locate_Time_Position<Locator, TimeGenerator, JumpGenerator, Boundary>;
+  Transitions_AdaptiveTimeStep_Time_Position
+  (TimeStepAdaptor&&, TimeGenerator&&, JumpGenerator&&, Boundary&&) ->
+  Transitions_AdaptiveTimeStep_Time_Position
+  <TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary>;
   
   /** \class Transitions_Positions CTRW/Transitions.h "CTRW/Transitions.h"
    *  \brief Update state.position

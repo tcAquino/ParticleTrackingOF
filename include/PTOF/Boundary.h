@@ -19,6 +19,7 @@
 #include <boost/algorithm/string.hpp>
 #include "General/Useful.h"
 #include "General/Operations.h"
+#include "PTOF/Reaction.h"
 #include "PTOF/Useful.h"
 
 namespace ptof
@@ -31,12 +32,13 @@ namespace ptof
      *  \brief Implemented types. */
     enum class Type
     {
-      reflecting,  /**< Reflecting                                          */
-      periodic,    /**< Periodic                                            */
-      absorbing,   /**< Absorbing                                           */
-      info,        /**< Information upon crossing                           */
-      custom,      /**< Enforced by custom Boundary object                  */
-      empty        /**< No effect (default for unspecified patches in mesh) */
+      reflecting,           /**< Reflecting                                          */
+      reacting_reflecting,  /**< Reflecting and reacting                     */
+      periodic,             /**< Periodic                                            */
+      absorbing,            /**< Absorbing                                           */
+      info,                 /**< Information upon hitting                      */
+      custom,               /**< Enforced by custom Boundary object                  */
+      empty                 /**< No effect (default for unspecified patches in mesh) */
     };
     
     /** Construct with standard 'custom' name. */
@@ -60,6 +62,7 @@ namespace ptof
     std::unordered_map<std::string, Type> name_to_type
     {
       { "reflecting", Type::reflecting },
+      { "reacting_reflecting", Type::reacting_reflecting },
       { "periodic", Type::periodic },
       { "absorbing", Type::absorbing },
       { "info", Type::info },
@@ -72,6 +75,7 @@ namespace ptof
     std::unordered_map<Type, std::string> type_to_name
     {
       { Type::reflecting, "reflecting" },
+      { Type::reacting_reflecting, "reacting_reflecting" },
       { Type::periodic, "periodic" },
       { Type::absorbing, "absorbing" },
       { Type::info, "info" },
@@ -228,7 +232,8 @@ namespace ptof
    *  \brief Boundary object to handle implemented boundary types */
   template
   <typename MeshSearch, typename Store_Info,
-  typename Boundary_Periodic, typename Boundary_Custom>
+  typename Boundary_Periodic, typename Boundary_Custom,
+  typename SurfaceReaction>
   class Boundary_Cases
   {
   public:
@@ -245,12 +250,14 @@ namespace ptof
      MeshSearch&& mesh_search,
      Store_Info&& store_info,
      Boundary_Periodic&& boundary_periodic = Boundary_DoNothing{},
-     Boundary_Custom&& boundary_custom = Boundary_DoNothing{})
+     Boundary_Custom&& boundary_custom = Boundary_DoNothing{},
+     SurfaceReaction&& reaction = SurfaceReaction_DoNothing{})
     : boundary_conditions{ boundary_conditions }
     , mesh_search{ std::forward<MeshSearch>(mesh_search) }
     , store_info{ std::forward<Store_Info>(store_info) }
     , boundary_periodic{ std::forward<Boundary_Periodic>(boundary_periodic) }
     , boundary_custom{ std::forward<Boundary_Custom>(boundary_custom) }
+    , reaction{ std::forward<SurfaceReaction>(reaction) }
     {
       add_unspecified_patches(this->boundary_conditions,
                               patch_names());
@@ -271,7 +278,7 @@ namespace ptof
      * Return 1 if some boundary had an effect, 0 otherwise. */
     template <typename State>
     bool operator()
-    (State& state, State const& state_old = {}) const
+    (State& state, State const& state_old = {})
     {
       /** Find first intersection with boundary patch. */
       auto intersection =
@@ -315,6 +322,20 @@ namespace ptof
                        useful::Selector<
                         BoundaryCondition::Type,
                         BoundaryCondition::Type::reflecting>{});
+            boundary_reflecting(state,
+                                intersection.point(),
+                                reflection_normal(intersection.index()));
+            had_effect = 1;
+            break;
+          }
+          case BoundaryCondition::Type::reacting_reflecting:
+          {
+            store_info(state, state_old, intersection,
+                       boundary_condition_types,
+                       useful::Selector<
+                        BoundaryCondition::Type,
+                        BoundaryCondition::Type::reflecting>{});
+            reaction(state, state_old, intersection.index());
             boundary_reflecting(state,
                                 intersection.point(),
                                 reflection_normal(intersection.index()));
@@ -415,6 +436,10 @@ namespace ptof
     Boundary_Periodic boundary_periodic;  /**< Boundary object to handle 'periodic' bc type.     */
     Boundary_Custom boundary_custom;      /**< Boundary object to handle 'custom' bc type.       */
     
+  public:
+    SurfaceReaction reaction;             /**< Surface reaction for reactive boundaries*/
+    
+  private:
     const BoundaryCondition
       boundary_condition_types{};         /**< Boundary condition names and types. */
     
@@ -451,17 +476,34 @@ namespace ptof
   <typename MeshSearch,
   typename Store_Info,
   typename Boundary_Periodic,
+  typename Boundary_Custom,
+  typename Surface_Reaction>
+  Boundary_Cases
+  (typename Boundary_Cases<
+   MeshSearch, Store_Info,
+   Boundary_Periodic, Boundary_Custom, Surface_Reaction>::BCs,
+   MeshSearch&&,
+   Store_Info&&,
+   Boundary_Periodic&&,
+   Boundary_Custom&&,
+   Surface_Reaction&&)->
+  Boundary_Cases<MeshSearch, Store_Info,
+  Boundary_Periodic, Boundary_Custom, Surface_Reaction>;
+  template
+  <typename MeshSearch,
+  typename Store_Info,
+  typename Boundary_Periodic,
   typename Boundary_Custom>
   Boundary_Cases
   (typename Boundary_Cases<
    MeshSearch, Store_Info,
-   Boundary_Periodic, Boundary_Custom>::BCs,
+   Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>::BCs,
    MeshSearch&&,
    Store_Info&&,
    Boundary_Periodic&&,
    Boundary_Custom&&)->
   Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_Periodic, Boundary_Custom>;
+  Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>;
   template
   <typename MeshSearch,
   typename Store_Info,
@@ -469,21 +511,21 @@ namespace ptof
   Boundary_Cases
   (typename Boundary_Cases<
    MeshSearch, Store_Info,
-   Boundary_Periodic, Boundary_DoNothing>::BCs,
+   Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
    MeshSearch&&,
    Store_Info&&,
    Boundary_Periodic&&)->
   Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_Periodic, Boundary_DoNothing>;
+  Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>;
   template <typename MeshSearch, typename Store_Info>
   Boundary_Cases
   (typename Boundary_Cases<
-  MeshSearch, Store_Info,
-   Boundary_DoNothing, Boundary_DoNothing>::BCs,
+   MeshSearch, Store_Info,
+   Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
    MeshSearch&&,
    Store_Info&&)->
   Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_DoNothing, Boundary_DoNothing>;
+  Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>;
   
   /** Periodic image of intersection point. */
   template
