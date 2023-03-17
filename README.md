@@ -8,7 +8,7 @@ Required external libraries (all free and open-source):
 - OpenFOAM : CFD software (https://www.openfoam.com/)
 - boost : C++ library implementing useful features and extensions (boost.org)
 
-A compiler compatible with C++17 is required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues.
+A version of the g++ or clang++ compiler compatible with C++17 and OpenMP are required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues. For compilation with clang++, llvm's OpenMP must be installed ("brew install libomp" on MacOS or "sudo apt install libomp-dev" on Linux).
 
 ## Documentation
 

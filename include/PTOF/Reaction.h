@@ -93,7 +93,7 @@ namespace ptof
         rate(face)*std::sqrt(constants::pi*exposure_time/diff_coeff);
       double probability_second_order = 1./(1.+probability_first_order/2);
       state.mass *= std::exp(-probability_second_order);
-    }
+      }
     
     /** Surface reaction rate at face */
     double rate(Foam::label face) const

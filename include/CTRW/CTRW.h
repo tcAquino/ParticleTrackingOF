@@ -188,17 +188,19 @@ namespace ctrw
     void evolve
     (Criterion criterion, Transitions_Particle& transitions_particle)
     {
-      for (auto& part : particle_container)
-        while(criterion(part))
-          part.transition(transitions_particle);
+      # pragma omp parallel for
+      for (std::size_t pp = 0; pp < size(); ++pp)
+        while(criterion(particle_container[pp]))
+          particle_container[pp].transition(transitions_particle);
     }
 
     /** Each particle makes one transition. */
     template<typename Transitions_Particle>
     void step(Transitions_Particle& transitions_particle)
     {
-      for (auto& part : particle_container)
-        part.transition(transitions_particle);
+      # pragma omp parallel for
+      for (std::size_t pp = 0; pp < size(); ++pp)
+        particle_container[pp].transition(transitions_particle);
     }
     
     /** Each particle for which criterion is satisfied makes one transition.
@@ -208,10 +210,11 @@ namespace ctrw
     std::size_t step(Criterion criterion, Transitions_Particle& transitions_particle)
     {
       std::size_t nr_stepped = 0;
-      for (auto& part : particle_container)
-        if (criterion(part))
+      # pragma omp parallel for reduction(+:nr_stepped)
+      for (std::size_t pp = 0; pp < size(); ++pp)
+        if (criterion(particle_container[pp]))
         {
-          part.transition(transitions_particle);
+          particle_container[pp].transition(transitions_particle);
           ++nr_stepped;
         }
       return nr_stepped;
