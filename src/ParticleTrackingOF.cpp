@@ -2,6 +2,7 @@
 // Author: Tomás Aquino
 // Date: 16/02/2022
 
+#include <chrono>
 #include <cstddef>
 #include <iomanip>
 #include <iostream>
@@ -13,7 +14,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_2d;
+  using namespace ptof::model_bcc_symmetryplanes_advection;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -82,55 +83,95 @@ int main(int argc, char * argv[])
   std::cout << std::setprecision(2) << std::scientific;
   
   std::cout << "\n" << "Importing transport parameters..." << std::endl;
+  auto execution_begin = std::chrono::high_resolution_clock::now();
   Transport::Parameters params_transport{ directories,
     parameters_transport_name };
-  std::cout << "Done!" << std::endl;
+  auto execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
   std::cout << "\n" << "Importing reaction parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   Reaction::Parameters params_reaction{ directories,
     parameters_reaction_name,
     params_transport };
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
   std::cout << "\n"  << "Importing solver parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   Solvers::Parameters params_solvers{ directories,
     parameters_solvers_name, params_transport, params_reaction };
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
   std::cout << "\n"  << "Importing initial condition parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   InitialCondition::Parameters params_initial_condition{ directories,
     parameters_initial_condition_name,
     params_transport, params_reaction, params_solvers };
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up geometry...\n";
+  execution_begin = std::chrono::high_resolution_clock::now();
   Geometry geometry{
     directories_of, directories, params_transport };
   geometry.info_runtime(std::cout);
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field = Transport::makeVelocityInterpolator(geometry);
-  double average_velocity_magnitude = params_transport.lengthscale/params_transport.advection_time;
-  double velocity_rescaling = average_velocity_magnitude/
-    ptof::magnitude_of_average(velocity_field.get_field(),
-                               geometry.mesh);
-  velocity_field.rescale(velocity_rescaling);
-  std::cout << "Done!" << std::endl;
+  params_transport.rescale(velocity_field, geometry.mesh);
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up reaction..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   auto reaction = Reaction::makeReaction(geometry,
                                          params_reaction,
                                          params_transport,
                                          params_solvers);
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up initial condition...\n";
+  execution_begin = std::chrono::high_resolution_clock::now();
   auto initial_condition
     = InitialCondition::makeInitialCondition(geometry,
                                              velocity_field,
                                              params_initial_condition);
   initial_condition.info_runtime(std::cout);
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up boundary conditions...\n";
+  execution_begin = std::chrono::high_resolution_clock::now();
   auto boundary = geometry.makeBoundary(directories,
                                         params_transport,
                                         params_reaction,
@@ -142,25 +183,40 @@ int main(int argc, char * argv[])
                                           params_solvers),
                                         initial_condition);
   boundary.info_runtime(std::cout);
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up dynamics..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   CTRW ctrw{ initial_condition(), CTRW::Tag{} };
   ctrw::Transitions_CTRW_Transport_Reaction transitions{
     Transport::makeTransitions(velocity_field,
                                geometry, boundary,
-                               params_transport, params_solvers),
+                               params_transport, params_reaction, params_solvers),
     reaction };
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n"  << "Importing output parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   Output::Parameters params_output{ directories,
     parameters_output_name,
     params_transport, params_reaction, params_solvers,
-    velocity_rescaling };
-  std::cout << "Done!" << std::endl;
+    params_transport.velocity_rescaling_factor };
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Setting up output..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   Output measurer{
     ctrw,
     velocity_field,
@@ -176,9 +232,14 @@ int main(int argc, char * argv[])
       + "_I_" + parameters_initial_condition_name
       + "_O_" + parameters_output_name };
   measurer.info_runtime(std::cout);
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
 
   std::cout << "\n" << "Starting dynamics..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
   double current_time = 0.;
   while (!measurer.done(current_time))
   {
@@ -210,8 +271,11 @@ int main(int argc, char * argv[])
     measurer(measurer.next_measure_time());
   }
   measurer();
-  
-  std::cout << "Done!" << std::endl;
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   return 0;
 }

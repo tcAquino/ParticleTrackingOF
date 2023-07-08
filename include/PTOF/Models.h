@@ -61,9 +61,12 @@ namespace ptof
       
       struct Parameters
       {
-        double time_step_accuracy_adv;
-        double time_step_accuracy_diff;
-        double time_step_accuracy_react;
+        double local_time_step_accuracy_adv;
+        double local_time_step_accuracy_diff;
+        double local_time_step_accuracy_react;
+        double global_time_step_accuracy_adv;
+        double global_time_step_accuracy_diff;
+        double global_time_step_accuracy_react;
         
         template
         <typename TransportParameters,
@@ -77,9 +80,12 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, time_step_accuracy_adv);
-          useful::read(input, time_step_accuracy_diff);
-          useful::read(input, time_step_accuracy_react);
+          useful::read(input, local_time_step_accuracy_adv);
+          useful::read(input, local_time_step_accuracy_diff);
+          useful::read(input, local_time_step_accuracy_react);
+          useful::read(input, global_time_step_accuracy_adv);
+          useful::read(input, global_time_step_accuracy_diff);
+          useful::read(input, global_time_step_accuracy_react);
           input.close();
         }
         
@@ -90,9 +96,13 @@ namespace ptof
             "--------------------------------------------------\n"
             "Solver parameters\n"
             "--------------------------------------------------\n"
-            "- Local timestep accuracy in terms of local advective step\n"
-            "- Local timestep accuracy in terms of local diffusive step\n"
-            "- Local timestep accuracy in terms of local surface reaction rate\\n"
+            "- Local timestep accuracy in terms of cell-based advection time\n"
+            "- Local timestep accuracy in terms of cell-based diffusion time\n"
+            "- Local timestep accuracy in terms of cell-based surface reaction time\n"
+            "- Global timestep accuracy in terms of characteristic advection time\n"
+            "- Global timestep accuracy in terms of characteristic diffusion time\n"
+            "- Global timestep accuracy in terms of surface reaction time\n"
+            "Note: minimum between processes and maximum between local and global is used\n"
             "--------------------------------------------------\n";
         }
       };
@@ -115,11 +125,13 @@ namespace ptof
       struct Parameters
       {
         double lengthscale;
-        double peclet;
         double diff_coeff;
-        
         double diffusion_time;
         double advection_time;
+        std::string rescale_velocity_field;
+        double peclet;
+        double mean_velocity;
+        double velocity_rescaling_factor{ 1. };
         
         Parameters
         (Directories const& directories, std::string const& name)
@@ -128,12 +140,66 @@ namespace ptof
                                          + "/parameters_transport_"
                                          + name + ".dat");
           useful::read(input, lengthscale);
-          useful::read(input, peclet);
           useful::read(input, diff_coeff);
-          input.close();
-          
           diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
-          advection_time = 2.*diffusion_time/peclet;
+          useful::read(input, rescale_velocity_field);
+          if (rescale_velocity_field == "rescale_to_peclet")
+          {
+            useful::read(input, peclet);
+            advection_time = 2.*diffusion_time/peclet;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else if (rescale_velocity_field == "rescale_to_mean")
+          {
+            useful::read(input, mean_velocity);
+            peclet = lengthscale*mean_velocity/diff_coeff;
+            advection_time = lengthscale/mean_velocity;
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            useful::read(input, advection_time);
+            peclet = 2.*diffusion_time/advection_time;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {}
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
+          input.close();
+        }
+
+        template <typename VelocityField, typename Mesh>
+        void rescale
+        (VelocityField& velocity_field, Mesh const& mesh)
+        {
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          if (rescale_velocity_field == "rescale_to_peclet")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "rescale_to_mean")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {
+            peclet = lengthscale*current_mean/diff_coeff;
+            advection_time = lengthscale/current_mean;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
         }
         
         template <typename OStream>
@@ -144,8 +210,15 @@ namespace ptof
             "Transport parameters\n"
             "--------------------------------------------------\n"
             "- Reference lengthscale\n"
-            "- Peclet number\n"
             "- Diffusion coefficient\n"
+            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+            "\trescale_to_peclet: Rescale according to imposed peclet number\n"
+            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+            "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
+            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
             "--------------------------------------------------\n";
         }
       };
@@ -153,12 +226,14 @@ namespace ptof
       template
       <typename Geometry,
       typename VelocityField,
-      typename Boundary>
+      typename Boundary,
+      typename ReactionParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
+       ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions<
@@ -166,6 +241,7 @@ namespace ptof
                                        geometry,
                                        boundary,
                                        params_transport,
+                                       params_reaction,
                                        params_solvers);
       }
       
@@ -206,8 +282,8 @@ namespace ptof
       struct Parameters
       {
         double damkohler{ 0. };
-        double reaction_rate{ 0. };
-        double reaction_time{ 1./reaction_rate };
+        double rate_constant{ 0. };
+        double reaction_time{ std::numeric_limits<double>::infinity() };
         
         template <typename TransportParameters>
         Parameters
@@ -365,7 +441,7 @@ namespace ptof
             "- Total transported mass in each injection step\n"
             "- Number of Lagrangian particles in each injection step\n"
             "- Initial injection time\n"
-            "- Final injection time\n"
+            "- Final injection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
             "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
             "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
             "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
@@ -432,9 +508,12 @@ namespace ptof
       
       struct Parameters
       {
-        double time_step_accuracy_adv;
-        double time_step_accuracy_diff = std::numeric_limits<double>::infinity();
-        double time_step_accuracy_react = std::numeric_limits<double>::infinity();
+        double local_time_step_accuracy_adv;
+        double local_time_step_accuracy_diff = std::numeric_limits<double>::infinity();
+        double local_time_step_accuracy_react = std::numeric_limits<double>::infinity();
+        double global_time_step_accuracy_adv;
+        double global_time_step_accuracy_diff = std::numeric_limits<double>::infinity();
+        double global_time_step_accuracy_react = std::numeric_limits<double>::infinity();
         
         template
         <typename TransportParameters,
@@ -448,7 +527,8 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, time_step_accuracy_adv);
+          useful::read(input, local_time_step_accuracy_adv);
+          useful::read(input, global_time_step_accuracy_adv);
           input.close();
         }
         
@@ -459,7 +539,9 @@ namespace ptof
             "--------------------------------------------------\n"
             "Solver parameters\n"
             "--------------------------------------------------\n"
-            "- Local time step\n"
+            "- Local timestep accuracy in terms of cell-based advection time\n"
+            "- Global timestep accuracy in terms of characteristic advection time\n"
+            "Note: minimum between processes and maximum between local and global is used\n"
             "--------------------------------------------------\n";
         }
       };
@@ -480,19 +562,66 @@ namespace ptof
     {
       struct Parameters
       {
-        double peclet = std::numeric_limits<double>::infinity();
-        double diff_coeff = 0.;
-        double diffusion_time = std::numeric_limits<double>::infinity();
         double lengthscale;
+        const double diff_coeff{ 0. };
+        const double diffusion_time{ std::numeric_limits<double>::infinity() };
         double advection_time;
+        std::string rescale_velocity_field;
+        const double peclet{ std::numeric_limits<double>::infinity() };
+        double mean_velocity;
+        double velocity_rescaling_factor{ 1. };
         
-        Parameters(Directories const& directories, std::string const& name)
+        Parameters
+        (Directories const& directories, std::string const& name)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
           useful::read(input, lengthscale);
-          useful::read(input, advection_time);
+          useful::read(input, rescale_velocity_field);
+          if (rescale_velocity_field == "rescale_to_mean")
+          {
+            useful::read(input, mean_velocity);
+            advection_time = lengthscale/mean_velocity;
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            useful::read(input, advection_time);
+            mean_velocity = lengthscale/advection_time;
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {}
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
+          input.close();
+        }
+
+        template <typename VelocityField, typename Mesh>
+        void rescale
+        (VelocityField& velocity_field, Mesh const& mesh)
+        {
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          if (rescale_velocity_field == "rescale_to_mean")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {
+            advection_time = lengthscale/current_mean;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
         }
         
         template <typename OStream>
@@ -503,7 +632,13 @@ namespace ptof
             "Transport parameters\n"
             "--------------------------------------------------\n"
             "- Reference lengthscale\n"
-            "- Advection time"
+            "- Diffusion coefficient\n"
+            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
             "--------------------------------------------------\n";
         }
       };
@@ -511,12 +646,14 @@ namespace ptof
       template
       <typename Geometry,
       typename VelocityField,
-      typename Boundary>
+      typename Boundary,
+      typename ReactionParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
+       ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions_Advection<
@@ -524,6 +661,7 @@ namespace ptof
                                        geometry,
                                        boundary,
                                        params_transport,
+                                       params_reaction,
                                        params_solvers);
       }
       
@@ -650,7 +788,7 @@ namespace ptof
         double damkohler;
         std::string initial_distribution;
         double surface_concentration;
-        double reaction_rate;
+        double rate_constant;
         double reaction_time;
       
         template <typename TransportParameters>
@@ -665,9 +803,9 @@ namespace ptof
           useful::read(input, damkohler);
           useful::read(input, initial_distribution);
           useful::read(input, surface_concentration);
-          reaction_rate = params_transport.lengthscale*damkohler/
+          rate_constant = params_transport.lengthscale*damkohler/
             (surface_concentration*params_transport.diffusion_time);
-          reaction_time = 1./reaction_rate;
+          reaction_time = params_transport.diffusion_time/damkohler;
           input.close();
         }
       
@@ -711,7 +849,7 @@ namespace ptof
       {
         if (params.initial_distribution == "uniform")
           return SurfaceReaction_AFluidPlusASolidtoASolid{
-            params.reaction_rate,
+            params.rate_constant,
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
@@ -731,89 +869,6 @@ namespace ptof
         Reaction_DoNothing::info(output);
         output << "\n";
         SurfaceReaction_AFluidPlusASolidtoASolid<Foam::meshSearch>::
-          info(output);
-      }
-    };
-  }
-  
-  namespace model_advection_diffusion_decay_2d
-  {
-    struct Model
-    {
-      inline static const std::string name{
-        "advection_diffusion_decay_2d" };
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
-      }
-    };
-
-    using model_advection_diffusion_2d::Geometry;
-    using model_advection_diffusion_2d::Info;
-    using model_advection_diffusion_2d::State;
-    using model_advection_diffusion_2d::CTRW;
-    using model_advection_diffusion_2d::Solvers;
-    using model_advection_diffusion_2d::Transport;
-    using model_advection_diffusion_2d::InitialCondition;
-    using model_advection_diffusion_2d::VelocityField;
-    using model_advection_diffusion_2d::Output;
-    
-    struct Reaction
-    {
-      using Parameters =
-        model_advection_diffusion_decay_catalytic_2d::
-        Reaction::Parameters;
-      
-      template
-      <typename Geometry,
-      typename TransportParameters,
-      typename SolverParameters>
-      static auto makeReaction
-      (Geometry const& geometry,
-       Parameters const& params,
-       TransportParameters const& params_transport,
-       SolverParameters const& params_solvers)
-      {
-        return Reaction_DoNothing{};
-      }
-      
-      template
-      <typename Geometry,
-      typename TransportParameters,
-      typename SolverParameters>
-      static auto makeSurfaceReaction
-      (Geometry const& geometry,
-       Parameters const& params,
-       TransportParameters const& params_transport,
-       SolverParameters const& params_solvers)
-      {
-        if (params.initial_distribution == "uniform")
-          return SurfaceReaction_AFluidPlusASolidtoNothing{
-            params.reaction_rate,
-            params_transport.diff_coeff,
-            uniform_solid_reactant_patches(params.surface_concentration,
-                                               { "wallFluidSolid" },
-                                               geometry.mesh ),
-            geometry.mesh_search };
-        throw std::runtime_error{
-          "Initial reactant distribution "
-          + params.initial_distribution
-          + " not supported" };
-      }
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        Reaction_DoNothing::info(output);
-        output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoNothing<Foam::meshSearch>::
           info(output);
       }
     };
@@ -968,36 +1023,6 @@ namespace ptof
     using model_advection_diffusion_decay_catalytic_2d::Reaction;
   }
   
-  namespace model_periodic_cartesian_advection_diffusion_decay_2d
-  {
-    struct Model
-    {
-      inline static const std::string name{
-        "periodic_cartesian_advection_diffusion_decay_2d" };
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
-      }
-    };
-
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::Geometry;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::Info;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::State;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::CTRW;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::Solvers;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::Transport;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::InitialCondition;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_2d::Output;
-    using model_advection_diffusion_decay_2d::Reaction;
-  }
-  
   namespace model_advection_diffusion_3d
   {
     struct Model
@@ -1026,53 +1051,19 @@ namespace ptof
     
     struct Transport
     {
-      struct Parameters
-      {
-        double lengthscale;
-        double peclet;
-        double diff_coeff;
-        
-        double diffusion_time;
-        double advection_time;
-        
-        Parameters
-        (Directories const& directories, std::string const& name)
-        {
-          auto input = useful::open_read(directories.dir_parameters
-                                         + "/parameters_transport_"
-                                         + name + ".dat");
-          useful::read(input, lengthscale);
-          useful::read(input, peclet);
-          useful::read(input, diff_coeff);
-          input.close();
-          
-          diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
-          advection_time = 2.*diffusion_time/peclet;
-        }
-        
-        template <typename OStream>
-        static void info(OStream& output)
-        {
-          output <<
-            "--------------------------------------------------\n"
-            "Transport parameters\n"
-            "--------------------------------------------------\n"
-            "- Reference lengthscale\n"
-            "- Peclet number\n"
-            "- Diffusion coefficient\n"
-            "--------------------------------------------------\n";
-        }
-      };
+      using Parameters = model_advection_diffusion_2d::Transport::Parameters;
       
       template
       <typename Geometry,
       typename VelocityField,
-      typename Boundary>
+      typename Boundary,
+      typename ReactionParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
+       ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions<
@@ -1080,6 +1071,7 @@ namespace ptof
                                        geometry,
                                        boundary,
                                        params_transport,
+                                       params_reaction,
                                        params_solvers);
       }
       
@@ -1120,8 +1112,8 @@ namespace ptof
       struct Parameters
       {
         double damkohler{ 0. };
-        double reaction_rate{ 0. };
-        double reaction_time{ 1./reaction_rate };
+        double rate_constant{ 0. };
+        double reaction_time{ std::numeric_limits<double>::infinity() };
         
         template <typename TransportParameters>
         Parameters
@@ -1325,7 +1317,7 @@ namespace ptof
         double damkohler;
         std::string initial_distribution;
         double surface_concentration;
-        double reaction_rate;
+        double rate_constant;
         double reaction_time;
       
         template <typename TransportParameters>
@@ -1340,9 +1332,9 @@ namespace ptof
           useful::read(input, damkohler);
           useful::read(input, initial_distribution);
           useful::read(input, surface_concentration);
-          reaction_rate = params_transport.lengthscale*damkohler/
+          rate_constant = params_transport.lengthscale*damkohler/
             (surface_concentration*params_transport.diffusion_time);
-          reaction_time = 1./reaction_rate;
+          reaction_time = params_transport.diffusion_time/damkohler;
           input.close();
         }
       
@@ -1386,7 +1378,7 @@ namespace ptof
       {
         if (params.initial_distribution == "uniform")
           return SurfaceReaction_AFluidPlusASolidtoASolid{
-            params.reaction_rate,
+            params.rate_constant,
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
@@ -1404,89 +1396,6 @@ namespace ptof
         Reaction_DoNothing::info(output);
         output << "\n";
         SurfaceReaction_AFluidPlusASolidtoASolid<Foam::meshSearch>::
-          info(output);
-      }
-    };
-  }
-
-  namespace model_advection_diffusion_decay_3d
-  {
-    struct Model
-    {
-      inline static const std::string name{
-        "advection_diffusion_decay_3d" };
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
-      }
-    };
-
-    using model_advection_diffusion_3d::Geometry;
-    using model_advection_diffusion_3d::Info;
-    using model_advection_diffusion_3d::State;
-    using model_advection_diffusion_3d::CTRW;
-    using model_advection_diffusion_3d::Solvers;
-    using model_advection_diffusion_3d::Transport;
-    using model_advection_diffusion_3d::InitialCondition;
-    using model_advection_diffusion_3d::VelocityField;
-    using model_advection_diffusion_3d::Output;
-    
-    struct Reaction
-    {
-      using Parameters =
-        model_advection_diffusion_decay_catalytic_3d::
-        Reaction::Parameters;
-      
-      template
-      <typename Geometry,
-      typename TransportParameters,
-      typename SolverParameters>
-      static auto makeReaction
-      (Geometry const& geometry,
-       Parameters const& params,
-       TransportParameters const& params_transport,
-       SolverParameters const& params_solvers)
-      {
-        return Reaction_DoNothing{};
-      }
-      
-      template
-      <typename Geometry,
-      typename TransportParameters,
-      typename SolverParameters>
-      static auto makeSurfaceReaction
-      (Geometry const& geometry,
-       Parameters const& params,
-       TransportParameters const& params_transport,
-       SolverParameters const& params_solvers)
-      {
-        if (params.initial_distribution == "uniform")
-          return SurfaceReaction_AFluidPlusASolidtoNothing{
-            params.reaction_rate,
-            params_transport.diff_coeff,
-            uniform_solid_reactant_patches(params.surface_concentration,
-                                               { "wallFluidSolid" },
-                                               geometry.mesh ),
-            geometry.mesh_search };
-        throw std::runtime_error{
-          "Initial reactant distribution "
-          + params.initial_distribution
-          + " not supported" };
-      }
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        Reaction_DoNothing::info(output);
-        output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoNothing<Foam::meshSearch>::
           info(output);
       }
     };
@@ -1640,36 +1549,6 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d::Output;
     using model_advection_diffusion_decay_catalytic_3d::Reaction;
   }
-
-  namespace model_periodic_cartesian_advection_diffusion_decay_3d
-  {
-    struct Model
-    {
-      inline static const std::string name{
-        "periodic_cartesian_advection_diffusion_decay_3d" };
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
-      }
-    };
-
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::Geometry;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::Info;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::State;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::CTRW;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::Solvers;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::Transport;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::InitialCondition;
-    using model_periodic_cartesian_advection_diffusion_decay_catalytic_3d::Output;
-    using model_advection_diffusion_decay_3d::Reaction;
-  }
   
   namespace model_bcc_cartesian_advection_diffusion
   {
@@ -1731,12 +1610,15 @@ namespace ptof
       {
         double radius;
         double lengthscale;
-        double peclet;
         double diff_coeff;
+        double diffusion_time;
+        std::string rescale_velocity_field;
+        double peclet;
+        double mean_velocity;
+        double velocity_rescaling_factor{ 1. };
         
         double cell_side;
         std::vector<std::pair<double, double>> primitive_cell_boundaries;
-        double diffusion_time;
         double advection_time;
         
         Parameters(Directories const& directories, std::string const& name)
@@ -1758,7 +1640,7 @@ namespace ptof
             useful::read(input, lengthscale);
           else
             throw std::runtime_error{
-              std::string("Lengthscale definition")
+              "Lengthscale definition"
               + lengthscale_definition
               + "not supported" };
           std::string primitive_cell_location;
@@ -1772,16 +1654,69 @@ namespace ptof
               = std::vector<std::pair<double, double>>
                 (3, { 0., cell_side });
           else
-            throw std::runtime_error{
-              std::string("Lengthscale definition")
+            throw std::runtime_error{ "Lengthscale definition"
               + lengthscale_definition
               + "not supported" };
-          useful::read(input, peclet);
           useful::read(input, diff_coeff);
-          input.close();
-          
           diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
-          advection_time = 2.*diffusion_time/peclet;
+          useful::read(input, rescale_velocity_field);
+          if (rescale_velocity_field == "rescale_to_peclet")
+          {
+            useful::read(input, peclet);
+            advection_time = 2.*diffusion_time/peclet;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else if (rescale_velocity_field == "rescale_to_mean")
+          {
+            useful::read(input, mean_velocity);
+            peclet = lengthscale*mean_velocity/diff_coeff;
+            advection_time = lengthscale/mean_velocity;
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            useful::read(input, advection_time);
+            peclet = 2.*diffusion_time/advection_time;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {}
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
+          input.close();
+        }
+        
+        template <typename VelocityField, typename Mesh>
+        void rescale
+        (VelocityField& velocity_field, Mesh const& mesh)
+        {
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          if (rescale_velocity_field == "rescale_to_peclet")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "rescale_to_mean")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {
+            peclet = lengthscale*current_mean/diff_coeff;
+            advection_time = lengthscale/current_mean;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
         }
         
         template <typename OStream>
@@ -1801,8 +1736,15 @@ namespace ptof
             "- Location of primitive cell:\n"
             "\tcentered: Centered at the origin\n"
             "\tcorner: Left bottom corner at the origin\n"
-            "- Peclet number\n"
             "- Diffusion coefficient\n"
+            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+            "\trescale_to_peclet: Rescale according to imposed peclet number\n"
+            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+            "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
+            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
             "--------------------------------------------------\n";
         }
       };
@@ -1810,12 +1752,14 @@ namespace ptof
       template
       <typename Geometry,
       typename VelocityField,
-      typename Boundary>
+      typename Boundary,
+      typename ReactionParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
+       ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions<
@@ -1823,6 +1767,7 @@ namespace ptof
                                        geometry,
                                        boundary,
                                        params_transport,
+                                       params_reaction,
                                        params_solvers);
       }
       
@@ -1925,16 +1870,18 @@ namespace ptof
     {
       struct Parameters
       {
-        double peclet = std::numeric_limits<double>::infinity();
-        double diff_coeff = 0.;
-        double diffusion_time = std::numeric_limits<double>::infinity();
-        double advection_time = 0.;
-        
         double radius;
         double lengthscale;
+        const double diff_coeff{ 0. };
+        const double diffusion_time { std::numeric_limits<double>::infinity() };
+        std::string rescale_velocity_field;
+        const double peclet{ std::numeric_limits<double>::infinity() };
+        double mean_velocity;
+        double velocity_rescaling_factor{ 1. };
         
         double cell_side;
         std::vector<std::pair<double, double>> primitive_cell_boundaries;
+        double advection_time;
         
         Parameters(Directories const& directories, std::string const& name)
         {
@@ -1954,8 +1901,7 @@ namespace ptof
           else if (lengthscale_definition == "custom")
             useful::read(input, lengthscale);
           else
-            throw std::runtime_error{
-              std::string("Lengthscale definition")
+            throw std::runtime_error{ "Lengthscale definition"
               + lengthscale_definition
               + "not supported" };
           std::string primitive_cell_location;
@@ -1969,11 +1915,53 @@ namespace ptof
               = std::vector<std::pair<double, double>>
                 (3, { 0., cell_side });
           else
-            throw std::runtime_error{
-              std::string("Lengthscale definition")
+            throw std::runtime_error{ "Lengthscale definition"
               + lengthscale_definition
               + "not supported" };
+          useful::read(input, rescale_velocity_field);
+          if (rescale_velocity_field == "rescale_to_mean")
+          {
+            useful::read(input, mean_velocity);
+            advection_time = lengthscale/mean_velocity;
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            useful::read(input, advection_time);
+            mean_velocity = lengthscale/advection_time;
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {}
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
           input.close();
+        }
+        
+        template <typename VelocityField, typename Mesh>
+        void rescale
+        (VelocityField& velocity_field, Mesh const& mesh)
+        {
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          if (rescale_velocity_field == "rescale_to_mean")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "rescale_to_advection_time")
+          {
+            velocity_rescaling_factor = mean_velocity/current_mean;
+            velocity_field.rescale(velocity_rescaling_factor);
+          }
+          else if (rescale_velocity_field == "no_rescale")
+          {
+            advection_time = lengthscale/current_mean;
+            mean_velocity = lengthscale/advection_time;
+          }
+          else
+            throw std::runtime_error{ "Flow field rescaling option "
+              + rescale_velocity_field
+              + " not supported" };
         }
         
         template <typename OStream>
@@ -1993,6 +1981,12 @@ namespace ptof
             "- Location of primitive cell:\n"
             "\tcentered: Centered at the origin\n"
             "\tcorner: Left bottom corner at the origin\n"
+            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
             "--------------------------------------------------\n";
         }
       };
@@ -2000,12 +1994,14 @@ namespace ptof
       template
       <typename Geometry,
       typename VelocityField,
-      typename Boundary>
+      typename Boundary,
+      typename ReactionParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
+       ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions_Advection<
@@ -2013,6 +2009,7 @@ namespace ptof
                                        geometry,
                                        boundary,
                                        params_transport,
+                                       params_reaction,
                                        params_solvers);
       }
      
@@ -2078,37 +2075,6 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion::VelocityField;
     using model_bcc_cartesian_advection_diffusion::Output;
     using model_advection_diffusion_decay_catalytic_2d::Reaction;
-  }
-  
-  namespace model_bcc_cartesian_advection_diffusion_decay
-  {
-    struct Model
-    {
-      inline static const std::string name{
-        "bcc_cartesian_advection_diffusion_decay" };
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
-      }
-    };
-
-    using model_bcc_cartesian_advection_diffusion::Geometry;
-    using model_bcc_cartesian_advection_diffusion::Info;
-    using model_bcc_cartesian_advection_diffusion::State;
-    using model_bcc_cartesian_advection_diffusion::CTRW;
-    using model_bcc_cartesian_advection_diffusion::Solvers;
-    using model_bcc_cartesian_advection_diffusion::Transport;
-    using model_bcc_cartesian_advection_diffusion::InitialCondition;
-    using model_bcc_cartesian_advection_diffusion::VelocityField;
-    using model_bcc_cartesian_advection_diffusion::Output;
-    using model_advection_diffusion_decay_2d::Reaction;
   }
   
   namespace model_bcc_symmetryplanes_advection_diffusion
@@ -2237,37 +2203,6 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion::VelocityField;
     using model_bcc_symmetryplanes_advection_diffusion::Output;
     using model_advection_diffusion_decay_catalytic_2d::Reaction;
-  }
-  
-  namespace model_bcc_symmetryplanes_advection_diffusion_decay
-  {
-    struct Model
-    {
-      inline static const std::string name{
-        "bcc_symmetryplanes_advection_diffusion_decay" };
-      
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
-      }
-    };
-
-    using model_bcc_symmetryplanes_advection_diffusion::Geometry;
-    using model_bcc_symmetryplanes_advection_diffusion::Info;
-    using model_bcc_symmetryplanes_advection_diffusion::State;
-    using model_bcc_symmetryplanes_advection_diffusion::CTRW;
-    using model_bcc_symmetryplanes_advection_diffusion::Solvers;
-    using model_bcc_symmetryplanes_advection_diffusion::Transport;
-    using model_bcc_symmetryplanes_advection_diffusion::InitialCondition;
-    using model_bcc_symmetryplanes_advection_diffusion::VelocityField;
-    using model_bcc_symmetryplanes_advection_diffusion::Output;
-    using model_advection_diffusion_decay_2d::Reaction;
   }
 }
 

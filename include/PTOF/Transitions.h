@@ -8,6 +8,7 @@
 #define PTOF_TRANSITIONS_H
 
 #include "CTRW/Transitions.h"
+#include "PTOF/Field.h"
 #include "PTOF/TimeStepAdaptor.h"
 
 namespace ptof
@@ -26,12 +27,14 @@ namespace ptof
   typename VelocityField,
   typename Boundary,
   typename TransportParameters,
+  typename ReactionParameters,
   typename SolverParameters>
   auto makeTransportTransitions
   (VelocityField&& velocity_field,
    Geometry const& geometry,
    Boundary& boundary,
    TransportParameters const& params_transport,
+   ReactionParameters const& params_reaction,
    SolverParameters const& params_solvers)
   {
     return
@@ -41,8 +44,9 @@ namespace ptof
           velocity_field,
           boundary.reaction,
           params_transport,
-          params_solvers
-        },
+          params_reaction,
+          params_solvers,
+          FieldOptions::Warn{} },
         Steppers::makeTimeGenerator(params_solvers),
         Steppers::makeJumpGenerator(std::forward<VelocityField>(velocity_field),
                                     boundary,
@@ -66,12 +70,14 @@ namespace ptof
   typename VelocityField,
   typename Boundary,
   typename TransportParameters,
+  typename ReactionParameters,
   typename SolverParameters>
   auto makeTransportTransitions_Advection
   (VelocityField&& velocity_field,
    Geometry const& geometry,
    Boundary& boundary,
    TransportParameters const& params_transport,
+   ReactionParameters const& params_reaction,
    SolverParameters const& params_solvers)
   {
     return
@@ -81,7 +87,9 @@ namespace ptof
           velocity_field,
           boundary.reaction,
           params_transport,
-          params_solvers },
+          params_reaction,
+          params_solvers,
+          FieldOptions::Warn{} },
         Steppers::makeTimeGenerator(params_solvers),
         Steppers::makeJumpGenerator_Advection(std::forward<VelocityField>(velocity_field),
                                               boundary,

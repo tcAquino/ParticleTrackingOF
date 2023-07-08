@@ -33,7 +33,7 @@ namespace ptof
     enum class Type
     {
       reflecting,           /**< Reflecting                                          */
-      reacting_reflecting,  /**< Reflecting and reacting                     */
+      reacting_reflecting,  /**< Reacting and reflecting                     */
       periodic,             /**< Periodic                                            */
       absorbing,            /**< Absorbing                                           */
       info,                 /**< Information upon hitting                      */

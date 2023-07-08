@@ -61,9 +61,15 @@ namespace ptof
     auto operator()
     (State const& state) const
     {
-      mesh_search.findCell(make_point(state.position),
-                           state.cell);
-      return state.cell;
+      return mesh_search.findCell(make_point(state.position),
+                                  state.cell);
+    }
+    
+    /** Find nearest cell to state. Does not use hint because holes are not handled correctly */
+    template <typename State>
+    auto nearest_cell(State const& state) const
+    {
+      return mesh_search.findNearestCell(make_point(state.position));
     }
     
     private:

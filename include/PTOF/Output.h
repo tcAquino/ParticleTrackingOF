@@ -408,7 +408,8 @@ namespace ptof
       : velocity_rescaling{ velocity_rescaling }
       {
         auto input = useful::open_read(directories.dir_parameters
-                                       + "/output.dat");
+                                       + "/parameters_output_"
+                                       + name + ".dat");
         useful::read(input, run_nr);
         read_time_units(input, params_transport, params_reaction);
         read_end_criterion(input);
@@ -449,12 +450,12 @@ namespace ptof
           "- Maximum measurement time, if required by measure spacing\n"
           "- Number of measurements, if required by measure spacing\n"
           "- Measurement types (any number):\n"
-          "\tposition: Time, particle positions, and particle masses\n"
+          "\tposition: Time, particle tags, particle positions, and particle masses\n"
           "\tposition_mean: Time and mean position\n"
           "\tposition_second_moment: Time and position second moment\n"
           "\tposition_variance: Time and position variance\n"
           "\tmass: Time and total mass\n"
-          "\tabsorption_time: Particle absorption times and masses at end of dynamics\n"
+          "\tabsorption_time: Particle absorption times, particle tags, and particle masses at end of dynamics\n"
           "--------------------------------------------------\n";
       }
       
@@ -709,18 +710,6 @@ namespace ptof
     }
         
   private:
-    /** Open output file for a given output type. */
-    std::ofstream open_write
-    (Directories const& directories,
-     std::string const& output_name,
-     std::string const& identifier)
-    {
-      return
-        useful::open_write(directories.dir_output
-        + "/" + output_name
-        + ".dat") ;
-    }
-  
     /** Set up output streams for requested output types. */
     void set_measure_types
     (Geometry const& geometry,
@@ -1040,9 +1029,7 @@ namespace ptof
       : subject{ subject }
       , velocity_field{ velocity_field }
       , geometry{ geometry }
-      , output{ useful::open_write(directories.dir_output
-        + "/" + output_name
-        + ".dat") } 
+      , output{ open_write(directories, output_name, identifier, params.run_nr) }
       , delimiter{ delimiter }
       {
         output << std::setprecision(precision)
@@ -1054,6 +1041,34 @@ namespace ptof
       Geometry const& geometry;
       std::ofstream output;
       std::string delimiter;
+        
+      /** Open output file for a given output type, tagged with run number identifier. */
+      std::ofstream open_write
+      (Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       std::size_t run_nr)
+      {
+        return
+          useful::open_write(directories.dir_output
+          + "/Data_" + output_name
+          + (identifier.empty() ? "" : "_" + identifier)
+          + "_RUN_" + std::to_string(run_nr)
+          + ".dat") ;
+      }
+        
+      /** Open output file for a given output type. */
+      std::ofstream open_write
+      (Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier)
+      {
+        return
+          useful::open_write(directories.dir_output
+          + "/Data_" + output_name
+          + (identifier.empty() ? "" : "_" + identifier)
+          + ".dat") ;
+      }
     };
         
     /** \struct Output PTOF/Output.h "PTOF/Output.h"
@@ -1078,9 +1093,7 @@ namespace ptof
       : subject{ subject }
       , velocity_field{ velocity_field }
       , geometry{ geometry }
-      , output{ useful::open_write(directories.dir_output
-        + "/" + output_name
-        + ".dat") }
+      , output{ open_write(directories, output_name, identifier, params.run_nr) }
       , delimiter{ delimiter }
       {
         output << std::setprecision(precision)
@@ -1092,6 +1105,34 @@ namespace ptof
       Geometry const& geometry;
       std::ofstream output;
       std::string delimiter;
+      
+      /** Open output file for a given output type, tagged with run number identifier. */
+      std::ofstream open_write
+      (Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       std::size_t run_nr)
+      {
+        return
+          useful::open_write(directories.dir_output
+          + "/Data_" + output_name
+          + (identifier.empty() ? "" : "_" + identifier)
+          + "_RUN_" + std::to_string(run_nr)
+          + ".dat");
+      }
+      
+      /** Open output file for a given output type. */
+      std::ofstream open_write
+      (Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier)
+      {
+        return
+          useful::open_write(directories.dir_output
+          + "/Data_" + output_name
+          + (identifier.empty() ? "" : "_" + identifier)
+          + ".dat");
+      }
     };
     
     /** \struct Output_position final PTOF/Output.h "PTOF/Output.h"

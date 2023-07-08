@@ -10,12 +10,14 @@
 #define GENERAL_USEFUL_H
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
 #include <fstream>
 #include <functional>
 #include <ios>
+#include <iomanip>
 #include <iostream>
 #include <list>
 #include <regex>
@@ -28,6 +30,38 @@
 
 namespace useful
 {
+  // Display execution time in human-readable format
+  // Adapted from Howard Hinnant's answer here:
+  // https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time
+  template <typename Clock>
+  std::ostream& display_duration
+  (std::ostream& stream,
+   std::chrono::time_point<Clock> start_time,
+   std::chrono::time_point<Clock> end_time)
+  {
+    auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+    using days = std::chrono::duration<int, std::ratio<86400>>;
+    char fill = stream.fill();
+    stream.fill('0');
+    auto d = std::chrono::duration_cast<days>(ns);
+    ns -= d;
+    auto h = std::chrono::duration_cast<std::chrono::hours>(ns);
+    ns -= h;
+    auto m = std::chrono::duration_cast<std::chrono::minutes>(ns);
+    ns -= m;
+    auto s = std::chrono::duration_cast<std::chrono::seconds>(ns);
+    ns -= s;
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(ns);
+    stream << std::setw(2) << d.count() << "d:"
+           << std::setw(2) << h.count() << "h:"
+           << std::setw(2) << m.count() << "m:"
+           << std::setw(2) << s.count() << "s:"
+           << std::setw(2) << ms.count() << "ms";
+    stream.fill(fill);
+    
+    return stream;
+  };
+  
   // Convert string to bool
   bool stob(std::string const& string)
   {
@@ -570,7 +604,7 @@ namespace useful
   
   // Print container
   template <typename Stream, typename Container>
-  void print
+  Stream& print
   (Stream& stream, Container const& container,
    bool delimit_first = 0, std::string delimiter = "\t")
   {
@@ -590,6 +624,8 @@ namespace useful
         delim = delimiter;
       }
     }
+    
+    return stream;
   }
   
   // Read contents of file as a sequence of doubles

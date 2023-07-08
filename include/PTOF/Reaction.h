@@ -74,11 +74,11 @@ namespace ptof
      * threshold diff_coeff, map of initial reactive surface concentrations,
      * and mesh search object. */
     SurfaceReaction_AFluidPlusASolidtoASolid
-    (double reaction_rate,
+    (double rate_constant,
      double diff_coeff,
      SurfaceConcentrations surface_concentrations,
      MeshSearch&& mesh_search)
-    : surface_reaction_rate{ reaction_rate/diff_coeff }
+    : rate_constant{ rate_constant }
     , diff_coeff{ diff_coeff }
     , surface_concentrations{ surface_concentrations }
     , mesh_search{ std::forward<MeshSearch>(mesh_search) }
@@ -91,15 +91,15 @@ namespace ptof
       double exposure_time = state.time - state_old.time;
       double probability_first_order =
         rate(face)*std::sqrt(constants::pi*exposure_time/diff_coeff);
-      double probability_second_order = 1./(1.+probability_first_order/2);
+      double probability_second_order = probability_first_order/(1.+probability_first_order/2.);
       state.mass *= std::exp(-probability_second_order);
-      }
-    
+    }
+      
     /** Surface reaction rate at face */
     double rate(Foam::label face) const
     {
       if (surface_concentrations.count(face))
-        return surface_reaction_rate*
+        return rate_constant*
           surface_concentrations.at(face);
         
       return 0.;
@@ -117,7 +117,7 @@ namespace ptof
         "--------------------------------------------------\n";
     }
     
-    double surface_reaction_rate;                 /**< Surface reaction rate per solid concentrations.*/
+    double rate_constant;                 /**< Surface reaction rate per solid concentrations.*/
     double diff_coeff;                            /**< Diffusion coefficient.*/
     SurfaceConcentrations surface_concentrations; /**< Map of concentrations over reactive faces.*/
     MeshSearch mesh_search;                       /**< To find mesh faces.*/
@@ -129,75 +129,6 @@ namespace ptof
    std::unordered_map<Foam::label, double>,
    MeshSearch&&) ->
   SurfaceReaction_AFluidPlusASolidtoASolid<MeshSearch>;
-  
-  /** \class SurfaceReaction_AFluidPlusASolidtoNothing PTOF/Reaction.h "PTOF/Reaction.h"
-   * \brief A_F + A_S -> Nothing surface reaction. */
-  template <typename MeshSearch>
-  class SurfaceReaction_AFluidPlusASolidtoNothing
-  {
-  public:
-    /** Type of container to hold reactant surface concentrations. */
-    using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
-    
-    /** Construct given well-mixed volumetric reaction rate,
-     * threshold diff_coeff, map of initial reactive surface concentrations,
-     * and mesh search object. */
-    SurfaceReaction_AFluidPlusASolidtoNothing
-    (double reaction_rate,
-     double diff_coeff,
-     SurfaceConcentrations surface_concentrations,
-     MeshSearch&& mesh_search)
-    : surface_reaction_rate{ reaction_rate/diff_coeff }
-    , diff_coeff{ diff_coeff }
-    , surface_concentrations{ surface_concentrations }
-    , mesh_search{ std::forward<MeshSearch>(mesh_search) }
-    {}
-    
-    /** React over exposure time. */
-    template <typename State>
-    void operator()(State& state, State const& state_old, Foam::label face)
-    {
-      double exposure_time = state.time - state_old.time;
-      double probability_first_order =
-        rate(face)*std::sqrt(constants::pi*exposure_time/diff_coeff);
-      double probability_second_order = 1./(1.+probability_first_order/2);
-      state.mass *= std::exp(-probability_second_order);
-    }
-    
-    /** Surface reaction rate at face */
-    double rate(Foam::label face) const
-    {
-      if (surface_concentrations.count(face))
-        return surface_reaction_rate*
-          surface_concentrations.at(face);
-        
-      return 0.;
-    }
-    
-    /** Output generic information about object. */
-    template <typename OStream>
-    static void info(OStream& output)
-    {
-      output <<
-        "--------------------------------------------------\n"
-        "Surface reaction\n"
-        "--------------------------------------------------\n"
-        "A_Fluid + A_Solid -> Nothing\n"
-        "--------------------------------------------------\n";
-    }
-    
-    double surface_reaction_rate;                 /**< Surface reaction rate per solid concentrations.*/
-    double diff_coeff;                            /**< Diffusion coefficient.*/
-    SurfaceConcentrations surface_concentrations; /**< Map of concentrations over reactive faces.*/
-    MeshSearch mesh_search;                       /**< To find mesh faces.*/
-  };
-  template <typename MeshSearch>
-  SurfaceReaction_AFluidPlusASolidtoNothing
-  (double,
-   double,
-   std::unordered_map<Foam::label, double>,
-   MeshSearch&&) ->
-  SurfaceReaction_AFluidPlusASolidtoNothing<MeshSearch>;
   
   /** \class SurfaceReaction_DoNothing
    * \brief No reaction. */
