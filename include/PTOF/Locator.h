@@ -39,6 +39,17 @@ namespace ptof
     auto operator()
     (Point const& position, Index hint = -1) const
     {
+      if (hint != -1)
+      {
+        auto const& mesh = mesh_search.mesh();
+        if (mesh.pointInCell(position, hint))
+          return hint;
+        
+        for (auto const& cell_index : mesh.cellCells()[hint])
+          if (mesh.pointInCell(position, cell_index))
+            return cell_index;
+      }
+      
       return mesh_search.findCell(position, hint);
     }
     
@@ -46,14 +57,14 @@ namespace ptof
     auto operator()
     (Point2D const& position, Index hint = -1) const
     {
-      return mesh_search.findCell(make_point(position), hint);
+      return this->operator()(make_point(position), hint);
     }
     
     /** Find mesh cell for 1D position, given hint. */
     auto operator()
     (Scalar position, Index hint = -1) const
     {
-      return mesh_search.findCell(make_point(position), hint);
+      return this->operator()(make_point(position), hint);
     }
     
     /** Find mesh cell for state, using state's cell hint. */
@@ -61,15 +72,36 @@ namespace ptof
     auto operator()
     (State const& state) const
     {
-      return mesh_search.findCell(make_point(state.position),
-                                  state.cell);
+      return this->operator()(make_point(state.position),
+                              state.cell);
+    }
+    
+    /** Find nearest mesh cell for 3D position given hint. Does not use hint because holes are not handled correctly */
+    auto nearest_cell
+    (Point const& position, Index hint = -1) const
+    {
+      return mesh_search.findNearestCell(position);
+    }
+    
+    /** Find nearest mesh cell for 2D position. Does not use hint because holes are not handled correctly */
+    auto nearest_cell
+    (Point2D const& position, Index hint = -1) const
+    {
+      return nearest_cell(make_point(position));
+    }
+    
+    /** Find nearest mesh cell for 1D position. Does not use hint because holes are not handled correctly */
+    auto nearest_cell
+    (Scalar position, Index hint = -1) const
+    {
+      return nearest_cell(make_point(position));
     }
     
     /** Find nearest cell to state. Does not use hint because holes are not handled correctly */
     template <typename State>
     auto nearest_cell(State const& state) const
     {
-      return mesh_search.findNearestCell(make_point(state.position));
+      return nearest_cell(make_point(state.position));
     }
     
     private:
