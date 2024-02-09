@@ -301,6 +301,13 @@ namespace ptof
                                                         -make_point(state_old.position),
                                                         mesh_search),
                                    make_point(state.position));
+      else
+      {
+        // Ignore new intersection if offset went beyond final point
+        if (((intersection.point() - make_point(state_old.position))
+                & (make_point(state.position) - make_point(state_old.position))) < 0.)
+          intersection.setMiss();
+      }
       
       bool had_effect = 0;
       
@@ -439,7 +446,7 @@ namespace ptof
     /** \private */
     BCs boundary_conditions;              /**< Patch names and associated bc type names.         */
     MeshSearch mesh_search;               /**< Mesh search object to find intersections, etc. */
-    Locator locator;                      /**< Locator to find position cells, intersections, etc. */
+    Locator locator;                      /**< Locator to find position cells. */
     Store_Info store_info;                /**< Object to handle boundary info storing in states. */
     Boundary_Periodic boundary_periodic;  /**< Boundary object to handle 'periodic' bc type.     */
     Boundary_Custom boundary_custom;      /**< Boundary object to handle 'custom' bc type.       */

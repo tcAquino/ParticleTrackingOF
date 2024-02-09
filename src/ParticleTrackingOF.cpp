@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion;
+  using namespace ptof::model_advection_diffusion_2d;
   
   if (useful::check_options_help(argc, argv))
   {
