@@ -15,6 +15,7 @@
 #include <memory>
 #include <iomanip>
 #include <string>
+#include <type_traits>
 #include <vector>
 #include <zero.H>
 #include "CTRW/StateGetter.h"
@@ -186,7 +187,8 @@ namespace ptof
       position_mean,                    /**< Time and mean position.                                                        */ 
       position_second_moment,           /**< Time and position second moment.                                               */ 
       position_variance,                /**< Time and position variance.                                                    */ 
-      mass,                             /**< Time and total mass.                                                           */ 
+      mass,                             /**< Time and total mass.                                                           */
+      mass_in_regions,                  /**< Time and total mass in regions speciefied by masks.                                            */
       velocity,                         /**< Time and particle tags and local velocities.                                   */ 
       velocity_gradient,                /**< Time and particle tags and local velocity gradient components.                 */ 
       pressure,                         /**< Time and particle tags and local pressures.                                    */ 
@@ -218,6 +220,7 @@ namespace ptof
       { "position_second_moment", Type::position_second_moment },
       { "position_variance", Type::position_variance },
       { "mass", Type::mass },
+      { "mass_in_regions", Type::mass_in_regions },
       { "velocity", Type::velocity },
       { "velocity_gradient", Type::velocity_gradient },
       { "pressure", Type::pressure },
@@ -237,6 +240,7 @@ namespace ptof
       { Type::position_second_moment, "position_second_moment" },
       { Type::position_variance, "position_variance" },
       { Type::mass, "mass" },
+      { Type::mass_in_regions, "mass_in_regions" },
       { Type::velocity, "velocity" },
       { Type::velocity_gradient, "velocity_gradient" },
       { Type::pressure, "pressure" },
@@ -447,6 +451,7 @@ namespace ptof
           "\tlinear: Linear spacing, specified maximum time and number of measurements\n"
           "\tlog: Log spacing, specified maximum time and number of measurements\n"
           "- Minimum measurement time\n"
+          "- Measurement time increment, if required by measure spacing\n"
           "- Maximum measurement time, if required by measure spacing\n"
           "- Number of measurements, if required by measure spacing\n"
           "- Measurement types (any number):\n"
@@ -455,6 +460,7 @@ namespace ptof
           "\tposition_second_moment: Time and position second moment\n"
           "\tposition_variance: Time and position variance\n"
           "\tmass: Time and total mass\n"
+          "\tmass_in_regions: Time and total mass within regions specified by masks\n"
           "\tabsorption_time: Particle absorption times, particle tags, and particle masses at end of dynamics\n"
           "--------------------------------------------------\n";
       }
@@ -609,6 +615,7 @@ namespace ptof
     /** Construct given directory information, output parameters,
      * and identifier for output filenames.
      * Optionaly set output precision and delimiter character. */
+    template <typename Mask = useful::Empty>
     Output_Cases
     (Subject const& subject,
      VelocityField const& velocity_field,
@@ -616,6 +623,8 @@ namespace ptof
      Directories const& directories,
      Parameters params,
      std::string const& identifier,
+     std::vector<Mask const*> masks = {},
+     std::vector<double> tolerances = {},
      int precision = 8, std::string delimiter = "\t")
     : params{ params }
     , subject{ subject }
@@ -623,6 +632,7 @@ namespace ptof
     , geometry{ geometry }
     {
       set_measure_types(geometry, directories, identifier,
+                        masks, tolerances,
                         precision, delimiter);
       set_end_criterion();
       set_next_measure_time();
@@ -703,7 +713,7 @@ namespace ptof
         "- Minimum measurement time: " << params.time_min << "\n"
         "- Maximum measurement time: " << std::to_string(params.time_max) << "\n"
         "- Measurement types:";
-      useful::print(output, params.measure_names, 1, "\n\t");
+      useful::print(output, params.measure_names, true, "\n\t");
       output << "\n";
       output <<
         "--------------------------------------------------\n";
@@ -711,10 +721,13 @@ namespace ptof
         
   private:
     /** Set up output streams for requested output types. */
+    template <typename Mask = useful::Empty>
     void set_measure_types
     (Geometry const& geometry,
      Directories const& directories,
      std::string const& identifier,
+     std::vector<Mask const*> masks = {},
+     std::vector<double> tolerances = {},
      int precision = 8,
      std::string delimiter = "\t")
     {
@@ -760,6 +773,14 @@ namespace ptof
             (std::make_unique<Output_mass>
              (subject, velocity_field, geometry,
               directories, name, identifier, params));
+            break;
+          }
+          case Measure::Type::mass_in_regions:
+          {
+            output_time.emplace_back
+            (std::make_unique<Output_mass_in_regions<Mask>>
+             (subject, velocity_field, geometry,
+              directories, name, identifier, params, masks, tolerances));
             break;
           }
           case Measure::Type::velocity:
@@ -1165,7 +1186,7 @@ namespace ptof
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, state.position,
-                          1, OutputTime::delimiter);
+                          true, OutputTime::delimiter);
             OutputTime::output << OutputTime::delimiter << state.mass;
           }
         }
@@ -1198,7 +1219,7 @@ namespace ptof
         OutputTime::output << time;
         useful::print(OutputTime::output,
                       position_mean(OutputTime::subject, time),
-                      1, OutputTime::delimiter);
+                      true, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
     };
@@ -1228,7 +1249,7 @@ namespace ptof
         OutputTime::output << time;
         useful::print(OutputTime::output,
                       position_second_moment(OutputTime::subject, time),
-                      1, OutputTime::delimiter);
+                      true, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
     };
@@ -1258,7 +1279,7 @@ namespace ptof
         OutputTime::output << time;
         useful::print(OutputTime::output,
                       position_variance(OutputTime::subject, time),
-                      1, OutputTime::delimiter);
+                      true, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
     };
@@ -1288,6 +1309,51 @@ namespace ptof
         OutputTime::output << time << OutputTime::delimiter
                            << mass(OutputTime::subject, time) << "\n";
       }
+    };
+        
+    /** \struct Output_mass_in_regions final PTOF/Output.h "PTOF/Output.h"
+     *  \brief  Output time and total mass in regions specified by maks. */
+    template <typename Mask>
+    struct Output_mass_in_regions final : OutputTime
+    {
+      Output_mass_in_regions
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       std::vector<Mask const*> masks,
+       std::vector<double> tolerances = {},
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , masks{ masks }
+      , tolerances{ tolerances }
+      {
+        while(tolerances.size() < masks.size())
+          tolerances.push_back(0.);
+      }
+      
+      void operator()(double time) override
+      {
+        if constexpr (!std::is_same_v<Mask, useful::Empty>)
+        {
+          auto masses = mass(OutputTime::subject, time,
+                             OutputTime::geometry.locator,
+                             masks, tolerances);
+          OutputTime::output << time;
+          useful::print(OutputTime::output, masses, true, OutputTime::delimiter);
+          OutputTime::output << "\n";
+        }
+      }
+      
+      std::vector<Mask const*> masks;
+      std::vector<double> tolerances;
     };
         
      /** \struct Output_velocity final PTOF/Output.h "PTOF/Output.h"
@@ -1321,7 +1387,7 @@ namespace ptof
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output,
                           OutputTime::velocity_field(state),
-                          1, OutputTime::delimiter);
+                          true, OutputTime::delimiter);
           }
         }
         OutputTime::output << "\n";
@@ -1373,7 +1439,7 @@ namespace ptof
             if (cell == -1)
               useful::print(OutputTime::output,
                             std::vector<double>(Geometry::dim, 0.),
-                            1, OutputTime::delimiter);
+                            true, OutputTime::delimiter);
             else
             {
               auto const& grad = velocity_gradient[cell];
@@ -1450,7 +1516,7 @@ namespace ptof
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, pressure(state),
-                          1, OutputTime::delimiter);
+                          true, OutputTime::delimiter);
           }
         }
         OutputTime::output << "\n";
@@ -1493,7 +1559,7 @@ namespace ptof
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, getter_position(state),
-                          1, OutputTime::delimiter);
+                          true, OutputTime::delimiter);
             OutputTime::output << OutputTime::delimiter << state.mass;
           }
         }
@@ -1533,7 +1599,7 @@ namespace ptof
         useful::print(OutputTime::output,
                       position_mean(OutputTime::subject, time,
                                     getter_position),
-                      1, OutputTime::delimiter);
+                      true, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
       
@@ -1570,7 +1636,7 @@ namespace ptof
         useful::print(OutputTime::output,
                       position_second_moment(OutputTime::subject, time,
                                              getter_position),
-                      1, OutputTime::delimiter);
+                      true, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
       
@@ -1607,7 +1673,7 @@ namespace ptof
         useful::print(OutputTime::output,
                       position_variance(OutputTime::subject, time,
                                         getter_position),
-                      1, OutputTime::delimiter);
+                      true, OutputTime::delimiter);
         OutputTime::output << "\n";
       }
       

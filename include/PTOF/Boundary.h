@@ -231,7 +231,7 @@ namespace ptof
   /** \class Boundary_Cases PTOF/Boundary.h "PTOF/Boundary.h"
    *  \brief Boundary object to handle implemented boundary types */
   template
-  <typename MeshSearch, typename Store_Info,
+  <typename MeshSearch, typename Locator, typename Store_Info,
   typename Boundary_Periodic, typename Boundary_Custom,
   typename SurfaceReaction>
   class Boundary_Cases
@@ -248,12 +248,14 @@ namespace ptof
     Boundary_Cases
     (BCs boundary_conditions,
      MeshSearch&& mesh_search,
+     Locator&& locator,
      Store_Info&& store_info,
      Boundary_Periodic&& boundary_periodic = Boundary_DoNothing{},
      Boundary_Custom&& boundary_custom = Boundary_DoNothing{},
      SurfaceReaction&& reaction = SurfaceReaction_DoNothing{})
     : boundary_conditions{ boundary_conditions }
     , mesh_search{ std::forward<MeshSearch>(mesh_search) }
+    , locator{ std::forward<Locator>(locator) }
     , store_info{ std::forward<Store_Info>(store_info) }
     , boundary_periodic{ std::forward<Boundary_Periodic>(boundary_periodic) }
     , boundary_custom{ std::forward<Boundary_Custom>(boundary_custom) }
@@ -289,17 +291,16 @@ namespace ptof
       // sometimes the intersection with it is not found
       // Avoid breaking by checking for intersections with a small
       // backwards offset when the final state is out of bounds
-      state.cell = mesh_search.findCell(make_point(state.position),
-                                        state.cell);
-      if (!intersection.hit() && state.cell == -1)
+      if (!intersection.hit()
+          && locator(make_point(state.position), state.cell) == -1)
         intersection =
           mesh_search.intersection(
-          offset_backward_cell(make_point(state_old.position),
-                               state_old.cell,
-                               make_point(state.position)
-                                 -make_point(state_old.position),
-                               mesh_search),
-                               make_point(state.position));
+                                   offset_backward_cell(make_point(state_old.position),
+                                                        state_old.cell,
+                                                        make_point(state.position)
+                                                        -make_point(state_old.position),
+                                                        mesh_search),
+                                   make_point(state.position));
       
       bool had_effect = 0;
       
@@ -398,8 +399,14 @@ namespace ptof
           break;
         
         // Find the next intersection with a boundary patch
+        auto old_intersection_point = intersection.point();
         intersection = next_intersection(intersection,
                                          make_point(state.position));
+        // Ignore new intersection if offset went beyond final point
+        if (intersection.hit()
+            && ((intersection.point() - old_intersection_point)
+                & (make_point(state.position) - old_intersection_point)) < 0.)
+          intersection.setMiss();
       }
       
       return had_effect;
@@ -431,7 +438,8 @@ namespace ptof
   private:
     /** \private */
     BCs boundary_conditions;              /**< Patch names and associated bc type names.         */
-    MeshSearch mesh_search;               /**< Mesh search object to find points, intersections, etc. */
+    MeshSearch mesh_search;               /**< Mesh search object to find intersections, etc. */
+    Locator locator;                      /**< Locator to find position cells, intersections, etc. */
     Store_Info store_info;                /**< Object to handle boundary info storing in states. */
     Boundary_Periodic boundary_periodic;  /**< Boundary object to handle 'periodic' bc type.     */
     Boundary_Custom boundary_custom;      /**< Boundary object to handle 'custom' bc type.       */
@@ -474,58 +482,65 @@ namespace ptof
   };
   template
   <typename MeshSearch,
+  typename Locator,
   typename Store_Info,
   typename Boundary_Periodic,
   typename Boundary_Custom,
   typename Surface_Reaction>
   Boundary_Cases
   (typename Boundary_Cases<
-   MeshSearch, Store_Info,
+   MeshSearch, Locator, Store_Info,
    Boundary_Periodic, Boundary_Custom, Surface_Reaction>::BCs,
    MeshSearch&&,
+   Locator&&,
    Store_Info&&,
    Boundary_Periodic&&,
    Boundary_Custom&&,
    Surface_Reaction&&)->
-  Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_Periodic, Boundary_Custom, Surface_Reaction>;
+  Boundary_Cases<MeshSearch, Locator,
+    Store_Info, Boundary_Periodic, Boundary_Custom, Surface_Reaction>;
   template
   <typename MeshSearch,
+  typename Locator,
   typename Store_Info,
   typename Boundary_Periodic,
   typename Boundary_Custom>
   Boundary_Cases
   (typename Boundary_Cases<
-   MeshSearch, Store_Info,
+   MeshSearch, Locator, Store_Info,
    Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>::BCs,
    MeshSearch&&,
+   Locator&&,
    Store_Info&&,
    Boundary_Periodic&&,
    Boundary_Custom&&)->
-  Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>;
+  Boundary_Cases<MeshSearch, Locator,
+    Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>;
   template
   <typename MeshSearch,
+  typename Locator,
   typename Store_Info,
   typename Boundary_Periodic>
   Boundary_Cases
   (typename Boundary_Cases<
-   MeshSearch, Store_Info,
+   MeshSearch, Locator, Store_Info,
    Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
    MeshSearch&&,
+   Locator&&,
    Store_Info&&,
    Boundary_Periodic&&)->
-  Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>;
-  template <typename MeshSearch, typename Store_Info>
+  Boundary_Cases<MeshSearch, Locator,
+    Store_Info, Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>;
+  template <typename MeshSearch, typename Locator, typename Store_Info>
   Boundary_Cases
   (typename Boundary_Cases<
-   MeshSearch, Store_Info,
+   MeshSearch, Locator, Store_Info,
    Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
    MeshSearch&&,
+   Locator&&,
    Store_Info&&)->
-  Boundary_Cases<MeshSearch, Store_Info,
-  Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>;
+  Boundary_Cases<MeshSearch, Locator,
+    Store_Info, Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>;
   
   /** Periodic image of intersection point. */
   template

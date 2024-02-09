@@ -116,7 +116,7 @@ namespace ptof
                                                    mesh_search.mesh()));
    
     return mesh_search.tol_*typ_dim*
-    direction/Foam::mag(direction);
+      direction/Foam::mag(direction);
   }
   
   /** Small offset along face normal (outward)
@@ -256,10 +256,36 @@ namespace ptof
     double mass = 0.;
     for (auto const& part : subject.particles())
       if (!part.state_new().info.absorbed
-          && part.state_old().time <= time){
+          && part.state_old().time <= time)
+      {
         mass += part.state_new().mass;
-        }
+      }
     return mass;
+  };
+  
+  /** Compute total mass in regions specified by masks. */
+  template <typename Subject, typename Locator, typename Mask>
+  auto mass
+  (Subject const& subject, double time,
+   Locator const& locator,
+   std::vector<Mask const*> masks,
+   std::vector<double> tolerances)
+  {
+    std::vector<double> masses(masks.size(), 0.);
+    for (auto const& part : subject.particles())
+    {
+      if (!part.state_new().info.absorbed
+          && part.state_old().time <= time)
+      {
+        auto cell = locator(part.state_new());
+        for (std::size_t ii = 0; ii < masks.size(); ++ii)
+        {
+          if (cell != -1 && (*masks[ii])[cell] > tolerances[ii])
+            masses[ii] += part.state_new().mass;
+        }
+      }
+    }
+    return masses;
   };
   
   /** Compute mean position (weighted by mass). */
@@ -337,6 +363,27 @@ namespace ptof
       static No test(...);
       static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
   };
+  
+  template <typename OStream, typename Measurer, typename ParametersOutput>
+  void info_time
+  (OStream& output, Measurer const& measurer, ParametersOutput const& params, double time)
+  {
+    output << "Time "
+           << "[" << params.time_units << " times]: "
+           << time/params.time_unit_factor
+           << "\n";
+  }
+  
+  template <typename OStream, typename Measurer, typename CTRW>
+  void info_fraction_not_absorbed
+  (OStream& output, Measurer const& measurer, CTRW const& ctrw, double time)
+  {
+    output << "Fraction not absorbed: "
+          << 1. - double(ptof::nr_absorbed(ctrw, time))/ctrw.size()
+          << "\n";
+  }
+  
+  
 }
 
 #endif /* PTOF_USEFUL_H */

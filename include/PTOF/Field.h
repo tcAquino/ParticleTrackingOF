@@ -127,6 +127,15 @@ namespace ptof
     auto rescale(double factor)
     { field *= factor; }
     
+    /** Sum to underlying field. */
+    auto sum(Field const& other_field)
+    { field += other_field; }
+    
+    auto set(Field const& field)
+    {
+      this->field = field;
+    }
+    
   private:
     Field field;      /**< Field data to interpolate.         */
     Locator locator;  /**< Locator to find positions in mesh. */

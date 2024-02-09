@@ -151,6 +151,7 @@ namespace ptof
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
+          locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
           Boundary_DoNothing{},
@@ -159,6 +160,7 @@ namespace ptof
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
+          locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
           Boundary_Reinject{ parameters } };
@@ -265,6 +267,7 @@ namespace ptof
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
@@ -275,6 +278,7 @@ namespace ptof
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
@@ -518,6 +522,7 @@ namespace ptof
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
@@ -528,6 +533,7 @@ namespace ptof
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
           mesh_search,
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,

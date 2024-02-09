@@ -2,6 +2,7 @@
 if [[ "$#" -eq 1 ]]
 then
 	sed -i'.bak' "s/.*using namespace ptof::model_.*/  using namespace ptof::model_$1;/" ParticleTrackingOF.cpp
+  sed -i'.bak' "s/.*using namespace ptof::model_.*/  using namespace ptof::model_$1;/" ParticleTrackingOF_TwoPhaseNonStationary.cpp
 	rm *.bak
 	exit 0
 fi

@@ -10,14 +10,12 @@
 #define GENERAL_USEFUL_H
 
 #include <algorithm>
-#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
 #include <fstream>
 #include <functional>
 #include <ios>
-#include <iomanip>
 #include <iostream>
 #include <list>
 #include <regex>
@@ -72,7 +70,7 @@ namespace useful
         || string == "False" || string == "FALSE")
       return false;
     throw std::runtime_error{
-      "Expected true or false, got "
+      "Expected true or false, got"
       + string };
   }
   
@@ -101,16 +99,23 @@ namespace useful
       || str == R"("")";
   }
   
+  // Remove extension after last dot, including dot
+  // Note: new_extension should include dot if wanted
+  std::string remove_extension
+  (std::string const& filename)
+  {
+    return filename.substr(0, filename.find_last_of('.'));
+  }
+
   // Change extension after last dot
   // Note: new_extension should include dot if wanted
   std::string change_extension
   (std::string const& filename,
    std::string const& new_extension)
   {
-    return filename.substr(0, filename.find_last_of('.'))
-      + new_extension;
+    return remove_extension(filename) + new_extension;
   }
-  
+
   // Expand environment variables
   // Based on Toby Speight's answer here:
   // https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion
@@ -173,20 +178,19 @@ namespace useful
     return it != container.end() && *it == val;
   }
   
-  // Helper to split string
+  // Split string
   // Adapted from Beder Acosta Borges's answer here:
   // https://stackoverflow.com/questions/14265581/
   // parse-split-a-string-in-c-using-string-delimiter-standard-c
-  bool ends_with(const std::string& string, const std::string& suffix)
+  bool endsWith(const std::string& string, const std::string& suffix)
   {
     return string.size() >= suffix.size() &&
       string.substr(string.size() - suffix.size()) == suffix;
   }
+  
   // Split string into vector of strings
   // Split at instances of delimeter
   // Empty entries can be included or discarded
-  // Adapted from Beder Acosta Borges's answer here:
-  // https://stackoverflow.com/questions/14265581/
   std::vector<std::string> split
   (std::string const& string, std::string const& delimiter = " ",
    bool empty_entries = false)
@@ -205,7 +209,7 @@ namespace useful
     }
 
     if (empty_entries &&
-        (string.empty() || ends_with(string, delimiter)))
+        (string.empty() || endsWith(string, delimiter)))
       tokens.push_back("");
 
     return tokens;
@@ -430,6 +434,21 @@ namespace useful
     return values;
   }
   
+  // Get number of numbers in first line of file
+  std::size_t nr_numbers_in_first_line(std::string const& filename)
+  {
+    auto input = open_read(filename);
+    std::string line;
+    std::getline(input, line);
+    std::stringstream stream(line);
+    double number;
+    std::size_t nr_numbers = 0;
+    while (stream >> number)
+      ++nr_numbers;
+    
+    return nr_numbers;
+  }
+  
   // Read next value from file
   template <typename Type>
   void read(std::ifstream& input, Type& val)
@@ -604,7 +623,7 @@ namespace useful
   
   // Print container
   template <typename Stream, typename Container>
-  Stream& print
+  void print
   (Stream& stream, Container const& container,
    bool delimit_first = 0, std::string delimiter = "\t")
   {
@@ -624,8 +643,6 @@ namespace useful
         delim = delimiter;
       }
     }
-    
-    return stream;
   }
   
   // Read contents of file as a sequence of doubles
@@ -805,13 +822,13 @@ namespace useful
       swap_erase(container, position);
   }
   
-  // Swap-erase all elements satisfying criterium
-  template <typename Container, typename Criterium>
-  void swap_erase_if(Container& container, Criterium criterium)
+  // Swap-erase all elements satisfying criterion
+  template <typename Container, typename Criterion>
+  void swap_erase_if(Container& container, Criterion criterion)
   {
     std::list<std::size_t> to_delete;
     for (std::size_t ii = 0; ii < container.size(); ++ii)
-      if (criterium(container[ii]))
+      if (criterion(container[ii]))
         to_delete.push_back(ii);
     
     swap_erase(container, to_delete);
@@ -836,14 +853,14 @@ namespace useful
       swap_delete(container, position);
   }
 
-  //	To check if a class has a method
-  //	From here: https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat
-  //	bundle of types
+  //  To check if a class has a method
+  //  From here: https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat
+  //  bundle of types
   template <class...> struct types{using type=types;};
   template <class...> struct voider{using type=void;};
-  //	Some dists still do not to have void_t
+  //  Some dists still do not to have void_t
   template <class...Ts> using void_t=typename voider<Ts...>::type;
-  //	hide the SFINAE stuff in a details namespace:
+  //  hide the SFINAE stuff in a details namespace:
   namespace details
   {
     template <template <class...> class Z, class types, class=void>
@@ -907,6 +924,15 @@ namespace useful
   template <>
   struct build_indices< 0 >
   { using type = indices<>; };
+
+  // Get Parameters type for true or Empty type for false
+  template <bool, typename>
+  struct Parameters_or_empty{ using type = useful::Empty; };
+  template <typename T>
+  struct Parameters_or_empty<true, T>
+  { using type = typename T::Parameters; };
+  template <bool condition, typename T>
+  using Parameters_or_empty_t = typename Parameters_or_empty<condition, T>::type;
 }
 
 #endif /* GENERAL_USEFUL_H */

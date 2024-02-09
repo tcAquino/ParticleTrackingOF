@@ -12,6 +12,7 @@
 #include <MinMax.H>
 #include <zero.H>
 #include "PTOF/Field.h"
+#include "PTOF/Reaction.h"
 
 namespace ptof
 {
@@ -87,22 +88,23 @@ namespace ptof
       double local_diffusion_time = cell_side*cell_side/(2.*params_transport.diff_coeff);
       
       double reaction_rate = 0.;
-      for (auto face : geometry.mesh.cells()[cell_id])
-      {
-        double rate = reaction.rate(face);
-        if (rate > reaction_rate)
-          reaction_rate = rate;
-      }
+      if constexpr (!std::is_same_v<SurfaceReaction, Reaction_DoNothing>)
+        for (auto face : geometry.mesh.cells()[cell_id])
+        {
+          double rate = reaction.rate(face);
+          if (rate > reaction_rate)
+            reaction_rate = rate;
+        }
       double local_reaction_time = params_transport.diff_coeff/(reaction_rate*reaction_rate);
       
       timestep = std::max(std::min({
-          params_solvers.local_time_step_accuracy_adv*local_advection_time,
-          params_solvers.local_time_step_accuracy_diff*local_diffusion_time,
-          params_solvers.local_time_step_accuracy_react*local_reaction_time }),
+          params_solvers.local_time_step_adv*local_advection_time,
+          params_solvers.local_time_step_diff*local_diffusion_time,
+          params_solvers.local_time_step_react*local_reaction_time }),
                           std::min({
-          params_solvers.global_time_step_accuracy_adv*params_transport.advection_time,
-          params_solvers.global_time_step_accuracy_adv*params_transport.diffusion_time,
-          params_solvers.global_time_step_accuracy_adv*params_reaction.reaction_time }));
+          params_solvers.global_time_step_adv*params_transport.advection_time,
+          params_solvers.global_time_step_adv*params_transport.diffusion_time,
+          params_solvers.global_time_step_adv*params_reaction.reaction_time }));
       
       if constexpr (has_time_step_setter<TimeGenerator>::value)
         time_generator.time_step(timestep);

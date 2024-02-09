@@ -61,12 +61,12 @@ namespace ptof
       
       struct Parameters
       {
-        double local_time_step_accuracy_adv;
-        double local_time_step_accuracy_diff;
-        double local_time_step_accuracy_react;
-        double global_time_step_accuracy_adv;
-        double global_time_step_accuracy_diff;
-        double global_time_step_accuracy_react;
+        double local_time_step_adv;
+        double local_time_step_diff;
+        double local_time_step_react;
+        double global_time_step_adv;
+        double global_time_step_diff;
+        double global_time_step_react;
         
         template
         <typename TransportParameters,
@@ -80,12 +80,12 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, local_time_step_accuracy_adv);
-          useful::read(input, local_time_step_accuracy_diff);
-          useful::read(input, local_time_step_accuracy_react);
-          useful::read(input, global_time_step_accuracy_adv);
-          useful::read(input, global_time_step_accuracy_diff);
-          useful::read(input, global_time_step_accuracy_react);
+          useful::read(input, local_time_step_adv);
+          useful::read(input, local_time_step_diff);
+          useful::read(input, local_time_step_react);
+          useful::read(input, global_time_step_adv);
+          useful::read(input, global_time_step_diff);
+          useful::read(input, global_time_step_react);
           input.close();
         }
         
@@ -96,12 +96,12 @@ namespace ptof
             "--------------------------------------------------\n"
             "Solver parameters\n"
             "--------------------------------------------------\n"
-            "- Local timestep accuracy in terms of cell-based advection time\n"
-            "- Local timestep accuracy in terms of cell-based diffusion time\n"
-            "- Local timestep accuracy in terms of cell-based surface reaction time\n"
-            "- Global timestep accuracy in terms of characteristic advection time\n"
-            "- Global timestep accuracy in terms of characteristic diffusion time\n"
-            "- Global timestep accuracy in terms of surface reaction time\n"
+            "- Local time step in terms of cell-based advection time\n"
+            "- Local time step in terms of cell-based diffusion time\n"
+            "- Local time step in terms of cell-based surface reaction time\n"
+            "- Global time step in terms of characteristic advection time\n"
+            "- Global time step in terms of characteristic diffusion time\n"
+            "- Global time step in terms of surface reaction time\n"
             "Note: minimum between processes and maximum between local and global is used\n"
             "--------------------------------------------------\n";
         }
@@ -219,7 +219,7 @@ namespace ptof
             "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
             "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
             "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
-            "--------------------------------------------------\n";
+            "--`------------------------------------------------\n";
         }
       };
       
@@ -272,7 +272,7 @@ namespace ptof
           "Transport\n"
           "--------------------------------------------------\n"
           "Processes: Advection-diffusion\n"
-          "Interpolation: linear\n"
+          "Interpolation: Linear\n"
           "--------------------------------------------------\n";
       }
     };
@@ -456,7 +456,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -467,6 +467,29 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
     
@@ -508,12 +531,12 @@ namespace ptof
       
       struct Parameters
       {
-        double local_time_step_accuracy_adv;
-        double local_time_step_accuracy_diff = std::numeric_limits<double>::infinity();
-        double local_time_step_accuracy_react = std::numeric_limits<double>::infinity();
-        double global_time_step_accuracy_adv;
-        double global_time_step_accuracy_diff = std::numeric_limits<double>::infinity();
-        double global_time_step_accuracy_react = std::numeric_limits<double>::infinity();
+        double local_time_step_adv;
+        double local_time_step_diff = std::numeric_limits<double>::infinity();
+        double local_time_step_react = std::numeric_limits<double>::infinity();
+        double global_time_step_adv;
+        double global_time_step_diff = std::numeric_limits<double>::infinity();
+        double global_time_step_react = std::numeric_limits<double>::infinity();
         
         template
         <typename TransportParameters,
@@ -527,8 +550,8 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, local_time_step_accuracy_adv);
-          useful::read(input, global_time_step_accuracy_adv);
+          useful::read(input, local_time_step_adv);
+          useful::read(input, global_time_step_adv);
           input.close();
         }
         
@@ -541,7 +564,8 @@ namespace ptof
             "--------------------------------------------------\n"
             "- Local timestep accuracy in terms of cell-based advection time\n"
             "- Global timestep accuracy in terms of characteristic advection time\n"
-            "Note: minimum between processes and maximum between local and global is used\n"
+            "Note: Minimum between processes and maximum between local and global is used\n"
+            "Note: Initial values (e.g., of flow) are used for global quantities\n"
             "--------------------------------------------------\n";
         }
       };
@@ -692,7 +716,7 @@ namespace ptof
           "Transport\n"
           "--------------------------------------------------\n"
           "Process: Advection\n"
-          "Interpolation: linear\n"
+          "Interpolation: Linear\n"
           "--------------------------------------------------\n";
       }
     };
@@ -738,7 +762,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -749,6 +773,29 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
   }
@@ -914,7 +961,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -926,6 +973,30 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker_Periodic{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            geometry.boundary_periodic,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
   }
@@ -1102,7 +1173,7 @@ namespace ptof
           "Transport\n"
           "--------------------------------------------------\n"
           "Processes: Advection-diffusion\n"
-          "Interpolation: linear\n"
+          "Interpolation: Linear\n"
           "--------------------------------------------------\n";
       }
     };
@@ -1178,7 +1249,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -1189,6 +1260,29 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
     
@@ -1267,7 +1361,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -1278,6 +1372,29 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
   }
@@ -1441,7 +1558,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -1453,6 +1570,30 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker_Periodic{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            geometry.boundary_periodic,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
   }
@@ -1589,7 +1730,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters params,
+       Parameters const& params,
        double time = 0.)
       {
         return InitialCondition_Cases{
@@ -1601,6 +1742,30 @@ namespace ptof
             time,
             params.initial_mass/params.nr_particles },
           params };
+      }
+      
+      template
+      <typename Geometry,
+      typename VelocityField,
+      typename Mask>
+      static auto makeInitialCondition
+      (Geometry const& geometry,
+       VelocityField const& velocity_field,
+       Parameters const& params,
+       Mask const& mask,
+       double threshold = 0.,
+       double time = 0.)
+      {
+        return InitialCondition_Cases{
+          geometry, velocity_field,
+          ParticleMaker_Periodic{
+            useful::Selector_t<CTRW::Particle>{},
+            geometry.locator,
+            geometry.boundary_periodic,
+            time,
+            params.initial_mass/params.nr_particles },
+          params,
+          mask, threshold };
       }
     };
     
@@ -1798,7 +1963,7 @@ namespace ptof
           "Transport\n"
           "--------------------------------------------------\n"
           "Process: Advection-diffusion\n"
-          "Interpolation: linear\n"
+          "Interpolation: Linear\n"
           "--------------------------------------------------\n";
       }
     };
@@ -2040,7 +2205,7 @@ namespace ptof
           "Transport\n"
           "--------------------------------------------------\n"
           "Process: Advection"
-          "Interpolation: linear\n"
+          "Interpolation: Linear\n"
           "--------------------------------------------------\n";
       }
     };

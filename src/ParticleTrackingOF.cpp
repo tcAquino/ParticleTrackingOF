@@ -1,6 +1,8 @@
-// File: ParticleTrackingOF.cpp
-// Author: Tomás Aquino
-// Date: 16/02/2022
+//
+//  ParticleTrackingOF.cpp
+//
+//  Created by Tomás Aquino on 16/02/2022.
+//
 
 #include <chrono>
 #include <cstddef>
@@ -14,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -47,11 +49,11 @@ int main(int argc, char * argv[])
     std::cout << std::endl;
     Reaction::info(std::cout);
     std::cout << std::endl;
+    Solvers::info(std::cout);
+    std::cout << std::endl;
     Transport::Parameters::info(std::cout);
     std::cout << std::endl;
     Reaction::Parameters::info(std::cout);
-    std::cout << std::endl;
-    Solvers::info(std::cout);
     std::cout << std::endl;
     Solvers::Parameters::info(std::cout);
     std::cout << std::endl;
@@ -241,34 +243,30 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   double current_time = 0.;
+  ptof::info_time(std::cout, measurer, params_output, current_time);
   while (!measurer.done(current_time))
   {
     while (measurer.next_measure_time() <= current_time)
     {
-      std::cout << "Time "
-                << "[" << params_output.time_units << " times]: "
-                << measurer.next_measure_time()/params_output.time_unit_factor
-                << "\n"
-                << "Fraction not absorbed: "
-                << 1. - double(ptof::nr_absorbed(ctrw, current_time))/ctrw.size()
-                << "\n";
+      std::cout << "Measurement required...\n";
+      ptof::info_time(std::cout, measurer, params_output, measurer.next_measure_time());
+      ptof::info_fraction_not_absorbed(std::cout, measurer, ctrw, measurer.next_measure_time());
       measurer(measurer.next_measure_time());
+      std::cout << "Done!\n";
     }
     current_time = measurer.next_measure_time();
     ctrw.evolve([current_time](CTRW::Particle& part)
                 { return part.state_new().time < current_time
                     && !part.state_new().info.absorbed; },
-                transitions); }
+                transitions);
+  }
   if (measurer.next_measure_time() <= current_time)
   {
-    std::cout << "Time "
-              << "[" << params_output.time_units << " times]: "
-              << measurer.next_measure_time()/params_output.time_unit_factor
-              << "\n"
-              << "Fraction not absorbed: "
-              << 1. - double(ptof::nr_absorbed(ctrw, current_time))/ctrw.size()
-              << "\n";
+    std::cout << "Measurement required...\n";
+    ptof::info_time(std::cout, measurer, params_output, measurer.next_measure_time());
+    ptof::info_fraction_not_absorbed(std::cout, measurer, ctrw, measurer.next_measure_time());
     measurer(measurer.next_measure_time());
+    std::cout << "Done!\n";
   }
   measurer();
   execution_end = std::chrono::high_resolution_clock::now();

@@ -14,6 +14,7 @@
 #include <numeric>
 #include <random>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 #include <boost/algorithm/string.hpp>
@@ -91,6 +92,32 @@ namespace ptof
       { Type::flux_weighted_inlet_continuous, "flux_weighted_inlet_continuous" }
     };
   };
+  
+  /** Remove cells/faces if mask is above threshold. */
+  template
+  <typename Container, typename Mask>
+  auto apply_mask_in_place
+  (Container& cell_or_face_ids,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    useful::swap_erase_if(cell_or_face_ids,
+                          [&mask, threshold](auto ii){ return mask[ii] > threshold; });
+  }
+  
+  /** Remove cells/faces if mask is above threshold. */
+  template
+  <typename Container, typename Mask>
+  auto apply_mask
+  (Container const& cell_or_face_ids,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    auto masked_ids = cell_or_face_ids;
+    apply_mask_in_place(masked_ids, mask, threshold);
+
+    return masked_ids;
+  }
   
   /** Make particles randomly uniformly
    *  over given mesh cells.
@@ -353,8 +380,30 @@ namespace ptof
    ParticleMaker& particle_maker)
   {
     return uniform_cells(nr_particles,
-                             all_cell_ids(mesh),
-                             mesh, rng, particle_maker);
+                         all_cell_ids(mesh),
+                         mesh, rng, particle_maker);
+  }
+  
+  /** Make particles randomly uniformly
+   *  over all mesh cells.
+   *  Place particles at center of cells. */
+  template
+  <typename Mesh,
+  typename RNG,
+  typename ParticleMaker,
+  typename Mask>
+  auto uniform
+  (std::size_t nr_particles,
+   Mesh const& mesh,
+   RNG& rng,
+   ParticleMaker& particle_maker,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    return uniform_cells(nr_particles,
+                         apply_mask(all_cell_ids(mesh),
+                                    mask, threshold),
+                         mesh, rng, particle_maker);
   }
   
   /** Make particles with probability proportional
@@ -379,6 +428,32 @@ namespace ptof
                                mesh, rng, particle_maker);
   }
   
+  /** Make particles with probability proportional
+   *  to velocity magnitude
+   *  over all mesh cells.
+   *  Place particles at center of cells. */
+  template
+  <typename VelocityField,
+  typename Mesh,
+  typename RNG,
+  typename ParticleMaker,
+  typename Mask>
+  auto flux_weighted
+  (std::size_t nr_particles,
+   VelocityField const& velocity_field,
+   Mesh const& mesh,
+   RNG& rng,
+   ParticleMaker& particle_maker,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    return flux_weighted_cells(nr_particles,
+                               apply_mask(all_cell_ids(mesh),
+                                          mask, threshold),
+                               velocity_field,
+                               mesh, rng, particle_maker);
+  }
+  
   /** Make particles randomly uniformly
    * over mesh cell faces in given patches.
    * Place particles at center of faces. */
@@ -397,6 +472,32 @@ namespace ptof
   {
     return uniform_faces(nr_particles,
                          patches_face_ids(mesh, patch_names),
+                         mesh, mesh_search,
+                         rng, particle_maker);
+  }
+  
+  /** Make particles randomly uniformly
+   * over mesh cell faces in given patches.
+   * Place particles at center of faces. */
+  template
+  <typename Mesh,
+  typename MeshSearch,
+  typename RNG,
+  typename ParticleMaker,
+  typename Mask>
+  auto uniform_patches
+  (std::size_t nr_particles,
+   std::vector<std::string> const& patch_names,
+   Mesh const& mesh,
+   MeshSearch const& mesh_search,
+   RNG& rng,
+   ParticleMaker& particle_maker,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    return uniform_faces(nr_particles,
+                         apply_mask(patches_face_ids(mesh, patch_names),
+                                    mask, threshold),
                          mesh, mesh_search,
                          rng, particle_maker);
   }
@@ -427,6 +528,36 @@ namespace ptof
                                rng, particle_maker);
   }
   
+  /** Make particles with probability proportional
+   * to velocity magnitude
+   * over mesh cell faces in given patches.
+   * Place particles at center of faces. */
+  template
+  <typename VelocityField,
+  typename Mesh,
+  typename MeshSearch,
+  typename RNG,
+  typename ParticleMaker,
+  typename Mask>
+  auto flux_weighted_patches
+  (std::size_t nr_particles,
+   std::vector<std::string> const& patch_names,
+   VelocityField const& velocity_field,
+   Mesh const& mesh,
+   MeshSearch const& mesh_search,
+   RNG& rng,
+   ParticleMaker& particle_maker,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    return flux_weighted_faces(nr_particles,
+                               apply_mask(patches_face_ids(mesh, patch_names),
+                                          mask, threshold),
+                               velocity_field,
+                               mesh, mesh_search,
+                               rng, particle_maker);
+  }
+  
   /** Make particles randomly uniformly
    * at given distance to mesh cell face centers
    * over given patches. */
@@ -445,6 +576,33 @@ namespace ptof
   {
     return uniform_near_boundary_faces(nr_particles,
                                        patches_face_ids(mesh, patch_names),
+                                       distance,
+                                       mesh, mesh_search,
+                                       rng, particle_maker);
+  }
+  
+  /** Make particles randomly uniformly
+   * at given distance to mesh cell face centers
+   * over given patches. */
+  template
+  <typename Mesh,
+  typename MeshSearch,
+  typename RNG,
+  typename ParticleMaker,
+  typename Mask>
+  auto uniform_near_boundary_patches
+  (std::size_t nr_particles,
+   std::vector<std::string> const& patch_names,
+   double distance,
+   Mesh const& mesh,
+   MeshSearch const& mesh_search,
+   RNG& rng, ParticleMaker particle_maker,
+   Mask const& mask,
+   double threshold = 0.)
+  {
+    return uniform_near_boundary_faces(nr_particles,
+                                       apply_mask(patches_face_ids(mesh, patch_names),
+                                                  mask, threshold),
                                        distance,
                                        mesh, mesh_search,
                                        rng, particle_maker);
@@ -498,34 +656,23 @@ namespace ptof
   /** Make particles at prescribed positions. */
   template <typename Positions, typename ParticleMaker>
   auto prescribed_positions
-  (std::size_t nr_particles,
-   Positions const& position_data,
+  (Positions const& position_data,
    ParticleMaker& particle_maker)
   {
     using Particle = decltype(particle_maker(Foam::point{}));
     std::vector<Particle> particles;
-    particles.reserve(nr_particles);
-    for (std::size_t pp = 0; pp < nr_particles; ++pp)
+    particles.reserve(position_data.size());
+    for (std::size_t pp = 0; pp < position_data.size(); ++pp)
       particles.push_back(particle_maker(make_point(position_data[pp])));
     
     return particles;
   }
   
   /** Make particles at prescribed positions. */
-  template <typename Positions, typename ParticleMaker>
-  auto prescribed_positions
-  (Positions const& position_data,
-   ParticleMaker& particle_maker)
-  {
-    return prescribed_positions(position_data.size(),
-                                position_data, particle_maker);
-  }
-  
-  /** Make particles at prescribed positions. */
   template <typename ParticleMaker>
   auto prescribed_positions
   (std::size_t nr_particles,
-   std::string filename_position_data,
+   std::string const& filename_position_data,
    ParticleMaker& particle_maker)
   {
     auto input = useful::open_read(filename_position_data);
@@ -550,16 +697,32 @@ namespace ptof
     if (nr_particles == 0)
       nr_particles = position_data.size();
     
-    return prescribed_positions(nr_particles, position_data, particle_maker);
+    return prescribed_positions(position_data, particle_maker);
   }
   
   /** Make particles at prescribed positions. */
   template <typename ParticleMaker>
   auto prescribed_positions
-  (std::string filename_position_data,
+  (std::string const& filename_position_data,
    ParticleMaker& particle_maker)
   {
-    return prescribed_positions(0, filename_position_data, particle_maker);
+    auto input = useful::open_read(filename_position_data);
+    std::vector<std::vector<double>> position_data;
+    std::string line;
+    while (std::getline(input, line))
+    {
+      std::vector<std::string> split_line;
+      boost::trim_if(line, boost::is_any_of("\t,|\r "));
+      boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
+                              boost::token_compress_on);
+      position_data.emplace_back();
+      position_data.back().reserve(split_line.size());
+      for (auto const& position_component : split_line)
+        position_data.back().push_back(std::stod(position_component));
+    }
+    input.close();
+    
+    return prescribed_positions(position_data, particle_maker);
   }
   
   /** \class InitialCondition_Cases PTOF/InitialConditions.h "PTOF/InitialConditions.h"
@@ -569,14 +732,18 @@ namespace ptof
   <typename Geometry,
   typename VelocityField,
   typename ParticleMaker,
-  typename Parameters>
+  typename Parameters,
+  typename Mask = useful::Empty>
   class InitialCondition_Cases
   {
     typename Geometry::Mesh const& mesh;                /**< Underlying mesh.                  */
     typename Geometry::MeshSearch const& mesh_search;   /**< Object to search mesh.            */
     VelocityField const& velocity_field;                /**< Underlying flow field.            */
     ParticleMaker particle_maker;                       /**< Makes a particle given a position.*/
+    Parameters params;                                  /**< Initial condition parameters. */
     std::mt19937 rng{ std::random_device{}() };         /**< Random number generator.          */
+    Mask mask{ useful::Empty{} };                       /**< Mask to disallow cells/faces        */
+    double mask_threshold{ 0. };                        /**< Threshold for mask        */
     
   private:
     struct PositionMaker
@@ -603,6 +770,28 @@ namespace ptof
     , velocity_field{ velocity_field }
     , particle_maker{ particle_maker }
     , params{ params }
+    {}
+    
+    /** Construct given:
+     * - geometry information;
+     * - velocity field;
+     * - particle maker given position;
+     * - initial condition parameters.
+     * - Mask to disallow cells/faces*/
+    InitialCondition_Cases
+    (Geometry const& geometry,
+     VelocityField const& velocity_field,
+     ParticleMaker particle_maker,
+     Parameters const& params,
+     Mask const& mask,
+     double mask_threshold = 0.)
+    : mesh{ geometry.mesh }
+    , mesh_search{ geometry.mesh_search }
+    , velocity_field{ velocity_field }
+    , particle_maker{ particle_maker }
+    , params{ params }
+    , mask{ mask }
+    , mask_threshold{ mask_threshold }
     {}
     
     /** Make given number of particles
@@ -636,9 +825,6 @@ namespace ptof
     {
       return make_positions(1)[0];
     }
-    
-  private:
-    Parameters params;  /**< Initial condition parameters. */
             
     /** Make given number of particles
      * according to given initial condition and particle maker. */
@@ -651,79 +837,166 @@ namespace ptof
       switch (type)
       {
         case InitialConditions::Type::uniform:
-          return uniform(nr_particles, mesh, rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return uniform(nr_particles, mesh, rng, particle_maker);
+          else
+            return uniform(nr_particles, mesh, rng, particle_maker, mask, mask_threshold);
         case InitialConditions::Type::flux_weighted:
-          return flux_weighted(nr_particles,
-                               velocity_field,
-                               mesh, rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return flux_weighted(nr_particles,
+                                 velocity_field,
+                                 mesh, rng, particle_maker);
+          else
+            return flux_weighted(nr_particles,
+                                 velocity_field,
+                                 mesh, rng, particle_maker,
+                                 mask, mask_threshold);
         case InitialConditions::Type::uniform_inlet:
-          return uniform_patches(nr_particles,
-                                 { "inlet" },
-                                 mesh, mesh_search,
-                                 rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return uniform_patches(nr_particles,
+                                   { "inlet" },
+                                   mesh, mesh_search,
+                                   rng, particle_maker);
+          else
+            return uniform_patches(nr_particles,
+                                   { "inlet" },
+                                   mesh, mesh_search,
+                                   rng, particle_maker,
+                                   mask, mask_threshold);
         case InitialConditions::Type::flux_weighted_inlet:
-          return flux_weighted_patches(nr_particles,
-                                       { "inlet" },
-                                       velocity_field,
-                                       mesh, mesh_search,
-                                       rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return flux_weighted_patches(nr_particles,
+                                         { "inlet" },
+                                         velocity_field,
+                                         mesh, mesh_search,
+                                         rng, particle_maker);
+          else
+            return flux_weighted_patches(nr_particles,
+                                         { "inlet" },
+                                         velocity_field,
+                                         mesh, mesh_search,
+                                         rng, particle_maker,
+                                         mask, mask_threshold);
         case InitialConditions::Type::uniform_solid:
-          return uniform_patches(nr_particles,
-                                 { "wallFluidSolid" },
-                                 mesh, mesh_search,
-                                 rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return uniform_patches(nr_particles,
+                                   { "wallFluidSolid" },
+                                   mesh, mesh_search,
+                                   rng, particle_maker);
+          else
+            return uniform_patches(nr_particles,
+                                   { "wallFluidSolid" },
+                                   mesh, mesh_search,
+                                   rng, particle_maker,
+                                   mask, mask_threshold);
         case InitialConditions::Type::uniform_near_solid:
-          return uniform_near_boundary_patches(nr_particles,
-                                               { "wallFluidSolid" },
-                                               params.distance_wall,
-                                               mesh, mesh_search,
-                                               rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return uniform_near_boundary_patches(nr_particles,
+                                                 { "wallFluidSolid" },
+                                                 params.distance_wall,
+                                                 mesh, mesh_search,
+                                                 rng, particle_maker);
+          else
+            return uniform_near_boundary_patches(nr_particles,
+                                                 { "wallFluidSolid" },
+                                                 params.distance_wall,
+                                                 mesh, mesh_search,
+                                                 rng, particle_maker,
+                                                 mask, mask_threshold);
         case InitialConditions::Type::uniform_region_cartesian:
-          return uniform_cells(nr_particles,
-                               cell_ids_region_cartesian(params.region_boundaries,
-                                                         mesh, mesh_search),
-                               mesh, rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return uniform_cells(nr_particles,
+                                 cell_ids_region_cartesian(params.region_boundaries,
+                                                           mesh, mesh_search),
+                                 mesh, rng, particle_maker);
+          else
+            return uniform_cells(nr_particles,
+                                 apply_mask(cell_ids_region_cartesian(params.region_boundaries,
+                                                                      mesh, mesh_search),
+                                            mask, mask_threshold),
+                                 mesh, rng, particle_maker);
         case InitialConditions::Type::flux_weighted_region_cartesian:
-          return flux_weighted_cells(nr_particles,
-                                     cell_ids_region_cartesian(params.region_boundaries,
-                                                               mesh, mesh_search),
-                                     velocity_field,
-                                     mesh,
-                                     rng, particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return flux_weighted_cells(nr_particles,
+                                       cell_ids_region_cartesian(params.region_boundaries,
+                                                                 mesh, mesh_search),
+                                       velocity_field,
+                                       mesh,
+                                       rng, particle_maker);
+          else
+            return flux_weighted_cells(nr_particles,
+                                       apply_mask(cell_ids_region_cartesian(params.region_boundaries,
+                                                                            mesh, mesh_search),
+                                                  mask, mask_threshold),
+                                       velocity_field,
+                                       mesh,
+                                       rng, particle_maker);
         case InitialConditions::Type::prescribed_positions:
           return prescribed_positions(nr_particles,
                                       params.position_data,
                                       particle_maker);
         case InitialConditions::Type::uniform_inlet_continuous:
-          return continuous_injection([this]
-                                      (std::size_t nr_particles,
-                                       ParticleMakerOther& particle_maker)
-                                      { return uniform_patches(nr_particles,
-                                                               { "inlet" },
-                                                               mesh, mesh_search,
-                                                               rng,
-                                                               particle_maker); },
-                                      nr_particles,
-                                      params.time_min,
-                                      params.time_max,
-                                      params.time_step,
-                                      particle_maker);
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return continuous_injection([this]
+                                        (std::size_t nr_particles,
+                                         ParticleMakerOther& particle_maker)
+                                        { return uniform_patches(nr_particles,
+                                                                 { "inlet" },
+                                                                 mesh, mesh_search,
+                                                                 rng,
+                                                                 particle_maker); },
+                                        nr_particles,
+                                        params.time_min,
+                                        params.time_max,
+                                        params.time_step,
+                                        particle_maker);
+          else
+            return continuous_injection([this]
+                                        (std::size_t nr_particles,
+                                         ParticleMakerOther& particle_maker)
+                                        { return uniform_patches(nr_particles,
+                                                                 { "inlet" },
+                                                                 mesh, mesh_search,
+                                                                 rng,
+                                                                 particle_maker,
+                                                                 mask, mask_threshold); },
+                                        nr_particles,
+                                        params.time_min,
+                                        params.time_max,
+                                        params.time_step,
+                                        particle_maker);
         case InitialConditions::Type::flux_weighted_inlet_continuous:
-          return continuous_injection([this]
-                                      (std::size_t nr_particles,
-                                       ParticleMakerOther& particle_maker)
-                                      { return flux_weighted_patches(nr_particles,
-                                                                     { "inlet" },
-                                                                     velocity_field,
-                                                                     mesh, mesh_search,
-                                                                     rng,
-                                                                     particle_maker); },
-                                      nr_particles,
-                                      params.time_min,
-                                      params.time_max,
-                                      params.time_step,
-                                      particle_maker);
-
+          if constexpr (std::is_same_v<Mask, useful::Empty>)
+            return continuous_injection([this]
+                                        (std::size_t nr_particles,
+                                         ParticleMakerOther& particle_maker)
+                                        { return flux_weighted_patches(nr_particles,
+                                                                       { "inlet" },
+                                                                       velocity_field,
+                                                                       mesh, mesh_search,
+                                                                       rng,
+                                                                       particle_maker); },
+                                        nr_particles,
+                                        params.time_min,
+                                        params.time_max,
+                                        params.time_step,
+                                        particle_maker);
+          else
+            return continuous_injection([this]
+                                        (std::size_t nr_particles,
+                                         ParticleMakerOther& particle_maker)
+                                        { return flux_weighted_patches(nr_particles,
+                                                                       { "inlet" },
+                                                                       velocity_field,
+                                                                       mesh, mesh_search,
+                                                                       rng,
+                                                                       particle_maker,
+                                                                       mask, mask_threshold); },
+                                        nr_particles,
+                                        params.time_min,
+                                        params.time_max,
+                                        params.time_step,
+                                        particle_maker);
         default:
           throw std::runtime_error{
             std::string{ "Initial condition type " }
@@ -745,6 +1018,35 @@ namespace ptof
         "--------------------------------------------------\n";
     }
   };
+  template
+  <typename Geometry,
+  typename VelocityField,
+  typename ParticleMaker,
+  typename Parameters,
+  typename Mask>
+  InitialCondition_Cases
+  (Geometry const&,
+   VelocityField const&,
+   ParticleMaker,
+   Parameters const&,
+   Mask const&,
+   double) ->
+  InitialCondition_Cases
+  <Geometry, VelocityField, ParticleMaker, Parameters, Mask const&>;
+  template
+  <typename Geometry,
+  typename VelocityField,
+  typename ParticleMaker,
+  typename Parameters,
+  typename Mask>
+  InitialCondition_Cases
+  (Geometry const&,
+   VelocityField const&,
+   ParticleMaker,
+   Parameters const&,
+   Mask const&) ->
+  InitialCondition_Cases
+  <Geometry, VelocityField, ParticleMaker, Parameters, Mask const&>;
 }
 
 #endif /* PTOF_INITIALCONDITIONS_H */
