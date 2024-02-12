@@ -100,7 +100,7 @@ namespace ptof
       == mesh.owner()[face];
   }
   
-  /** Small offset forward given current face and direction. */
+  /** Small offset forward given current face and direction.*/
   template <typename MeshSearch>
   Foam::vector offset_face
   (Foam::point const& begin,
@@ -134,7 +134,7 @@ namespace ptof
   }
   
   /** Small offset forward from begin
-   * given current face and direction */
+   * given current face and direction. */
   template <typename MeshSearch>
   Foam::vector offset_forward_face
   (Foam::point const& begin,
@@ -142,12 +142,35 @@ namespace ptof
    Foam::vector const& direction,
    MeshSearch const& mesh_search)
   {
-    return begin
-      + offset_face(begin, face, direction, mesh_search);
+    return begin + offset_face(begin, face, direction, mesh_search);;
+  }
+  
+  /** Small offset forward from begin
+   * given current face and direction.
+   * If begin point is in mesh, guarantee offset point in mesh*/
+  template <typename MeshSearch, typename Locator>
+  Foam::vector offset_forward_face
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search,
+   Locator const& locator)
+  {
+    auto offset = offset_face(begin, face, direction, mesh_search);
+    auto point = begin + offset;
+    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    if (locator(begin, owner_cell) < 0)
+      return point;
+    while (locator(point, owner_cell) < 0)
+    {
+      offset /= 2.;
+      point = begin + offset;
+    }
+    return point;
   }
   
   /**Small offset backward from begin
-   * given current face and direction */
+   * given current face and direction. */
   template <typename MeshSearch>
   Foam::vector offset_backward_face
   (Foam::point const& begin,
@@ -155,8 +178,31 @@ namespace ptof
    Foam::vector const& direction,
    MeshSearch const& mesh_search)
   {
-    return begin
-      - offset_face(begin, face, direction, mesh_search);
+    return begin - offset_face(begin, face, direction, mesh_search);
+  }
+  
+  /**Small offset backward from begin
+   * given current face and direction.
+   * * If begin point is in mesh, guarantee offset point in mesh*/
+  template <typename MeshSearch, typename Locator>
+  Foam::vector offset_backward_face
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search,
+   Locator const& locator)
+  {
+    auto offset = offset_face(begin, face, direction, mesh_search);
+    auto point = begin - offset;
+    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    if (locator(begin, owner_cell) < 0)
+      return point;
+    while (locator(point, owner_cell) < 0)
+    {
+      offset /= 2.;
+      point = begin - offset;
+    }
+    return point;
   }
   
   /** Small offset along face normal (outward)
@@ -212,6 +258,29 @@ namespace ptof
       + offset_cell(begin, cell, direction, mesh_search);
   }
   
+  /** Small offset forward
+   * given current cell and direction.
+   * If begin point is in mesh, guarantee offset point in mesh. */
+  template <typename MeshSearch, typename Locator>
+  Foam::vector offset_forward_cell
+  (Foam::point const& begin,
+   Foam::label cell,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search,
+   Locator const& locator)
+  {
+    auto offset = offset_cell(begin, cell, direction, mesh_search);
+    auto point = begin + offset;
+    if (locator(begin, cell) < 0)
+      return point;
+    while (locator(point, cell) < 0)
+    {
+      offset /= 2.;
+      point = begin + offset;
+    }
+    return point;
+  }
+  
   /** Small offset backward
    * given current cell and direction. */
   template <typename MeshSearch>
@@ -223,6 +292,29 @@ namespace ptof
   {
     return begin
       - offset_cell(begin, cell, direction, mesh_search);
+  }
+  
+  /** Small offset backward
+   * given current cell and direction.
+   * If begin point is in mesh, guarantee offset point in mesh. */
+  template <typename MeshSearch, typename Locator>
+  Foam::vector offset_backward_cell
+  (Foam::point const& begin,
+   Foam::label cell,
+   Foam::vector const& direction,
+   MeshSearch const& mesh_search,
+   Locator const& locator)
+  {
+    auto offset = offset_cell(begin, cell, direction, mesh_search);
+    auto point = begin - offset;
+    if (locator(begin, cell) < 0)
+      return point;
+    while (locator(point, cell) < 0)
+    {
+      offset /= 2.;
+      point = begin - offset;
+    }
+    return point;
   }
   
   /** Check for existence of periodicity info

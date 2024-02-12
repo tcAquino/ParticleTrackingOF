@@ -38,7 +38,6 @@ namespace ptof
                                        + "/parameters_phase_"
                                        + name + ".dat");
         useful::read(input, excluded_phase_name);
-        double leakage_tolerance = 1e-3;
         std::string phase_transport;
         useful::read(input, phase_transport);
         if (phase_transport == "excluded")
@@ -67,6 +66,7 @@ namespace ptof
           throw std::invalid_argument{
             std::string("Unknown option ") + compute +
             " for whether to compute or read excluded phase gradient" };
+        double leakage_tolerance = 0.;
         useful::read(input, leakage_tolerance);
         leakage_coefficient = std::log(leakage_tolerance);
         useful::read(input, phase_threshold);
