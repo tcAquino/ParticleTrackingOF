@@ -180,7 +180,7 @@ namespace ptof
       for (auto dd : degenerate_dimensions)
         center[dd] = degenerate_dimensions[dd];
       auto cell_id = mesh_search.findCell(center);
-      if (cell_id != -1)
+      if (cell_id >= 0)
         cell_ids.insert(cell_id);
     }
 

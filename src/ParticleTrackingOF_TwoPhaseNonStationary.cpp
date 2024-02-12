@@ -1,28 +1,35 @@
 //
-//  ParticleTrackingOF.cpp
+//  ParticleTrackingOF_TwoPhaseNonStationary.cpp
+//  PTOF
 //
-//  Created by Tomás Aquino on 16/02/2022.
+//  Created by Tomás Aquino on 07/02/2024.
 //
 
+#include <algorithm>
 #include <chrono>
 #include <cstddef>
+#include <exception>
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <string>
+#include <fvcGrad.H>
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Models.h"
+#include "PTOF/Phase.h"
 
 int main(int argc, char * argv[])
 {
   using namespace ptof::model_advection_2d;
+  using Phase = ptof::Phase;
   
   if (useful::check_options_help(argc, argv))
   {
     std::cout <<
       "--------------------------------------------------\n"
-      "ParticleTrackingOF\n"
+      "ParticleTrackingOF_TwoPhaseNonStationary\n"
       "--------------------------------------------------\n";
     std::cout << std::endl;
     std::cout <<
@@ -32,6 +39,7 @@ int main(int argc, char * argv[])
       "- Cases directory [../cases]\n"
       "- Name of case\n"
       "- Name of transport parameter set\n"
+      "- Name of phase parameter set\n"
       "- Name of reaction parameter set\n"
       "- Name of solver parameter set\n"
       "- Name of initial condition parameter set\n"
@@ -53,6 +61,8 @@ int main(int argc, char * argv[])
     std::cout << std::endl;
     Transport::Parameters::info(std::cout);
     std::cout << std::endl;
+    Phase::Parameters::info(std::cout);
+    std::cout << std::endl;
     Reaction::Parameters::info(std::cout);
     std::cout << std::endl;
     Solvers::Parameters::info(std::cout);
@@ -63,13 +73,14 @@ int main(int argc, char * argv[])
     std::cout << std::endl;
     return 0;
   }
-  if (argc != 9)
+  if (argc != 10)
     throw useful::bad_parameters_help();
   
   std::size_t arg = 1;
   std::string dir = argv[arg++];
   std::string case_name = argv[arg++];
   std::string parameters_transport_name = argv[arg++];
+  std::string parameters_phase_name = argv[arg++];
   std::string parameters_reaction_name = argv[arg++];
   std::string parameters_solvers_name = argv[arg++];
   std::string parameters_initial_condition_name = argv[arg++];
@@ -89,6 +100,16 @@ int main(int argc, char * argv[])
   Transport::Parameters params_transport{ directories,
     parameters_transport_name };
   auto execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
+  std::cout << "\n" << "Importing phase parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  Phase::Parameters params_phase{ directories,
+    parameters_phase_name };
+  execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
@@ -119,7 +140,9 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   InitialCondition::Parameters params_initial_condition{ directories,
     parameters_initial_condition_name,
-    params_transport, params_reaction, params_solvers };
+    params_transport, params_reaction, params_solvers,
+    
+  };
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -137,10 +160,24 @@ int main(int argc, char * argv[])
   useful::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
   
+  std::cout << "\n" << "Setting up phases..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  auto excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh, params_phase);
+  auto grad_excluded_phase_field = Phase::get_grad_excluded_phase_data(geometry.mesh, params_phase, excluded_phase_field);
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field = Transport::makeVelocityInterpolator(geometry);
   params_transport.rescale(velocity_field, geometry.mesh);
+  velocity_field.sum(-params_phase.leakage_coefficient
+                     * Foam::dimensionedScalar("",
+                                                Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
+                                                params_transport.diff_coeff)
+                     * grad_excluded_phase_field);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -164,7 +201,9 @@ int main(int argc, char * argv[])
   auto initial_condition
     = InitialCondition::makeInitialCondition(geometry,
                                              velocity_field,
-                                             params_initial_condition);
+                                             params_initial_condition,
+                                             excluded_phase_field,
+                                             params_phase.phase_threshold);
   initial_condition.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -225,14 +264,18 @@ int main(int argc, char * argv[])
     geometry,
     directories,
     params_output,
-    "M_" + Model::name
+    std::string("M_") + "TwoPhaseNonStationary_" + Model::name
       + "_C_" + case_name
       + "_OF_" + directories_of.case_name
       + "_T_" + parameters_transport_name
+      + "_P_" + parameters_phase_name
       + "_R_" + parameters_reaction_name
       + "_S_" + parameters_solvers_name
       + "_I_" + parameters_initial_condition_name
-      + "_O_" + parameters_output_name };
+      + "_O_" + parameters_output_name,
+    std::vector<Phase::PhaseField const*>{ &excluded_phase_field },
+    { 1. - params_phase.phase_threshold }
+  };
   measurer.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -242,10 +285,61 @@ int main(int argc, char * argv[])
 
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  double current_time = 0.;
+  double current_time = directories_of.time.value();
   ptof::info_time(std::cout, measurer, params_output, current_time);
+  auto const& flow_times = directories_of.time.times();
+  auto closest_time_index = [&flow_times](auto value)
+  {
+    return std::distance(flow_times.cbegin(),
+                         std::min_element(flow_times.cbegin(), flow_times.cend(),
+                                          [value](auto xx, auto yy)
+                                          {
+      if (xx.name() == "constant" || yy.name() == "constant")
+        return true;
+      else
+        return std::abs(xx.value() - value) < std::abs(yy.value() - value); }));
+  };
+  Foam::label time_index = closest_time_index(current_time);
+  double next_flow_time = std::numeric_limits<double>::infinity();
+  if (time_index < flow_times.size()-1)
+  {
+    next_flow_time = flow_times[time_index+1].value();
+  }
+  
   while (!measurer.done(current_time))
   {
+    if (time_index < flow_times.size()-1)
+    {
+      bool velocity_field_needs_update = false;
+      while (time_index < flow_times.size()-1
+             && current_time >= next_flow_time)
+      {
+        ++time_index;
+        next_flow_time = directories_of.time.times()[time_index].value();
+        directories_of.time.setTime(next_flow_time, 0);
+        velocity_field_needs_update = true;
+      }
+      if (velocity_field_needs_update)
+      {
+        std::cout << "Field updates required...\n";
+        ptof::info_time(std::cout, measurer, params_output, current_time);
+        std::cout << "Updating phase field...\n";
+        excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh, params_phase);
+        grad_excluded_phase_field = Phase::get_grad_excluded_phase_data(geometry.mesh, params_phase, excluded_phase_field);
+        std::cout << "Done!\n";
+        std::cout << "Updating velocity field...\n";
+        velocity_field.set(ptof::get_velocity_data(geometry.mesh));
+        if (params_transport.velocity_rescaling_factor != 1.)
+          velocity_field.rescale(params_transport.velocity_rescaling_factor);
+        velocity_field.sum(params_phase.leakage_coefficient
+                           * Foam::dimensionedScalar("",
+                                  Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
+                                  params_transport.diff_coeff)
+                           * grad_excluded_phase_field);
+        std::cout << "Done!\n";
+        std::cout << "Done!\n";
+      }
+    }
     while (measurer.next_measure_time() <= current_time)
     {
       std::cout << "Measurement required...\n";
@@ -254,7 +348,9 @@ int main(int argc, char * argv[])
       measurer(measurer.next_measure_time());
       std::cout << "Done!\n";
     }
-    current_time = measurer.next_measure_time();
+    current_time = next_flow_time > current_time
+      ? std::min(measurer.next_measure_time(), next_flow_time)
+      : measurer.next_measure_time();
     ctrw.evolve([current_time](CTRW::Particle& part)
                 { return part.state_new().time < current_time
                     && !part.state_new().info.absorbed; },
@@ -274,6 +370,5 @@ int main(int argc, char * argv[])
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
-  
   return 0;
 }

@@ -1,32 +1,33 @@
 /**
-* \file CTRW/CTRW.h
+* \file CTRW/CTRW_Parallel.h
 * \author Tomás Aquino
-* \date 09/26/2017
+* \date 14/12/2023
 */
 
-#ifndef CTRW_CTRW_H
-#define CTRW_CTRW_H
+#ifndef CTRW_PARALLEL_h
+#define CTRW_PARALLEL_h
 
 #include <functional>
 #include <list>
+#include <omp.h>
 #include <vector>
-#include "CTRW/Particle.h"
+#include "Particle.h"
 #include "General/Useful.h"
 
 namespace ctrw
 {
-  /** \class CTRW CTRW/CTRW.h "CTRW/CTRW.h"
-   * \brief Handles a set of particles characterized by a state. 
-   * 
-   * Particles undergo transitions handled by a separate class
-   * passed to the evolution methods. \n
-   * State_t characterizes each particle's state. \n
-   * 
-   * Notes: \n
-   * - Order of particles in container is not preserved by removal methods.
-   * - Iterators and references can be invalidated when removing or adding particles. */
+  /** \class CTRW_Parallel CTRW/CTRW_Parallel.h "CTRW/CTRW_Parallel.h"
+  * \brief Handles a set of particles characterized by a state, for parallel computations.
+  *
+  * Particles undergo transitions handled by a separate class
+  * passed to the evolution methods. \n
+  * State_t characterizes each particle's state. \n
+  *
+  * Notes: \n
+  * - Order of particles in container is not preserved by removal methods.
+  * - Iterators and references can be invalidated when removing or adding particles. */
   template <typename State_t>
-  class CTRW
+  class CTRW_Parallel
   {
   public:
     using State = State_t;                   /**< Particle state.                           */
@@ -34,47 +35,47 @@ namespace ctrw
     using Container = std::vector<Particle>; /**< Set of particles.                         */
     
     /** \struct Tag CTRW/CTRW.h "CTRW/CTRW.h"
-     * To select constructors that tag particles.*/
-    struct Tag{};                     
+    * To select constructors that tag particles.*/
+    struct Tag{};
 
     /** Construct empty. */
-    CTRW()
+    CTRW_Parallel()
     {}
 
     /** Construct given particles. */
-    CTRW(Container particles)
+    CTRW_Parallel(Container particles)
     : particle_container{ particles }
     {}
     
     /** Construct given particles and tag them in ascending order.
-     * State must define: tag. */
-    CTRW(Container particles, Tag)
-    : CTRW{ particles }
+    * State must define: tag. */
+    CTRW_Parallel(Container particles, Tag)
+    : CTRW_Parallel{ particles }
     { retag(); }
     
     /** Construct given particles and reserve space for given maximum number. */
-    CTRW(Container particles, std::size_t max_nr_particles)
+    CTRW_Parallel(Container particles, std::size_t max_nr_particles)
     {
       particle_container.reserve(max_nr_particles);
       particle_container = particles;
     }
     
     /** Construct given particles and reserve space for given maximum number
-     * Tag them in ascending order.
-     * State must define: 
-     * - tag */
-    CTRW(Container particles, std::size_t max_nr_particles, Tag)
-    : CTRW(particles, max_nr_particles)
+    * Tag them in ascending order.
+    * State must define:
+    * - tag */
+    CTRW_Parallel(Container particles, std::size_t max_nr_particles, Tag)
+    : CTRW_Parallel(particles, max_nr_particles)
     { retag(); }
 
     /** Handle nr_particles particles.
-     * Each particle's state is produced by StateMaker. */
+    * Each particle's state is produced by StateMaker. */
     template <typename StateMaker>
-    CTRW(std::size_t nr_particles, StateMaker state_maker)
+    CTRW_Parallel(std::size_t nr_particles, StateMaker state_maker)
     { push_back(nr_particles, state_maker); }
 
     /** Add nr_particles particles.
-     * Each particle's state is produced by StateMaker. */
+    * Each particle's state is produced by StateMaker. */
     template <typename StateMaker>
     void push_back(std::size_t nr_particles, StateMaker state_maker)
     {
@@ -137,7 +138,7 @@ namespace ctrw
       for (auto& particle : particle_container)
         particle.transform_both(transformation);
     }
-    
+
     /** Remove particles satisfying a criterion. */
     template<typename Criterion>
     void remove(Criterion criterion)
@@ -160,54 +161,60 @@ namespace ctrw
     { particle_container.clear(); }
 
     /** Particles make transitions until their time is >= time_to. */
-    template<typename Transitions_Particle>
+    template<typename Transitions>
     void evolve_time
-    (double time_to, Transitions_Particle& transitions_particle)
+    (double time_to, Transitions& transitions)
     {
       evolve
       ([time_to](Particle const& part)
-       { return part.state_new().time < time_to; }, transitions_particle);
+       { return part.state_new().time < time_to; }, transitions);
     }
 
     /** Particles make transitions until their time is >= time_to. */
-    template<typename Transitions_Particle>
+    template<typename Transitions>
     void evolve_space
-    (double length_to, Transitions_Particle& transitions_particle)
+    (double length_to, Transitions& transitions)
     {
       evolve
       ([length_to](Particle const& part)
-      { return part.state_new().position < length_to; }, transitions_particle);
+      { return part.state_new().position < length_to; }, transitions);
     }
 
     /** Particles make transitions until a given (particle-based) criterion is met. */
-    template<typename Transitions_Particle, typename Criterion>
+    template
+    <template<typename...> typename Container, typename Transitions, typename Criterion,
+    typename... Ts>
     void evolve
-    (Criterion criterion, Transitions_Particle& transitions_particle)
+    (Criterion criterion, Container<Transitions, Ts...>& transitions)
     {
-      for (auto& part : particle_container)
-        while(criterion(part))
-          part.transition(transitions_particle);
+      #pragma omp parallel for
+      for (std::size_t part = 0; part < particle_container.size(); ++part)
+        while(criterion(particle_container[part]))
+          particle_container[part].transition(transitions[omp_get_thread_num()]);
     }
 
     /** Each particle makes one transition. */
-    template<typename Transitions_Particle>
-    void step(Transitions_Particle& transitions_particle)
+    template<template<typename...> typename Container, typename Transitions, typename... Ts>
+    void step(Container<Transitions, Ts...>& transitions)
     {
-      for (auto& part : particle_container)
-        part.transition(transitions_particle);
+      #pragma omp parallel for
+      for (std::size_t part = 0; part < particle_container.size(); ++part)
+        particle_container[part].transition(transitions[omp_get_thread_num()]);
     }
     
-    /** Each particle for which criterion is satisfied makes one transition.
-     *
-     * Returns number of particles that took a step */
-    template<typename Transitions_Particle, typename Criterion>
-    std::size_t step(Criterion criterion, Transitions_Particle& transitions_particle)
+    /** Each particle for which criterion is satisfied makes one transition. */
+    template
+    <template<typename...> typename Container, typename Transitions, typename Criterion,
+    typename... Ts>
+    std::size_t step(Criterion criterion, Container<Transitions, Ts...>& transitions)
     {
+      
       std::size_t nr_stepped = 0;
-      for (auto& part : particle_container)
-        if (criterion(part))
+      #pragma omp parallel for reduction (+:nr_stepped)
+      for (std::size_t part = 0; part < particle_container.size(); ++part)
+        if (criterion(particle_container[part]))
         {
-          part.transition(transitions_particle);
+          particle_container[part].transition(transitions[omp_get_thread_num()]);
           ++nr_stepped;
         }
       return nr_stepped;
@@ -217,11 +224,11 @@ namespace ctrw
     Container const& particles() const
     { return particle_container; }
 
-    /** Get reference to particles. */
+    /** Get reference to particle. */
     Particle const& particles(std::size_t part) const
     { return particle_container[part]; }
 
-    // Get number of particles
+    /** Get number of particles. */
     std::size_t size() const
     { return particle_container.size(); }
 
@@ -255,4 +262,4 @@ namespace ctrw
   };
 }
 
-#endif /* CTRW_CTRW_H */
+#endif /* CTRW_PARALLEL_h */

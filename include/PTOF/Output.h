@@ -183,7 +183,8 @@ namespace ptof
      *  \brief Implemented types. */  
     enum class Type
     {
-      position,                         /**< Time and particle tags, positions, and masses.                                 */ 
+      position,                         /**< Time and particle tags, positions, and masses.                                 */
+      position_in_regions,              /**< Time and particle tags, positions, and masses in regions speciefied by masks. */
       position_mean,                    /**< Time and mean position.                                                        */ 
       position_second_moment,           /**< Time and position second moment.                                               */ 
       position_variance,                /**< Time and position variance.                                                    */ 
@@ -216,6 +217,7 @@ namespace ptof
     std::unordered_map<std::string, Type>name_to_type
     {
       { "position", Type::position },
+      { "position_in_regions", Type::position_in_regions },
       { "position_mean", Type::position_mean },
       { "position_second_moment", Type::position_second_moment },
       { "position_variance", Type::position_variance },
@@ -236,6 +238,7 @@ namespace ptof
     std::unordered_map<Type, std::string>type_to_name
     {
       { Type::position, "position" },
+      { Type::position_in_regions, "position_in_regions" },
       { Type::position_mean, "position_mean" },
       { Type::position_second_moment, "position_second_moment" },
       { Type::position_variance, "position_variance" },
@@ -456,6 +459,7 @@ namespace ptof
           "- Number of measurements, if required by measure spacing\n"
           "- Measurement types (any number):\n"
           "\tposition: Time, particle tags, particle positions, and particle masses\n"
+          "\tposition: Time, particle tags, particle positions, and particle masses within regions specified by masks\n"
           "\tposition_mean: Time and mean position\n"
           "\tposition_second_moment: Time and position second moment\n"
           "\tposition_variance: Time and position variance\n"
@@ -740,7 +744,18 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_position>
               (subject, velocity_field, geometry,
-               directories, name, identifier, params));
+               directories, name, identifier, params,
+               precision, delimiter));
+            break;
+          }
+          case Measure::Type::position_in_regions:
+          {
+            output_time.emplace_back
+            (std::make_unique<Output_position_in_regions<Mask>>
+              (subject, velocity_field, geometry,
+               directories, name, identifier, params,
+               masks, tolerances,
+               precision, delimiter));
             break;
           }
           case Measure::Type::position_mean:
@@ -748,7 +763,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_position_mean>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::position_second_moment:
@@ -756,7 +772,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_position_second_moment>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::position_variance:
@@ -764,7 +781,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_position_variance>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::mass:
@@ -772,7 +790,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_mass>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::mass_in_regions:
@@ -780,7 +799,9 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_mass_in_regions<Mask>>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params, masks, tolerances));
+              directories, name, identifier, params,
+              masks, tolerances,
+              precision, delimiter));
             break;
           }
           case Measure::Type::velocity:
@@ -788,7 +809,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_velocity>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::velocity_gradient:
@@ -796,7 +818,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_velocity_gradient>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::pressure:
@@ -804,7 +827,8 @@ namespace ptof
             output_time.emplace_back
             (std::make_unique<Output_pressure>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           case Measure::Type::position_periodic:
@@ -816,7 +840,8 @@ namespace ptof
               (std::make_unique<Output_position_periodic<
                decltype(geometry.boundary_periodic)>>
                (subject, velocity_field, geometry,
-                directories, name, identifier, params));
+                directories, name, identifier, params,
+                precision, delimiter));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + name + ": "
@@ -832,7 +857,8 @@ namespace ptof
               (std::make_unique<Output_position_mean_periodic<
                decltype(geometry.boundary_periodic)>>
                (subject, velocity_field, geometry,
-                directories, name, identifier, params));
+                directories, name, identifier, params,
+                precision, delimiter));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + name + ": "
@@ -848,7 +874,8 @@ namespace ptof
               (std::make_unique<Output_position_second_moment_periodic<
                decltype(geometry.boundary_periodic)>>
                (subject, velocity_field, geometry,
-                directories, name, identifier, params));
+                directories, name, identifier, params,
+                precision, delimiter));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + name + ": "
@@ -864,7 +891,8 @@ namespace ptof
               (std::make_unique<Output_position_variance_periodic<
                decltype(geometry.boundary_periodic)>>
                (subject, velocity_field, geometry,
-                directories, name, identifier, params));
+                directories, name, identifier, params,
+                precision, delimiter));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + name + ": "
@@ -876,7 +904,8 @@ namespace ptof
             output.emplace_back
             (std::make_unique<Output_absorption_time>
              (subject, velocity_field, geometry,
-              directories, name, identifier, params));
+              directories, name, identifier, params,
+              precision, delimiter));
             break;
           }
           default:
@@ -1182,7 +1211,8 @@ namespace ptof
         for (auto const& part : OutputTime::subject.particles())
         {
           auto const& state = part.state_new();
-          if (!state.info.absorbed)
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, state.position,
@@ -1192,6 +1222,62 @@ namespace ptof
         }
         OutputTime::output << "\n";
       }
+    };
+        
+    /** \struct Output_position_in_regions final PTOF/Output.h "PTOF/Output.h"
+     *  \brief  Output time, tags, positions, and masses within regions specified by masks. */
+    template <typename Mask>
+    struct Output_position_in_regions final : OutputTime
+    {
+      Output_position_in_regions
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& output_name,
+       std::string const& identifier,
+       Parameters const& params,
+       std::vector<Mask const*> masks,
+       std::vector<double> tolerances = {},
+       int precision = 8,
+       std::string delimiter = "\t")
+      : OutputTime{ subject, velocity_field,
+        geometry, directories,
+        output_name, identifier, params,
+        precision, delimiter }
+      , masks{ masks }
+      , tolerances{ tolerances }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::output << time;
+        for (auto const& part : OutputTime::subject.particles())
+        {
+          if constexpr (!std::is_same_v<Mask, useful::Empty>)
+          {
+            auto const& state = part.state_new();
+            auto cell = OutputTime::geometry.locator(state);
+            for (std::size_t ii = 0; ii < masks.size(); ++ii)
+            {
+              if (!state.info.absorbed
+                  && part.state_old().time <= time
+                  && cell >= 0
+                  && (*masks[ii])[cell] > tolerances[ii])
+              {
+                OutputTime::output << OutputTime::delimiter << state.tag;
+                useful::print(OutputTime::output, state.position,
+                              true, OutputTime::delimiter);
+                OutputTime::output << OutputTime::delimiter << state.mass;
+              }
+            }
+          }
+        }
+        OutputTime::output << "\n";
+      }
+      
+      std::vector<Mask const*> masks;
+      std::vector<double> tolerances;
     };
     
     /** \struct Output_position_mean final PTOF/Output.h "PTOF/Output.h"
@@ -1382,7 +1468,8 @@ namespace ptof
         for (auto const& part : OutputTime::subject.particles())
         {
           auto const& state = part.state_new();
-          if (!state.info.absorbed)
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output,
@@ -1432,11 +1519,12 @@ namespace ptof
         for (auto const& part : OutputTime::subject.particles())
         {
           auto const& state = part.state_new();
-          if (!state.info.absorbed)
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
-            auto cell = OutputTime::geometry.locator(part.state_new());
-            if (cell == -1)
+            auto cell = OutputTime::geometry.locator(state);
+            if (cell < 0)
               useful::print(OutputTime::output,
                             std::vector<double>(Geometry::dim, 0.),
                             true, OutputTime::delimiter);
@@ -1512,7 +1600,8 @@ namespace ptof
         for (auto const& part : OutputTime::subject.particles())
         {
           auto const& state = part.state_new();
-          if (!state.info.absorbed)
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, pressure(state),
@@ -1555,7 +1644,8 @@ namespace ptof
         for (auto const& part : OutputTime::subject.particles())
         {
           auto const& state = part.state_new();
-          if (!state.info.absorbed)
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
           {
             OutputTime::output << OutputTime::delimiter << state.tag;
             useful::print(OutputTime::output, getter_position(state),

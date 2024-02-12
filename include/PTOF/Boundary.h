@@ -292,7 +292,7 @@ namespace ptof
       // Avoid breaking by checking for intersections with a small
       // backwards offset when the final state is out of bounds
       if (!intersection.hit()
-          && locator(make_point(state.position), state.cell) < 0)
+          && locator(state) < 0)
         intersection =
           mesh_search.intersection(offset_backward_cell(make_point(state_old.position),
                                                         state_old.cell,
@@ -333,14 +333,6 @@ namespace ptof
                                 intersection.point(),
                                 reflection_normal(intersection.index()));
             had_effect = 1;
-            if (locator(make_point(state.position), state.cell) < 0)
-            {
-              std::cout << "OoB after applying reflecting BCs at ";
-              useful::print(std::cout, intersection.point());
-              std::cout << " to ";
-              useful::print(std::cout, state.position);
-              std::cout << std::endl;
-            }
             break;
           }
           case BoundaryCondition::Type::reacting_reflecting:
@@ -365,14 +357,6 @@ namespace ptof
                         BoundaryCondition::Type,
                         BoundaryCondition::Type::periodic>{});
             had_effect += boundary_periodic(state, intersection);
-            if (locator(make_point(state.position), state.cell) < 0)
-            {
-              std::cout << "OoB after applying periodic BCs at ";
-              useful::print(std::cout, intersection.point());
-              std::cout << " to ";
-              useful::print(std::cout, state.position);
-              std::cout << std::endl;
-            }
             break;
           }
           case BoundaryCondition::Type::absorbing:
@@ -430,15 +414,6 @@ namespace ptof
             && ((intersection.point() - old_intersection_point)
                 & (make_point(state.position) - old_intersection_point)) < 0.)
           intersection.setMiss();
-      }
-      
-      if (locator(make_point(state.position), state.cell) < 0)
-      {
-        std::cout << "OoB after applying BCs starting from ";
-        useful::print(std::cout, state_old.position);
-        std::cout << " to ";
-        useful::print(std::cout, state.position);
-        std::cout << std::endl;
       }
       
       return had_effect;
