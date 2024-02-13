@@ -22,7 +22,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_2d;
+  using namespace ptof::model_advection_diffusion_2d;
   using Phase = ptof::Phase;
   
   if (useful::check_options_help(argc, argv))
@@ -173,7 +173,7 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field = Transport::makeVelocityInterpolator(geometry);
   params_transport.rescale(velocity_field, geometry.mesh);
-  velocity_field.sum(-params_phase.leakage_coefficient
+  velocity_field.sum(params_phase.leakage_coefficient
                      * Foam::dimensionedScalar("",
                                                 Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
                                                 params_transport.diff_coeff)

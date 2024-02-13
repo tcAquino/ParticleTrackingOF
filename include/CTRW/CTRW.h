@@ -70,24 +70,24 @@ namespace ctrw
     /** Handle nr_particles particles.
      * Each particle's state is produced by StateMaker. */
     template <typename StateMaker>
-    CTRW(std::size_t nr_particles, StateMaker state_maker)
+    CTRW(std::size_t nr_particles, StateMaker&& state_maker)
     { push_back(nr_particles, state_maker); }
 
     /** Add nr_particles particles.
      * Each particle's state is produced by StateMaker. */
     template <typename StateMaker>
-    void push_back(std::size_t nr_particles, StateMaker state_maker)
+    void push_back(std::size_t nr_particles, StateMaker&& state_maker)
     {
       particle_container.reserve(nr_particles);
       std::generate_n(std::back_inserter(particle_container), nr_particles, state_maker);
     }
 
     /** Add copy of particle. */
-    void push_back(Particle particle)
+    void push_back(Particle const& particle)
     { particle_container.push_back(particle); }
 
     /** Add copies of particles in a container. */
-    void push_back(Container particles)
+    void push_back(Container const& particles)
     {
       for (auto const& particle : particles)
         particle_container.push_back(particle);
@@ -114,12 +114,12 @@ namespace ctrw
     
     /** Apply transformation to particle. */
     template <typename Transformation>
-    void transform(Transformation transformation, std::size_t part)
+    void transform(Transformation&& transformation, std::size_t part)
     { particle_container[part].transform(transformation); }
     
     /** Apply transformation to all particles. */
     template <typename Transformation>
-    void transform(Transformation transformation)
+    void transform(Transformation&& transformation)
     {
       for (auto& particle : particle_container)
         particle.transform(transformation);
@@ -127,12 +127,12 @@ namespace ctrw
     
     /** Apply same transformation to both states of particle. */
     template <typename Transformation>
-    void transform_both(Transformation transformation, std::size_t part)
+    void transform_both(Transformation&& transformation, std::size_t part)
     { particle_container[part].transform_both(transformation); }
     
     /** Apply same transformation to both states of all particles. */
     template <typename Transformation>
-    void transform_both(Transformation transformation)
+    void transform_both(Transformation&& transformation)
     {
       for (auto& particle : particle_container)
         particle.transform_both(transformation);
@@ -140,7 +140,7 @@ namespace ctrw
     
     /** Remove particles satisfying a criterion. */
     template<typename Criterion>
-    void remove(Criterion criterion)
+    void remove(Criterion&& criterion)
     {
       for (std::size_t part = size(); part --> 0;)
         remove(part, criterion);
@@ -162,7 +162,7 @@ namespace ctrw
     /** Particles make transitions until their time is >= time_to. */
     template<typename Transitions_Particle>
     void evolve_time
-    (double time_to, Transitions_Particle& transitions_particle)
+    (double time_to, Transitions_Particle&& transitions_particle)
     {
       evolve
       ([time_to](Particle const& part)
@@ -172,7 +172,7 @@ namespace ctrw
     /** Particles make transitions until their time is >= time_to. */
     template<typename Transitions_Particle>
     void evolve_space
-    (double length_to, Transitions_Particle& transitions_particle)
+    (double length_to, Transitions_Particle&& transitions_particle)
     {
       evolve
       ([length_to](Particle const& part)
@@ -182,7 +182,7 @@ namespace ctrw
     /** Particles make transitions until a given (particle-based) criterion is met. */
     template<typename Transitions_Particle, typename Criterion>
     void evolve
-    (Criterion criterion, Transitions_Particle& transitions_particle)
+    (Criterion&& criterion, Transitions_Particle&& transitions_particle)
     {
       for (auto& part : particle_container)
         while(criterion(part))
@@ -191,7 +191,7 @@ namespace ctrw
 
     /** Each particle makes one transition. */
     template<typename Transitions_Particle>
-    void step(Transitions_Particle& transitions_particle)
+    void step(Transitions_Particle&& transitions_particle)
     {
       for (auto& part : particle_container)
         part.transition(transitions_particle);
@@ -201,7 +201,7 @@ namespace ctrw
      *
      * Returns number of particles that took a step */
     template<typename Transitions_Particle, typename Criterion>
-    std::size_t step(Criterion criterion, Transitions_Particle& transitions_particle)
+    std::size_t step(Criterion&& criterion, Transitions_Particle&& transitions_particle)
     {
       std::size_t nr_stepped = 0;
       for (auto& part : particle_container)
@@ -246,7 +246,7 @@ namespace ctrw
 
     /** Remove particle by position in container if criterion is met. */
     template <typename Criterion>
-    void remove(std::size_t part, Criterion criterion)
+    void remove(std::size_t part, Criterion&& criterion)
     { if (criterion(particle_container[part])) remove(part); }
     
     /** Remove particle by position in container. */

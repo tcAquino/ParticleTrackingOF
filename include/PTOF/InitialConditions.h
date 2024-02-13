@@ -840,7 +840,8 @@ namespace ptof
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform(nr_particles, mesh, rng, particle_maker);
           else
-            return uniform(nr_particles, mesh, rng, particle_maker, mask, mask_threshold);
+            return uniform(nr_particles, mesh, rng, particle_maker,
+                           mask, mask_threshold);
         case InitialConditions::Type::flux_weighted:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return flux_weighted(nr_particles,
