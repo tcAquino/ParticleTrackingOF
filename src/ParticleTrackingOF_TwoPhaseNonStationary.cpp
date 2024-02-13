@@ -22,7 +22,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_2d;
+  using namespace ptof::model_bcc_symmetryplanes_advection;
   using Phase = ptof::Phase;
   
   if (useful::check_options_help(argc, argv))
