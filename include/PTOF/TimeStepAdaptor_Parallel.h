@@ -1,15 +1,16 @@
 /**
-* \file PTOF/TimeStepAdaptor.h
+* \file PTOF/TimeStepAdaptor_Parallel.h
 * \author Tomás Aquino
-* \date 09/26/2017
+* \date 13/02/2024
 */
 
-#ifndef PTOF_TIMESTEPADAPTOR_H
-#define PTOF_TIMESTEPADAPTOR_H
+#ifndef PTOF_TIMESTEPADAPTOR_PARALLEL_H
+#define PTOF_TIMESTEPADAPTOR_PARALLEL_H
 
 #include <algorithm>
 #include <fieldTypes.H>
 #include <MinMax.H>
+#include <omp.h>
 #include <zero.H>
 #include "PTOF/Field.h"
 #include "PTOF/Reaction.h"
@@ -29,10 +30,10 @@ namespace ptof
   typename SolverParameters,
   bool check_if_outside,
   bool warn_if_outside>
-  class TimeStepAdaptor_CellSize_SurfaceReaction
+  class TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   {
   public:
-    TimeStepAdaptor_CellSize_SurfaceReaction
+    TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
     (Geometry const& geometry,
      VelocityField const& velocity_field,
      SurfaceReaction& reaction,
@@ -40,12 +41,12 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      FieldOptions::NoCheck)
-    : TimeStepAdaptor_CellSize_SurfaceReaction{
+    : TimeStepAdaptor_CellSize_SurfaceReaction_Parallel{
       geometry, velocity_field, reaction,
       params_transport, params_reaction, params_solvers }
     {}
     
-    TimeStepAdaptor_CellSize_SurfaceReaction
+    TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
     (Geometry const& geometry,
      VelocityField const& velocity_field,
      SurfaceReaction& reaction,
@@ -53,12 +54,12 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      FieldOptions::Check)
-    : TimeStepAdaptor_CellSize_SurfaceReaction{
+    : TimeStepAdaptor_CellSize_SurfaceReaction_Parallel{
       geometry, velocity_field, reaction,
       params_transport, params_reaction, params_solvers }
     {}
     
-    TimeStepAdaptor_CellSize_SurfaceReaction
+    TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
     (Geometry const& geometry,
      VelocityField const& velocity_field,
      SurfaceReaction& reaction,
@@ -66,7 +67,7 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      FieldOptions::Warn)
-    : TimeStepAdaptor_CellSize_SurfaceReaction{
+    : TimeStepAdaptor_CellSize_SurfaceReaction_Parallel{
       geometry, velocity_field, reaction,
       params_transport, params_reaction, params_solvers }
     {}
@@ -75,13 +76,11 @@ namespace ptof
     void operator()
     (State& state, TimeGenerator& time_generator, JumpGenerator& jump_generator)
     {
-      state.cell = geometry.locator(state);
+      state.cell = geometry.locator[omp_get_thread_num()](state);
       auto cell_id = state.cell;
       if constexpr (check_if_outside)
         if (outside(make_point(state.position), state.cell))
-        {
-          cell_id = geometry.locator.nearest_cell(state);
-        }
+          cell_id = geometry.locator[omp_get_thread_num()].nearest_cell(state);
       double cell_side = std::pow(geometry.mesh.V()[cell_id]/volume_factor,
                                   1./Geometry::dim);
       double local_advection_time = cell_side/Foam::mag(velocity_field(state));
@@ -127,7 +126,7 @@ namespace ptof
     double volume_factor;
     double timestep;
     
-    TimeStepAdaptor_CellSize_SurfaceReaction
+    TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
     (Geometry const& geometry,
      VelocityField const& velocity_field,
      SurfaceReaction& reaction,
@@ -200,11 +199,11 @@ namespace ptof
   typename TransportParameters,
   typename ReactionParameters,
   typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction
+  TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   (Geometry const&, VelocityField const&, SurfaceReaction&,
    TransportParameters const&, ReactionParameters const&, SolverParameters const&,
    FieldOptions::NoCheck) ->
-  TimeStepAdaptor_CellSize_SurfaceReaction
+  TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   <Geometry, VelocityField, SurfaceReaction,
   TransportParameters, ReactionParameters, SolverParameters, 0, 0>;
   template
@@ -214,11 +213,11 @@ namespace ptof
   typename TransportParameters,
   typename ReactionParameters,
   typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction
+  TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   (Geometry const&, VelocityField const&, SurfaceReaction&,
    TransportParameters const&, ReactionParameters const&, SolverParameters const&,
    FieldOptions::Check) ->
-  TimeStepAdaptor_CellSize_SurfaceReaction
+  TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   <Geometry, VelocityField, SurfaceReaction,
   TransportParameters, ReactionParameters, SolverParameters, 1, 0>;
   template
@@ -228,13 +227,13 @@ namespace ptof
   typename TransportParameters,
   typename ReactionParameters,
   typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction
+  TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   (Geometry const&, VelocityField const&, SurfaceReaction&,
    TransportParameters const&, ReactionParameters const&, SolverParameters const&,
    FieldOptions::Warn) ->
-  TimeStepAdaptor_CellSize_SurfaceReaction
+  TimeStepAdaptor_CellSize_SurfaceReaction_Parallel
   <Geometry, VelocityField, SurfaceReaction,
   TransportParameters, ReactionParameters, SolverParameters, 1, 1>;
 }
 
-#endif /* PTOF_TIMESTEPADAPTOR_H */
+#endif /* PTOF_TIMESTEPADAPTOR_PARALLEL_H */

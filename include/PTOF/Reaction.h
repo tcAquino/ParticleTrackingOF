@@ -63,7 +63,6 @@ namespace ptof
   
   /** \class SurfaceReaction_AFluidPlusASolidtoASolid PTOF/Reaction.h "PTOF/Reaction.h"
    * \brief A_F + A_S -> A_S surface reaction. */
-  template <typename MeshSearch>
   class SurfaceReaction_AFluidPlusASolidtoASolid
   {
   public:
@@ -76,12 +75,10 @@ namespace ptof
     SurfaceReaction_AFluidPlusASolidtoASolid
     (double rate_constant,
      double diff_coeff,
-     SurfaceConcentrations surface_concentrations,
-     MeshSearch&& mesh_search)
+     SurfaceConcentrations surface_concentrations)
     : rate_constant{ rate_constant }
     , diff_coeff{ diff_coeff }
     , surface_concentrations{ surface_concentrations }
-    , mesh_search{ std::forward<MeshSearch>(mesh_search) }
     {}
     
     /** React over exposure time. */
@@ -120,15 +117,7 @@ namespace ptof
     double rate_constant;                 /**< Surface reaction rate per solid concentrations.*/
     double diff_coeff;                            /**< Diffusion coefficient.*/
     SurfaceConcentrations surface_concentrations; /**< Map of concentrations over reactive faces.*/
-    MeshSearch mesh_search;                       /**< To find mesh faces.*/
   };
-  template <typename MeshSearch>
-  SurfaceReaction_AFluidPlusASolidtoASolid
-  (double,
-   double,
-   std::unordered_map<Foam::label, double>,
-   MeshSearch&&) ->
-  SurfaceReaction_AFluidPlusASolidtoASolid<MeshSearch>;
   
   /** \class SurfaceReaction_DoNothing
    * \brief No reaction. */

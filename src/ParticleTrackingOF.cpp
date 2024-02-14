@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_periodic_cartesian_advection_diffusion_2d;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -255,7 +255,7 @@ int main(int argc, char * argv[])
       std::cout << "Done!\n";
     }
     current_time = measurer.next_measure_time();
-    ctrw.evolve([current_time](CTRW::Particle& part)
+    ctrw.evolve([current_time](CTRW::Particle const& part)
                 { return part.state_new().time < current_time
                     && !part.state_new().info.absorbed; },
                 transitions);

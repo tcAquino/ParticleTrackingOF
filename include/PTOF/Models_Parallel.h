@@ -1,7 +1,7 @@
 /**
 * \file PTOF/Models_Parallel.h
 * \author Tomás Aquino
-* \date 22/02/2022
+* \date 12/02/2024
 */
 
 #ifndef PTOF_MODELS_PARALLEL_H
@@ -18,15 +18,15 @@
 #include "CTRW/CTRW_Parallel.h"
 #include "General/Useful.h"
 #include "PTOF/Advection.h"
-#include "PTOF/Geometry.h"
+#include "PTOF/Geometry_Parallel.h"
 #include "PTOF/InitialConditions.h"
 #include "PTOF/Info.h"
 #include "PTOF/Locator.h"
 #include "PTOF/Output.h"
-#include "PTOF/Reaction.h"
+#include "PTOF/Reaction_Parallel.h"
 #include "PTOF/State.h"
 #include "PTOF/Steppers.h"
-#include "PTOF/Transitions.h"
+#include "PTOF/Transitions_Parallel.h"
 
 namespace ptof
 {
@@ -48,7 +48,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry<2,
+    using Geometry = Geometry_Parallel<2,
       BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
     using State = StateDim<
@@ -170,25 +170,25 @@ namespace ptof
           input.close();
         }
 
-        template <typename VelocityField, typename Mesh>
+        template <typename VelocityData, typename Mesh>
         void rescale
-        (VelocityField& velocity_field, Mesh const& mesh)
+        (VelocityData& velocity_data, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
           if (rescale_velocity_field == "rescale_to_peclet")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -236,7 +236,7 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions<
+        return makeTransportTransitions_Parallel<
           Geometry, Solvers::Steppers>(velocity_field,
                                        geometry,
                                        boundary,
@@ -245,23 +245,11 @@ namespace ptof
                                        params_solvers);
       }
       
-      template <typename Geometry>
+      template <typename Geometry, typename VelocityData>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, double average_velocity_magnitude)
+      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
-                                           average_velocity_magnitude));
-      };
-      
-      template <typename Geometry>
-      static auto makeVelocityInterpolator
-      (Geometry const& geometry)
-      {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh));
+        return makeLinearInterpolator(geometry, velocity_data, thread);
       };
       
       template <typename OStream>
@@ -457,16 +445,18 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -477,6 +467,7 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -485,16 +476,18 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
     
+
     using VelocityField = VectorField_LinearInterpolation_OF
-    <Foam::volVectorField, Locator_Cell const&, 1, 1>;
+    <Foam::volVectorField&, Locator_Cell const&, 1, 1>;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
@@ -622,20 +615,20 @@ namespace ptof
           input.close();
         }
 
-        template <typename VelocityField, typename Mesh>
+        template <typename VelocityData, typename Mesh>
         void rescale
-        (VelocityField& velocity_field, Mesh const& mesh)
+        (VelocityData& velocity_data, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
           if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -680,7 +673,7 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Advection<
+        return makeTransportTransitions_Advection_Parallel<
           Geometry, Solvers::Steppers>(velocity_field,
                                        geometry,
                                        boundary,
@@ -689,24 +682,12 @@ namespace ptof
                                        params_solvers);
       }
       
-      template <typename Geometry>
+      template <typename Geometry, typename VelocityData>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, double average_velocity_magnitude)
+      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
-                                           average_velocity_magnitude));
-      };
-      
-      template <typename Geometry>
-      static auto makeVelocityInterpolator
-      (Geometry const& geometry)
-      {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh));
-      };
+        return makeLinearInterpolator(geometry, velocity_data, thread);
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -741,7 +722,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry<2,
+    using Geometry = Geometry_Parallel<2,
       BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = StateDim<Geometry::dim,
@@ -763,16 +744,18 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -783,6 +766,7 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -791,10 +775,11 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
@@ -900,9 +885,7 @@ namespace ptof
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
-                                               geometry.mesh ),
-            geometry.mesh_search
-          };
+                                               geometry.mesh ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -915,8 +898,7 @@ namespace ptof
       {
         Reaction_DoNothing::info(output);
         output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoASolid<Foam::meshSearch>::
-          info(output);
+        SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
       }
     };
   }
@@ -940,7 +922,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Periodic_Cartesian<2,
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<2,
       BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_2d_parallel::Info;
     using State = StateDim_Periodic<
@@ -962,17 +944,19 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -983,6 +967,7 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -991,11 +976,12 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
@@ -1051,7 +1037,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Periodic_Cartesian<2,
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<2,
       BoundaryConditionSet::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::State;
@@ -1112,7 +1098,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry<3,
+    using Geometry = Geometry_Parallel<3,
       BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
     using State = StateDim<
@@ -1137,7 +1123,7 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions<
+        return makeTransportTransitions_Parallel<
           Geometry, Solvers::Steppers>(velocity_field,
                                        geometry,
                                        boundary,
@@ -1146,24 +1132,12 @@ namespace ptof
                                        params_solvers);
       }
       
-      template <typename Geometry>
+      template <typename Geometry, typename VelocityData>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, double average_velocity_magnitude)
+      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
-                                           average_velocity_magnitude));
-      };
-      
-      template <typename Geometry>
-      static auto makeVelocityInterpolator
-      (Geometry const& geometry)
-      {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh));
-      };
+        return makeLinearInterpolator(geometry, velocity_data, thread);
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -1250,16 +1224,18 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -1271,6 +1247,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
+       std::size_t thread,
        double threshold = 0.,
        double time = 0.)
       {
@@ -1278,16 +1255,17 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
     
     using VelocityField = VectorField_LinearInterpolation_OF
-    <Foam::volVectorField, Locator_Cell const&, 1, 1>;
+    <Foam::volVectorField&, Locator_Cell const&, 1, 1>;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
 
@@ -1340,7 +1318,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry<3,
+    using Geometry = Geometry_Parallel<3,
       BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = StateDim<Geometry::dim,
@@ -1362,16 +1340,18 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -1382,6 +1362,7 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -1390,10 +1371,11 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
@@ -1499,8 +1481,7 @@ namespace ptof
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
-                                               geometry.mesh ),
-            geometry.mesh_search };
+                                               geometry.mesh ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -1512,8 +1493,7 @@ namespace ptof
       {
         Reaction_DoNothing::info(output);
         output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoASolid<Foam::meshSearch>::
-          info(output);
+        SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
       }
     };
   }
@@ -1537,7 +1517,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Periodic_Cartesian<3,
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<3,
       BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_3d_parallel::Info;
     using State = StateDim_Periodic<
@@ -1559,17 +1539,19 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -1580,6 +1562,7 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -1588,11 +1571,12 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
@@ -1648,7 +1632,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Periodic_Cartesian<3,
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<3,
       BoundaryConditionSet::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::State;
@@ -1710,7 +1694,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Bcc<3,
+    using Geometry = Geometry_Bcc_Parallel<3,
       BoundaryConditionSet::Type::transport,
       BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_2d_parallel::Info;
@@ -1731,17 +1715,19 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
-          params };
+          params,
+          thread };
       }
       
       template
@@ -1752,6 +1738,7 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
+       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -1760,11 +1747,12 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator,
+            geometry.locator[thread],
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
           params,
+          thread,
           mask, threshold };
       }
     };
@@ -1852,25 +1840,25 @@ namespace ptof
           input.close();
         }
         
-        template <typename VelocityField, typename Mesh>
+        template <typename VelocityData, typename Mesh>
         void rescale
-        (VelocityField& velocity_field, Mesh const& mesh)
+        (VelocityData& velocity_data, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
           if (rescale_velocity_field == "rescale_to_peclet")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -1927,7 +1915,7 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions<
+        return makeTransportTransitions_Parallel<
           Geometry, Solvers::Steppers>(velocity_field,
                                        geometry,
                                        boundary,
@@ -1936,24 +1924,12 @@ namespace ptof
                                        params_solvers);
       }
       
-      template <typename Geometry>
+      template <typename Geometry, typename VelocityData>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, double average_velocity_magnitude)
+      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
-                                           average_velocity_magnitude));
-      };
-      
-      template <typename Geometry>
-      static auto makeVelocityInterpolator
-      (Geometry const& geometry)
-      {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh));
-      };
+        return makeLinearInterpolator(geometry, velocity_data, thread);
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -1988,7 +1964,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Bcc<3,
+    using Geometry = Geometry_Bcc_Parallel<3,
       BoundaryConditionSet::Type::firstpassage,
       BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
@@ -2103,20 +2079,20 @@ namespace ptof
           input.close();
         }
         
-        template <typename VelocityField, typename Mesh>
+        template <typename VelocityData, typename Mesh>
         void rescale
-        (VelocityField& velocity_field, Mesh const& mesh)
+        (VelocityData& velocity_data, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
           if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_field.rescale(velocity_rescaling_factor);
+            velocity_data *= velocity_rescaling_factor;
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -2169,7 +2145,7 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Advection<
+        return makeTransportTransitions_Advection_Parallel<
           Geometry, Solvers::Steppers>(velocity_field,
                                        geometry,
                                        boundary,
@@ -2178,24 +2154,12 @@ namespace ptof
                                        params_solvers);
       }
      
-      template <typename Geometry>
+      template <typename Geometry, typename VelocityData>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, double average_velocity_magnitude)
+      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
-                                           average_velocity_magnitude));
-      };
-     
-      template <typename Geometry>
-      static auto makeVelocityInterpolator
-      (Geometry const& geometry)
-      {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh));
-      };
+        return makeLinearInterpolator(geometry, velocity_data, thread);
+      }
      
       template <typename OStream>
       static void info(OStream& output)
@@ -2261,7 +2225,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Bcc<3,
+    using Geometry = Geometry_Bcc_Parallel<3,
       BoundaryConditionSet::Type::transport,
       BoundaryConditionSet::Type::symmetryplanes>;
     using model_bcc_cartesian_advection_diffusion_parallel::Info;
@@ -2294,7 +2258,7 @@ namespace ptof
       }
     };
 
-    using Geometry = Geometry_Bcc<3,
+    using Geometry = Geometry_Bcc_Parallel<3,
       BoundaryConditionSet::Type::firstpassage,
       BoundaryConditionSet::Type::symmetryplanes>;
     using model_advection_diffusion_fpt_2d_parallel::Info;

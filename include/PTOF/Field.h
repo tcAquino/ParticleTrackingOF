@@ -64,7 +64,7 @@ namespace ptof
     auto operator()(Point const& position, Index cell) const
     {
       if constexpr (check_if_outside)
-        if (check_bounds(position, cell))
+        if (outside(position, cell))
           return Vector::zero;
       
       return interpolant.interpolate(position, cell);
@@ -144,7 +144,7 @@ namespace ptof
     Foam::interpolationCellPoint<Vector> interpolant{ field };
     
     /** Bounds checking. */
-    bool check_bounds
+    bool outside
     (Point const& position, Index cell) const
     {
       if (cell == -1)
@@ -223,7 +223,7 @@ namespace ptof
     auto operator()(Point const& position, Index cell) const
     {
       if constexpr (check_if_outside)
-        if (check_bounds(position, cell))
+        if (outside(position, cell))
           return 0.;
       
       return interpolant.interpolate(position, cell);
@@ -292,7 +292,7 @@ namespace ptof
     Foam::interpolationCellPoint<Scalar> interpolant{ field };
     
     /** Bounds checking. */
-    bool check_bounds
+    bool outside
     (Point const& position, Index cell) const
     {
       if (cell == -1)

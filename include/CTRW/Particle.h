@@ -35,7 +35,7 @@ namespace ctrw
 
     /** Transition according to a given rule that modifies the state.*/
     template <typename Transition>
-    void transition(Transition& transition)
+    void transition(Transition&& transition)
     {
       old_state = new_state;
       transition(new_state);
@@ -50,7 +50,7 @@ namespace ctrw
     
     /** Apply same transformation to both states. */
     template <typename Transformation>
-    void transform_both(Transformation transformation)
+    void transform_both(Transformation&& transformation)
     {
       transformation(old_state);
       transformation(new_state);
@@ -58,7 +58,7 @@ namespace ctrw
     
     /** Apply arbitrary transformation to both states. */
     template <typename Transformation>
-    void transform(Transformation transformation)
+    void transform(Transformation&& transformation)
     {
       transformation(new_state, old_state);
     }

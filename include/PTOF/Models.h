@@ -253,7 +253,7 @@ namespace ptof
           geometry,
           ptof::get_velocity_data_rescaled(geometry.mesh,
                                            average_velocity_magnitude));
-      };
+      }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
@@ -262,7 +262,7 @@ namespace ptof
         return makeLinearInterpolator(
           geometry,
           ptof::get_velocity_data(geometry.mesh));
-      };
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -697,7 +697,7 @@ namespace ptof
           geometry,
           ptof::get_velocity_data_rescaled(geometry.mesh,
                                            average_velocity_magnitude));
-      };
+      }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
@@ -706,7 +706,7 @@ namespace ptof
         return makeLinearInterpolator(
           geometry,
           ptof::get_velocity_data(geometry.mesh));
-      };
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -900,9 +900,7 @@ namespace ptof
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
-                                               geometry.mesh ),
-            geometry.mesh_search
-          };
+                                               geometry.mesh ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -915,8 +913,7 @@ namespace ptof
       {
         Reaction_DoNothing::info(output);
         output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoASolid<Foam::meshSearch>::
-          info(output);
+        SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
       }
     };
   }
@@ -1154,7 +1151,7 @@ namespace ptof
           geometry,
           ptof::get_velocity_data_rescaled(geometry.mesh,
                                            average_velocity_magnitude));
-      };
+      }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
@@ -1163,7 +1160,7 @@ namespace ptof
         return makeLinearInterpolator(
           geometry,
           ptof::get_velocity_data(geometry.mesh));
-      };
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -1499,8 +1496,7 @@ namespace ptof
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
-                                               geometry.mesh ),
-            geometry.mesh_search };
+                                               geometry.mesh ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -1512,8 +1508,7 @@ namespace ptof
       {
         Reaction_DoNothing::info(output);
         output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoASolid<Foam::meshSearch>::
-          info(output);
+        SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
       }
     };
   }
@@ -1944,7 +1939,7 @@ namespace ptof
           geometry,
           ptof::get_velocity_data_rescaled(geometry.mesh,
                                            average_velocity_magnitude));
-      };
+      }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
@@ -1953,7 +1948,7 @@ namespace ptof
         return makeLinearInterpolator(
           geometry,
           ptof::get_velocity_data(geometry.mesh));
-      };
+      }
       
       template <typename OStream>
       static void info(OStream& output)
@@ -2186,7 +2181,7 @@ namespace ptof
           geometry,
           ptof::get_velocity_data_rescaled(geometry.mesh,
                                            average_velocity_magnitude));
-      };
+      }
      
       template <typename Geometry>
       static auto makeVelocityInterpolator
@@ -2195,7 +2190,7 @@ namespace ptof
         return makeLinearInterpolator(
           geometry,
           ptof::get_velocity_data(geometry.mesh));
-      };
+      }
      
       template <typename OStream>
       static void info(OStream& output)

@@ -794,6 +794,47 @@ namespace ptof
     , mask_threshold{ mask_threshold }
     {}
     
+    /** Construct given:
+     * - geometry information;
+     * - velocity field;
+     * - particle maker given position;
+     * - initial condition parameters. */
+    InitialCondition_Cases
+    (Geometry const& geometry,
+     VelocityField const& velocity_field,
+     ParticleMaker particle_maker,
+     Parameters const& params,
+     std::size_t thread)
+    : mesh{ geometry.mesh }
+    , mesh_search{ *geometry.mesh_search[thread] }
+    , velocity_field{ velocity_field }
+    , particle_maker{ particle_maker }
+    , params{ params }
+    {}
+    
+    /** Construct given:
+     * - geometry information;
+     * - velocity field;
+     * - particle maker given position;
+     * - initial condition parameters.
+     * - Mask to disallow cells/faces*/
+    InitialCondition_Cases
+    (Geometry const& geometry,
+     VelocityField const& velocity_field,
+     ParticleMaker particle_maker,
+     Parameters const& params,
+     std::size_t thread,
+     Mask const& mask,
+     double mask_threshold = 0.)
+    : mesh{ geometry.mesh }
+    , mesh_search{ *geometry.mesh_search[thread] }
+    , velocity_field{ velocity_field }
+    , particle_maker{ particle_maker }
+    , params{ params }
+    , mask{ mask }
+    , mask_threshold{ mask_threshold }
+    {}
+    
     /** Make given number of particles
      * according to prescribed initial condition and particle maker. */
     auto operator()(std::size_t nr_particles)

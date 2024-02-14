@@ -47,8 +47,18 @@ namespace ptof
     return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
       geometry.locator,
-      FieldOptions::Warn{}
-    };
+      FieldOptions::Warn{} };
+  };
+  
+  /** Make a linear interpolator for a field using OpenFOAM interpolation.*/
+  template <typename Geometry, typename Field>
+  auto makeLinearInterpolator
+  (Geometry const& geometry, Field&& field, std::size_t thread)
+  {
+    return ptof::VectorField_LinearInterpolation_OF{
+      std::forward<Field>(field),
+      geometry.locator[thread],
+      FieldOptions::Warn{} };
   };
 }
 

@@ -86,8 +86,7 @@ namespace geometry
   typename Boundaries = std::vector<std::pair<double, double>>>
   bool outOfBounds_box(Position const& position, Boundaries const& boundaries)
   {
-    position[0];
-    for (std::size_t dd=0; dd<position.size(); ++dd)
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
       if (outOfBounds_box(position[dd], boundaries[dd]))
         return true;
 

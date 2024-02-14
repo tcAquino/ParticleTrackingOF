@@ -600,10 +600,12 @@ namespace ptof
     Particle operator()
     (Position const& position)
     {
+      auto state_position = State::make_position(position);
       typename Particle::State state{
-        make_state(State::make_position(position),
-                   std::vector<int>(position.size(), 0),
+        make_state(state_position,
+                   std::vector<int>(state_position.size(), 0),
                    Info{}, locator, time, mass, tag) };
+      
       boundary(state);
       return state;
     }

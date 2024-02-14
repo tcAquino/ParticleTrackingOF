@@ -13,23 +13,24 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <omp.h>
 #include <string>
 #include <fvcGrad.H>
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
-#include "PTOF/Models.h"
+#include "PTOF/Models_Parallel.h"
 #include "PTOF/Phase.h"
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_periodic_cartesian_advection_diffusion_2d;
+  using namespace ptof::model_periodic_cartesian_advection_diffusion_2d_parallel;
   using Phase = ptof::Phase;
   
   if (useful::check_options_help(argc, argv))
   {
     std::cout <<
       "--------------------------------------------------\n"
-      "ParticleTrackingOF_TwoPhaseNonStationary\n"
+      "ParticleTrackingOF_TwoPhaseNonStationary_Parallel\n"
       "--------------------------------------------------\n";
     std::cout << std::endl;
     std::cout <<
@@ -45,6 +46,7 @@ int main(int argc, char * argv[])
       "- Name of initial condition parameter set\n"
       "- Name of output parameter set\n"
       "- Output directory [<Case directory>/output]\n"
+      "- Number of parallel threads\n"
       "--------------------------------------------------\n";
     std::cout << std::endl;
     Model::info(std::cout);
@@ -73,7 +75,7 @@ int main(int argc, char * argv[])
     std::cout << std::endl;
     return 0;
   }
-  if (argc != 10)
+  if (argc != 11)
     throw useful::bad_parameters_help();
   
   std::size_t arg = 1;
@@ -86,6 +88,13 @@ int main(int argc, char * argv[])
   std::string parameters_initial_condition_name = argv[arg++];
   std::string parameters_output_name = argv[arg++];
   std::string dir_output = argv[arg++];
+  std::size_t num_threads = strtoul(argv[arg++], NULL, 0);
+  
+  if (num_threads < 1)
+    throw useful::bad_parameters_help();
+  omp_set_num_threads(int(num_threads));
+  auto thread_num = []()
+  { return static_cast<std::size_t>(omp_get_thread_num()); };
   
   ptof::Directories directories{ dir, case_name, dir_output };
   directories.info_runtime(std::cout);
@@ -152,7 +161,7 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Setting up geometry...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
   Geometry geometry{
-    directories_of, directories, params_transport };
+    directories_of, directories, num_threads, params_transport };
   geometry.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -171,13 +180,19 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = Transport::makeVelocityInterpolator(geometry);
-  params_transport.rescale(velocity_field, geometry.mesh);
-  velocity_field.sum(params_phase.leakage_coefficient
-                     * Foam::dimensionedScalar("",
-                                                Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
-                                                params_transport.diff_coeff)
-                     * grad_excluded_phase_field);
+  auto velocity_data = ptof::get_velocity_data(geometry.mesh);
+  std::vector<VelocityField> velocity_field;
+  velocity_field.reserve(num_threads);
+  for (std::size_t thread = 0; thread < num_threads; ++thread)
+    velocity_field.emplace_back(Transport::makeVelocityInterpolator(geometry,
+                                                                    velocity_data,
+                                                                    thread));
+  params_transport.rescale(velocity_data, geometry.mesh);
+  velocity_data += params_phase.leakage_coefficient
+    * Foam::dimensionedScalar("",
+                              Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
+                              params_transport.diff_coeff)
+    * grad_excluded_phase_field;
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -198,13 +213,24 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up initial condition...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto initial_condition
-    = InitialCondition::makeInitialCondition(geometry,
-                                             velocity_field,
-                                             params_initial_condition,
-                                             excluded_phase_field,
-                                             params_phase.phase_threshold);
-  initial_condition.info_runtime(std::cout);
+  using InitialConditionObject
+    = decltype(InitialCondition::makeInitialCondition(geometry,
+                                                      velocity_field[thread_num()],
+                                                      params_initial_condition,
+                                                      thread_num(),
+                                                      excluded_phase_field,
+                                                      params_phase.phase_threshold));
+  std::vector<InitialConditionObject> initial_condition;
+  initial_condition.reserve(num_threads);
+  for (std::size_t thread = 0; thread < num_threads; ++thread)
+    initial_condition.emplace_back(InitialCondition::makeInitialCondition
+                                   (geometry,
+                                    velocity_field[thread],
+                                    params_initial_condition,
+                                    thread,
+                                    excluded_phase_field,
+                                    params_phase.phase_threshold));
+  initial_condition[thread_num()].info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -213,17 +239,28 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up boundary conditions...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto boundary = geometry.makeBoundary(directories,
-                                        params_transport,
-                                        params_reaction,
-                                        params_solvers,
-                                        Reaction::makeSurfaceReaction(
-                                          geometry,
-                                          params_reaction,
-                                          params_transport,
-                                          params_solvers),
-                                        initial_condition);
-  boundary.info_runtime(std::cout);
+  auto surface_reaction = Reaction::makeSurfaceReaction(geometry,
+                                                        params_reaction,
+                                                        params_transport,
+                                                        params_solvers);
+  using Boundary
+    = decltype(geometry.makeBoundary(directories,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers,
+                                     surface_reaction,
+                                     thread_num(),
+                                     initial_condition[thread_num()]));
+  std::vector<Boundary> boundary;
+  for (std::size_t thread = 0; thread < num_threads; ++thread)
+    boundary.emplace_back(geometry.makeBoundary(directories,
+                                                params_transport,
+                                                params_reaction,
+                                                params_solvers,
+                                                surface_reaction,
+                                                thread,
+                                                initial_condition[thread]));
+  boundary[thread_num()].info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -232,12 +269,20 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  CTRW ctrw{ initial_condition(), CTRW::Tag{} };
-  ctrw::Transitions_CTRW_Transport_Reaction transitions{
-    Transport::makeTransitions(velocity_field,
-                               geometry, boundary,
+  CTRW ctrw{ initial_condition[thread_num()](), CTRW::Tag{} };
+  using Transitions = decltype(ctrw::Transitions_CTRW_Transport_Reaction{
+    Transport::makeTransitions(velocity_field[thread_num()],
+                               geometry, boundary[thread_num()],
                                params_transport, params_reaction, params_solvers),
-    reaction };
+    reaction });
+  std::vector<Transitions> transitions;
+  transitions.reserve(num_threads);
+  for (std::size_t thread = 0; thread < num_threads; ++thread)
+    transitions.emplace_back(
+      Transport::makeTransitions(velocity_field[thread],
+                                 geometry, boundary[thread],
+                                 params_transport, params_reaction, params_solvers),
+      reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -260,7 +305,7 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   Output measurer{
     ctrw,
-    velocity_field,
+    velocity_field[thread_num()],
     geometry,
     directories,
     params_output,
@@ -273,9 +318,9 @@ int main(int argc, char * argv[])
       + "_S_" + parameters_solvers_name
       + "_I_" + parameters_initial_condition_name
       + "_O_" + parameters_output_name,
+    thread_num(),
     std::vector<Phase::PhaseField const*>{ &excluded_phase_field },
-    { 1. - params_phase.phase_threshold }
-  };
+    { 1. - params_phase.phase_threshold } };
   measurer.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -328,14 +373,14 @@ int main(int argc, char * argv[])
         grad_excluded_phase_field = Phase::get_grad_excluded_phase_data(geometry.mesh, params_phase, excluded_phase_field);
         std::cout << "Done!\n";
         std::cout << "Updating velocity field...\n";
-        velocity_field.set(ptof::get_velocity_data(geometry.mesh));
+        velocity_data = ptof::get_velocity_data(geometry.mesh);
         if (params_transport.velocity_rescaling_factor != 1.)
-          velocity_field.rescale(params_transport.velocity_rescaling_factor);
-        velocity_field.sum(params_phase.leakage_coefficient
-                           * Foam::dimensionedScalar("",
-                                  Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
-                                  params_transport.diff_coeff)
-                           * grad_excluded_phase_field);
+          velocity_data *= params_transport.velocity_rescaling_factor;
+        velocity_data += params_phase.leakage_coefficient
+          * Foam::dimensionedScalar("",
+                                    Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
+                                    params_transport.diff_coeff)
+          * grad_excluded_phase_field;
         std::cout << "Done!\n";
         std::cout << "Done!\n";
       }

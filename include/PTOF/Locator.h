@@ -44,12 +44,12 @@ namespace ptof
         auto const& mesh = mesh_search.mesh();
         if (mesh.pointInCell(position, hint))
           return hint;
-        
+
         for (auto const& cell_index : mesh.cellCells()[hint])
           if (mesh.pointInCell(position, cell_index))
             return cell_index;
       }
-      
+
       return mesh_search.findCell(position, hint);
     }
     

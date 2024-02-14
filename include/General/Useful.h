@@ -815,7 +815,7 @@ namespace useful
   
   // Swap-erase all elements at positions in list
   template <typename Container, typename List>
-  void swap_erase(Container& container, List& positions)
+  void swap_erase(Container& container, List&& positions)
   {
     positions.sort(std::greater<std::size_t>{});
     for (auto const position : positions)
@@ -824,14 +824,12 @@ namespace useful
   
   // Swap-erase all elements satisfying criterion
   template <typename Container, typename Criterion>
-  void swap_erase_if(Container& container, Criterion criterion)
+  void swap_erase_if(Container& container, Criterion&& criterion)
   {
     std::list<std::size_t> to_delete;
-    for (std::size_t ii = 0; ii < container.size(); ++ii)
+    for (std::size_t ii = container.size(); ii --> 0;)
       if (criterion(container[ii]))
-        to_delete.push_back(ii);
-    
-    swap_erase(container, to_delete);
+        swap_erase(container, ii);
   }
 
   // Copy position to end element of vector to position, then delete end element
