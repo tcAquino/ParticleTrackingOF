@@ -1,8 +1,0 @@
-<map id="geometry::place_in_unit_cell" name="geometry::place_in_unit_cell">
-<area shape="rect" id="node1" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,23,152,65"/>
-<area shape="rect" id="node2" href="$d5/d5f/namespacegeometry.html#a73edf4353d0a0de987ec753fea974ef1" title="Compute projection along basis vectors of symmetry planes." alt="" coords="225,5,363,32"/>
-<area shape="rect" id="node4" href="$d5/d5f/namespacegeometry.html#af008b22a40fd3d175279892dd942a2f0" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="200,56,388,83"/>
-<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="671,31,803,57"/>
-<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a1a30d0a57035d3b63a84b072ba5f3194" title="Element&#45;wise subtraction." alt="" coords="436,56,623,83"/>
-<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982" title="Element&#45;wise multiplication by scalar." alt="" coords="442,107,617,133"/>
-</map>

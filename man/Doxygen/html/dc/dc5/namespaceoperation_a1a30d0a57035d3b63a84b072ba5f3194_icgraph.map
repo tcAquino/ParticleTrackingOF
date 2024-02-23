@@ -1,5 +1,0 @@
-<map id="operation::minus_InPlace" name="operation::minus_InPlace">
-<area shape="rect" id="node1" title="Element&#45;wise subtraction." alt="" coords="436,13,623,39"/>
-<area shape="rect" id="node2" href="$d5/d5f/namespacegeometry.html#af008b22a40fd3d175279892dd942a2f0" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="200,13,388,39"/>
-<area shape="rect" id="node3" href="$d5/d5f/namespacegeometry.html#adb5c30ba87066cf2cfa9197c74ebe2ed" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,5,152,47"/>
-</map>

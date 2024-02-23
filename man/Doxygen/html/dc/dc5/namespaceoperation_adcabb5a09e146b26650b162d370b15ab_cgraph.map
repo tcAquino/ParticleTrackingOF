@@ -1,6 +1,0 @@
-<map id="operation::abs" name="operation::abs">
-<area shape="rect" id="node1" title="Euclidean norm." alt="" coords="5,5,120,32"/>
-<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="168,5,305,32"/>
-<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="178,56,295,83"/>
-<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="353,56,471,83"/>
-</map>

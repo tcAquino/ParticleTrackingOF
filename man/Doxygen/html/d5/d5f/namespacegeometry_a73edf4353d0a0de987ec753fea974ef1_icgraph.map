@@ -1,5 +1,0 @@
-<map id="geometry::project" name="geometry::project">
-<area shape="rect" id="node1" title="Compute projection along basis vectors of symmetry planes." alt="" coords="200,42,337,69"/>
-<area shape="rect" id="node2" href="$d5/d5f/namespacegeometry.html#adb5c30ba87066cf2cfa9197c74ebe2ed" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,5,152,47"/>
-<area shape="rect" id="node3" href="$d5/d5f/namespacegeometry.html#a37c5e07c0ff04f4238278e8700cd0313" title="Compute projection along basis vectors of symmetry planes." alt="" coords="10,71,147,98"/>
-</map>

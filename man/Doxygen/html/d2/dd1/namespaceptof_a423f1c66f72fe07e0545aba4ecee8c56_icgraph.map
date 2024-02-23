@@ -1,7 +1,0 @@
-<map id="ptof::continuous_injection" name="ptof::continuous_injection">
-<area shape="rect" id="node1" title="Maker particles over a time window according to given pulse properties." alt="" coords="673,46,863,73"/>
-<area shape="rect" id="node2" href="$db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="451,39,625,80"/>
-<area shape="rect" id="node3" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
-<area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aeda63116f887b549df7f4bfb7f0ad283" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>
-<area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a10c229da4e32ffd7db3c9a3c705dc186" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
-</map>

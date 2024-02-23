@@ -1,8 +1,0 @@
-<map id="ctrw::JumpGenerator_Velocity_RK4::operator()" name="ctrw::JumpGenerator_Velocity_RK4::operator()">
-<area shape="rect" id="node1" title=" " alt="" coords="5,78,192,119"/>
-<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#a766a1d4a98268b036ef6c1bdbb2cbab6" title="lambda_1 *input_1 + lambda_2 * input2." alt="" coords="254,5,401,32"/>
-<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="268,56,387,83"/>
-<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f" title="Element&#45;wise multiplication by scalar." alt="" coords="240,107,415,149"/>
-<area shape="rect" id="node6" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#acf680bf306d5a2749b38408549f38ac6" title=" " alt="" coords="240,173,415,214"/>
-<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982" title="Element&#45;wise multiplication by scalar." alt="" coords="463,115,637,141"/>
-</map>

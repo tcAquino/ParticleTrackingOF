@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['type_1910',['Type',['../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66f',1,'ptof::BoundaryCondition::Type()'],['../d6/dd9/structptof_1_1_boundary_condition_set.html#aca3e35639dc3bdb3f5e916623a6d0298',1,'ptof::BoundaryConditionSet::Type()'],['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94c',1,'ptof::InitialConditions::Type()'],['../dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5',1,'ptof::EndCriterion::Type()'],['../d4/dd7/structptof_1_1_measure_spacing.html#acd7306cfaa066f22540a9b4c5d7ef10e',1,'ptof::MeasureSpacing::Type()'],['../d2/d80/structptof_1_1_measure_spacing_units.html#a45689f18d2082d42aaac8d95956bb339',1,'ptof::MeasureSpacingUnits::Type()'],['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8',1,'ptof::Measure::Type()']]]
-];

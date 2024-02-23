@@ -1,8 +1,0 @@
-<map id="ptof::make_particle_at_face_center" name="ptof::make_particle_at_face_center">
-<area shape="rect" id="node1" title="Make particle at given mesh face&#39;s center." alt="" coords="5,90,152,131"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="626,9,753,36"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="624,85,755,112"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a157fda891beb78212b2f6d40eac9c3ae" title=" " alt="" coords="427,174,576,215"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="200,72,379,98"/>
-<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="438,21,565,48"/>
-</map>

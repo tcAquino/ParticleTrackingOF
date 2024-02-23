@@ -1,4 +1,0 @@
-<map id="ctrw::JumpGenerator_Velocity_withHint&lt; VelocityField &gt;" name="ctrw::JumpGenerator_Velocity_withHint&lt; VelocityField &gt;">
-<area shape="rect" id="node1" title="Jump according to a velocity field and time step (forward Euler) with the previous position as a hint..." alt="" coords="5,95,160,151"/>
-<area shape="rect" id="node2" title=" " alt="" coords="30,5,135,32"/>
-</map>

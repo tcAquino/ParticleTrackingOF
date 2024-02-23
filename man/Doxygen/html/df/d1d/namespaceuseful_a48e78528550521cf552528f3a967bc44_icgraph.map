@@ -1,5 +1,0 @@
-<map id="useful::open_write" name="useful::open_write">
-<area shape="rect" id="node1" title="Open file for writing." alt="" coords="240,46,383,73"/>
-<area shape="rect" id="node2" href="$d2/d71/structptof_1_1_output___cases_1_1_output_time.html#a51c0179147b9a89a2a34b6cb729c1780" title="Open output file for a given output type, tagged with run number identifier." alt="" coords="5,5,192,47"/>
-<area shape="rect" id="node3" href="$d0/d91/structptof_1_1_output___cases_1_1_output.html#ad565145c388947765e62372810557b00" title="Open output file for a given output type, tagged with run number identifier." alt="" coords="21,71,176,112"/>
-</map>

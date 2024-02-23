@@ -1,5 +1,0 @@
-<map id="ptof::Geometry_Periodic_Cartesian_Parallel::info" name="ptof::Geometry_Periodic_Cartesian_Parallel::info">
-<area shape="rect" id="node1" title="Output generic information about object." alt="" coords="5,5,184,47"/>
-<area shape="rect" id="node2" href="$d6/dd9/structptof_1_1_boundary_condition_set.html#ae4b805c7178f0d594b3db35598163f14" title="Get name from type." alt="" coords="232,5,432,47"/>
-<area shape="rect" id="node3" href="$d6/dd9/structptof_1_1_boundary_condition_set.html#a23926c77c9abc34791f92d6332afba90" title="Get type from name." alt="" coords="480,5,680,47"/>
-</map>

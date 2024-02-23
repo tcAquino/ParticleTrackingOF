@@ -1,5 +1,0 @@
-var namespaceptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d__parallel =
-[
-    [ "Model", "df/d54/structptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d__parallel_1_1_model.html", "df/d54/structptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d__parallel_1_1_model" ],
-    [ "makeTransitions", "d4/dfe/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d__parallel.html#a5b579d31abd51d311c0b9ab4ab35a429", null ]
-];

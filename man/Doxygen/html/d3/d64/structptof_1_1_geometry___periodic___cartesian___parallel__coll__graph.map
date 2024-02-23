@@ -1,5 +1,0 @@
-<map id="ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics &gt;" name="ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics &gt;">
-<area shape="rect" id="node1" title="Geometry class for geometry with Cartesian periodic BCs along some dimensions." alt="" coords="102,109,289,165"/>
-<area shape="rect" id="node2" href="$db/d57/classgeometry_1_1_boundary___periodic___with_outside_info.html" title="Periodic boundaries along each dimension with information about where position would be outside domai..." alt="" coords="5,5,199,47"/>
-<area shape="rect" id="node3" href="$d5/db8/structptof_1_1_locator___cell___parallel.html" title="Object to locate positions or states in mesh." alt="" coords="223,5,357,47"/>
-</map>

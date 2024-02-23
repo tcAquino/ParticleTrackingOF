@@ -1,8 +1,0 @@
-<map id="ptof::model_bcc_cartesian_advection_parallel::Transport::Parameters::Parameters" name="ptof::model_bcc_cartesian_advection_parallel::Transport::Parameters::Parameters">
-<area shape="rect" id="node1" title=" " alt="" coords="5,41,223,97"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="271,5,409,32"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466" title="Read next value from file." alt="" coords="291,56,389,83"/>
-<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="281,107,399,133"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="457,5,633,32"/>
-<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="487,107,604,133"/>
-</map>

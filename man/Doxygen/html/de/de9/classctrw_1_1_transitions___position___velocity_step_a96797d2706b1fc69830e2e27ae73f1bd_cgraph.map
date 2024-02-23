@@ -1,9 +1,0 @@
-<map id="ctrw::Transitions_Position_VelocityStep::operator()" name="ctrw::Transitions_Position_VelocityStep::operator()">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,192,90"/>
-<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="269,19,384,45"/>
-<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a1f1a4a899f7e1bcd82512126f8cf48a9" title="Element&#45;wise sum." alt="" coords="240,81,413,108"/>
-<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="461,5,599,32"/>
-<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="471,56,589,83"/>
-<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="647,56,764,83"/>
-<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="471,107,589,133"/>
-</map>
