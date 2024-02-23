@@ -102,9 +102,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2e2e22e3934082f4a52b073faa96d3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65e21e1377ee41c905238ac4f0da0f7b"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:a65e21e1377ee41c905238ac4f0da0f7b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a65e21e1377ee41c905238ac4f0da0f7b">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="memdesc:a65e21e1377ee41c905238ac4f0da0f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if position is out of bounds.  <a href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a65e21e1377ee41c905238ac4f0da0f7b">More...</a><br /></td></tr>
 <tr class="separator:a65e21e1377ee41c905238ac4f0da0f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace73e13a2b0d7b2863cf3d895f0ff824"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:ace73e13a2b0d7b2863cf3d895f0ff824"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#ace73e13a2b0d7b2863cf3d895f0ff824">operator()</a> (State &amp;state, State const &amp;state_old) const</td></tr>
+<tr class="memdesc:ace73e13a2b0d7b2863cf3d895f0ff824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#ace73e13a2b0d7b2863cf3d895f0ff824">More...</a><br /></td></tr>
 <tr class="separator:ace73e13a2b0d7b2863cf3d895f0ff824"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -114,20 +116,21 @@ Data Fields</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a753a6a2a245a7dfa5856f949b2c8ab0e"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a753a6a2a245a7dfa5856f949b2c8ab0e">radius_sq</a> { <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a>*<a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a> }</td></tr>
-<tr class="separator:a753a6a2a245a7dfa5856f949b2c8ab0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb07f9f2ceaf75b292d2d1f69eca2c79"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#abb07f9f2ceaf75b292d2d1f69eca2c79">begin_transverse</a> { dd_open == 0 ? 1 : 0 }</td></tr>
-<tr class="separator:abb07f9f2ceaf75b292d2d1f69eca2c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0022bc54c5c4740b060725123ce419c8"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a0022bc54c5c4740b060725123ce419c8">_radius_sq</a> { <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a>*<a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a> }</td></tr>
+<tr class="separator:a0022bc54c5c4740b060725123ce419c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40fb036357e74aa886eaa2d115613c24"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a40fb036357e74aa886eaa2d115613c24">_begin_transverse</a> { dd_open == 0 ? 1 : 0 }</td></tr>
+<tr class="separator:a40fb036357e74aa886eaa2d115613c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;std::size_t dd_open = 0&gt;<br />
 class geometry::Boundary_Open_RadialReflecting_3d&lt; dd_open &gt;</h3>
 
 <p>Reflecting boundaries on the inside of an infinite cylinder in 3d. </p>
-<p>Cylinder longitudinal axis is dd_open, which may be 0 or 2. <br  />
-State must define:</p><ul>
-<li>position (vector type) </li>
+<p>Cylinder longitudinal axis is dd_open, which may be 0 or 2.</p>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position [vector type] </li>
 </ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2e2e22e3934082f4a52b073faa96d3f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2e2e22e3934082f4a52b073faa96d3f8">&#9670;&nbsp;</a></span>Boundary_Open_RadialReflecting_3d()</h2>
@@ -154,7 +157,12 @@ template&lt;std::size_t dd_open = 0&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given domain radius along reflecting dimension. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">radius</td><td><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> radius along reflecting dimensions. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -196,7 +204,33 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Enforce boundary condition/ </p>
+
+<p>Enforce boundary condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to apply BC to. </td></tr>
+    <tr><td class="paramname">state_old</td><td>Previous particle state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if there was an effect, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_ace73e13a2b0d7b2863cf3d895f0ff824_cgraph.png" border="0" usemap="#ad8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_ace73e13a2b0d7b2863cf3d895f0ff824_cgraph" alt=""/></div>
+<map name="ad8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_ace73e13a2b0d7b2863cf3d895f0ff824_cgraph" id="ad8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_ace73e13a2b0d7b2863cf3d895f0ff824_cgraph">
+<area shape="rect" title="Enforce boundary condition." alt="" coords="5,125,181,181"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="249,5,386,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="841,5,959,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#aa66a60dc66ffdd947d2bab609b5a6ac0" title="Implemented here because some versions of gcc have trouble with std::isnan." alt="" coords="265,107,370,133"/>
+<area shape="rect" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a65e21e1377ee41c905238ac4f0da0f7b" title="Check if position is out of bounds." alt="" coords="229,157,405,213"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a8b305455a85de0d116cd5f51a9919d6e" title="Rotate vector by angle." alt="" coords="252,237,383,264"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f" title="Element&#45;wise multiplication by scalar." alt="" coords="230,289,405,330"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="483,5,598,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="676,5,793,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982" title="Element&#45;wise multiplication by scalar." alt="" coords="453,296,628,323"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -227,13 +261,30 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Check if position is out of bounds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if out of bounds, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_a65e21e1377ee41c905238ac4f0da0f7b_icgraph.png" border="0" usemap="#ad8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_a65e21e1377ee41c905238ac4f0da0f7b_icgraph" alt=""/></div>
+<map name="ad8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_a65e21e1377ee41c905238ac4f0da0f7b_icgraph" id="ad8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d_a65e21e1377ee41c905238ac4f0da0f7b_icgraph">
+<area shape="rect" title="Check if position is out of bounds." alt="" coords="229,5,405,61"/>
+<area shape="rect" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#ace73e13a2b0d7b2863cf3d895f0ff824" title="Enforce boundary condition." alt="" coords="5,5,181,61"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="abb07f9f2ceaf75b292d2d1f69eca2c79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb07f9f2ceaf75b292d2d1f69eca2c79">&#9670;&nbsp;</a></span>begin_transverse</h2>
+<a id="a40fb036357e74aa886eaa2d115613c24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40fb036357e74aa886eaa2d115613c24">&#9670;&nbsp;</a></span>_begin_transverse</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,7 +295,7 @@ template&lt;std::size_t dd_open = 0&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::size_t <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html">geometry::Boundary_Open_RadialReflecting_3d</a>&lt; dd_open &gt;::begin_transverse { dd_open == 0 ? 1 : 0 }</td>
+          <td class="memname">const std::size_t <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html">geometry::Boundary_Open_RadialReflecting_3d</a>&lt; dd_open &gt;::_begin_transverse { dd_open == 0 ? 1 : 0 }</td>
         </tr>
       </table>
   </td>
@@ -253,6 +304,31 @@ template&lt;std::size_t dd_open = 0&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0022bc54c5c4740b060725123ce419c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0022bc54c5c4740b060725123ce419c8">&#9670;&nbsp;</a></span>_radius_sq</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t dd_open = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html">geometry::Boundary_Open_RadialReflecting_3d</a>&lt; dd_open &gt;::_radius_sq { <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a>*<a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a> }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> radius along reflecting dimensions squared. </p>
 
 </div>
 </div>
@@ -269,30 +345,7 @@ template&lt;std::size_t dd_open = 0&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a753a6a2a245a7dfa5856f949b2c8ab0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a753a6a2a245a7dfa5856f949b2c8ab0e">&#9670;&nbsp;</a></span>radius_sq</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::size_t dd_open = 0&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html">geometry::Boundary_Open_RadialReflecting_3d</a>&lt; dd_open &gt;::radius_sq { <a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a>*<a class="el" href="../../d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#afa42586e7b1cf1cb150ef7223e955443">radius</a> }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> radius along reflecting dimensions. </p>
 
 </div>
 </div>

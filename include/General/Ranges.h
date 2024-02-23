@@ -1,7 +1,7 @@
 /**
-* \file General/Ranges.h
-* \author Tomás Aquino
-* \date 08/06/2016
+ \file General/Ranges.h
+ \author Tomás Aquino
+ \date 08/06/2016
 */
 
 // Initialize and set containers to ranges
@@ -15,8 +15,7 @@
 
 namespace range
 {
-  // Linear partition of [x_L, x_R]
-  // with nr_points points
+  /** \return Linear partition of [\p x_L, \p x_R] with \p nr_points points. */
   template <typename Container = std::vector<double>>
   Container linspace(double x_L, double x_R, std::size_t nr_points)
   {
@@ -31,8 +30,7 @@ namespace range
     return output;
   }
 
-  // log partition of [x_L, x_R]
-  // with nr_points points in output
+  /** \return log partition of [\p x_L, \p x_R] with \p nr_points points. **/
   template <typename Container = std::vector<double>>
   Container logspace(double x_L, double x_R, std::size_t nr_points)
   {
@@ -47,8 +45,7 @@ namespace range
     return output;
   }
 
-  // Linear partition of [x_L, x_R]
-  // with spacing given by increment
+  /** \return Linear partition of [\p x_L, \p x_R] with spacing given by \p increment. */
   template <typename Container = std::vector<double>>
   Container range(double x_L, double increment, double x_R)
   {
@@ -74,14 +71,15 @@ namespace range
     return output;
   }
 
-  // Populate container with sequence first first+1 ... first+size-1
+  /** \brief Populate container with sequence \p first, \p first + 1, ..., \p first + \p size - 1. */
   template <typename OutputIterator, typename Size, typename Assignable>
   void iota_n(OutputIterator first, Size size, Assignable value)
   {
     std::generate_n(first, size, [&value]() { return value++; });
   }
 
-  // Use with std::generate to populate vector with the sequence (seed, seed + 1, seed + 2, ...)
+  /** \struct gen
+   \brief Use with std::generate to populate vector with sequences. */
   template <typename Type>
   struct gen
   {

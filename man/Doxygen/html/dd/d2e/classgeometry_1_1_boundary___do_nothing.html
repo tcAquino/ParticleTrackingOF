@@ -98,9 +98,11 @@ $(document).ready(function(){initNavTree('dd/d2e/classgeometry_1_1_boundary___do
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7c20c07ff2a4fbbde8d15905f9b33318"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:a7c20c07ff2a4fbbde8d15905f9b33318"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/d2e/classgeometry_1_1_boundary___do_nothing.html#a7c20c07ff2a4fbbde8d15905f9b33318">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="memdesc:a7c20c07ff2a4fbbde8d15905f9b33318"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <code>position</code> is out of bounds.  <a href="../../dd/d2e/classgeometry_1_1_boundary___do_nothing.html#a7c20c07ff2a4fbbde8d15905f9b33318">More...</a><br /></td></tr>
 <tr class="separator:a7c20c07ff2a4fbbde8d15905f9b33318"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38ea68378bf4bcdb14d3eaf31877a336"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:a38ea68378bf4bcdb14d3eaf31877a336"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/d2e/classgeometry_1_1_boundary___do_nothing.html#a38ea68378bf4bcdb14d3eaf31877a336">operator()</a> (State &amp;state, State const &amp;state_old={}) const</td></tr>
+<tr class="memdesc:a38ea68378bf4bcdb14d3eaf31877a336"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../dd/d2e/classgeometry_1_1_boundary___do_nothing.html#a38ea68378bf4bcdb14d3eaf31877a336">More...</a><br /></td></tr>
 <tr class="separator:a38ea68378bf4bcdb14d3eaf31877a336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -141,7 +143,16 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Enforce boundary condition (do nothing). </p>
+
+<p>Enforce boundary condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to apply BC. </td></tr>
+    <tr><td class="paramname">state_old</td><td>Previous particle state (unused). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>false</code> (no effect). </dd></dl>
 
 </div>
 </div>
@@ -170,7 +181,9 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Check if position is out of bounds (it never is). </p>
+
+<p>Check if <code>position</code> is out of bounds. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>false</code> (always in bounds). </dd></dl>
 
 </div>
 </div>

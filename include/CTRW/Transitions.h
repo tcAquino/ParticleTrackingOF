@@ -1,7 +1,23 @@
 /**
-* \file CTRW/Transitions.h
-* \author Tomás Aquino
-* \date 08/06/2018
+ \file CTRW/Transitions.h
+ \author Tomás Aquino
+ \date 08/06/2018
+ 
+ \brief Objects to handle state transitions in particle tracking.
+ 
+Transitions objects should implement the following minimal functionality:
+ 
+\code{.cpp}
+class Transitions
+{
+public:
+   template <typename State>
+   void operator() (State& state)
+   {
+     // Update state for a single transition
+   }
+};
+\endcode
 */
 
 #ifndef CTRW_TRANSITIONS_H
@@ -16,23 +32,14 @@
 
 namespace ctrw
 {
-  // Transitions objects should implement the following minimal functionality:
-  // class Transitions
-  // {
-  // public:
-  //   template <typename State>
-  //   void operator() (State& state)
-  //   {
-  //     // Update state for a single transition
-  //   }
-  // };
-  
   /** \class Transition_Time_Position CTRW/Transitions.h "CTRW/Transitions.h"
-   * \brief Update state.position and state.time
-   * by summing quantities returned by a
-   * JumpGenerator and a TimeGenerator object given state.\n
-   * 
-   * Apply Boundary condition given new state and old state. */
+   * \brief Update position and time according to specified jumps and time increments.
+   * \tparam JumpGenerator Object to return jump given state.
+   * \tparam TimeGenerator Object to return time increment given state.
+   * \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   * \note State must define:
+   * - position
+   * - time */
 	template <typename TimeGenerator, typename JumpGenerator,
   typename Boundary = geometry::Boundary_DoNothing>
 	class Transitions_Time_Position
@@ -41,33 +48,33 @@ namespace ctrw
 		Transitions_Time_Position
     (TimeGenerator&& time_generator, JumpGenerator&& jump_generator,
      Boundary&& boundary = {})
-    : time_generator{ std::forward<TimeGenerator>(time_generator) }
-    , jump_generator{ std::forward<JumpGenerator>(jump_generator) }
-    , boundary{ std::forward<Boundary>(boundary) }
+    : _time_generator{ std::forward<TimeGenerator>(time_generator) }
+    , _jump_generator{ std::forward<JumpGenerator>(jump_generator) }
+    , _boundary{ std::forward<Boundary>(boundary) }
 		{}
 
 		template <typename State>
 		void operator() (State& state)
 		{
       auto state_old = state;
-      operation::plus_InPlace(state.position, jump_generator(state));
-      state.time += time_generator(state);
-      boundary(state, state_old);
+      operation::plus_InPlace(state.position, _jump_generator(state));
+      state.time += _time_generator(state);
+      _boundary(state, state_old);
 		}
     
-    auto const& get_time_generator() const
-    { return time_generator; }
+    auto const& time_generator() const
+    { return _time_generator; }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
 
 	private:
-		TimeGenerator time_generator;
-		JumpGenerator jump_generator;
-    Boundary boundary;
+		TimeGenerator _time_generator;
+		JumpGenerator _jump_generator;
+    Boundary _boundary;
 	};
   template <typename TimeGenerator, typename JumpGenerator,
   typename Boundary>
@@ -76,16 +83,14 @@ namespace ctrw
   Transitions_Time_Position<TimeGenerator, JumpGenerator, Boundary>;
   
   /** \class Transitions_AdaptiveTimeStep_Time_Position CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief
-   * Choose time step based on state
-   * Update state.position and state.time
-   * by summing quantities returned by a
-   * JumpGenerator and a TimeGenerator object given state. 
-   * 
-   * Apply Boundary condition given new state and old state. \n
-   * Locate all particles in cells before jumping. \n
-   * State must define: 
-   * - cell */
+  \brief Update position and time according to specified jumps and time increments, using state-based adaptive time steps.
+  \tparam TimeStepAdaptor Object to return and update time step given state, time generator, and jump generator.
+  \tparam TimeGenerator Object to return time increment given state.
+  \tparam JumpGenerator Object to return jump given state.
+  \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+  \note State must define:
+  - position
+  - time */
   template <typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator,
   typename Boundary = geometry::Boundary_DoNothing>
   class Transitions_AdaptiveTimeStep_Time_Position
@@ -96,39 +101,40 @@ namespace ctrw
      TimeGenerator&& time_generator,
      JumpGenerator&& jump_generator,
      Boundary&& boundary = {})
-    : time_step_adaptor{ std::forward<TimeStepAdaptor>(time_step_adaptor) }
-    , time_generator{ std::forward<TimeGenerator>(time_generator) }
-    , jump_generator{ std::forward<JumpGenerator>(jump_generator) }
-    , boundary{ std::forward<Boundary>(boundary) }
+    : _time_step_adaptor{ std::forward<TimeStepAdaptor>(time_step_adaptor) }
+    , _time_generator{ std::forward<TimeGenerator>(time_generator) }
+    , _jump_generator{ std::forward<JumpGenerator>(jump_generator) }
+    , _boundary{ std::forward<Boundary>(boundary) }
     {}
 
     template <typename State>
     void operator() (State& state)
     {
       auto state_old = state;
-      time_step_adaptor(state, time_generator, jump_generator);
-      operation::plus_InPlace(state.position, jump_generator(state));
-      state.time += time_generator(state);
-      boundary(state, state_old);
+      _time_step = _time_step_adaptor(state, _time_generator, _jump_generator);
+      operation::plus_InPlace(state.position, _jump_generator(state));
+      state.time += _time_generator(state);
+      _boundary(state, state_old);
     }
     
-    auto const& get_time_generator() const
-    { return time_generator; }
+    auto const& time_generator() const
+    { return _time_generator; }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
     
     double time_step() const
-    { return time_step_adaptor.time_step(); }
+    { return _time_step; }
 
   private:
-    TimeStepAdaptor time_step_adaptor;
-    TimeGenerator time_generator;
-    JumpGenerator jump_generator;
-    Boundary boundary;
+    TimeStepAdaptor _time_step_adaptor;
+    TimeGenerator _time_generator;
+    JumpGenerator _jump_generator;
+    Boundary _boundary;
+    double _time_step;
   };
   template <typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator,
   typename Boundary>
@@ -138,81 +144,89 @@ namespace ctrw
   <TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary>;
   
   /** \class Transitions_Positions CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state.position
-   *  by summing quantity returned by a
-   * JumpGenerator object given state.
-   *  
-   * Apply Boundary condition given new state and old state. */
+   \brief Update position according to specified jump increments.
+   \tparam JumpGenerator Object to return jump given state.
+   \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   \note State must define:
+   - position */
   template <typename JumpGenerator, typename Boundary = geometry::Boundary_DoNothing>
   class Transitions_Position
   {
   public:
     Transitions_Position
     (JumpGenerator&& jump_generator, Boundary&& boundary = {})
-    : jump_generator{ std::forward<JumpGenerator>(jump_generator) }
-    , boundary{ std::forward<Boundary>(boundary) }
+    : _jump_generator{ std::forward<JumpGenerator>(jump_generator) }
+    , _boundary{ std::forward<Boundary>(boundary) }
     {}
 
     template <typename State>
     void operator()(State& state)
     {
       auto state_old = state;
-      operation::plus_InPlace(state.position, jump_generator(state));
-      boundary(state, state_old);
+      operation::plus_InPlace(state.position, _jump_generator(state));
+      _boundary(state, state_old);
     }
     
     template <typename Time = double>
     void time_step(Time time_step)
     {
-      jump_generator.time_step(time_step);
+      _jump_generator.time_step(time_step);
     }
     
     auto time_step() const
     {
-      return jump_generator.time_step();
+      return _jump_generator.time_step();
     }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
 
   private:
-    JumpGenerator jump_generator;
-    Boundary boundary;
+    JumpGenerator _jump_generator;
+    Boundary _boundary;
   };
   template <typename JumpGenerator, typename Boundary>
   Transitions_Position(JumpGenerator&&, Boundary&&) ->
   Transitions_Position<JumpGenerator, Boundary>;
   
-  /** \struct VelocityFromGenerator
-   *  \brief Helper class to return velocity from JumpGenerator object
-   * given state. */
+  /** \class VelocityFromGenerator
+   *  \brief Helper class to return velocity value from JumpGenerator object given state.
+   *  \tparam JumpGenerator Object to return jump given state.
+   *  \note \p JumpGenerator must define:
+   *  - velocity(State const&) */
   template <typename JumpGenerator>
   struct VelocityFromGenerator
   {
     VelocityFromGenerator
     (JumpGenerator const& jump_generator)
-    : jump_generator{ jump_generator }
+    : _jump_generator{ jump_generator }
     {}
     
     template <typename State>
     auto operator()(State const& state) const
-    { return this->jump_generator.velocity(state); }
+    { return _jump_generator.velocity(state); }
     
   private:
-    JumpGenerator const& jump_generator;
+    JumpGenerator const& _jump_generator;
   };
   
   /** \class Transitions_Position_VelocityStep CTRW/Transitions.h "CTRW/Transitions.h"
-   * \brief Update state.position according to a JumpGenerator object given state
-   * with time step according to prescribed jump size divided
-   * by velocity calculated accorsing to Velocity object given state. 
-   * 
-   * Apply Boundary condition given new state and old state. */
+   \brief Update position according to velocity field with adapative time step to fix jump increments.
+   \details Tiime step is determined according to  jump sizes divided by local velocity. Jump increments use forward Euler.
+   \tparam JumpGenerator Object to return jump given state.
+   \tparam VelocityField Object to return velocity value given state.
+   \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   \note State must define:
+   - position
+   - time
+   
+   Velocity field may be passed to constructor or velocities may be obtained from jump_generator if JumpGenerator defines:
+   - velocity(State const&) */
   template <typename JumpGenerator,
-  typename Velocity,
+  typename VelocityField,
   typename Boundary = geometry::Boundary_DoNothing>
   class Transitions_Position_VelocityStep
   {
@@ -220,66 +234,69 @@ namespace ctrw
     Transitions_Position_VelocityStep
     (double step_length,
      JumpGenerator&& jump_generator,
-     Velocity&& velocity,
+     VelocityField&& velocity_field,
      Boundary&& boundary)
-    : step_length{ step_length }
-    , jump_generator{ std::forward<JumpGenerator>(jump_generator) }
-    , velocity_field{ std::forward<Velocity>(velocity_field) }
-    , boundary{ std::forward<Boundary>(boundary) }
+    : _step_length{ step_length }
+    , _jump_generator{ std::forward<JumpGenerator>(jump_generator) }
+    , _velocity_field{ std::forward<VelocityField>(velocity_field) }
+    , _boundary{ std::forward<Boundary>(boundary) }
     {}
     
     Transitions_Position_VelocityStep
     (double step_length,
      JumpGenerator&& jump_generator,
      Boundary&& boundary = {})
-    : step_length{ step_length }
-    , jump_generator{ std::forward<JumpGenerator>(jump_generator) }
-    , velocity_field{ VelocityFromGenerator{ this->jump_generator } }
-    , boundary{ std::forward<Boundary>(boundary) }
+    : _step_length{ step_length }
+    , _jump_generator{ std::forward<JumpGenerator>(jump_generator) }
+    , _velocity_field{ VelocityFromGenerator{ this->jump_generator } }
+    , _boundary{ std::forward<Boundary>(boundary) }
     {}
 
     template <typename State>
     void operator() (State& state)
     {
       auto state_old = state;
-      jump_generator.time_step(step_length/operation::abs(velocity(state)));
-      if (jump_generator.time_step() == std::numeric_limits<double>::infinity())
+      _jump_generator.time_step(_step_length/operation::abs(_velocity(state)));
+      if (_jump_generator.time_step() == std::numeric_limits<double>::infinity())
       {
         state.time = std::numeric_limits<double>::infinity();
         return;
       }
-      operation::plus_InPlace(state.position, jump_generator(state));
-      state.time += jump_generator.time_step();
-      boundary(state, state_old);
+      operation::plus_InPlace(state.position, _jump_generator(state));
+      state.time += _jump_generator.time_step();
+      _boundary(state, state_old);
     }
     
     template <typename State>
     auto velocity(State const& state) const
-    { return velocity_field(state); }
+    { return _velocity_field(state); }
     
     auto time_step() const
-    { return jump_generator.time_step(); }
+    { return _jump_generator.time_step(); }
     
-    auto const& get_velocity_field() const
-    { return velocity_field; }
+    auto time_step(double time_step) const
+    { return _jump_generator.time_step(time_step); }
+    
+    auto const& velocity_field() const
+    { return _velocity_field; }
 
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
 
   private:
-    double step_length;
-    JumpGenerator jump_generator;
-    Velocity velocity_field;  /**< Velocity field given state. */
-    Boundary boundary;
+    double _step_length;
+    JumpGenerator _jump_generator;
+    VelocityField _velocity_field;         /**< Velocity field given state. */
+    Boundary _boundary;
   };
-  template <typename JumpGenerator, typename Velocity,
+  template <typename JumpGenerator, typename VelocityField,
   typename Boundary>
   Transitions_Position_VelocityStep
-  (double, JumpGenerator&&, Velocity&&, Boundary&&) ->
-  Transitions_Position_VelocityStep<JumpGenerator, Velocity, Boundary>;
+  (double, JumpGenerator&&, VelocityField&&, Boundary&&) ->
+  Transitions_Position_VelocityStep<JumpGenerator, VelocityField, Boundary>;
   template <typename JumpGenerator, typename Boundary>
   Transitions_Position_VelocityStep
   (double, JumpGenerator&&, Boundary&&) ->
@@ -287,36 +304,37 @@ namespace ctrw
   <JumpGenerator, VelocityFromGenerator<JumpGenerator>, Boundary>;
 
   /** \class Transitions_PTRW_FlowField_Diff CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state.position according to forward-Euler
-   * with prescribed time step,
-   * with advection contribution according to flow field
-   * along the 0 direction
-   * given position and diffusion.
-   * 
-   * Apply Boundary condition given new state and old state. */
-	template <typename FlowField, typename Boundary = geometry::Boundary_DoNothing>
+   \brief Update position according to prescribed flow field and time step.
+   \details Jump increments use forward Euler.
+   \tparam FlowField Object to return velocity value given position.
+   \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   \note State must define:
+   - position
+   - time */
+	template <typename FlowField, typename Boundary = geometry::Boundary_DoNothing,
+  typename RNG = std::mt19937>
 	class Transitions_PTRW_FlowField_Diff
 	{
   private:
     auto make_diff_generators
-    (std::vector<double> const& diff, double timestep)
+    (std::vector<double> const& diff, double time_step)
     {
-      std::vector<JumpGenerator_Diffusion_1d> diff_generators;
+      std::vector<JumpGenerator_Diffusion_1d<RNG>> diff_generators;
       diff_generators.reserve(diff.size());
       for (auto const& diff_val : diff)
-        diff_generators.emplace_back(diff_val, timestep);
+        diff_generators.emplace_back(diff_val, time_step);
 
       return diff_generators;
     }
     
 	public:
     Transitions_PTRW_FlowField_Diff
-    (std::vector<double> const& diff, double timestep,
+    (std::vector<double> const& diff, double time_step,
      FlowField&& flow_field, Boundary&& boundary = {})
-    : time_generator{ timestep }
-    , diff_generators{ make_diff_generators(diff, timestep) }
-    , flow_field{ std::forward<FlowField>(flow_field) }
-    , boundary{ std::forward<Boundary>(boundary) }
+    : _time_generator{ time_step }
+    , _diff_generators{ make_diff_generators(diff, time_step) }
+    , _flow_field{ std::forward<FlowField>(flow_field) }
+    , _boundary{ std::forward<Boundary>(boundary) }
 		{}
     
 		template <typename State>
@@ -325,122 +343,126 @@ namespace ctrw
       auto state_old = state;
       std::vector<double> jump(state.position.size());
       for (std::size_t dd = 0; dd < jump.size(); ++dd)
-        jump[dd] = diff_generators[dd]();
-      jump[0] += velocity(state)*time_generator.time_step();
+        jump[dd] = _diff_generators[dd]();
+      jump[0] += _velocity(state)*_time_generator.time_step();
 
       for (std::size_t dd = 0; dd < jump.size(); ++dd)
         state.position[dd] += jump[dd];
 
-			boundary(state, state_old);
+			_boundary(state, state_old);
 		}
     
     template <typename State>
     auto velocity(State const& state) const
-    { return velocity_field(state.position); }
+    { return _velocity_field(state.position); }
 
-		void time_step(double timestep)
+		void time_step(double time_step)
 		{
-      time_generator.time_step(timestep);
-      for (auto& gen : diff_generators)
-        gen.time_step(timestep);
+      _time_generator.time_step(time_step);
+      for (auto& gen : _diff_generators)
+        gen.time_step(time_step);
     }
 
     void diff(std::size_t dd, double diff)
-    { return diff_generators[dd].diff(diff); }
+    { return _diff_generators[dd].diff(diff); }
 
     double time_step() const
-    { return time_generator.time_step(); }
+    { return _time_generator.time_step(); }
 
     double diff(std::size_t dd) const
-    { return diff_generators[dd].diff(); }
+    { return _diff_generators[dd].diff(); }
     
-    auto const& get_time_generator() const
-    { return time_generator; }
+    auto const& time_generator() const
+    { return _time_generator; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
     
-    auto const& get_velocity_field() const
-    { return flow_field; }
+    auto const& velocity_field() const
+    { return _flow_field; }
 
 	private:
-    TimeGenerator_Step<double> time_generator;
-    std::vector<JumpGenerator_Diffusion_1d> diff_generators;
-    FlowField flow_field;
-		Boundary boundary;
+    TimeGenerator_Step<double> _time_generator;
+    std::vector<JumpGenerator_Diffusion_1d<RNG>> _diff_generators;
+    FlowField _flow_field;
+		Boundary _boundary;
 	};
   template <typename FlowField, typename Boundary>
   Transitions_PTRW_FlowField_Diff
   (std::vector<double> const&, double,
    FlowField&&, Boundary&&) ->
-  Transitions_PTRW_FlowField_Diff<FlowField, Boundary>;
+  Transitions_PTRW_FlowField_Diff<FlowField, Boundary, std::mt19937>;
 
   /** \class Transitions_PTRW_Diffusion_1d CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state.position according to forward-Euler
-   * for diffusion in one dimension
-   * with prescribed time step.
-   * 
-   * Apply Boundary condition given new state and old state. */
-  template <typename Boundary = geometry::Boundary_DoNothing>
+   \brief Update position according to diffusion in one dimension with prescribed time step.
+   \details Jump increments use stochastic forward Euler.
+   \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   \tparam RNG Random number generator.
+   \note State must define:
+   - position
+   - time */
+  template <typename Boundary = geometry::Boundary_DoNothing, typename RNG = std::mt19937>
   class Transitions_PTRW_Diffusion_1d
   {
   public:
     Transitions_PTRW_Diffusion_1d
-    (double diff, double timestep, Boundary&& boundary = {})
-    : time_generator{ timestep }
-    , jump_generator{ diff, timestep }
-    , boundary{ std::forward<Boundary>(boundary) }
+    (double diff, double time_step, Boundary&& boundary = {})
+    : _time_generator{ time_step }
+    , _jump_generator{ diff, time_step }
+    , _boundary{ std::forward<Boundary>(boundary) }
     {}
 
     template <typename State>
     void operator()(State& state)
     {
       auto state_old = state;
-      state.position += jump_generator(state);
-      boundary(state, state_old);
+      state.position += _jump_generator(state);
+      _boundary(state, state_old);
       state.time += time_step();
     }
 
-    void time_step(double timestep)
+    void time_step(double time_step)
     {
-      time_generator.time_step(timestep);
-      jump_generator.time_step(timestep);
+      _time_generator.time_step(time_step);
+      _jump_generator.time_step(time_step);
     }
 
     void diff(double diff)
-    { return jump_generator.diff(diff); }
+    { return _jump_generator.diff(diff); }
 
     double time_step() const
-    { return time_generator.time_step(); }
+    { return _time_generator.time_step(); }
 
     double diff() const
-    { return jump_generator.diff(); }
+    { return _jump_generator.diff(); }
     
-    auto const& get_time_generator() const
-    { return time_generator; }
+    auto const& time_generator() const
+    { return _time_generator; }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
 
   private:
-    TimeGenerator_Step<double> time_generator;
-    JumpGenerator_Diffusion_1d jump_generator;
-    Boundary boundary;
+    TimeGenerator_Step<double> _time_generator;
+    JumpGenerator_Diffusion_1d<RNG> _jump_generator;
+    Boundary _boundary;
   };
   template <typename Boundary>
   Transitions_PTRW_Diffusion_1d
   (double, double, Boundary&&) ->
-  Transitions_PTRW_Diffusion_1d<Boundary>;
+  Transitions_PTRW_Diffusion_1d<Boundary, std::mt19937>;
   
   /** \class Transitions_PTRW_Transport_Reaction CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state according to a transport transition given state
-   * followed by a reaction transition given state and time step,
-   * with a prescribed time step.
-   * 
-   * Note: transport rule should enforce any boundary conditions. */
+   \brief Update state according to specified transport transitions followed by reaction.
+   \tparam Transitions_Transport Update particle state according to transport.
+   \tparam Reaction Update particle state according to reaction, given state and time increment.
+   \note
+   - \p Transitions_Transport should enforce any boundary conditions.
+   - Time step needed for reaction may be specified or extracted from transport transitions if \p Transitions_Transport defines:
+    -# time_step() */
   template <typename Transitions_Transport, typename Reaction>
   class Transitions_PTRW_Transport_Reaction
   {
@@ -448,47 +470,47 @@ namespace ctrw
     Transitions_PTRW_Transport_Reaction
     (Transitions_Transport&& transitions_transport,
      Reaction&& reaction)
-    : transitions_transport{
-      std::forward<Transitions_Transport>(transitions_transport) }
-    , reaction{ std::forward<Reaction>(reaction) }
-    , timestep{ transitions_transport.time_step() }
+    : _transitions_transport{
+        std::forward<Transitions_Transport>(transitions_transport) }
+    , _reaction{ std::forward<Reaction>(reaction) }
+    , _time_step{ transitions_transport.time_step() }
     {}
     
     Transitions_PTRW_Transport_Reaction
     (Transitions_Transport&& transitions_transport,
-     Reaction reaction, double timestep)
-    : transitions_transport{
-      std::forward<Transitions_Transport>(transitions_transport) }
-    , reaction{ std::forward<Reaction>(reaction) }
-    , timestep{ timestep }
+     Reaction reaction, double time_step)
+    : _transitions_transport{
+        std::forward<Transitions_Transport>(transitions_transport) }
+    , _reaction{ std::forward<Reaction>(reaction) }
+    , _time_step{ time_step }
     {}
 
     template <typename State>
     void operator()(State& state)
     {
-      transitions_transport(state);
-      reaction(state, timestep);
+      _transitions_transport(state);
+      _reaction(state, _time_step);
     }
     
-    void time_step(double timestep)
+    void time_step(double time_step)
     {
-      transitions_transport.time_step(timestep);
-      this->timestep = timestep;
+      _transitions_transport.time_step(time_step);
+      _time_step = time_step;
     }
     
     double time_step()
-    { return timestep; }
+    { return _time_step; }
     
     auto const& get_transitions_transport() const
-    { return transitions_transport; }
+    { return _transitions_transport; }
     
     auto const& get_reaction() const
-    { return reaction; }
+    { return _reaction; }
 
   private:
-    Transitions_Transport transitions_transport;
-    Reaction reaction;
-    double timestep;
+    Transitions_Transport _transitions_transport;
+    Reaction _reaction;
+    double _time_step;
   };
   template <typename Transitions_Transport, typename Reaction>
   Transitions_PTRW_Transport_Reaction
@@ -499,11 +521,14 @@ namespace ctrw
   (Transitions_Transport&&, Reaction&&, double) ->
   Transitions_PTRW_Transport_Reaction<Transitions_Transport, Reaction>;
   
-  /** \class Transitions_CTR_Transport_Reaction CTRW/Transitions.h "CTRW/Transitions.h"
-   * \brief Update state according to a transport transition given state
-   * followed by a reaction transition given change in state.time.
-   * 
-   * Note: transport transition should enforce any boundary conditions. */
+  /** \class Transitions_CTRW_Transport_Reaction CTRW/Transitions.h "CTRW/Transitions.h"
+   \brief Update state according to specified transport transitions followed by reaction.
+   \tparam Transitions_Transport Update particle state according to transport.
+   \tparam Reaction Update particle state according to reaction, given state and time increment.
+   \note State must define:
+   - time
+   
+   \p Transitions_Transport should enforce any boundary conditions. */
   template <typename Transitions_Transport, typename Reaction>
   class Transitions_CTRW_Transport_Reaction
   {
@@ -511,28 +536,28 @@ namespace ctrw
     Transitions_CTRW_Transport_Reaction
     (Transitions_Transport&& transitions_transport,
      Reaction&& reaction)
-    : transitions_transport{
-      std::forward<Transitions_Transport>(transitions_transport) }
-    , reaction{ std::forward<Reaction>(reaction) }
+    : _transitions_transport{
+        std::forward<Transitions_Transport>(transitions_transport) }
+    , _reaction{ std::forward<Reaction>(reaction) }
     {}
 
     template <typename State>
     void operator()(State& state)
     {
       auto time_old = state.time;
-      transitions_transport(state);
-      reaction(state, state.time-time_old);
+      _transitions_transport(state);
+      _reaction(state, state.time-time_old);
     }
     
-    auto const& get_transitions_transport() const
-    { return transitions_transport; }
+    auto const& transitions_transport() const
+    { return _transitions_transport; }
     
-    auto const& get_reaction() const
-    { return reaction; }
+    auto const& reaction() const
+    { return _reaction; }
 
   private:
-    Transitions_Transport transitions_transport;
-    Reaction reaction;
+    Transitions_Transport _transitions_transport;
+    Reaction _reaction;
   };
   template <typename Transitions_Transport, typename Reaction>
   Transitions_CTRW_Transport_Reaction
@@ -540,12 +565,15 @@ namespace ctrw
   Transitions_CTRW_Transport_Reaction<Transitions_Transport, Reaction>;
 
   /** \class Transitions_Reaction_Position CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state according to a reaction transition given a time step
-   * returned by a TimeGenerator given state,
-   * followed by a change in state.time according to the time step
-   * and a change in position returned by a JumpGenerator given state.
-   * 
-   * Note: JumpGenerator should enforce any boundary conditions. */
+   * \brief Update state according to reaction, followed by a position update, followed by a time update
+   * \tparam TimeGenerator Object to return time increment given state.
+   * \tparam JumpGenerator Object to return jump given state.
+   * \tparam Reaction Update particle state according to reaction, given state and time increment.
+   * \note State must define:
+   * - position
+   * - time
+   *
+   * \p JumpGenerator should enforce any boundary conditions. */
 	template <typename TimeGenerator,
   typename JumpGenerator, typename Reaction>
 	class Transitions_Reaction_Position
@@ -555,35 +583,35 @@ namespace ctrw
 		(TimeGenerator&& time_generator,
      JumpGenerator&& jump_generator,
      Reaction&& reaction)
-    : time_generator{
-      std::forward<TimeGenerator>(time_generator) }
-    , jump_generator{
-      std::forward<JumpGenerator>(jump_generator) }
-    , reaction{ std::forward<Reaction>(reaction) }
+    : _time_generator{
+        std::forward<TimeGenerator>(time_generator) }
+    , _jump_generator{
+        std::forward<JumpGenerator>(jump_generator) }
+    , _reaction{ std::forward<Reaction>(reaction) }
 		{}
 
 		template <typename State>
 		void operator()(State& state)
 		{
-			double exposure_time = time_generator(state);
-			reaction(state, exposure_time);
-			state.position += jump_generator(state);
+			double exposure_time = _time_generator(state);
+			_reaction(state, exposure_time);
+			state.position += _jump_generator(state);
 			state.time += exposure_time;
 		}
     
-    auto const& get_time_generator() const
-    { return time_generator; }
+    auto const& time_generator() const
+    { return _time_generator; }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_reaction() const
-    { return reaction; }
+    auto const& reaction() const
+    { return _reaction; }
 
 	private:
-		TimeGenerator time_generator;
-		JumpGenerator jump_generator;
-		Reaction reaction;
+		TimeGenerator _time_generator;
+		JumpGenerator _jump_generator;
+		Reaction _reaction;
 	};
   template <typename TimeGenerator,
   typename JumpGenerator, typename Reaction>
@@ -592,13 +620,14 @@ namespace ctrw
   Transitions_Reaction_Position<TimeGenerator, JumpGenerator, Reaction>;
   
   /** \class Transitions_Reaction_Position_Conditional CTRW/Transitions.h "CTRW/Transitions.h"
-   * \brief Update state according to a reaction transition given a time step
-   * returned by a TimeGenerator given state.
-   * 
-   * If the particle does not react, this is
-   * followed by a change in state.time according to the time step
-   * and a change in position returned by a JumpGenerator given state
-   * Note: JumpGenerator should enforce any boundary conditions */
+   * \brief Update state according to reaction, followed by a position update, followed by a time update
+   * \tparam TimeGenerator Object to return time increment given state.
+   * \tparam JumpGenerator Object to return jump given state.
+   * \tparam Reaction Update particle state according to reaction, given state and time increment. Must return true when applied if reaction occurs and false otherwise.
+   * \note State must define:
+   * - position
+   * - time
+   * \p JumpGenerator should enforce any boundary conditions. */
   template <typename TimeGenerator,
   typename JumpGenerator, typename Reaction>
   class Transitions_Reaction_Position_Conditional
@@ -608,38 +637,38 @@ namespace ctrw
     (TimeGenerator&& time_generator,
      JumpGenerator&& jump_generator,
      Reaction&& reaction)
-    : time_generator{
-      std::forward<TimeGenerator>(time_generator) }
-    , jump_generator{
-      std::forward<JumpGenerator>(jump_generator) }
-    , reaction{ std::forward<Reaction>(reaction) }
+    : _time_generator{
+        std::forward<TimeGenerator>(time_generator) }
+    , _jump_generator{
+        std::forward<JumpGenerator>(jump_generator) }
+    , _reaction{ std::forward<Reaction>(reaction) }
     {}
 
     template <typename State>
     void operator()(State& state)
     {
-      double exposure_time = time_generator(state);
-      bool reacted = reaction(state, exposure_time);
+      double exposure_time = _time_generator(state);
+      bool reacted = _reaction(state, exposure_time);
       if (!reacted)
       {
-        state.position += jump_generator(state);
+        state.position += _jump_generator(state);
         state.time += exposure_time;
       }
     }
     
-    auto const& get_time_generator() const
-    { return time_generator; }
+    auto const& time_generator() const
+    { return _time_generator; }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_reaction() const
-    { return reaction; }
+    auto const& reaction() const
+    { return _reaction; }
 
   private:
-    TimeGenerator time_generator;
-    JumpGenerator jump_generator;
-    Reaction reaction;
+    TimeGenerator _time_generator;
+    JumpGenerator _jump_generator;
+    Reaction _reaction;
   };
   template <typename TimeGenerator,
   typename JumpGenerator, typename Reaction>
@@ -649,34 +678,38 @@ namespace ctrw
   TimeGenerator, JumpGenerator, Reaction>;
   
   /** \class Transitions_RunTumble CTRW/Transitions.h "CTRW/Transitions.h"
-   * \brief Update state.time according to state.run.   
-   * 
-   *  If state.run, update state.time by summing contribution returned
-   * by TimeGenerator_run object given state, and state.position by
-   * summing contribution returned by JumoGenerator object given state. \n
-   * If not state.run, update state.time by summing contribution returned
-   * by TimeGenerator_tumble object given state, and state.orientation by
-   * summing contribution returned by OrientationGenerator object given state
-   * Flip state.run */
+   * \brief Update position and time when in run state and orientation and time when not in run state. Flip run state at each update.
+   * returned by a TimeGenerator given state. Position and time are then update only if no reaction occured.
+   * \tparam TimeGenerator_run Object to return time increment when in run mode, given state.
+   * \tparam TimeGenerator_tumble Object to return time increment when not run mode, given state.
+   * \tparam JumpGenerator Object to return jump given state.
+   * \tparam OrientationGenerator Object to return orientation increments given state.
+   * \note State must define:
+   * - position
+   * - time
+   * - orientation
+   * - run
+   *
+   * \p JumpGenerator should enforce any boundary conditions. */
   template
   <typename TimeGenerator_run, typename TimeGenerator_tumble,
   typename JumpGenerator, typename OrientationGenerator>
-  class Transitions_RunTumble
+  class Transitions_RunAndTumble
   {
   public:
-    Transitions_RunTumble
+    Transitions_RunAndTumble
     (TimeGenerator_run&& time_generator_run,
      TimeGenerator_tumble&& time_generator_tumble,
      JumpGenerator&& jump_generator,
      OrientationGenerator&& orientation_generator)
-    : time_generator_run{
-      std::forward<TimeGenerator_run>(time_generator_run) }
-    , time_generator_tumble{
-      std::forward<TimeGenerator_tumble>(time_generator_tumble) }
-    , jump_generator{
-      std::forward<JumpGenerator>(jump_generator) }
-    , orientation_generator{
-      std::forward<OrientationGenerator>(orientation_generator) }
+    : _time_generator_run{
+        std::forward<TimeGenerator_run>(time_generator_run) }
+    , _time_generator_tumble{
+        std::forward<TimeGenerator_tumble>(time_generator_tumble) }
+    , _jump_generator{
+        std::forward<JumpGenerator>(jump_generator) }
+    , _orientation_generator{
+        std::forward<OrientationGenerator>(orientation_generator) }
     {}
 
     template <typename State>
@@ -684,68 +717,79 @@ namespace ctrw
     {
       if (state.run)
       {
-        state.position += jump_generator(state);
-        state.time += time_generator_run(state);
+        state.position += _jump_generator(state);
+        state.time += _time_generator_run(state);
       }
       else
       {
-        state.orientation += orientation_generator(state);
-        state.time += time_generator_tumble(state);
+        state.orientation += _orientation_generator(state);
+        state.time += _time_generator_tumble(state);
       }
       state.run = !state.run;
     }
     
-    auto const& get_time_generator_run() const
-    { return time_generator_run; }
+    auto const& time_generator_run() const
+    { return _time_generator_run; }
     
-    auto const& get_time_generator_tumble() const
-    { return time_generator_tumble; }
+    auto const& time_generator_tumble() const
+    { return _time_generator_tumble; }
     
-    auto const& get_jump_generator() const
-    { return jump_generator; }
+    auto const& jump_generator() const
+    { return _jump_generator; }
     
-    auto const& get_orientation_generator() const
-    { return orientation_generator; }
+    auto const& orientation_generator() const
+    { return _orientation_generator; }
 
   private:
-    TimeGenerator_run time_generator_run;
-    TimeGenerator_tumble time_generator_tumble;
-    JumpGenerator jump_generator;
-    OrientationGenerator orientation_generator;
+    TimeGenerator_run _time_generator_run;
+    TimeGenerator_tumble _time_generator_tumble;
+    JumpGenerator _jump_generator;
+    OrientationGenerator _orientation_generator;
   };
   template
   <typename TimeGenerator_run, typename TimeGenerator_tumble,
   typename JumpGenerator, typename OrientationGenerator>
-  Transitions_RunTumble
+  Transitions_RunAndTumble
   (TimeGenerator_run&&, TimeGenerator_tumble&&,
    JumpGenerator&&, OrientationGenerator&&) ->
-  Transitions_RunTumble<TimeGenerator_run, TimeGenerator_tumble,
+  Transitions_RunAndTumble<TimeGenerator_run, TimeGenerator_tumble,
   JumpGenerator, OrientationGenerator>;
   
-  /** \class Transitions_RunAndTuble_PTRW CTRW/Transitions.h "CTRW/Transitions.h"
-   *  \brief Update state according to current state.state.
-   * 
-   *  Update state according to current state.state:
-   *  - 0 (run): Sum to state.position as returned
-   *          by JumpGenerator object given state. \n
-   *          Apply Boundary condition. \n
-   *          If state.state has not been switched to wall-tumble,
-   *         apply the StateSwitcher run rule given state
-   *         to obtain new state.state.
-   *  - 1 (tumble): Apply the StateSwitcher tumble rule given state
-   *             to obtain new state.state. \n
-   *             If state.state has been switched to run,
-   *            sum to state.orientation as returned
-   *             by OrientationGenerator object given state.
-   *  - 2 (wall-tumble): Apply the StateSwitcher wall_tumble rule given state
-   *                  to obtain new state.state. \n
-   *                 If state.state has been switched to run,
-   *                 sum to state.orientation as returned
-   *                 by OrientationGenerator_Wall object given state. */
+  /** \class Transitions_RunAndTumble_PTRW CTRW/Transitions.h "CTRW/Transitions.h"
+   *  \brief Update state according to current internal state.
+   * \details
+   *  When internal state is:
+   *  - 0 (run): Update position as according to \p JumpGenerator object. \n
+   *          Apply \p Boundary condition. \n
+   *          If internal state has not been switched to wall-tumble,
+   *          apply the \p StateSwitcher run rule given state
+   *          to obtain new internal state.
+   *  - 1 (tumble): Apply the \p StateSwitcher tumble rule given state
+   *           to obtain new internal state. \n
+   *           If internal state has been switched to run,
+   *           update orientation accoiding to \p OrientationGenerator .
+   *  - 2 (wall-tumble): Apply \p StateSwitcher wall_tumble rule
+   *               to obtain new internal state. \n
+   *               If internal state has been switched to run,
+   *               update orientation accoiding to \p OrientationGenerator_Wall .
+   * \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   * \tparam StateSwitcher Object to return new internal state given state.
+   * \tparam JumpGenerator Object to return jump given state.
+   * \tparam OrientationGenerator Object to return orientation increments given state.
+   * \tparam OrientationGenerator_Wall Object to return orientation increments given state.
+   * \note State must define:
+   *  - position
+   *  - orientation
+   *  - state
+   * \c StateSwitcher must define:
+   *  - int run(State const&)
+   *  - int tumble(State const&)
+   *  - int wall_tumble(State const&)
+   * \c Boundary object should set wall_tumble state when appropriate. */
   template
   <typename Boundary, typename StateSwitcher,
   typename JumpGenerator, typename OrientationGenerator,
-  typename OrientationGenerator_Wall = OrientationGenerator>
+  typename OrientationGenerator_Wall>
   class Transitions_RunAndTumble_PTRW
   {
   public:
@@ -754,15 +798,15 @@ namespace ctrw
      OrientationGenerator&& orientation_generator,
      OrientationGenerator_Wall&& orientation_generator_wall,
      StateSwitcher&& state_switcher, Boundary&& boundary)
-    : boundary{ std::forward<Boundary>(boundary) }
-    , state_switcher{
-      std::forward<StateSwitcher>(state_switcher) }
-    , jump_generator{
-      std::forward<JumpGenerator>(jump_generator) }
-    , orientation_generator{
-      std::forward<OrientationGenerator>(orientation_generator) }
-    , orientation_generator_wall{
-      std::forward<OrientationGenerator_Wall>(orientation_generator_wall) }
+    : _boundary{ std::forward<Boundary>(boundary) }
+    , _state_switcher{
+        std::forward<StateSwitcher>(state_switcher) }
+    , _jump_generator{
+        std::forward<JumpGenerator>(jump_generator) }
+    , _orientation_generator{
+        std::forward<OrientationGenerator>(orientation_generator) }
+    , _orientation_generator_wall{
+        std::forward<OrientationGenerator_Wall>(orientation_generator_wall) }
     {}
     
     Transitions_RunAndTumble_PTRW
@@ -785,45 +829,45 @@ namespace ctrw
       {
         case 0:
           operation::plus_InPlace(state.position,
-                                  jump_generator(state));
+                                  _jump_generator(state));
           if(!boundary(state, state_old))
-            state.state = state_switcher.run(state);
+            state.state = _state_switcher.run(state);
           break;
         case 1:
-          state.state = state_switcher.tumble(state);
+          state.state = _state_switcher.tumble(state);
           if (state.state == 0)
             operation::plus_InPlace(state.orientation,
-                                    orientation_generator(state));
+                                    _orientation_generator(state));
           break;
         case 2:
-          state.state = state_switcher.wall_tumble(state);
+          state.state = _state_switcher.wall_tumble(state);
           if (state.state == 0)
             operation::plus_InPlace(state.orientation,
-                                    orientation_generator_wall(state));
+                                    _orientation_generator_wall(state));
           break;
         default:
           break;
       }
     }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
     
-    auto const& get_state_switcher() const
-    { return state_switcher; }
+    auto const& state_switcher() const
+    { return _state_switcher; }
     
-    auto const& get_orientation_generator() const
-    { return orientation_generator; }
+    auto const& orientation_generator() const
+    { return _orientation_generator; }
     
-    auto const& get_orientation_generator_wall() const
-    { return orientation_generator_wall; }
+    auto const& orientation_generator_wall() const
+    { return _orientation_generator_wall; }
     
   private:
-    Boundary boundary;
-    StateSwitcher state_switcher;
-    JumpGenerator jump_generator;
-    OrientationGenerator orientation_generator;
-    OrientationGenerator_Wall orientation_generator_wall;
+    Boundary _boundary;
+    StateSwitcher _state_switcher;
+    JumpGenerator _jump_generator;
+    OrientationGenerator _orientation_generator;
+    OrientationGenerator_Wall _orientation_generator_wall;
   };
   template
   <typename Boundary, typename StateSwitcher,
@@ -844,16 +888,31 @@ namespace ctrw
   <Boundary, StateSwitcher, JumpGenerator,
   OrientationGenerator, OrientationGenerator>;
   
-  template <typename Acceleration, typename Boundary>
+  /** \class Transitions_Velocity_Acceleration CTRW/Transitions.h "CTRW/Transitions.h"
+   *  \brief Update position and velocity according to imposed acceleration.
+   * \tparam Acceleration Object to return acceleration given state.
+   * \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
+   * \note State must define:
+   * - position
+   * - velocity */
+  template <typename Acceleration, typename Boundary = useful::Empty>
   class Transitions_Velocity_Acceleration
   {
   public:
     Transitions_Velocity_Acceleration
-    (double timestep,
-     Acceleration&& acceleration, Boundary&& boundary = {})
-    : timestep{ timestep }
-    , acceleration{ std::forward<Acceleration>(acceleration) }
-    , boundary{ std::forward<Boundary>(boundary) }
+    (double time_step,
+     Acceleration&& acceleration, Boundary&& boundary)
+    : _time_step{ time_step }
+    , _acceleration{ std::forward<Acceleration>(acceleration) }
+    , _boundary{ std::forward<Boundary>(boundary) }
+    {}
+    
+    Transitions_Velocity_Acceleration
+    (double time_step,
+     Acceleration&& acceleration)
+    : _time_step{ time_step }
+    , _acceleration{ std::forward<Acceleration>(acceleration) }
+    , _boundary{ useful::Empty{} }
     {}
 
     template <typename State>
@@ -868,28 +927,33 @@ namespace ctrw
     }
     
     template <typename Time = double>
-    void time_step(Time timestep)
-    { this->timestep = timestep; }
+    void time_step(Time time_step)
+    { _time_step = time_step; }
     
     auto time_step() const
-    { return timestep; }
+    { return _time_step; }
     
-    auto const& get_acceleration() const
-    { return acceleration; }
+    auto const& acceleration() const
+    { return _acceleration; }
     
-    auto const& get_boundary() const
-    { return boundary; }
+    auto const& boundary() const
+    { return _boundary; }
 
   private:
-    double timestep;
-    Acceleration acceleration;
-    Boundary boundary;
+    double _time_step;
+    Acceleration _acceleration;
+    Boundary _boundary;
   };
   template
   <typename Acceleration, typename Boundary>
   Transitions_Velocity_Acceleration
   (double, Acceleration&&, Boundary&&) ->
   Transitions_Velocity_Acceleration<Acceleration, Boundary>;
+  template
+  <typename Acceleration>
+  Transitions_Velocity_Acceleration
+  (double, Acceleration&&) ->
+  Transitions_Velocity_Acceleration<Acceleration, useful::Empty>;
 }
 
 #endif /* CTRW_TRANSITIONS_H */

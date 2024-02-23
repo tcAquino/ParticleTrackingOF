@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: general/Modular.h File Reference</title>
+<title>ParticleTrackingOF: General/Modular.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -89,24 +89,19 @@ $(document).ready(function(){initNavTree('db/d5a/_modular_8h.html','../../'); in
 <div class="title">Modular.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cstdlib&gt;</code><br />
+
+<p>Modular arithmetic, basis change, and similar operations.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;cstdlib&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Modular.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/d70/_modular_8h__incl.png" border="0" usemap="#ageneral_2_modular_8h" alt=""/></div>
-<map name="ageneral_2_modular_8h" id="ageneral_2_modular_8h">
-<area shape="rect" title=" " alt="" coords="5,5,144,32"/>
-<area shape="rect" title=" " alt="" coords="42,80,107,107"/>
-</map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../de/dd1/_modular_8h__dep__incl.png" border="0" usemap="#ageneral_2_modular_8hdep" alt=""/></div>
-<map name="ageneral_2_modular_8hdep" id="ageneral_2_modular_8hdep">
-<area shape="rect" title=" " alt="" coords="13,5,151,32"/>
-<area shape="rect" href="../../d1/dd1/_multi_array_8h.html" title=" " alt="" coords="5,80,159,107"/>
-<area shape="rect" href="../../d8/dea/_grid_8h.html" title=" " alt="" coords="36,155,128,181"/>
+<div class="center"><img src="../../d9/d70/_modular_8h__incl.png" border="0" usemap="#a_general_2_modular_8h" alt=""/></div>
+<map name="a_general_2_modular_8h" id="a_general_2_modular_8h">
+<area shape="rect" title="Modular arithmetic, basis change, and similar operations." alt="" coords="10,5,151,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,68,107"/>
+<area shape="rect" title=" " alt="" coords="92,80,157,107"/>
 </map>
 </div>
 </div>
@@ -133,25 +128,45 @@ Functions</h2></td></tr>
 <tr class="memitem:a06bfd3d3e6cce73064fc93d32fb1ff90"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename Integer_Type &gt; </td></tr>
 <tr class="memitem:a06bfd3d3e6cce73064fc93d32fb1ff90"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#a06bfd3d3e6cce73064fc93d32fb1ff90">modular::convert</a> (Integer_Type to_convert, Integer_Type basis, Container &amp;converted)</td></tr>
 <tr class="separator:a06bfd3d3e6cce73064fc93d32fb1ff90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6f93ad09ea918af0b8e6c29708a57c7"><td class="memTemplParams" colspan="2">template&lt;typename Integer_Type &gt; </td></tr>
+<tr class="memitem:ac6f93ad09ea918af0b8e6c29708a57c7"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Integer_Type &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#ac6f93ad09ea918af0b8e6c29708a57c7">modular::convert</a> (Integer_Type to_convert, Integer_Type basis)</td></tr>
+<tr class="separator:ac6f93ad09ea918af0b8e6c29708a57c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d69796478dbe77dca7fb4c30ae963db"><td class="memTemplParams" colspan="2">template&lt;typename Integer_Type &gt; </td></tr>
+<tr class="memitem:a7d69796478dbe77dca7fb4c30ae963db"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::size_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#a7d69796478dbe77dca7fb4c30ae963db">modular::convert</a> (Integer_Type to_convert, Integer_Type basis, std::size_t nr_digits)</td></tr>
+<tr class="separator:a7d69796478dbe77dca7fb4c30ae963db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a078f1d5d403be1ba74f69eb96c4301a0"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename IntegerType  = std::size_t&gt; </td></tr>
 <tr class="memitem:a078f1d5d403be1ba74f69eb96c4301a0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0">modular::indexToPosition</a> (IntegerType idx, Container const &amp;nr_points, Container &amp;position)</td></tr>
+<tr class="memdesc:a078f1d5d403be1ba74f69eb96c4301a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given 1d index <code>idx</code>, convert to position (x_idx,y_idx,...) in a regular grid; output in <code>position</code>.  <a href="../../da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0">More...</a><br /></td></tr>
 <tr class="separator:a078f1d5d403be1ba74f69eb96c4301a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d9df1223e0020d0c29bb8ac84a02e6"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename IntegerType  = std::size_t&gt; </td></tr>
+<tr class="memitem:a53d9df1223e0020d0c29bb8ac84a02e6"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#a53d9df1223e0020d0c29bb8ac84a02e6">modular::indexToPosition</a> (IntegerType idx, Container const &amp;nr_points)</td></tr>
+<tr class="separator:a53d9df1223e0020d0c29bb8ac84a02e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac097f25f765cb8774d3f147089590743"><td class="memTemplParams" colspan="2">template&lt;typename Container &gt; </td></tr>
 <tr class="memitem:ac097f25f765cb8774d3f147089590743"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#ac097f25f765cb8774d3f147089590743">modular::positionToIndex</a> (Container const &amp;position, Container const &amp;nr_points)</td></tr>
 <tr class="separator:ac097f25f765cb8774d3f147089590743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4d74fa754ad662f004c7005ea8816dc"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename IntegerType &gt; </td></tr>
 <tr class="memitem:ae4d74fa754ad662f004c7005ea8816dc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc">modular::increment</a> (Container &amp;num, IntegerType basis)</td></tr>
+<tr class="memdesc:ae4d74fa754ad662f004c7005ea8816dc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>num</code> are the digits of a basis <code>basis</code> number. Increment it by 1.  <a href="../../da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc">More...</a><br /></td></tr>
 <tr class="separator:ae4d74fa754ad662f004c7005ea8816dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a751c3fd158800664390ee07d8932ae03"><td class="memTemplParams" colspan="2">template&lt;typename Container &gt; </td></tr>
 <tr class="memitem:a751c3fd158800664390ee07d8932ae03"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#a751c3fd158800664390ee07d8932ae03">modular::increment</a> (Container &amp;num, Container const &amp;basis)</td></tr>
+<tr class="memdesc:a751c3fd158800664390ee07d8932ae03"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>num</code> are the digits of a number such that each digit ranges from 0 to <code>basis</code>[dig] - 1. Increment it by 1.  <a href="../../da/d32/namespacemodular.html#a751c3fd158800664390ee07d8932ae03">More...</a><br /></td></tr>
 <tr class="separator:a751c3fd158800664390ee07d8932ae03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8751a12845164316558a4f8642da4578"><td class="memTemplParams" colspan="2">template&lt;typename Container &gt; </td></tr>
+<tr class="memitem:a8751a12845164316558a4f8642da4578"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d32/namespacemodular.html#a8751a12845164316558a4f8642da4578">modular::increment</a> (Container &amp;num, Container const &amp;basis, std::size_t inc)</td></tr>
+<tr class="memdesc:a8751a12845164316558a4f8642da4578"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>num</code> are the digits of a number such that each digit ranges from 0 to <code>basis</code>[dig] - 1. Increment it by <code>inc</code>.  <a href="../../da/d32/namespacemodular.html#a8751a12845164316558a4f8642da4578">More...</a><br /></td></tr>
+<tr class="separator:a8751a12845164316558a4f8642da4578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Modular arithmetic, basis change, and similar operations. </p>
+<dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>08/06/2019 </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bba024cd03edd7f9d6096b84e1006209.html">general</a></li><li class="navelem"><a class="el" href="../../db/d5a/_modular_8h.html">Modular.h</a></li>
+    <li class="navelem"><a class="el" href="../../dir_31c2500c25d0b570f9d116670e5783cb.html">General</a></li><li class="navelem"><a class="el" href="../../db/d5a/_modular_8h.html">Modular.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

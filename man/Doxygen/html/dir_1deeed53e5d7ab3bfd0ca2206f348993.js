@@ -4,6 +4,10 @@ var dir_1deeed53e5d7ab3bfd0ca2206f348993 =
       [ "CTRW", "d2/dd2/classctrw_1_1_c_t_r_w.html", "d2/dd2/classctrw_1_1_c_t_r_w" ],
       [ "Tag", "d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html", null ]
     ] ],
+    [ "CTRW_Parallel.h", "dd/df4/_c_t_r_w___parallel_8h.html", [
+      [ "CTRW_Parallel", "d7/dfc/classctrw_1_1_c_t_r_w___parallel.html", "d7/dfc/classctrw_1_1_c_t_r_w___parallel" ],
+      [ "Tag", "d9/da3/structctrw_1_1_c_t_r_w___parallel_1_1_tag.html", null ]
+    ] ],
     [ "JumpGenerator.h", "d3/dba/_jump_generator_8h.html", "d3/dba/_jump_generator_8h" ],
     [ "Particle.h", "d4/d15/_particle_8h.html", [
       [ "Particle", "d5/d4b/classctrw_1_1_particle.html", "d5/d4b/classctrw_1_1_particle" ]

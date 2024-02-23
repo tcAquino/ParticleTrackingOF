@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Reaction.h
-* \author Tomás Aquino
-* \date 10/03/2022
+ \file PTOF/Reaction.h
+ \author Tomás Aquino
+ \date 10/03/2022
 */
 
 #ifndef PTOF_REACTION_H
@@ -18,8 +18,11 @@
 
 namespace ptof
 {
-  /** Make map of homogeneous surface concentrations
-   * over given face indices. */
+  /**
+   \param surface_concentration Homogeneous surface concentration value.
+   \param face_ids Mesh face indices where to assign concentration.
+   \param mesh OpenFOAM mesh.
+   \return Map of homogeneous surface concentrations over given face indices. */
   template
   <typename Container,
   typename Mesh>
@@ -34,9 +37,11 @@ namespace ptof
     return surface_concentrations;
   }
   
-  /** Make map of uniformly random surface concentrations
-   * with given mean
-   * over faces in given patches. */
+  /**
+  \param surface_concentration Mean surface concentration value.
+  \param patch_names Mesh patch names where to assign concentration.
+  \param mesh OpenFOAM mesh.
+  \return Map of homogeneous surface concentrations over given face indices. */
   template <typename Mesh>
   auto uniform_solid_reactant_patches
   (double surface_concentration,
@@ -48,14 +53,17 @@ namespace ptof
                                   mesh);
   }
   
-  /** Find nearest boundary face and diff_coeff to it. */
-  template <typename MeshSearch>
+  /**
+   \param position Spatial position.
+   \param locator Object to locate positions in mesh.
+   \return Pair of nearest boundary face index and distance to it. */
+  template <typename Locator>
   std::pair<Foam::label, double> nearest_boundary_face_dist
-  (Foam::vector const& position, MeshSearch const& mesh_search)
+  (Foam::vector const& position, Locator const& locator)
   {
+    auto const& mesh = locator.mesh_search().mesh();
     // Do not use hint because this can get stuck in local minima
-    auto const& mesh = mesh_search.mesh();
-    auto face_id = mesh_search.findNearestBoundaryFace(position);
+    auto face_id = locator.mesh_search().findNearestBoundaryFace(position);
     auto dist = Foam::mag(position - mesh.faces()[face_id].centre(mesh.points()));
 
     return { face_id, dist };
@@ -66,12 +74,13 @@ namespace ptof
   class SurfaceReaction_AFluidPlusASolidtoASolid
   {
   public:
-    /** Type of container to hold reactant surface concentrations. */
+    /** Container to hold reactant surface concentrations. */
     using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
     
-    /** Construct give well-mixed volumetric reaction rate,
-     * threshold diff_coeff, map of initial reactive surface concentrations,
-     * and mesh search object. */
+    /** Constructor.
+      \param rate_constant Surface reaction rate per solid concentration.
+      \param diff_coeff Diffusion coefficient.
+      \param surface_concentrations Map of initial reactive surface concentrations over mesh faces. */
     SurfaceReaction_AFluidPlusASolidtoASolid
     (double rate_constant,
      double diff_coeff,
@@ -81,7 +90,10 @@ namespace ptof
     , surface_concentrations{ surface_concentrations }
     {}
     
-    /** React over exposure time. */
+    /** \param state State of particle to react.
+     \param state_old Previous state of particle.
+     \param face Mesh face index where reaction occurs.
+     \brief React over exposure time. */
     template <typename State>
     void operator()(State& state, State const& state_old, Foam::label face)
     {
@@ -92,7 +104,8 @@ namespace ptof
       state.mass *= std::exp(-probability_second_order);
     }
       
-    /** Surface reaction rate at face */
+    /** \param face Mesh face index.
+     \return Surface reaction rate at face */
     double rate(Foam::label face) const
     {
       if (surface_concentrations.count(face))
@@ -102,7 +115,7 @@ namespace ptof
       return 0.;
     }
     
-    /** Output generic information about object. */
+    /** \brief Output generic information about object. */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -114,26 +127,30 @@ namespace ptof
         "--------------------------------------------------\n";
     }
     
-    double rate_constant;                 /**< Surface reaction rate per solid concentrations.*/
-    double diff_coeff;                            /**< Diffusion coefficient.*/
-    SurfaceConcentrations surface_concentrations; /**< Map of concentrations over reactive faces.*/
+    double rate_constant;                         /**< Surface reaction rate per solid concentration. */
+    double diff_coeff;                            /**< Diffusion coefficient. */
+    SurfaceConcentrations surface_concentrations; /**< Map of concentrations over reactive faces. */
   };
   
   /** \class SurfaceReaction_DoNothing
-   * \brief No reaction. */
+   * \brief Surface reaction object that does nothing. */
   class SurfaceReaction_DoNothing
   {
   public:
-    /** React over exposure time. */
+    /** \param state State of particle to react (unused).
+    \param state_old Previous state of particle (unused).
+    \param face Mesh face index where reaction occurs (unused).
+    \brief React over exposure time (do nothing). */
     template <typename State>
     void operator()(State& state, State const& state_old, Foam::label face) const
     {}
     
-    /** Surface reaction rate at face */
+    /** \param face Mesh face index (unused).
+     \return Surface reaction rate at face (always 0.). */
     double rate(Foam::label face) const
     { return 0.; }
     
-    /** Output generic information about object. */
+    /** \brief Output generic information about object. */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -146,17 +163,19 @@ namespace ptof
     }
   };
   
-  /** \class Reaction_DoNothing
-   * \brief No reaction. */
+  /** \class Reaction_DoNothing PTOF/Reaction.h "PTOF/Reaction.h"
+   * \brief Reaction object that does nothing. */
   class Reaction_DoNothing
   {
   public:
-    /** React over exposure time. */
+    /** \param state State of particle to react (unused).
+    \param exposure_time Exposure time over which to react (unused).
+    \brief React over exposure time (do nothing). */
     template <typename State>
-    void operator()(State&, double) const
+    void operator()(State& state, double exposure_time) const
     {}
     
-    /** Output generic information about object. */
+    /** \brief Output generic information about object. */
     template <typename OStream>
     static void info(OStream& output)
     {

@@ -87,13 +87,23 @@ $(document).ready(function(){initNavTree('d5/da5/class_transitions___positions.h
 </div><!--header-->
 <div class="contents">
 
-<p>Update state.position by summing quantity returned by a JumpGenerator object given state.  
+<p>Update position according to specified jump increments.  
  <a href="../../d5/da5/class_transitions___positions.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">CTRW/Transitions.h</a>&quot;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Update state.position by summing quantity returned by a JumpGenerator object given state. </p>
-<p>Apply Boundary condition given new state and old state. </p>
+<div class="textblock"><p>Update position according to specified jump increments. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">JumpGenerator</td><td>Object to return jump given state. </td></tr>
+    <tr><td class="paramname">Boundary</td><td>Object to enforce boundary condition on new state given new state and old state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position </li>
+</ul>
+</dd></dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">Transitions.h</a></li>
 </ul>

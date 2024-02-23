@@ -1,8 +1,8 @@
 /**
-* \file PTOF/Models_Parallel.h
-* \author Tomás Aquino
-* \date 12/02/2024
-*/
+  \file PTOF/Models_Parallel.h
+  \author Tomás Aquino
+  \date 12/02/2024
+ */
 
 #ifndef PTOF_MODELS_PARALLEL_H
 #define PTOF_MODELS_PARALLEL_H
@@ -26,10 +26,12 @@
 #include "PTOF/Reaction_Parallel.h"
 #include "PTOF/State.h"
 #include "PTOF/Steppers.h"
-#include "PTOF/Transitions_Parallel.h"
+#include "PTOF/Transitions.h"
 
 namespace ptof
 {
+  /** \namespace ptof::model_advection_diffusion_2d_parallel
+   Definitions for 2D advective--diffusive transport, in parallel. */
   namespace model_advection_diffusion_2d_parallel
   {
     struct Model
@@ -40,19 +42,19 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Parallel<2,
-      BoundaryConditionSet::Type::transport>;
+    BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
     using State = StateDim<
-      Geometry::dim, Info, double, double, std::size_t>;
+    Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     
     struct Solvers
@@ -93,17 +95,17 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Solver parameters\n"
-            "--------------------------------------------------\n"
-            "- Local time step in terms of cell-based advection time\n"
-            "- Local time step in terms of cell-based diffusion time\n"
-            "- Local time step in terms of cell-based surface reaction time\n"
-            "- Global time step in terms of characteristic advection time\n"
-            "- Global time step in terms of characteristic diffusion time\n"
-            "- Global time step in terms of surface reaction time\n"
-            "Note: minimum between processes and maximum between local and global is used\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Solver parameters\n"
+          "--------------------------------------------------\n"
+          "- Local time step in terms of cell-based advection time\n"
+          "- Local time step in terms of cell-based diffusion time\n"
+          "- Local time step in terms of cell-based surface reaction time\n"
+          "- Global time step in terms of characteristic advection time\n"
+          "- Global time step in terms of characteristic diffusion time\n"
+          "- Global time step in terms of surface reaction time\n"
+          "Note: minimum between processes and maximum between local and global is used\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -111,12 +113,12 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Solvers\n"
-          "--------------------------------------------------\n"
-          "Advection: Euler\n"
-          "Diffusion: Stochastic Euler\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Solvers\n"
+        "--------------------------------------------------\n"
+        "Advection: Euler\n"
+        "Diffusion: Stochastic Euler\n"
+        "--------------------------------------------------\n";
       }
     };
     
@@ -169,26 +171,26 @@ namespace ptof
               + " not supported" };
           input.close();
         }
-
-        template <typename VelocityData, typename Mesh>
+        
+        template <typename VelocityField, typename Mesh>
         void rescale
-        (VelocityData& velocity_data, Mesh const& mesh)
+        (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
           if (rescale_velocity_field == "rescale_to_peclet")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -206,26 +208,26 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Transport parameters\n"
-            "--------------------------------------------------\n"
-            "- Reference lengthscale\n"
-            "- Diffusion coefficient\n"
-            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
-            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
-            "\trescale_to_peclet: Rescale according to imposed peclet number\n"
-            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
-            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
-            "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
-            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
-            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
-            "--`------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Transport parameters\n"
+          "--------------------------------------------------\n"
+          "- Reference lengthscale\n"
+          "- Diffusion coefficient\n"
+          "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+          "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+          "\trescale_to_peclet: Rescale according to imposed peclet number\n"
+          "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+          "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+          "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
+          "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+          "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
+          "--`------------------------------------------------\n";
         }
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
       typename ReactionParameters>
       static auto makeTransitions
@@ -236,37 +238,51 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Parallel<
-          Geometry, Solvers::Steppers>(velocity_field,
-                                       geometry,
-                                       boundary,
-                                       params_transport,
-                                       params_reaction,
-                                       params_solvers);
+        return makeTransportTransitions<
+        Geometry, Solvers::Steppers>(velocity_field,
+                                     geometry,
+                                     boundary,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers);
       }
       
-      template <typename Geometry, typename VelocityData>
+      template <typename Geometry>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
+      (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(geometry, velocity_data, thread);
-      };
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
+      }
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
       
       template <typename OStream>
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Transport\n"
-          "--------------------------------------------------\n"
-          "Processes: Advection-diffusion\n"
-          "Interpolation: Linear\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Transport\n"
+        "--------------------------------------------------\n"
+        "Processes: Advection-diffusion\n"
+        "Interpolation: Linear\n"
+        "--------------------------------------------------\n";
       }
     };
     
     struct Reaction
     {
+      using ReactionType = Reaction_DoNothing;
+      
       struct Parameters
       {
         double damkohler{ 0. };
@@ -284,11 +300,11 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Reaction parameters\n"
-            "--------------------------------------------------\n"
-            "None\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Reaction parameters\n"
+          "--------------------------------------------------\n"
+          "None\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -397,10 +413,10 @@ namespace ptof
             useful::read(input, time_step_accuracy_diff);
             useful::read(input, time_step_accuracy_react);
             time_step =
-              std::min({
-                time_step_accuracy_adv*params_transport.advection_time,
-                time_step_accuracy_diff*params_transport.diffusion_time,
-                time_step_accuracy_react*params_reaction.reaction_time });
+            std::min({
+              time_step_accuracy_adv*params_transport.advection_time,
+              time_step_accuracy_diff*params_transport.diffusion_time,
+              time_step_accuracy_react*params_reaction.reaction_time });
           }
         }
         
@@ -408,33 +424,33 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Initial condition parameters\n"
-            "--------------------------------------------------\n"
-            "- Initial condition type:\n"
-            "\tuniform: Homogeneous throughout the domain\n"
-            "\tflux_weighted: Flux-weighted throughout the domain\n"
-            "\tuniform_inlet: Homogeneous at the inlet\n"
-            "\tflux_weighted_inlet: Flux-weighted at the inlet\n"
-            "\tuniform_solid: Homogeneous at the solid surface\n"
-            "\tuniform_near_solid: Homogeneous at a fixed distance to the solid interface\n"
-            "\tuniform_region_cartesian: Homogeneous in a prescribed cartesian region\n"
-            "\tflux_weighted_region_cartesian: Flux-weighted in a prescribed cartesian region\n"
-            "\tprescribed_positions: Prescribed positions\n"
-            "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
-            "\tflux_weighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
-            "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
-            "- Region boundaries (pass only for types uniform_region_cartesian or flux_weighted_region_cartesian)\n"
-            "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
-            "- Total transported mass in each injection step\n"
-            "- Number of Lagrangian particles in each injection step\n"
-            "- Initial injection time\n"
-            "- Final injection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-            "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-            "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-            "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-            "- Number of Lagrangian particles in each injection discretization\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Initial condition parameters\n"
+          "--------------------------------------------------\n"
+          "- Initial condition type:\n"
+          "\tuniform: Homogeneous throughout the domain\n"
+          "\tflux_weighted: Flux-weighted throughout the domain\n"
+          "\tuniform_inlet: Homogeneous at the inlet\n"
+          "\tflux_weighted_inlet: Flux-weighted at the inlet\n"
+          "\tuniform_solid: Homogeneous at the solid surface\n"
+          "\tuniform_near_solid: Homogeneous at a fixed distance to the solid interface\n"
+          "\tuniform_region_cartesian: Homogeneous in a prescribed cartesian region\n"
+          "\tflux_weighted_region_cartesian: Flux-weighted in a prescribed cartesian region\n"
+          "\tprescribed_positions: Prescribed positions\n"
+          "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
+          "\tflux_weighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
+          "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
+          "- Region boundaries (pass only for types uniform_region_cartesian or flux_weighted_region_cartesian)\n"
+          "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
+          "- Total transported mass in each injection step\n"
+          "- Number of Lagrangian particles in each injection step\n"
+          "- Initial injection time\n"
+          "- Final injection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
+          "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
+          "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
+          "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
+          "- Number of Lagrangian particles in each injection discretization\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -445,18 +461,16 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -467,7 +481,6 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -476,21 +489,149 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
     
-
+    
     using VelocityField = VectorField_LinearInterpolation_OF
-    <Foam::volVectorField&, Locator_Cell const&, 1, 1>;
+    <Foam::volVectorField, Locator_Cell_Parallel const&, 1, 1>;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    
+    template
+    <typename Transport,
+    typename VelocityField,
+    typename Geometry,
+    typename Boundary,
+    typename TransportParameters,
+    typename ReactionParameters,
+    typename SolverParameters,
+    typename Reaction>
+    struct TransitionMaker
+    {
+      TransitionMaker
+      (VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Boundary& boundary,
+       TransportParameters const& params_transport,
+       ReactionParameters const& params_reaction,
+       SolverParameters const& params_solvers,
+       Reaction const& reaction,
+       std::size_t num_threads)
+      : _velocity_field{ velocity_field }
+      , _geometry{ geometry }
+      , _boundary{ boundary }
+      , _params_transport{ params_transport }
+      , _params_reaction{ params_reaction }
+      , _params_solvers{ params_solvers }
+      , _reaction{ reaction }
+      , _num_threads{ num_threads }
+      {}
+      
+      TransitionMaker
+      (VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Boundary& boundary,
+       TransportParameters const& params_transport,
+       ReactionParameters const& params_reaction,
+       SolverParameters const& params_solvers,
+       Reaction const& reaction,
+       std::size_t num_threads,
+       useful::Selector_t<Transport>)
+      : TransitionMaker(velocity_field,
+                        geometry,
+                        boundary,
+                        params_transport,
+                        params_reaction,
+                        params_solvers,
+                        reaction,
+                        num_threads)
+      {}
+      
+      auto operator()()
+      {
+        std::vector<Transitions> transitions;
+        for (std::size_t thread = 0; thread < _num_threads; ++thread)
+          transitions.emplace_back(Transport::makeTransitions(_velocity_field,
+                                                              _geometry,
+                                                              _boundary,
+                                                              _params_transport,
+                                                              _params_reaction,
+                                                              _params_solvers),
+                                   _reaction);
+        
+        return transitions;
+      }
+      
+    private:
+      VelocityField const& _velocity_field;
+      Geometry const& _geometry;
+      Boundary& _boundary;
+      TransportParameters const& _params_transport;
+      ReactionParameters const& _params_reaction;
+      SolverParameters const& _params_solvers;
+      Reaction const& _reaction;
+      std::size_t _num_threads;
+      
+      using Transitions = decltype(ctrw::Transitions_CTRW_Transport_Reaction{
+          Transport::makeTransitions(_velocity_field,
+                                     _geometry, _boundary,
+                                     _params_transport, _params_reaction, _params_solvers),
+          _reaction });
+    };
+    template
+    <typename Transport,
+    typename VelocityField,
+    typename Geometry,
+    typename Boundary,
+    typename TransportParameters,
+    typename ReactionParameters,
+    typename SolverParameters,
+    typename Reaction>
+    TransitionMaker
+    (VelocityField const&,
+     Geometry const&,
+     Boundary&,
+     TransportParameters const&,
+     ReactionParameters const&,
+     SolverParameters const&,
+     Reaction const&,
+     std::size_t,
+     useful::Selector_t<Transport>) ->
+    TransitionMaker<Transport, VelocityField, Geometry, Boundary,
+    TransportParameters, ReactionParameters, SolverParameters,
+    Reaction>;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return
+      model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                             geometry,
+                                                             boundary,
+                                                             params_transport,
+                                                             params_reaction,
+                                                             params_solvers,
+                                                             reaction,
+                                                             num_threads,
+                                                             useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_advection_2d_parallel
+   Definitions for 2D advective transport, in parallel. */
   namespace model_advection_2d_parallel
   {
     struct Model
@@ -501,11 +642,11 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
     
@@ -552,14 +693,14 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Solver parameters\n"
-            "--------------------------------------------------\n"
-            "- Local timestep accuracy in terms of cell-based advection time\n"
-            "- Global timestep accuracy in terms of characteristic advection time\n"
-            "Note: Minimum between processes and maximum between local and global is used\n"
-            "Note: Initial values (e.g., of flow) are used for global quantities\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Solver parameters\n"
+          "--------------------------------------------------\n"
+          "- Local timestep accuracy in terms of cell-based advection time\n"
+          "- Global timestep accuracy in terms of characteristic advection time\n"
+          "Note: Minimum between processes and maximum between local and global is used\n"
+          "Note: Initial values (e.g., of flow) are used for global quantities\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -567,11 +708,11 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Solvers\n"
-          "--------------------------------------------------\n"
-          "Advection: Euler\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Solvers\n"
+        "--------------------------------------------------\n"
+        "Advection: Euler\n"
+        "--------------------------------------------------\n";
       }
     };
     
@@ -614,21 +755,21 @@ namespace ptof
               + " not supported" };
           input.close();
         }
-
-        template <typename VelocityData, typename Mesh>
+        
+        template <typename VelocityField, typename Mesh>
         void rescale
-        (VelocityData& velocity_data, Mesh const& mesh)
+        (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
           if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -645,24 +786,24 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Transport parameters\n"
-            "--------------------------------------------------\n"
-            "- Reference lengthscale\n"
-            "- Diffusion coefficient\n"
-            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
-            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
-            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
-            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
-            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
-            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Transport parameters\n"
+          "--------------------------------------------------\n"
+          "- Reference lengthscale\n"
+          "- Diffusion coefficient\n"
+          "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+          "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+          "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+          "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+          "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+          "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
+          "--------------------------------------------------\n";
         }
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
       typename ReactionParameters>
       static auto makeTransitions
@@ -673,36 +814,72 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Advection_Parallel<
-          Geometry, Solvers::Steppers>(velocity_field,
-                                       geometry,
-                                       boundary,
-                                       params_transport,
-                                       params_reaction,
-                                       params_solvers);
+        return makeTransportTransitions_Advection<
+        Geometry, Solvers::Steppers>(velocity_field,
+                                     geometry,
+                                     boundary,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers);
       }
       
-      template <typename Geometry, typename VelocityData>
+      template <typename Geometry>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
+      (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(geometry, velocity_data, thread);
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
+      }
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Transport\n"
-          "--------------------------------------------------\n"
-          "Process: Advection\n"
-          "Interpolation: Linear\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Transport\n"
+        "--------------------------------------------------\n"
+        "Process: Advection\n"
+        "Interpolation: Linear\n"
+        "--------------------------------------------------\n";
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   };
   
+  /** \namespace ptof::model_advection_diffusion_fpt_2d_parallel
+   Definitions for first-passage times under 2D advective--diffusive transport, in parallel. */
   namespace model_advection_diffusion_fpt_2d_parallel
   {
     struct Model
@@ -714,19 +891,19 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Parallel<2,
-      BoundaryConditionSet::Type::firstpassage>;
+    BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = StateDim<Geometry::dim,
-      Info, double, double, std::size_t>;
+    Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::Transport;
@@ -744,18 +921,16 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -766,7 +941,6 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -775,16 +949,39 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_advection_diffusion_decay_catalytic_2d_parallel
+   Definitions for 2D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$, in parallel. */
   namespace model_advection_diffusion_decay_catalytic_2d_parallel
   {
     struct Model
@@ -796,14 +993,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_advection_diffusion_2d_parallel::Geometry;
     using model_advection_diffusion_2d_parallel::Info;
     using model_advection_diffusion_2d_parallel::State;
@@ -811,10 +1008,13 @@ namespace ptof
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::Transport;
     using model_advection_diffusion_2d_parallel::InitialCondition;
+    using model_advection_diffusion_2d_parallel::VelocityField;
     using model_advection_diffusion_2d_parallel::Output;
     
     struct Reaction
     {
+      using ReactionType = Reaction_DoNothing;
+    
       struct Parameters
       {
         double damkohler;
@@ -822,7 +1022,7 @@ namespace ptof
         double surface_concentration;
         double rate_constant;
         double reaction_time;
-      
+        
         template <typename TransportParameters>
         Parameters
         (Directories const& directories,
@@ -836,23 +1036,23 @@ namespace ptof
           useful::read(input, initial_distribution);
           useful::read(input, surface_concentration);
           rate_constant = params_transport.lengthscale*damkohler/
-            (surface_concentration*params_transport.diffusion_time);
+          (surface_concentration*params_transport.diffusion_time);
           reaction_time = params_transport.diffusion_time/damkohler;
           input.close();
         }
-      
+        
         template <typename OStream>
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Reaction parameters:\n"
-            "--------------------------------------------------\n"
-            "- Damkohler number\n"
-            "- Solid reactant initial distribution type\n"
-            "\tuniform: Homogeneous throughout the domain\n"
-            "- Initial solid reactant surface concentration\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Reaction parameters:\n"
+          "--------------------------------------------------\n"
+          "- Damkohler number\n"
+          "- Solid reactant initial distribution type\n"
+          "\tuniform: Homogeneous throughout the domain\n"
+          "- Initial solid reactant surface concentration\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -884,8 +1084,8 @@ namespace ptof
             params.rate_constant,
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
-                                               { "wallFluidSolid" },
-                                               geometry.mesh ) };
+                                           { "wallFluidSolid" },
+                                           geometry.mesh() ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -901,8 +1101,32 @@ namespace ptof
         SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_2d_parallel
+   Definitions for 2D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes, in parallel. */
   namespace model_periodic_cartesian_advection_diffusion_2d_parallel
   {
     struct Model
@@ -914,19 +1138,19 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Periodic_Cartesian_Parallel<2,
-      BoundaryConditionSet::Type::transport>;
+    BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_2d_parallel::Info;
     using State = StateDim_Periodic<
-      Geometry::dim, Info, double, double, std::size_t>;
+    Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::Transport;
@@ -944,19 +1168,17 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -967,7 +1189,6 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -976,17 +1197,40 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_periodic_cartesian_advection_2d_parallel
+   Definitions for 2D advective transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_2d_parallel
   {
     struct Model
@@ -998,11 +1242,11 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
     
@@ -1016,8 +1260,32 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d_parallel::InitialCondition;
     using model_advection_2d_parallel::VelocityField;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Output;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   };
   
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_2d_parallel
+   Definitions for first-passage times under 2D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes, in parallel. */
   namespace model_periodic_cartesian_advection_diffusion_fpt_2d_parallel
   {
     struct Model
@@ -1029,16 +1297,16 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Periodic_Cartesian_Parallel<2,
-      BoundaryConditionSet::Type::firstpassage>;
+    BoundaryConditionSet::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::State;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::CTRW;
@@ -1048,8 +1316,32 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d_parallel::InitialCondition;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::VelocityField;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_decay_catalytic_2d_parallel
+   Definitions for first-passage times under 2D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$, with some periodic boundaries aligned with the Cartesian axes, in parallel. */
   namespace model_periodic_cartesian_advection_diffusion_decay_catalytic_2d_parallel
   {
     struct Model
@@ -1061,14 +1353,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Geometry;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::State;
@@ -1076,10 +1368,35 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Solvers;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Transport;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::InitialCondition;
+    using model_advection_diffusion_2d_parallel::VelocityField;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Output;
     using model_advection_diffusion_decay_catalytic_2d_parallel::Reaction;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_advection_diffusion_3d_parallel
+   Definitions for 2D advective--diffusive transport, in parallel. */
   namespace model_advection_diffusion_3d_parallel
   {
     struct Model
@@ -1090,19 +1407,19 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Parallel<3,
-      BoundaryConditionSet::Type::transport>;
+    BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
     using State = StateDim<
-      Geometry::dim, Info, double, double, std::size_t>;
+    Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using Solvers = model_advection_diffusion_2d_parallel::Solvers;
     
@@ -1111,8 +1428,8 @@ namespace ptof
       using Parameters = model_advection_diffusion_2d_parallel::Transport::Parameters;
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
       typename ReactionParameters>
       static auto makeTransitions
@@ -1123,37 +1440,51 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Parallel<
-          Geometry, Solvers::Steppers>(velocity_field,
-                                       geometry,
-                                       boundary,
-                                       params_transport,
-                                       params_reaction,
-                                       params_solvers);
+        return makeTransportTransitions<
+        Geometry, Solvers::Steppers>(velocity_field,
+                                     geometry,
+                                     boundary,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers);
       }
       
-      template <typename Geometry, typename VelocityData>
+      template <typename Geometry>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
+      (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(geometry, velocity_data, thread);
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
+      }
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Transport\n"
-          "--------------------------------------------------\n"
-          "Processes: Advection-diffusion\n"
-          "Interpolation: Linear\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Transport\n"
+        "--------------------------------------------------\n"
+        "Processes: Advection-diffusion\n"
+        "Interpolation: Linear\n"
+        "--------------------------------------------------\n";
       }
     };
     
     struct Reaction
     {
+      using ReactionType = Reaction_DoNothing;
+      
       struct Parameters
       {
         double damkohler{ 0. };
@@ -1171,11 +1502,11 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Reaction parameters\n"
-            "--------------------------------------------------\n"
-            "None\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Reaction parameters\n"
+          "--------------------------------------------------\n"
+          "None\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -1224,18 +1555,16 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -1247,7 +1576,6 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       std::size_t thread,
        double threshold = 0.,
        double time = 0.)
       {
@@ -1255,20 +1583,43 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
     
     using VelocityField = VectorField_LinearInterpolation_OF
-    <Foam::volVectorField&, Locator_Cell const&, 1, 1>;
+    <Foam::volVectorField, Locator_Cell_Parallel const&, 1, 1>;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
-
+  
+  /** \namespace ptof::model_advection_3d_parallel
+   Definitions for 3D advective--diffusive transport, in parallel. */
   namespace model_advection_3d_parallel
   {
     struct Model
@@ -1279,11 +1630,11 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
     
@@ -1297,8 +1648,32 @@ namespace ptof
     using model_advection_diffusion_3d_parallel::Output;
     using model_advection_2d_parallel::Solvers;
     using model_advection_2d_parallel::Transport;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   };
-
+  
+  /** \namespace ptof::model_advection_diffusion_fpt_3d_parallel
+   Definitions for first-passage times under 3D advective--diffusive transport, in parallel. */
   namespace model_advection_diffusion_fpt_3d_parallel
   {
     struct Model
@@ -1310,19 +1685,19 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Parallel<3,
-      BoundaryConditionSet::Type::firstpassage>;
+    BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = StateDim<Geometry::dim,
-      Info, double, double, std::size_t>;
+    Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_3d_parallel::Solvers;
     using model_advection_diffusion_3d_parallel::Transport;
@@ -1340,18 +1715,16 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -1362,7 +1735,6 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -1371,16 +1743,39 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
-
+  
+  /** \namespace ptof::model_advection_diffusion_decay_catalytic_3d_parallel
+   Definitions for 3D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$, in parallel. */
   namespace model_advection_diffusion_decay_catalytic_3d_parallel
   {
     struct Model
@@ -1392,14 +1787,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_advection_diffusion_3d_parallel::Geometry;
     using model_advection_diffusion_3d_parallel::Info;
     using model_advection_diffusion_3d_parallel::State;
@@ -1407,10 +1802,13 @@ namespace ptof
     using model_advection_diffusion_3d_parallel::Solvers;
     using model_advection_diffusion_3d_parallel::Transport;
     using model_advection_diffusion_3d_parallel::InitialCondition;
+    using model_advection_diffusion_2d_parallel::VelocityField;
     using model_advection_diffusion_3d_parallel::Output;
     
     struct Reaction
     {
+      using ReactionType = Reaction_DoNothing;
+      
       struct Parameters
       {
         double damkohler;
@@ -1418,7 +1816,7 @@ namespace ptof
         double surface_concentration;
         double rate_constant;
         double reaction_time;
-      
+        
         template <typename TransportParameters>
         Parameters
         (Directories const& directories,
@@ -1432,23 +1830,23 @@ namespace ptof
           useful::read(input, initial_distribution);
           useful::read(input, surface_concentration);
           rate_constant = params_transport.lengthscale*damkohler/
-            (surface_concentration*params_transport.diffusion_time);
+          (surface_concentration*params_transport.diffusion_time);
           reaction_time = params_transport.diffusion_time/damkohler;
           input.close();
         }
-      
+        
         template <typename OStream>
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Reaction parameters:\n"
-            "--------------------------------------------------\n"
-            "- Damkohler number\n"
-            "- Solid reactant initial distribution type\n"
-            "\tuniform: Homogeneous throughout the domain\n"
-            "- Initial solid reactant surface concentration\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Reaction parameters:\n"
+          "--------------------------------------------------\n"
+          "- Damkohler number\n"
+          "- Solid reactant initial distribution type\n"
+          "\tuniform: Homogeneous throughout the domain\n"
+          "- Initial solid reactant surface concentration\n"
+          "--------------------------------------------------\n";
         }
       };
       
@@ -1480,8 +1878,8 @@ namespace ptof
             params.rate_constant,
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
-                                               { "wallFluidSolid" },
-                                               geometry.mesh ) };
+                                           { "wallFluidSolid" },
+                                           geometry.mesh() ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -1496,8 +1894,32 @@ namespace ptof
         SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
-
+  
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_3d_parallel
+   Definitions for 3D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_3d_parallel
   {
     struct Model
@@ -1509,19 +1931,19 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Periodic_Cartesian_Parallel<3,
-      BoundaryConditionSet::Type::transport>;
+    BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_3d_parallel::Info;
     using State = StateDim_Periodic<
-      Geometry::dim, Info, double, double, std::size_t>;
+    Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_3d_parallel::Solvers;
     using model_advection_diffusion_3d_parallel::Transport;
@@ -1539,19 +1961,17 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -1562,7 +1982,6 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -1571,17 +1990,40 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
-
+  
+  /** \namespace ptof::model_periodic_cartesian_advection_3d_parallel
+   Definitions for 3D advective transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_3d_parallel
   {
     struct Model
@@ -1593,11 +2035,11 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
     
@@ -1611,8 +2053,32 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d_parallel::InitialCondition;
     using model_advection_3d_parallel::VelocityField;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Output;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   };
-
+  
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_3d_parallel
+   Definitions for first-passage times under 3D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes, in parallel. */
   namespace model_periodic_cartesian_advection_diffusion_fpt_3d_parallel
   {
     struct Model
@@ -1624,16 +2090,16 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Periodic_Cartesian_Parallel<3,
-      BoundaryConditionSet::Type::firstpassage>;
+    BoundaryConditionSet::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::State;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::CTRW;
@@ -1643,8 +2109,32 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d_parallel::InitialCondition;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::VelocityField;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
-
+  
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_decay_catalytic_3d_parallel
+   Definitions for 3D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$, with some periodic boundaries aligned with the Cartesian axes, in parallel. */
   namespace model_periodic_cartesian_advection_diffusion_decay_catalytic_3d_parallel
   {
     struct Model
@@ -1656,14 +2146,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Geometry;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::State;
@@ -1671,10 +2161,35 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Solvers;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Transport;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::InitialCondition;
+    using model_advection_diffusion_2d_parallel::VelocityField;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Output;
     using model_advection_diffusion_decay_catalytic_3d_parallel::Reaction;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+   /** \namespace ptof::model_bcc_cartesian_advection_diffusion_parallel
+    Definitions for 3D advective--diffusive transport in a body centered cubic pack, based on the primitive unit cel, in parallel. */
   namespace model_bcc_cartesian_advection_diffusion_parallel
   {
     struct Model
@@ -1686,17 +2201,17 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Bcc_Parallel<3,
-      BoundaryConditionSet::Type::transport,
-      BoundaryConditionSet::Type::cartesian>;
+    BoundaryConditionSet::Type::transport,
+    BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_2d_parallel::Info;
     using State = StateDim_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -1715,19 +2230,17 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        double time = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
-          params,
-          thread };
+          params };
       }
       
       template
@@ -1738,7 +2251,6 @@ namespace ptof
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& params,
-       std::size_t thread,
        Mask const& mask,
        double threshold = 0.,
        double time = 0.)
@@ -1747,12 +2259,11 @@ namespace ptof
           geometry, velocity_field,
           ParticleMaker_Periodic{
             useful::Selector_t<CTRW::Particle>{},
-            geometry.locator[thread],
+            geometry.locator,
             geometry.boundary_periodic,
             time,
             params.initial_mass/params.nr_particles },
           params,
-          thread,
           mask, threshold };
       }
     };
@@ -1800,12 +2311,12 @@ namespace ptof
           useful::read(input, primitive_cell_location);
           if (lengthscale_definition == "centered")
             primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>
-                (3, { -cell_side/2., cell_side/2. });
+            = std::vector<std::pair<double, double>>
+            (3, { -cell_side/2., cell_side/2. });
           else if (lengthscale_definition == "corner")
             primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>
-                (3, { 0., cell_side });
+            = std::vector<std::pair<double, double>>
+            (3, { 0., cell_side });
           else
             throw std::runtime_error{ "Lengthscale definition"
               + lengthscale_definition
@@ -1840,25 +2351,25 @@ namespace ptof
           input.close();
         }
         
-        template <typename VelocityData, typename Mesh>
+        template <typename VelocityField, typename Mesh>
         void rescale
-        (VelocityData& velocity_data, Mesh const& mesh)
+        (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
           if (rescale_velocity_field == "rescale_to_peclet")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -1876,35 +2387,35 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Transport parameters\n"
-            "--------------------------------------------------\n"
-            "- Bead radius\n"
-            "- Reference length scale definition\n"
-            "\tradius: bead radius\n"
-            "\tdiameter: bead diameter\n"
-            "\tcell_side: primitive cubic cell side\n"
-            "\tcustom: custom value\n"
-            "- Reference length scale value, if defined as custom\n"
-            "- Location of primitive cell:\n"
-            "\tcentered: Centered at the origin\n"
-            "\tcorner: Left bottom corner at the origin\n"
-            "- Diffusion coefficient\n"
-            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
-            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
-            "\trescale_to_peclet: Rescale according to imposed peclet number\n"
-            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
-            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
-            "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
-            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
-            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Transport parameters\n"
+          "--------------------------------------------------\n"
+          "- Bead radius\n"
+          "- Reference length scale definition\n"
+          "\tradius: bead radius\n"
+          "\tdiameter: bead diameter\n"
+          "\tcell_side: primitive cubic cell side\n"
+          "\tcustom: custom value\n"
+          "- Reference length scale value, if defined as custom\n"
+          "- Location of primitive cell:\n"
+          "\tcentered: Centered at the origin\n"
+          "\tcorner: Left bottom corner at the origin\n"
+          "- Diffusion coefficient\n"
+          "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+          "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+          "\trescale_to_peclet: Rescale according to imposed peclet number\n"
+          "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+          "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+          "- Peclet number (pass only if rescaling with rescale_to_peclet)\n"
+          "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+          "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
+          "--------------------------------------------------\n";
         }
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
       typename ReactionParameters>
       static auto makeTransitions
@@ -1915,36 +2426,72 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Parallel<
-          Geometry, Solvers::Steppers>(velocity_field,
-                                       geometry,
-                                       boundary,
-                                       params_transport,
-                                       params_reaction,
-                                       params_solvers);
+        return makeTransportTransitions<
+        Geometry, Solvers::Steppers>(velocity_field,
+                                     geometry,
+                                     boundary,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers);
       }
       
-      template <typename Geometry, typename VelocityData>
+      template <typename Geometry>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
+      (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(geometry, velocity_data, thread);
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
+      }
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Transport\n"
-          "--------------------------------------------------\n"
-          "Process: Advection-diffusion\n"
-          "Interpolation: Linear\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Transport\n"
+        "--------------------------------------------------\n"
+        "Process: Advection-diffusion\n"
+        "Interpolation: Linear\n"
+        "--------------------------------------------------\n";
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection_diffusion_fpt_parallel
+   Definitions for advective--diffusive transport in a body centered cubic beadpack, based on the primitive unit cell, in parallel. */
   namespace model_bcc_cartesian_advection_diffusion_fpt_parallel
   {
     struct Model
@@ -1956,17 +2503,17 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Bcc_Parallel<3,
-      BoundaryConditionSet::Type::firstpassage,
-      BoundaryConditionSet::Type::cartesian>;
+    BoundaryConditionSet::Type::firstpassage,
+    BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_bcc_cartesian_advection_diffusion_parallel::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
@@ -1974,10 +2521,35 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion_parallel::VelocityField;
     using model_bcc_cartesian_advection_diffusion_parallel::Reaction;
     using model_bcc_cartesian_advection_diffusion_parallel::Transport;
+    using model_advection_diffusion_2d_parallel::VelocityField;
     using model_bcc_cartesian_advection_diffusion_parallel::InitialCondition;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection_parallel
+   Definitions for first-passage times under advective--diffusive transport in a body centered cubic beadpack, based on the primitive unit cell. */
   namespace model_bcc_cartesian_advection_parallel
   {
     struct Model
@@ -1989,14 +2561,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_bcc_cartesian_advection_diffusion_parallel::Geometry;
     using model_bcc_cartesian_advection_diffusion_parallel::Info;
     using model_bcc_cartesian_advection_diffusion_parallel::State;
@@ -2049,12 +2621,12 @@ namespace ptof
           useful::read(input, primitive_cell_location);
           if (lengthscale_definition == "centered")
             primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>
-                (3, { -cell_side/2., cell_side/2. });
+            = std::vector<std::pair<double, double>>
+            (3, { -cell_side/2., cell_side/2. });
           else if (lengthscale_definition == "corner")
             primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>
-                (3, { 0., cell_side });
+            = std::vector<std::pair<double, double>>
+            (3, { 0., cell_side });
           else
             throw std::runtime_error{ "Lengthscale definition"
               + lengthscale_definition
@@ -2079,20 +2651,20 @@ namespace ptof
           input.close();
         }
         
-        template <typename VelocityData, typename Mesh>
+        template <typename VelocityField, typename Mesh>
         void rescale
-        (VelocityData& velocity_data, Mesh const& mesh)
+        (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_data, mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
           if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "rescale_to_advection_time")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
-            velocity_data *= velocity_rescaling_factor;
+            velocity_field.rescale(velocity_rescaling_factor);
           }
           else if (rescale_velocity_field == "no_rescale")
           {
@@ -2109,32 +2681,32 @@ namespace ptof
         static void info(OStream& output)
         {
           output <<
-            "--------------------------------------------------\n"
-            "Transport parameters\n"
-            "--------------------------------------------------\n"
-            "- Bead radius\n"
-            "- Reference length scale definition\n"
-            "\tradius: bead radius\n"
-            "\tdiameter: bead diameter\n"
-            "\tcell_side: primitive cubic cell side\n"
-            "\tcustom: custom value\n"
-            "- Reference length scale value, if defined as custom\n"
-            "- Location of primitive cell:\n"
-            "\tcentered: Centered at the origin\n"
-            "\tcorner: Left bottom corner at the origin\n"
-            "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
-            "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
-            "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
-            "\trescale_to_advection_time: Rescale according to imposed advection time\n"
-            "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
-            "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
-            "--------------------------------------------------\n";
+          "--------------------------------------------------\n"
+          "Transport parameters\n"
+          "--------------------------------------------------\n"
+          "- Bead radius\n"
+          "- Reference length scale definition\n"
+          "\tradius: bead radius\n"
+          "\tdiameter: bead diameter\n"
+          "\tcell_side: primitive cubic cell side\n"
+          "\tcustom: custom value\n"
+          "- Reference length scale value, if defined as custom\n"
+          "- Location of primitive cell:\n"
+          "\tcentered: Centered at the origin\n"
+          "\tcorner: Left bottom corner at the origin\n"
+          "- Whether and how to rescale velocity field (Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called):\n"
+          "\tno_rescale: Do not rescale. Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity\n"
+          "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
+          "\trescale_to_advection_time: Rescale according to imposed advection time\n"
+          "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
+          "- Advection time (pass only if rescaling with rescale_to_advection_time)\n"
+          "--------------------------------------------------\n";
         }
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
       typename ReactionParameters>
       static auto makeTransitions
@@ -2145,36 +2717,72 @@ namespace ptof
        ReactionParameters const& params_reaction,
        Solvers::Parameters const& params_solvers)
       {
-        return makeTransportTransitions_Advection_Parallel<
-          Geometry, Solvers::Steppers>(velocity_field,
-                                       geometry,
-                                       boundary,
-                                       params_transport,
-                                       params_reaction,
-                                       params_solvers);
+        return makeTransportTransitions_Advection<
+        Geometry, Solvers::Steppers>(velocity_field,
+                                     geometry,
+                                     boundary,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers);
       }
-     
-      template <typename Geometry, typename VelocityData>
+      
+      template <typename Geometry>
       static auto makeVelocityInterpolator
-      (Geometry const& geometry, VelocityData& velocity_data, std::size_t thread)
+      (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(geometry, velocity_data, thread);
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
       }
-     
+      
+      template <typename Geometry>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry)
+      {
+        return makeLinearInterpolator(
+                                      geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
+      
       template <typename OStream>
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Transport\n"
-          "--------------------------------------------------\n"
-          "Process: Advection"
-          "Interpolation: Linear\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Transport\n"
+        "--------------------------------------------------\n"
+        "Process: Advection"
+        "Interpolation: Linear\n"
+        "--------------------------------------------------\n";
       }
     };
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection_diffusion_decay_catalytic_parallel
+   Definitions for advective transport in a body centered cubic beadpack, based on the primitive unit cell. */
   namespace model_bcc_cartesian_advection_diffusion_decay_catalytic_parallel
   {
     struct Model
@@ -2186,14 +2794,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_bcc_cartesian_advection_diffusion_parallel::Geometry;
     using model_bcc_cartesian_advection_diffusion_parallel::Info;
     using model_bcc_cartesian_advection_diffusion_parallel::State;
@@ -2204,8 +2812,32 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion_parallel::VelocityField;
     using model_bcc_cartesian_advection_diffusion_parallel::Output;
     using model_advection_diffusion_decay_catalytic_2d_parallel::Reaction;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_parallel
+   Definitions for advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$ in a body centered cubic beadpack, based on the primitive unit cell, in parallel. */
   namespace model_bcc_symmetryplanes_advection_diffusion_parallel
   {
     struct Model
@@ -2217,17 +2849,17 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Bcc_Parallel<3,
-      BoundaryConditionSet::Type::transport,
-      BoundaryConditionSet::Type::symmetryplanes>;
+    BoundaryConditionSet::Type::transport,
+    BoundaryConditionSet::Type::symmetryplanes>;
     using model_bcc_cartesian_advection_diffusion_parallel::Info;
     using model_bcc_cartesian_advection_diffusion_parallel::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
@@ -2237,8 +2869,32 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion_parallel::VelocityField;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     using model_bcc_cartesian_advection_diffusion_parallel::Reaction;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt_parallel
+   Definitions for first-passage times under advective--diffusive transport in a body centered cubic beadpack, based on the minimal periodic unit cel, in parallell. */
   namespace model_bcc_symmetryplanes_advection_diffusion_fpt_parallel
   {
     struct Model
@@ -2250,17 +2906,17 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using Geometry = Geometry_Bcc_Parallel<3,
-      BoundaryConditionSet::Type::firstpassage,
-      BoundaryConditionSet::Type::symmetryplanes>;
+    BoundaryConditionSet::Type::firstpassage,
+    BoundaryConditionSet::Type::symmetryplanes>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::State;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::CTRW;
@@ -2269,9 +2925,34 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Reaction;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Transport;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::InitialCondition;
+    using model_advection_diffusion_2d_parallel::VelocityField;
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_parallel
+  Definitions for advective transport in a body centered cubic beadpack, based on the minimal periodic unit cell, in parallel. */
   namespace model_bcc_symmetryplanes_advection_parallel
   {
     struct Model
@@ -2283,14 +2964,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Geometry;
     using model_bcc_cartesian_advection_parallel::Info;
     using model_bcc_cartesian_advection_parallel::State;
@@ -2301,8 +2982,32 @@ namespace ptof
     using model_bcc_cartesian_advection_parallel::VelocityField;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Output;
     using model_bcc_cartesian_advection_parallel::Reaction;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_decay_catalytic
+  Definitions for advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$ in a body centered cubic beadpack, based on the minimal periodic unit cell, in parallel. */
   namespace model_bcc_symmetryplanes_advection_diffusion_decay_catalytic_parallel
   {
     struct Model
@@ -2314,14 +3019,14 @@ namespace ptof
       static void info(OStream& output)
       {
         output <<
-          "--------------------------------------------------\n"
-          "Model\n"
-          "--------------------------------------------------\n"
-          + name + "\n"
-          "--------------------------------------------------\n";
+        "--------------------------------------------------\n"
+        "Model\n"
+        "--------------------------------------------------\n"
+        + name + "\n"
+        "--------------------------------------------------\n";
       }
     };
-
+    
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Geometry;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Info;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::State;
@@ -2332,6 +3037,28 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion_parallel::VelocityField;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Output;
     using model_advection_diffusion_decay_catalytic_2d_parallel::Reaction;
+    
+    template <typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     Transport::Parameters const& params_transport,
+     Reaction::Parameters const& params_reaction,
+     Solvers::Parameters const& params_solvers,
+     Reaction::ReactionType const& reaction,
+     std::size_t num_threads)
+    {
+      return model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
+                                                                    geometry,
+                                                                    boundary,
+                                                                    params_transport,
+                                                                    params_reaction,
+                                                                    params_solvers,
+                                                                    reaction,
+                                                                    num_threads,
+                                                                    useful::Selector_t<Transport>{})();
+    }
   }
 }
 

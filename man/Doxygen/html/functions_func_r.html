@@ -85,18 +85,17 @@ $(document).ready(function(){initNavTree('functions_func_r.html',''); initResiza
 &#160;
 
 <h3><a id="index_r"></a>- r -</h3><ul>
-<li>radiusSearch()
-: <a class="el" href="d1/dfe/classgrid_1_1_k_d_tree___grid.html#aa9e4a0bab8e19cce5097451e175c67ff">grid::KDTree_Grid&lt; Grid, dim &gt;</a>
-, <a class="el" href="db/d0a/classgrid_1_1_k_d_tree___grid___mask.html#a85b47475eee1e19befceb766d0bf1ac1">grid::KDTree_Grid_Mask&lt; Grid, dim &gt;</a>
-</li>
 <li>rank()
 : <a class="el" href="dc/d1a/classuseful_1_1_multi_array.html#a3ae889bd4b72f82ef0bded3168967860">useful::MultiArray&lt; value_t &gt;</a>
 </li>
-<li>Reaction_AFluidPlusASolidtoASolid()
-: <a class="el" href="de/de2/classptof_1_1_reaction___a_fluid_plus_a_solidto_a_solid.html#a97575e3d76d29fefba0d40858789c2af">ptof::Reaction_AFluidPlusASolidtoASolid&lt; MeshSearch &gt;</a>
+<li>rate()
+: <a class="el" href="d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#ade3d819a11dcc1d5c2bc5a4e8cd97a10">ptof::SurfaceReaction_AFluidPlusASolidtoASolid</a>
+, <a class="el" href="df/d31/classptof_1_1_surface_reaction___do_nothing.html#a4899df12c28b6a50e4503af5e4304f34">ptof::SurfaceReaction_DoNothing</a>
 </li>
-<li>Reaction_AFluidPlusASolidtoNothing()
-: <a class="el" href="d6/d84/classptof_1_1_reaction___a_fluid_plus_a_solidto_nothing.html#a52ed7ab8d1f851c450f19d36249be3b3">ptof::Reaction_AFluidPlusASolidtoNothing&lt; MeshSearch &gt;</a>
+<li>reaction()
+: <a class="el" href="db/dbd/classctrw_1_1_transitions___c_t_r_w___transport___reaction.html#a35a6029879e533a58097a0ecf0bb304b">ctrw::Transitions_CTRW_Transport_Reaction&lt; Transitions_Transport, Reaction &gt;</a>
+, <a class="el" href="d8/d5f/classctrw_1_1_transitions___reaction___position.html#a3ec5552759f8023fe62f5dabf4a51f17">ctrw::Transitions_Reaction_Position&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
+, <a class="el" href="d5/dd3/classctrw_1_1_transitions___reaction___position___conditional.html#a7ac405196dc0f19ef7a73941e73d1f9e">ctrw::Transitions_Reaction_Position_Conditional&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
 </li>
 <li>read_end_criterion()
 : <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a843875f22b7804e2ffaa0bd5aafcd04f">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
@@ -111,23 +110,31 @@ $(document).ready(function(){initNavTree('functions_func_r.html',''); initResiza
 : <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a61479298004ab41b4abbf7c6d495f4c5">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
 </li>
 <li>reflection_normal()
-: <a class="el" href="d4/d49/classptof_1_1_boundary___cases.html#a5c22aaec94043f220503a2a722526241">ptof::Boundary_Cases&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;</a>
-</li>
-<li>RegularGrid()
-: <a class="el" href="dc/d43/classgrid_1_1_regular_grid.html#a1a1bd28126350312b5c4cecc5b5312b5">grid::RegularGrid&lt; value_t, Position_t, Index_t &gt;</a>
+: <a class="el" href="d4/d49/classptof_1_1_boundary___cases.html#a867090f3023efbe2f6a54efdb0cb5ff0">ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;</a>
 </li>
 <li>remove()
-: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#ab69ef38be2483c4e45dd1587b2195819">ctrw::CTRW&lt; State_t &gt;</a>
+: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a5d5750cabf670629c97f37bf897845cf">ctrw::CTRW&lt; State_t &gt;</a>
+, <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a902eb4d0d33f0015b50f132ee7191930">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
 </li>
 <li>rescale()
-: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a7b6b3883f7d9fc44207c7866a2bc93de">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside &gt;</a>
+: <a class="el" href="d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#ae228f4c806c1cee1eb76402a79d42ffb">ptof::model_advection_2d::Transport::Parameters</a>
+, <a class="el" href="d5/dac/structptof_1_1model__advection__2d__parallel_1_1_transport_1_1_parameters.html#af747b58d89c1a0208711d536c26b7151">ptof::model_advection_2d_parallel::Transport::Parameters</a>
+, <a class="el" href="dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a7460cc25bcc8867575f6907f8575dc74">ptof::model_advection_diffusion_2d::Transport::Parameters</a>
+, <a class="el" href="df/d6c/structptof_1_1model__advection__diffusion__2d__parallel_1_1_transport_1_1_parameters.html#af27d1dea3739fa759ff3f2471a5cf225">ptof::model_advection_diffusion_2d_parallel::Transport::Parameters</a>
+, <a class="el" href="db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a918ad61a73a353863fdf1bded888b801">ptof::model_bcc_cartesian_advection::Transport::Parameters</a>
+, <a class="el" href="d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a111fe45f2a69ed4fb27e5c57ede87e33">ptof::model_bcc_cartesian_advection_diffusion::Transport::Parameters</a>
+, <a class="el" href="d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html#a941e48ed155390c062871d48e9bbcbaf">ptof::model_bcc_cartesian_advection_diffusion_parallel::Transport::Parameters</a>
+, <a class="el" href="df/d2a/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_transport_1_1_parameters.html#ac41d11f5122fae7fe7647780a4a91448">ptof::model_bcc_cartesian_advection_parallel::Transport::Parameters</a>
+, <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a99c375e5462942d147371d97f671f8b4">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside &gt;</a>
 , <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa046ca9f740d5ebe7fbc4d9b03e742ff">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside &gt;</a>
 </li>
 <li>reserve()
 : <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a15c6ff845db1666b8f974bc779f524ee">ctrw::CTRW&lt; State_t &gt;</a>
+, <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a1ba62d511e6b1e60b00c3d57ab4887d1">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
 </li>
 <li>retag()
 : <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a633524d45d3c71f99308b57bf890e9f3">ctrw::CTRW&lt; State_t &gt;</a>
+, <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a03d2a71fa1825eec6aff44a43c25d1a9">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

@@ -1,10 +1,12 @@
 <map id="Geometry/SymmetryPlanes.h" name="Geometry/SymmetryPlanes.h">
-<area shape="rect" id="node1" title=" " alt="" coords="107,5,322,32"/>
-<area shape="rect" id="node2" href="$d8/dab/_geometry_2_boundary_8h.html" title=" " alt="" coords="133,80,296,107"/>
-<area shape="rect" id="node3" href="$d3/dba/_jump_generator_8h.html" title=" " alt="" coords="127,155,302,181"/>
-<area shape="rect" id="node4" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title=" " alt="" coords="5,229,152,256"/>
-<area shape="rect" id="node8" href="$d7/dd9/_p_t_o_f_2_geometry_8h.html" title=" " alt="" coords="277,304,411,331"/>
-<area shape="rect" id="node7" href="$d2/d1d/_p_t_o_f_2_steppers_8h.html" title=" " alt="" coords="177,229,306,256"/>
-<area shape="rect" id="node5" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="33,304,175,331"/>
-<area shape="rect" id="node6" href="$da/d4a/_p_t_o_f_2_models_8h.html" title=" " alt="" coords="179,379,298,405"/>
+<area shape="rect" id="node1" title="Symmetry planes to describe general symmetries." alt="" coords="158,5,373,32"/>
+<area shape="rect" id="node2" href="$d8/dab/_geometry_2_boundary_8h.html" title="Boundary&#45;enforcing classes for particle tracking." alt="" coords="184,80,347,107"/>
+<area shape="rect" id="node3" href="$d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="89,155,263,181"/>
+<area shape="rect" id="node4" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="5,229,152,256"/>
+<area shape="rect" id="node9" href="$d1/d4e/_geometry_8h.html" title=" " alt="" coords="287,155,422,181"/>
+<area shape="rect" id="node10" href="$d5/d99/_geometry___parallel_8h.html" title=" " alt="" coords="349,229,541,256"/>
+<area shape="rect" id="node8" href="$d0/dd9/_steppers_8h.html" title=" " alt="" coords="278,304,407,331"/>
+<area shape="rect" id="node5" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="59,304,202,331"/>
+<area shape="rect" id="node6" href="$d3/d74/_models_8h.html" title=" " alt="" coords="146,379,265,405"/>
+<area shape="rect" id="node7" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="289,379,463,405"/>
 </map>

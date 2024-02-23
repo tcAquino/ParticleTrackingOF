@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,7 +86,7 @@ $(document).ready(function(){initNavTree('d7/d1a/structctrw_1_1_get__position__i
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt; Struct Template Reference</div>  </div>
+<div class="title">ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -100,8 +100,8 @@ Collaboration diagram for ctrw::Get_position_interp_velocity&lt; Getter, Getter_
 <div class="center"><img src="../../db/d98/structctrw_1_1_get__position__interp__velocity__coll__graph.png" border="0" usemap="#actrw_1_1_get__position__interp__velocity_3_01_getter_00_01_getter__velocity_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="actrw_1_1_get__position__interp__velocity_3_01_getter_00_01_getter__velocity_01_4_coll__map" id="actrw_1_1_get__position__interp__velocity_3_01_getter_00_01_getter__velocity_01_4_coll__map">
 <area shape="rect" title="Get linearly interpolated position according to velocity in old state given new state and old state." alt="" coords="63,95,249,151"/>
-<area shape="rect" href="../../d1/d4e/structctrw_1_1_get__velocity.html" title="Get state.velocity given state." alt="" coords="5,5,144,32"/>
-<area shape="rect" href="../../d9/dca/structctrw_1_1_get__position.html" title="Get state.position given state." alt="" coords="168,5,307,32"/>
+<area shape="rect" href="../../d1/d4e/structctrw_1_1_get__velocity.html" title="Get velocity given state." alt="" coords="5,5,144,32"/>
+<area shape="rect" href="../../d9/dca/structctrw_1_1_get__position.html" title="Get position given state." alt="" coords="168,5,307,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -124,9 +124,16 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Getter = Get_position, typename Getter_velocity = Get_velocity&gt;<br />
-struct ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt;</h3>
+class ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt;</h3>
 
 <p>Get linearly interpolated position according to velocity in old state given new state and old state. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Getter</td><td>Object to extract quantity given state. </td></tr>
+    <tr><td class="paramname">Getter_velocity</td><td>Object to extract velocity quantity given state. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a99b141c83dd2821aa6e7fb950f64ebcb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a99b141c83dd2821aa6e7fb950f64ebcb">&#9670;&nbsp;</a></span>Get_position_interp_velocity()</h2>
@@ -169,7 +176,6 @@ template&lt;typename Getter  = Get_position, typename Getter_velocity  = Get_vel
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given current time, getter for position given state and getter for velocity given state. </p>
 
 </div>
 </div>
@@ -211,6 +217,15 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d7/d1a/structctrw_1_1_get__position__interp__velocity_aa8f6ed11f5e332e43ce1fb340343c819_cgraph.png" border="0" usemap="#ad7/d1a/structctrw_1_1_get__position__interp__velocity_aa8f6ed11f5e332e43ce1fb340343c819_cgraph" alt=""/></div>
+<map name="ad7/d1a/structctrw_1_1_get__position__interp__velocity_aa8f6ed11f5e332e43ce1fb340343c819_cgraph" id="ad7/d1a/structctrw_1_1_get__position__interp__velocity_aa8f6ed11f5e332e43ce1fb340343c819_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,204,47"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="252,13,371,39"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -263,7 +278,7 @@ template&lt;typename Getter  = Get_position, typename Getter_velocity  = Get_vel
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">StateGetter.h</a></li>
 </ul>
 </div><!-- contents -->

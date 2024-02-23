@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('d9/d7f/structctrw_1_1_get__position__p
 </div><!--header-->
 <div class="contents">
 
-<p>Get projection of absolute position along a direction given state from state.position and periodicity information about the unit cell periodic position is in Unit cell faces must be perpendicular to cartesian coordinate axes.  
+<p>Get projection of absolute position along given direction, given state from position and periodicity.  
  <a href="../../d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code></p>
@@ -100,8 +100,8 @@ Collaboration diagram for ctrw::Get_position_periodic_cartesian_projection:</div
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d47/structctrw_1_1_get__position__periodic__cartesian__projection__coll__graph.png" border="0" usemap="#actrw_1_1_get__position__periodic__cartesian__projection_coll__map" alt="Collaboration graph"/></div>
 <map name="actrw_1_1_get__position__periodic__cartesian__projection_coll__map" id="actrw_1_1_get__position__periodic__cartesian__projection_coll__map">
-<area shape="rect" title="Get projection of absolute position along a direction given state from state.position and periodicity..." alt="" coords="5,109,153,165"/>
-<area shape="rect" href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html" title="Get absolute position given state from state.position and periodicity information about the unit cell..." alt="" coords="5,5,153,47"/>
+<area shape="rect" title="Get projection of absolute position along given direction, given state from position and periodicity." alt="" coords="5,109,153,165"/>
+<area shape="rect" href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html" title="Get absolute position given state from position and periodicity." alt="" coords="5,5,153,47"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -120,11 +120,16 @@ Data Fields</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:aeb6562b65e70df4f7c0217fa17c886cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html">Get_position_periodic_cartesian</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection.html#aeb6562b65e70df4f7c0217fa17c886cc">get_position</a></td></tr>
-<tr class="separator:aeb6562b65e70df4f7c0217fa17c886cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac03b00a67109da2813c16008c94b99ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html">Get_position_periodic_cartesian</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection.html#ac03b00a67109da2813c16008c94b99ca">_get_position</a></td></tr>
+<tr class="separator:ac03b00a67109da2813c16008c94b99ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Get projection of absolute position along a direction given state from state.position and periodicity information about the unit cell periodic position is in Unit cell faces must be perpendicular to cartesian coordinate axes. </p>
+<div class="textblock"><p>Get projection of absolute position along given direction, given state from position and periodicity. </p>
+<p>state.periodicity should hold the (directional) integer number of times unit cell has been traversed. </p><dl class="section note"><dt>Note</dt><dd><ul>
+<li>Unit cell faces must be perpendicular to (cartesian) coordinate axes.</li>
+<li>Direction vector is normalized upon construction. </li>
+</ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab84224417f76513be4bc50415442f044"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab84224417f76513be4bc50415442f044">&#9670;&nbsp;</a></span>Get_position_periodic_cartesian_projection()</h2>
@@ -159,7 +164,6 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given size of domain along each dimension and direction to project onto. </p>
 
 </div>
 </div>
@@ -189,10 +193,41 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection_aa6078c3ba3fa807fad4eb91b3d773aed_cgraph.png" border="0" usemap="#ad9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection_aa6078c3ba3fa807fad4eb91b3d773aed_cgraph" alt=""/></div>
+<map name="ad9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection_aa6078c3ba3fa807fad4eb91b3d773aed_cgraph" id="ad9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection_aa6078c3ba3fa807fad4eb91b3d773aed_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,172,61"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a598f8f9295e720e6929dc66fb44139a5" title="Dot product." alt="" coords="220,20,333,47"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a id="ac03b00a67109da2813c16008c94b99ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac03b00a67109da2813c16008c94b99ca">&#9670;&nbsp;</a></span>_get_position</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html">Get_position_periodic_cartesian</a> ctrw::Get_position_periodic_cartesian_projection::_get_position</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa258650ac5a9b27949b3f3afc2a5677d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa258650ac5a9b27949b3f3afc2a5677d">&#9670;&nbsp;</a></span>direction</h2>
 
@@ -203,28 +238,6 @@ template&lt;typename State &gt; </div>
           <td class="memname">std::vector&lt;double&gt; ctrw::Get_position_periodic_cartesian_projection::direction</td>
         </tr>
       </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aeb6562b65e70df4f7c0217fa17c886cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb6562b65e70df4f7c0217fa17c886cc">&#9670;&nbsp;</a></span>get_position</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html">Get_position_periodic_cartesian</a> ctrw::Get_position_periodic_cartesian_projection::get_position</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>

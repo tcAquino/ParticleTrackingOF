@@ -1,4 +1,4 @@
-<map id="ptof::Boundary_Cases&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;" name="ptof::Boundary_Cases&lt; MeshSearch, Store_Info, Boundary_Periodic, Boundary_Custom &gt;">
+<map id="ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;" name="ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;">
 <area shape="rect" id="node1" title="Boundary object to handle implemented boundary types." alt="" coords="5,109,223,180"/>
-<area shape="rect" id="node2" href="$d2/d5e/structptof_1_1_boundary_condition.html" title="Keep track of names and types of boundary conditions ." alt="" coords="25,5,203,32"/>
+<area shape="rect" id="node2" href="$d2/d5e/structptof_1_1_boundary_condition.html" title="Names and types of boundary conditions." alt="" coords="25,5,203,32"/>
 </map>

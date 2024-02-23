@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Phase.h
-* \author Tomás Aquino
-* \date 08/02/2024
+ \file PTOF/Phase.h
+ \author Tomás Aquino
+ \date 08/02/2024
 */
 
 #ifndef PTOF_PHASE_H
@@ -18,19 +18,27 @@
 
 namespace ptof
 {
+  /** \struct Phase PTOF/Phase.h "PTOF/Phase.h"
+   \brief Phase field information. */
   struct Phase
   {
-    using PhaseField = Foam::volScalarField;
-    using GradPhaseField = Foam::volVectorField;
+    using PhaseField = Foam::volScalarField;        /**< Saturation scalar field as a function of mesh cell index. */
+    using GradPhaseField = Foam::volVectorField;    /**< Gradient of saturation vector field as a function of mesh cell index. */
     
+    /** \struct Phase::Parameters PTOF/Phase.h "PTOF/Phase.h"
+     \brief Parameters for phase-related quantities. */
     struct Parameters
     {
-      std::string excluded_phase_name;
-      double leakage_coefficient;
-      bool excluded_phase;
-      bool compute_gradient;
-      double phase_threshold;
+      std::string excluded_phase_name;    /**< Name of phase saturation field where transport should not occur. */
+      double leakage_coefficient;         /**< Ratio of concentrations between excluded phase and other phase. */
+      bool excluded_phase;                /**< Weather to read excluded phase or other phase from file. */
+      bool compute_gradient;              /**< Weather to compute or read from file gradient of excluded phase. */
+      double phase_threshold;             /**< Tolerance in local phase saturation to consider pure phase. */
       
+      /** Constructor.
+       \param directories Current case directory information.
+       \param name Name of phase parameters set.
+      */
       Parameters
       (Directories const& directories, std::string const& name)
       {
@@ -73,6 +81,7 @@ namespace ptof
         input.close();
       }
       
+      /** \brief Output general information about object. */
       template <typename OStream>
       static void info(OStream& output)
       {
@@ -94,6 +103,8 @@ namespace ptof
       }
     };
     
+    /** \return Excluded phase saturation field.
+     \details Obtained from OpenFOAM file data for either the excluded phase or the other phase. */
     template <typename Mesh>
     static auto get_excluded_phase_data
     (Mesh const& mesh, Parameters const& parameters)
@@ -120,37 +131,33 @@ namespace ptof
           mesh });
     }
     
-    template <typename Mesh>
-    static auto get_grad_excluded_phase_data
-    (Mesh const& mesh, Parameters const& parameters, Foam::volScalarField const& excluded_phase_field)
-    {
-      if (parameters.excluded_phase && !parameters.compute_gradient)
-        return GradPhaseField{
-          Foam::IOobject{
-            std::string("gradAlpha.") + parameters.excluded_phase_name,
-            mesh.time().timeName(),
-            mesh,
-            Foam::IOobject::MUST_READ,
-            Foam::IOobject::NO_WRITE
-          },
-          mesh };
-      else
-        return Foam::volVectorField(Foam::fvc::grad(excluded_phase_field));
-    }
-    
+    /** \return Excluded phase field gradient.
+    \details Based on OpenFOAM file data. */
     template <typename Mesh>
     static auto get_grad_excluded_phase_data
     (Mesh const& mesh, Parameters const& parameters)
     {
       return GradPhaseField{
         Foam::IOobject{
-          std::string("alpha.") + parameters.excluded_phase_name,
+          std::string("gradAlpha.") + parameters.excluded_phase_name,
           mesh.time().timeName(),
           mesh,
           Foam::IOobject::MUST_READ,
           Foam::IOobject::NO_WRITE
         },
         mesh };
+    }
+    
+    /** \return Excluded phase field gradient.
+     \details Based on OpenFOAM file data or computed from excluded phase saturation field. */
+    template <typename Mesh>
+    static auto get_grad_excluded_phase_data
+    (Mesh const& mesh, Parameters const& parameters, Foam::volScalarField const& excluded_phase_field)
+    {
+      if (parameters.excluded_phase && !parameters.compute_gradient)
+        return get_grad_excluded_phase_data(mesh, parameters);
+      else
+        return Foam::volVectorField(Foam::fvc::grad(excluded_phase_field));
     }
   };
 }

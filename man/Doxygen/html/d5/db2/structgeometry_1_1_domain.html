@@ -104,8 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac62d0cd05313e02f499af232a4af6223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a404f6eccfa0981239be24ca594b25649"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a404f6eccfa0981239be24ca594b25649">Domain</a> (<a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#adcb221bebc0190b552f1e56789033ccf">DomainShape</a> <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a9665d282e3f46f7b63741521b90afdec">box</a>)</td></tr>
 <tr class="separator:a404f6eccfa0981239be24ca594b25649"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a869f37b5a8297687e9c8a2578f03ac27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a869f37b5a8297687e9c8a2578f03ac27">Domain</a> (<a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#adcb221bebc0190b552f1e56789033ccf">DomainShape</a> <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a9665d282e3f46f7b63741521b90afdec">box</a>, std::vector&lt; <a class="el" href="../../d4/d45/structgeometry_1_1_parallelepiped.html">geometry::Parallelepiped</a>&lt;&gt;&gt; <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#acd0a9ac053c312dcb6ce2433b9d62d9d">parallelepipeds</a>, std::vector&lt; <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">geometry::Sphere</a>&lt;&gt;&gt; sphere)</td></tr>
-<tr class="separator:a869f37b5a8297687e9c8a2578f03ac27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e244b01d82b83b9c83871134ae52ff0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a2e244b01d82b83b9c83871134ae52ff0">Domain</a> (<a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#adcb221bebc0190b552f1e56789033ccf">DomainShape</a> <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a9665d282e3f46f7b63741521b90afdec">box</a>, std::vector&lt; <a class="el" href="../../d4/d45/structgeometry_1_1_parallelepiped.html">geometry::Parallelepiped</a>&lt;&gt;&gt; <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#acd0a9ac053c312dcb6ce2433b9d62d9d">parallelepipeds</a>, std::vector&lt; <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">geometry::Sphere</a>&lt;&gt;&gt; <a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a0c36af994ab22394b142eabe07be4fe9">spheres</a>)</td></tr>
+<tr class="separator:a2e244b01d82b83b9c83871134ae52ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a785957be5b41571c818fb8a4993a8abe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a785957be5b41571c818fb8a4993a8abe">dimensions</a> () const</td></tr>
 <tr class="separator:a785957be5b41571c818fb8a4993a8abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3271cc6b217a99392118c32b7671cca"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
@@ -121,7 +121,12 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a0c36af994ab22394b142eabe07be4fe9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">geometry::Sphere</a>&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html#a0c36af994ab22394b142eabe07be4fe9">spheres</a></td></tr>
 <tr class="separator:a0c36af994ab22394b142eabe07be4fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename Shape&gt;<br />
+struct geometry::Domain&lt; Shape &gt;</h3>
+
+<p><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> with arbitrary shape, with rectangular and/or spherical inclusions in any spatial dimension. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="adcb221bebc0190b552f1e56789033ccf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adcb221bebc0190b552f1e56789033ccf">&#9670;&nbsp;</a></span>DomainShape</h2>
 
@@ -135,6 +140,7 @@ template&lt;typename Shape &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Bounding domain shape. </p>
 
 </div>
 </div>
@@ -163,6 +169,7 @@ template&lt;typename Shape &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructor. </p>
 
 </div>
 </div>
@@ -191,11 +198,17 @@ template&lt;typename Shape &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">box</td><td><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> shape. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a869f37b5a8297687e9c8a2578f03ac27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a869f37b5a8297687e9c8a2578f03ac27">&#9670;&nbsp;</a></span>Domain() <span class="overload">[3/3]</span></h2>
+<a id="a2e244b01d82b83b9c83871134ae52ff0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e244b01d82b83b9c83871134ae52ff0">&#9670;&nbsp;</a></span>Domain() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,7 +234,7 @@ template&lt;typename Shape &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::vector&lt; <a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html">geometry::Sphere</a>&lt;&gt;&gt;&#160;</td>
-          <td class="paramname"><em>sphere</em>&#160;</td>
+          <td class="paramname"><em>spheres</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -235,6 +248,14 @@ template&lt;typename Shape &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">box</td><td><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> shape. </td></tr>
+    <tr><td class="paramname">parallelepipeds</td><td>Rectangular inclusions. </td></tr>
+    <tr><td class="paramname">spheres</td><td>Spherical inclusions. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -263,6 +284,7 @@ template&lt;typename Shape &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> side sizes. </dd></dl>
 
 </div>
 </div>
@@ -293,6 +315,16 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <code>position</code> is outside domain, <code>false</code> otherwise . </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d5/db2/structgeometry_1_1_domain_ae3271cc6b217a99392118c32b7671cca_icgraph.png" border="0" usemap="#ad5/db2/structgeometry_1_1_domain_ae3271cc6b217a99392118c32b7671cca_icgraph" alt=""/></div>
+<map name="ad5/db2/structgeometry_1_1_domain_ae3271cc6b217a99392118c32b7671cca_icgraph" id="ad5/db2/structgeometry_1_1_domain_ae3271cc6b217a99392118c32b7671cca_icgraph">
+<area shape="rect" title=" " alt="" coords="240,5,412,47"/>
+<area shape="rect" href="../../d5/d5f/namespacegeometry.html#a3d7699dbdfe08674a3a44fed526f3623" title=" " alt="" coords="5,13,192,39"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -310,6 +342,7 @@ template&lt;typename Shape &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Bounding domain shape. </p>
 
 </div>
 </div>
@@ -326,6 +359,7 @@ template&lt;typename Shape &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Rectangular inclusions. </p>
 
 </div>
 </div>
@@ -342,6 +376,7 @@ template&lt;typename Shape &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Spherical inclusions. </p>
 
 </div>
 </div>

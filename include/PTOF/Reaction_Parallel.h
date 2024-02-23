@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Reaction_Parallel.h
-* \author Tomás Aquino
-* \date 13/02/2024
+ \file PTOF/Reaction_Parallel.h
+ \author Tomás Aquino
+ \date 13/02/2024
 */
 
 #ifndef PTOF_REACTION_PARALLEL_H

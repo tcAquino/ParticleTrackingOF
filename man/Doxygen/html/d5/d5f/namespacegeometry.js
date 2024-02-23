@@ -35,9 +35,9 @@ var namespacegeometry =
     [ "project", "d5/d5f/namespacegeometry.html#a017c760300d032e349706ab19cca34de", null ],
     [ "reflectOffSphere_outsideToInside", "d5/d5f/namespacegeometry.html#a3e694e2d693eded9ad17b9db37fb6783", null ],
     [ "reflectOffSphere_outsideToInside", "d5/d5f/namespacegeometry.html#ad086cd428e32e4ab00c06bc5dfe2d550", null ],
-    [ "reflectOffSphere_velocity_outsideToInside", "d5/d5f/namespacegeometry.html#a2e27209169857328a5049fe5df4eb503", null ],
+    [ "reflectOffSphere_velocity_outsideToInside", "d5/d5f/namespacegeometry.html#afc21cbcce2adca3e3ea4302e5645a6da", null ],
     [ "reflectOffSphere_velocity_outsideToInside", "d5/d5f/namespacegeometry.html#a98a36981a54776bd7c65fa2e9ea2224a", null ],
     [ "spherical2cartesian", "d5/d5f/namespacegeometry.html#a79a08ed5ccc4259aafd25ee5a61ba9b0", null ],
-    [ "translate", "d5/d5f/namespacegeometry.html#aaf0559f3db7a23f20c51d0d6bcd85ac8", null ],
-    [ "translate_back", "d5/d5f/namespacegeometry.html#a1b7929ca7fb7280e4a355eb149349b1f", null ]
+    [ "translate", "d5/d5f/namespacegeometry.html#a2b45bfba74caca086225c1aa9b2da7a1", null ],
+    [ "translate_back", "d5/d5f/namespacegeometry.html#af008b22a40fd3d175279892dd942a2f0", null ]
 ];

@@ -1,0 +1,4 @@
+<map id="operation::linearOp_InPlace" name="operation::linearOp_InPlace">
+<area shape="rect" id="node1" title="lambda_1 * input_1 + lambda_2 * input2." alt="" coords="5,5,152,47"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#a766a1d4a98268b036ef6c1bdbb2cbab6" title="lambda_1 *input_1 + lambda_2 * input2." alt="" coords="200,13,347,39"/>
+</map>

@@ -1,8 +1,8 @@
 /**
- *\file PTOF/Boundary.h
- * \author Tomás Aquino
- * \date 17/02/2022
- */
+ \file PTOF/Boundary.h
+ \author Tomás Aquino
+ \date 17/02/2022
+*/
 
 #ifndef PTOF_BOUNDARY_H
 #define PTOF_BOUNDARY_H
@@ -25,7 +25,7 @@
 namespace ptof
 {
    /** \struct BoundaryCondition PTOF/Boundary.h "PTOF/Boundary.h"
-   *  \brief Keep track of names and types of boundary conditions .*/
+    \brief Names and types of boundary conditions. */
   struct BoundaryCondition
   {
     /** \enum Type
@@ -41,23 +41,33 @@ namespace ptof
       empty                 /**< No effect (default for unspecified patches in mesh) */
     };
     
-    /** Construct with standard 'custom' name. */
+    /** Constructor.
+     \brief Default constructor. */
     BoundaryCondition()
     {}
     
-    /** Type from name. */
+    /** \brief Type from name.
+     \param name Boundary condition name.
+     \return Boundary condition type.
+     */
     static auto type(std::string const& name)
     { return name_to_type.at(name); }
     
-    /** Name from type. */
+    /** \brief Name from type.
+     \param type Boundary condition type.
+     \return Boundary condition name.
+    */
     static auto name(Type type)
     { return type_to_name.at(type); }
     
-    /** Check if name exists. */
+    /** \brief Check if name exists.
+     \param name condition name.
+     \return \c true if name exists, \c false otherwise.
+     */
     static bool contains(std::string const& name)
     { return name_to_type.count(name); }
     
-    /** Map names to types. */
+    /** \brief Map names to types. */
     inline static const
     std::unordered_map<std::string, Type> name_to_type
     {
@@ -70,7 +80,7 @@ namespace ptof
       { "empty", Type::empty },
     };
     
-    /** Map types to names. */
+    /** \brief Map types to names. */
     inline static const
     std::unordered_map<Type, std::string> type_to_name
     {
@@ -84,10 +94,11 @@ namespace ptof
     };
   };
   
-  /** Apply reflecting boundary condition
-   * given the contact point at boundary
-   * and the unit normal at the contact point
-   * pointing inwards. */
+  /**
+   \brief Apply reflecting boundary condition.
+   \param state Particle state to update.
+   \param contact_point Contact point at boundary.
+   \param unit_normal Unit normal at the contact point, pointing inwards. */
   template <typename State>
   void boundary_reflecting
   (State& state,
@@ -109,7 +120,10 @@ namespace ptof
                           : Foam::zero{}));
   }
 
-  /** Apply absorbing boundary condition.*/
+  /**
+  \brief Apply absorbing boundary condition.
+  \param state Particle state to update.
+  \param contact_point Contact point at boundary. */
   template <typename State>
   void boundary_absorbing
   (State& state, Foam::point const& contact_point)
@@ -117,10 +131,12 @@ namespace ptof
     state.set_position(contact_point);
   }
 
-  /** Get the boundary conditions associated
-   * with a set of patches from file. 
-   * Each file line should hold a patch name
-   * followed by a boundary condition type. */
+  /**
+   \brief Get the boundary conditions associated with a set of patches from file.
+   \param filename Name of file holding a patch name followed by a boundary condition type in each line
+   \param header_lines Number of header lines to ignore in file
+   \param delims Possible delimiters between patch names and boundary condition types
+  */
   auto get_boundary_conditions
   (std::string const& filename,
    std::size_t header_lines = 0,
@@ -148,10 +164,10 @@ namespace ptof
     return boundary_conditions;
   }
   
-  /** Verify that patch names exist in mesh
-   * and associated boundary condition types are implemented
-   * BCs should be a container of pairs of patch names and
-   * boundary condition types.*/
+  /** \brief Throw if any patch name does not exist in mesh or associated boundary condition type is not implemented.
+   \param boundary_conditions Container of pairs of patch names and boundary condition types.
+   \param mesh OpenFOAM mesh.
+   \param implemented BoundaryCondition object holding information about implemented boundary conditions */
   template <typename BCs, typename Mesh, typename Implemented>
   void verify_boundary_conditions
   (BCs const& boundary_conditions, Mesh const& mesh,
@@ -169,10 +185,11 @@ namespace ptof
         };
   }
   
-  /** Add default type 'empty'
-   * to boundary conditions for unspecified patches in patch_names
-   * BCs should be an associative container of pairs of patch names and
-   * boundary condition types. */
+  /**
+   \brief Add default type 'empty' to boundary conditions for unspecified patches
+   \param boundary_conditions Associative container of pairs of patch names and boundary condition types, to add to.
+   \param patch_names Container with all patch names
+  */
   template <typename BCs, typename Container>
   void add_unspecified_patches
   (BCs& boundary_conditions,
@@ -183,10 +200,11 @@ namespace ptof
         boundary_conditions[name] = "empty";
   }
   
-  /** Add default type 'empty'
-   * to boundary conditions for unspecified patches in mesh
-   * BCs should be a container of pairs of patch names and
-   * boundary condition types. */
+  /**
+   \brief Add default type 'empty' to boundary conditions for unspecified patches in mesh
+   \param boundary_conditions Associative container of pairs of patch names and boundary condition types, to add to.
+   \param mesh OpenFOAM mesh
+  */
   template <typename BCs, typename Mesh>
   void add_unspecified_patches_in_mesh
   (BCs& boundary_conditions, Mesh const& mesh)
@@ -199,31 +217,50 @@ namespace ptof
    * \brief Boundary object with no effect. */
   struct Boundary_DoNothing
   {
-    /** Check if position is out of bounds (it never is). */
+    /**
+     \brief Check if position is out of bounds.
+     \param position Position to check.
+     \return \c false (always in bounds).
+     */
     template <typename Position>
     bool outOfBounds(Position const& position) const
-    { return 0; }
+    { return false; }
     
-    /** Apply boundary condition (do nothing, return 0 for no effect). */
-    template <typename State, typename Intersection>
+    /**
+     \brief Apply boundary condition (do nothing).
+     \param state Current particle state.
+     \param state_old Previous particle state.
+     \param dummy Dummy argument (unused)
+     \return \c false (no effect).
+    */
+    template <typename State, typename Dummy>
     bool operator()
     (State const& state, State const& state_old,
-     Intersection const&) const
-    { return 0; }
+     Dummy const& dummy) const
+    { return false; }
     
-    /** Apply boundary condition (do nothing, return 0 for no effect). */
-    template <typename State, typename IntersectionOrState>
+    /**
+     \brief Apply boundary condition (do nothing).
+     \param state Current particle state.
+     \param dummy Dummy argument (unused)
+     \return \c false (no effect).
+    */
+    template <typename State, typename Dummy>
     bool operator()
-    (State const& state, IntersectionOrState const&) const
-    { return 0; }
+    (State const& state, Dummy const& dummy) const
+    { return false; }
     
-    /** Apply boundary condition (do nothing, return 0 for no effect). */
+    /**
+     \brief Apply boundary condition (do nothing).
+     \param state Current particle state.
+     \return \c false (no effect).
+    */
     template <typename State>
     bool operator()
     (State const& state) const
-    { return 0; }
+    { return false; }
     
-    /** Custom name of boundary condition type. */
+    /** \brief Name of boundary condition type. */
     std::string name() const
     { return "empty"; }
   };
@@ -231,75 +268,85 @@ namespace ptof
   /** \class Boundary_Cases PTOF/Boundary.h "PTOF/Boundary.h"
    *  \brief Boundary object to handle implemented boundary types */
   template
-  <typename MeshSearch, typename Locator, typename Store_Info,
+  <typename Locator, typename Store_Info,
   typename Boundary_Periodic, typename Boundary_Custom,
   typename SurfaceReaction>
   class Boundary_Cases
   {
   public:
-    /** Container type to hold patch names and associated bc type names. */
+    /** \brief Container type to hold patch names and associated bc type names. */
     using BCs = std::unordered_map<std::string, std::string>;
     
-    /** Construct given
-     * boundary condition patches and associated types,
-     * - Mesh search object,
-     * - Object to store info when applying different boundary condition types
-     * - Custom boundary object for boundary condition types. */
+    /** Constructor
+     \param boundary_conditions Patch names and associated  boundary condition types.
+     \param locator Object to locate positions in mesh.
+     \param store_info Object to handle storing of information upon boundary hitting.
+     \param boundary_periodic Periodic boundary condition enforcer.
+     \param boundary_custom Custom boundary condition enforcer.
+     \param surface_reaction Surface Reaction.
+    */
     Boundary_Cases
     (BCs boundary_conditions,
-     MeshSearch&& mesh_search,
      Locator&& locator,
      Store_Info&& store_info,
      Boundary_Periodic&& boundary_periodic = Boundary_DoNothing{},
      Boundary_Custom&& boundary_custom = Boundary_DoNothing{},
-     SurfaceReaction&& reaction = SurfaceReaction_DoNothing{})
-    : boundary_conditions{ boundary_conditions }
-    , mesh_search{ std::forward<MeshSearch>(mesh_search) }
-    , locator{ std::forward<Locator>(locator) }
-    , store_info{ std::forward<Store_Info>(store_info) }
-    , boundary_periodic{ std::forward<Boundary_Periodic>(boundary_periodic) }
-    , boundary_custom{ std::forward<Boundary_Custom>(boundary_custom) }
-    , reaction{ std::forward<SurfaceReaction>(reaction) }
+     SurfaceReaction&& surface_reaction = SurfaceReaction_DoNothing{})
+    : _boundary_conditions{ boundary_conditions }
+    , _locator{ std::forward<Locator>(locator) }
+    , _store_info{ std::forward<Store_Info>(store_info) }
+    , _boundary_periodic{ std::forward<Boundary_Periodic>(boundary_periodic) }
+    , _boundary_custom{ std::forward<Boundary_Custom>(boundary_custom) }
+    , surface_reaction{ std::forward<SurfaceReaction>(surface_reaction) }
     {
-      add_unspecified_patches(this->boundary_conditions,
+      add_unspecified_patches(_boundary_conditions,
                               patch_names());
-      verify_boundary_conditions(this->boundary_conditions,
-                                 mesh_search.mesh(),
-                                 boundary_condition_types);
+      verify_boundary_conditions(_boundary_conditions,
+                                 _locator.mesh_search().mesh(),
+                                 _boundary_condition_types);
     }
     
-    /** Check if position is out of bounds. */
+    /**
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
+    */
     template <typename Position>
     bool outOfBounds(Position const& position) const
     {
-      Foam::label cell = mesh_search.findCell(make_point(position));
+      Foam::label cell = _locator.mesh_search().findCell(make_point(position));
       return cell < 0;
     }
 
-    /** Enforce boundary condition by choosing appropriate type
-     * Return 1 if some boundary had an effect, 0 otherwise. */
+    /**
+     \brief Enforce boundary conditions if necessary by choosing appropriate types.
+     \param state Current particle state to apply BCs if needed (possibly out of bounds).
+     \param state_old Previous particle state (should be in bounds).
+     \return \c true if some boundary had an effect, \c false otherwise.
+    */
     template <typename State>
     bool operator()
     (State& state, State const& state_old = {})
     {
       /** Find first intersection with boundary patch. */
       auto intersection =
-        mesh_search.intersection(make_point(state_old.position),
-                                 make_point(state.position));
+        _locator.mesh_search().intersection(make_point(state_old.position),
+                                           make_point(state.position));
       
       // When the start point is on a cell face,
       // sometimes the intersection with it is not found
       // Avoid breaking by checking for intersections with a small
       // backwards offset when the final state is out of bounds
+      state.cell = _locator(state);
       if (!intersection.hit()
-          && locator(state) < 0)
+          && state.cell < 0)
         intersection =
-          mesh_search.intersection(offset_backward_cell(make_point(state_old.position),
-                                                        state_old.cell,
-                                                        make_point(state.position)
-                                                        -make_point(state_old.position),
-                                                        mesh_search),
-                                   make_point(state.position));
+          _locator.mesh_search().intersection(offset_backward_cell(make_point(state_old.position),
+                                                                  state_old.cell,
+                                                                  make_point(state.position)
+                                                                  -make_point(state_old.position),
+                                                                  _locator),
+                                             make_point(state.position));
       else
       {
         // Ignore new intersection if offset went beyond final point
@@ -314,21 +361,21 @@ namespace ptof
       while (intersection.hit())
       {
         /** Find patch in mesh and associated boundary type name. */
-        auto patch_id = mesh_search.mesh().boundaryMesh().
+        auto patch_id = _locator.mesh_search().mesh().boundaryMesh().
           whichPatch(intersection.index());
         auto patch = patch_name(patch_id);
-        auto type_name = boundary_conditions.at(patch);
+        auto type_name = _boundary_conditions.at(patch);
         
         // Apply the approriate boundary and store associated info
-        switch (boundary_condition_types.type(type_name))
+        switch (_boundary_condition_types.type(type_name))
         {
           case BoundaryCondition::Type::reflecting:
           {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
+           _store_info(state, state_old, intersection,
+                       _boundary_condition_types,
                        useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::reflecting>{});
+                         BoundaryCondition::Type,
+                         BoundaryCondition::Type::reflecting>{});
             boundary_reflecting(state,
                                 intersection.point(),
                                 reflection_normal(intersection.index()));
@@ -337,12 +384,12 @@ namespace ptof
           }
           case BoundaryCondition::Type::reacting_reflecting:
           {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
-                       useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::reflecting>{});
-            reaction(state, state_old, intersection.index());
+            _store_info(state, state_old, intersection,
+                        _boundary_condition_types,
+                        useful::Selector<
+                          BoundaryCondition::Type,
+                          BoundaryCondition::Type::reflecting>{});
+            surface_reaction(state, state_old, intersection.index());
             boundary_reflecting(state,
                                 intersection.point(),
                                 reflection_normal(intersection.index()));
@@ -351,42 +398,42 @@ namespace ptof
           }
           case BoundaryCondition::Type::periodic:
           {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
-                       useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::periodic>{});
-            had_effect += boundary_periodic(state, intersection);
+            _store_info(state, state_old, intersection,
+                        _boundary_condition_types,
+                        useful::Selector<
+                          BoundaryCondition::Type,
+                          BoundaryCondition::Type::periodic>{});
+            had_effect += _boundary_periodic(state, intersection);
             break;
           }
           case BoundaryCondition::Type::absorbing:
           {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
-                       useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::absorbing>{});
+            _store_info(state, state_old, intersection,
+                        _boundary_condition_types,
+                        useful::Selector<
+                          BoundaryCondition::Type,
+                          BoundaryCondition::Type::absorbing>{});
             boundary_absorbing(state, intersection.point());
             had_effect = 1;
             break;
           }
           case BoundaryCondition::Type::custom:
           {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
-                       useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::custom>{});
-            had_effect += boundary_custom(state, state_old, intersection);
+            _store_info(state, state_old, intersection,
+                        _boundary_condition_types,
+                        useful::Selector<
+                          BoundaryCondition::Type,
+                          BoundaryCondition::Type::custom>{});
+            had_effect += _boundary_custom(state, state_old, intersection);
             break;
           }
           case BoundaryCondition::Type::info:
           {
-            store_info(state, state_old, intersection,
-                       boundary_condition_types,
-                       useful::Selector<
-                        BoundaryCondition::Type,
-                        BoundaryCondition::Type::info>{});
+            _store_info(state, state_old, intersection,
+                        _boundary_condition_types,
+                        useful::Selector<
+                          BoundaryCondition::Type,
+                          BoundaryCondition::Type::info>{});
             break;
           }
           case BoundaryCondition::Type::empty:
@@ -419,7 +466,7 @@ namespace ptof
       return had_effect;
     }
     
-    /** Output information about current object. */
+    /** \brief Output information about current object. */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -429,11 +476,11 @@ namespace ptof
         "--------------------------------------------------\n"
         "Patch / Condition\n"
         "\n";
-      for (auto const& bc : boundary_conditions)
+      for (auto const& bc : _boundary_conditions)
       {
         output << bc.first << "\t";
         if (bc.second == "custom")
-          output << boundary_custom.name();
+          output << _boundary_custom.name();
         else
           output << bc.second;
         output << "\n";
@@ -443,126 +490,126 @@ namespace ptof
     }
     
   private:
-    /** \private */
-    BCs boundary_conditions;              /**< Patch names and associated bc type names.         */
-    MeshSearch mesh_search;               /**< Mesh search object to find intersections, etc. */
-    Locator locator;                      /**< Locator to find position cells. */
-    Store_Info store_info;                /**< Object to handle boundary info storing in states. */
-    Boundary_Periodic boundary_periodic;  /**< Boundary object to handle 'periodic' bc type.     */
-    Boundary_Custom boundary_custom;      /**< Boundary object to handle 'custom' bc type.       */
+    BCs _boundary_conditions;              /**< Patch names and associated bc type names.         */
+    Locator _locator;                      /**< Object to locate positions in mesh. */
+    Store_Info _store_info;                /**< Object to handle boundary info storing in states. */
+    Boundary_Periodic _boundary_periodic;  /**< Boundary object to handle 'periodic' bc type.     */
+    Boundary_Custom _boundary_custom;      /**< Boundary object to handle 'custom' bc type.       */
     
   public:
-    SurfaceReaction reaction;             /**< Surface reaction for reactive boundaries*/
+    SurfaceReaction surface_reaction;              /**< Surface reaction for reactive boundaries*/
     
   private:
     const BoundaryCondition
-      boundary_condition_types{};         /**< Boundary condition names and types. */
+      _boundary_condition_types{};         /**< Boundary condition names and types. */
     
-    /** Names of patches in mesh. */
+    /** \return Names of patches in mesh. */
     auto patch_names() const
-    { return mesh_search.mesh().boundaryMesh().names(); }
+    { return _locator.mesh_search().mesh().boundaryMesh().names(); }
     
-    /** Name of given patch index in mesh. */
+    /**
+     \param patch Index of patch in mesh.
+     \return Name of patch. */
     auto patch_name(std::size_t patch) const
     { return patch_names()[patch]; }
     
-    /** Wrapper function to get normal to face for reflection. */
+    /**
+     \param face Face index
+     \return Inward normal to face (used for reflection). */
     auto reflection_normal(Foam::label face) const
     {
-      return unit_normal_inward(face, mesh_search.mesh());
+      return unit_normal_inward(face, _locator.mesh_search().mesh());
     }
     
-    /** Find next intersection
-     * given current intersection and end of jump. */
+    /** \brief Find next intersection with a boundary.
+     \details Find the next intersection, if any, along straight line from previous intersection to endpoint.
+     \param intersection previous_intersection.
+     \param end Endpoint.
+     \param cell Cell index for previous intersection.
+     \return Next intersection. */
     template <typename Intersection>
     auto next_intersection
     (Intersection const& intersection,
      Foam::point const& end,
      Foam::label cell) const
     {
-      return mesh_search.
-        intersection(offset_forward_face(intersection.point(),
-                                         intersection.index(),
-                                         end-intersection.point(),
-                                         mesh_search,
-                                         locator),
+      return _locator.mesh_search().
+        intersection(offset_forward_face_keep_inside(intersection.point(),
+                                                     intersection.index(),
+                                                     end-intersection.point(),
+                                                     _locator),
                      end);
     }
   };
   template
-  <typename MeshSearch,
-  typename Locator,
+  <typename Locator,
   typename Store_Info,
   typename Boundary_Periodic,
   typename Boundary_Custom,
   typename Surface_Reaction>
   Boundary_Cases
-  (typename Boundary_Cases<
-   MeshSearch, Locator, Store_Info,
+  (typename Boundary_Cases<Locator, Store_Info,
    Boundary_Periodic, Boundary_Custom, Surface_Reaction>::BCs,
-   MeshSearch&&,
    Locator&&,
    Store_Info&&,
    Boundary_Periodic&&,
    Boundary_Custom&&,
    Surface_Reaction&&)->
-  Boundary_Cases<MeshSearch, Locator,
+  Boundary_Cases<Locator,
     Store_Info, Boundary_Periodic, Boundary_Custom, Surface_Reaction>;
   template
-  <typename MeshSearch,
-  typename Locator,
+  <typename Locator,
   typename Store_Info,
   typename Boundary_Periodic,
   typename Boundary_Custom>
   Boundary_Cases
-  (typename Boundary_Cases<
-   MeshSearch, Locator, Store_Info,
+  (typename Boundary_Cases<Locator, Store_Info,
    Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>::BCs,
-   MeshSearch&&,
    Locator&&,
    Store_Info&&,
    Boundary_Periodic&&,
    Boundary_Custom&&)->
-  Boundary_Cases<MeshSearch, Locator,
-    Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>;
+  Boundary_Cases<Locator, Store_Info,
+    Boundary_Periodic, Boundary_Custom, SurfaceReaction_DoNothing>;
   template
-  <typename MeshSearch,
-  typename Locator,
+  <typename Locator,
   typename Store_Info,
   typename Boundary_Periodic>
   Boundary_Cases
-  (typename Boundary_Cases<
-   MeshSearch, Locator, Store_Info,
+  (typename Boundary_Cases<Locator, Store_Info,
    Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
-   MeshSearch&&,
    Locator&&,
    Store_Info&&,
    Boundary_Periodic&&)->
-  Boundary_Cases<MeshSearch, Locator,
-    Store_Info, Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>;
-  template <typename MeshSearch, typename Locator, typename Store_Info>
+  Boundary_Cases<Locator, Store_Info,
+    Boundary_Periodic, Boundary_DoNothing, SurfaceReaction_DoNothing>;
+  template <typename Locator, typename Store_Info>
   Boundary_Cases
-  (typename Boundary_Cases<
-   MeshSearch, Locator, Store_Info,
+  (typename Boundary_Cases<Locator, Store_Info,
    Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
-   MeshSearch&&,
    Locator&&,
    Store_Info&&)->
-  Boundary_Cases<MeshSearch, Locator,
+  Boundary_Cases<Locator,
     Store_Info, Boundary_DoNothing, Boundary_DoNothing, SurfaceReaction_DoNothing>;
   
-  /** Periodic image of intersection point. */
+  /** \brief Find periodic image of intersection point.
+   \param state_outside Out-of-bounds state.
+   \param state_image Periodic image of state, in bounds.
+   \param intersection Boundary intersection info.
+   \param boundary Periodic boundary enforcer.
+   \param locator Object to locate positions in mesh.
+   \return Periodic image of intersection. */
   template
   <typename State, typename Intersection,
-  typename Boundary, typename MeshSearch>
+  typename Boundary, typename Locator>
   auto periodic_intersection
   (State state_outside,
    State const& state_image,
    Intersection const& intersection,
    Boundary const& boundary,
-   MeshSearch const& mesh_search)
+   Locator const& locator)
   {
-    /** Compute displacement from intersection to outside position. */
+    // Compute displacement from intersection to outside position.
     auto displacement = make_point(state_outside.position)-
       intersection.point();
     
@@ -577,7 +624,7 @@ namespace ptof
       = offset_forward_face(intersection.point(),
                             intersection.index(),
                             displacement,
-                            mesh_search);
+                            locator);
       
     // Ensure offset position is closer to
     // intersection than outside position
@@ -598,36 +645,45 @@ namespace ptof
     // Find the periodic image of the intersection by
     // looking from outside the domain towards the final periodic image
     // Start at the outside point found by taking
-    return mesh_search.
+    return locator.mesh_search().
       intersection(make_point(state_outside.position)
                    - 2.*(make_point(state_image.position)-
                          make_point(state_outside.position)),
                    make_point(state_outside.position));
   }
   
-  /** \struct Boundary_Periodic_OF PTOF/Boundary.h "PTOF/Boundary.h"
-   *  \brief Boundary object for periodic boundaries.
-   *  The templated boundary object should enforce the periodic boundaries */
-  template <typename Boundary, typename MeshSearch>
+  /** \class Boundary_Periodic_OF PTOF/Boundary.h "PTOF/Boundary.h"
+   *  \brief Interface for periodic boundary enforcer. */
+  template <typename Boundary, typename Locator>
   struct Boundary_Periodic_OF
   {
-    /** Construct given boundary positions along each dimension. */
+    /** Constructor
+     \param boundary Periodic boundary enforcer.
+     \param locator Object to locate positions in mesh.
+    */
     Boundary_Periodic_OF
     (Boundary&& boundary,
-     MeshSearch&& mesh_search)
+     Locator&& locator)
     : boundary_periodic{ std::forward<Boundary>(boundary) }
-    , mesh_search{ std::forward<MeshSearch>(mesh_search) }
+    , locator{ std::forward<Locator>(locator) }
     {}
     
-    /** Check if position is out of bounds. */
+    /**
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
+    */
     template <typename Position>
     bool outOfBounds(Position const& position) const
     {
       return boundary_periodic.outOfBounds(position);
     }
     
-    /** Enforce boundary condition
-     * and place intersection at its periodic image. */
+    /** \brief Enforce boundary condition  and place intersection at its periodic image.
+     \param state Particle state to apply BC to.
+     \param intersection Boundary intersection info, to be replaced by periodic image.
+     \return \c true
+     */
     template <typename State, typename Intersection>
     bool operator() (State& state, Intersection& intersection) const
     {
@@ -636,7 +692,7 @@ namespace ptof
       intersection
         = periodic_intersection(state_outside, state,
                                 intersection, boundary_periodic,
-                                mesh_search);
+                                locator);
       if (!intersection.hit())
         throw std::runtime_error{
           "Could not find image of periodic boundary intersection" };
@@ -644,39 +700,45 @@ namespace ptof
       return 1;
     }
     
-    Boundary boundary_periodic;
-    MeshSearch mesh_search;
+    Boundary boundary_periodic; /**< Periodic boundary type. */
+    Locator locator;            /**< Object to locate positions in mesh. */
   };
-  template <typename Boundary, typename MeshSearch>
-  Boundary_Periodic_OF(Boundary&&, MeshSearch&&)
-  ->Boundary_Periodic_OF<Boundary, MeshSearch>;
+  template <typename Boundary, typename Locator>
+  Boundary_Periodic_OF(Boundary&&, Locator&&)
+  ->Boundary_Periodic_OF<Boundary, Locator>;
   
-  /** Boundary object that reinjects particles according to
-   * prescribed initial condition. */
+  /** \class Boundary_Reinject PTOF/Boundary.h "PTOF/Boundary.h"
+   \brief Boundary object that reinjects particles according to prescribed initial condition. */
   template <typename InitialCondition>
   struct Boundary_Reinject
   {
-    /** Construct given initial condition object. */
+    /** Constructor.
+     \param initial_condition Initial condition object. */
     Boundary_Reinject
     (InitialCondition&& initial_condition)
     : initial_condition{
         std::forward<InitialCondition>(initial_condition) }
     {}
     
-    /** Enforce boundary condition. */
+    /** \brief Enforce boundary condition
+    \param state Particle state to apply BC to.
+    \param state_old Old particle state (unused).
+    \param intersection Boundary intersection info (unused).
+    \return \c true
+    */
     template <typename State, typename Intersection>
     bool operator()
-    (State& state, State const&, Intersection const&) const
+    (State& state, State const& state_old, Intersection const& intersection) const
     {
       state.set_position(initial_condition.make_position());
       return 1;
     }
     
-    /** Custom name of boundary condition type. */
+    /** \brief Name of boundary condition type. */
     std::string name() const
     { return "reinject"; }
     
-    InitialCondition initial_condition;
+    InitialCondition initial_condition; /**< Initial condition according to which to reinject. */
   };
   template <typename InitialCondition>
   Boundary_Reinject

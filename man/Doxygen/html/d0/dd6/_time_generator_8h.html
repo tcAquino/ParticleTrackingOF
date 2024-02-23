@@ -89,13 +89,16 @@ $(document).ready(function(){initNavTree('d0/dd6/_time_generator_8h.html','../..
 <div class="title">TimeGenerator.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Objects to generate time increments for particle tracking.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;random&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for TimeGenerator.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d1/df1/_time_generator_8h__incl.png" border="0" usemap="#a_c_t_r_w_2_time_generator_8h" alt=""/></div>
 <map name="a_c_t_r_w_2_time_generator_8h" id="a_c_t_r_w_2_time_generator_8h">
-<area shape="rect" title=" " alt="" coords="5,5,180,32"/>
+<area shape="rect" title="Objects to generate time increments for particle tracking." alt="" coords="5,5,180,32"/>
 <area shape="rect" title=" " alt="" coords="57,80,129,107"/>
 </map>
 </div>
@@ -104,11 +107,12 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d51/_time_generator_8h__dep__incl.png" border="0" usemap="#a_c_t_r_w_2_time_generator_8hdep" alt=""/></div>
 <map name="a_c_t_r_w_2_time_generator_8hdep" id="a_c_t_r_w_2_time_generator_8hdep">
-<area shape="rect" title=" " alt="" coords="68,5,243,32"/>
-<area shape="rect" href="../../d6/d95/_c_t_r_w_2_transitions_8h.html" title=" " alt="" coords="15,80,162,107"/>
-<area shape="rect" href="../../d2/d1d/_p_t_o_f_2_steppers_8h.html" title=" " alt="" coords="172,155,301,181"/>
+<area shape="rect" title="Objects to generate time increments for particle tracking." alt="" coords="68,5,243,32"/>
+<area shape="rect" href="../../d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="15,80,162,107"/>
+<area shape="rect" href="../../d0/dd9/_steppers_8h.html" title=" " alt="" coords="172,155,301,181"/>
 <area shape="rect" href="../../de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="5,155,148,181"/>
-<area shape="rect" href="../../da/d4a/_p_t_o_f_2_models_8h.html" title=" " alt="" coords="97,229,216,256"/>
+<area shape="rect" href="../../d3/d74/_models_8h.html" title=" " alt="" coords="12,229,131,256"/>
+<area shape="rect" href="../../d0/dee/_models___parallel_8h.html" title=" " alt="" coords="155,229,329,256"/>
 </map>
 </div>
 </div>
@@ -129,9 +133,21 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>10/23/2019 </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Objects to generate time increments for particle tracking. </p>
+<dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10/23/2019</dd></dl>
+<p>A TimeGenerator should implement the following minimal functionality:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>TimeGenerator</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> State&gt;</div>
+<div class="line">  val_type operator() (<a class="code" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a9e912afa01b5b6fffdd91d9da9ff1f7a">State</a> <span class="keyword">const</span>&amp;)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// Return time increment, with val_type</span></div>
+<div class="line">    <span class="comment">// a scalar type (e.g. double)</span></div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="ttc" id="anamespaceptof_1_1model__advection__diffusion__2d_html_a9e912afa01b5b6fffdd91d9da9ff1f7a"><div class="ttname"><a href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a9e912afa01b5b6fffdd91d9da9ff1f7a">ptof::model_advection_diffusion_2d::State</a></div><div class="ttdeci">StateDim&lt; Geometry::dim, Info, double, double, std::size_t &gt; State</div><div class="ttdef"><b>Definition:</b> Models.h:58</div></div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

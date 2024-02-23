@@ -1,7 +1,7 @@
 <map id="ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_velocity_gradient" name="ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_velocity_gradient">
-<area shape="rect" id="node1" title="Output time and velocity gradient components." alt="" coords="55,304,273,375"/>
-<area shape="rect" id="node2" href="$d2/d71/structptof_1_1_output___cases_1_1_output_time.html" title="Polymorphic output handler for outputting time and some quantity." alt="" coords="69,199,259,255"/>
-<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title=" " alt="" coords="5,95,165,136"/>
-<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="18,5,153,32"/>
-<area shape="rect" id="node5" title=" " alt="" coords="190,102,295,129"/>
+<area shape="rect" id="node1" title=" " alt="" coords="104,304,321,375"/>
+<area shape="rect" id="node2" href="$d2/d71/structptof_1_1_output___cases_1_1_output_time.html" title=" " alt="" coords="117,199,308,255"/>
+<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="133,95,293,136"/>
+<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="5,5,140,32"/>
+<area shape="rect" id="node5" title=" " alt="" coords="317,102,423,129"/>
 </map>

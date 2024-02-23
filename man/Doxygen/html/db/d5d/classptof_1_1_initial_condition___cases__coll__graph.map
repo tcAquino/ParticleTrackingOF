@@ -1,6 +1,9 @@
-<map id="ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters &gt;" name="ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters &gt;">
-<area shape="rect" id="node1" title="InitialCondition object to handle implemented initial condition types." alt="" coords="401,57,644,113"/>
-<area shape="rect" id="node2" href="$da/dae/structptof_1_1_particle_maker.html" title="Object to make particles given position." alt="" coords="49,5,205,47"/>
-<area shape="rect" id="node3" title=" " alt="" coords="74,71,179,98"/>
-<area shape="rect" id="node4" href="$dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html" title=" " alt="" coords="5,123,248,193"/>
+<map id="ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;" name="ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;">
+<area shape="rect" id="node1" title="InitialCondition object to handle implemented initial condition types." alt="" coords="408,159,663,215"/>
+<area shape="rect" id="node2" href="$da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="71,5,183,32"/>
+<area shape="rect" id="node3" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html" title=" " alt="" coords="33,56,221,112"/>
+<area shape="rect" id="node4" href="$da/dae/structptof_1_1_particle_maker.html" title="Functor to make particles given position." alt="" coords="49,137,205,178"/>
+<area shape="rect" id="node5" title=" " alt="" coords="74,203,179,229"/>
+<area shape="rect" id="node6" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="59,253,194,280"/>
+<area shape="rect" id="node7" href="$dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html" title=" " alt="" coords="5,305,248,375"/>
 </map>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::JumpGenerator_Diffusion_1d Class Reference</title>
+<title>ParticleTrackingOF: ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,7 +86,7 @@ $(document).ready(function(){initNavTree('d1/d8b/classctrw_1_1_jump_generator___
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::JumpGenerator_Diffusion_1d Class Reference</div>  </div>
+<div class="title">ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -97,47 +97,52 @@ $(document).ready(function(){initNavTree('d1/d8b/classctrw_1_1_jump_generator___
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9539b45555acf1c0f715b485e664ed5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a9539b45555acf1c0f715b485e664ed5e">JumpGenerator_Diffusion_1d</a> (double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ad833e4f5192765259dde11b4f225612c">diff_coeff</a>, double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a65a9ece763ba87c6e44a3eb0ca5391e2">dt</a>)</td></tr>
-<tr class="separator:a9539b45555acf1c0f715b485e664ed5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae809c86fa2693475a6a0e114735629df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ae809c86fa2693475a6a0e114735629df">time_step</a> (double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a65a9ece763ba87c6e44a3eb0ca5391e2">dt</a>)</td></tr>
-<tr class="separator:ae809c86fa2693475a6a0e114735629df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff33e77c1fad6b6753766ad116bf7ff9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aff33e77c1fad6b6753766ad116bf7ff9">diff</a> (double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ad833e4f5192765259dde11b4f225612c">diff_coeff</a>)</td></tr>
-<tr class="separator:aff33e77c1fad6b6753766ad116bf7ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acca1d65f702f29d6733e39d7b2836790"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#acca1d65f702f29d6733e39d7b2836790">time_step</a> () const</td></tr>
-<tr class="separator:acca1d65f702f29d6733e39d7b2836790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af932d360fa45a3394cd7e173c97187fe"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#af932d360fa45a3394cd7e173c97187fe">diff</a> () const</td></tr>
-<tr class="separator:af932d360fa45a3394cd7e173c97187fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63759428ca57676c991c6251d4b909a9"><td class="memTemplParams" colspan="2">template&lt;typename State  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a63759428ca57676c991c6251d4b909a9"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a63759428ca57676c991c6251d4b909a9">operator()</a> (State const &amp;={})</td></tr>
-<tr class="separator:a63759428ca57676c991c6251d4b909a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca30d33bc5acb3b6c08b7e42d7d3c048"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aca30d33bc5acb3b6c08b7e42d7d3c048">JumpGenerator_Diffusion_1d</a> (double diff_coeff, double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a0b962edf056a0afbaa559978675ec23d">time_step</a>)</td></tr>
+<tr class="separator:aca30d33bc5acb3b6c08b7e42d7d3c048"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b962edf056a0afbaa559978675ec23d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a0b962edf056a0afbaa559978675ec23d">time_step</a> (double time_step)</td></tr>
+<tr class="separator:a0b962edf056a0afbaa559978675ec23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f313497d219ee197237bd71ec58e736"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a1f313497d219ee197237bd71ec58e736">diff</a> (double diff_coeff)</td></tr>
+<tr class="separator:a1f313497d219ee197237bd71ec58e736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa807d53a41feeb281ad29675eab57813"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aa807d53a41feeb281ad29675eab57813">time_step</a> () const</td></tr>
+<tr class="separator:aa807d53a41feeb281ad29675eab57813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49ab4709998f2671286ae12a0818a66"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#af49ab4709998f2671286ae12a0818a66">diff</a> () const</td></tr>
+<tr class="separator:af49ab4709998f2671286ae12a0818a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab40bc4e59057497eced04778abdb9b2b"><td class="memTemplParams" colspan="2">template&lt;typename State  = useful::Empty&gt; </td></tr>
+<tr class="memitem:ab40bc4e59057497eced04778abdb9b2b"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ab40bc4e59057497eced04778abdb9b2b">operator()</a> (State const &amp;state={})</td></tr>
+<tr class="separator:ab40bc4e59057497eced04778abdb9b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a65a9ece763ba87c6e44a3eb0ca5391e2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a65a9ece763ba87c6e44a3eb0ca5391e2">dt</a></td></tr>
-<tr class="separator:a65a9ece763ba87c6e44a3eb0ca5391e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad833e4f5192765259dde11b4f225612c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ad833e4f5192765259dde11b4f225612c">diff_coeff</a></td></tr>
-<tr class="separator:ad833e4f5192765259dde11b4f225612c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca084269fc1dfb2c84f35f5f4cee04ac"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aca084269fc1dfb2c84f35f5f4cee04ac">diff_aux</a> { std::sqrt(2.*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ad833e4f5192765259dde11b4f225612c">diff_coeff</a>*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a65a9ece763ba87c6e44a3eb0ca5391e2">dt</a>) }</td></tr>
-<tr class="separator:aca084269fc1dfb2c84f35f5f4cee04ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfa219d130923661789237a504d6ad9c"><td class="memItemLeft" align="right" valign="top">std::mt19937&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#abfa219d130923661789237a504d6ad9c">rng</a> { std::random_device{}() }</td></tr>
-<tr class="separator:abfa219d130923661789237a504d6ad9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94174c289d17524ade39e0366a75cf95"><td class="memItemLeft" align="right" valign="top">std::normal_distribution&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a94174c289d17524ade39e0366a75cf95">normal_dist</a></td></tr>
-<tr class="separator:a94174c289d17524ade39e0366a75cf95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bfd95756f94488efab724861fda4375"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a5bfd95756f94488efab724861fda4375">_time_step</a></td></tr>
+<tr class="separator:a5bfd95756f94488efab724861fda4375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab048395eb80eef8576f7aeeaff0899bd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ab048395eb80eef8576f7aeeaff0899bd">_diff_coeff</a></td></tr>
+<tr class="separator:ab048395eb80eef8576f7aeeaff0899bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca1d13cbc7a567af868533801ff78471"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aca1d13cbc7a567af868533801ff78471">_diff_aux</a> { std::sqrt(2.*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ab048395eb80eef8576f7aeeaff0899bd">_diff_coeff</a>*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a5bfd95756f94488efab724861fda4375">_time_step</a>) }</td></tr>
+<tr class="separator:aca1d13cbc7a567af868533801ff78471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bb91887d4ae5b160969949ed35eaac0"><td class="memItemLeft" align="right" valign="top">RNG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a6bb91887d4ae5b160969949ed35eaac0">_rng</a> { std::random_device{}() }</td></tr>
+<tr class="separator:a6bb91887d4ae5b160969949ed35eaac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aab68b84d22ba8db5761066cac0bfee"><td class="memItemLeft" align="right" valign="top">std::normal_distribution&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a9aab68b84d22ba8db5761066cac0bfee">_normal_dist</a> { 0., 1. }</td></tr>
+<tr class="separator:a9aab68b84d22ba8db5761066cac0bfee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>One dimensional diffusion jumps using Gaussian distribution. </p>
+<div class="textblock"><h3>template&lt;typename RNG = std::mt19937&gt;<br />
+class ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt;</h3>
+
+<p>One dimensional diffusion jumps using Gaussian distribution. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9539b45555acf1c0f715b485e664ed5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9539b45555acf1c0f715b485e664ed5e">&#9670;&nbsp;</a></span>JumpGenerator_Diffusion_1d()</h2>
+<a id="aca30d33bc5acb3b6c08b7e42d7d3c048"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca30d33bc5acb3b6c08b7e42d7d3c048">&#9670;&nbsp;</a></span>JumpGenerator_Diffusion_1d()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ctrw::JumpGenerator_Diffusion_1d::JumpGenerator_Diffusion_1d </td>
+          <td class="memname"><a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">JumpGenerator_Diffusion_1d</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>diff_coeff</em>, </td>
@@ -146,7 +151,7 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>&#160;</td>
+          <td class="paramname"><em>time_step</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -160,22 +165,30 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given diffusion coefficient and time step. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">diff_coeff</td><td>Diffusion coefficient. </td></tr>
+    <tr><td class="paramname">time_step</td><td>Diffusion coefficient. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af932d360fa45a3394cd7e173c97187fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af932d360fa45a3394cd7e173c97187fe">&#9670;&nbsp;</a></span>diff() <span class="overload">[1/2]</span></h2>
+<a id="af49ab4709998f2671286ae12a0818a66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af49ab4709998f2671286ae12a0818a66">&#9670;&nbsp;</a></span>diff() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double ctrw::JumpGenerator_Diffusion_1d::diff </td>
+          <td class="memname">double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::diff </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -187,21 +200,23 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get diffusion coefficient. </p>
+<dl class="section return"><dt>Returns</dt><dd>Diffusion coefficient. </dd></dl>
 
 </div>
 </div>
-<a id="aff33e77c1fad6b6753766ad116bf7ff9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff33e77c1fad6b6753766ad116bf7ff9">&#9670;&nbsp;</a></span>diff() <span class="overload">[2/2]</span></h2>
+<a id="a1f313497d219ee197237bd71ec58e736"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f313497d219ee197237bd71ec58e736">&#9670;&nbsp;</a></span>diff() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void ctrw::JumpGenerator_Diffusion_1d::diff </td>
+          <td class="memname">void <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::diff </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>diff_coeff</em></td><td>)</td>
@@ -214,15 +229,32 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set diffusion coefficient. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">diff_coeff</td><td>Diffusion coefficient to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a1f313497d219ee197237bd71ec58e736_cgraph.png" border="0" usemap="#ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a1f313497d219ee197237bd71ec58e736_cgraph" alt=""/></div>
+<map name="ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a1f313497d219ee197237bd71ec58e736_cgraph" id="ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a1f313497d219ee197237bd71ec58e736_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,160,47"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="208,13,325,39"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="373,13,491,39"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a63759428ca57676c991c6251d4b909a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63759428ca57676c991c6251d4b909a9">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="ab40bc4e59057497eced04778abdb9b2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab40bc4e59057497eced04778abdb9b2b">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <div class="memtemplate">
 template&lt;typename State  = useful::Empty&gt; </div>
 <table class="mlabels">
@@ -230,10 +262,10 @@ template&lt;typename State  = useful::Empty&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double ctrw::JumpGenerator_Diffusion_1d::operator() </td>
+          <td class="memname">double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">State const &amp;&#160;</td>
-          <td class="paramname"> = <code>{}</code></td><td>)</td>
+          <td class="paramname"><em>state</em> = <code>{}</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -243,21 +275,29 @@ template&lt;typename State  = useful::Empty&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return the jump increment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> state (unused). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Jump increment. </dd></dl>
 
 </div>
 </div>
-<a id="acca1d65f702f29d6733e39d7b2836790"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acca1d65f702f29d6733e39d7b2836790">&#9670;&nbsp;</a></span>time_step() <span class="overload">[1/2]</span></h2>
+<a id="aa807d53a41feeb281ad29675eab57813"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa807d53a41feeb281ad29675eab57813">&#9670;&nbsp;</a></span>time_step() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double ctrw::JumpGenerator_Diffusion_1d::time_step </td>
+          <td class="memname">double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::time_step </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -269,24 +309,35 @@ template&lt;typename State  = useful::Empty&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get time step. </p>
+<dl class="section return"><dt>Returns</dt><dd>Time step. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d_aa807d53a41feeb281ad29675eab57813_icgraph.png" border="0" usemap="#ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_aa807d53a41feeb281ad29675eab57813_icgraph" alt=""/></div>
+<map name="ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_aa807d53a41feeb281ad29675eab57813_icgraph" id="ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_aa807d53a41feeb281ad29675eab57813_icgraph">
+<area shape="rect" title=" " alt="" coords="236,5,419,47"/>
+<area shape="rect" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a0b962edf056a0afbaa559978675ec23d" title=" " alt="" coords="5,5,188,47"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="ae809c86fa2693475a6a0e114735629df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae809c86fa2693475a6a0e114735629df">&#9670;&nbsp;</a></span>time_step() <span class="overload">[2/2]</span></h2>
+<a id="a0b962edf056a0afbaa559978675ec23d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b962edf056a0afbaa559978675ec23d">&#9670;&nbsp;</a></span>time_step() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void ctrw::JumpGenerator_Diffusion_1d::time_step </td>
+          <td class="memname">void <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::time_step </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em></td><td>)</td>
+          <td class="paramname"><em>time_step</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -296,22 +347,40 @@ template&lt;typename State  = useful::Empty&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set time step. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time_step</td><td>Time step to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a0b962edf056a0afbaa559978675ec23d_cgraph.png" border="0" usemap="#ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a0b962edf056a0afbaa559978675ec23d_cgraph" alt=""/></div>
+<map name="ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a0b962edf056a0afbaa559978675ec23d_cgraph" id="ad1/d8b/classctrw_1_1_jump_generator___diffusion__1d_a0b962edf056a0afbaa559978675ec23d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,27,188,69"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="269,5,386,32"/>
+<area shape="rect" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aa807d53a41feeb281ad29675eab57813" title=" " alt="" coords="236,57,419,98"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="467,5,584,32"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="aca084269fc1dfb2c84f35f5f4cee04ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca084269fc1dfb2c84f35f5f4cee04ac">&#9670;&nbsp;</a></span>diff_aux</h2>
+<a id="aca1d13cbc7a567af868533801ff78471"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca1d13cbc7a567af868533801ff78471">&#9670;&nbsp;</a></span>_diff_aux</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double ctrw::JumpGenerator_Diffusion_1d::diff_aux { std::sqrt(2.*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ad833e4f5192765259dde11b4f225612c">diff_coeff</a>*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a65a9ece763ba87c6e44a3eb0ca5391e2">dt</a>) }</td>
+          <td class="memname">double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::_diff_aux { std::sqrt(2.*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ab048395eb80eef8576f7aeeaff0899bd">_diff_coeff</a>*<a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a5bfd95756f94488efab724861fda4375">_time_step</a>) }</td>
         </tr>
       </table>
   </td>
@@ -325,17 +394,19 @@ template&lt;typename State  = useful::Empty&gt; </div>
 
 </div>
 </div>
-<a id="ad833e4f5192765259dde11b4f225612c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad833e4f5192765259dde11b4f225612c">&#9670;&nbsp;</a></span>diff_coeff</h2>
+<a id="ab048395eb80eef8576f7aeeaff0899bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab048395eb80eef8576f7aeeaff0899bd">&#9670;&nbsp;</a></span>_diff_coeff</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double ctrw::JumpGenerator_Diffusion_1d::diff_coeff</td>
+          <td class="memname">double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::_diff_coeff</td>
         </tr>
       </table>
   </td>
@@ -348,17 +419,69 @@ template&lt;typename State  = useful::Empty&gt; </div>
 
 </div>
 </div>
-<a id="a65a9ece763ba87c6e44a3eb0ca5391e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65a9ece763ba87c6e44a3eb0ca5391e2">&#9670;&nbsp;</a></span>dt</h2>
+<a id="a9aab68b84d22ba8db5761066cac0bfee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aab68b84d22ba8db5761066cac0bfee">&#9670;&nbsp;</a></span>_normal_dist</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double ctrw::JumpGenerator_Diffusion_1d::dt</td>
+          <td class="memname">std::normal_distribution&lt;double&gt; <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::_normal_dist { 0., 1. }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Unit normal distribution. </p>
+
+</div>
+</div>
+<a id="a6bb91887d4ae5b160969949ed35eaac0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb91887d4ae5b160969949ed35eaac0">&#9670;&nbsp;</a></span>_rng</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RNG <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::_rng { std::random_device{}() }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Random number generator. </p>
+
+</div>
+</div>
+<a id="a5bfd95756f94488efab724861fda4375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bfd95756f94488efab724861fda4375">&#9670;&nbsp;</a></span>_time_step</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RNG  = std::mt19937&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="../../d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html">ctrw::JumpGenerator_Diffusion_1d</a>&lt; RNG &gt;::_time_step</td>
         </tr>
       </table>
   </td>
@@ -369,54 +492,6 @@ template&lt;typename State  = useful::Empty&gt; </div>
 </div><div class="memdoc">
 <p>Time step. <br  />
  </p>
-
-</div>
-</div>
-<a id="a94174c289d17524ade39e0366a75cf95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94174c289d17524ade39e0366a75cf95">&#9670;&nbsp;</a></span>normal_dist</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::normal_distribution&lt;double&gt; ctrw::JumpGenerator_Diffusion_1d::normal_dist</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">      0., 1. }</div>
-</div><!-- fragment --><p>Unit normal distribution. </p>
-
-</div>
-</div>
-<a id="abfa219d130923661789237a504d6ad9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfa219d130923661789237a504d6ad9c">&#9670;&nbsp;</a></span>rng</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::mt19937 ctrw::JumpGenerator_Diffusion_1d::rng { std::random_device{}() }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Random number generator. </p>
 
 </div>
 </div>

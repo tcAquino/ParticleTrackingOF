@@ -1,7 +1,7 @@
 /**
-* \file General/Useful.h
-* \author Tomás Aquino
-* \date 03/15/2011
+ \file General/Useful.h
+ \author Tomás Aquino
+ \date 03/15/2011
 */
 
 // Miscelaneous collection of useful objects and algorithms
@@ -28,9 +28,9 @@
 
 namespace useful
 {
-  // Display execution time in human-readable format
-  // Adapted from Howard Hinnant's answer here:
-  // https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time
+  /** \brief Display execution time in human-readable format.
+  \details Adapted from Howard Hinnant's answer here:
+   https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time */
   template <typename Clock>
   std::ostream& display_duration
   (std::ostream& stream,
@@ -60,7 +60,7 @@ namespace useful
     return stream;
   };
   
-  // Convert string to bool
+  /** \return Convert \p string to boolean. */
   bool stob(std::string const& string)
   {
     if (string == "true" || string == "1"
@@ -74,8 +74,11 @@ namespace useful
       + string };
   }
   
-  // Convert bool to string
-  std::string btos(bool val, bool boolalpha = 1)
+  /**
+   \param val Boolean value.
+   \param boolalpha Use true/false if true or 1/0 if false to represent booleans.
+   \return Convert boolean \p val to string. */
+  std::string btos(bool val, bool boolalpha = true)
   {
     std::ostringstream stream;
     if (boolalpha)
@@ -87,11 +90,12 @@ namespace useful
     return stream.str();
   }
   
-  // Check if string is empty
-  // Strings are considered empty if they hold:
-  // - Nothing
-  // - ''
-  // - ""
+  /** \brief Check if string is empty.
+   \details
+   Strings are considered empty if they hold:
+   - Nothing.
+   - ''
+   - "" */
   bool empty(std::string const& str)
   {
     return str == ""
@@ -99,16 +103,15 @@ namespace useful
       || str == R"("")";
   }
   
-  // Remove extension after last dot, including dot
-  // Note: new_extension should include dot if wanted
+  /** \brief Remove extension after last dot, including dot. */
   std::string remove_extension
   (std::string const& filename)
   {
     return filename.substr(0, filename.find_last_of('.'));
   }
 
-  // Change extension after last dot
-  // Note: new_extension should include dot if wanted
+  /** \brief Change extension after last dot.
+   \note: \p new_extension should include dot if wanted. */
   std::string change_extension
   (std::string const& filename,
    std::string const& new_extension)
@@ -116,9 +119,10 @@ namespace useful
     return remove_extension(filename) + new_extension;
   }
 
-  // Expand environment variables
-  // Based on Toby Speight's answer here:
-  // https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion
+  /** \brief Expand environment variables.
+   \details
+   Based on Toby Speight's answer here:
+   https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion . */
   inline std::string expand_env(std::string text)
   {
     static const std::regex env_re{R"--(\$\{([^}]+)\})--"};
@@ -132,8 +136,8 @@ namespace useful
     return text;
   }
   
-  // Get widths of bins having given values as midpoints
-  // and given minimum (left edge)
+  /** \brief Compute widths of bins having given \p values as midpoints and given \p minimum (left edge).
+   \details Widths are computed sequentially as twice the distance between the next midpoint and the current left edge. */
   template <typename Value_type = double>
   std::vector<Value_type> get_bin_widths
   (std::vector<Value_type> const& values, Value_type minimum)
@@ -152,8 +156,10 @@ namespace useful
     return widths;
   }
   
-  // Get widths of bins having given values as midpoints
-  // and given minimum (left edge)
+  /** \brief Compute widths of bins having given \p values as midpoints.
+   \details Leftmost bin edge is the minimum value minus half the width of the first bin.
+   
+   Widths are computed sequentially as twice the distance between the next midpoint and the current left edge. */
   template <typename Value_type = double>
   std::vector<Value_type> get_bin_widths
   (std::vector<Value_type> const& values)
@@ -164,8 +170,8 @@ namespace useful
     return get_bin_widths(values, values[0]-(midpoint-values[0]));
   }
   
-  // Check if container contains val
-  // Warning: container must be sorted
+  /** \brief Check if sorted \p container contains \p val.
+  \note: Container must be sorted. */
   template <typename T, typename U>
   bool contains(const std::vector<T>& container, U const& val)
   {
@@ -178,19 +184,38 @@ namespace useful
     return it != container.end() && *it == val;
   }
   
-  // Split string
-  // Adapted from Beder Acosta Borges's answer here:
-  // https://stackoverflow.com/questions/14265581/
-  // parse-split-a-string-in-c-using-string-delimiter-standard-c
+  /** \brief Check whether \p container contains \p value.
+  \details
+   Container must be sorted according to \p comp_less, equality is checked using \p comp_eq. */
+  template <typename T, typename U, typename Comp_less, typename Comp_eq>
+  bool contains
+  (std::vector<T> const& container,
+   U const& val,
+   Comp_less comp_less = std::less<void>{},
+   Comp_eq comp_eq = std::equal_to<void>{})
+  {
+    auto it = std::lower_bound(
+          container.begin(),
+          container.end(),
+          val,
+          comp_less);
+    
+    return it != container.end() && comp_eq(*it, val);
+  }
+  
+
+  /** \brief Check if \p string ends with \p suffix. */
   bool endsWith(const std::string& string, const std::string& suffix)
   {
     return string.size() >= suffix.size() &&
       string.substr(string.size() - suffix.size()) == suffix;
   }
   
-  // Split string into vector of strings
-  // Split at instances of delimeter
-  // Empty entries can be included or discarded
+  /** \brief Split \p string into vector of strings at instances of \p delimeter.
+  \details Empty entries can be included or discarded.
+   
+  Adapted from Beder Acosta Borges's answer here:
+  https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c . */
   std::vector<std::string> split
   (std::string const& string, std::string const& delimiter = " ",
    bool empty_entries = false)
@@ -215,7 +240,7 @@ namespace useful
     return tokens;
   }
   
-  // Throw exception for parsing a file line
+  /** \return Exception for failing to parse a file line. */
   auto parse_error
   (std::string const& filename, std::string const& line)
   {
@@ -224,43 +249,42 @@ namespace useful
       "\nin file " + filename };
   }
   
-  // Throw exception for parsing a file
+  /** \return Exception for failing to parse a file. */
   auto parse_error_file(std::string const& filename)
   {
     return std::runtime_error{
       "Could not parse file " + filename };
   }
   
-  // Throw exception for parsing a line
+  /** \return Exception for failing to parse a line. */
   auto parse_error_line(std::string const& line)
   {
     return std::runtime_error{
       "Could not parse line\n" + line };
   }
   
-  // Throw exception for opening a file for reading
+  /** \return Exception for failing to open a file for reading. */
   auto open_read_error(std::string const& filename)
   {
     return std::runtime_error{
       "Could not open file " + filename + " for reading" };
   }
   
-  // Throw exception for opening a file for writing
+  /** \return Exception for failing to open a file for writing. */
   auto open_write_error(std::string const& filename)
   {
     return std::runtime_error{
       "Could not open file " + filename + " for writing" };
   }
   
-  // Throw exception for unexpected contents in file
+  /** \return Exception for unexpected contents in file. */
   auto bad_file_contents(std::string const& filename)
   {
     return std::runtime_error{
       "Innapropriate contents in file " + filename };
   }
   
-  // Throw exception for finding end of a file
-  // before expected string
+  /** \return TException for finding the end of a file before expected string. */
   auto bad_eof
   (std::string const& filename, std::string const& string)
   {
@@ -269,20 +293,20 @@ namespace useful
       filename + " before " + string + " was found" };
   }
   
-  // Throw exception for bad parameters
+  /** \return Exception for bad parameters. */
   auto bad_parameters()
   {
     return std::invalid_argument{ "Inappropriate parameters" };
   }
   
-  // Throw exception for bad parameters and suggest help
+  /** \return Exception for bad parameters and suggest help. */
   auto bad_parameters_help()
   {
     return std::invalid_argument{ "Inappropriate parameters"
       " (-h or --help for help)" };
   }
   
-  // Check command line options for help flag
+  /** \brief Check command line options for help flags. */
   bool check_options_help(int argc, const char* const argv[])
   {
     return argc == 2 &&
@@ -290,7 +314,7 @@ namespace useful
        std::string(argv[1]) == "-h");
   }
   
-  // Open file for reading
+  /** \brief Open file for reading. */
   std::ifstream open_read(std::string const& filename)
   {
     std::ifstream file(filename);
@@ -300,7 +324,7 @@ namespace useful
     return file;
   }
   
-  // Open file for writing
+  /** \brief Open file for writing. */
   std::ofstream open_write(std::string const& filename)
   {
     std::ofstream file(filename);
@@ -310,7 +334,7 @@ namespace useful
     return file;
   }
   
-  //Load 1-column file into vector of doubles
+  /** \brief Load 1-column file into vector of doubles. */
   auto load_1
   (std::string const& filename, std::size_t nr_estimate = 0,
    std::size_t header_lines = 0,
@@ -338,7 +362,7 @@ namespace useful
     return values;
   }
   
-  //Load 2-column file into pair of vectors of doubles
+  /** \brief Load 2-column file into pair of vectors of doubles. */
   auto load_2
   (std::string const& filename, std::size_t nr_estimate = 0,
    std::size_t header_lines = 0, std::string const& delim = " ")
@@ -368,9 +392,7 @@ namespace useful
     return values;
   }
   
-  // Load 3-column file,
-  // first two columns into vector of pairs,
-  // last column into vector of doubles
+  /** \brief Load 3-column file,  first two columns into vector of pairs, last column into vector of doubles. */
   auto load_pair_1
   (std::string const& filename, std::size_t nr_estimate = 0,
    std::size_t header_lines = 0, std::string const& delim = " ")
@@ -403,11 +425,11 @@ namespace useful
     return output;
   }
   
-  //Load file into vector of vectors of doubles
+  /** \brief Load file into vector of vectors of doubles. */
   auto load(std::string const& filename, std::size_t nr_columns,
             std::size_t nr_estimate = 0,
-              std::size_t header_lines = 0,
-              std::string const& delim = " ")
+            std::size_t header_lines = 0,
+            std::string const& delim = " ")
   {
     using Value = double;
     using Container = std::vector<Value>;
@@ -434,7 +456,7 @@ namespace useful
     return values;
   }
   
-  // Get number of numbers in first line of file
+  /** \brief Get number of numbers in first line of file. */
   std::size_t nr_numbers_in_first_line(std::string const& filename)
   {
     auto input = open_read(filename);
@@ -449,7 +471,7 @@ namespace useful
     return nr_numbers;
   }
   
-  // Read next value from file
+  /** \brief Read next value from file. */
   template <typename Type>
   void read(std::ifstream& input, Type& val)
   {
@@ -458,31 +480,45 @@ namespace useful
       throw std::runtime_error{ "Could not read value" };
   }
   
-  // From Passer By's answer here:
-  // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
-  // Check whether class can call sqrt
+  /** \class can_call_sqrt General/Useful.h "General/Useful.h"
+   \brief To check whether class can call sqrt
+   \details From Passer By's answer here:
+   https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
   template <typename = void, typename... Args>
   struct can_call_sqrt : std::false_type {};
+  /** \class can_call_sqrt General/Useful.h "General/Useful.h"
+  \brief To check whether class can call sqrt.
+  \details From Passer By's answer here:
+  https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
   template <typename... Args>
   struct can_call_sqrt<
   std::void_t<decltype(std::sqrt(std::declval<Args>()...))>, Args...>
   : std::true_type {};
+  /**
+  \brief To check whether class can call sqrt.
+  \details From Passer By's answer here:
+  https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
   template <typename... Args>
   inline constexpr bool can_call_sqrt_v = can_call_sqrt<void, Args...>::value;
-  // Check whether class can call abs
+  
   template <typename = void, typename... Args>
   struct can_call_abs : std::false_type {};
   template <typename... Args>
   struct can_call_abs<
   std::void_t<decltype(std::abs(std::declval<Args>()...))>, Args...>
   : std::true_type {};
+  /**
+  \brief To check whether class can call abs.
+  \details From Passer By's answer here:
+  https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
   template <typename... Args>
   inline constexpr bool can_call_abs_v = can_call_abs<void, Args...>::value;
   
   
-  // From Richard Hodges's answer here:
-  // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
-  // Check whether classes can be used with binary operator
+  /** Check whether classes can be used with binary operator
+  \details
+    From Richard Hodges's answer here:
+    https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
   template<class X, class Y, class Op>
   struct op_valid_impl
   {
@@ -497,9 +533,12 @@ namespace useful
 
   };
   template<class X, class Y, class Op> using op_valid = typename op_valid_impl<X, Y, Op>::type;
-  // Operators not in std::
+  
+  /** \namespace notstd Operators not in std. */
   namespace notstd {
 
+      /** \struct left_shift General/Useful.h "General/Useful.h"
+       \brief Left shift operator. */
       struct left_shift {
 
           template <class L, class R>
@@ -511,6 +550,8 @@ namespace useful
           }
       };
 
+      /** \struct right_shift General/Useful.h "General/Useful.h"
+      \brief Right shift operator. */
       struct right_shift {
 
           template <class L, class R>
@@ -522,6 +563,8 @@ namespace useful
           }
       };
     
+      /** \struct operator_and General/Useful.h "General/Useful.h"
+      \brief And operator. */
       struct operator_and {
 
           template <class L, class R>
@@ -534,24 +577,41 @@ namespace useful
       };
 
   }
+  /** \brief Check whether classes can be used with equality operator. */
   template<class X, class Y> using has_equality = op_valid<X, Y, std::equal_to<>>;
+  /** \brief Check whether classes can be used with inequality operator. */
   template<class X, class Y> using has_inequality = op_valid<X, Y, std::not_equal_to<>>;
+  /** \brief Check whether classes can be used with less than operator. */
   template<class X, class Y> using has_less_than = op_valid<X, Y, std::less<>>;
-  template<class X, class Y> using has_less_equal = op_valid<X, Y, std::less_equal<>>;
+  /** \brief Check whether classes can be used with less than or equal operator. */
+  template<class X, class Y> using has_less_equal = op_valid<X, Y, std::less_equal<>>;\
+  /** \brief Check whether classes can be used with greater than operator. */
   template<class X, class Y> using has_greater_than = op_valid<X, Y, std::greater<>>;
+  /** \brief Check whether classes can be used with greater than or equal operator. */
   template<class X, class Y> using has_greater_equal = op_valid<X, Y, std::greater_equal<>>;
+  /** \brief Check whether classes can be used with bit xor operator. */
   template<class X, class Y> using has_bit_xor = op_valid<X, Y, std::bit_xor<>>;
+  /** \brief Check whether classes can be used with bit or operator. */
   template<class X, class Y> using has_bit_or = op_valid<X, Y, std::bit_or<>>;
+  /** \brief Check whether classes can be used with left shift operator. */
   template<class X, class Y> using has_left_shift = op_valid<X, Y, notstd::left_shift>;
+  /** \brief Check whether classes can be used with right shift operator. */
   template<class X, class Y> using has_right_shift = op_valid<X, Y, notstd::right_shift>;
+  /** \brief Check whether classes can be used with plus operator. */
   template<class X, class Y> using has_plus = op_valid<X, Y, std::plus<>>;
+  /** \brief Check whether classes can be used with minus operator. */
   template<class X, class Y> using has_minus = op_valid<X, Y, std::minus<>>;
+  /** \brief Check whether classes can be used with multiplication operator. */
   template<class X, class Y> using has_multiplies = op_valid<X, Y, std::multiplies<>>;
+  /** \brief Check whether classes can be used with division operator. */
   template<class X, class Y> using has_divides = op_valid<X, Y, std::divides<>>;
+  /** \brief Check whether classes can be used with and operator. */
   template<class X, class Y> using has_and = op_valid<X, Y, notstd::operator_and>;
   
-  // Check if class defines the type value_type
-  // From here: https://gist.github.com/ilya-biryukov/887b7e543b72b49376ed
+  /** \class has_value_type General/Useful.h "General/Useful.h"
+   \brief Check if class defines the type value_type
+   \details
+   From here: https://gist.github.com/ilya-biryukov/887b7e543b72b49376ed . */
   template <class T>
   class has_value_type
   {
@@ -567,31 +627,13 @@ namespace useful
   public:
       static const bool value = sizeof(foo<T>(nullptr)) == sizeof(One);
   };
-  
-  // Check whether container contains value
-  // Container must be sorted according to comp_less,
-  // equality is checked using comp_eq
-  template <typename T, typename U, typename Comp_less, typename Comp_eq>
-  bool contains
-  (std::vector<T> const& container,
-   U const& val,
-   Comp_less comp_less = std::less<void>{},
-   Comp_eq comp_eq = std::equal_to<void>{})
-  {
-    auto it = std::lower_bound(
-          container.begin(),
-          container.end(),
-          val,
-          comp_less);
-    
-    return it != container.end() && comp_eq(*it, val);
-  }
 
-  // Sign of val
+  /** \return Sign of \p val. */
   template <typename T> int sgn(T val)
   { return (T(0) < val) - (val < T(0)); }
 
-  // Class holding const object
+  /** \class StoreConst General/Useful.h "General/Useful.h"
+   \brief Class holding const object. */
   template <typename Object_Type, typename Return_Type = Object_Type>
   struct StoreConst
   {
@@ -602,7 +644,8 @@ namespace useful
     const Object_Type obj;
   };
 
-  // Class holding object
+  /** \class Store General/Useful.h "General/Useful.h"
+  \brief Class holding object. */
   template <typename Object_Type, typename Return_Type = Object_Type>
   struct Store
   {
@@ -613,7 +656,8 @@ namespace useful
     Object_Type obj;
   };
 
-  // Class holding nothing
+  /** \class Empty General/Useful.h "General/Useful.h"
+  \brief Class holding nothing and doing nothing. */
   struct Empty
   {
     template <typename ...Args>
@@ -621,7 +665,7 @@ namespace useful
     Empty(){}
   };
   
-  // Print container
+  /** \brief Print values in container. */
   template <typename Stream, typename Container>
   void print
   (Stream& stream, Container const& container,
@@ -645,7 +689,7 @@ namespace useful
     }
   }
   
-  // Read contents of file as a sequence of doubles
+  /** \brief Read contents of file as a sequence of doubles. */
   std::vector<double> read
   (std::string const& filename)
   {
@@ -661,7 +705,8 @@ namespace useful
     return vals;
   }
   
-  // Functor that does nothing
+  /** \struct DoNothing General/Useful.h "General/Useful.h"
+   \brief Functor that does nothing. */
   struct DoNothing
   {
     template <typename ...Args>
@@ -669,7 +714,8 @@ namespace useful
     {}
   };
 
-  // Functor that always returns false
+  /** \struct DoFalse General/Useful.h "General/Useful.h"
+  \brief Functor that always returns false. */
   struct DoFalse
   {
     template <typename ...Args>
@@ -677,7 +723,8 @@ namespace useful
     { return false; }
   };
   
-  // Functor that always returns true
+  /** \struct DoTrue General/Useful.h "General/Useful.h"
+  \brief Functor that always returns true. */
   struct DoTrue
   {
     template <typename ...Args>
@@ -685,42 +732,43 @@ namespace useful
     { return true; }
   };
 
-  // Make an object passing a parameters object
+  /** \brief Make an object and initialize it given \p parameters.
+   \note Object must implement:
+   - initialize(Params const&). */
   template <typename Object, typename Params>
-  Object Create(Params const& parameters = useful::Empty())
+  Object create(Params const& parameters = useful::Empty())
   {
-    Object tracker;
-    tracker.Initialize(parameters);
+    Object object;
+    object.initialize(parameters);
 
-    return tracker;
+    return object;
   }
   
-  // Functor to make objects of given type,
-  // passing arbitrary parameters
+  /** \class Maker General/Useful.h "General/Useful.h"
+   \brief Functor to make objects of given type, passing arbitrary parameters. */
   template <typename Object>
-  class Maker
+  struct Maker
   {
     template <typename ...Args>
-    Object operator()(Args... args)
+    Object operator()(Args... args) const
     { return Object{ args... }; }
   };
 
-  // Functor to make an object on the heap,
-  // passing arbitrary parameters
+  /** \class Creator General/Useful.h "General/Useful.h"
+   \brief Functor to make an object on the heap,  passing arbitrary parameters. */
   template <typename T>
   struct Creator
   {
     using value_type = T;
     using pointer = T*;
 
-    pointer operator() (void) const
-    { return (new T ()); }
-
-    pointer operator() (double param) const
-    { return (new T(param)); }
+    template <typename ...Args>
+    pointer operator()(Args... args) const
+    { return new T{ args... }; }
   };
 
-  // Functor to return back an argument without change
+  /** \class Forward General/Useful.h "General/Useful.h"
+   \brief Functor to forward an argument. */
   template <typename Object_Type>
   struct Forward
   {
@@ -728,7 +776,8 @@ namespace useful
     { return object; }
   };
 
-  // Functor to return const reference to an argument
+  /** \class Forward_ref General/Useful.h "General/Useful.h"
+   \brief Functor to forward a const reference. */
   template <typename Object_Type>
   struct Forward_ref
   {
@@ -736,22 +785,26 @@ namespace useful
     { return object; }
   };
 
-  // Types for selecting function implementations
-  // at compile time
+  /** \class Selector_t General/Useful.h "General/Useful.h"
+   \brief Type for selecting function implementations at compile time. */
   template <typename TT> struct Selector_t{};
+  
+  /** \class Selector General/Useful.h "General/Useful.h"
+   \brief Type for selecting function implementations at compile time. */
   template <typename TT, TT(val)> struct Selector{};
 
-  // Ensure reference type
+  /** \brief Used along with ensure_ref(T const& obj) to ensure \p T is a reference type. */
   template <typename T>
   T& ensure_ref(T const* obj)
   { return *obj; }
 
-  // Ensure reference type
+  /** \brief Used along with ensure_ref(T const* obj) to ensure \p T is a reference type. */
   template <typename T>
   T& ensure_ref(T const& obj)
   { return obj; }
 
-  // Simple hash for a container by combining element hashes
+  /** \class hash_container General/Useful.h "General/Useful.h"
+   \brief Simple hash for a container by combining element hashes. */
   template <typename Container>
   struct hash_container
   {
@@ -769,7 +822,7 @@ namespace useful
     }
   };
 
-  // Combining seed with object hash
+  /** \brief Combine \p seed with the hash of an object \p v. */
   template <typename T>
   void hash_combine(std::size_t& seed, T const& v)
   {
@@ -777,7 +830,8 @@ namespace useful
     seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
   }
 
-  // Hash for std::pair
+  /** \class hash_pair General/Useful.h "General/Useful.h"
+   \brief Hash for std::pair. */
   template <typename S, typename T>
   struct hash_pair
   {
@@ -790,21 +844,21 @@ namespace useful
     }
   };
 
-  // Replace NaNs
-  template < typename T >
+  /** \brief If \p to_replace is NaN, replace it with \p replace_with. */
+  template <typename T>
   void deNaN(T& to_replace, T replace_with = T())
   {
     if (to_replace != to_replace) to_replace = replace_with;
   }
 
-  // Replace values below tolerance
+  /** \brief If \p to_chop is smaller than \p tolerance, replace it with \p replace_with. */
   template <typename T>
   void chop(T& to_chop, T tolerance, T replace_with = T())
   {
     if (std::abs(to_chop - replace_with) < tolerance) to_chop = replace_with;
   }
 
-  // Copy end element of container to position, then erase end element
+  /** \brief Copy end element of \p container to position \p position, then erase end element. */
   template <typename Container>
   void swap_erase(Container& container, std::size_t position)
   {
@@ -813,7 +867,8 @@ namespace useful
     container.pop_back();
   }
   
-  // Swap-erase all elements at positions in list
+  /** \brief Swap-erase elements in \p container at positions \p positions.
+   \note \p positions will be sorted, and must implement \c sort(std::greater<std::size_t>).*/
   template <typename Container, typename List>
   void swap_erase(Container& container, List&& positions)
   {
@@ -822,17 +877,16 @@ namespace useful
       swap_erase(container, position);
   }
   
-  // Swap-erase all elements satisfying criterion
+  /** \brief Swap-erase elements of \p container satisfying \p criterion. */
   template <typename Container, typename Criterion>
   void swap_erase_if(Container& container, Criterion&& criterion)
   {
-    std::list<std::size_t> to_delete;
     for (std::size_t ii = container.size(); ii --> 0;)
       if (criterion(container[ii]))
         swap_erase(container, ii);
   }
 
-  // Copy position to end element of vector to position, then delete end element
+  /** \brief Like swap_erase(Container&, std::size_t), but call \c delete on the removed element. */
   template <typename Container>
   void swap_delete(Container& container, std::size_t position)
   {
@@ -842,7 +896,7 @@ namespace useful
     container.pop_back();
   }
   
-  // Swap-delete all elements at positions in list
+  /** \brief Swap-delete elements in \p container at positions \p positions. */
   template <typename Container, typename List>
   void swap_delete(Container& container, List& positions)
   {
@@ -850,15 +904,26 @@ namespace useful
     for (auto const position : positions)
       swap_delete(container, position);
   }
+              
+  /** \brief Swap-delete elements of \p container satisfying \p criterion. */
+  template <typename Container, typename Criterion>
+  void swap_delete_if(Container& container, Criterion&& criterion)
+  {
+    for (std::size_t ii = container.size(); ii --> 0;)
+      if (criterion(container[ii]))
+        swap_delete(container, ii);
+  }
 
-  //  To check if a class has a method
-  //  From here: https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat
-  //  bundle of types
+  /** \class types General/Useful.h "General/Useful.h"
+   \brief Bundle of types. */
   template <class...> struct types{using type=types;};
+  /** \class voider General/Useful.h "General/Useful.h"
+   \brief Metafunction to turn a bundle of type arguments into \c void. */
   template <class...> struct voider{using type=void;};
-  //  Some dists still do not to have void_t
-  template <class...Ts> using void_t=typename voider<Ts...>::type;
-  //  hide the SFINAE stuff in a details namespace:
+  /** \brief void_t General/Useful.h "General/Useful.h"
+   \brief For dists that do not to have \c void_t. */
+  template <class...Ts> using void_t = typename voider<Ts...>::type;
+  /** \namespace useful::details Implementation details. */
   namespace details
   {
     template <template <class...> class Z, class types, class=void>
@@ -866,27 +931,37 @@ namespace useful
     template <template <class...> class Z, class...Ts>
     struct has_method<Z,types<Ts...>,void_t<Z<Ts...>>>:std::true_type{};
   }
-  // has_method<template, types...> is true iff template <types...> is valid
+  /** \brief types General/Useful.h "General/Useful.h"
+  \brief To check if a class has a method.
+  \details has_method<template, types...> is true iff template <types...> is valid.
+   
+   From here: https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat . */
   template <template <class...> class Z, class...Ts>
-  using has_method=details::has_method<Z,types<Ts...>>;
+  using has_method=details::has_method<Z, types<Ts...>>;
   
+  /** \brief begin_result General/Useful.h "General/Useful.h"
+  \brief Helper to check if a class has begin() method. */
   template<class X>
   using begin_result = decltype(std::declval<X>().begin());
+  /** \brief has_begin General/Useful.h "General/Useful.h"
+  \brief Check if a class has begin() method. */
   template<class X>
   using has_begin = has_method<begin_result, X>;
   
-  // Implemented here because some versions of gcc have trouble with the standard one
+  /** \brief Implemented here because some versions of gcc have trouble with std::isnan. */
   template <typename T>
   bool isnan(T const& val)
   { return val != val; }
   
-  // Apply function to each element of tuple
+  /** \brief Helper to apply function to each element of tuple. */
   template <typename Tuple, typename F, std::size_t ...Indices>
   void for_each_impl(Tuple const& tuple, F f, std::index_sequence<Indices...>)
   {
     using swallow = int[];
     (void)swallow{ 1, (f(std::get<Indices>(tuple)), void(), int{})... };
   }
+  
+  /** \brief Apply function to each element of tuple. */
   template <typename Tuple, typename F>
   void for_each(Tuple const& tuple, F f)
   {
@@ -894,6 +969,8 @@ namespace useful
       = std::tuple_size<std::remove_reference_t<Tuple>>::value;
     for_each_impl(tuple, f, std::make_index_sequence<N>{});
   }
+  
+  /** \brief Helper to apply function to each element of tuple. */
   template <typename Tuple, typename F, std::size_t ...Indices>
   void for_each_impl
   (Tuple&& tuple, F&& f, std::index_sequence<Indices...>)
@@ -903,6 +980,8 @@ namespace useful
                        void(),
                        int{})... };
   }
+  
+  /** \brief Apply function to each element of tuple. */
   template <typename Tuple, typename F>
   void for_each(Tuple&& tuple, F&& f)
   {
@@ -912,18 +991,23 @@ namespace useful
                   std::make_index_sequence<N>{});
   }
 
-  // Indices for template metamagic
+  /** \class indices General/Useful.h "General/Useful.h"
+   \brief Indices for template metamagic. */
   template <std::size_t... Indices>
   struct indices
   { using next = indices<Indices..., sizeof...(Indices)>; };
+
+  /** \class build_indices General/Useful.h "General/Useful.h"
+  \brief Indices for template metamagic. */
   template <std::size_t size>
   struct build_indices
   { using type = typename build_indices<size-1>::type::next; };
   template <>
-  struct build_indices< 0 >
+  struct build_indices<0>
   { using type = indices<>; };
 
-  // Get Parameters type for true or Empty type for false
+  /** \class Parameters_or_empty General/Useful.h "General/Useful.h"
+   \brief  Get Parameters type for true or Empty type for false. */
   template <bool, typename>
   struct Parameters_or_empty{ using type = useful::Empty; };
   template <typename T>
@@ -931,6 +1015,43 @@ namespace useful
   { using type = typename T::Parameters; };
   template <bool condition, typename T>
   using Parameters_or_empty_t = typename Parameters_or_empty<condition, T>::type;
+  
+  /** \class has_time_step_setter General/Useful.h "General/Useful.h"
+   \brief Check if type T has member function void time_step(double).
+   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
+  */
+  template <typename T> struct has_time_step_setter
+  {
+      typedef char (&Yes)[1];
+      typedef char (&No)[2];
+
+      template<class U>
+      static Yes test(U* data,
+                      typename std::enable_if<std::is_void<
+                        decltype(data->time_step(0.))>::value>::type* = 0);
+      static No test(...);
+      static const bool value =
+        sizeof(Yes) ==
+          sizeof(has_time_step_setter::test((typename std::remove_reference<T>::type*)0));
+  };
+  
+  /** \class has_time_step General/Useful.h "General/Useful.h"
+   \brief Check if type T has member function void time_step().
+   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
+  */
+  template <typename T> struct has_time_step
+  {
+      typedef char (&Yes)[1];
+      typedef char (&No)[2];
+
+      template<class U>
+      static Yes test(U* data,
+                      typename std::enable_if<std::is_same<
+                        double,
+                        decltype(data->time_step)>::value>::type* = 0);
+      static No test(...);
+      static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
+  };
 }
 
 #endif /* GENERAL_USEFUL_H */

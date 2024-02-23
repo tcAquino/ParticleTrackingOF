@@ -1,10 +1,18 @@
 <map id="General/Constants.h" name="General/Constants.h">
-<area shape="rect" id="node1" title=" " alt="" coords="121,5,275,32"/>
-<area shape="rect" id="node2" href="$d3/dba/_jump_generator_8h.html" title=" " alt="" coords="49,155,224,181"/>
-<area shape="rect" id="node7" href="$d8/dab/_geometry_2_boundary_8h.html" title=" " alt="" coords="178,80,341,107"/>
-<area shape="rect" id="node3" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title=" " alt="" coords="159,229,306,256"/>
-<area shape="rect" id="node6" href="$d0/dd9/_steppers_8h.html" title=" " alt="" coords="5,229,135,256"/>
-<area shape="rect" id="node4" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="109,304,252,331"/>
-<area shape="rect" id="node5" href="$d3/d74/_models_8h.html" title=" " alt="" coords="121,379,240,405"/>
-<area shape="rect" id="node8" href="$d1/d4e/_geometry_8h.html" title=" " alt="" coords="276,304,411,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="189,5,343,32"/>
+<area shape="rect" id="node2" href="$d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="28,155,203,181"/>
+<area shape="rect" id="node8" href="$d8/dab/_geometry_2_boundary_8h.html" title="Boundary&#45;enforcing classes for particle tracking." alt="" coords="185,80,347,107"/>
+<area shape="rect" id="node11" href="$de/ddd/_reaction_8h.html" title=" " alt="" coords="485,80,615,107"/>
+<area shape="rect" id="node3" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="107,229,254,256"/>
+<area shape="rect" id="node7" href="$d0/dd9/_steppers_8h.html" title=" " alt="" coords="5,304,135,331"/>
+<area shape="rect" id="node4" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="159,304,301,331"/>
+<area shape="rect" id="node5" href="$d3/d74/_models_8h.html" title=" " alt="" coords="280,379,399,405"/>
+<area shape="rect" id="node6" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="379,453,553,480"/>
+<area shape="rect" id="node9" href="$d1/d4e/_geometry_8h.html" title=" " alt="" coords="580,304,715,331"/>
+<area shape="rect" id="node10" href="$d5/d99/_geometry___parallel_8h.html" title=" " alt="" coords="657,379,849,405"/>
+<area shape="rect" id="node12" href="$dd/da3/_p_t_o_f_2_boundary_8h.html" title=" " alt="" coords="704,155,836,181"/>
+<area shape="rect" id="node15" href="$d6/d3b/_reaction___parallel_8h.html" title=" " alt="" coords="891,229,1075,256"/>
+<area shape="rect" id="node16" href="$dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="329,155,513,181"/>
+<area shape="rect" id="node13" href="$d9/d92/_initial_conditions_8h.html" title=" " alt="" coords="377,304,555,331"/>
+<area shape="rect" id="node14" href="$d4/deb/_store_8h.html" title=" " alt="" coords="710,229,817,256"/>
 </map>

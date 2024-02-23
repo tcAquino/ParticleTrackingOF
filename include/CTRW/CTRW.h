@@ -1,7 +1,7 @@
 /**
-* \file CTRW/CTRW.h
-* \author Tomás Aquino
-* \date 09/26/2017
+ \file CTRW/CTRW.h
+ \author Tomás Aquino
+ \date 09/26/2017
 */
 
 #ifndef CTRW_CTRW_H
@@ -13,18 +13,17 @@
 #include "CTRW/Particle.h"
 #include "General/Useful.h"
 
+/** \namespace ctrw Objects and methods related to CTRW. */
 namespace ctrw
 {
   /** \class CTRW CTRW/CTRW.h "CTRW/CTRW.h"
-   * \brief Handles a set of particles characterized by a state. 
-   * 
-   * Particles undergo transitions handled by a separate class
-   * passed to the evolution methods. \n
-   * State_t characterizes each particle's state. \n
-   * 
-   * Notes: \n
-   * - Order of particles in container is not preserved by removal methods.
-   * - Iterators and references can be invalidated when removing or adding particles. */
+   \brief Handles a set of particles characterized by a state.
+   \details Particles undergo transitions handled by a separate class passed to the evolution methods.
+   \tparam State_t Characterizes a particle's state.
+    \note
+    - Order of particles in container is not preserved by removal methods.
+    - Iterators and references can be invalidated when removing or adding particles.
+  */
   template <typename State_t>
   class CTRW
   {
@@ -34,111 +33,149 @@ namespace ctrw
     using Container = std::vector<Particle>; /**< Set of particles.                         */
     
     /** \struct Tag CTRW/CTRW.h "CTRW/CTRW.h"
-     * To select constructors that tag particles.*/
+    \brief To select constructors that tag particles. */
     struct Tag{};                     
 
-    /** Construct empty. */
+    /** Constructor.
+     \brief No particles.
+    */
     CTRW()
     {}
 
-    /** Construct given particles. */
+    /** Constructor.
+     \param particles Container with particles.
+    */
     CTRW(Container particles)
-    : particle_container{ particles }
+    : _particles{ particles }
     {}
     
-    /** Construct given particles and tag them in ascending order.
-     * State must define: tag. */
+    /** Constructor.
+     \brief Tag particles in ascending order.
+     \note State must define: tag.
+     \param particles Container with particles.
+    */
     CTRW(Container particles, Tag)
     : CTRW{ particles }
     { retag(); }
     
-    /** Construct given particles and reserve space for given maximum number. */
+    /** Constructor.
+     \brief Reserve space for maximum number of particles.
+     \param particles Container with particles.
+     \param max_nr_particles Number of particles to reserve space for.
+    */
     CTRW(Container particles, std::size_t max_nr_particles)
     {
-      particle_container.reserve(max_nr_particles);
-      particle_container = particles;
+      _particles.reserve(max_nr_particles);
+      _particles = particles;
     }
     
-    /** Construct given particles and reserve space for given maximum number
-     * Tag them in ascending order.
-     * State must define: 
-     * - tag */
+    /** Constructor.
+     \brief Tag particles in ascending order reserve space for maximum number of particles.
+     \note State must define: tag.
+     \param particles Container with particles.
+     \param max_nr_particles Number of particles to reserve space for.
+    */
     CTRW(Container particles, std::size_t max_nr_particles, Tag)
     : CTRW(particles, max_nr_particles)
     { retag(); }
 
-    /** Handle nr_particles particles.
-     * Each particle's state is produced by StateMaker. */
+    /** Constructor.
+     \param nr_particles Number of particles
+     \param state_maker Object to initialize particle states.
+    */
     template <typename StateMaker>
     CTRW(std::size_t nr_particles, StateMaker&& state_maker)
     { push_back(nr_particles, state_maker); }
 
-    /** Add nr_particles particles.
-     * Each particle's state is produced by StateMaker. */
+    /** \brief Add particles.
+     \param nr_particles Number of particles to add.
+     \param state_maker Object to initialize particle states.
+    */
     template <typename StateMaker>
     void push_back(std::size_t nr_particles, StateMaker&& state_maker)
     {
-      particle_container.reserve(nr_particles);
-      std::generate_n(std::back_inserter(particle_container), nr_particles, state_maker);
+      _particles.reserve(nr_particles);
+      std::generate_n(std::back_inserter(_particles), nr_particles, state_maker);
     }
 
-    /** Add copy of particle. */
+    /** \brief Add a particle.
+     \param particle Particle to add a copy of.
+    */
     void push_back(Particle const& particle)
-    { particle_container.push_back(particle); }
+    { _particles.push_back(particle); }
 
-    /** Add copies of particles in a container. */
+    /** \brief Add particles.
+      \param particles Container of particles to add copies of.
+    */
     void push_back(Container const& particles)
     {
       for (auto const& particle : particles)
-        particle_container.push_back(particle);
+        _particles.push_back(particle);
     }
     
-    /** Reserve space for nr_particles particles. */
+    /** \brief Reserve space for particles.
+     \param nr_particles Number of particles to reserve space for.
+    */
     void reserve(std::size_t nr_particles)
-    { particle_container.reserve(nr_particles); }
+    { _particles.reserve(nr_particles); }
     
-    /** Tag particles in order of container. */
+    /** \brief Tag particles in order of container. */
     void retag()
     {
       std::size_t pp = 0;
-      for (auto& particle : particle_container)
+      for (auto& particle : _particles)
       {
         particle.transform_both([pp](State& state){ state.tag = pp; });
         ++pp;
       }
     }
     
-    /** Set particle's new and old state to given state. */
+    /** \brief Set particle's new and old state.
+     \param part Index of particle to change state of.
+     \param state New state.
+    */
     void set(std::size_t part, State const& state)
-    { particle_container[part].set(state); }
+    { _particles[part].set(state); }
     
-    /** Apply transformation to particle. */
+    /** \brief Apply transformation to a particle's state(s).
+    \param transformation Transformation to apply.
+    \param part Index of particle to apply transformation to.
+    */
     template <typename Transformation>
     void transform(Transformation&& transformation, std::size_t part)
-    { particle_container[part].transform(transformation); }
+    { _particles[part].transform(transformation); }
     
-    /** Apply transformation to all particles. */
+    /** \brief Apply transformation to all particles' state(s).
+    \param transformation Transformation to apply.
+    */
     template <typename Transformation>
     void transform(Transformation&& transformation)
     {
-      for (auto& particle : particle_container)
+      for (auto& particle : _particles)
         particle.transform(transformation);
     }
     
-    /** Apply same transformation to both states of particle. */
+    /** \brief Apply same transformation to both states of a particle.
+    \param transformation Transformation to apply.
+    \param part Index of particle to apply transformation to.
+    */
     template <typename Transformation>
     void transform_both(Transformation&& transformation, std::size_t part)
-    { particle_container[part].transform_both(transformation); }
+    { _particles[part].transform_both(transformation); }
     
-    /** Apply same transformation to both states of all particles. */
+    /** \brief Apply same transformation to both states of all particles.
+    \param transformation Transformation to apply.
+    */
     template <typename Transformation>
     void transform_both(Transformation&& transformation)
     {
-      for (auto& particle : particle_container)
+      for (auto& particle : _particles)
         particle.transform_both(transformation);
     }
     
-    /** Remove particles satisfying a criterion. */
+    /** \brief Remove particles satisfying a criterion.
+     \param criterion Criterion to apply to each particle.
+    */
     template<typename Criterion>
     void remove(Criterion&& criterion)
     {
@@ -146,7 +183,9 @@ namespace ctrw
         remove(part, criterion);
     }
 
-    /** Remove particles at given positions in container. */
+    /** \brief Remove particles at given indices.
+     \param list List of particle indices to remove.
+    */
     template <typename IntegerType>
     void remove(std::list<IntegerType>& list)
     {
@@ -155,103 +194,126 @@ namespace ctrw
         remove(part);
     }
 
-    /** Remove all particles. */
+    /** \brief Remove all particles. */
     void clear()
-    { particle_container.clear(); }
+    { _particles.clear(); }
 
-    /** Particles make transitions until their time is >= time_to. */
-    template<typename Transitions_Particle>
+    /** \brief Evolve particle states in time.
+     \note State must define: time.
+     \param time_to Particles make transitions until their time is >= time_to.
+     \param transitions Handle changes to particle states in each step.
+    */
+    template<typename Transitions>
     void evolve_time
-    (double time_to, Transitions_Particle&& transitions_particle)
+    (double time_to, Transitions&& transitions)
     {
       evolve
       ([time_to](Particle const& part)
-       { return part.state_new().time < time_to; }, transitions_particle);
+       { return part.state_new().time < time_to; }, transitions);
     }
 
-    /** Particles make transitions until their time is >= time_to. */
-    template<typename Transitions_Particle>
+    /** \brief Evolve particle states in space in 1D.
+     \note
+     - State must define: position (scalar).
+     \param length_to Particles make transitions until their position is >= length_to.
+     \param transitions Handle changes to particle states in each step.
+    */
+    template<typename Transitions>
     void evolve_space
-    (double length_to, Transitions_Particle&& transitions_particle)
+    (double length_to, Transitions&& transitions)
     {
       evolve
       ([length_to](Particle const& part)
-      { return part.state_new().position < length_to; }, transitions_particle);
+      { return part.state_new().position < length_to; }, transitions);
     }
 
-    /** Particles make transitions until a given (particle-based) criterion is met. */
-    template<typename Transitions_Particle, typename Criterion>
+    /** \brief Evolve each particle until a given criterion is met.
+     \param criterion Criterion to apply to each particle.
+     \param transitions Handle changes to particle states in each step.
+    */
+    template<typename Transitions, typename Criterion>
     void evolve
-    (Criterion&& criterion, Transitions_Particle&& transitions_particle)
+    (Criterion&& criterion, Transitions&& transitions)
     {
-      for (auto& part : particle_container)
+      for (auto& part : _particles)
         while(criterion(part))
-          part.transition(transitions_particle);
+          part.transition(transitions);
     }
 
-    /** Each particle makes one transition. */
-    template<typename Transitions_Particle>
-    void step(Transitions_Particle&& transitions_particle)
+    /** \brief Evolve each particle one step.
+     \param transitions Handle changes to particle states in each step.
+    */
+    template<typename Transitions>
+    void step(Transitions&& transitions)
     {
-      for (auto& part : particle_container)
-        part.transition(transitions_particle);
+      for (auto& part : _particles)
+        part.transition(transitions);
     }
     
-    /** Each particle for which criterion is satisfied makes one transition.
-     *
-     * Returns number of particles that took a step */
-    template<typename Transitions_Particle, typename Criterion>
-    std::size_t step(Criterion&& criterion, Transitions_Particle&& transitions_particle)
+    /** \brief Evolve each particle that satisfies a criterion one step.
+     \param criterion Criterion to apply to each particle.
+     \param transitions Handle changes to particle states in each step.
+    */
+    template<typename Transitions, typename Criterion>
+    std::size_t step(Criterion&& criterion, Transitions&& transitions)
     {
       std::size_t nr_stepped = 0;
-      for (auto& part : particle_container)
+      for (auto& part : _particles)
         if (criterion(part))
         {
-          part.transition(transitions_particle);
+          part.transition(transitions);
           ++nr_stepped;
         }
       return nr_stepped;
     }
 
-    /** Get reference to particle container. */
+    /** \return Particle container.  */
     Container const& particles() const
-    { return particle_container; }
+    { return _particles; }
 
-    /** Get reference to particles. */
+    /**
+     \param part Index of particle.
+     \return Particle at given index.
+    */
     Particle const& particles(std::size_t part) const
-    { return particle_container[part]; }
+    { return _particles[part]; }
 
-    // Get number of particles
+    /** \return Number of particles. */
     std::size_t size() const
-    { return particle_container.size(); }
+    { return _particles.size(); }
 
-    /** Iterator to begining of particle container. */
+    /** \return Constant iterator to begining of particle container. */
     auto cbegin() const
-    { return particle_container.cbegin(); }
+    { return _particles.cbegin(); }
 
-    /** Iterator to end of particle container. */
+    /** \return Constant iterator to end of particle container. */
     auto cend() const
-    { return particle_container.cend(); }
+    { return _particles.cend(); }
     
-    /** Iterator to begining of particle container. */
+    /** \return Constant iterator to begining of particle container. */
     auto begin() const
-    { return particle_container.cbegin(); }
+    { return _particles.cbegin(); }
 
-    /** Iterator to end of particle container. */
+    /** \return Constant iterator to end of particle container. */
     auto end() const
-    { return particle_container.cend(); }
+    { return _particles.cend(); }
     
   private:
-    Container particle_container; /**< Current particles. */
+    Container _particles; /**< Current particles. */
 
-    /** Remove particle by position in container if criterion is met. */
+    /** \brief Remove particle if criterion is met.
+    \param part Index of particle to remove.
+    \param criterion Criterion to apply to each particle.
+    */
     template <typename Criterion>
     void remove(std::size_t part, Criterion&& criterion)
-    { if (criterion(particle_container[part])) remove(part); }
+    { if (criterion(_particles[part])) remove(part); }
     
-    /** Remove particle by position in container. */
+    /** \brief Remove particle.
+    \param part Index of particle to remove.
+    */
     void remove(std::size_t part)
-    { useful::swap_erase(particle_container, part); }
+    { useful::swap_erase(_particles, part); }
   };
 }
 

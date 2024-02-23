@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Models.h
-* \author Tomás Aquino
-* \date 22/02/2022
+ \file PTOF/Models.h
+ \author Tomás Aquino
+ \date 22/02/2022
 */
 
 #ifndef PTOF_MODELS_H
@@ -28,8 +28,11 @@
 #include "PTOF/Steppers.h"
 #include "PTOF/Transitions.h"
 
+/** \namespace ptof Objects and methods for ParticleTrackingOF. */
 namespace ptof
 {
+  /** \namespace ptof::model_advection_diffusion_2d
+   Definitions for 2D advective--diffusive transport. */
   namespace model_advection_diffusion_2d
   {
     struct Model
@@ -224,17 +227,18 @@ namespace ptof
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
-      typename ReactionParameters>
+      typename ReactionParameters,
+      typename SolverParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
        ReactionParameters const& params_reaction,
-       Solvers::Parameters const& params_solvers)
+       SolverParameters const& params_solvers)
       {
         return makeTransportTransitions<
           Geometry, Solvers::Steppers>(velocity_field,
@@ -251,7 +255,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
+          ptof::get_velocity_data_rescaled(geometry.mesh(),
                                            average_velocity_magnitude));
       }
       
@@ -261,7 +265,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data(geometry.mesh));
+          ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
@@ -498,6 +502,8 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
+  /** \namespace ptof::model_advection_2d
+   Definitions for 2D advective transport. */
   namespace model_advection_2d
   {
     struct Model
@@ -668,17 +674,18 @@ namespace ptof
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
-      typename ReactionParameters>
+      typename ReactionParameters,
+      typename SolverParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
        ReactionParameters const& params_reaction,
-       Solvers::Parameters const& params_solvers)
+       SolverParameters const& params_solvers)
       {
         return makeTransportTransitions_Advection<
           Geometry, Solvers::Steppers>(velocity_field,
@@ -695,7 +702,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
+          ptof::get_velocity_data_rescaled(geometry.mesh(),
                                            average_velocity_magnitude));
       }
       
@@ -705,7 +712,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data(geometry.mesh));
+          ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
@@ -722,6 +729,8 @@ namespace ptof
     };
   };
   
+  /** \namespace ptof::model_advection_diffusion_fpt_2d
+   Definitions for first-passage times under 2D advective--diffusive transport. */
   namespace model_advection_diffusion_fpt_2d
   {
     struct Model
@@ -800,6 +809,8 @@ namespace ptof
     };
   }
   
+  /** \namespace ptof::model_advection_diffusion_decay_catalytic_2d
+   Definitions for 2D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$. */
   namespace model_advection_diffusion_decay_catalytic_2d
   {
     struct Model
@@ -900,7 +911,7 @@ namespace ptof
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
-                                               geometry.mesh ) };
+                                               geometry.mesh() ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -918,6 +929,8 @@ namespace ptof
     };
   }
   
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_2d
+   Definitions for 2D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_2d
   {
     struct Model
@@ -998,6 +1011,8 @@ namespace ptof
     };
   }
   
+  /** \namespace ptof::model_periodic_cartesian_advection_2d
+   Definitions for 2D advective transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_2d
   {
     struct Model
@@ -1029,6 +1044,8 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d::Output;
   };
   
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_2d
+   Definitions for first-passage times under 2D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_fpt_2d
   {
     struct Model
@@ -1061,6 +1078,8 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_decay_catalytic_2d
+   Definitions for first-passage times under 2D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$, with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_decay_catalytic_2d
   {
     struct Model
@@ -1091,6 +1110,8 @@ namespace ptof
     using model_advection_diffusion_decay_catalytic_2d::Reaction;
   }
   
+  /** \namespace ptof::model_advection_diffusion_3d
+   Definitions for 3D advective--diffusive transport. */
   namespace model_advection_diffusion_3d
   {
     struct Model
@@ -1122,17 +1143,18 @@ namespace ptof
       using Parameters = model_advection_diffusion_2d::Transport::Parameters;
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
-      typename ReactionParameters>
+      typename ReactionParameters,
+      typename SolverParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
        ReactionParameters const& params_reaction,
-       Solvers::Parameters const& params_solvers)
+       SolverParameters const& params_solvers)
       {
         return makeTransportTransitions<
           Geometry, Solvers::Steppers>(velocity_field,
@@ -1149,7 +1171,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
+          ptof::get_velocity_data_rescaled(geometry.mesh(),
                                            average_velocity_magnitude));
       }
       
@@ -1159,7 +1181,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data(geometry.mesh));
+          ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
@@ -1288,6 +1310,8 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
 
+  /** \namespace ptof::model_advection_3d
+   Definitions for 3D advective transport. */
   namespace model_advection_3d
   {
     struct Model
@@ -1318,6 +1342,8 @@ namespace ptof
     using model_advection_2d::Transport;
   };
 
+  /** \namespace ptof::model_advection_diffusion_fpt_3d
+   Definitions for first-passage times under 3D advective--diffusive transport. */
   namespace model_advection_diffusion_fpt_3d
   {
     struct Model
@@ -1396,6 +1422,8 @@ namespace ptof
     };
   }
 
+  /** \namespace ptof::model_advection_diffusion_decay_catalytic_3d
+   Definitions for 3D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$. */
   namespace model_advection_diffusion_decay_catalytic_3d
   {
     struct Model
@@ -1496,7 +1524,7 @@ namespace ptof
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(params.surface_concentration,
                                                { "wallFluidSolid" },
-                                               geometry.mesh ) };
+                                               geometry.mesh() ) };
         throw std::runtime_error{
           "Initial reactant distribution "
           + params.initial_distribution
@@ -1513,6 +1541,8 @@ namespace ptof
     };
   }
 
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_3d
+   Definitions for 3D advective transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_3d
   {
     struct Model
@@ -1593,6 +1623,8 @@ namespace ptof
     };
   }
 
+  /** \namespace ptof::model_periodic_cartesian_advection_3d
+   Definitions for 3D advective transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_3d
   {
     struct Model
@@ -1624,6 +1656,8 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d::Output;
   };
 
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_3d
+   Definitions for first-passage times under 3D advective--diffusive transport with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_fpt_3d
   {
     struct Model
@@ -1656,6 +1690,8 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
 
+  /** \namespace ptof::model_periodic_cartesian_advection_diffusion_decay_catalytic_3d
+   Definitions for 3D advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$, with some periodic boundaries aligned with the Cartesian axes. */
   namespace model_periodic_cartesian_advection_diffusion_decay_catalytic_3d
   {
     struct Model
@@ -1686,6 +1722,8 @@ namespace ptof
     using model_advection_diffusion_decay_catalytic_3d::Reaction;
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection_diffusion
+   Definitions for advective--diffusive transport in a body centered cubic beadpack, based on the primitive unit cell. */
   namespace model_bcc_cartesian_advection_diffusion
   {
     struct Model
@@ -1910,17 +1948,18 @@ namespace ptof
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
-      typename ReactionParameters>
+      typename ReactionParameters,
+      typename SolverParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
        ReactionParameters const& params_reaction,
-       Solvers::Parameters const& params_solvers)
+       SolverParameters const& params_solvers)
       {
         return makeTransportTransitions<
           Geometry, Solvers::Steppers>(velocity_field,
@@ -1937,7 +1976,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
+          ptof::get_velocity_data_rescaled(geometry.mesh(),
                                            average_velocity_magnitude));
       }
       
@@ -1947,7 +1986,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data(geometry.mesh));
+          ptof::get_velocity_data(geometry.mesh()));
       }
       
       template <typename OStream>
@@ -1964,6 +2003,8 @@ namespace ptof
     };
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection_diffusion_fpt
+   Definitions for first-passage times under advective--diffusive transport in a body centered cubic beadpack, based on the primitive unit cell. */
   namespace model_bcc_cartesian_advection_diffusion_fpt
   {
     struct Model
@@ -1997,6 +2038,8 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection
+   Definitions for advective transport in a body centered cubic beadpack, based on the primitive unit cell. */
   namespace model_bcc_cartesian_advection
   {
     struct Model
@@ -2152,17 +2195,18 @@ namespace ptof
       };
       
       template
-      <typename Geometry,
-      typename VelocityField,
+      <typename VelocityField,
+      typename Geometry,
       typename Boundary,
-      typename ReactionParameters>
+      typename ReactionParameters,
+      typename SolverParameters>
       static auto makeTransitions
       (VelocityField const& velocity_field,
        Geometry const& geometry,
        Boundary& boundary,
        Parameters const& params_transport,
        ReactionParameters const& params_reaction,
-       Solvers::Parameters const& params_solvers)
+       SolverParameters const& params_solvers)
       {
         return makeTransportTransitions_Advection<
           Geometry, Solvers::Steppers>(velocity_field,
@@ -2179,7 +2223,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh,
+          ptof::get_velocity_data_rescaled(geometry.mesh(),
                                            average_velocity_magnitude));
       }
      
@@ -2189,7 +2233,7 @@ namespace ptof
       {
         return makeLinearInterpolator(
           geometry,
-          ptof::get_velocity_data(geometry.mesh));
+          ptof::get_velocity_data(geometry.mesh()));
       }
      
       template <typename OStream>
@@ -2206,6 +2250,8 @@ namespace ptof
     };
   }
   
+  /** \namespace ptof::model_bcc_cartesian_advection_diffusion_decay_catalytic
+   Definitions for advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$ in a body centered cubic beadpack, based on the primitive unit cell. */
   namespace model_bcc_cartesian_advection_diffusion_decay_catalytic
   {
     struct Model
@@ -2237,6 +2283,8 @@ namespace ptof
     using model_advection_diffusion_decay_catalytic_2d::Reaction;
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_diffusion
+   Definitions for advective--diffusive transport in a body centered cubic beadpack, based on the minimal periodic unit cell. */
   namespace model_bcc_symmetryplanes_advection_diffusion
   {
     struct Model
@@ -2270,6 +2318,8 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion::Reaction;
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt
+  Definitions for first-passage times under advective--diffusive transport in a body centered cubic beadpack, based on the minimal periodic unit cell. */
   namespace model_bcc_symmetryplanes_advection_diffusion_fpt
   {
     struct Model
@@ -2303,6 +2353,8 @@ namespace ptof
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection
+  Definitions for advective transport in a body centered cubic beadpack, based on the minimal periodic unit cell. */
   namespace model_bcc_symmetryplanes_advection
   {
     struct Model
@@ -2334,6 +2386,8 @@ namespace ptof
     using model_bcc_cartesian_advection::Reaction;
   }
   
+  /** \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_decay_catalytic
+  Definitions for advective--diffusive transport with surface reaction \f$ A_F + B_S \to B_S\f$ in a body centered cubic beadpack, based on the minimal periodic unit cell. */
   namespace model_bcc_symmetryplanes_advection_diffusion_decay_catalytic
   {
     struct Model

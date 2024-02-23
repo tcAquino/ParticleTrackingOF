@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Transitions.h
-* \author Tomás Aquino
-* \date 09/03/2022
+ \file PTOF/Transitions.h
+ \author Tomás Aquino
+ \date 09/03/2022
 */
 
 #ifndef PTOF_TRANSITIONS_H
@@ -13,14 +13,7 @@
 
 namespace ptof
 {
-  /** Make transitions object
-   * to handle conservative transport.
-   * Given:
-   * - velocity field;
-   * - geometry information;
-   * - boundary condition enforcer;
-   * - transport parameters;
-   * - solver parameters. */
+  /** \brief Make transitions object to handle advective-diffusive transport. */
   template
   <typename Geometry,
   typename Steppers,
@@ -42,11 +35,11 @@ namespace ptof
         TimeStepAdaptor_CellSize_SurfaceReaction{
           geometry,
           velocity_field,
-          boundary.reaction,
+          boundary.surface_reaction,
           params_transport,
           params_reaction,
           params_solvers,
-          FieldOptions::Warn{} },
+          CheckOptions::Warn{} },
         Steppers::makeTimeGenerator(params_solvers),
         Steppers::makeJumpGenerator(std::forward<VelocityField>(velocity_field),
                                     boundary,
@@ -56,14 +49,7 @@ namespace ptof
         boundary };
   }
   
-  /** Make transitions object
-   * to handle purely-advective transport
-   * Given:
-   * - velocity field;
-   * - geometry information;
-   * - boundary condition enforcer;
-   * - transport parameters;
-   * - solver parameters. */
+  /** \brief Make transitions object to handle purely-advective transport. */
   template
   <typename Geometry,
   typename Steppers,
@@ -85,11 +71,11 @@ namespace ptof
         TimeStepAdaptor_CellSize_SurfaceReaction{
           geometry,
           velocity_field,
-          boundary.reaction,
+          boundary.surface_reaction,
           params_transport,
           params_reaction,
           params_solvers,
-          FieldOptions::Warn{} },
+          CheckOptions::Warn{} },
         Steppers::makeTimeGenerator(params_solvers),
         Steppers::makeJumpGenerator_Advection(std::forward<VelocityField>(velocity_field),
                                               boundary,

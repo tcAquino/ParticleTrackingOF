@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::Get_position_periodic&lt; Boundary &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: ctrw::Get_position_periodic&lt; Boundary &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,18 +86,18 @@ $(document).ready(function(){initNavTree('dd/dd1/structctrw_1_1_get__position__p
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::Get_position_periodic&lt; Boundary &gt; Struct Template Reference</div>  </div>
+<div class="title">ctrw::Get_position_periodic&lt; Boundary &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Get absolute position given state.  
+<p>Get absolute position given state from position and periodicity.  
  <a href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a274d3b735024a18cdf158d8b4dcbf8ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#a274d3b735024a18cdf158d8b4dcbf8ee">Get_position_periodic</a> (Boundary &amp;&amp;<a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#a7da7dcd0383fe6553379b7d0e8c7a0db">boundary</a>)</td></tr>
+<tr class="memitem:a274d3b735024a18cdf158d8b4dcbf8ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#a274d3b735024a18cdf158d8b4dcbf8ee">Get_position_periodic</a> (Boundary &amp;&amp;boundary)</td></tr>
 <tr class="separator:a274d3b735024a18cdf158d8b4dcbf8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcb643988f7123707164536d428d8b14"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:adcb643988f7123707164536d428d8b14"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#adcb643988f7123707164536d428d8b14">operator()</a> (State const &amp;state) const</td></tr>
@@ -105,18 +105,20 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a7da7dcd0383fe6553379b7d0e8c7a0db"><td class="memItemLeft" align="right" valign="top">Boundary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#a7da7dcd0383fe6553379b7d0e8c7a0db">boundary</a></td></tr>
-<tr class="separator:a7da7dcd0383fe6553379b7d0e8c7a0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3963e329d4a7ec0af18a62ead18d869"><td class="memItemLeft" align="right" valign="top">Boundary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html#ac3963e329d4a7ec0af18a62ead18d869">_boundary</a></td></tr>
+<tr class="separator:ac3963e329d4a7ec0af18a62ead18d869"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Boundary&gt;<br />
-struct ctrw::Get_position_periodic&lt; Boundary &gt;</h3>
+class ctrw::Get_position_periodic&lt; Boundary &gt;</h3>
 
-<p>Get absolute position given state. </p>
-<p>State must define:</p><ul>
-<li>position</li>
-<li>periodicity : unit cell periodic position is in Boundary class must define translation method given a position. </li>
-</ul>
+<p>Get absolute position given state from position and periodicity. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Boundary</td><td>Object that must define translate method given position and periodicity, which changes the first according to the latter. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a274d3b735024a18cdf158d8b4dcbf8ee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a274d3b735024a18cdf158d8b4dcbf8ee">&#9670;&nbsp;</a></span>Get_position_periodic()</h2>
@@ -143,7 +145,6 @@ template&lt;typename Boundary &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given boundary class. </p>
 
 </div>
 </div>
@@ -179,8 +180,8 @@ template&lt;typename State &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a7da7dcd0383fe6553379b7d0e8c7a0db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7da7dcd0383fe6553379b7d0e8c7a0db">&#9670;&nbsp;</a></span>boundary</h2>
+<a id="ac3963e329d4a7ec0af18a62ead18d869"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3963e329d4a7ec0af18a62ead18d869">&#9670;&nbsp;</a></span>_boundary</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,7 +192,7 @@ template&lt;typename Boundary &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary <a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html">ctrw::Get_position_periodic</a>&lt; Boundary &gt;::boundary</td>
+          <td class="memname">Boundary <a class="el" href="../../dd/dd1/structctrw_1_1_get__position__periodic.html">ctrw::Get_position_periodic</a>&lt; Boundary &gt;::_boundary</td>
         </tr>
       </table>
   </td>
@@ -203,7 +204,7 @@ template&lt;typename Boundary &gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">StateGetter.h</a></li>
 </ul>
 </div><!-- contents -->

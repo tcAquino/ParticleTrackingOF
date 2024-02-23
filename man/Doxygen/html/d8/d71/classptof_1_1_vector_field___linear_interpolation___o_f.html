@@ -92,10 +92,10 @@ $(document).ready(function(){initNavTree('d8/d71/classptof_1_1_vector_field___li
 </div><!--header-->
 <div class="contents">
 
-<p>Linear interpolation of vector field data based on OpenFOAM routines.  
+<p>Linear interpolation of vector field cell data based on OpenFOAM routines.  
  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d2/dd0/_particle_tracking_o_f_2_field_8h_source.html">PTOF/Field.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../df/d96/_field_8h_source.html">PTOF/Field.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -111,106 +111,81 @@ Public Types</h2></td></tr>
 <tr class="separator:ac539c48a5677794c117efbf26b4e3ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accbc7e3948cbd24d046c549d3ce6184b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> = Foam::label</td></tr>
 <tr class="separator:accbc7e3948cbd24d046c549d3ce6184b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa60df8b3b546bed4a94a80770fb219f3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> = Foam::point</td></tr>
-<tr class="separator:aa60df8b3b546bed4a94a80770fb219f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5225df3635fd7d7a2d8fdd00b10c5148"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
-<tr class="separator:a5225df3635fd7d7a2d8fdd00b10c5148"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac110a75f4d90e80745ee082314d0e2d3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac110a75f4d90e80745ee082314d0e2d3">Vector</a> = Foam::vector</td></tr>
-<tr class="separator:ac110a75f4d90e80745ee082314d0e2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2844fb06fa63c9d87ea1fc581b55cd31"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2844fb06fa63c9d87ea1fc581b55cd31">Vector2D</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
-<tr class="separator:a2844fb06fa63c9d87ea1fc581b55cd31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac539c48a5677794c117efbf26b4e3ea4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a> = Foam::scalar</td></tr>
-<tr class="separator:ac539c48a5677794c117efbf26b4e3ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accbc7e3948cbd24d046c549d3ce6184b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> = Foam::label</td></tr>
-<tr class="separator:accbc7e3948cbd24d046c549d3ce6184b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac7da41a7c4e2e2525ac115cd948ca3af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac7da41a7c4e2e2525ac115cd948ca3af">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a>, Locator &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a>, <a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a73f540aadab47311bfaeb4a9d651005c">FieldOptions::NoCheck</a>)</td></tr>
-<tr class="separator:ac7da41a7c4e2e2525ac115cd948ca3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab90a95f18e9f59259a17eddbde7a3075"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ab90a95f18e9f59259a17eddbde7a3075">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a>, Locator &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a>, <a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a5930c3216df999bdc83f944262fdfc41">FieldOptions::Check</a>)</td></tr>
-<tr class="separator:ab90a95f18e9f59259a17eddbde7a3075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33d5d3fa4cfd470c787bf29a6c55f2c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a33d5d3fa4cfd470c787bf29a6c55f2c3">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a>, Locator &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a>, <a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a4f0d32625c035502a6f87c56d3e16a0c">FieldOptions::Warn</a>)</td></tr>
-<tr class="separator:a33d5d3fa4cfd470c787bf29a6c55f2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82e80fb2617aef74a260c5750d062210"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a82e80fb2617aef74a260c5750d062210">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;field, Locator &amp;&amp;locator, <a class="el" href="../../d6/d82/namespaceptof_1_1_check_options.html#a22960b800e4c92cc3e17b39cecb5f4ef">CheckOptions::NoCheck</a>)</td></tr>
+<tr class="memdesc:a82e80fb2617aef74a260c5750d062210"><td class="mdescLeft">&#160;</td><td class="mdescRight">Without checking if position is in bounds.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a82e80fb2617aef74a260c5750d062210">More...</a><br /></td></tr>
+<tr class="separator:a82e80fb2617aef74a260c5750d062210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6364678a78fb295451ccfa0c753b9d0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6364678a78fb295451ccfa0c753b9d0a">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;field, Locator &amp;&amp;locator, <a class="el" href="../../d6/d82/namespaceptof_1_1_check_options.html#aaae4720ab7867069cb637989f530a8f5">CheckOptions::Check</a>)</td></tr>
+<tr class="memdesc:a6364678a78fb295451ccfa0c753b9d0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">With checking if position is in bounds but no warning if not.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6364678a78fb295451ccfa0c753b9d0a">More...</a><br /></td></tr>
+<tr class="separator:a6364678a78fb295451ccfa0c753b9d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376886b743ec3d8ca7b674bcdb1f61c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a376886b743ec3d8ca7b674bcdb1f61c4">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;field, Locator &amp;&amp;locator, <a class="el" href="../../d6/d82/namespaceptof_1_1_check_options.html#a9db96a4c8e4112987ed1b7df21171b61">CheckOptions::Warn</a>)</td></tr>
+<tr class="memdesc:a376886b743ec3d8ca7b674bcdb1f61c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">With warning if particle is in bounds.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a376886b743ec3d8ca7b674bcdb1f61c4">More...</a><br /></td></tr>
+<tr class="separator:a376886b743ec3d8ca7b674bcdb1f61c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8117c4d69778366ca3e50aa7f2d105ce"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8117c4d69778366ca3e50aa7f2d105ce">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
+<tr class="memdesc:a8117c4d69778366ca3e50aa7f2d105ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8117c4d69778366ca3e50aa7f2d105ce">More...</a><br /></td></tr>
 <tr class="separator:a8117c4d69778366ca3e50aa7f2d105ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abec8305dff506b46bd742fdfeef8a17e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#abec8305dff506b46bd742fdfeef8a17e">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position) const</td></tr>
+<tr class="memdesc:abec8305dff506b46bd742fdfeef8a17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#abec8305dff506b46bd742fdfeef8a17e">More...</a><br /></td></tr>
 <tr class="separator:abec8305dff506b46bd742fdfeef8a17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb27165abb080c7cec4d9f77a8744db3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#afb27165abb080c7cec4d9f77a8744db3">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
+<tr class="memdesc:afb27165abb080c7cec4d9f77a8744db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#afb27165abb080c7cec4d9f77a8744db3">More...</a><br /></td></tr>
 <tr class="separator:afb27165abb080c7cec4d9f77a8744db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ed24418b40413881a6ff0d86470c717"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8ed24418b40413881a6ff0d86470c717">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> const &amp;position) const</td></tr>
+<tr class="memdesc:a8ed24418b40413881a6ff0d86470c717"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8ed24418b40413881a6ff0d86470c717">More...</a><br /></td></tr>
 <tr class="separator:a8ed24418b40413881a6ff0d86470c717"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae349767b53171ebe192dc69cdc890847"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ae349767b53171ebe192dc69cdc890847">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a> position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
+<tr class="memdesc:ae349767b53171ebe192dc69cdc890847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ae349767b53171ebe192dc69cdc890847">More...</a><br /></td></tr>
 <tr class="separator:ae349767b53171ebe192dc69cdc890847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbe1614618f64052d5addf4365740b6e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#acbe1614618f64052d5addf4365740b6e">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a> position) const</td></tr>
+<tr class="memdesc:acbe1614618f64052d5addf4365740b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#acbe1614618f64052d5addf4365740b6e">More...</a><br /></td></tr>
 <tr class="separator:acbe1614618f64052d5addf4365740b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a9580cf7cec57af4ad684712a95e6ab"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:a6a9580cf7cec57af4ad684712a95e6ab"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6a9580cf7cec57af4ad684712a95e6ab">operator()</a> (State const &amp;state) const</td></tr>
+<tr class="memdesc:a6a9580cf7cec57af4ad684712a95e6ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6a9580cf7cec57af4ad684712a95e6ab">More...</a><br /></td></tr>
 <tr class="separator:a6a9580cf7cec57af4ad684712a95e6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b2678b6c72d5c52e68062de5818d74b"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:a1b2678b6c72d5c52e68062de5818d74b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a1b2678b6c72d5c52e68062de5818d74b">locate</a> (State const &amp;state) const</td></tr>
+<tr class="memdesc:a1b2678b6c72d5c52e68062de5818d74b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locate a state in the mesh.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a1b2678b6c72d5c52e68062de5818d74b">More...</a><br /></td></tr>
 <tr class="separator:a1b2678b6c72d5c52e68062de5818d74b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5c1e6dd0c62510b3ed4c6030db6abdf"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac5c1e6dd0c62510b3ed4c6030db6abdf">get_field</a> () const</td></tr>
 <tr class="separator:ac5c1e6dd0c62510b3ed4c6030db6abdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5fc3f8399a0d6af5ce16687ec51fb07"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ab5fc3f8399a0d6af5ce16687ec51fb07">get_locator</a> () const</td></tr>
 <tr class="separator:ab5fc3f8399a0d6af5ce16687ec51fb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa046ca9f740d5ebe7fbc4d9b03e742ff"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa046ca9f740d5ebe7fbc4d9b03e742ff">rescale</a> (double factor)</td></tr>
+<tr class="memdesc:aa046ca9f740d5ebe7fbc4d9b03e742ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rescale underlying field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa046ca9f740d5ebe7fbc4d9b03e742ff">More...</a><br /></td></tr>
 <tr class="separator:aa046ca9f740d5ebe7fbc4d9b03e742ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7da41a7c4e2e2525ac115cd948ca3af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac7da41a7c4e2e2525ac115cd948ca3af">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a>, Locator &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a>, <a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a73f540aadab47311bfaeb4a9d651005c">FieldOptions::NoCheck</a>)</td></tr>
-<tr class="separator:ac7da41a7c4e2e2525ac115cd948ca3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab90a95f18e9f59259a17eddbde7a3075"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ab90a95f18e9f59259a17eddbde7a3075">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a>, Locator &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a>, <a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a5930c3216df999bdc83f944262fdfc41">FieldOptions::Check</a>)</td></tr>
-<tr class="separator:ab90a95f18e9f59259a17eddbde7a3075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33d5d3fa4cfd470c787bf29a6c55f2c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a33d5d3fa4cfd470c787bf29a6c55f2c3">VectorField_LinearInterpolation_OF</a> (Field &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a>, Locator &amp;&amp;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a>, <a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a4f0d32625c035502a6f87c56d3e16a0c">FieldOptions::Warn</a>)</td></tr>
-<tr class="separator:a33d5d3fa4cfd470c787bf29a6c55f2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8117c4d69778366ca3e50aa7f2d105ce"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8117c4d69778366ca3e50aa7f2d105ce">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
-<tr class="separator:a8117c4d69778366ca3e50aa7f2d105ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abec8305dff506b46bd742fdfeef8a17e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#abec8305dff506b46bd742fdfeef8a17e">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position) const</td></tr>
-<tr class="separator:abec8305dff506b46bd742fdfeef8a17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb27165abb080c7cec4d9f77a8744db3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#afb27165abb080c7cec4d9f77a8744db3">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
-<tr class="separator:afb27165abb080c7cec4d9f77a8744db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ed24418b40413881a6ff0d86470c717"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8ed24418b40413881a6ff0d86470c717">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> const &amp;position) const</td></tr>
-<tr class="separator:a8ed24418b40413881a6ff0d86470c717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae349767b53171ebe192dc69cdc890847"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ae349767b53171ebe192dc69cdc890847">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a> position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
-<tr class="separator:ae349767b53171ebe192dc69cdc890847"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbe1614618f64052d5addf4365740b6e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#acbe1614618f64052d5addf4365740b6e">operator()</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a> position) const</td></tr>
-<tr class="separator:acbe1614618f64052d5addf4365740b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a9580cf7cec57af4ad684712a95e6ab"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a6a9580cf7cec57af4ad684712a95e6ab"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6a9580cf7cec57af4ad684712a95e6ab">operator()</a> (State const &amp;state) const</td></tr>
-<tr class="separator:a6a9580cf7cec57af4ad684712a95e6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b2678b6c72d5c52e68062de5818d74b"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a1b2678b6c72d5c52e68062de5818d74b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a1b2678b6c72d5c52e68062de5818d74b">locate</a> (State const &amp;state) const</td></tr>
-<tr class="separator:a1b2678b6c72d5c52e68062de5818d74b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5c1e6dd0c62510b3ed4c6030db6abdf"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac5c1e6dd0c62510b3ed4c6030db6abdf">get_field</a> () const</td></tr>
-<tr class="separator:ac5c1e6dd0c62510b3ed4c6030db6abdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5fc3f8399a0d6af5ce16687ec51fb07"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ab5fc3f8399a0d6af5ce16687ec51fb07">get_locator</a> () const</td></tr>
-<tr class="separator:ab5fc3f8399a0d6af5ce16687ec51fb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa046ca9f740d5ebe7fbc4d9b03e742ff"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa046ca9f740d5ebe7fbc4d9b03e742ff">rescale</a> (double factor)</td></tr>
-<tr class="separator:aa046ca9f740d5ebe7fbc4d9b03e742ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a882415fa2a30b62290e68fbf778ea0b3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a882415fa2a30b62290e68fbf778ea0b3">sum</a> (Field const &amp;other_field)</td></tr>
+<tr class="memdesc:a882415fa2a30b62290e68fbf778ea0b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum to underlying field.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a882415fa2a30b62290e68fbf778ea0b3">More...</a><br /></td></tr>
+<tr class="separator:a882415fa2a30b62290e68fbf778ea0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d52b52de4aaf2bb1d0bc908ab62e5c8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6d52b52de4aaf2bb1d0bc908ab62e5c8">set</a> (Field const &amp;field)</td></tr>
+<tr class="memdesc:a6d52b52de4aaf2bb1d0bc908ab62e5c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change underlying field data.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a6d52b52de4aaf2bb1d0bc908ab62e5c8">More...</a><br /></td></tr>
+<tr class="separator:a6d52b52de4aaf2bb1d0bc908ab62e5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:af2320bf6dc923afe8e24f5e2f3c5bdc2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#af2320bf6dc923afe8e24f5e2f3c5bdc2">check_bounds</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
-<tr class="separator:af2320bf6dc923afe8e24f5e2f3c5bdc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2320bf6dc923afe8e24f5e2f3c5bdc2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#af2320bf6dc923afe8e24f5e2f3c5bdc2">check_bounds</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
-<tr class="separator:af2320bf6dc923afe8e24f5e2f3c5bdc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb0fa71255315f6a0fa9e76070a51f1b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#afb0fa71255315f6a0fa9e76070a51f1b">outside</a> (<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;position, <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> cell) const</td></tr>
+<tr class="memdesc:afb0fa71255315f6a0fa9e76070a51f1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if position is out of bounds.  <a href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#afb0fa71255315f6a0fa9e76070a51f1b">More...</a><br /></td></tr>
+<tr class="separator:afb0fa71255315f6a0fa9e76070a51f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a2c3e9e0fe2ebd84436c63842898063e9"><td class="memItemLeft" align="right" valign="top">Field&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a></td></tr>
-<tr class="separator:a2c3e9e0fe2ebd84436c63842898063e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a184a3459e4590ec8c8fba82e8b2ad51f"><td class="memItemLeft" align="right" valign="top">Locator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a184a3459e4590ec8c8fba82e8b2ad51f">locator</a></td></tr>
-<tr class="separator:a184a3459e4590ec8c8fba82e8b2ad51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8051fa46135bd19d3db8873d29f9b599"><td class="memItemLeft" align="right" valign="top">Foam::interpolationCellPoint&lt; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac110a75f4d90e80745ee082314d0e2d3">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8051fa46135bd19d3db8873d29f9b599">interpolant</a> { <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a> }</td></tr>
-<tr class="separator:a8051fa46135bd19d3db8873d29f9b599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d7c7fa7040c80a2618c63edb0e39d1f"><td class="memItemLeft" align="right" valign="top">Field&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a3d7c7fa7040c80a2618c63edb0e39d1f">_field</a></td></tr>
+<tr class="separator:a3d7c7fa7040c80a2618c63edb0e39d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a986e21ca4959d8c1b5df7e3d8b1ae70e"><td class="memItemLeft" align="right" valign="top">Locator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a986e21ca4959d8c1b5df7e3d8b1ae70e">_locator</a></td></tr>
+<tr class="separator:a986e21ca4959d8c1b5df7e3d8b1ae70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af78b891433a088ae373c36ee9bd0c38e"><td class="memItemLeft" align="right" valign="top">Foam::interpolationCellPoint&lt; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac110a75f4d90e80745ee082314d0e2d3">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#af78b891433a088ae373c36ee9bd0c38e">_interpolant</a> { <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a3d7c7fa7040c80a2618c63edb0e39d1f">_field</a> }</td></tr>
+<tr class="separator:af78b891433a088ae373c36ee9bd0c38e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Field, typename Locator, bool check_if_outside, bool warn_if_outside&gt;<br />
 class ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside &gt;</h3>
 
-<p>Linear interpolation of vector field data based on OpenFOAM routines. </p>
+<p>Linear interpolation of vector field cell data based on OpenFOAM routines. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="accbc7e3948cbd24d046c549d3ce6184b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accbc7e3948cbd24d046c549d3ce6184b">&#9670;&nbsp;</a></span>Index <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#accbc7e3948cbd24d046c549d3ce6184b">&#9670;&nbsp;</a></span>Index</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,43 +197,14 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="accbc7e3948cbd24d046c549d3ce6184b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accbc7e3948cbd24d046c549d3ce6184b">&#9670;&nbsp;</a></span>Index <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a> =  Foam::label</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<blockquote class="doxtable">
+<p>Scalar (also 1D point). </p>
+</blockquote>
 
 </div>
 </div>
 <a id="aa60df8b3b546bed4a94a80770fb219f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa60df8b3b546bed4a94a80770fb219f3">&#9670;&nbsp;</a></span>Point <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> =  Foam::point</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa60df8b3b546bed4a94a80770fb219f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa60df8b3b546bed4a94a80770fb219f3">&#9670;&nbsp;</a></span>Point <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa60df8b3b546bed4a94a80770fb219f3">&#9670;&nbsp;</a></span>Point</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,7 +220,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </div>
 </div>
 <a id="a5225df3635fd7d7a2d8fdd00b10c5148"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5225df3635fd7d7a2d8fdd00b10c5148">&#9670;&nbsp;</a></span>Point2D <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5225df3635fd7d7a2d8fdd00b10c5148">&#9670;&nbsp;</a></span>Point2D</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,27 +232,14 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5225df3635fd7d7a2d8fdd00b10c5148"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5225df3635fd7d7a2d8fdd00b10c5148">&#9670;&nbsp;</a></span>Point2D <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<blockquote class="doxtable">
+<p>3D point. </p>
+</blockquote>
 
 </div>
 </div>
 <a id="ac539c48a5677794c117efbf26b4e3ea4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac539c48a5677794c117efbf26b4e3ea4">&#9670;&nbsp;</a></span>Scalar <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac539c48a5677794c117efbf26b4e3ea4">&#9670;&nbsp;</a></span>Scalar</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,27 +251,14 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac539c48a5677794c117efbf26b4e3ea4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac539c48a5677794c117efbf26b4e3ea4">&#9670;&nbsp;</a></span>Scalar <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a> =  Foam::scalar</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<blockquote class="doxtable">
+<p>2D vector. </p>
+</blockquote>
 
 </div>
 </div>
 <a id="ac110a75f4d90e80745ee082314d0e2d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac110a75f4d90e80745ee082314d0e2d3">&#9670;&nbsp;</a></span>Vector <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac110a75f4d90e80745ee082314d0e2d3">&#9670;&nbsp;</a></span>Vector</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,27 +270,14 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac110a75f4d90e80745ee082314d0e2d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac110a75f4d90e80745ee082314d0e2d3">&#9670;&nbsp;</a></span>Vector <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac110a75f4d90e80745ee082314d0e2d3">Vector</a> =  Foam::vector</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<blockquote class="doxtable">
+<p>2D point. </p>
+</blockquote>
 
 </div>
 </div>
 <a id="a2844fb06fa63c9d87ea1fc581b55cd31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2844fb06fa63c9d87ea1fc581b55cd31">&#9670;&nbsp;</a></span>Vector2D <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2844fb06fa63c9d87ea1fc581b55cd31">&#9670;&nbsp;</a></span>Vector2D</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -382,28 +289,15 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2844fb06fa63c9d87ea1fc581b55cd31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2844fb06fa63c9d87ea1fc581b55cd31">&#9670;&nbsp;</a></span>Vector2D <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2844fb06fa63c9d87ea1fc581b55cd31">Vector2D</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<blockquote class="doxtable">
+<p>3D vector. </p>
+</blockquote>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac7da41a7c4e2e2525ac115cd948ca3af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7da41a7c4e2e2525ac115cd948ca3af">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[1/6]</span></h2>
+<a id="a82e80fb2617aef74a260c5750d062210"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82e80fb2617aef74a260c5750d062210">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -428,7 +322,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a73f540aadab47311bfaeb4a9d651005c">FieldOptions::NoCheck</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d6/d82/namespaceptof_1_1_check_options.html#a22960b800e4c92cc3e17b39cecb5f4ef">CheckOptions::NoCheck</a>&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -444,10 +338,22 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
+<p>Without checking if position is in bounds. </p>
+<blockquote class="doxtable">
+<p>Cell index. </p>
+</blockquote>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Vector field cell data to interpolate. </td></tr>
+    <tr><td class="paramname">locator</td><td>Mesh locator. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="ab90a95f18e9f59259a17eddbde7a3075"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab90a95f18e9f59259a17eddbde7a3075">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[2/6]</span></h2>
+<a id="a6364678a78fb295451ccfa0c753b9d0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6364678a78fb295451ccfa0c753b9d0a">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -472,7 +378,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a5930c3216df999bdc83f944262fdfc41">FieldOptions::Check</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d6/d82/namespaceptof_1_1_check_options.html#aaae4720ab7867069cb637989f530a8f5">CheckOptions::Check</a>&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -488,10 +394,19 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
+<p>With checking if position is in bounds but no warning if not. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Vector field cell data to interpolate. </td></tr>
+    <tr><td class="paramname">locator</td><td>Mesh locator. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="a33d5d3fa4cfd470c787bf29a6c55f2c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33d5d3fa4cfd470c787bf29a6c55f2c3">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[3/6]</span></h2>
+<a id="a376886b743ec3d8ca7b674bcdb1f61c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a376886b743ec3d8ca7b674bcdb1f61c4">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -516,7 +431,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a4f0d32625c035502a6f87c56d3e16a0c">FieldOptions::Warn</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d6/d82/namespaceptof_1_1_check_options.html#a9db96a4c8e4112987ed1b7df21171b61">CheckOptions::Warn</a>&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -532,223 +447,20 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="ac7da41a7c4e2e2525ac115cd948ca3af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7da41a7c4e2e2525ac115cd948ca3af">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[4/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">VectorField_LinearInterpolation_OF</a> </td>
-          <td>(</td>
-          <td class="paramtype">Field &amp;&amp;&#160;</td>
-          <td class="paramname"><em>field</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Locator &amp;&amp;&#160;</td>
-          <td class="paramname"><em>locator</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a73f540aadab47311bfaeb4a9d651005c">FieldOptions::NoCheck</a>&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Construct without bounds checking and without bounds warning. </p>
-
-</div>
-</div>
-<a id="ab90a95f18e9f59259a17eddbde7a3075"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab90a95f18e9f59259a17eddbde7a3075">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[5/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">VectorField_LinearInterpolation_OF</a> </td>
-          <td>(</td>
-          <td class="paramtype">Field &amp;&amp;&#160;</td>
-          <td class="paramname"><em>field</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Locator &amp;&amp;&#160;</td>
-          <td class="paramname"><em>locator</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a5930c3216df999bdc83f944262fdfc41">FieldOptions::Check</a>&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Construct with bounds checking and without bounds warning. </p>
-
-</div>
-</div>
-<a id="a33d5d3fa4cfd470c787bf29a6c55f2c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33d5d3fa4cfd470c787bf29a6c55f2c3">&#9670;&nbsp;</a></span>VectorField_LinearInterpolation_OF() <span class="overload">[6/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">VectorField_LinearInterpolation_OF</a> </td>
-          <td>(</td>
-          <td class="paramtype">Field &amp;&amp;&#160;</td>
-          <td class="paramname"><em>field</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Locator &amp;&amp;&#160;</td>
-          <td class="paramname"><em>locator</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d88/namespaceptof_1_1_field_options.html#a4f0d32625c035502a6f87c56d3e16a0c">FieldOptions::Warn</a>&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Construct with bounds checking and with bounds warning. </p>
+<p>With warning if particle is in bounds. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Scalar field cell data to interpolate. </td></tr>
+    <tr><td class="paramname">locator</td><td>Mesh locator. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af2320bf6dc923afe8e24f5e2f3c5bdc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2320bf6dc923afe8e24f5e2f3c5bdc2">&#9670;&nbsp;</a></span>check_bounds() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::check_bounds </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a>&#160;</td>
-          <td class="paramname"><em>cell</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af2320bf6dc923afe8e24f5e2f3c5bdc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2320bf6dc923afe8e24f5e2f3c5bdc2">&#9670;&nbsp;</a></span>check_bounds() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::check_bounds </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a>&#160;</td>
-          <td class="paramname"><em>cell</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Bounds checking. </p>
-
-</div>
-</div>
 <a id="ac5c1e6dd0c62510b3ed4c6030db6abdf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5c1e6dd0c62510b3ed4c6030db6abdf">&#9670;&nbsp;</a></span>get_field() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5c1e6dd0c62510b3ed4c6030db6abdf">&#9670;&nbsp;</a></span>get_field()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -771,39 +483,22 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
   </tr>
 </table>
 </div><div class="memdoc">
-
+<dl class="section return"><dt>Returns</dt><dd>Underlying field data. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ac5c1e6dd0c62510b3ed4c6030db6abdf_icgraph.png" border="0" usemap="#ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ac5c1e6dd0c62510b3ed4c6030db6abdf_icgraph" alt=""/></div>
+<map name="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ac5c1e6dd0c62510b3ed4c6030db6abdf_icgraph" id="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ac5c1e6dd0c62510b3ed4c6030db6abdf_icgraph">
+<area shape="rect" title=" " alt="" coords="229,57,423,98"/>
+<area shape="rect" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a7460cc25bcc8867575f6907f8575dc74" title=" " alt="" coords="5,5,181,61"/>
+<area shape="rect" href="../../df/d6c/structptof_1_1model__advection__diffusion__2d__parallel_1_1_transport_1_1_parameters.html#af27d1dea3739fa759ff3f2471a5cf225" title=" " alt="" coords="7,86,179,157"/>
+</map>
 </div>
-</div>
-<a id="ac5c1e6dd0c62510b3ed4c6030db6abdf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5c1e6dd0c62510b3ed4c6030db6abdf">&#9670;&nbsp;</a></span>get_field() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::get_field </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get underlying field. </p>
 
 </div>
 </div>
 <a id="ab5fc3f8399a0d6af5ce16687ec51fb07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5fc3f8399a0d6af5ce16687ec51fb07">&#9670;&nbsp;</a></span>get_locator() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5fc3f8399a0d6af5ce16687ec51fb07">&#9670;&nbsp;</a></span>get_locator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -826,39 +521,12 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab5fc3f8399a0d6af5ce16687ec51fb07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5fc3f8399a0d6af5ce16687ec51fb07">&#9670;&nbsp;</a></span>get_locator() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::get_locator </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get underlying locator object. </p>
+<dl class="section return"><dt>Returns</dt><dd>Locator object to find positions in mesh. </dd></dl>
 
 </div>
 </div>
 <a id="a1b2678b6c72d5c52e68062de5818d74b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b2678b6c72d5c52e68062de5818d74b">&#9670;&nbsp;</a></span>locate() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b2678b6c72d5c52e68062de5818d74b">&#9670;&nbsp;</a></span>locate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -885,41 +553,19 @@ template&lt;typename State &gt; </div>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a1b2678b6c72d5c52e68062de5818d74b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b2678b6c72d5c52e68062de5818d74b">&#9670;&nbsp;</a></span>locate() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<div class="memtemplate">
-template&lt;typename State &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::locate </td>
-          <td>(</td>
-          <td class="paramtype">State const &amp;&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 <p>Locate a state in the mesh. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to locate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mesh cell index. </dd></dl>
 
 </div>
 </div>
 <a id="abec8305dff506b46bd742fdfeef8a17e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abec8305dff506b46bd742fdfeef8a17e">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abec8305dff506b46bd742fdfeef8a17e">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -944,39 +590,19 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="abec8305dff506b46bd742fdfeef8a17e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abec8305dff506b46bd742fdfeef8a17e">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interpolate field according to 3D position. </p>
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>3D position. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>interpolated field value. </dd></dl>
 
 </div>
 </div>
 <a id="a8117c4d69778366ca3e50aa7f2d105ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8117c4d69778366ca3e50aa7f2d105ce">&#9670;&nbsp;</a></span>operator()() <span class="overload">[3/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8117c4d69778366ca3e50aa7f2d105ce">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1011,49 +637,29 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>3D position. </td></tr>
+    <tr><td class="paramname">cell</td><td>Hint for mesh cell index position is in. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>interpolated field value. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_a8117c4d69778366ca3e50aa7f2d105ce_cgraph.png" border="0" usemap="#ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_a8117c4d69778366ca3e50aa7f2d105ce_cgraph" alt=""/></div>
+<map name="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_a8117c4d69778366ca3e50aa7f2d105ce_cgraph" id="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_a8117c4d69778366ca3e50aa7f2d105ce_cgraph">
+<area shape="rect" title="Interpolate field." alt="" coords="5,5,208,47"/>
+<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#afb0fa71255315f6a0fa9e76070a51f1b" title="Check if position is out of bounds." alt="" coords="256,5,441,47"/>
+</map>
 </div>
-</div>
-<a id="a8117c4d69778366ca3e50aa7f2d105ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8117c4d69778366ca3e50aa7f2d105ce">&#9670;&nbsp;</a></span>operator()() <span class="overload">[4/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a>&#160;</td>
-          <td class="paramname"><em>cell</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interpolate field according to 3D position and mesh cell. </p>
 
 </div>
 </div>
 <a id="a8ed24418b40413881a6ff0d86470c717"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ed24418b40413881a6ff0d86470c717">&#9670;&nbsp;</a></span>operator()() <span class="overload">[5/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ed24418b40413881a6ff0d86470c717">&#9670;&nbsp;</a></span>operator()() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1078,39 +684,19 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a8ed24418b40413881a6ff0d86470c717"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ed24418b40413881a6ff0d86470c717">&#9670;&nbsp;</a></span>operator()() <span class="overload">[6/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interpolate field according to 2D position. </p>
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>2D position. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>interpolated field value. </dd></dl>
 
 </div>
 </div>
 <a id="afb27165abb080c7cec4d9f77a8744db3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb27165abb080c7cec4d9f77a8744db3">&#9670;&nbsp;</a></span>operator()() <span class="overload">[7/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afb27165abb080c7cec4d9f77a8744db3">&#9670;&nbsp;</a></span>operator()() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1145,49 +731,29 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>2D position. </td></tr>
+    <tr><td class="paramname">cell</td><td>Hint for mesh cell index position is in. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>interpolated field value. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb27165abb080c7cec4d9f77a8744db3_cgraph.png" border="0" usemap="#ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb27165abb080c7cec4d9f77a8744db3_cgraph" alt=""/></div>
+<map name="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb27165abb080c7cec4d9f77a8744db3_cgraph" id="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb27165abb080c7cec4d9f77a8744db3_cgraph">
+<area shape="rect" title="Interpolate field." alt="" coords="5,5,208,47"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="256,13,387,39"/>
+</map>
 </div>
-</div>
-<a id="afb27165abb080c7cec4d9f77a8744db3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb27165abb080c7cec4d9f77a8744db3">&#9670;&nbsp;</a></span>operator()() <span class="overload">[8/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a5225df3635fd7d7a2d8fdd00b10c5148">Point2D</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a>&#160;</td>
-          <td class="paramname"><em>cell</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interpolate field according to 2D position and mesh cell. </p>
 
 </div>
 </div>
 <a id="acbe1614618f64052d5addf4365740b6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbe1614618f64052d5addf4365740b6e">&#9670;&nbsp;</a></span>operator()() <span class="overload">[9/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe1614618f64052d5addf4365740b6e">&#9670;&nbsp;</a></span>operator()() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1212,39 +778,19 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="acbe1614618f64052d5addf4365740b6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbe1614618f64052d5addf4365740b6e">&#9670;&nbsp;</a></span>operator()() <span class="overload">[10/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a>&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interpolate field according to scalar position. </p>
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>1D position. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>interpolated field value. </dd></dl>
 
 </div>
 </div>
 <a id="ae349767b53171ebe192dc69cdc890847"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae349767b53171ebe192dc69cdc890847">&#9670;&nbsp;</a></span>operator()() <span class="overload">[11/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae349767b53171ebe192dc69cdc890847">&#9670;&nbsp;</a></span>operator()() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1279,49 +825,29 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>1D position. </td></tr>
+    <tr><td class="paramname">cell</td><td>Hint for mesh cell index position is in. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>interpolated field value. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ae349767b53171ebe192dc69cdc890847_cgraph.png" border="0" usemap="#ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ae349767b53171ebe192dc69cdc890847_cgraph" alt=""/></div>
+<map name="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ae349767b53171ebe192dc69cdc890847_cgraph" id="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_ae349767b53171ebe192dc69cdc890847_cgraph">
+<area shape="rect" title="Interpolate field." alt="" coords="5,5,208,47"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="256,13,387,39"/>
+</map>
 </div>
-</div>
-<a id="ae349767b53171ebe192dc69cdc890847"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae349767b53171ebe192dc69cdc890847">&#9670;&nbsp;</a></span>operator()() <span class="overload">[12/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac539c48a5677794c117efbf26b4e3ea4">Scalar</a>&#160;</td>
-          <td class="paramname"><em>position</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a>&#160;</td>
-          <td class="paramname"><em>cell</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interpolate field according to 1D position and mesh cell. </p>
 
 </div>
 </div>
 <a id="a6a9580cf7cec57af4ad684712a95e6ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a9580cf7cec57af4ad684712a95e6ab">&#9670;&nbsp;</a></span>operator()() <span class="overload">[13/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a9580cf7cec57af4ad684712a95e6ab">&#9670;&nbsp;</a></span>operator()() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1348,41 +874,74 @@ template&lt;typename State &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Interpolate field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to interpolate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="a6a9580cf7cec57af4ad684712a95e6ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a9580cf7cec57af4ad684712a95e6ab">&#9670;&nbsp;</a></span>operator()() <span class="overload">[14/14]</span></h2>
+<a id="afb0fa71255315f6a0fa9e76070a51f1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb0fa71255315f6a0fa9e76070a51f1b">&#9670;&nbsp;</a></span>outside()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<div class="memtemplate">
-template&lt;typename State &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::operator() </td>
+          <td class="memname">bool <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::outside </td>
           <td>(</td>
-          <td class="paramtype">State const &amp;&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aa60df8b3b546bed4a94a80770fb219f3">Point</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#accbc7e3948cbd24d046c549d3ce6184b">Index</a>&#160;</td>
+          <td class="paramname"><em>cell</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Interpolate field according to state. </p>
+
+<p>Check if position is out of bounds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to check. </td></tr>
+    <tr><td class="paramname">cell</td><td>Hint for mesh cell index position is in. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb0fa71255315f6a0fa9e76070a51f1b_icgraph.png" border="0" usemap="#ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb0fa71255315f6a0fa9e76070a51f1b_icgraph" alt=""/></div>
+<map name="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb0fa71255315f6a0fa9e76070a51f1b_icgraph" id="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_afb0fa71255315f6a0fa9e76070a51f1b_icgraph">
+<area shape="rect" title="Check if position is out of bounds." alt="" coords="256,5,441,47"/>
+<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a8117c4d69778366ca3e50aa7f2d105ce" title="Interpolate field." alt="" coords="5,5,208,47"/>
+</map>
+</div>
 
 </div>
 </div>
 <a id="aa046ca9f740d5ebe7fbc4d9b03e742ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa046ca9f740d5ebe7fbc4d9b03e742ff">&#9670;&nbsp;</a></span>rescale() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa046ca9f740d5ebe7fbc4d9b03e742ff">&#9670;&nbsp;</a></span>rescale()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1407,40 +966,101 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="aa046ca9f740d5ebe7fbc4d9b03e742ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa046ca9f740d5ebe7fbc4d9b03e742ff">&#9670;&nbsp;</a></span>rescale() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::rescale </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>factor</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 <p>Rescale underlying field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">factor</td><td>Scaling factor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_aa046ca9f740d5ebe7fbc4d9b03e742ff_icgraph.png" border="0" usemap="#ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_aa046ca9f740d5ebe7fbc4d9b03e742ff_icgraph" alt=""/></div>
+<map name="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_aa046ca9f740d5ebe7fbc4d9b03e742ff_icgraph" id="ad8/d71/classptof_1_1_vector_field___linear_interpolation___o_f_aa046ca9f740d5ebe7fbc4d9b03e742ff_icgraph">
+<area shape="rect" title="Rescale underlying field." alt="" coords="229,57,413,98"/>
+<area shape="rect" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a7460cc25bcc8867575f6907f8575dc74" title=" " alt="" coords="5,5,181,61"/>
+<area shape="rect" href="../../df/d6c/structptof_1_1model__advection__diffusion__2d__parallel_1_1_transport_1_1_parameters.html#af27d1dea3739fa759ff3f2471a5cf225" title=" " alt="" coords="7,86,179,157"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6d52b52de4aaf2bb1d0bc908ab62e5c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d52b52de4aaf2bb1d0bc908ab62e5c8">&#9670;&nbsp;</a></span>set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype">Field const &amp;&#160;</td>
+          <td class="paramname"><em>field</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Change underlying field data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Set field data to this field. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a882415fa2a30b62290e68fbf778ea0b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a882415fa2a30b62290e68fbf778ea0b3">&#9670;&nbsp;</a></span>sum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Field , typename Locator , bool check_if_outside, bool warn_if_outside&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::sum </td>
+          <td>(</td>
+          <td class="paramtype">Field const &amp;&#160;</td>
+          <td class="paramname"><em>other_field</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sum to underlying field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other_field</td><td>field to sum </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a2c3e9e0fe2ebd84436c63842898063e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c3e9e0fe2ebd84436c63842898063e9">&#9670;&nbsp;</a></span>field</h2>
+<a id="a3d7c7fa7040c80a2618c63edb0e39d1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d7c7fa7040c80a2618c63edb0e39d1f">&#9670;&nbsp;</a></span>_field</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1451,7 +1071,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Field <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::field</td>
+          <td class="memname">Field <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::_field</td>
         </tr>
       </table>
   </td>
@@ -1460,13 +1080,12 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Field data to interpolate. <br  />
- </p>
+<p>Vector field cell data to interpolate. </p>
 
 </div>
 </div>
-<a id="a8051fa46135bd19d3db8873d29f9b599"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8051fa46135bd19d3db8873d29f9b599">&#9670;&nbsp;</a></span>interpolant</h2>
+<a id="af78b891433a088ae373c36ee9bd0c38e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af78b891433a088ae373c36ee9bd0c38e">&#9670;&nbsp;</a></span>_interpolant</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1477,7 +1096,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Foam::interpolationCellPoint&lt; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac110a75f4d90e80745ee082314d0e2d3">Vector</a> &gt; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::interpolant { <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9">field</a> }</td>
+          <td class="memname">Foam::interpolationCellPoint&lt;<a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac110a75f4d90e80745ee082314d0e2d3">Vector</a>&gt; <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::_interpolant { <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a3d7c7fa7040c80a2618c63edb0e39d1f">_field</a> }</td>
         </tr>
       </table>
   </td>
@@ -1490,8 +1109,8 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 
 </div>
 </div>
-<a id="a184a3459e4590ec8c8fba82e8b2ad51f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a184a3459e4590ec8c8fba82e8b2ad51f">&#9670;&nbsp;</a></span>locator</h2>
+<a id="a986e21ca4959d8c1b5df7e3d8b1ae70e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a986e21ca4959d8c1b5df7e3d8b1ae70e">&#9670;&nbsp;</a></span>_locator</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1502,7 +1121,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Locator <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::locator</td>
+          <td class="memname">Locator <a class="el" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>&lt; Field, Locator, check_if_outside, warn_if_outside &gt;::_locator</td>
         </tr>
       </table>
   </td>
@@ -1516,7 +1135,7 @@ template&lt;typename Field , typename Locator , bool check_if_outside, bool warn
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>ParticleTrackingOF/<a class="el" href="../../d2/dd0/_particle_tracking_o_f_2_field_8h_source.html">Field.h</a></li>
+<li>PTOF/<a class="el" href="../../df/d96/_field_8h_source.html">Field.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

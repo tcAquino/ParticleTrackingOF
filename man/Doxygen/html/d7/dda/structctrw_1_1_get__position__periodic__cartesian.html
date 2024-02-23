@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('d7/dda/structctrw_1_1_get__position__p
 </div><!--header-->
 <div class="contents">
 
-<p>Get absolute position given state from state.position and periodicity information about the unit cell periodic position is in Unit cell faces must be perpendicular to (cartesian) coordinate axes.  
+<p>Get absolute position given state from position and periodicity.  
  <a href="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code></p>
@@ -109,7 +109,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:aed225e6c26eef95f732fbd7c4c2d9e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Get absolute position given state from state.position and periodicity information about the unit cell periodic position is in Unit cell faces must be perpendicular to (cartesian) coordinate axes. </p>
+<div class="textblock"><p>Get absolute position given state from position and periodicity. </p>
+<p>state.periodicity should hold the (directional) integer number of times unit cell has been traversed. </p><dl class="section note"><dt>Note</dt><dd>Direction vector is normalized upon construction. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8ff960d5509e4130116aa0fbf4f5e54b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ff960d5509e4130116aa0fbf4f5e54b">&#9670;&nbsp;</a></span>Get_position_periodic_cartesian()</h2>
@@ -134,7 +135,6 @@ Data Fields</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given size of domain along each dimension. </p>
 
 </div>
 </div>
@@ -164,6 +164,16 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d7/dda/structctrw_1_1_get__position__periodic__cartesian_a692c3237d204ba5ddbd3be61583c1e0a_cgraph.png" border="0" usemap="#ad7/dda/structctrw_1_1_get__position__periodic__cartesian_a692c3237d204ba5ddbd3be61583c1e0a_cgraph" alt=""/></div>
+<map name="ad7/dda/structctrw_1_1_get__position__periodic__cartesian_a692c3237d204ba5ddbd3be61583c1e0a_cgraph" id="ad7/dda/structctrw_1_1_get__position__periodic__cartesian_a692c3237d204ba5ddbd3be61583c1e0a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,16,153,72"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="207,5,325,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a14446dfc56712cfc166748c4c8acca60" title="Element&#45;wise multiplication." alt="" coords="201,56,331,83"/>
+</map>
+</div>
 
 </div>
 </div>

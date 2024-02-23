@@ -91,7 +91,10 @@ $(document).ready(function(){initNavTree('d4/d45/structgeometry_1_1_parallelepip
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="../../da/d05/_shape_8h_source.html">Shape.h</a>&gt;</code></p>
+<p>Rectangle in any dimension, aligned with Cartesian axes.  
+ <a href="../../d4/d45/structgeometry_1_1_parallelepiped.html#details">More...</a></p>
+
+<p><code>#include &quot;<a class="el" href="../../da/d05/_shape_8h_source.html">Geometry/Shape.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -121,7 +124,12 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a1375d13c4f8efeaaf83e4249007e84f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#a7f7975c873ebfa74c67a0f52a013a355">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#a1375d13c4f8efeaaf83e4249007e84f7">dimensions</a></td></tr>
 <tr class="separator:a1375d13c4f8efeaaf83e4249007e84f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename Position_t = std::vector&lt;double&gt;&gt;<br />
+struct geometry::Parallelepiped&lt; Position_t &gt;</h3>
+
+<p>Rectangle in any dimension, aligned with Cartesian axes. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a7f7975c873ebfa74c67a0f52a013a355"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7f7975c873ebfa74c67a0f52a013a355">&#9670;&nbsp;</a></span>Position</h2>
 
@@ -163,6 +171,10 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<blockquote class="doxtable">
+<p>Sizes of rectangle along each dimension. </p>
+</blockquote>
+<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>Object with unassigned properties. </dd></dl>
 
 </div>
 </div>
@@ -201,6 +213,13 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">corner</td><td>Lower left corner. </td></tr>
+    <tr><td class="paramname">dimensions</td><td>Side sizes. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -229,6 +248,16 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Spatial dimension of rectangle. </p><dl class="section note"><dt>Note</dt><dd>: Zero if side sizes have not been assigned. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d45/structgeometry_1_1_parallelepiped_aca31b83aaf45802ea81db8494c415cc8_icgraph.png" border="0" usemap="#ad4/d45/structgeometry_1_1_parallelepiped_aca31b83aaf45802ea81db8494c415cc8_icgraph" alt=""/></div>
+<map name="ad4/d45/structgeometry_1_1_parallelepiped_aca31b83aaf45802ea81db8494c415cc8_icgraph" id="ad4/d45/structgeometry_1_1_parallelepiped_aca31b83aaf45802ea81db8494c415cc8_icgraph">
+<area shape="rect" title=" " alt="" coords="237,13,455,39"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#af93fb620de16e50723668e4f179e19d6" title=" " alt="" coords="5,5,189,47"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -256,6 +285,27 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Position of rectangle center. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_cgraph.png" border="0" usemap="#ad4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_cgraph" alt=""/></div>
+<map name="ad4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_cgraph" id="ad4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,35,189,76"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#a86c42d8b97b2dd98aa24d687944208aa" title=" " alt="" coords="237,5,421,47"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="270,71,389,98"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a77da2742a0e5e3922bd9fc3486537695" title="Element&#45;wise division by scalar." alt="" coords="469,13,628,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_icgraph.png" border="0" usemap="#ad4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_icgraph" alt=""/></div>
+<map name="ad4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_icgraph" id="ad4/d45/structgeometry_1_1_parallelepiped_a7cf5a8623c89d750c674962b3768bf1f_icgraph">
+<area shape="rect" title=" " alt="" coords="237,5,421,47"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#af93fb620de16e50723668e4f179e19d6" title=" " alt="" coords="5,5,189,47"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -283,6 +333,26 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Half the size along each dimension. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_cgraph.png" border="0" usemap="#ad4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_cgraph" alt=""/></div>
+<map name="ad4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_cgraph" id="ad4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,189,47"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a77da2742a0e5e3922bd9fc3486537695" title="Element&#45;wise division by scalar." alt="" coords="237,13,396,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_icgraph.png" border="0" usemap="#ad4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_icgraph" alt=""/></div>
+<map name="ad4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_icgraph" id="ad4/d45/structgeometry_1_1_parallelepiped_a86c42d8b97b2dd98aa24d687944208aa_icgraph">
+<area shape="rect" title=" " alt="" coords="469,35,653,76"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#a7cf5a8623c89d750c674962b3768bf1f" title=" " alt="" coords="237,5,421,47"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#af93fb620de16e50723668e4f179e19d6" title=" " alt="" coords="5,35,189,76"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -313,6 +383,25 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <code>position</code> is inside rectangle, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d45/structgeometry_1_1_parallelepiped_af93fb620de16e50723668e4f179e19d6_cgraph.png" border="0" usemap="#ad4/d45/structgeometry_1_1_parallelepiped_af93fb620de16e50723668e4f179e19d6_cgraph" alt=""/></div>
+<map name="ad4/d45/structgeometry_1_1_parallelepiped_af93fb620de16e50723668e4f179e19d6_cgraph" id="ad4/d45/structgeometry_1_1_parallelepiped_af93fb620de16e50723668e4f179e19d6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,106,189,147"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="289,8,403,35"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#aca31b83aaf45802ea81db8494c415cc8" title=" " alt="" coords="237,63,455,89"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#a7cf5a8623c89d750c674962b3768bf1f" title=" " alt="" coords="254,165,438,206"/>
+<area shape="rect" href="../../d4/d45/structgeometry_1_1_parallelepiped.html#a86c42d8b97b2dd98aa24d687944208aa" title=" " alt="" coords="503,107,687,149"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="280,231,412,257"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="526,5,663,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="536,56,653,83"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="755,56,873,83"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="535,173,654,200"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a77da2742a0e5e3922bd9fc3486537695" title="Element&#45;wise division by scalar." alt="" coords="735,115,893,141"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -330,6 +419,9 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<blockquote class="doxtable">
+<p>Type of coordinate container. </p>
+</blockquote>
 
 </div>
 </div>
@@ -346,6 +438,9 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<blockquote class="doxtable">
+<p>Lower left corner. </p>
+</blockquote>
 
 </div>
 </div>

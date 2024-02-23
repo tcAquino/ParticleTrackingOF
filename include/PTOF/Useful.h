@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Useful.h
-* \author Tomás Aquino
-* \date 2022/02/17
+ \file PTOF/Useful.h
+ \author Tomás Aquino
+ \date 2022/02/17
 */
 
 #ifndef PTOF_USEFUL_H
@@ -13,23 +13,38 @@
 
 namespace ptof
 {
-  /** Make 3D point from 2D point. */
+  /** \namespace CheckOptions Options for checking conditions. */
+  namespace CheckOptions
+  {
+    using NoCheck = useful::Selector<int, 0>;  /**< No bounds checking.           */
+    using Check = useful::Selector<int, 1>;    /**< Bounds checking, no warning.  */
+    using Warn = useful::Selector<int, 2>;     /**< Bounds checking, warning.     */
+  }
+  
+  /** \namespace ParallelOptions Options to choose between serial and parallel implementations. */
+  namespace ParallelOptions
+  {
+    using Serial = useful::Selector<int, 0>;  /**< Serial implementations.           */
+    using Parallel = useful::Selector<int, 1>;    /**< Parallel implementations.  */
+  }
+  
+  /** \brief Make 3D point from 2D point. */
   auto make_point(Foam::Vector2D<Foam::scalar> const& point)
   {
     return Foam::point{ point[0], point[1], 0. };
   }
 
-  /**  Make 3D point from 1D point. */
+  /** \brief Make 3D point from 1D point. */
   auto make_point(Foam::scalar point)
   {
     return Foam::point{ point, 0., 0. };
   }
 
-  /** Make 3D point from 3D point (simple copy). */
+  /** \brief Make 3D point from 3D point (simple copy). */
   auto make_point(Foam::point const& point)
   { return point; }
   
-  /** Make point from vector (simple copy). */
+  /** \brief Make point from vector (simple copy). */
   Foam::point make_point(std::vector<double> const& point)
   {
     if (point.size() >= 3)
@@ -41,7 +56,7 @@ namespace ptof
     return { 0., 0., 0. };
   }
   
-  /** Unit normal at boundary face, pointing outward. */
+  /** \brief Unit normal at boundary face, pointing outward. */
   template <typename Mesh>
   auto unit_normal_outward
   (Foam::label face, Mesh const& mesh)
@@ -49,7 +64,7 @@ namespace ptof
     return mesh.faces()[face].unitNormal(mesh.points());
   }
   
-  /** Unit normal at boundary face, pointing inward. */
+  /** \brief Unit normal at boundary face, pointing inward. */
   template <typename Mesh>
   auto unit_normal_inward
   (Foam::label face, Mesh const& mesh)
@@ -57,7 +72,7 @@ namespace ptof
     return -mesh.faces()[face].unitNormal(mesh.points());
   }
   
-  /** Area (magnitude) of a face. */
+  /** \brief Area (magnitude) of a face. */
   template <typename Mesh>
   auto face_area
   (Foam::label face, Mesh const& mesh)
@@ -65,7 +80,7 @@ namespace ptof
     return mesh.faces()[face].mag(mesh.points());
   }
   
-  /** Center of a face. */
+  /** \brief Center of a face. */
   template <typename Mesh>
   auto face_center
   (Foam::label face, Mesh const& mesh)
@@ -73,7 +88,7 @@ namespace ptof
     return mesh.faces()[face].centre(mesh.points());
   }
   
-  /** Volume of a cell. */
+  /** \brief Volume of a cell. */
   template <typename Mesh>
   auto cell_volume
   (Foam::label cell, Mesh const& mesh)
@@ -81,7 +96,7 @@ namespace ptof
     return mesh.cellVolumes()[cell];
   }
   
-  /** Center of a cell. */
+  /** \brief Center of a cell. */
   template <typename Mesh>
   auto cell_center
   (Foam::label cell, Mesh const& mesh)
@@ -89,76 +104,88 @@ namespace ptof
     return mesh.cellCentres()[cell];
   }
   
-  /** Sometimes the face center associated with a mesh face
-   *  is not considered within the cell,
-   *  verify this */
-  template <typename Mesh, typename MeshSearch>
+  /** Sometimes the face center associated with a mesh face is not considered within the cell. Verify this */
+  template <typename Mesh, typename Locator>
   bool face_center_is_in_cell
-  (Foam::label face, Mesh const& mesh, MeshSearch const& mesh_search)
+  (Foam::label face, Mesh const& mesh, Locator const& locator)
   {
-    return mesh_search.findCell(face_center(face, mesh_search.mesh()))
+    return locator.mesh_search().findCell(face_center(face, locator.mesh_search().mesh()))
       == mesh.owner()[face];
   }
   
-  /** Small offset forward given current face and direction.*/
-  template <typename MeshSearch>
+  /** \brief Small offset forward given current face and direction.*/
+  template <typename Locator>
   Foam::vector offset_face
   (Foam::point const& begin,
   Foam::label face,
   Foam::vector const& direction,
-  MeshSearch const& mesh_search)
+  Locator const& locator)
   {
-    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
-    Foam::point const& cell_center = mesh_search.mesh().
+    Foam::label owner_cell = locator.mesh_search().mesh().faceOwner()[face];
+    Foam::point const& cell_center = locator.mesh_search().mesh().
       cellCentres()[owner_cell];
     Foam::scalar typ_dim = Foam::mag(cell_center
                                      - face_center(face,
-                                                   mesh_search.mesh()));
+                                                   locator.mesh_search().mesh()));
    
-    return mesh_search.tol_*typ_dim*
+    return locator.mesh_search().tol_*typ_dim*
       direction/Foam::mag(direction);
   }
   
-  /** Small offset along face normal (outward)
-   * given current face
-   * with face center as begin point */
-  template <typename MeshSearch>
+  /**
+   \brief Small offset along face normal (outward).
+   \param face Mesh face index to use face center as beginning point.
+   \param locator Object to locate positions in mesh.
+   \return Offset vector.
+  */
+  template <typename Locator>
   Foam::vector offset_face
   (Foam::label face,
-   MeshSearch const& mesh_search)
-  {
-    return offset_face(face_center(face, mesh_search.mesh()),
-                       face,
-                       unit_normal_outward(face, mesh_search.mesh()),
-                       mesh_search);
-  }
-  
-  /** Small offset forward from begin
-   * given current face and direction. */
-  template <typename MeshSearch>
-  Foam::vector offset_forward_face
-  (Foam::point const& begin,
-   Foam::label face,
-   Foam::vector const& direction,
-   MeshSearch const& mesh_search)
-  {
-    return begin + offset_face(begin, face, direction, mesh_search);;
-  }
-  
-  /** Small offset forward from begin
-   * given current face and direction.
-   * If begin point is in mesh, guarantee offset point in mesh*/
-  template <typename MeshSearch, typename Locator>
-  Foam::vector offset_forward_face
-  (Foam::point const& begin,
-   Foam::label face,
-   Foam::vector const& direction,
-   MeshSearch const& mesh_search,
    Locator const& locator)
   {
-    auto offset = offset_face(begin, face, direction, mesh_search);
+    return offset_face(face_center(face, locator.mesh_search().mesh()),
+                       face,
+                       unit_normal_outward(face, locator.mesh_search().mesh()),
+                       locator);
+  }
+  
+  /**
+   \brief Small offset forward from a point on a face.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_forward_face
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   Locator const& locator)
+  {
+    return begin + offset_face(begin, face, direction, locator);;
+  }
+  
+  /**
+   \brief Small offset forward from a point on a face.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_forward_face_keep_inside
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   Locator const& locator)
+  {
+    auto offset = offset_face(begin, face, direction, locator);
     auto point = begin + offset;
-    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    Foam::label owner_cell = locator.mesh_search().mesh().faceOwner()[face];
     if (locator(begin, owner_cell) < 0)
       return point;
     while (locator(point, owner_cell) < 0)
@@ -169,32 +196,43 @@ namespace ptof
     return point;
   }
   
-  /**Small offset backward from begin
-   * given current face and direction. */
-  template <typename MeshSearch>
-  Foam::vector offset_backward_face
+  /**
+   \brief Small offset backward from a point on a face.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_backward_face
   (Foam::point const& begin,
    Foam::label face,
    Foam::vector const& direction,
-   MeshSearch const& mesh_search)
-  {
-    return begin - offset_face(begin, face, direction, mesh_search);
-  }
-  
-  /**Small offset backward from begin
-   * given current face and direction.
-   * * If begin point is in mesh, guarantee offset point in mesh*/
-  template <typename MeshSearch, typename Locator>
-  Foam::vector offset_backward_face
-  (Foam::point const& begin,
-   Foam::label face,
-   Foam::vector const& direction,
-   MeshSearch const& mesh_search,
    Locator const& locator)
   {
-    auto offset = offset_face(begin, face, direction, mesh_search);
+    return begin - offset_face(begin, face, direction, locator);
+  }
+  
+  /**
+   \brief Small offset backward from a point on a face.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_backward_face_keep_inside
+  (Foam::point const& begin,
+   Foam::label face,
+   Foam::vector const& direction,
+   Locator const& locator)
+  {
+    auto offset = offset_face(begin, face, direction, locator);
     auto point = begin - offset;
-    Foam::label owner_cell = mesh_search.mesh().faceOwner()[face];
+    Foam::label owner_cell = locator.mesh_search().mesh().faceOwner()[face];
     if (locator(begin, owner_cell) < 0)
       return point;
     while (locator(point, owner_cell) < 0)
@@ -205,71 +243,97 @@ namespace ptof
     return point;
   }
   
-  /** Small offset along face normal (outward)
-   * given current face
-   *  with face center as begin point */
-  template <typename MeshSearch>
-  Foam::vector offset_outward_face
+  /**
+   \brief Small offset outward along face normal starting from face center.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param face Mesh face index.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_outward_face
   (Foam::label face,
-   MeshSearch const& mesh_search)
+   Locator const& locator)
   {
-    return face_center(face, mesh_search.mesh())
-      + offset_face(face, mesh_search);
+    return face_center(face, locator.mesh_search().mesh())
+      + offset_face(face, locator);
   }
   
-   /**Small offset along face normal (inward)
-    * given current face
-    * with face center as begin point */
-   template <typename MeshSearch>
-   Foam::vector offset_inward_face
+   /**
+    \brief Small offset inward along face normal starting from face center.
+    \details If begin point is in mesh, guarantee offset point in mesh.
+    \param face Mesh face index.
+    \param locator Object to locate positions in mesh.
+    \return Offset point.
+   */
+   template <typename Locator>
+   Foam::point offset_inward_face
    (Foam::label face,
-    MeshSearch const& mesh_search)
+    Locator const& locator)
    {
-     return face_center(face, mesh_search.mesh())
-      - offset_face(face, mesh_search);
+     return face_center(face, locator.mesh_search().mesh())
+      - offset_face(face, locator);
    }
   
-  /** Small offset
-   * given current cell, direction, and begin point */
-  template <typename MeshSearch>
+  /**
+   \brief Small offset outward along face normal starting from face center.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param begin Starting point in cell.
+   \param cell Mesh cell index.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
   Foam::vector offset_cell
   (Foam::point const& begin,
    Foam::label cell,
    Foam::vector const& direction,
-   MeshSearch const& mesh_search)
+   Locator const& locator)
   {
-    Foam::point const& center = mesh_search.mesh().cellCentres()[cell];
+    Foam::point const& center = locator.mesh_search().mesh().cellCentres()[cell];
     Foam::scalar typ_dim = Foam::mag(center - begin);
     
-    return mesh_search.tol_*typ_dim*
+    return locator.mesh_search().tol_*typ_dim*
       direction/Foam::mag(direction);
   }
   
-  /** Small offset forward
-   * given current cell and direction. */
-  template <typename MeshSearch>
-  Foam::vector offset_forward_cell
+  /**
+   \brief Small offset forward.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_forward_cell
   (Foam::point const& begin,
    Foam::label cell,
    Foam::vector const& direction,
-   MeshSearch const& mesh_search)
+   Locator const& locator)
   {
     return begin
-      + offset_cell(begin, cell, direction, mesh_search);
+      + offset_cell(begin, cell, direction, locator);
   }
   
   /** Small offset forward
-   * given current cell and direction.
-   * If begin point is in mesh, guarantee offset point in mesh. */
-  template <typename MeshSearch, typename Locator>
-  Foam::vector offset_forward_cell
+   \brief Small offset forward.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_forward_cell_keep_inside
   (Foam::point const& begin,
    Foam::label cell,
    Foam::vector const& direction,
-   MeshSearch const& mesh_search,
    Locator const& locator)
   {
-    auto offset = offset_cell(begin, cell, direction, mesh_search);
+    auto offset = offset_cell(begin, cell, direction, locator);
     auto point = begin + offset;
     if (locator(begin, cell) < 0)
       return point;
@@ -281,31 +345,42 @@ namespace ptof
     return point;
   }
   
-  /** Small offset backward
-   * given current cell and direction. */
-  template <typename MeshSearch>
-  Foam::vector offset_backward_cell
+  /**
+   \brief Small offset backward.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_backward_cell
   (Foam::point const& begin,
    Foam::label cell,
    Foam::vector const& direction,
-   MeshSearch const& mesh_search)
-  {
-    return begin
-      - offset_cell(begin, cell, direction, mesh_search);
-  }
-  
-  /** Small offset backward
-   * given current cell and direction.
-   * If begin point is in mesh, guarantee offset point in mesh. */
-  template <typename MeshSearch, typename Locator>
-  Foam::vector offset_backward_cell
-  (Foam::point const& begin,
-   Foam::label cell,
-   Foam::vector const& direction,
-   MeshSearch const& mesh_search,
    Locator const& locator)
   {
-    auto offset = offset_cell(begin, cell, direction, mesh_search);
+    return begin
+      - offset_cell(begin, cell, direction, locator);
+  }
+  
+  /**
+   \brief Small offset backward.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
+  */
+  template <typename Locator>
+  Foam::point offset_backward_cell_keep_inside
+  (Foam::point const& begin,
+   Foam::label cell,
+   Foam::vector const& direction,
+   Locator const& locator)
+  {
+    auto offset = offset_cell(begin, cell, direction, locator);
     auto point = begin - offset;
     if (locator(begin, cell) < 0)
       return point;
@@ -317,8 +392,9 @@ namespace ptof
     return point;
   }
   
-  /** Check for existence of periodicity info
-   * (to use with State). */
+  /** \class Has_periodicity
+   \brief Check for existence of periodicity info (to use with State objects).
+  */
   template <typename State, typename = int>
   struct Has_periodicity : std::false_type { };
   template <typename State>
@@ -326,7 +402,13 @@ namespace ptof
   <State, decltype((void) State::periodicity, 0)>
   : std::true_type { };
   
-  /** Compute number of absorbed particles. */
+  /**
+   \param subject CTRW object.
+   \param time Current time.
+   \return Number of absorbed particles.
+   \note Particle states must implement:
+   - info.asorbed [std::size_t]
+   - time */
   template <typename Subject>
   auto nr_absorbed
   (Subject const& subject, double time)
@@ -340,7 +422,14 @@ namespace ptof
     return absorbed;
   };
   
-  /** Compute total mass. */
+  /**
+  \param subject CTRW object.
+  \param time Current time.
+  \return Total mass.
+  \note Particle states must implement:
+   - mass [double]
+   - info.asorbed [std::size_t]
+   - time */
   template <typename Subject>
   auto mass
   (Subject const& subject, double time)
@@ -355,7 +444,17 @@ namespace ptof
     return mass;
   };
   
-  /** Compute total mass in regions specified by masks. */
+  /**
+   \param subject CTRW object.
+   \param time Current time.
+   \param locator Object to locate positions in mesh.
+   \param masks Vector of pointers to Masks. Masks are scalar fields assigned values to mesh cells through operator[].
+   \param tolerances Vector of tolerances for each mask, such that cells where a mask is above the tolerance are considered.
+   \return Total masses in regions specified by masks.
+   \note Particle states must implement:
+   - mass [double]
+   - info.asorbed [std::size_t]
+   - time */
   template <typename Subject, typename Locator, typename Mask>
   auto mass
   (Subject const& subject, double time,
@@ -380,7 +479,16 @@ namespace ptof
     return masses;
   };
   
-  /** Compute mean position (weighted by mass). */
+  /**
+    \param subject CTRW object.
+    \param time Current time.
+    \param getter_position Get position from state, gets position directly by default.
+    \return Mean position (weighted by mass).
+    \note Particle states must implement:
+    - position [for default positition getter]
+    - info.asorbed [std::size_t]
+    - mass
+    - time*/
   template
   <typename Subject, typename GetterPosition = ctrw::Get_position>
   auto position_mean
@@ -401,7 +509,15 @@ namespace ptof
     return position_mean/mass(subject, time);
   };
   
-  /** Compute second moment of position (weighted by mass). */
+  /**
+   \param subject CTRW object.
+   \param time Current time.
+   \param getter_position Get position from state, gets position directly by default.
+   \return Second moment of position (weighted by mass).
+   \note Particle states must implement:
+   - position [for default positition getter]
+   - info.asorbed [std::size_t]
+   - mass */
   template
   <typename Subject, typename GetterPosition = ctrw::Get_position>
   auto position_second_moment
@@ -425,7 +541,15 @@ namespace ptof
     return second_moment/mass(subject, time);
   };
   
-  /** Compute position variance (weighted by mass). */
+  /**
+  \param subject CTRW object.
+  \param time Current time.
+  \param getter_position Get position from state, gets position directly by default.
+  \return Position variance (weighted by mass).
+  \note Particle states must implement:
+  - position [for default positition getter]
+  - info.asorbed [std::size_t]
+  - mass */
   template
   <typename Subject, typename GetterPosition = ctrw::Get_position>
   auto position_variance
@@ -439,26 +563,14 @@ namespace ptof
               position_mean_sq)/mass(subject, time);
   };
   
-  // Check if type T has member double time_step
-  // Adapted from kispaljr's answer here:
-  // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
-  template <typename T> struct has_time_step
-  {
-      typedef char (&Yes)[1];
-      typedef char (&No)[2];
-
-      template<class U>
-      static Yes test(U* data,
-                      typename std::enable_if<std::is_same<
-                        double,
-                        decltype(data->time_step)>::value>::type* = 0);
-      static No test(...);
-      static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
-  };
-  
-  template <typename OStream, typename Measurer, typename ParametersOutput>
+  /** \brief Output time information.
+   \param output Output stream.
+   \param params Output parameters, holding time_unit_factor to rescale \p time.
+   \param time Current time.
+   */
+  template <typename OStream, typename ParametersOutput>
   void info_time
-  (OStream& output, Measurer const& measurer, ParametersOutput const& params, double time)
+  (OStream& output, ParametersOutput const& params, double time)
   {
     output << "Time "
            << "[" << params.time_units << " times]: "
@@ -466,12 +578,19 @@ namespace ptof
            << "\n";
   }
   
-  template <typename OStream, typename Measurer, typename CTRW>
+  /** \brief Output information about fraction of particles that have not been absorbed.
+   \param output Output stream.
+   \param subject CTRW object.
+   \param time Current time.
+   \note Particle states must implement:
+   - info.asorbed [std::size_t]
+  */
+  template <typename OStream, typename Subject>
   void info_fraction_not_absorbed
-  (OStream& output, Measurer const& measurer, CTRW const& ctrw, double time)
+  (OStream& output, Subject const& subject, double time)
   {
     output << "Fraction not absorbed: "
-          << 1. - double(ptof::nr_absorbed(ctrw, time))/ctrw.size()
+          << 1. - double(ptof::nr_absorbed(subject, time))/subject.size()
           << "\n";
   }
   

@@ -1,5 +1,6 @@
 //
 //  ParticleTrackingOF.cpp
+//  PTOF
 //
 //  Created by Tomás Aquino on 16/02/2022.
 //
@@ -17,7 +18,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_periodic_cartesian_advection_diffusion_2d_parallel;
+  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -82,8 +83,6 @@ int main(int argc, char * argv[])
   if (num_threads < 1)
     throw useful::bad_parameters_help();
   omp_set_num_threads(int(num_threads));
-  auto thread_num = []()
-  { return static_cast<std::size_t>(omp_get_thread_num()); };
   
   ptof::Directories directories{ dir, case_name, dir_output };
   directories.info_runtime(std::cout);
@@ -148,14 +147,8 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_data = ptof::get_velocity_data(geometry.mesh);
-  std::vector<VelocityField> velocity_field;
-  velocity_field.reserve(num_threads);
-  for (std::size_t thread = 0; thread < num_threads; ++thread)
-    velocity_field.emplace_back(Transport::makeVelocityInterpolator(geometry,
-                                                                    velocity_data,
-                                                                    thread));
-  params_transport.rescale(velocity_data, geometry.mesh);
+  auto velocity_field = Transport::makeVelocityInterpolator(geometry);
+  params_transport.rescale(velocity_field, geometry.mesh());
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -176,20 +169,11 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up initial condition...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
-  using InitialConditionObject
-    = decltype(InitialCondition::makeInitialCondition(geometry,
-                                                      velocity_field[thread_num()],
-                                                      params_initial_condition,
-                                                      thread_num()));
-  std::vector<InitialConditionObject> initial_condition;
-  initial_condition.reserve(num_threads);
-  for (std::size_t thread = 0; thread < num_threads; ++thread)
-    initial_condition.emplace_back(InitialCondition::makeInitialCondition
-                                   (geometry,
-                                    velocity_field[thread],
-                                    params_initial_condition,
-                                    thread));
-  initial_condition[thread_num()].info_runtime(std::cout);
+  auto initial_condition
+    = InitialCondition::makeInitialCondition(geometry,
+                                             velocity_field,
+                                             params_initial_condition);
+  initial_condition.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -202,25 +186,13 @@ int main(int argc, char * argv[])
                                                         params_reaction,
                                                         params_transport,
                                                         params_solvers);
-  using Boundary
-    = decltype(geometry.makeBoundary(directories,
-                                     params_transport,
-                                     params_reaction,
-                                     params_solvers,
-                                     surface_reaction,
-                                     thread_num(),
-                                     initial_condition[thread_num()]));
-  std::vector<Boundary> boundary;
-  boundary.reserve(num_threads);
-  for (std::size_t thread = 0; thread < num_threads; ++thread)
-    boundary.emplace_back(geometry.makeBoundary(directories,
-                                                params_transport,
-                                                params_reaction,
-                                                params_solvers,
-                                                surface_reaction,
-                                                thread,
-                                                initial_condition[thread]));
-  boundary[thread_num()].info_runtime(std::cout);
+  auto boundary = geometry.makeBoundary(directories,
+                                        params_transport,
+                                        params_reaction,
+                                        params_solvers,
+                                        surface_reaction,
+                                        initial_condition);
+  boundary.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -229,20 +201,12 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  CTRW ctrw{ initial_condition[thread_num()](), CTRW::Tag{} };
-  using Transitions = decltype(ctrw::Transitions_CTRW_Transport_Reaction{
-    Transport::makeTransitions(velocity_field[thread_num()],
-                               geometry, boundary[thread_num()],
-                               params_transport, params_reaction, params_solvers),
-    reaction });
-  std::vector<Transitions> transitions;
-  transitions.reserve(num_threads);
-  for (std::size_t thread = 0; thread < num_threads; ++thread)
-    transitions.emplace_back(
-      Transport::makeTransitions(velocity_field[thread],
-                                 geometry, boundary[thread],
-                                 params_transport, params_reaction, params_solvers),
-      reaction);
+  CTRW ctrw{ initial_condition(), CTRW::Tag{} };
+  auto transitions = makeTransitions(velocity_field,
+                                     geometry, boundary,
+                                     params_transport, params_reaction, params_solvers,
+                                     reaction,
+                                     num_threads);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -265,7 +229,7 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   Output measurer{
     ctrw,
-    velocity_field[thread_num()],
+    velocity_field,
     geometry,
     directories,
     params_output,
@@ -276,8 +240,7 @@ int main(int argc, char * argv[])
       + "_R_" + parameters_reaction_name
       + "_S_" + parameters_solvers_name
       + "_I_" + parameters_initial_condition_name
-      + "_O_" + parameters_output_name,
-    thread_num() };
+      + "_O_" + parameters_output_name };
   measurer.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -288,14 +251,14 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   double current_time = 0.;
-  ptof::info_time(std::cout, measurer, params_output, current_time);
+  ptof::info_time(std::cout, params_output, current_time);
   while (!measurer.done(current_time))
   {
     while (measurer.next_measure_time() <= current_time)
     {
       std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, measurer, params_output, measurer.next_measure_time());
-      ptof::info_fraction_not_absorbed(std::cout, measurer, ctrw, measurer.next_measure_time());
+      ptof::info_time(std::cout, params_output, measurer.next_measure_time());
+      ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
       measurer(measurer.next_measure_time());
       std::cout << "Done!\n";
     }
@@ -309,8 +272,8 @@ int main(int argc, char * argv[])
   if (measurer.next_measure_time() <= current_time)
   {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, measurer, params_output, measurer.next_measure_time());
-    ptof::info_fraction_not_absorbed(std::cout, measurer, ctrw, measurer.next_measure_time());
+    ptof::info_time(std::cout, params_output, measurer.next_measure_time());
+    ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
     measurer(measurer.next_measure_time());
     std::cout << "Done!\n";
   }

@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Field.h
-* \author Tomás Aquino
-* \date 16/02/2022
+ \file PTOF/Field.h
+ \author Tomás Aquino
+ \date 16/02/2022
 */
 
 #ifndef PTOF_FIELD_H
@@ -15,135 +15,193 @@
 
 namespace ptof
 {
-  /** \namespace FieldOptions Options for interpolation constructors. */
-  namespace FieldOptions
-  {
-    using NoCheck = useful::Selector<int, 0>;  /**< No bounds checking.           */
-    using Check = useful::Selector<int, 1>;    /**< Bounds checking, no warning.  */
-    using Warn = useful::Selector<int, 2>;     /**< Bounds checking, warning.     */
-  }
-  
+
   /** \class VectorField_LinearInterpolation_OF PTOF/Field.h "PTOF/Field.h"
-    *  \brief Linear interpolation of vector field data based on OpenFOAM routines. */
+    *  \brief Linear interpolation of vector field cell data based on OpenFOAM routines. */
   template
   <typename Field, typename Locator,
   bool check_if_outside, bool warn_if_outside>
   class VectorField_LinearInterpolation_OF
   {
   public:
-    // Typedefs for position, vector, and mesh cell index types
-    using Point = Foam::point;
-    using Point2D = Foam::Vector2D<Foam::scalar>;
-    using Vector = Foam::vector;
-    using Vector2D = Foam::Vector2D<Foam::scalar>;
-    using Scalar = Foam::scalar;
-    using Index = Foam::label;
+    using Point = Foam::point;                      /**> 3D point. */
+    using Point2D = Foam::Vector2D<Foam::scalar>;   /**> 2D point. */
+    using Vector = Foam::vector;                    /**> 3D vector. */
+    using Vector2D = Foam::Vector2D<Foam::scalar>;  /**> 2D vector. */
+    using Scalar = Foam::scalar;                    /**> Scalar (also 1D point). */
+    using Index = Foam::label;                      /**> Cell index.*/
     
-    /** Construct without bounds checking and without bounds warning. */
+    /** Constructor.
+    \brief Without checking if position is in bounds.
+    \param field Vector field cell data to interpolate.
+    \param locator Mesh locator.
+    */
     VectorField_LinearInterpolation_OF
-    (Field&& field, Locator&& locator, FieldOptions::NoCheck)
-    : field{ std::forward<Field>(field) }
-    , locator{ std::forward<Locator>(locator) }
-    {}
+    (Field&& field, Locator&& locator, CheckOptions::NoCheck)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {
+      static_assert(check_if_outside == false && warn_if_outside == false,
+      "Bad template argument for no bounds checking.");
+    }
     
-    /** Construct with bounds checking and without bounds warning. */
+    /** Constructor.
+     \brief With checking if position is in bounds but no warning if not.
+     \param field Vector field cell data to interpolate.
+     \param locator Mesh locator.
+    */
     VectorField_LinearInterpolation_OF
-    (Field&& field, Locator&& locator, FieldOptions::Check)
-    : field{ std::forward<Field>(field) }
-    , locator{ std::forward<Locator>(locator) }
-    {}
+    (Field&& field, Locator&& locator, CheckOptions::Check)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {
+      static_assert(check_if_outside == true && warn_if_outside == false,
+      "Bad template argument for bounds checking.");
+    }
     
-    /** Construct with bounds checking and with bounds warning. */
+    /** Constructor.
+     \brief With warning if particle is in bounds.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+    */
     VectorField_LinearInterpolation_OF
-    (Field&& field, Locator&& locator, FieldOptions::Warn)
-    : field{ std::forward<Field>(field) }
-    , locator{ std::forward<Locator>(locator) }
-    {}
+    (Field&& field, Locator&& locator, CheckOptions::Warn)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {
+      static_assert(check_if_outside == true && warn_if_outside == true,
+      "Bad template argument for bounds warning.");
+    }
     
-    /** Interpolate field according to 3D position and mesh cell. */
+    /**
+     \brief Interpolate field.
+     \param position 3D position.
+     \param cell Hint for mesh cell index position is in.
+     \return interpolated field value.
+    */
     auto operator()(Point const& position, Index cell) const
     {
       if constexpr (check_if_outside)
         if (outside(position, cell))
           return Vector::zero;
       
-      return interpolant.interpolate(position, cell);
+      return _interpolant.interpolate(position, cell);
     }
     
-    /** Interpolate field according to 3D position. */
+    /**
+     \brief Interpolate field.
+     \param position 3D position.
+     \return interpolated field value.
+    */
     auto operator()(Point const& position) const
     {
-      return this->operator()(position, locator(position));
+      return (*this)(position, _locator(position));
     }
     
-    /** Interpolate field according to 2D position and mesh cell. */
+    /**
+     \brief Interpolate field.
+     \param position 2D position.
+     \param cell Hint for mesh cell index position is in.
+     \return interpolated field value.
+    */
     auto operator()(Point2D const& position, Index cell) const
     {
-      auto interp = this->operator()(make_point(position), cell);
+      auto interp = (*this)(make_point(position), cell);
       
       return Vector2D{ interp[0], interp[1] };
     }
     
-    /** Interpolate field according to 2D position. */
+    /**
+     \brief Interpolate field.
+     \param position 2D position.
+     \return interpolated field value.
+    */
     auto operator()(Point2D const& position) const
     {
-      return this->operator()(position, locator(position));
+      return (*this)(position, _locator(position));
     }
     
-    /** Interpolate field according to 1D position and mesh cell. */
+    /**
+     \brief Interpolate field.
+     \param position 1D position.
+     \param cell Hint for mesh cell index position is in.
+     \return interpolated field value.
+    */
     auto operator()(Scalar position, Index cell) const
     {
-      return this->operator()(make_point(position), cell)[0];
+      return (*this)(make_point(position), cell)[0];
     }
     
-    /** Interpolate field according to scalar position. */
+    /**
+     \brief Interpolate field.
+     \param position 1D position.
+     \return interpolated field value.
+    */
     auto operator()(Scalar position) const
     {
-      return this->operator()(position, locator(position));
+      return (*this)(position, _locator(position));
     }
     
-    /** Interpolate field according to state. */
+    /**
+     \brief Interpolate field.
+     \param state Particle state to interpolate.
+    */
     template <typename State>
     auto operator()
     (State const& state) const
     {
-      return this->operator()(state.position, locator(state));
+      return (*this)(state.position, _locator(state));
     }
     
-    /** Locate a state in the mesh. */
+    /**
+     \brief Locate a state in the mesh.
+     \param state Particle state to locate.
+     \return Mesh cell index.
+    */
     template <typename State>
     auto locate(State const& state) const
-    { return locator(state); }
+    { return _locator(state); }
     
-    /** Get underlying field. */
+    /** \return Underlying field data. */
     auto const& get_field() const
-    { return field; }
+    { return _field; }
     
-    /** Get underlying locator object. */
+    /** \return Locator object to find positions in mesh. */
     auto const& get_locator() const
-    { return locator; }
+    { return _locator; }
     
-    /** Rescale underlying field. */
+    /** \brief Rescale underlying field.
+     \param factor Scaling factor.
+    */
     auto rescale(double factor)
-    { field *= factor; }
+    { _field *= factor; }
     
-    /** Sum to underlying field. */
+    /**
+     \brief Sum to underlying field.
+     \param other_field field to sum
+    */
     auto sum(Field const& other_field)
-    { field += other_field; }
+    { _field += other_field; }
     
+    /**
+     \brief Change underlying field data.
+     \param field Set field data to this field.
+    */
     auto set(Field const& field)
     {
-      this->field = field;
+      _field = field;
     }
     
   private:
-    Field field;      /**< Field data to interpolate.         */
-    Locator locator;  /**< Locator to find positions in mesh. */
+    Field _field;      /**< Vector field cell data to interpolate. */
+    Locator _locator;  /**< Locator to find positions in mesh. */
+    Foam::interpolationCellPoint<Vector> _interpolant{ _field };  /**< Interpolation object. */
     
-    /** Interpolation object. */
-    Foam::interpolationCellPoint<Vector> interpolant{ field };
-    
-    /** Bounds checking. */
+    /**
+     \brief Check if position is out of bounds.
+     \param position Position to check.
+     \param cell Hint for mesh cell index position is in.
+    */
     bool outside
     (Point const& position, Index cell) const
     {
@@ -166,132 +224,206 @@ namespace ptof
   <typename Field, typename Locator>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&,
-   FieldOptions::NoCheck) ->
+   CheckOptions::NoCheck) ->
   VectorField_LinearInterpolation_OF
   <Field, Locator, 0, 0>;
   template
   <typename Field, typename Locator>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&,
-   FieldOptions::Check) ->
+   CheckOptions::Check) ->
   VectorField_LinearInterpolation_OF
   <Field, Locator, 1, 0>;
   template
   <typename Field, typename Locator>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&,
-   FieldOptions::Warn) ->
+   CheckOptions::Warn) ->
   VectorField_LinearInterpolation_OF
   <Field, Locator, 1, 1>;
   
   /** \class ScalarField_LinearInterpolation_OF PTOF/Field.h "PTOF/Field.h"
-   * \brief Linear interpolation of scalar field data based on OpenFOAM routines. */
+   * \brief Linear interpolation of scalar field cell data based on OpenFOAM routines. */
   template
   <typename Field, typename Locator,
   bool check_if_outside, bool warn_if_outside>
   class ScalarField_LinearInterpolation_OF
   {
   public:
-    // Typedefs for position, vector, and mesh cell index types
-    using Point = Foam::point;
-    using Point2D = Foam::Vector2D<Foam::scalar>;
-    using Scalar = Foam::scalar;
-    using Index = Foam::label;
+    using Point = Foam::point;                      /**> 3D point. */
+    using Point2D = Foam::Vector2D<Foam::scalar>;   /**> 2D point. */
+    using Scalar = Foam::scalar;                    /**> Scalar (also 1D point). */
+    using Index = Foam::label;                      /**> Cell index.*/
     
-    /** \brief Construct without bounds checking and without bounds warning. */
+    /** Constructor.
+     \brief Without checking if position is in bounds.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+     */
     ScalarField_LinearInterpolation_OF
-    (Field&& field, Locator&& locator, FieldOptions::NoCheck)
-    : field{ std::forward<Field>(field) }
-    , locator{ std::forward<Locator>(locator) }
-    {}
+    (Field&& field, Locator&& locator, CheckOptions::NoCheck)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {
+      static_assert(check_if_outside == false && warn_if_outside == false,
+      "Bad template argument for no bounds checking.");
+    }
     
-    /** Construct with bounds checking and without bounds warning. */
+    /** Constructor.
+     \brief With checking if position is in bounds but no warning if not.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+    */
     ScalarField_LinearInterpolation_OF
-    (Field&& field, Locator&& locator, FieldOptions::Check)
-    : field{ std::forward<Field>(field) }
-    , locator{ std::forward<Locator>(locator) }
-    {}
+    (Field&& field, Locator&& locator, CheckOptions::Check)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {
+      static_assert(check_if_outside == true && warn_if_outside == false,
+      "Bad template argument for bounds checking.");
+    }
     
-    /** Construct with bounds checking and with bounds warning. */
+    /** Constructor.
+     \brief With warning if particle is in bounds.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+    */
     ScalarField_LinearInterpolation_OF
-    (Field&& field, Locator&& locator, FieldOptions::Warn)
-    : field{ std::forward<Field>(field) }
-    , locator{ std::forward<Locator>(locator) }
-    {}
+    (Field&& field, Locator&& locator, CheckOptions::Warn)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {
+      static_assert(check_if_outside == true && warn_if_outside == true,
+      "Bad template argument for bounds warning.");
+    }
     
-    /** Interpolate field according to 3D position and mesh cell. */
+    /**
+     \brief Interpolate field.
+     \param position 3D position.
+     \param cell Hint for mesh cell index position is in.
+     \return interpolated field value.
+    */
     auto operator()(Point const& position, Index cell) const
     {
       if constexpr (check_if_outside)
         if (outside(position, cell))
           return 0.;
       
-      return interpolant.interpolate(position, cell);
+      return _interpolant.interpolate(position, cell);
     }
     
-    /** Interpolate field according to 3D position. */
+    /**
+     \brief Interpolate field.
+     \param position 3D position.
+     \return interpolated field value.
+    */
     auto operator()(Point const& position) const
     {
-      return this->operator()(position, locator(position));
+      return (*this)(position, _locator(position));
     }
     
-    /** Interpolate field according to 2D position and mesh cell. */
+    /**
+     \brief Interpolate field.
+     \param position 2D position.
+     \param cell Hint for mesh cell index position is in.
+     \return interpolated field value.
+    */
     auto operator()(Point2D const& position, Index cell) const
     {
-      return this->operator()(make_point(position), cell);
+      return (*this)(make_point(position), cell);
     }
     
-    /** Interpolate field according to 2D position. */
+    /**
+     \brief Interpolate field.
+     \param position 2D position.
+     \return interpolated field value.
+    */
     auto operator()(Point2D const& position) const
     {
-      return this->operator()(position, locator(position));
+      return (*this)(position, _locator(position));
     }
     
-    /** Interpolate field according to 1D position and mesh cell. */
+    /**
+     \brief Interpolate field.
+     \param position 1D position.
+     \param cell Hint for mesh cell index position is in.
+     \return interpolated field value.
+    */
     auto operator()(Scalar position, Index cell) const
     {
-      return this->operator()(make_point(position), cell);
+      return (*this)(make_point(position), cell);
     }
     
-    /** Interpolate field according to scalar position. */
+    /**
+     \brief Interpolate field.
+     \param position 1D position.
+     \return interpolated field value.
+    */
     auto operator()(Scalar position) const
     {
-      return this->operator()(position, locator(position));
+      return (*this)(position, _locator(position));
     }
     
-    /** Interpolate field according to state. */
+    /**
+     \brief Interpolate field.
+     \param state Particle state to interpolate.
+    */
     template <typename State>
     auto operator()
     (State const& state) const
     {
-      return this->operator()(state.position, locator(state));
+      return (*this)(state.position, _locator(state));
     }
     
-    /** Locate a state in the mesh. */
+    /**
+     \brief Locate a state in the mesh.
+     \param state Particle state to locate.
+     \return Mesh cell index.
+    */
     template <typename State>
     auto locate(State const& state) const
-    { return locator(state); }
+    { return _locator(state); }
     
-    /** Get underlying field. */
+    /** \return Underlying field data. */
     auto const& get_field() const
-    { return field; }
+    { return _field; }
     
-    /** Get underlying locator object. */
+    /** \return Locator object to find positions in mesh. */
     auto const& get_locator() const
-    { return locator; }
+    { return _locator; }
     
-    /** Rescale underlying field. */
-    auto rescale(double factor)
-    { field *= factor; }
+    /** \brief Rescale underlying field.
+     \param factor Scaling factor
+    */
+    void rescale(double factor)
+    { _field *= factor; }
+    
+    /**
+     \brief Sum to underlying field.
+     \param other_field field to sum
+    */
+    auto sum(Field const& other_field)
+    { _field += other_field; }
+    
+    /**
+     \brief Change underlying field data.
+     \param field Set field data to this field.
+    */
+    auto set(Field const& field)
+    {
+      _field = field;
+    }
     
   private:
-    Field field;      /**< Field data to interpolate.         */
-    Locator locator;  /**< Locator to find positions in mesh. */
+    Field _field;      /**< Scalar field cell data to interpolate.         */
+    Locator _locator;  /**< Locator to find positions in mesh. */
+    Foam::interpolationCellPoint<Scalar> _interpolant{ _field }; /**< Interpolation object. */
     
-    /** Interpolation object. */
-    Foam::interpolationCellPoint<Scalar> interpolant{ field };
-    
-    /** Bounds checking. */
+    /**
+     \brief Check if position is out of bounds.
+     \param position Position to check.
+     \param cell Hint for mesh cell index position is in.
+    */
     bool outside
     (Point const& position, Index cell) const
     {
@@ -314,26 +446,25 @@ namespace ptof
   <typename Field, typename Locator>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&,
-   FieldOptions::NoCheck) ->
+   CheckOptions::NoCheck) ->
   ScalarField_LinearInterpolation_OF
   <Field, Locator, 0, 0>;
   template
   <typename Field, typename Locator>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&,
-   FieldOptions::Check) ->
+   CheckOptions::Check) ->
   ScalarField_LinearInterpolation_OF
   <Field, Locator, 1, 0>;
   template
   <typename Field, typename Locator>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&,
-   FieldOptions::Warn) ->
+   CheckOptions::Warn) ->
   ScalarField_LinearInterpolation_OF
   <Field, Locator, 1, 1>;
   
-  /** Compute magnitude of average of volumetric field
-   * (set of values associated with mesh cells) */
+  /** \brief Compute magnitude of average of volumetric field (set of values associated with mesh cells). */
   template <typename Field, typename Mesh>
   auto magnitude_of_average(Field& field, Mesh const& mesh)
   {
@@ -344,9 +475,7 @@ namespace ptof
     return Foam::mag(average_weighted_data)/mesh_volume;
   }
   
-  /** Rescale a volumetric field
-   * (set of values associated with mesh cells)
-   * to a given average value. */
+  /** \brief Rescale a volumetric field (set of values associated with mesh cells)  to a given average value. */
   template <typename Field, typename Mesh>
   void rescale_to_average
   (Field& field, Mesh const& mesh, double average)

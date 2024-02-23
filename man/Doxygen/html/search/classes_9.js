@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['kdtree_5fgrid_958',['KDTree_Grid',['../d1/dfe/classgrid_1_1_k_d_tree___grid.html',1,'grid']]],
-  ['kdtree_5fgrid_5fmask_959',['KDTree_Grid_Mask',['../db/d0a/classgrid_1_1_k_d_tree___grid___mask.html',1,'grid']]]
+  ['left_5fshift_1012',['left_shift',['../db/dc4/structuseful_1_1notstd_1_1left__shift.html',1,'useful::notstd']]],
+  ['locator_5fcell_1013',['Locator_Cell',['../d0/d4f/structptof_1_1_locator___cell.html',1,'ptof']]],
+  ['locator_5fcell_5fparallel_1014',['Locator_Cell_Parallel',['../d5/db8/structptof_1_1_locator___cell___parallel.html',1,'ptof']]]
 ];

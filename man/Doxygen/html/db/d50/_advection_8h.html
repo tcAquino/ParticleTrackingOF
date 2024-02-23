@@ -123,8 +123,8 @@ Include dependency graph for Advection.h:</div>
 <area shape="rect" title=" " alt="" coords="505,453,563,480"/>
 <area shape="rect" title=" " alt="" coords="5,453,97,480"/>
 <area shape="rect" title=" " alt="" coords="121,453,184,480"/>
-<area shape="rect" href="../../dd/ddd/_state_getter_8h.html" title=" " alt="" coords="489,229,640,256"/>
-<area shape="rect" href="../../d7/d14/_operations_8h.html" title=" " alt="" coords="485,304,645,331"/>
+<area shape="rect" href="../../dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="489,229,640,256"/>
+<area shape="rect" href="../../d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="485,304,645,331"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -132,8 +132,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d53/_advection_8h__dep__incl.png" border="0" usemap="#a_p_t_o_f_2_advection_8hdep" alt=""/></div>
 <map name="a_p_t_o_f_2_advection_8hdep" id="a_p_t_o_f_2_advection_8hdep">
-<area shape="rect" title=" " alt="" coords="5,5,143,32"/>
-<area shape="rect" href="../../d3/d74/_models_8h.html" title=" " alt="" coords="15,80,133,107"/>
+<area shape="rect" title=" " alt="" coords="81,5,219,32"/>
+<area shape="rect" href="../../d3/d74/_models_8h.html" title=" " alt="" coords="5,80,124,107"/>
+<area shape="rect" href="../../d0/dee/_models___parallel_8h.html" title=" " alt="" coords="148,80,323,107"/>
 </map>
 </div>
 </div>
@@ -148,13 +149,20 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:aac351f75a62fadba4267e352ab98a20d"><td class="memTemplParams" colspan="2">template&lt;typename Mesh &gt; </td></tr>
 <tr class="memitem:aac351f75a62fadba4267e352ab98a20d"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d">ptof::get_velocity_data</a> (Mesh const &amp;mesh)</td></tr>
+<tr class="memdesc:aac351f75a62fadba4267e352ab98a20d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the velocity field U from the OpenFOAM case time associated with a mesh.  <a href="../../d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d">More...</a><br /></td></tr>
 <tr class="separator:aac351f75a62fadba4267e352ab98a20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="memTemplParams" colspan="2">template&lt;typename Mesh &gt; </td></tr>
 <tr class="memitem:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24">ptof::get_velocity_data_rescaled</a> (Mesh const &amp;mesh, double average)</td></tr>
+<tr class="memdesc:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given average.  <a href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24">More...</a><br /></td></tr>
 <tr class="separator:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76b58a938a23e25fad266087fcfdade5"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename Field &gt; </td></tr>
 <tr class="memitem:a76b58a938a23e25fad266087fcfdade5"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a76b58a938a23e25fad266087fcfdade5">ptof::makeLinearInterpolator</a> (Geometry const &amp;geometry, Field &amp;&amp;field)</td></tr>
+<tr class="memdesc:a76b58a938a23e25fad266087fcfdade5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a linear interpolator for a field using OpenFOAM interpolation.  <a href="../../d2/dd1/namespaceptof.html#a76b58a938a23e25fad266087fcfdade5">More...</a><br /></td></tr>
 <tr class="separator:a76b58a938a23e25fad266087fcfdade5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a205789d7ca48bc377f5e2f503e9c8f84"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename Field &gt; </td></tr>
+<tr class="memitem:a205789d7ca48bc377f5e2f503e9c8f84"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a205789d7ca48bc377f5e2f503e9c8f84">ptof::makeLinearInterpolator</a> (Geometry const &amp;geometry, Field &amp;&amp;field, std::size_t thread)</td></tr>
+<tr class="memdesc:a205789d7ca48bc377f5e2f503e9c8f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a linear interpolator for a field using OpenFOAM interpolation.  <a href="../../d2/dd1/namespaceptof.html#a205789d7ca48bc377f5e2f503e9c8f84">More...</a><br /></td></tr>
+<tr class="separator:a205789d7ca48bc377f5e2f503e9c8f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>

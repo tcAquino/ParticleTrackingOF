@@ -22,7 +22,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_periodic_cartesian_advection_diffusion_2d;
+  using namespace ptof::model_periodic_cartesian_advection_diffusion_3d;
   using Phase = ptof::Phase;
   
   if (useful::check_options_help(argc, argv))
@@ -162,8 +162,12 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up phases..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh, params_phase);
-  auto grad_excluded_phase_field = Phase::get_grad_excluded_phase_data(geometry.mesh, params_phase, excluded_phase_field);
+  auto excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh(),
+                                                             params_phase);
+  auto grad_excluded_phase_field
+    = Phase::get_grad_excluded_phase_data(geometry.mesh(),
+                                          params_phase,
+                                          excluded_phase_field);
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
@@ -172,7 +176,7 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field = Transport::makeVelocityInterpolator(geometry);
-  params_transport.rescale(velocity_field, geometry.mesh);
+  params_transport.rescale(velocity_field, geometry.mesh());
   velocity_field.sum(params_phase.leakage_coefficient
                      * Foam::dimensionedScalar("",
                                                 Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
@@ -286,7 +290,7 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Starting dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   double current_time = directories_of.time.value();
-  ptof::info_time(std::cout, measurer, params_output, current_time);
+  ptof::info_time(std::cout, params_output, current_time);
   auto const& flow_times = directories_of.time.times();
   auto closest_time_index = [&flow_times](auto value)
   {
@@ -322,13 +326,17 @@ int main(int argc, char * argv[])
       if (velocity_field_needs_update)
       {
         std::cout << "Field updates required...\n";
-        ptof::info_time(std::cout, measurer, params_output, current_time);
+        ptof::info_time(std::cout, params_output, current_time);
         std::cout << "Updating phase field...\n";
-        excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh, params_phase);
-        grad_excluded_phase_field = Phase::get_grad_excluded_phase_data(geometry.mesh, params_phase, excluded_phase_field);
+        excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh(),
+                                                              params_phase);
+        grad_excluded_phase_field
+          = Phase::get_grad_excluded_phase_data(geometry.mesh(),
+                                                params_phase,
+                                                excluded_phase_field);
         std::cout << "Done!\n";
         std::cout << "Updating velocity field...\n";
-        velocity_field.set(ptof::get_velocity_data(geometry.mesh));
+        velocity_field.set(ptof::get_velocity_data(geometry.mesh()));
         if (params_transport.velocity_rescaling_factor != 1.)
           velocity_field.rescale(params_transport.velocity_rescaling_factor);
         velocity_field.sum(params_phase.leakage_coefficient
@@ -343,8 +351,8 @@ int main(int argc, char * argv[])
     while (measurer.next_measure_time() <= current_time)
     {
       std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, measurer, params_output, measurer.next_measure_time());
-      ptof::info_fraction_not_absorbed(std::cout, measurer, ctrw, measurer.next_measure_time());
+      ptof::info_time(std::cout, params_output, measurer.next_measure_time());
+      ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
       measurer(measurer.next_measure_time());
       std::cout << "Done!\n";
     }
@@ -359,8 +367,8 @@ int main(int argc, char * argv[])
   if (measurer.next_measure_time() <= current_time)
   {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, measurer, params_output, measurer.next_measure_time());
-    ptof::info_fraction_not_absorbed(std::cout, measurer, ctrw, measurer.next_measure_time());
+    ptof::info_time(std::cout, params_output, measurer.next_measure_time());
+    ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
     measurer(measurer.next_measure_time());
     std::cout << "Done!\n";
   }

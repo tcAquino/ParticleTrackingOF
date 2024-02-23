@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Geometry.h
-* \author Tomás Aquino
-* \date 09/03/2022
+ \file PTOF/Geometry.h
+ \author Tomás Aquino
+ \date 09/03/2022
 */
 #ifndef PTOF_GEOMETRY_H
 #define PTOF_GEOMETRY_H
@@ -26,9 +26,7 @@
 namespace ptof
 {
   /** \struct BoundaryConditionSet PTOF/Geometry.h "PTOF/Geometry.h"
-    *  \brief Keep track of names of
-    *  types of boundary condition sets
-    *  for different types of simulations. */
+     \brief Keep track of names of types of boundary condition sets  for different types of simulations. */
   struct BoundaryConditionSet
   {
     /** \enum Type
@@ -41,19 +39,19 @@ namespace ptof
       symmetryplanes   /**< Periodicity according to symmetry planes.      */
     };
     
-    /** Type from name. */
+    /** \brief Get type from name. */
     static auto type(std::string const& name)
     { return name_to_type.at(name); }
     
-    /** Name from type. */
+    /** \brief Get name from type. */
     static auto name(Type type)
     { return type_to_name.at(type); }
     
-    /** Check if name exists. */
+    /** \brief Check if name exists. */
     static bool contains(std::string const& name)
     { return name_to_type.count(name); }
     
-    /** Map names to types. */
+    /** \brief Map names to types. */
     inline static const
     std::unordered_map<std::string, Type> name_to_type
     {
@@ -63,7 +61,7 @@ namespace ptof
       { "symmetryplanes", Type::symmetryplanes }
     };
     
-    /** Map types to names. */
+    /** \brief Map types to names. */
     inline static const
     std::unordered_map<Type, std::string> type_to_name
     {
@@ -74,7 +72,10 @@ namespace ptof
     };
   };
   
-  /** Get boundary conditions for dynamics type. */
+  /**
+   \brief Get boundary conditions for dynamics type.
+   \param directories Current case directory information.
+   */
   template <BoundaryConditionSet::Type dynamics>
   auto get_boundary_conditions(Directories const& directories)
   {
@@ -94,34 +95,36 @@ namespace ptof
                                       + ".dat");
   }
   
-  /** \struct Geometry PTOF/Geometry.h "PTOF/Geometry.h"
-   * Basic geometry class */
+  /** \class Geometry PTOF/Geometry.h "PTOF/Geometry.h"
+   * \brief Basic geometry class. */
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics>
   struct Geometry
   {
-    static constexpr std::size_t dim{ dim_val };
-    using Mesh = Foam::fvMesh;
-    using MeshSearch = Foam::meshSearch;
-    using Locator = Locator_Cell;
-    
-    /** Store only absorptions for transport simulations,
-     * store absorptions and reinjections for fpt simulations. */
+    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    using Mesh = Foam::fvMesh;                      /**< Mesh. */
+    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
+    using Locator = Locator_Cell;                   /**< Locate positions in mesh. */
     using BoundaryInfo
       = std::conditional_t<
           dynamics
             == BoundaryConditionSet::Type::transport,
           Store_Absorbed,
-          Store_Absorbed_Reinjections>;
+          Store_Absorbed_Reinjections>;             /**< What to store upon hitting a boundary. */
     
-    /** Construct with mesh from specified OpenFOAM case time. */
+    /** Constructor.
+    \brief Use mesh from specified OpenFOAM case time.
+    \param directories_of OpenFOAM case directory information.
+    \param directories Current case directory information.
+    \param parameters Additional parameters (unused).
+    */
     template <typename Parameters>
     Geometry
     (DirectoriesOF const& directories_of,
      Directories const& directories,
      Parameters const& parameters = useful::Empty{})
-    : mesh{
+    : _mesh{
         Foam::IOobject{
           Foam::fvMesh::defaultRegion,
           directories_of.time.timeName(),
@@ -129,10 +132,20 @@ namespace ptof
           Foam::IOobject::MUST_READ } }
     {}
     
-    /** Make a Boundary object for the preset type of dynamics:
-     * - 'transport': No parameters, custom boundary does nothing;
-     * - 'firstpassage': Parameters should hold InitialCondition object;
-     * - custom boundary reinjects according to initial condition. */
+    /**
+     \brief Make a Boundary object for the preset type of dynamics.
+     
+     - 'transport': No parameters, custom boundary does nothing.
+     - 'firstpassage': Parameters should hold InitialCondition object.
+     - 'custom': Boundary reinjects according to initial condition.
+     \param directories Current case directory information.
+     \param params_transport Transport parameters.
+     \param params_reaction Reaction parameters.
+     \param params_solvers Solver parameters.
+     \param surface_reaction Surface reaction.
+     \param parameters Additional parameters (unused).
+     \return Boundary object.
+    */
     template
     <typename TransportParameters,
     typename ReactionParameters,
@@ -144,22 +157,20 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     SurfaceReaction&& reaction,
+     SurfaceReaction&& surface_reaction,
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          mesh_search,
           locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
           Boundary_DoNothing{},
-          std::forward<SurfaceReaction>(reaction) };
+          std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          mesh_search,
           locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
@@ -170,7 +181,10 @@ namespace ptof
           + " not supported" };
     }
     
-    /** Output generic information about object. */
+    /**
+    \brief Output generic information about object.
+    \param output Output stream
+    */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -195,7 +209,9 @@ namespace ptof
         "--------------------------------------------------\n";
     }
     
-    /** Output information about current object. */
+   /**
+      \brief Output information about current object.
+    */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -203,42 +219,52 @@ namespace ptof
         "--------------------------------------------------\n"
         "Mesh\n"
         "--------------------------------------------------\n";
-      output << "cells: " << mesh.nCells() << "\n"
-             << "faces: " << mesh.nFaces() << "\n"
-             << "edges: " << mesh.nEdges() << "\n";
+      output << "cells: " << mesh().nCells() << "\n"
+             << "faces: " << mesh().nFaces() << "\n"
+             << "edges: " << mesh().nEdges() << "\n";
       output <<
         "--------------------------------------------------\n";
     }
     
-    Mesh mesh;                        /**< Mesh for fields and boundaries. */
-    MeshSearch mesh_search{ mesh };   /**< To find positions in mesh, etc. */
-    Locator locator{ mesh_search };   /**< Wrapper on mesh search.         */
+    /** \return Mesh. */
+    auto const& mesh() const
+    { return _mesh; }
+    
+  private:
+    Mesh _mesh;                          /**< Mesh for fields and boundaries. */
+    MeshSearch _mesh_search{ _mesh };    /**< Mesh searching tools.*/
+    
+  public:
+    Locator locator{ _mesh_search };    /**< To locate positions in mesh.*/
   };
   
-  /** \struct Geometry_Periodic_Cartesian PTOF/Geometry.h "PTOF/Geometry.h"
-   *  \brief Geometry class for geometry
-   *  with Cartesian periodic BCs along some dimensions.*/
+  /** \class Geometry_Periodic_Cartesian PTOF/Geometry.h "PTOF/Geometry.h"
+   *  \brief Geometry class for geometry with Cartesian periodic BCs along some dimensions.*/
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics>
   struct Geometry_Periodic_Cartesian
   {
-    static constexpr std::size_t dim{ dim_val };
-    using Mesh = Foam::fvMesh;
-    using MeshSearch = Foam::meshSearch;
-    using Locator = Locator_Cell;
-    using Boundary_Periodic = geometry::Boundary_Periodic_WithOutsideInfo;
+    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    using Mesh = Foam::fvMesh;                      /**< Mesh. */
+    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
+    using Locator = Locator_Cell;                   /**< Locate positions in mesh.*/
+    using Boundary_Periodic =
+      geometry::Boundary_Periodic_WithOutsideInfo;  /**< Periodic boundary. */
+    using BoundaryInfo = Store_Absorbed;            /**< What to store upon hitting a boundary. */
     
-    /** Store only absorptions. */
-    using BoundaryInfo = Store_Absorbed;
-    
-    /** Construct with mesh from specified OpenFOAM case time. */
+    /** Constructor.
+     \brief Use mesh from specified OpenFOAM case time.
+     \param directories_of OpenFOAM case directory information.
+     \param directories Current case directory information.
+     \param parameters Additional parameters (unused)
+    */
     template <typename Parameters>
     Geometry_Periodic_Cartesian
     (DirectoriesOF const& directories_of,
      Directories const& directories,
-     Parameters const& params = useful::Empty{})
-    : mesh{
+     Parameters const& parameters = useful::Empty{})
+    : _mesh{
         Foam::IOobject{
           Foam::fvMesh::defaultRegion,
           directories_of.time.timeName(),
@@ -248,7 +274,16 @@ namespace ptof
         make_boundary_periodic(directories) }
     {}
     
-    /** Make a Boundary object for Cartesian periodicity. */
+    /**
+     \brief Make a Boundary object for Cartesian periodicity.
+     \param directories Current case directory information.
+     \param params_transport Transport parameters.
+     \param params_reaction Reaction parameters.
+     \param params_solvers Solver parameters.
+     \param surface_reaction Surface reaction.
+     \param parameters Additional parameters (initial condition object for reinjection).
+     \return Boundary object.
+    */
     template
     <typename TransportParameters,
     typename ReactionParameters,
@@ -260,29 +295,27 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     SurfaceReaction&& reaction,
+     SurfaceReaction&& surface_reaction,
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          mesh_search,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            mesh_search },
+            locator },
           Boundary_DoNothing{},
-          std::forward<SurfaceReaction>(reaction) };
+          std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          mesh_search,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            mesh_search },
+            locator },
           Boundary_Reinject{ parameters } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
@@ -290,7 +323,7 @@ namespace ptof
           + " not supported" };
     }
     
-    /** Output generic information about object. */
+    /** \brief Output generic information about object. */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -316,7 +349,7 @@ namespace ptof
       "--------------------------------------------------\n";
     }
     
-    /** Output information about current object. */
+    /** \brief Output information about current object. */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -324,9 +357,9 @@ namespace ptof
         "--------------------------------------------------\n"
         "Mesh\n"
         "--------------------------------------------------\n";
-      output << "cells: " << mesh.nCells() << "\n"
-             << "faces: " << mesh.nFaces() << "\n"
-             << "edges: " << mesh.nEdges() << "\n"
+      output << "cells: " << mesh().nCells() << "\n"
+             << "faces: " << mesh().nFaces() << "\n"
+             << "edges: " << mesh().nEdges() << "\n"
         "--------------------------------------------------\n";
       output <<
         "--------------------------------------------------\n"
@@ -347,12 +380,24 @@ namespace ptof
         "--------------------------------------------------\n";
     }
     
-    Mesh mesh;                            /**< Mesh for fields and boundaries.        */
-    MeshSearch mesh_search{ mesh };       /**< To find positions in mesh, etc.        */
-    Locator locator{ mesh_search };       /**< Wrapper on mesh search.                */ 
+    /** \return Mesh. */
+    auto const& mesh() const
+    { return _mesh; }
+    
+  private:
+    Mesh _mesh;                            /**< Mesh for fields and boundaries.        */
+    MeshSearch _mesh_search{ _mesh };       /**< Mesh searching tools. */
+    
+  public:
+    Locator locator{ _mesh_search };       /**< To locate positions in mesh.*/
     Boundary_Periodic boundary_periodic;  /**< Boundary object to enforce periodicity.*/
     
   private:
+    /**
+    \brief Make a boundary object to enforce periodicity based on cartesian planes.
+    \param directories Current case directory information.
+    \return Periodic boundary object.
+    */
     Boundary_Periodic make_boundary_periodic
     (Directories const& directories)
     {
@@ -363,10 +408,10 @@ namespace ptof
       for (auto const& bc : boundary_conditions)
         if (bc.second == "periodic")
         {
-          /** Find average and variance of patch face centers. */
+          // Find average and variance of patch face centers.
           auto const& patch_id =
-            mesh.boundaryMesh().findPatchID(bc.first, false);
-          auto const& patch = mesh.boundaryMesh()[patch_id];
+            mesh().boundaryMesh().findPatchID(bc.first, false);
+          auto const& patch = mesh().boundaryMesh()[patch_id];
           auto face_start = patch.start();
           Foam::point average_face_center = Foam::point::zero;
           Foam::point variance_face_center = Foam::point::zero;
@@ -374,8 +419,8 @@ namespace ptof
           for (auto face = face_start;
                face < face_start + patch.size(); ++face)
           {
-            auto area = face_area(face, mesh);
-            auto weighted_center = area*face_center(face, mesh);
+            auto area = face_area(face, mesh());
+            auto weighted_center = area*face_center(face, mesh());
             total_area += area;
             average_face_center += weighted_center;
             for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd)
@@ -388,7 +433,7 @@ namespace ptof
             variance_face_center[dd] -=
               average_face_center[dd]*average_face_center[dd];
           
-          /** Choose dimension with least variance. */
+          // Choose dimension with least variance.
           auto it_min = std::min_element(variance_face_center.begin(),
                                          variance_face_center.end());
           std::size_t dd = std::distance(variance_face_center.begin(),
@@ -396,8 +441,8 @@ namespace ptof
           boundaries_dim[dd].push_back(average_face_center[dd]);
         }
       
-      /** Check which dimensions have periodic BCs
-       * If a dimension has periodic BCs they must be exactly two.*/
+      // Check which dimensions have periodic BCs.
+      // If a dimension has periodic BCs they must be exactly two.
       std::vector<bool> dim_has_periodic_bcs(dim, 0);
       for (std::size_t dd = 0; dd < dim; ++dd)
         if (boundaries_dim[dd].size() != 0)
@@ -413,12 +458,12 @@ namespace ptof
           dim_has_periodic_bcs[dd] = 1;
         }
       
-      /** Periodic conditions are assumed to be checked in order
-       * across Cartesian dimensions.
-       * If there are periodic BCs in all dimensions
-       * starting from 0 up to some dimension, add only those boundaries
-       * If there are gap dimensions between periodic dimensions,
-       * add {-inf, inf} boundaries.*/
+      // Periodic conditions are assumed to be checked in order
+      // across Cartesian dimensions.
+      // If there are periodic BCs in all dimensions
+      // starting from 0 up to some dimension, add only those boundaries
+      // If there are gap dimensions between periodic dimensions,
+      // add {-inf, inf} boundaries.
       bool found_nonperiodic = 0;
       bool nonconsecutive_dims = 0;
       for (bool periodic : dim_has_periodic_bcs)
@@ -452,42 +497,42 @@ namespace ptof
         }
       }
       return { boundaries };
-    };
+    }
   };
   
-  /** \struct Geometry_Bcc PTOF/Geometry.h "PTOF/Geometry.h"
-   * \brief Geometry class for periodic geometry in a
-   * body centered cubic beadpack
-   * Holds spatial dimension info,
-   * mesh, mesh search objects,
-   * and periodic boundary to enforce periodicity. */
+  /** \class Geometry_Bcc PTOF/Geometry.h "PTOF/Geometry.h"
+   \brief Geometry class for periodic representation of a body centered cubic beadpack.
+   \details Holds spatial dimension info, mesh, mesh search objects, and periodic boundary to enforce periodicity. */
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics,
   BoundaryConditionSet::Type periodicity_type>
   struct Geometry_Bcc
   {
-    static constexpr std::size_t dim{ dim_val };
-    using Mesh = Foam::fvMesh;
-    using MeshSearch = Foam::meshSearch;
-    using Locator = Locator_Cell;
+    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    using Mesh = Foam::fvMesh;                      /**< Mesh. */
+    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
+    using Locator = Locator_Cell;                   /**< Locate positions in mesh. */
     using Boundary_Periodic = std::conditional_t<
       periodicity_type
       == BoundaryConditionSet::Type::cartesian,
     geometry::Boundary_Periodic_WithOutsideInfo,
     geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
-      geometry::SymmetryPlanes_Bcc>>;
+      geometry::SymmetryPlanes_Bcc>>;              /**< Periodic boundary type. */
+    using BoundaryInfo = Store_Absorbed;           /**< What to store upon hitting a boundary. */
     
-    /** Store only absorptions.*/
-    using BoundaryInfo = Store_Absorbed;
-    
-    /** Construct with mesh from specified OpenFOAM case time. */
+    /** Constructor.
+    \brief Use mesh from specified OpenFOAM case time.
+    \param directories_of OpenFOAM case directory information.
+    \param directories Current case directory information.
+    \param parameters Additional parameters for periodic boundary.
+    */
     template <typename Parameters>
     Geometry_Bcc
     (DirectoriesOF const& directories_of,
      Directories const& directories,
-     Parameters const& params)
-    : mesh{
+     Parameters const& parameters)
+    : _mesh{
         Foam::IOobject{
           Foam::fvMesh::defaultRegion,
           directories_of.time.timeName(),
@@ -497,13 +542,20 @@ namespace ptof
         make_boundary_periodic(useful::Selector<
                                 BoundaryConditionSet::Type,
                                 periodicity_type>{},
-                               params) }
+                               parameters) }
     {}
     
-    /** Make a Boundary object for the preset type of periodicity
-     * Parameters holds periodic boundary
-     * - 'cartesian': Cartesian periodicity
-     * - 'symmetryplanes': Periodicity according to symmetry planes */
+    /**
+     \brief Make a Boundary object for the preset type of dynamics and periodicity
+     \details
+     - 'cartesian': Cartesian periodicity
+     - 'symmetryplanes': Periodicity according to symmetry planes
+     \param directories Current case directory information.
+     \param params_transport Transport parameters.
+     \param params_reaction Reaction parameters.
+     \param params_solvers Solver parameters.
+     \param surface_reaction Surface reaction.
+     \param parameters Additional parameters (initial condition object for reinjection). */
     template
     <typename TransportParameters,
     typename ReactionParameters,
@@ -515,29 +567,27 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     SurfaceReaction&& reaction,
+     SurfaceReaction&& surface_reaction,
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          mesh_search,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            mesh_search },
+            locator },
           Boundary_DoNothing{},
-          std::forward<SurfaceReaction>(reaction) };
+          std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          mesh_search,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            mesh_search },
+            locator },
           Boundary_Reinject{ parameters } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
@@ -545,7 +595,9 @@ namespace ptof
           + " not supported" };
     }
     
-    /** Output generic information about object.*/
+    /**
+    \brief Output generic information about object.
+    */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -575,7 +627,9 @@ namespace ptof
       "--------------------------------------------------\n";
     }
     
-    /** Output information about current object.*/
+    /**
+    \brief Output information about current object.
+    */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -583,39 +637,56 @@ namespace ptof
         "--------------------------------------------------\n"
         "Mesh\n"
         "--------------------------------------------------\n";
-      output << "cells: " << mesh.nCells() << "\n"
-             << "faces: " << mesh.nFaces() << "\n"
-             << "edges: " << mesh.nEdges() << "\n";
+      output << "cells: " << mesh().nCells() << "\n"
+             << "faces: " << mesh().nFaces() << "\n"
+             << "edges: " << mesh().nEdges() << "\n";
       output <<
         "--------------------------------------------------\n";
     }
     
-    Mesh mesh;                            /**< Mesh for fields and boundaries. */
-    MeshSearch mesh_search{ mesh };       /**< To find positions in mesh, etc. */
-    Locator locator{ mesh_search };       /**< Wrapper on mesh search.         */
-    Boundary_Periodic boundary_periodic;  /**< Boundary object to enforce periodicity. */
+    /** \return Mesh. */
+    auto const& mesh() const
+    { return _mesh; }
+    
+  private:
+    Mesh _mesh;                             /**< Mesh for fields and boundaries. */
+    MeshSearch _mesh_search{ _mesh };       /**< Mesh searching tools. */
+    
+  public:
+    Locator locator{ _mesh_search };        /**< To locate positions in mesh.*/
+    Boundary_Periodic boundary_periodic;    /**< Boundary object to enforce periodicity. */
   
   private:
+    /**
+    \brief Make a boundary object to enforce cartesian periodicity.
+    \param parameters Additional parameters (Should hold primitive_cell_boundaries).
+    \return Periodic boundary object.
+    */
     template <typename Parameters>
     Boundary_Periodic make_boundary_periodic
     (useful::Selector<BoundaryConditionSet::Type,
       BoundaryConditionSet::Type::cartesian>,
-      Parameters const& params)
+      Parameters const& parameters)
     {
-      return { params.primitive_cell_boundaries };
+      return { parameters.primitive_cell_boundaries };
     };
   
+    /**
+    \brief Make a boundary object to enforce periodicity based on symmetry planes.
+    \param parameters Additional parameters (Should hold radius and primitive_cell_boundaries).
+    \return Periodic boundary object.
+    */
     template <typename Parameters>
     Boundary_Periodic make_boundary_periodic
     (useful::Selector<BoundaryConditionSet::Type,
       BoundaryConditionSet::Type::symmetryplanes>,
-     Parameters const& params)
+     Parameters const& parameters)
     {
       std::vector<double> midpoint;
       for (auto const& boundary
-           : params.primitive_cell_boundaries)
+           : parameters.primitive_cell_boundaries)
         midpoint.push_back( (boundary.first + boundary.second)/2. );
-      return { params.radius, midpoint };
+      return { parameters.radius, midpoint };
     }
   };
 }

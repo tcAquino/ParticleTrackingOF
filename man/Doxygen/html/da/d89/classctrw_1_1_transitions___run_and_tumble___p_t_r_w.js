@@ -2,14 +2,14 @@ var classctrw_1_1_transitions___run_and_tumble___p_t_r_w =
 [
     [ "Transitions_RunAndTumble_PTRW", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#aa680dc7c48036c5b2b975e284927908f", null ],
     [ "Transitions_RunAndTumble_PTRW", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a6cfe45f4612a8a738ee77615cf756c2a", null ],
-    [ "get_boundary", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a563c72a0f1ecef584521b809ff3f7e0b", null ],
-    [ "get_orientation_generator", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a43ffaa03a389ffee437dc3e435230dc0", null ],
-    [ "get_orientation_generator_wall", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a8160ea05f855cb75bbc4a0e9ebf876d7", null ],
-    [ "get_state_switcher", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a3ee2e5e1f623b80dc241f76ec4186c6f", null ],
+    [ "boundary", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#abe3789c0e569215a319f020bbc688f27", null ],
     [ "operator()", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a91cabe365089d3be139912ac8bc96d6e", null ],
-    [ "boundary", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a698f9a306ad65f32837c546516a6d8ba", null ],
-    [ "jump_generator", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a7807a37446fd40df57bb51cb977b1052", null ],
-    [ "orientation_generator", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a4dca451fc1f097489744f20cf598489b", null ],
-    [ "orientation_generator_wall", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#af31cc9ce2edc9afd91b0fab043196189", null ],
-    [ "state_switcher", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#ad63017e11faa0e125b0f7fcc36a15c5d", null ]
+    [ "orientation_generator", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a0f63cf4eed155b6ff982fa6899a100ea", null ],
+    [ "orientation_generator_wall", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#aaef3ddd0d1a7b955e469ebc240267bc6", null ],
+    [ "state_switcher", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a425ed83c0cbe4f67344ccae378ea64c8", null ],
+    [ "_boundary", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a401c695a1e1dfbf6a235f0c3b77cfb23", null ],
+    [ "_jump_generator", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a0381659141a83f21356e2db62c52b089", null ],
+    [ "_orientation_generator", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#ab359fabc1d811e49a67bf7ac9e608cd0", null ],
+    [ "_orientation_generator_wall", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#ad1a80b39a6a51d2e04f98e6ba9126d32", null ],
+    [ "_state_switcher", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a3c9ba0677923cfcbdc2fc292ff731d2e", null ]
 ];

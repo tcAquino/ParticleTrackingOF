@@ -1,12 +1,13 @@
 var structptof_1_1_output___cases_1_1_output__mass =
 [
-    [ "Output_mass", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#af0926410136a81eb7a46e1a978674a7d", null ],
-    [ "Output_mass", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#af0926410136a81eb7a46e1a978674a7d", null ],
+    [ "Output_mass", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#affd9ca40f3da61071fe1f8d44ae453fc", null ],
+    [ "open_write", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a8abca2101343ce0010981443a97d23ef", null ],
+    [ "open_write", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a51c0179147b9a89a2a34b6cb729c1780", null ],
     [ "operator()", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#afd8a99bd2d513fc10a2dd4754a6bc757", null ],
-    [ "operator()", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#afd8a99bd2d513fc10a2dd4754a6bc757", null ],
-    [ "delimiter", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a92ce87993c04b6d485ce4a85ce152656", null ],
-    [ "geometry", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a9460a2521c71cb8acaaa3f998a9265bf", null ],
-    [ "output", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a93bf63fbded65ef4614b4f1c19caa6a8", null ],
-    [ "subject", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a5607f308e1f2d99fbb9b66e7eaaf1940", null ],
-    [ "velocity_field", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a07f216f9cd38b3b60b43e5b8411e3122", null ]
+    [ "_delimiter", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a80eb9f47273c9764eb51cfbcfc2052f1", null ],
+    [ "_geometry", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a15ba20aaf9d476817a2147dc5e60a043", null ],
+    [ "_locator", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#acbae717a5f062f538cb8c1dea1eb721e", null ],
+    [ "_output", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#af3a4e1af6bc2e57b0cfbb370d9bb52dc", null ],
+    [ "_subject", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a6185a34436db209dd5fa17ce67889ab7", null ],
+    [ "_velocity_field", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a16b196e928656e040bdaf40436404afb", null ]
 ];

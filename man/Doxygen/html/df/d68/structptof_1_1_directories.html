@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('df/d68/structptof_1_1_directories.html
 <p>Object to handle simulation case directories.  
  <a href="../../df/d68/structptof_1_1_directories.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../df/dcc/_particle_tracking_o_f_2_directories_8h_source.html">PTOF/Directories.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d6/d77/_directories_8h_source.html">PTOF/Directories.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -101,11 +101,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad4f2a046b5ff987db8f0eb773bd8b8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86629782240373bafa0f421ff064c887"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:a86629782240373bafa0f421ff064c887"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d68/structptof_1_1_directories.html#a86629782240373bafa0f421ff064c887">info_runtime</a> (OStream &amp;output) const</td></tr>
-<tr class="separator:a86629782240373bafa0f421ff064c887"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4f2a046b5ff987db8f0eb773bd8b8e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d68/structptof_1_1_directories.html#ad4f2a046b5ff987db8f0eb773bd8b8e4">Directories</a> (std::string const &amp;dir, std::string const &amp;case_name, std::string const &amp;<a class="el" href="../../df/d68/structptof_1_1_directories.html#ab01609a754c43acca84294b73047dac3">dir_output</a>)</td></tr>
-<tr class="separator:ad4f2a046b5ff987db8f0eb773bd8b8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86629782240373bafa0f421ff064c887"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:a86629782240373bafa0f421ff064c887"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d68/structptof_1_1_directories.html#a86629782240373bafa0f421ff064c887">info_runtime</a> (OStream &amp;output) const</td></tr>
+<tr class="memdesc:a86629782240373bafa0f421ff064c887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../df/d68/structptof_1_1_directories.html#a86629782240373bafa0f421ff064c887">More...</a><br /></td></tr>
 <tr class="separator:a86629782240373bafa0f421ff064c887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -123,7 +119,7 @@ Data Fields</h2></td></tr>
 <div class="textblock"><p>Object to handle simulation case directories. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad4f2a046b5ff987db8f0eb773bd8b8e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4f2a046b5ff987db8f0eb773bd8b8e4">&#9670;&nbsp;</a></span>Directories() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4f2a046b5ff987db8f0eb773bd8b8e4">&#9670;&nbsp;</a></span>Directories()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,55 +157,20 @@ Data Fields</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad4f2a046b5ff987db8f0eb773bd8b8e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4f2a046b5ff987db8f0eb773bd8b8e4">&#9670;&nbsp;</a></span>Directories() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">ptof::Directories::Directories </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>case_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>dir_output</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Construct given base cases directory (default ../cases if empty string), case name, and output directory (default &lt;case directory&gt;/../cases if empty string). </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dir</td><td>Path to current case directory. </td></tr>
+    <tr><td class="paramname">case_name</td><td>Current case directory relative to <code>dir</code>. </td></tr>
+    <tr><td class="paramname">dir_output</td><td>Output directory relative to <code>dir</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a86629782240373bafa0f421ff064c887"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86629782240373bafa0f421ff064c887">&#9670;&nbsp;</a></span>info_runtime() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a86629782240373bafa0f421ff064c887">&#9670;&nbsp;</a></span>info_runtime()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,33 +195,6 @@ template&lt;typename OStream &gt; </div>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a86629782240373bafa0f421ff064c887"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86629782240373bafa0f421ff064c887">&#9670;&nbsp;</a></span>info_runtime() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename OStream &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ptof::Directories::info_runtime </td>
-          <td>(</td>
-          <td class="paramtype">OStream &amp;&#160;</td>
-          <td class="paramname"><em>output</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 <p>Output information about current object. </p>
 
 </div>
@@ -330,7 +264,7 @@ template&lt;typename OStream &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>ParticleTrackingOF/<a class="el" href="../../df/dcc/_particle_tracking_o_f_2_directories_8h_source.html">Directories.h</a></li>
+<li>PTOF/<a class="el" href="../../d6/d77/_directories_8h_source.html">Directories.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,7 +1,23 @@
 /**
- * \file CTRW/TimeGenerator.h
- * \author Tomás Aquino
- * \date 10/23/2019
+  \file CTRW/TimeGenerator.h
+  \author Tomás Aquino
+  \date 10/23/2019
+
+ \brief Objects to generate time increments for particle tracking.
+
+ A TimeGenerator should implement the following minimal functionality:
+ 
+\code{.cpp}
+class TimeGenerator
+{
+  template <typename State>
+  val_type operator() (State const&)
+  {
+    // Return time increment, with val_type
+    // a scalar type (e.g. double)
+  }
+};
+\endcode
 */
 
 #ifndef CTRW_TIMEGENERATOR_H
@@ -11,41 +27,29 @@
 
 namespace ctrw
 {
-  // A TimeGenerator should implement the following minimal functionality:
-  //
-  // class TimeGenerator
-  // {
-  //   template <typename State>
-  //   val_type operator() (State const&)
-  //   {
-  //     // Return time increment, with val_type
-  //     // a scalar type (e.g. double)
-  //   }
-  // };
-  
   /** \class TimeGenerator_Step CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
    *  \brief Deterministic time step. */
   template <typename val_type = double>
   class TimeGenerator_Step
   {
-    val_type dt;
+    val_type _time_step;
 
   public:
     using value_type = val_type;
 
-    TimeGenerator_Step(val_type dt = 0.)
-    : dt{ dt }
+    TimeGenerator_Step(val_type time_step = 0.)
+    : _time_step{ time_step }
     {}
 
-    void time_step(val_type dt)
-    { this->dt = dt; }
+    void time_step(val_type time_step)
+    { _time_step = time_step; }
 
     val_type time_step() const
-    { return dt; }
+    { return _time_step; }
 
     template <typename State = useful::Empty>
     val_type operator()(State const& = {})
-    { return dt; }
+    { return _time_step; }
   };
   
   /** \class TimeGenerator_Dist CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
@@ -53,19 +57,19 @@ namespace ctrw
   template <typename Dist, typename RNG = std::mt19937>
   class TimeGenerator_Dist
   {
-    Dist dist;
-    RNG rng{ std::random_device{}() };
+    Dist _dist;
+    RNG _rng{ std::random_device{}() };
 
   public:
-    using value_type = decltype(dist(rng));
+    using value_type = decltype(dist(_rng));
 
     TimeGenerator_Dist(Dist dist)
-    : dist{ dist }
+    : _dist{ dist }
     {}
 
     template <typename State = useful::Empty>
     auto operator()(State const& = {})
-    { return dist(rng); }
+    { return _dist(_rng); }
   };
 }
 

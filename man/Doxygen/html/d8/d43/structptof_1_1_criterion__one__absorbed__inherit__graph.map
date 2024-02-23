@@ -1,4 +1,4 @@
 <map id="ptof::Criterion_one_absorbed&lt; Subject &gt;" name="ptof::Criterion_one_absorbed&lt; Subject &gt;">
 <area shape="rect" id="node1" title="Check if at least one particle has been absorbed." alt="" coords="17,80,183,121"/>
-<area shape="rect" id="node2" href="$d9/d13/structptof_1_1_criterion.html" title="Polymorphic criteria." alt="" coords="5,5,195,32"/>
+<area shape="rect" id="node2" href="$d9/d13/structptof_1_1_criterion.html" title="Polymorphic functor to implement criteria for ending measurements." alt="" coords="5,5,195,32"/>
 </map>

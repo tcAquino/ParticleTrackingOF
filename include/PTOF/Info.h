@@ -1,7 +1,7 @@
 /**
- * \file PTOF/Info.h
- * \author Tomás Aquino
- * \date 03/09/2022
+ \file PTOF/Info.h
+ \author Tomás Aquino
+ \date 03/09/2022
 */
 
 #ifndef PTOF_INFO_H
@@ -14,7 +14,7 @@
 
 namespace ptof
 {
-  /** Store information about absorption. */
+  /** \brief Store information about absorption. */
   template <typename State>
   void store_info_absorbed
   (State& state)
@@ -22,7 +22,7 @@ namespace ptof
     state.info.absorbed = 1;
   }
 
-  /** Store information about boundary condition type. */
+  /** \brief Store information about boundary condition type. */
   template <typename State, typename BC>
   void store_info_type
   (State& state, BC const& type)
@@ -30,7 +30,7 @@ namespace ptof
     state.info.type = type;
   }
 
-  /** Store information about contact point. */
+  /** \brief Store information about contact point. */
   template <typename State>
   void store_info_contact
   (State& state, Foam::point const& contact_point)
@@ -38,7 +38,7 @@ namespace ptof
     state.info.set_position(contact_point);
   }
 
-  /** Store information about cell face.*/
+  /** \brief Store information about cell face.*/
   template <typename State>
   void store_info_face
   (State& state, Foam::label face)
@@ -46,7 +46,7 @@ namespace ptof
     state.info.face = face;
   }
 
-  /** Store information about time.*/
+  /** \brief Store information about time.*/
   template <typename State>
   void store_info_time
   (State& state, Foam::scalar time)
@@ -54,7 +54,7 @@ namespace ptof
     state.info.time = time;
   }
 
-  /** Store information about number of reinjections.*/
+  /** \brief Store information about number of reinjections.*/
   template <typename State>
   void store_info_reinjections
   (State& state)

@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Locator.h
-* \author Tomás Aquino
-* \date 09/03/2022
+ \file PTOF/Locator.h
+ \author Tomás Aquino
+ \date 09/03/2022
 */
 
 #ifndef PTOF_LOCATOR_H
@@ -20,28 +20,34 @@ namespace ptof
    * \brief Object to locate positions or states in mesh. */
   struct Locator_Cell
   {
-    // Typedefs for position, vector, and mesh cell index types
-    using Point = Foam::point;
-    using Point2D = Foam::Vector2D<Foam::scalar>;
-    using Vector = Foam::vector;
-    using Vector2D = Foam::Vector2D<Foam::scalar>;
-    using Scalar = Foam::scalar;
-    using Index = Foam::label;
+    using Point = Foam::point;                      /**> 3D point. */
+    using Point2D = Foam::Vector2D<Foam::scalar>;   /**> 2D point. */
+    using Vector = Foam::vector;                    /**> 3D vector. */
+    using Vector2D = Foam::Vector2D<Foam::scalar>;  /**> 2D vector. */
+    using Scalar = Foam::scalar;                    /**> Scalar (also 1D point). */
+    using Index = Foam::label;                      /**> Cell index.*/
+    using MeshSearch = Foam::meshSearch;            /**< Type of mesh searching object. */
     
-    using MeshSearch = Foam::meshSearch; /**< Type of mesh searching object. */
-    
-    /** Construct given mesh searching object. */
+    /** Constructor.
+     \param mesh_search Mesh searching object. */
     Locator_Cell(MeshSearch const& mesh_search)
-    : mesh_search{ mesh_search }
+    : _mesh_search{ mesh_search }
     {}
     
-    /** Find mesh cell for 3D position given hint. */
+    /** \return Mesh search object. */
+    MeshSearch const& mesh_search() const
+    { return _mesh_search; }
+    
+    /**
+    \param position Position to locate.
+    \param hint Mesh cell index hint.
+    \return Mesh cell index. */
     auto operator()
     (Point const& position, Index hint = -1) const
     {
       if (hint != -1)
       {
-        auto const& mesh = mesh_search.mesh();
+        auto const& mesh = mesh_search().mesh();
         if (mesh.pointInCell(position, hint))
           return hint;
 
@@ -50,24 +56,35 @@ namespace ptof
             return cell_index;
       }
 
-      return mesh_search.findCell(position, hint);
+      return mesh_search().findCell(position, hint);
     }
     
-    /** Find mesh cell for 2D position, given hint. */
+    /**
+    \param position Position to locate.
+    \param hint Mesh cell index hint.
+    \return Mesh cell index. */
     auto operator()
     (Point2D const& position, Index hint = -1) const
     {
       return this->operator()(make_point(position), hint);
     }
     
-    /** Find mesh cell for 1D position, given hint. */
+    /**
+    \param position Position to locate.
+    \param hint Mesh cell index hint.
+    \return Mesh cell index. */
     auto operator()
     (Scalar position, Index hint = -1) const
     {
       return this->operator()(make_point(position), hint);
     }
     
-    /** Find mesh cell for state, using state's cell hint. */
+    /**
+    \param state State with position to locate.
+    \return Mesh cell for state, using state's cell hint.
+    \note State must implement:
+    - position
+    - cell [cell index, used as hint] */
     template <typename State>
     auto operator()
     (State const& state) const
@@ -76,39 +93,55 @@ namespace ptof
                               state.cell);
     }
     
-    /** Find nearest mesh cell for 3D position given hint. Does not use hint because holes are not handled correctly */
+    /**
+     \param position Position to locate.
+     \return Nearest mesh cell index.
+     \details Does not use hint because holes are not handled correctly. */
     auto nearest_cell
-    (Point const& position, Index hint = -1) const
+    (Point const& position) const
     {
-      return mesh_search.findNearestCell(position);
+      return mesh_search().findNearestCell(position);
     }
     
-    /** Find nearest mesh cell for 2D position. Does not use hint because holes are not handled correctly */
+    /**
+    \param position Position to locate.
+    \return Nearest mesh cell index.
+    \details Does not use hint because holes are not handled correctly. */
     auto nearest_cell
-    (Point2D const& position, Index hint = -1) const
+    (Point2D const& position) const
     {
       return nearest_cell(make_point(position));
     }
     
-    /** Find nearest mesh cell for 1D position. Does not use hint because holes are not handled correctly */
+    /**
+    \param position Position to locate.
+    \return Nearest mesh cell index.
+    \details Does not use hint because holes are not handled correctly. */
     auto nearest_cell
-    (Scalar position, Index hint = -1) const
+    (Scalar position) const
     {
       return nearest_cell(make_point(position));
     }
     
-    /** Find nearest cell to state. Does not use hint because holes are not handled correctly */
+    /**
+     \param state State with position to locate.
+     \return Nearest mesh cell index.
+     \details Does not use hint because holes are not handled correctly.
+     \note State must implement:
+     - position */
     template <typename State>
     auto nearest_cell(State const& state) const
     {
       return nearest_cell(make_point(state.position));
     }
     
-    private:
-      MeshSearch const& mesh_search;  /**< Object to search mesh. */
+  private:
+    MeshSearch const& _mesh_search;  /**< Mesh searching tools. */
   };
   
-  /** Get all cell indexes of mesh. */
+  /**
+   \param mesh OpenFOAM mesh.
+   \return All mesh cell indices. */
   template <typename Mesh>
   auto all_cell_ids(Mesh const& mesh)
   {
@@ -117,7 +150,10 @@ namespace ptof
       boost::counting_iterator<Foam::label>(mesh.nCells()) };
   }
   
-  /** Get face indexes in given patches of mesh. */
+  /**
+   \param mesh OpenFOAM mesh.
+   \param patch_names Names of patches.
+   \return Mesh face indices of faces given patches. */
   template <typename Mesh>
   auto patches_face_ids
   (Mesh const& mesh, std::vector<std::string> const& patch_names)
@@ -135,12 +171,16 @@ namespace ptof
     return face_ids;
   }
   
-  /** Get cell indexes of mesh within cartesian region. */
-  template <typename Mesh, typename MeshSearch>
+  /**
+   \param boundaries Container of pairs of lower and upper boundary locations along each dimension.
+   \param mesh OpenFOAM mesh.
+   \param locator Object to locate positions in mesh.
+   \return Mesh cell indices within boundaries. */
+  template <typename Mesh, typename Locator>
   auto cell_ids_region_cartesian
   (std::vector<std::pair<double, double>> boundaries,
    Mesh const& mesh,
-   MeshSearch const& mesh_search)
+   Locator const& locator)
   {
     // Identify degenerate dimensions
     // (if some minimum and maximum boundary values are equal,
@@ -179,7 +219,7 @@ namespace ptof
       // mesh, include it in the region
       for (auto dd : degenerate_dimensions)
         center[dd] = degenerate_dimensions[dd];
-      auto cell_id = mesh_search.findCell(center);
+      auto cell_id = locator.mesh_search().findCell(center);
       if (cell_id >= 0)
         cell_ids.insert(cell_id);
     }

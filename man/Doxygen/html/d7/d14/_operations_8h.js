@@ -33,7 +33,7 @@ var _operations_8h =
     [ "linearOp_InPlace", "d7/d14/_operations_8h.html#a6163694f84c59bc52662d346524f0f9b", null ],
     [ "mean", "d7/d14/_operations_8h.html#ac8520d1b08b63122d2ec56ed7f3e33f5", null ],
     [ "mean", "d7/d14/_operations_8h.html#a59a17daaab3386792a7643d6f1eefabc", null ],
-    [ "mean_InPlace", "d7/d14/_operations_8h.html#a2499d023a83b99e50fd1ad67a14b8ba1", null ],
+    [ "mean_InPlace", "d7/d14/_operations_8h.html#a7fd556b345038b405da3e68de58558b0", null ],
     [ "midpoints", "d7/d14/_operations_8h.html#afc4803eaad450dd24d24ba0edc49b3b7", null ],
     [ "midpoints", "d7/d14/_operations_8h.html#ae07b68b33121e33a64765edeae7d3aec", null ],
     [ "minus", "d7/d14/_operations_8h.html#a1e8045e5e42c102425b0245a05a079a9", null ],
@@ -72,6 +72,6 @@ var _operations_8h =
     [ "times_scalar", "d7/d14/_operations_8h.html#a68f9f3922acccb2440557f9e25b41afa", null ],
     [ "times_scalar", "d7/d14/_operations_8h.html#adabf17f9bf477a37f76917bfe7a6c982", null ],
     [ "times_scalar_InPlace", "d7/d14/_operations_8h.html#abb8bc4921a7cfee509196a155743166f", null ],
-    [ "widths", "d7/d14/_operations_8h.html#ad4b16fa3f56331492f9e266d671a5ca1", null ],
+    [ "widths", "d7/d14/_operations_8h.html#a780b2b66202523429c157d6144c5ba91", null ],
     [ "widths", "d7/d14/_operations_8h.html#ad8d1fda37a1896f129ea50da804e566f", null ]
 ];

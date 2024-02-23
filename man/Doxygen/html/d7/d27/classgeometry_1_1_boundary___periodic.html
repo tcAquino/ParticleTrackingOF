@@ -102,12 +102,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a339dffa16543bfc76bd6b446ece25a23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a817b6f0d593f4efcd27891fbe787517f"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:a817b6f0d593f4efcd27891fbe787517f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/d27/classgeometry_1_1_boundary___periodic.html#a817b6f0d593f4efcd27891fbe787517f">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="memdesc:a817b6f0d593f4efcd27891fbe787517f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if position is out of bounds.  <a href="../../d7/d27/classgeometry_1_1_boundary___periodic.html#a817b6f0d593f4efcd27891fbe787517f">More...</a><br /></td></tr>
 <tr class="separator:a817b6f0d593f4efcd27891fbe787517f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7302f41df58aab6be876f6764fdcff5c"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:a7302f41df58aab6be876f6764fdcff5c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/d27/classgeometry_1_1_boundary___periodic.html#a7302f41df58aab6be876f6764fdcff5c">operator()</a> (State &amp;state, State const &amp;state_old={}) const</td></tr>
+<tr class="memdesc:a7302f41df58aab6be876f6764fdcff5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../d7/d27/classgeometry_1_1_boundary___periodic.html#a7302f41df58aab6be876f6764fdcff5c">More...</a><br /></td></tr>
 <tr class="separator:a7302f41df58aab6be876f6764fdcff5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75a1e8ac669004e4cba812bd6edcd465"><td class="memTemplParams" colspan="2">template&lt;typename Position , typename Projections  = std::vector&lt;double&gt;&gt; </td></tr>
 <tr class="memitem:a75a1e8ac669004e4cba812bd6edcd465"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/d27/classgeometry_1_1_boundary___periodic.html#a75a1e8ac669004e4cba812bd6edcd465">translate</a> (Position &amp;position, Projections const &amp;projections) const</td></tr>
+<tr class="memdesc:a75a1e8ac669004e4cba812bd6edcd465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate a position according to projection in periodic cell.  <a href="../../d7/d27/classgeometry_1_1_boundary___periodic.html#a75a1e8ac669004e4cba812bd6edcd465">More...</a><br /></td></tr>
 <tr class="separator:a75a1e8ac669004e4cba812bd6edcd465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -124,9 +127,10 @@ Private Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Periodic boundaries along each dimension. </p>
-<p>State must define:</p><ul>
-<li>position (vector type) </li>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position [vector type] </li>
 </ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a339dffa16543bfc76bd6b446ece25a23"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a339dffa16543bfc76bd6b446ece25a23">&#9670;&nbsp;</a></span>Boundary_Periodic()</h2>
@@ -151,7 +155,12 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given lower and upper boundaries along each dimension. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -179,6 +188,13 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d5/db2/structgeometry_1_1_domain.html">Domain</a> dimensions. </dd></dl>
 
 </div>
 </div>
@@ -217,7 +233,16 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Enforce boundary condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to apply BC to. </td></tr>
+    <tr><td class="paramname">state_old</td><td>Previous particle state (unused). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if there was an effect, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -246,7 +271,24 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Check if position is out of bounds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if out of bounds, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d7/d27/classgeometry_1_1_boundary___periodic_a817b6f0d593f4efcd27891fbe787517f_cgraph.png" border="0" usemap="#ad7/d27/classgeometry_1_1_boundary___periodic_a817b6f0d593f4efcd27891fbe787517f_cgraph" alt=""/></div>
+<map name="ad7/d27/classgeometry_1_1_boundary___periodic_a817b6f0d593f4efcd27891fbe787517f_cgraph" id="ad7/d27/classgeometry_1_1_boundary___periodic_a817b6f0d593f4efcd27891fbe787517f_cgraph">
+<area shape="rect" title="Check if position is out of bounds." alt="" coords="5,5,179,47"/>
+<area shape="rect" href="../../d5/d5f/namespacegeometry.html#afffbc962e678d19f4051f218a7544840" title=" " alt="" coords="227,13,433,39"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -285,7 +327,26 @@ template&lt;typename Position , typename Projections  = std::vector&lt;double&gt
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Translate position according to symmetry planes. </p>
+
+<p>Translate a position according to projection in periodic cell. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to translate. </td></tr>
+    <tr><td class="paramname">projections</td><td>Projection components in periodic cell. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d7/d27/classgeometry_1_1_boundary___periodic_a75a1e8ac669004e4cba812bd6edcd465_cgraph.png" border="0" usemap="#ad7/d27/classgeometry_1_1_boundary___periodic_a75a1e8ac669004e4cba812bd6edcd465_cgraph" alt=""/></div>
+<map name="ad7/d27/classgeometry_1_1_boundary___periodic_a75a1e8ac669004e4cba812bd6edcd465_cgraph" id="ad7/d27/classgeometry_1_1_boundary___periodic_a75a1e8ac669004e4cba812bd6edcd465_cgraph">
+<area shape="rect" title="Translate a position according to projection in periodic cell." alt="" coords="5,23,160,65"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a1f1a4a899f7e1bcd82512126f8cf48a9" title="Element&#45;wise sum." alt="" coords="208,5,381,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a14446dfc56712cfc166748c4c8acca60" title="Element&#45;wise multiplication." alt="" coords="230,56,359,83"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="429,5,548,32"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -301,7 +362,7 @@ template&lt;typename Position , typename Projections  = std::vector&lt;double&gt
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Lower and upper boundaries along each dimension. </p>
+<p>Lower and upper boundary locations along each dimension. </p>
 
 </div>
 </div>
@@ -316,6 +377,7 @@ template&lt;typename Position , typename Projections  = std::vector&lt;double&gt
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Size of domain along each dimension. </p>
 
 </div>
 </div>

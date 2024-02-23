@@ -90,14 +90,14 @@ $(document).ready(function(){initNavTree('da/dd1/structctrw_1_1_get__position__p
 </div><!--header-->
 <div class="contents">
 
-<p>Get projection of state.position along direction given state.  
+<p>Get projection of position along direction given state. *.  
  <a href="../../da/dd1/structctrw_1_1_get__position__projection.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a06547122670cb4a127197c258c67dc91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd1/structctrw_1_1_get__position__projection.html#a06547122670cb4a127197c258c67dc91">Get_position_projection</a> (std::vector&lt; double &gt; const &amp;direction)</td></tr>
+<tr class="memitem:a06547122670cb4a127197c258c67dc91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd1/structctrw_1_1_get__position__projection.html#a06547122670cb4a127197c258c67dc91">Get_position_projection</a> (std::vector&lt; double &gt; const &amp;<a class="el" href="../../da/dd1/structctrw_1_1_get__position__projection.html#a9b3122dbef93a62f2c7db0f0f9ba3b37">direction</a>)</td></tr>
 <tr class="separator:a06547122670cb4a127197c258c67dc91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98e0dd0db70f79c1d0daf9c9e078e18b"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:a98e0dd0db70f79c1d0daf9c9e078e18b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/dd1/structctrw_1_1_get__position__projection.html#a98e0dd0db70f79c1d0daf9c9e078e18b">operator()</a> (State const &amp;state) const</td></tr>
@@ -105,11 +105,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0357483519f0c09cc18490a3ba2552bd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd1/structctrw_1_1_get__position__projection.html#a0357483519f0c09cc18490a3ba2552bd">basis</a> {}</td></tr>
-<tr class="separator:a0357483519f0c09cc18490a3ba2552bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b3122dbef93a62f2c7db0f0f9ba3b37"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd1/structctrw_1_1_get__position__projection.html#a9b3122dbef93a62f2c7db0f0f9ba3b37">direction</a> {}</td></tr>
+<tr class="separator:a9b3122dbef93a62f2c7db0f0f9ba3b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Get projection of state.position along direction given state. </p>
+<div class="textblock"><p>Get projection of position along direction given state. *. </p>
+<dl class="section note"><dt>Note</dt><dd>Direction vector is normalized upon instatiation. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a06547122670cb4a127197c258c67dc91"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a06547122670cb4a127197c258c67dc91">&#9670;&nbsp;</a></span>Get_position_projection()</h2>
@@ -134,7 +135,6 @@ Data Fields</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given direction to project onto. </p>
 
 </div>
 </div>
@@ -164,18 +164,27 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/dd1/structctrw_1_1_get__position__projection_a98e0dd0db70f79c1d0daf9c9e078e18b_cgraph.png" border="0" usemap="#ada/dd1/structctrw_1_1_get__position__projection_a98e0dd0db70f79c1d0daf9c9e078e18b_cgraph" alt=""/></div>
+<map name="ada/dd1/structctrw_1_1_get__position__projection_a98e0dd0db70f79c1d0daf9c9e078e18b_cgraph" id="ada/dd1/structctrw_1_1_get__position__projection_a98e0dd0db70f79c1d0daf9c9e078e18b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,172,47"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a598f8f9295e720e6929dc66fb44139a5" title="Dot product." alt="" coords="220,13,333,39"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a0357483519f0c09cc18490a3ba2552bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0357483519f0c09cc18490a3ba2552bd">&#9670;&nbsp;</a></span>basis</h2>
+<a id="a9b3122dbef93a62f2c7db0f0f9ba3b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b3122dbef93a62f2c7db0f0f9ba3b37">&#9670;&nbsp;</a></span>direction</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;double&gt; ctrw::Get_position_projection::basis {}</td>
+          <td class="memname">std::vector&lt;double&gt; ctrw::Get_position_projection::direction {}</td>
         </tr>
       </table>
 </div><div class="memdoc">

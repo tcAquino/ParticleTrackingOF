@@ -1,10 +1,8 @@
-//
-//  Coordinates.h
-//  BeadPack_Reactive
-//
-//  Created by Tomás Aquino on 17/11/2020.
-//  Copyright © 2020 Tomás Aquino. All rights reserved.
-//
+/**
+ \file Geometry/Coordinates.h
+ \author Tomás Aquino
+ \date 17/11/2020
+*/
 
 #ifndef Coordinates_h
 #define Coordinates_h
@@ -15,8 +13,7 @@
 
 namespace geometry
 {
-  // Covert cartesian (x, y, z)
-  // to spherical (r, phi (azimuthal), theta (elevation))
+  /** \brief Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation)). */
   template <typename Container = std::vector<double>>
   Container cartesian2spherical(Container const& cartesian)
   {
@@ -27,8 +24,7 @@ namespace geometry
       std::acos(cartesian[2]/abs) };
   }
 
-  // Covert spherical (r, phi (azimuthal), theta (elevation))
-  // to cartesian (x, y, z)
+  /** \brief Covert spherical (r, phi (azimuthal), theta (elevation)) to cartesian (x, y, z). */
   template <typename Container = std::vector<double>>
   Container spherical2cartesian(std::vector<double> const& spherical)
   {
@@ -39,8 +35,7 @@ namespace geometry
       spherical[0]*std::cos(spherical[2]) };
   }
 
-  // Covert cartesian (x, y)
-  // to polar (r, theta)
+  /** \brief Covert cartesian (x, y) to polar (r, theta). */
   template <typename Container = std::vector<double>>
   Container cartesian2polar(std::vector<double> const& cartesian)
   {
@@ -49,8 +44,7 @@ namespace geometry
       std::atan2(cartesian[1], cartesian[0]) };
   }
 
-  // Covert polar (r, theta)
-  // to cartesian (x, y)
+  /** Covert polar (r, theta) to cartesian (x, y). */
   template <typename Container = std::vector<double>>
   Container polar2cartesian(std::vector<double> const& polar)
   {

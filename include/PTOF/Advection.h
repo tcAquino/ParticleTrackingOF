@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Advection.h
-* \author Tomás Aquino
-* \date 09/03/2022
+ \file PTOF/Advection.h
+ \author Tomás Aquino
+ \date 09/03/2022
 */
 
 #ifndef PTOF_ADVECTION_H
@@ -15,7 +15,11 @@
 
 namespace ptof
 { 
-  /** Get the velocity field U from the OpenFOAM case time associated with a mesh.*/  
+  /**
+   \brief Get the velocity field U from the OpenFOAM case time associated with a mesh.
+   \param mesh OpenFOAM mesh.
+   \return OpenFOAM velocity field data.
+   */
   template <typename Mesh>
   auto get_velocity_data(Mesh const& mesh)
   {
@@ -30,7 +34,12 @@ namespace ptof
       mesh };
   }
   
-  /** Get velocity data and rescale it to a given average. */  
+  /**
+   \brief Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given average.
+   \param mesh OpenFOAM mesh.
+   \param average Absolute value of velocity field average.
+   \return OpenFOAM velocity field data.
+  */
   template <typename Mesh>
   auto get_velocity_data_rescaled(Mesh const& mesh, double average)
   {
@@ -39,7 +48,12 @@ namespace ptof
     return data;
   }
   
-  /** Make a linear interpolator for a field using OpenFOAM interpolation.*/  
+  /**
+   \brief Make a linear interpolator for a field using OpenFOAM interpolation.
+   \param geometry Domain geometry info and utilities.
+   \param field OpenFOAM vector field data
+   \return Vector field interpolator
+  */
   template <typename Geometry, typename Field>
   auto makeLinearInterpolator
   (Geometry const& geometry, Field&& field)
@@ -47,18 +61,24 @@ namespace ptof
     return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
       geometry.locator,
-      FieldOptions::Warn{} };
+      CheckOptions::Warn{} };
   };
   
-  /** Make a linear interpolator for a field using OpenFOAM interpolation.*/
+  /**
+   \brief Make a linear interpolator for a field using OpenFOAM interpolation.
+   \param geometry Domain geometry info and utilities.
+   \param field OpenFOAM vector field data
+   \param thread Parallel thread number
+   \return Vector field interpolator
+  */
   template <typename Geometry, typename Field>
   auto makeLinearInterpolator
   (Geometry const& geometry, Field&& field, std::size_t thread)
   {
     return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
-      geometry.locator[thread],
-      FieldOptions::Warn{} };
+      geometry.locator,
+      CheckOptions::Warn{} };
   };
 }
 

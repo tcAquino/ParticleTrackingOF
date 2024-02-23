@@ -20,6 +20,6 @@ var classuseful_1_1_multi_array =
     [ "size", "dc/d1a/classuseful_1_1_multi_array.html#a0f7fe888253b7bfe39b5adafb4827420", null ],
     [ "size", "dc/d1a/classuseful_1_1_multi_array.html#a304b7b6570560716d15db330bdd44c33", null ],
     [ "sizes", "dc/d1a/classuseful_1_1_multi_array.html#a2570b6194d1725999df95afcbca267a6", null ],
-    [ "dimensions", "dc/d1a/classuseful_1_1_multi_array.html#a9d6ad90326dd432c7d7775890e2d36fd", null ],
-    [ "values", "dc/d1a/classuseful_1_1_multi_array.html#ae1332db4b77cad8b6077c5977fed7443", null ]
+    [ "_dimensions", "dc/d1a/classuseful_1_1_multi_array.html#a40f1b3172dab92882a2740917d2979d1", null ],
+    [ "_values", "dc/d1a/classuseful_1_1_multi_array.html#a1741d0d6ce4dfd4e3d8d1c5be4d1a514", null ]
 ];

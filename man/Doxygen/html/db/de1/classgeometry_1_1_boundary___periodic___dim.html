@@ -104,9 +104,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0f7e9a38adaedcd588c60f99afb703f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2088bdc138ab26a8abdab5da3c02cb24"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:a2088bdc138ab26a8abdab5da3c02cb24"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/de1/classgeometry_1_1_boundary___periodic___dim.html#a2088bdc138ab26a8abdab5da3c02cb24">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="memdesc:a2088bdc138ab26a8abdab5da3c02cb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if position is out of bounds.  <a href="../../db/de1/classgeometry_1_1_boundary___periodic___dim.html#a2088bdc138ab26a8abdab5da3c02cb24">More...</a><br /></td></tr>
 <tr class="separator:a2088bdc138ab26a8abdab5da3c02cb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af177b9f540374b6beddb41c0e9a5f9b3"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:af177b9f540374b6beddb41c0e9a5f9b3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/de1/classgeometry_1_1_boundary___periodic___dim.html#af177b9f540374b6beddb41c0e9a5f9b3">operator()</a> (State &amp;state, State const &amp;state_old={}) const</td></tr>
+<tr class="memdesc:af177b9f540374b6beddb41c0e9a5f9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../db/de1/classgeometry_1_1_boundary___periodic___dim.html#af177b9f540374b6beddb41c0e9a5f9b3">More...</a><br /></td></tr>
 <tr class="separator:af177b9f540374b6beddb41c0e9a5f9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -124,9 +126,10 @@ Static Public Attributes</h2></td></tr>
 class geometry::Boundary_Periodic_Dim&lt; dd &gt;</h3>
 
 <p>Periodic boundary along dimension dd. </p>
-<p>State must define:</p><ul>
-<li>position (vector type) </li>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position [vector type] </li>
 </ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab2e8ba1bb2fb5e8b71adf288bcd9787f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab2e8ba1bb2fb5e8b71adf288bcd9787f">&#9670;&nbsp;</a></span>Boundary_Periodic_Dim() <span class="overload">[1/2]</span></h2>
@@ -153,7 +156,12 @@ template&lt;std::size_t dd&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct with boundaries at same distance from origin given domain halfwidth. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">half_width</td><td>Half-size of boundary, centered at zero. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -182,7 +190,12 @@ template&lt;std::size_t dd&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given lower and upper boundaries along dimension dim. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">boundaries</td><td>Pair of lower and upper boundary location. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -224,7 +237,16 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Enforce boundary condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to apply BC to. </td></tr>
+    <tr><td class="paramname">state_old</td><td>Previous particle state (unused). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if there was an effect, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -255,7 +277,24 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Check if position is out of bounds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if out of bounds, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../db/de1/classgeometry_1_1_boundary___periodic___dim_a2088bdc138ab26a8abdab5da3c02cb24_cgraph.png" border="0" usemap="#adb/de1/classgeometry_1_1_boundary___periodic___dim_a2088bdc138ab26a8abdab5da3c02cb24_cgraph" alt=""/></div>
+<map name="adb/de1/classgeometry_1_1_boundary___periodic___dim_a2088bdc138ab26a8abdab5da3c02cb24_cgraph" id="adb/de1/classgeometry_1_1_boundary___periodic___dim_a2088bdc138ab26a8abdab5da3c02cb24_cgraph">
+<area shape="rect" title="Check if position is out of bounds." alt="" coords="5,5,212,47"/>
+<area shape="rect" href="../../d5/d5f/namespacegeometry.html#afffbc962e678d19f4051f218a7544840" title=" " alt="" coords="260,13,467,39"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -273,7 +312,7 @@ template&lt;std::size_t dd&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Lower and upper boundaries along dimension dd. </p>
+<p>Lower and upper boundary location along dimension <code>dd</code>. </p>
 
 </div>
 </div>
@@ -298,7 +337,7 @@ template&lt;std::size_t dd&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Dimension for outside visibility. </p>
+<p>Cartesian dimension along which BC holds. </p>
 
 </div>
 </div>

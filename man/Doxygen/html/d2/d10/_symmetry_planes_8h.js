@@ -9,6 +9,6 @@ var _symmetry_planes_8h =
     [ "project", "d2/d10/_symmetry_planes_8h.html#a73edf4353d0a0de987ec753fea974ef1", null ],
     [ "project", "d2/d10/_symmetry_planes_8h.html#a3a9815f6acd3a7cee748661f747159c8", null ],
     [ "project", "d2/d10/_symmetry_planes_8h.html#a017c760300d032e349706ab19cca34de", null ],
-    [ "translate", "d2/d10/_symmetry_planes_8h.html#aaf0559f3db7a23f20c51d0d6bcd85ac8", null ],
-    [ "translate_back", "d2/d10/_symmetry_planes_8h.html#a1b7929ca7fb7280e4a355eb149349b1f", null ]
+    [ "translate", "d2/d10/_symmetry_planes_8h.html#a2b45bfba74caca086225c1aa9b2da7a1", null ],
+    [ "translate_back", "d2/d10/_symmetry_planes_8h.html#af008b22a40fd3d175279892dd942a2f0", null ]
 ];

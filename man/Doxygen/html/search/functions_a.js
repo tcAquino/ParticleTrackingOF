@@ -1,8 +1,14 @@
 var searchData=
 [
-  ['kdtree_5fget_5fbbox_1310',['kdtree_get_bbox',['../d1/dfe/classgrid_1_1_k_d_tree___grid.html#a6a83ae2c6d0c8b714bc5c470b12dea5a',1,'grid::KDTree_Grid::kdtree_get_bbox()'],['../db/d0a/classgrid_1_1_k_d_tree___grid___mask.html#a730d5763c3d32a8d44bbabb6c3eb1b6a',1,'grid::KDTree_Grid_Mask::kdtree_get_bbox()']]],
-  ['kdtree_5fget_5fpoint_5fcount_1311',['kdtree_get_point_count',['../d1/dfe/classgrid_1_1_k_d_tree___grid.html#ae95c9ed160ffb30a9807625ca083cf5b',1,'grid::KDTree_Grid::kdtree_get_point_count()'],['../db/d0a/classgrid_1_1_k_d_tree___grid___mask.html#a2b68ef69cd8b9931af2346b41ea8b8bf',1,'grid::KDTree_Grid_Mask::kdtree_get_point_count()']]],
-  ['kdtree_5fget_5fpt_1312',['kdtree_get_pt',['../d1/dfe/classgrid_1_1_k_d_tree___grid.html#af2c85022de010845c957a170b7eb496d',1,'grid::KDTree_Grid::kdtree_get_pt()'],['../db/d0a/classgrid_1_1_k_d_tree___grid___mask.html#a31948657813fdded4a4f42a5c50c6629',1,'grid::KDTree_Grid_Mask::kdtree_get_pt()']]],
-  ['kdtree_5fgrid_1313',['KDTree_Grid',['../d1/dfe/classgrid_1_1_k_d_tree___grid.html#a6c2aefeaa6b9ea4b8a252f8c02317082',1,'grid::KDTree_Grid']]],
-  ['kdtree_5fgrid_5fmask_1314',['KDTree_Grid_Mask',['../db/d0a/classgrid_1_1_k_d_tree___grid___mask.html#add25ad1982c73e64e4f326c945e1e4b9',1,'grid::KDTree_Grid_Mask']]]
+  ['linearop_1392',['linearOp',['../dc/dc5/namespaceoperation.html#a766a1d4a98268b036ef6c1bdbb2cbab6',1,'operation::linearOp(Type_1 lambda_1, Container_1 const &amp;input_1, Type_2 lambda_2, Container_2 const &amp;input_2, Container_out &amp;output)'],['../dc/dc5/namespaceoperation.html#abb2cce6ec6dfe295fae223fe3e8b335f',1,'operation::linearOp(Type_1 lambda_1, Container_1 const &amp;input_1, Type_2 lambda_2, Container_2 const &amp;input_2)'],['../dc/dc5/namespaceoperation.html#a8965a8646f0da6ebf110ef41c02c44a3',1,'operation::linearOp(Type lambda, Container_1 const &amp;input_1, Container_2 const &amp;input_2, Container_out &amp;output)'],['../dc/dc5/namespaceoperation.html#a24e972fae7a2018618c8d789ce6dcc5f',1,'operation::linearOp(Type lambda, Container_1 const &amp;input_1, Container_2 const &amp;input_2)']]],
+  ['linearop_5finplace_1393',['linearOp_InPlace',['../dc/dc5/namespaceoperation.html#a6163694f84c59bc52662d346524f0f9b',1,'operation::linearOp_InPlace(Type_1 lambda_1, Container_1 &amp;input_1, Type_2 lambda_2, Container_2 const &amp;input_2)'],['../dc/dc5/namespaceoperation.html#a912cbf31ff72af6d272f06ca46c36cfd',1,'operation::linearOp_InPlace(Type lambda, Container_1 &amp;input_1, Container_2 const &amp;input_2)']]],
+  ['linspace_1394',['linspace',['../d6/d48/namespacerange.html#a55bb97ba6bd59a0e814334935ae41bc2',1,'range']]],
+  ['load_1395',['load',['../df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd',1,'useful']]],
+  ['load_5f1_1396',['load_1',['../df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39',1,'useful']]],
+  ['load_5f2_1397',['load_2',['../df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3',1,'useful']]],
+  ['load_5fpair_5f1_1398',['load_pair_1',['../df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e',1,'useful']]],
+  ['locate_1399',['locate',['../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a1b2678b6c72d5c52e68062de5818d74b',1,'ptof::VectorField_LinearInterpolation_OF::locate()'],['../d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a6d27c1ff302f2037ed99e280681bffd4',1,'ptof::ScalarField_LinearInterpolation_OF::locate()']]],
+  ['locator_5fcell_1400',['Locator_Cell',['../d0/d4f/structptof_1_1_locator___cell.html#a302d272a5addf15052b06a2094775190',1,'ptof::Locator_Cell']]],
+  ['locator_5fcell_5fparallel_1401',['Locator_Cell_Parallel',['../d5/db8/structptof_1_1_locator___cell___parallel.html#a4b65207a7e7504dde0389e19dabce24c',1,'ptof::Locator_Cell_Parallel']]],
+  ['logspace_1402',['logspace',['../d6/d48/namespacerange.html#a3747e6eed482437b47010790a4216651',1,'range']]]
 ];

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['field_1598',['field',['../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a2c3e9e0fe2ebd84436c63842898063e9',1,'ptof::VectorField_LinearInterpolation_OF::field()'],['../d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#aa80eb64d153910e0ed43b89c78633523',1,'ptof::ScalarField_LinearInterpolation_OF::field()']]],
-  ['flow_5ffield_1599',['flow_field',['../d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a00463616adbc68e74f68a8856d2c553c',1,'ctrw::Transitions_PTRW_FlowField_Diff']]]
+  ['end_5fcriterion_1742',['end_criterion',['../dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a0fcd23c2435529fc58db1d2988d132e3',1,'ptof::Output_Cases::Parameters']]],
+  ['end_5fvalue_1743',['end_value',['../da/d6e/structptof_1_1_criterion__time.html#acb89af24bb653ee0d6470ce0016bc94e',1,'ptof::Criterion_time::end_value()'],['../da/df1/structptof_1_1_criterion__mass__below.html#a8bce30539ac3cef0d5f61e2fd67d1e4b',1,'ptof::Criterion_mass_below::end_value()'],['../d0/d36/structptof_1_1_criterion__mass__above.html#a08560873d5eb5dbf892396911b4e56bb',1,'ptof::Criterion_mass_above::end_value()'],['../d4/d26/structptof_1_1_criterion__fraction__absorbed.html#a807c5c3ad38d57a7d1521046c476dfcb',1,'ptof::Criterion_fraction_absorbed::end_value()'],['../dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a46e66589d546e6426cf5c47bb4dc2a6b',1,'ptof::Output_Cases::Parameters::end_value()']]],
+  ['excluded_5fphase_1744',['excluded_phase',['../de/d93/structptof_1_1_phase_1_1_parameters.html#a3e9d874c6a28052e5d09f3d86133d8f8',1,'ptof::Phase::Parameters']]],
+  ['excluded_5fphase_5fname_1745',['excluded_phase_name',['../de/d93/structptof_1_1_phase_1_1_parameters.html#affa85b26d432bc4a6f34c8cd0cf45f60',1,'ptof::Phase::Parameters']]]
 ];

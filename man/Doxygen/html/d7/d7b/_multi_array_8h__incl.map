@@ -1,10 +1,9 @@
-<map id="general/MultiArray.h" name="general/MultiArray.h">
+<map id="General/MultiArray.h" name="General/MultiArray.h">
 <area shape="rect" id="node1" title=" " alt="" coords="195,5,349,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,75,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="99,80,170,107"/>
 <area shape="rect" id="node4" title=" " alt="" coords="194,80,257,107"/>
 <area shape="rect" id="node5" title=" " alt="" coords="281,80,356,107"/>
 <area shape="rect" id="node6" title=" " alt="" coords="381,80,467,107"/>
-<area shape="rect" id="node7" href="$db/d5a/_modular_8h.html" title=" " alt="" coords="492,80,631,107"/>
-<area shape="rect" id="node8" title=" " alt="" coords="529,155,594,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="492,80,631,107"/>
 </map>

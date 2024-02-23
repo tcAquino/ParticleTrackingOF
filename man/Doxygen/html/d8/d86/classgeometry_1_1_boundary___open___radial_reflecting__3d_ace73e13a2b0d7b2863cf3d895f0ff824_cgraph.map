@@ -1,0 +1,12 @@
+<map id="geometry::Boundary_Open_RadialReflecting_3d::operator()" name="geometry::Boundary_Open_RadialReflecting_3d::operator()">
+<area shape="rect" id="node1" title="Enforce boundary condition." alt="" coords="5,125,181,181"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="249,5,386,32"/>
+<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="841,5,959,32"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#aa66a60dc66ffdd947d2bab609b5a6ac0" title="Implemented here because some versions of gcc have trouble with std::isnan." alt="" coords="265,107,370,133"/>
+<area shape="rect" id="node7" href="$d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#a65e21e1377ee41c905238ac4f0da0f7b" title="Check if position is out of bounds." alt="" coords="229,157,405,213"/>
+<area shape="rect" id="node8" href="$dc/dc5/namespaceoperation.html#a8b305455a85de0d116cd5f51a9919d6e" title="Rotate vector by angle." alt="" coords="252,237,383,264"/>
+<area shape="rect" id="node9" href="$dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f" title="Element&#45;wise multiplication by scalar." alt="" coords="230,289,405,330"/>
+<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="483,5,598,32"/>
+<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="676,5,793,32"/>
+<area shape="rect" id="node10" href="$dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982" title="Element&#45;wise multiplication by scalar." alt="" coords="453,296,628,323"/>
+</map>

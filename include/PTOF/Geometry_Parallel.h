@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Geometry_Parallel.h
-* \author Tomás Aquino
-* \date 13/02/2024
+ \file PTOF/Geometry_Parallel.h
+ \author Tomás Aquino
+ \date 13/02/2024
 */
 #ifndef PTOF_GEOMETRY_PARALLEL_H
 #define PTOF_GEOMETRY_PARALLEL_H
@@ -22,64 +22,60 @@
 #include "PTOF/Boundary.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Geometry.h"
+#include "PTOF/Locator_Parallel.h"
+#include "PTOF/Store.h"
 
 namespace ptof
 {
   /** \struct Geometry_Parallel PTOF/Geometry_Parallel.h "PTOF/Geometry_Parallel.h"
-   * Basic geometry class */
+   * \brief Basic geometry class. */
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics>
   struct Geometry_Parallel
   {
-    static constexpr std::size_t dim{ dim_val };
-    using Mesh = Foam::fvMesh;
-    using MeshSearch = Foam::meshSearch;
-    using Locator = Locator_Cell;
-    
-    /** Store only absorptions for transport simulations,
-     * store absorptions and reinjections for fpt simulations. */
+    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    using Mesh = Foam::fvMesh;                      /**< Mesh type. */
+    using Locator = Locator_Cell_Parallel;          /**< Mesh locator type. */
     using BoundaryInfo
       = std::conditional_t<
           dynamics
             == BoundaryConditionSet::Type::transport,
           Store_Absorbed,
-          Store_Absorbed_Reinjections>;
+          Store_Absorbed_Reinjections>;             /**< What to store upon hitting boundary. */
     
-    /** Construct with mesh from specified OpenFOAM case time. */
+    /** Constructor.
+     \brief Use mesh from specified OpenFOAM case time.
+     \param directories_of OpenFOAM case directory information.
+     \param directories Current case directory information.
+     \param num_threads Number of parallel threads.
+     \param parameters Additional parameters (unused).
+     */
     template <typename Parameters>
     Geometry_Parallel
     (DirectoriesOF const& directories_of,
      Directories const& directories,
      std::size_t num_threads,
      Parameters const& parameters = useful::Empty{})
-    : mesh{
-        Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ } }
-    {
-      mesh_copies.reserve(num_threads-1);
-      for (std::size_t thread = 0; thread < num_threads-1; ++thread)
-        mesh_copies.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ }));
-      mesh_search.reserve(num_threads);
-      mesh_search.emplace_back(std::make_unique<MeshSearch>(mesh));
-      for (std::size_t thread = 1; thread < num_threads; ++thread)
-        mesh_search.emplace_back(std::make_unique<MeshSearch>(*mesh_copies[thread-1]));
-      locator.reserve(num_threads);
-      for (std::size_t thread = 0; thread < num_threads; ++thread)
-        locator.emplace_back(*mesh_search[thread]);
-    }
+    : _meshes(make_meshes(directories_of, num_threads))
+    , _mesh_searches(make_mesh_searches(directories_of, num_threads))
+    , locator{ _mesh_searches }
+    {}
     
-    /** Make a Boundary object for the preset type of dynamics:
-     * - 'transport': No parameters, custom boundary does nothing;
-     * - 'firstpassage': Parameters should hold InitialCondition object;
-     * - custom boundary reinjects according to initial condition. */
+    /**
+      \brief Make a Boundary object for the preset type of dynamics.
+      \details
+      - 'transport': No parameters, custom boundary does nothing.
+      - 'firstpassage': Parameters should hold InitialCondition object.
+      - 'custom': Boundary reinjects according to initial condition.
+      \param directories Current case directory information.
+      \param params_transport Transport parameters.
+      \param params_reaction Reaction parameters.
+      \param params_solvers Solver parameters.
+      \param surface_reaction Surface reaction.
+      \param parameters Additional parameters (unused).
+      \return Boundary object.
+     */
     template
     <typename TransportParameters,
     typename ReactionParameters,
@@ -91,24 +87,21 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     SurfaceReaction&& reaction,
-     std::size_t thread,
+     SurfaceReaction&& surface_reaction,
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          *mesh_search[thread],
-          locator[thread],
+          locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
           Boundary_DoNothing{},
-          std::forward<SurfaceReaction>(reaction) };
+          std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          *mesh_search[thread],
-          locator[thread],
+          locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
           Boundary_Reinject{ parameters } };
@@ -118,7 +111,10 @@ namespace ptof
           + " not supported" };
     }
     
-    /** Output generic information about object. */
+    /**
+     \brief Output generic information about object.
+     \param output Output stream.
+     */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -143,7 +139,9 @@ namespace ptof
         "--------------------------------------------------\n";
     }
     
-    /** Output information about current object. */
+    /**
+     \brief Output information about current object.
+     */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -151,69 +149,107 @@ namespace ptof
         "--------------------------------------------------\n"
         "Mesh\n"
         "--------------------------------------------------\n";
-      output << "cells: " << mesh.nCells() << "\n"
-             << "faces: " << mesh.nFaces() << "\n"
-             << "edges: " << mesh.nEdges() << "\n";
+      output << "cells: " << mesh().nCells() << "\n"
+             << "faces: " << mesh().nFaces() << "\n"
+             << "edges: " << mesh().nEdges() << "\n";
       output <<
         "--------------------------------------------------\n";
     }
     
-    Mesh mesh;                                               /**< Mesh for fields and boundaries. */
-    std::vector<std::unique_ptr<Mesh>> mesh_copies;          /**< Mesh copies needed for parallel searches */
-    std::vector<std::unique_ptr<MeshSearch>> mesh_search;         /**< To find positions in mesh, etc. */
-    std::vector<Locator> locator;                            /**< Wrapper on mesh search.         */
+    /** \return Mesh for the current thread. */
+    auto const& mesh() const
+    { return *_meshes[omp_get_thread_num()]; }
+    
+  private:
+    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools type. */
+    
+    std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh copies needed for parallel searches. */
+    std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
+    
+  public:
+    Locator locator;                                          /**< Object to locate positions in mesh. */
+    
+  private:
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \param num_threads Number of parallel threads.
+     \return Mesh copies for parallel searches
+    */
+    std::vector<std::unique_ptr<Mesh>> make_meshes
+    (DirectoriesOF const& directories_of, std::size_t num_threads)
+    {
+      std::vector<std::unique_ptr<Mesh>> meshes;
+      meshes.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads-1; ++thread)
+        meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion,
+          directories_of.time.timeName(),
+          directories_of.time,
+          Foam::IOobject::MUST_READ }));
+      
+      return meshes;
+    }
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \param num_threads Number of parallel threads.
+     \return Mesh search tools for parallel searches
+    */
+    std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
+    (DirectoriesOF const& directories_of, std::size_t num_threads)
+    {
+      std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
+      mesh_searches.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
+
+      return mesh_searches;
+    }
   };
   
   /** \struct Geometry_Periodic_Cartesian_Parallel PTOF/Geometry_Parallel.h "PTOF/Geometry_Parallel.h"
-   *  \brief Geometry class for geometry
-   *  with Cartesian periodic BCs along some dimensions.*/
+   *  \brief Geometry class for geometry with Cartesian periodic BCs along some dimensions.*/
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics>
   struct Geometry_Periodic_Cartesian_Parallel
   {
-    static constexpr std::size_t dim{ dim_val };
-    using Mesh = Foam::fvMesh;
-    using MeshSearch = Foam::meshSearch;
-    using Locator = Locator_Cell;
-    using Boundary_Periodic = geometry::Boundary_Periodic_WithOutsideInfo;
+    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    using Mesh = Foam::fvMesh;                      /**< Mesh type. */
+    using Locator = Locator_Cell_Parallel;          /**< Mesh locator type. */
+    using Boundary_Periodic =
+      geometry::Boundary_Periodic_WithOutsideInfo;  /**< Periodic boundary type. */
+    using BoundaryInfo = Store_Absorbed;            /**< What to store upon hitting boundary. */
     
-    /** Store only absorptions. */
-    using BoundaryInfo = Store_Absorbed;
-    
-    /** Construct with mesh from specified OpenFOAM case time. */
+    /** Constructor.
+     \brief Use mesh from specified OpenFOAM case time.
+     \param directories_of OpenFOAM case directory information.
+     \param directories Current case directory information.
+     \param num_threads Number of parallel threads.
+     \param parameters Additional parameters (unused)
+    */
     template <typename Parameters>
     Geometry_Periodic_Cartesian_Parallel
     (DirectoriesOF const& directories_of,
      Directories const& directories,
      std::size_t num_threads,
-     Parameters const& params = useful::Empty{})
-    : mesh{
-        Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ } }
-    , boundary_periodic{
-        make_boundary_periodic(directories) }
-    {
-      mesh_copies.reserve(num_threads-1);
-      for (std::size_t thread = 0; thread < num_threads-1; ++thread)
-        mesh_copies.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ }));
-      mesh_search.reserve(num_threads);
-      mesh_search.emplace_back(std::make_unique<MeshSearch>(mesh));
-      for (std::size_t thread = 1; thread < num_threads; ++thread)
-        mesh_search.emplace_back(std::make_unique<MeshSearch>(*mesh_copies[thread-1]));
-      locator.reserve(num_threads);
-      for (std::size_t thread = 0; thread < num_threads; ++thread)
-        locator.emplace_back(*mesh_search[thread]);
-    }
+     Parameters const& parameters = useful::Empty{})
+    : _meshes{ make_meshes(directories_of, num_threads) }
+    , _mesh_searches{ make_mesh_searches(directories_of, num_threads) }
+    , locator{ _mesh_searches }
+    , boundary_periodic{ makeboundary_periodic(directories) }
+    {}
     
-    /** Make a Boundary object for Cartesian periodicity. */
+    /**
+     \brief Make a Boundary object for Cartesian periodicity.
+     \param directories Current case directory information.
+     \param params_transport Transport parameters.
+     \param params_reaction Reaction parameters.
+     \param params_solvers Solver parameters.
+     \param surface_reaction Surface reaction.
+     \param parameters Additional parameters (initial condition object for reinjection).
+     \return Boundary object.
+    */
     template
     <typename TransportParameters,
     typename ReactionParameters,
@@ -225,30 +261,27 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     SurfaceReaction&& reaction,
-     std::size_t thread,
+     SurfaceReaction&& surface_reaction,
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          *mesh_search[thread],
-          locator[thread],
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            *mesh_search[thread] },
+            locator },
           Boundary_DoNothing{},
-          std::forward<SurfaceReaction>(reaction) };
+          std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          *mesh_search[thread],
-          locator[thread],
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            *mesh_search[thread] },
+            locator },
           Boundary_Reinject{ parameters } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
@@ -256,7 +289,7 @@ namespace ptof
           + " not supported" };
     }
     
-    /** Output generic information about object. */
+    /** \brief Output generic information about object. */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -282,7 +315,7 @@ namespace ptof
       "--------------------------------------------------\n";
     }
     
-    /** Output information about current object. */
+    /** \brief Output information about current object. */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -290,9 +323,9 @@ namespace ptof
         "--------------------------------------------------\n"
         "Mesh\n"
         "--------------------------------------------------\n";
-      output << "cells: " << mesh.nCells() << "\n"
-             << "faces: " << mesh.nFaces() << "\n"
-             << "edges: " << mesh.nEdges() << "\n"
+      output << "cells: " << mesh().nCells() << "\n"
+             << "faces: " << mesh().nFaces() << "\n"
+             << "edges: " << mesh().nEdges() << "\n"
         "--------------------------------------------------\n";
       output <<
         "--------------------------------------------------\n"
@@ -313,14 +346,27 @@ namespace ptof
         "--------------------------------------------------\n";
     }
     
-    Mesh mesh;                                             /**< Mesh for fields and boundaries.        */
-    Boundary_Periodic boundary_periodic;                   /**< Boundary object to enforce periodicity.*/
-    std::vector<std::unique_ptr<Mesh>> mesh_copies;          /**< Mesh copies needed for parallel searches */
-    std::vector<std::unique_ptr<MeshSearch>> mesh_search;  /**< To find positions in mesh, etc.        */
-    std::vector<Locator> locator;                          /**< Wrapper on mesh search.                */
+    /** \return Mesh for the current thread. */
+    auto const& mesh() const
+    { return *_meshes[omp_get_thread_num()]; }
     
   private:
-    Boundary_Periodic make_boundary_periodic
+    using MeshSearch = Foam::meshSearch;                      /**< Mesh searching tools type. */
+    
+    std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh copies needed for parallel searches. */
+    std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
+    
+  public:
+    Locator locator;                                          /**< Object to locate positions in mesh. */
+    Boundary_Periodic boundary_periodic;                      /**< Boundary object to enforce periodicity. */
+    
+  private:
+    /**
+    \brief Make a boundary object to enforce periodicity based on cartesian planes.
+    \param directories Current case directory information.
+    \return Periodic boundary object.
+    */
+    Boundary_Periodic makeboundary_periodic
     (Directories const& directories)
     {
       auto boundary_conditions =
@@ -330,10 +376,10 @@ namespace ptof
       for (auto const& bc : boundary_conditions)
         if (bc.second == "periodic")
         {
-          /** Find average and variance of patch face centers. */
+          // Find average and variance of patch face centers.
           auto const& patch_id =
-            mesh.boundaryMesh().findPatchID(bc.first, false);
-          auto const& patch = mesh.boundaryMesh()[patch_id];
+            mesh().boundaryMesh().findPatchID(bc.first, false);
+          auto const& patch = mesh().boundaryMesh()[patch_id];
           auto face_start = patch.start();
           Foam::point average_face_center = Foam::point::zero;
           Foam::point variance_face_center = Foam::point::zero;
@@ -341,8 +387,8 @@ namespace ptof
           for (auto face = face_start;
                face < face_start + patch.size(); ++face)
           {
-            auto area = face_area(face, mesh);
-            auto weighted_center = area*face_center(face, mesh);
+            auto area = face_area(face, mesh());
+            auto weighted_center = area*face_center(face, mesh());
             total_area += area;
             average_face_center += weighted_center;
             for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd)
@@ -355,7 +401,7 @@ namespace ptof
             variance_face_center[dd] -=
               average_face_center[dd]*average_face_center[dd];
           
-          /** Choose dimension with least variance. */
+          // Choose dimension with least variance.
           auto it_min = std::min_element(variance_face_center.begin(),
                                          variance_face_center.end());
           std::size_t dd = std::distance(variance_face_center.begin(),
@@ -363,8 +409,8 @@ namespace ptof
           boundaries_dim[dd].push_back(average_face_center[dd]);
         }
       
-      /** Check which dimensions have periodic BCs
-       * If a dimension has periodic BCs they must be exactly two.*/
+      // Check which dimensions have periodic BCs.
+      // If a dimension has periodic BCs they must be exactly two.
       std::vector<bool> dim_has_periodic_bcs(dim, 0);
       for (std::size_t dd = 0; dd < dim; ++dd)
         if (boundaries_dim[dd].size() != 0)
@@ -380,12 +426,12 @@ namespace ptof
           dim_has_periodic_bcs[dd] = 1;
         }
       
-      /** Periodic conditions are assumed to be checked in order
-       * across Cartesian dimensions.
-       * If there are periodic BCs in all dimensions
-       * starting from 0 up to some dimension, add only those boundaries
-       * If there are gap dimensions between periodic dimensions,
-       * add {-inf, inf} boundaries.*/
+      // Periodic conditions are assumed to be checked in order
+      // across Cartesian dimensions.
+      // If there are periodic BCs in all dimensions
+      // starting from 0 up to some dimension, add only those boundaries
+      // If there are gap dimensions between periodic dimensions,
+      // add {-inf, inf} boundaries.
       bool found_nonperiodic = 0;
       bool nonconsecutive_dims = 0;
       for (bool periodic : dim_has_periodic_bcs)
@@ -419,74 +465,94 @@ namespace ptof
         }
       }
       return { boundaries };
-    };
+    }
+    
+    std::vector<std::unique_ptr<Mesh>> make_meshes
+    (DirectoriesOF const& directories_of, std::size_t num_threads)
+    {
+      std::vector<std::unique_ptr<Mesh>> meshes;
+      meshes.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion,
+          directories_of.time.timeName(),
+          directories_of.time,
+          Foam::IOobject::MUST_READ }));
+      
+      return meshes;
+    }
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \param num_threads Number of parallel threads.
+     \return Mesh search tools for parallel searches
+    */
+    std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
+    (DirectoriesOF const& directories_of, std::size_t num_threads)
+    {
+      std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
+      mesh_searches.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
+
+      return mesh_searches;
+    }
   };
   
   /** \struct Geometry_Bcc_Parallel PTOF/Geometry_Parallel.h "PTOF/Geometry_Parallel.h"
-   * \brief Geometry class for periodic geometry in a
-   * body centered cubic beadpack
-   * Holds spatial dimension info,
-   * mesh, mesh search objects,
-   * and periodic boundary to enforce periodicity. */
+   \brief Geometry class for periodic representation of a body centered cubic beadpack.
+   \details Holds spatial dimension info, mesh, mesh search objects, and periodic boundary to enforce periodicity. */
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics,
   BoundaryConditionSet::Type periodicity_type>
   struct Geometry_Bcc_Parallel
   {
-    static constexpr std::size_t dim{ dim_val };
-    using Mesh = Foam::fvMesh;
-    using MeshSearch = Foam::meshSearch;
-    using Locator = Locator_Cell;
+    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    using Mesh = Foam::fvMesh;                      /**< Mesh type. */
+    using Locator = Locator_Cell_Parallel;          /**< Mesh locator type. */
     using Boundary_Periodic = std::conditional_t<
       periodicity_type
       == BoundaryConditionSet::Type::cartesian,
     geometry::Boundary_Periodic_WithOutsideInfo,
     geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
-      geometry::SymmetryPlanes_Bcc>>;
+      geometry::SymmetryPlanes_Bcc>>;               /**< Periodic boundary type. */
+    using BoundaryInfo = Store_Absorbed;            /**< What to store upon hitting boundary. */
     
-    /** Store only absorptions.*/
-    using BoundaryInfo = Store_Absorbed;
-    
-    /** Construct with mesh from specified OpenFOAM case time. */
+    /** Constructor.
+     \brief Use mesh from specified OpenFOAM case time.
+     \brief Use mesh from specified OpenFOAM case time.
+     \param directories_of OpenFOAM case directory information.
+     \param directories Current case directory information.
+     \param num_threads Number of parallel threads.
+     \param parameters Additional parameters for periodic boundary.
+     */
     template <typename Parameters>
     Geometry_Bcc_Parallel
     (DirectoriesOF const& directories_of,
      Directories const& directories,
      std::size_t num_threads,
-     Parameters const& params)
-    : mesh{
-        Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ } }
-    , boundary_periodic{
-        make_boundary_periodic(useful::Selector<
-                                BoundaryConditionSet::Type,
-                                periodicity_type>{},
-                               params) }
-    {
-      mesh_copies.reserve(num_threads-1);
-      for (std::size_t thread = 0; thread < num_threads-1; ++thread)
-        mesh_copies.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ }));
-      mesh_search.reserve(num_threads);
-      mesh_search.emplace_back(std::make_unique<MeshSearch>(mesh));
-      for (std::size_t thread = 1; thread < num_threads; ++thread)
-        mesh_search.emplace_back(std::make_unique<MeshSearch>(*mesh_copies[thread-1]));
-      locator.reserve(num_threads);
-      for (std::size_t thread = 0; thread < num_threads; ++thread)
-        locator.emplace_back(*mesh_search[thread]);
-    }
+     Parameters const& parameters)
+    : _meshes(make_meshes(directories_of, num_threads))
+    , _mesh_searches(make_mesh_searches(directories_of, num_threads))
+    , locator{ _mesh_searches }
+    , boundary_periodic{ makeboundary_periodic(useful::Selector<
+                                               BoundaryConditionSet::Type,
+                                               periodicity_type>{},
+                                               parameters) }
+    {}
     
-    /** Make a Boundary object for the preset type of periodicity
-     * Parameters holds periodic boundary
-     * - 'cartesian': Cartesian periodicity
-     * - 'symmetryplanes': Periodicity according to symmetry planes */
+    /**
+      \brief Make a Boundary object for the preset type of dynamics and periodicity.
+      \details
+      - 'cartesian': Cartesian periodicity.
+      - 'symmetryplanes': Periodicity according to symmetry planes.
+      \param directories Current case directory information.
+      \param params_transport Transport parameters.
+      \param params_reaction Reaction parameters.
+      \param params_solvers Solver parameters.
+      \param surface_reaction Surface reaction.
+      \param parameters Additional parameters (initial condition object for reinjection). */
     template
     <typename TransportParameters,
     typename ReactionParameters,
@@ -498,30 +564,27 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
-     SurfaceReaction&& reaction,
-     std::size_t thread,
+     SurfaceReaction&& surface_reaction,
      Parameters&& parameters = {}) const
     {
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          *mesh_search[thread],
-          locator[thread],
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            *mesh_search[thread] },
+            locator },
           Boundary_DoNothing{},
-          std::forward<SurfaceReaction>(reaction) };
+          std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
           get_boundary_conditions<dynamics>(directories),
-          *mesh_search[thread],
-          locator[thread],
+          locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
-            *mesh_search[thread] },
+            locator },
           Boundary_Reinject{ parameters } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
@@ -529,7 +592,9 @@ namespace ptof
           + " not supported" };
     }
     
-    /** Output generic information about object.*/
+    /**
+     \brief Output generic information about object.
+     */
     template <typename OStream>
     static void info(OStream& output)
     {
@@ -559,7 +624,9 @@ namespace ptof
       "--------------------------------------------------\n";
     }
     
-    /** Output information about current object.*/
+    /**
+     \brief Output information about current object.
+     */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -567,40 +634,89 @@ namespace ptof
         "--------------------------------------------------\n"
         "Mesh\n"
         "--------------------------------------------------\n";
-      output << "cells: " << mesh.nCells() << "\n"
-             << "faces: " << mesh.nFaces() << "\n"
-             << "edges: " << mesh.nEdges() << "\n";
+      output << "cells: " << mesh().nCells() << "\n"
+             << "faces: " << mesh().nFaces() << "\n"
+             << "edges: " << mesh().nEdges() << "\n";
       output <<
         "--------------------------------------------------\n";
     }
     
-    Mesh mesh;                                             /**< Mesh for fields and boundaries.        */
-    Boundary_Periodic boundary_periodic;                   /**< Boundary object to enforce periodicity.*/
-    std::vector<std::unique_ptr<Mesh>> mesh_copies;          /**< Mesh copies needed for parallel searches */
-    std::vector<std::unique_ptr<MeshSearch>> mesh_search;  /**< To find positions in mesh, etc.        */
-    std::vector<Locator> locator;                          /**< Wrapper on mesh search.                */
+    /** \return Mesh for the current thread. */
+    auto const& mesh() const
+    { return *_meshes[omp_get_thread_num()]; }
+    
+  private:
+    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools type. */
+    
+    std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh copies needed for parallel searches. */
+    std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
+    
+  public:
+    Locator locator;                                          /**< Object to locate positions in mesh. */
+    Boundary_Periodic boundary_periodic;                      /**< Boundary object to enforce periodicity.*/
   
   private:
+    /**
+     \brief Make a boundary object to enforce cartesian periodicity.
+     \param parameters Additional parameters (Should hold primitive_cell_boundaries).
+     \return Periodic boundary object.
+     */
     template <typename Parameters>
-    Boundary_Periodic make_boundary_periodic
+    Boundary_Periodic makeboundary_periodic
     (useful::Selector<BoundaryConditionSet::Type,
       BoundaryConditionSet::Type::cartesian>,
-      Parameters const& params)
+      Parameters const& parameters)
     {
-      return { params.primitive_cell_boundaries };
+      return { parameters.primitive_cell_boundaries };
     };
   
+    /**
+    \brief Make a boundary object to enforce periodicity based on symmetry planes.
+    \param parameters Additional parameters (Should hold radius and primitive_cell_boundaries).
+    \return Periodic boundary object.
+    */
     template <typename Parameters>
-    Boundary_Periodic make_boundary_periodic
+    Boundary_Periodic makeboundary_periodic
     (useful::Selector<BoundaryConditionSet::Type,
       BoundaryConditionSet::Type::symmetryplanes>,
-     Parameters const& params)
+     Parameters const& parameters)
     {
       std::vector<double> midpoint;
       for (auto const& boundary
-           : params.primitive_cell_boundaries)
+           : parameters.primitive_cell_boundaries)
         midpoint.push_back( (boundary.first + boundary.second)/2. );
-      return { params.radius, midpoint };
+      return { parameters.radius, midpoint };
+    }
+    
+    std::vector<std::unique_ptr<Mesh>> make_meshes
+    (DirectoriesOF const& directories_of, std::size_t num_threads)
+    {
+      std::vector<std::unique_ptr<Mesh>> meshes;
+      meshes.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion,
+          directories_of.time.timeName(),
+          directories_of.time,
+          Foam::IOobject::MUST_READ }));
+      
+      return meshes;
+    }
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \param num_threads Number of parallel threads.
+     \return Mesh search tools for parallel searches
+    */
+    std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
+    (DirectoriesOF const& directories_of, std::size_t num_threads)
+    {
+      std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
+      mesh_searches.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
+
+      return mesh_searches;
     }
   };
 }

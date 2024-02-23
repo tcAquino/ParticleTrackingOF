@@ -25,6 +25,12 @@
 var NAVTREE =
 [
   [ "ParticleTrackingOF", "index.html", [
+    [ "Dependencies", "index.html#autotoc_md1", null ],
+    [ "Documentation", "index.html#autotoc_md2", null ],
+    [ "Citations", "index.html#autotoc_md3", null ],
+    [ "License", "index.html#autotoc_md4", null ],
+    [ "Contributors", "index.html#autotoc_md5", null ],
+    [ "About the author", "index.html#autotoc_md6", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -42,7 +48,7 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", "functions_vars" ],
-        [ "Typedefs", "functions_type.html", "functions_type" ],
+        [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ]
       ] ]
     ] ],
@@ -55,20 +61,19 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d1/d40/classctrw_1_1_jump_generator___velocity__with_hint.html#a269c9af53c7295f28714762370ee2a9d",
-"d2/d80/structptof_1_1_measure_spacing_units.html#a45689f18d2082d42aaac8d95956bb339",
-"d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html#a5607f308e1f2d99fbb9b66e7eaaf1940",
-"d4/d74/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__fpt.html",
-"d5/daa/structptof_1_1model__advection__diffusion__decay__catalytic__3d_1_1_reaction_1_1_parameters.html",
-"d6/dc4/_particle_tracking_o_f_2_models_8h.html#abfa1ef3298d8500eb9dc2d0e61e4209b",
-"d7/dda/structctrw_1_1_get__position__periodic__cartesian.html#aed225e6c26eef95f732fbd7c4c2d9e4d",
-"d9/d1a/structctrw_1_1_get__velocity__property.html#a3848e4159172707bdea6b927d7733fb4",
-"da/df7/structptof_1_1model__advection__3d_1_1_transport_1_1_parameters.html#a141a85a5b1776bc8c239c7e9bce4b408",
-"dc/d30/structptof_1_1_geometry.html#a0fffe048c94e91b70e1bd8cd70d00f6f",
-"dd/d08/structctrw_1_1_get__old.html#ae49e37cf0bacf9b5f1ec975242c08656",
-"de/d46/structptof_1_1model__advection__diffusion__decay__catalytic__3d_1_1_reaction.html",
-"df/d1d/namespaceuseful.html#aa83a9553ab0f9e0cb71e9fd4c4c7bc5c",
-"functions_func_b.html"
+"d0/dee/_models___parallel_8h.html#aaae1513854e84a0d67d4964da4fe14a7",
+"d2/d3e/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d__parallel.html",
+"d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c",
+"d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a525988f13b4a192d5582fdfc9e8864df",
+"d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html#abb4296f7d4aa930021a03e16dff737be",
+"d6/d95/_c_t_r_w_2_transitions_8h.html#a18a52c79552267c7e05b813362d1d2c6",
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a80e8e18bbde56664ca2b46a1643b2584",
+"d9/d18/_general_2_useful_8h.html#a9e695e68fa7aad5dde31cbec59310164",
+"da/dae/structptof_1_1_particle_maker.html#a01641c53717ab545eeba7439c29944f7",
+"dc/d22/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_model.html",
+"dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aa536ca8ad810c5ce892d3444c70e2fcd",
+"df/d1d/namespaceuseful.html",
+"df/dfc/structptof_1_1_geometry___parallel.html#ae63ad11bc5dc9901527e8269d468bbac"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

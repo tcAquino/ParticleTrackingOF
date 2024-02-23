@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('da/d36/structptof_1_1model__advection_
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="../../d6/dc4/_particle_tracking_o_f_2_models_8h_source.html">Models.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d3/d74/_models_8h_source.html">Models.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -99,26 +99,14 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af52f74377db3881f72f06e9b21044cbb"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; </td></tr>
-<tr class="memitem:af52f74377db3881f72f06e9b21044cbb"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#af52f74377db3881f72f06e9b21044cbb">makeTransitions</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a02363bfd87abc1cb70c474449d540a32">VelocityField</a> &amp;&amp;velocity_field, <a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;geometry, Boundary const &amp;boundary, <a class="el" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html">Parameters</a> const &amp;params_transport, <a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;params_solvers)</td></tr>
-<tr class="separator:af52f74377db3881f72f06e9b21044cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b93571e428e8e869452a8ece6271b00"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Geometry , typename Boundary , typename ReactionParameters , typename SolverParameters &gt; </td></tr>
+<tr class="memitem:a2b93571e428e8e869452a8ece6271b00"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a2b93571e428e8e869452a8ece6271b00">makeTransitions</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a726b95ccacb7b49aef82f5021a6b2dac">VelocityField</a> const &amp;velocity_field, <a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;geometry, Boundary &amp;boundary, <a class="el" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html">Parameters</a> const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers)</td></tr>
+<tr class="separator:a2b93571e428e8e869452a8ece6271b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51faa6066979d5c9173e48b0375cbc22"><td class="memTemplParams" colspan="2">template&lt;typename Geometry &gt; </td></tr>
-<tr class="memitem:a51faa6066979d5c9173e48b0375cbc22"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a51faa6066979d5c9173e48b0375cbc22">makeVelocityInterpolator</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;geometry, double average_velocity_magnitude)</td></tr>
+<tr class="memitem:a51faa6066979d5c9173e48b0375cbc22"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a51faa6066979d5c9173e48b0375cbc22">makeVelocityInterpolator</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;geometry, double average_velocity_magnitude)</td></tr>
 <tr class="separator:a51faa6066979d5c9173e48b0375cbc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memTemplParams" colspan="2">template&lt;typename Geometry &gt; </td></tr>
-<tr class="memitem:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a3f2609c59c88dab22b4b8ca98d1606a5">makeVelocityInterpolator</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;geometry)</td></tr>
-<tr class="separator:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16783c70addf63f0f29ab82ab46aea47"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:a16783c70addf63f0f29ab82ab46aea47"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a16783c70addf63f0f29ab82ab46aea47">info</a> (OStream &amp;output)</td></tr>
-<tr class="separator:a16783c70addf63f0f29ab82ab46aea47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af52f74377db3881f72f06e9b21044cbb"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; </td></tr>
-<tr class="memitem:af52f74377db3881f72f06e9b21044cbb"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#af52f74377db3881f72f06e9b21044cbb">makeTransitions</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a02363bfd87abc1cb70c474449d540a32">VelocityField</a> &amp;&amp;velocity_field, <a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;geometry, Boundary const &amp;boundary, <a class="el" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html">Parameters</a> const &amp;params_transport, <a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;params_solvers)</td></tr>
-<tr class="separator:af52f74377db3881f72f06e9b21044cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51faa6066979d5c9173e48b0375cbc22"><td class="memTemplParams" colspan="2">template&lt;typename Geometry &gt; </td></tr>
-<tr class="memitem:a51faa6066979d5c9173e48b0375cbc22"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a51faa6066979d5c9173e48b0375cbc22">makeVelocityInterpolator</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;geometry, double average_velocity_magnitude)</td></tr>
-<tr class="separator:a51faa6066979d5c9173e48b0375cbc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memTemplParams" colspan="2">template&lt;typename Geometry &gt; </td></tr>
-<tr class="memitem:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a3f2609c59c88dab22b4b8ca98d1606a5">makeVelocityInterpolator</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;geometry)</td></tr>
+<tr class="memitem:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a3f2609c59c88dab22b4b8ca98d1606a5">makeVelocityInterpolator</a> (<a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;geometry)</td></tr>
 <tr class="separator:a3f2609c59c88dab22b4b8ca98d1606a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16783c70addf63f0f29ab82ab46aea47"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:a16783c70addf63f0f29ab82ab46aea47"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a16783c70addf63f0f29ab82ab46aea47">info</a> (OStream &amp;output)</td></tr>
@@ -126,7 +114,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a16783c70addf63f0f29ab82ab46aea47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16783c70addf63f0f29ab82ab46aea47">&#9670;&nbsp;</a></span>info() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a16783c70addf63f0f29ab82ab46aea47">&#9670;&nbsp;</a></span>info()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,41 +141,13 @@ template&lt;typename OStream &gt; </div>
 
 </div>
 </div>
-<a id="a16783c70addf63f0f29ab82ab46aea47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16783c70addf63f0f29ab82ab46aea47">&#9670;&nbsp;</a></span>info() <span class="overload">[2/2]</span></h2>
+<a id="a2b93571e428e8e869452a8ece6271b00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b93571e428e8e869452a8ece6271b00">&#9670;&nbsp;</a></span>makeTransitions()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename OStream &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void ptof::model_advection_diffusion_2d::Transport::info </td>
-          <td>(</td>
-          <td class="paramtype">OStream &amp;&#160;</td>
-          <td class="paramname"><em>output</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af52f74377db3881f72f06e9b21044cbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af52f74377db3881f72f06e9b21044cbb">&#9670;&nbsp;</a></span>makeTransitions() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; </div>
+template&lt;typename VelocityField , typename Geometry , typename Boundary , typename ReactionParameters , typename SolverParameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -195,19 +155,19 @@ template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; 
         <tr>
           <td class="memname">static auto ptof::model_advection_diffusion_2d::Transport::makeTransitions </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a02363bfd87abc1cb70c474449d540a32">VelocityField</a> &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a726b95ccacb7b49aef82f5021a6b2dac">VelocityField</a> const &amp;&#160;</td>
           <td class="paramname"><em>velocity_field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Boundary const &amp;&#160;</td>
+          <td class="paramtype">Boundary &amp;&#160;</td>
           <td class="paramname"><em>boundary</em>, </td>
         </tr>
         <tr>
@@ -219,7 +179,13 @@ template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype">ReactionParameters const &amp;&#160;</td>
+          <td class="paramname"><em>params_reaction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SolverParameters const &amp;&#160;</td>
           <td class="paramname"><em>params_solvers</em>&#160;</td>
         </tr>
         <tr>
@@ -234,67 +200,20 @@ template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a2b93571e428e8e869452a8ece6271b00_cgraph.png" border="0" usemap="#ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a2b93571e428e8e869452a8ece6271b00_cgraph" alt=""/></div>
+<map name="ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a2b93571e428e8e869452a8ece6271b00_cgraph" id="ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a2b93571e428e8e869452a8ece6271b00_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,181,61"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aa6d78263c3529ae0c12b0bfe1fdc5942" title="Make transitions object to handle advective&#45;diffusive transport." alt="" coords="229,20,451,47"/>
+</map>
 </div>
-</div>
-<a id="af52f74377db3881f72f06e9b21044cbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af52f74377db3881f72f06e9b21044cbb">&#9670;&nbsp;</a></span>makeTransitions() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename Boundary &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto ptof::model_advection_diffusion_2d::Transport::makeTransitions </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a02363bfd87abc1cb70c474449d540a32">VelocityField</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>velocity_field</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Boundary const &amp;&#160;</td>
-          <td class="paramname"><em>boundary</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html">Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>params_transport</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>params_solvers</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a3f2609c59c88dab22b4b8ca98d1606a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f2609c59c88dab22b4b8ca98d1606a5">&#9670;&nbsp;</a></span>makeVelocityInterpolator() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f2609c59c88dab22b4b8ca98d1606a5">&#9670;&nbsp;</a></span>makeVelocityInterpolator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -307,7 +226,7 @@ template&lt;typename Geometry &gt; </div>
         <tr>
           <td class="memname">static auto ptof::model_advection_diffusion_2d::Transport::makeVelocityInterpolator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em></td><td>)</td>
           <td></td>
         </tr>
@@ -318,39 +237,21 @@ template&lt;typename Geometry &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a3f2609c59c88dab22b4b8ca98d1606a5_cgraph.png" border="0" usemap="#ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a3f2609c59c88dab22b4b8ca98d1606a5_cgraph" alt=""/></div>
+<map name="ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a3f2609c59c88dab22b4b8ca98d1606a5_cgraph" id="ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a3f2609c59c88dab22b4b8ca98d1606a5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,16,200,72"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="266,5,437,32"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a76b58a938a23e25fad266087fcfdade5" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="248,56,455,83"/>
+</map>
 </div>
-</div>
-<a id="a3f2609c59c88dab22b4b8ca98d1606a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f2609c59c88dab22b4b8ca98d1606a5">&#9670;&nbsp;</a></span>makeVelocityInterpolator() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Geometry &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto ptof::model_advection_diffusion_2d::Transport::makeVelocityInterpolator </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a51faa6066979d5c9173e48b0375cbc22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51faa6066979d5c9173e48b0375cbc22">&#9670;&nbsp;</a></span>makeVelocityInterpolator() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a51faa6066979d5c9173e48b0375cbc22">&#9670;&nbsp;</a></span>makeVelocityInterpolator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -363,7 +264,7 @@ template&lt;typename Geometry &gt; </div>
         <tr>
           <td class="memname">static auto ptof::model_advection_diffusion_2d::Transport::makeVelocityInterpolator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -384,49 +285,25 @@ template&lt;typename Geometry &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a51faa6066979d5c9173e48b0375cbc22_cgraph.png" border="0" usemap="#ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a51faa6066979d5c9173e48b0375cbc22_cgraph" alt=""/></div>
+<map name="ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a51faa6066979d5c9173e48b0375cbc22_cgraph" id="ada/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport_a51faa6066979d5c9173e48b0375cbc22_cgraph">
+<area shape="rect" title=" " alt="" coords="5,45,200,101"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="284,23,419,65"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a76b58a938a23e25fad266087fcfdade5" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="248,89,455,116"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="509,5,679,32"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="503,56,685,83"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="733,49,879,90"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9debef4d2a93a63a963577836e14631b" title="Sum of elements." alt="" coords="927,56,1047,83"/>
+</map>
 </div>
-</div>
-<a id="a51faa6066979d5c9173e48b0375cbc22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51faa6066979d5c9173e48b0375cbc22">&#9670;&nbsp;</a></span>makeVelocityInterpolator() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Geometry &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto ptof::model_advection_diffusion_2d::Transport::makeVelocityInterpolator </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a7144c4886cbc77f456ea9903fa995c79">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>average_velocity_magnitude</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>ParticleTrackingOF/<a class="el" href="../../d6/dc4/_particle_tracking_o_f_2_models_8h_source.html">Models.h</a></li>
+<li>PTOF/<a class="el" href="../../d3/d74/_models_8h_source.html">Models.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,11 +86,11 @@ $(document).ready(function(){initNavTree('d5/d10/structctrw_1_1_get__time__inter
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt; Struct Template Reference</div>  </div>
+<div class="title">ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Get linearly interpolated position according to function of state.velocity in old state given new state and old state.  
+<p>Get linearly interpolated time according to (a function of) velocity in old state given new state and old state.  
  <a href="../../d5/d10/structctrw_1_1_get__time__interp__velocity.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code></p>
@@ -99,8 +99,8 @@ Collaboration diagram for ctrw::Get_time_interp_velocity&lt; Getter, VelocityMap
 <div class="dyncontent">
 <div class="center"><img src="../../da/d94/structctrw_1_1_get__time__interp__velocity__coll__graph.png" border="0" usemap="#actrw_1_1_get__time__interp__velocity_3_01_getter_00_01_velocity_mapper_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="actrw_1_1_get__time__interp__velocity_3_01_getter_00_01_velocity_mapper_01_4_coll__map" id="actrw_1_1_get__time__interp__velocity_3_01_getter_00_01_velocity_mapper_01_4_coll__map">
-<area shape="rect" title="Get linearly interpolated position according to function of state.velocity in old state given new sta..." alt="" coords="56,95,253,151"/>
-<area shape="rect" href="../../da/dad/structctrw_1_1_get__time.html" title="Get state.time given state." alt="" coords="5,5,123,32"/>
+<area shape="rect" title="Get linearly interpolated time according to (a function of) velocity in old state given new state and..." alt="" coords="56,95,253,151"/>
+<area shape="rect" href="../../da/dad/structctrw_1_1_get__time.html" title="Get time given state." alt="" coords="5,5,123,32"/>
 <area shape="rect" href="../../df/d34/structuseful_1_1_forward.html" title=" " alt="" coords="147,5,343,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
@@ -124,9 +124,16 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Getter = Get_time, typename VelocityMapper = useful::Forward&lt;double&gt;&gt;<br />
-struct ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt;</h3>
+class ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt;</h3>
 
-<p>Get linearly interpolated position according to function of state.velocity in old state given new state and old state. </p>
+<p>Get linearly interpolated time according to (a function of) velocity in old state given new state and old state. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Getter</td><td>Object to extract time quantity given state. </td></tr>
+    <tr><td class="paramname">VelocityMapper</td><td>Object to apply to velocity before interpolating. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab0798bdea85bcd9a3b7ce07d4b603694"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab0798bdea85bcd9a3b7ce07d4b603694">&#9670;&nbsp;</a></span>Get_time_interp_velocity()</h2>
@@ -169,7 +176,6 @@ template&lt;typename Getter  = Get_time, typename VelocityMapper  = useful::Forw
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given current time, getter for position given state and map of state.velocity to actual velocity given state. </p>
 
 </div>
 </div>
@@ -263,7 +269,7 @@ template&lt;typename Getter  = Get_time, typename VelocityMapper  = useful::Forw
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">StateGetter.h</a></li>
 </ul>
 </div><!-- contents -->

@@ -1,8 +1,8 @@
 /**
- * \file PTOF/Directories.h
- * \author Tomás Aquino
- * \date 22/02/2022
- */
+ \file PTOF/Directories.h
+ \author Tomás Aquino
+ \date 22/02/2022
+*/
  
 #ifndef PTOF_DIRECTORIES_H
 #define PTOF_DIRECTORIES_H
@@ -19,12 +19,15 @@ namespace ptof
   struct Directories
   {
     std::string dir_case;                 /**< Case directory.                */
-    std::string dir_output;               /**< Output directory.              */ 
+    std::string dir_output;               /**<  Output directory.              */
     std::string dir_parameters;           /**< Parameters directory.          */
     std::string dir_boundaryconditions;   /**< Boundary conditions directory. */
     
-    /** Construct given base cases directory (default ../cases if empty string), case name,
-     * and output directory (default <case directory>/../cases if empty string). */
+    /** Constructor.
+    \param dir Path to current case directory.
+    \param case_name Current case directory relative to \p dir.
+    \param dir_output Output directory relative to \p dir.
+    */
     Directories
     (std::string const& dir,
      std::string const& case_name,
@@ -41,7 +44,7 @@ namespace ptof
     , dir_boundaryconditions{ dir_case + "/boundary_conditions" }
     {}
     
-    /** Output information about current object. */
+    /** \brief Output information about current object. */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -62,22 +65,23 @@ namespace ptof
   struct DirectoriesOF
   {
   private:
-    std::string dir;              /**< \private OpenFOAM base cases directory.    */
-    std::string time_name_input;  /**< \private Information about time directory. */
+    std::string _dir;              /**< \private OpenFOAM base cases directory.    */
+    std::string _time_name_input;  /**< \private Information about time directory. */
     
   public:
-    std::string case_name;        /**< \public OpenFOAM case name.       */
-    std::string dir_case;         /**< \public OpenFOAM case directory.  */
-    Foam::Time time;              /**< \public OpenFOAM case time.       */
+    std::string case_name;         /**< \public OpenFOAM case name.       */
+    std::string dir_case;          /**< \public OpenFOAM case directory.  */
+    Foam::Time time;               /**< \public OpenFOAM case time.       */
     
-    /** \brief Construct given Directories information. */
+    /** Constructor
+     \param directories Current case directory information.*/
     DirectoriesOF(Directories const& directories)
     : time{ makeRunTime(directories) }
     {
-      if (useful::empty(time_name_input))
+      if (useful::empty(_time_name_input))
         time.setTime(time.times().last(), 0);
       else
-        time.setTime(Foam::instant(std::stod(time_name_input)), 0);
+        time.setTime(Foam::instant(std::stod(_time_name_input)), 0);
     }
     
     /** \brief Construct given Directories information. */
@@ -94,7 +98,7 @@ namespace ptof
         "--------------------------------------------------\n";
     }
 
-    /** Output information about current object. */
+    /** \brief Output information about current object. */
     template <typename OStream>
     void info_runtime(OStream& output) const
     {
@@ -108,22 +112,24 @@ namespace ptof
     }
     
   private:
-    /** Make OpenFOAM Time instance given Directories information. */
+    /**
+     \param directories Current case directory information.
+     \return OpenFOAM runTime instance given Directories information. */
     Foam::Time makeRunTime(Directories const& directories)
     {
       auto input = useful::open_read(directories.dir_parameters
                                      + "/of.dat");
-      useful::read(input, dir);
+      useful::read(input, _dir);
       useful::read(input, case_name);
-      useful::read(input, time_name_input);
+      useful::read(input, _time_name_input);
       input.close();
       
       // Use OpenFOAM
-      if (useful::empty(dir))
-        dir = useful::expand_env("${FOAM_RUN}");
-      dir_case = dir + "/" + case_name;
+      if (useful::empty(_dir))
+        _dir = useful::expand_env("${FOAM_RUN}");
+      dir_case = _dir + "/" + case_name;
       
-      return { Foam::Time::controlDictName, dir, case_name };
+      return { Foam::Time::controlDictName, _dir, case_name };
     }
   };
 }

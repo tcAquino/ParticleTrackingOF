@@ -91,7 +91,10 @@ $(document).ready(function(){initNavTree('d5/da0/structgeometry_1_1_sphere.html'
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="../../da/d05/_shape_8h_source.html">Shape.h</a>&gt;</code></p>
+<p><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> in any dimension.  
+ <a href="../../d5/da0/structgeometry_1_1_sphere.html#details">More...</a></p>
+
+<p><code>#include &quot;<a class="el" href="../../da/d05/_shape_8h_source.html">Geometry/Shape.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -119,7 +122,12 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a175ec5fe0f144c22afff60687c679a84"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html#a175ec5fe0f144c22afff60687c679a84">radius</a></td></tr>
 <tr class="separator:a175ec5fe0f144c22afff60687c679a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename Position_t = std::vector&lt;double&gt;&gt;<br />
+struct geometry::Sphere&lt; Position_t &gt;</h3>
+
+<p><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> in any dimension. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="ae282489fb9b0135c273a767bbd4413b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae282489fb9b0135c273a767bbd4413b8">&#9670;&nbsp;</a></span>Position</h2>
 
@@ -133,6 +141,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Type of center position. </p>
 
 </div>
 </div>
@@ -161,6 +170,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>Object with unassigned properties. </dd></dl>
 
 </div>
 </div>
@@ -199,6 +209,13 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">center</td><td><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> center. </td></tr>
+    <tr><td class="paramname">radius</td><td><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> radius. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -227,6 +244,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Spatial dimension of sphere. </p><dl class="section note"><dt>Note</dt><dd>: Zero if center has not been assigned. </dd></dl>
 
 </div>
 </div>
@@ -254,6 +272,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Position of sphere center. </dd></dl>
 
 </div>
 </div>
@@ -284,6 +303,20 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <code>position</code> is inside spherer, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d5/da0/structgeometry_1_1_sphere_a1c18c78f0261d94c45a8a5d6d371bf8b_cgraph.png" border="0" usemap="#ad5/da0/structgeometry_1_1_sphere_a1c18c78f0261d94c45a8a5d6d371bf8b_cgraph" alt=""/></div>
+<map name="ad5/da0/structgeometry_1_1_sphere_a1c18c78f0261d94c45a8a5d6d371bf8b_cgraph" id="ad5/da0/structgeometry_1_1_sphere_a1c18c78f0261d94c45a8a5d6d371bf8b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,189,57"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="237,5,375,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="240,56,372,83"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="423,5,537,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="585,5,703,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="751,5,868,32"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -301,6 +334,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> center position. </p>
 
 </div>
 </div>
@@ -317,6 +351,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p><a class="el" href="../../d5/da0/structgeometry_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> radius. </p>
 
 </div>
 </div>

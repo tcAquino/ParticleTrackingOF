@@ -1,7 +1,7 @@
 /**
-* \file PTOF/Steppers.h
-* \author Tomás Aquino
-* \date 09/03/2022
+ \file PTOF/Steppers.h
+ \author Tomás Aquino
+ \date 09/03/2022
 */
 
 #ifndef PTOF_STEPPERS_H
@@ -12,30 +12,43 @@
 #include <utility>
 #include "CTRW/JumpGenerator.h"
 #include "CTRW/TimeGenerator.h"
+#include "General/Useful.h"
 
 namespace ptof
 {
   /** \struct Steppers_Advection_RK4_Diffusion_Euler PTOF/Steppers.h "PTOF/Steppers.h"
-   * \brief  Time steppers for RK4 advection
-   * and stochastic forward Euler diffusion. */
+   * \brief Time steppers for RK4 advection and stochastic forward Euler diffusion. */
   struct Steppers_Advection_RK4_Diffusion_Euler
   {
-    /** Make constant time step TimeGenerator. */
-    template <typename Parameters>
-    static auto makeTimeGenerator(Parameters const& params)
+    /**
+     \param solver_params Solver parameters.
+     \return Deterministic time step TimeGenerator.
+     \note
+     \p solver_params must define:
+     - time_step
+    */
+    template <typename SolverParameters>
+    static auto makeTimeGenerator(SolverParameters const& solver_params)
     {
-      if constexpr (has_time_step<Parameters>::value)
-        return ctrw::TimeGenerator_Step{ params.time_step };
+      if constexpr (useful::has_time_step<SolverParameters>::value)
+        return ctrw::TimeGenerator_Step{ solver_params.time_step };
       return ctrw::TimeGenerator_Step{ 0. };
     }
     
-    /** Make advection--diffusion JumpGenerator.
-     * Given:
-     * - velocity field;
-     * - boundary enforcer;
-     * - transport parameters; 
-     * - solver parameters;
-     * - spatial dimension. */
+    /**
+     \param velocity_field Velocity field as a function of state.
+     \param boundary Boundary condition enforcer.
+     \param params_transport Transport parameters.
+     \param params_solvers Solver parameters.
+     \param dim Spatial dimension.
+     \return Advection--diffusion JumpGenerator.
+     \note
+     \p params_transport must define:
+     - diff_coeff
+     
+     \p params_solvers must define:
+     - time_step
+     */
     template
     <typename VelocityField,
     typename Boundary,
@@ -48,7 +61,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (has_time_step<SolverParameters>::value)
+      if constexpr (useful::has_time_step<SolverParameters>::value)
         return
           ctrw::JumpGenerator_Add{
             ctrw::JumpGenerator_Velocity_RK4{
@@ -71,13 +84,17 @@ namespace ptof
             dim } };
     }
     
-    /** Make purely-advective JumpGenerator.
-     * Given:
-     * - velocity field; 
-     * - boundary enforcer;
-     * - transport parameters;
-     * - solver parameters;
-     * - spatial dimension. */
+    /**
+     \param velocity_field Velocity field as a function of state.
+     \param boundary Boundary condition enforcer.
+     \param params_transport Transport parameters (unused).
+     \param params_solvers Solver parameters.
+     \param dim Spatial dimension.
+     \return Pure advection JumpGenerator.
+     \note
+     \p params_solvers must define:
+     - time_step
+    */
     template
     <typename VelocityField,
     typename Boundary,
@@ -90,7 +107,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (has_time_step<SolverParameters>::value)
+      if constexpr (useful::has_time_step<SolverParameters>::value)
         return
           ctrw::JumpGenerator_Velocity_RK4{
             std::forward<VelocityField>(velocity_field),
@@ -102,48 +119,41 @@ namespace ptof
           0.,
           std::forward<Boundary>(boundary) };
     }
-    
-  private:
-    // Check if type T has member double time_step
-    // Adapted from kispaljr's answer here:
-    // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
-    template <typename T> struct has_time_step
-    {
-        typedef char (&Yes)[1];
-        typedef char (&No)[2];
-
-        template<class U>
-        static Yes test(U* data,
-                        typename std::enable_if<std::is_same<
-                          double,
-                          decltype(data->time_step)>::value>::type* = 0);
-        static No test(...);
-        static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
-    };
   };
   
   /** \struct Steppers_Advection_Euler_Diffusion_Euler PTOF/Steppers.h "PTOF/Steppers.h"
-   * \brief  Time steppers for forward Euler advection
-   * and stochastic forward Euler diffusion. */
+   \brief Time steppers for forward Euler advection and stochastic forward Euler diffusion. */
   struct Steppers_Advection_Euler_Diffusion_Euler
   {
-    // Make constant time step TimeGenerator
-    template <typename Parameters>
-    static auto makeTimeGenerator(Parameters const& params)
+    /**
+     \param solver_params Solver parameters.
+     \return Deterministic time step TimeGenerator.
+     \note
+     \p solver_params must define:
+     - time_step
+    */
+    template <typename SolverParameters>
+    static auto makeTimeGenerator(SolverParameters const& solver_params)
     {
-//      if constexpr (std::is_member_pointer_v<decltype(&Parameters::time_step)>)
-//        return ctrw::TimeGenerator_Step{ params.time_step };
-//      else
-        return ctrw::TimeGenerator_Step{ 0. };
+      if constexpr (useful::has_time_step<SolverParameters>::value)
+        return ctrw::TimeGenerator_Step{ solver_params.time_step };
+      return ctrw::TimeGenerator_Step{ 0. };
     }
     
-    /** Make advection--diffusion JumpGenerator.
-     * Given:
-     * - velocity field;
-     * - boundary enforcer;
-     * - transport parameters; 
-     * - solver parameters;
-     * - spatial dimension. */
+    /**
+      \param velocity_field Velocity field as a function of state.
+      \param boundary Boundary condition enforcer.
+      \param params_transport Transport parameters.
+      \param params_solvers Solver parameters.
+      \param dim Spatial dimension.
+      \return Advection--diffusion JumpGenerator.
+      \note
+      \p params_transport must define:
+      - diff_coeff
+     
+      \p params_solvers must define:
+      - time_step
+     */
     template
     <typename VelocityField,
     typename Boundary,
@@ -156,7 +166,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (has_time_step<SolverParameters>::value)
+      if constexpr (useful::has_time_step<SolverParameters>::value)
         return
           ctrw::JumpGenerator_Add{
             ctrw::JumpGenerator_Velocity{
@@ -177,13 +187,17 @@ namespace ptof
             dim } };
     }
     
-    /** Make advection JumpGenerator.
-     * Given:
-     * - velocity field;
-     * - boundary enforcer;
-     * - transport parameters;
-     * - solver parameters;
-     * - spatial dimension. */
+    /**
+     \param velocity_field Velocity field as a function of state.
+     \param boundary Boundary condition enforcer.
+     \param params_transport Transport parameters (unused).
+     \param params_solvers Solver parameters.
+     \param dim Spatial dimension.
+     \return Pure advection JumpGenerator.
+     \note
+     \p params_solvers must define:
+     - time_step
+    */
     template
     <typename VelocityField,
     typename Boundary,
@@ -196,7 +210,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (has_time_step<SolverParameters>::value)
+      if constexpr (useful::has_time_step<SolverParameters>::value)
         return
           ctrw::JumpGenerator_Velocity{
             std::forward<VelocityField>(velocity_field),
@@ -206,26 +220,7 @@ namespace ptof
           std::forward<VelocityField>(velocity_field),
           0. };
     }
-    
-  private:
-    // Check if type T has member double time_step
-    // Adapted from kispaljr's answer here:
-    // https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
-    template <typename T> struct has_time_step
-    {
-        typedef char (&Yes)[1];
-        typedef char (&No)[2];
-
-        template<class U>
-        static Yes test(U* data,
-                        typename std::enable_if<std::is_same<
-                          double,
-                          decltype(data->time_step)>::value>::type* = 0);
-        static No test(...);
-        static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
-    };
   };
 }
-
 
 #endif /* PTOF_STEPPERS_H */

@@ -90,40 +90,53 @@ $(document).ready(function(){initNavTree('d8/d5f/classctrw_1_1_transitions___rea
 </div><!--header-->
 <div class="contents">
 
-<p>Update state according to a reaction transition given a time step returned by a TimeGenerator given state, followed by a change in state.time according to the time step and a change in position returned by a JumpGenerator given state.  
+<p>Update state according to reaction, followed by a position update, followed by a time update.  
  <a href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">CTRW/Transitions.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:accee159eb06b39d28979f8a45d10342f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#accee159eb06b39d28979f8a45d10342f">Transitions_Reaction_Position</a> (TimeGenerator &amp;&amp;<a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#af3c6b5f17572cba4c77bcb55e4d03cf6">time_generator</a>, JumpGenerator &amp;&amp;<a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a8660790ef093310a25f81740c205d5e3">jump_generator</a>, Reaction &amp;&amp;<a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#adba6eafb1c69b0f0c7ee8c5638517307">reaction</a>)</td></tr>
+<tr class="memitem:accee159eb06b39d28979f8a45d10342f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#accee159eb06b39d28979f8a45d10342f">Transitions_Reaction_Position</a> (TimeGenerator &amp;&amp;<a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#aa730aa3fabfd8dbc4b0054d6ca9547eb">time_generator</a>, JumpGenerator &amp;&amp;<a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#ab160ae4768ec8eb36c287a63e2955c2e">jump_generator</a>, Reaction &amp;&amp;<a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a3ec5552759f8023fe62f5dabf4a51f17">reaction</a>)</td></tr>
 <tr class="separator:accee159eb06b39d28979f8a45d10342f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab00b0cb13e6acf444c62c5ba459a2622"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:ab00b0cb13e6acf444c62c5ba459a2622"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#ab00b0cb13e6acf444c62c5ba459a2622">operator()</a> (State &amp;state)</td></tr>
 <tr class="separator:ab00b0cb13e6acf444c62c5ba459a2622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61d120d4005d5a725b0c9ee30a5aed0d"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a61d120d4005d5a725b0c9ee30a5aed0d">get_time_generator</a> () const</td></tr>
-<tr class="separator:a61d120d4005d5a725b0c9ee30a5aed0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0498d2e69e360a9c18c472cfc6b0a98e"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a0498d2e69e360a9c18c472cfc6b0a98e">get_jump_generator</a> () const</td></tr>
-<tr class="separator:a0498d2e69e360a9c18c472cfc6b0a98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48a9755232d2f56d84cd37e7d900daa3"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a48a9755232d2f56d84cd37e7d900daa3">get_reaction</a> () const</td></tr>
-<tr class="separator:a48a9755232d2f56d84cd37e7d900daa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa730aa3fabfd8dbc4b0054d6ca9547eb"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#aa730aa3fabfd8dbc4b0054d6ca9547eb">time_generator</a> () const</td></tr>
+<tr class="separator:aa730aa3fabfd8dbc4b0054d6ca9547eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab160ae4768ec8eb36c287a63e2955c2e"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#ab160ae4768ec8eb36c287a63e2955c2e">jump_generator</a> () const</td></tr>
+<tr class="separator:ab160ae4768ec8eb36c287a63e2955c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ec5552759f8023fe62f5dabf4a51f17"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a3ec5552759f8023fe62f5dabf4a51f17">reaction</a> () const</td></tr>
+<tr class="separator:a3ec5552759f8023fe62f5dabf4a51f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:af3c6b5f17572cba4c77bcb55e4d03cf6"><td class="memItemLeft" align="right" valign="top">TimeGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#af3c6b5f17572cba4c77bcb55e4d03cf6">time_generator</a></td></tr>
-<tr class="separator:af3c6b5f17572cba4c77bcb55e4d03cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8660790ef093310a25f81740c205d5e3"><td class="memItemLeft" align="right" valign="top">JumpGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a8660790ef093310a25f81740c205d5e3">jump_generator</a></td></tr>
-<tr class="separator:a8660790ef093310a25f81740c205d5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adba6eafb1c69b0f0c7ee8c5638517307"><td class="memItemLeft" align="right" valign="top">Reaction&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#adba6eafb1c69b0f0c7ee8c5638517307">reaction</a></td></tr>
-<tr class="separator:adba6eafb1c69b0f0c7ee8c5638517307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13d6cb5a39c77581f0fbea2af33bc454"><td class="memItemLeft" align="right" valign="top">TimeGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a13d6cb5a39c77581f0fbea2af33bc454">_time_generator</a></td></tr>
+<tr class="separator:a13d6cb5a39c77581f0fbea2af33bc454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1df3c0dabb1a8074a51ccedbab51b1f3"><td class="memItemLeft" align="right" valign="top">JumpGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a1df3c0dabb1a8074a51ccedbab51b1f3">_jump_generator</a></td></tr>
+<tr class="separator:a1df3c0dabb1a8074a51ccedbab51b1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4915b4b728cccb6ecc45a96d5b2985a3"><td class="memItemLeft" align="right" valign="top">Reaction&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html#a4915b4b728cccb6ecc45a96d5b2985a3">_reaction</a></td></tr>
+<tr class="separator:a4915b4b728cccb6ecc45a96d5b2985a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename TimeGenerator, typename JumpGenerator, typename Reaction&gt;<br />
 class ctrw::Transitions_Reaction_Position&lt; TimeGenerator, JumpGenerator, Reaction &gt;</h3>
 
-<p>Update state according to a reaction transition given a time step returned by a TimeGenerator given state, followed by a change in state.time according to the time step and a change in position returned by a JumpGenerator given state. </p>
-<p>Note: JumpGenerator should enforce any boundary conditions. </p>
+<p>Update state according to reaction, followed by a position update, followed by a time update. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TimeGenerator</td><td>Object to return time increment given state. </td></tr>
+    <tr><td class="paramname">JumpGenerator</td><td>Object to return jump given state. </td></tr>
+    <tr><td class="paramname">Reaction</td><td>Update particle state according to reaction, given state and time increment. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position</li>
+<li>time</li>
+</ul>
+</dd></dl>
+<p><code>JumpGenerator</code> should enforce any boundary conditions. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="accee159eb06b39d28979f8a45d10342f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#accee159eb06b39d28979f8a45d10342f">&#9670;&nbsp;</a></span>Transitions_Reaction_Position()</h2>
@@ -170,8 +183,8 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0498d2e69e360a9c18c472cfc6b0a98e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0498d2e69e360a9c18c472cfc6b0a98e">&#9670;&nbsp;</a></span>get_jump_generator()</h2>
+<a id="ab160ae4768ec8eb36c287a63e2955c2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab160ae4768ec8eb36c287a63e2955c2e">&#9670;&nbsp;</a></span>jump_generator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -182,61 +195,7 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::get_jump_generator </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a48a9755232d2f56d84cd37e7d900daa3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48a9755232d2f56d84cd37e7d900daa3">&#9670;&nbsp;</a></span>get_reaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::get_reaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a61d120d4005d5a725b0c9ee30a5aed0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61d120d4005d5a725b0c9ee30a5aed0d">&#9670;&nbsp;</a></span>get_time_generator()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::get_time_generator </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::jump_generator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -281,9 +240,63 @@ template&lt;typename State &gt; </div>
 
 </div>
 </div>
+<a id="a3ec5552759f8023fe62f5dabf4a51f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ec5552759f8023fe62f5dabf4a51f17">&#9670;&nbsp;</a></span>reaction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto const&amp; <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::reaction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa730aa3fabfd8dbc4b0054d6ca9547eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa730aa3fabfd8dbc4b0054d6ca9547eb">&#9670;&nbsp;</a></span>time_generator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto const&amp; <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::time_generator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a8660790ef093310a25f81740c205d5e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8660790ef093310a25f81740c205d5e3">&#9670;&nbsp;</a></span>jump_generator</h2>
+<a id="a1df3c0dabb1a8074a51ccedbab51b1f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1df3c0dabb1a8074a51ccedbab51b1f3">&#9670;&nbsp;</a></span>_jump_generator</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -294,7 +307,7 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">JumpGenerator <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::jump_generator</td>
+          <td class="memname">JumpGenerator <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::_jump_generator</td>
         </tr>
       </table>
   </td>
@@ -306,8 +319,8 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
 
 </div>
 </div>
-<a id="adba6eafb1c69b0f0c7ee8c5638517307"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adba6eafb1c69b0f0c7ee8c5638517307">&#9670;&nbsp;</a></span>reaction</h2>
+<a id="a4915b4b728cccb6ecc45a96d5b2985a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4915b4b728cccb6ecc45a96d5b2985a3">&#9670;&nbsp;</a></span>_reaction</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,7 +331,7 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Reaction <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::reaction</td>
+          <td class="memname">Reaction <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::_reaction</td>
         </tr>
       </table>
   </td>
@@ -330,8 +343,8 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
 
 </div>
 </div>
-<a id="af3c6b5f17572cba4c77bcb55e4d03cf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3c6b5f17572cba4c77bcb55e4d03cf6">&#9670;&nbsp;</a></span>time_generator</h2>
+<a id="a13d6cb5a39c77581f0fbea2af33bc454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13d6cb5a39c77581f0fbea2af33bc454">&#9670;&nbsp;</a></span>_time_generator</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,7 +355,7 @@ template&lt;typename TimeGenerator , typename JumpGenerator , typename Reaction 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TimeGenerator <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::time_generator</td>
+          <td class="memname">TimeGenerator <a class="el" href="../../d8/d5f/classctrw_1_1_transitions___reaction___position.html">ctrw::Transitions_Reaction_Position</a>&lt; TimeGenerator, JumpGenerator, Reaction &gt;::_time_generator</td>
         </tr>
       </table>
   </td>

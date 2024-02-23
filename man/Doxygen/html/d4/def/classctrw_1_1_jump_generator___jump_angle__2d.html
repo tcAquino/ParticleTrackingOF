@@ -110,9 +110,10 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Random walk jumps along current orientation with fixed step size. </p>
-<p>State must implement:</p><ul>
-<li>orientation (scalar) </li>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> state must define:<ul>
+<li>orientation [scalar type] </li>
 </ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac902c4178e276edcfc67851f0e0a1485"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac902c4178e276edcfc67851f0e0a1485">&#9670;&nbsp;</a></span>JumpGenerator_JumpAngle_2d()</h2>
@@ -137,7 +138,12 @@ Data Fields</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given maximum jump size. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">jump_size</td><td>Fixed jump size </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -167,7 +173,13 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return the jump increment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Orientation increment. </dd></dl>
 
 </div>
 </div>

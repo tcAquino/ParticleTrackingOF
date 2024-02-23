@@ -1,26 +1,30 @@
 var namespaces_dup =
 [
+    [ "CheckOptions", "d2/dba/namespace_check_options.html", null ],
     [ "constants", "d7/d28/namespaceconstants.html", [
       [ "gravity", "d7/d28/namespaceconstants.html#a947f2b7092909e060e3504a322f0dbfa", null ],
       [ "pi", "d7/d28/namespaceconstants.html#a204a0248d18871c4d4d1b3e9a69ff495", null ],
       [ "von_karman", "d7/d28/namespaceconstants.html#a18c01616ccce2cded236f2cfbe02596e", null ]
     ] ],
     [ "ctrw", "d8/d34/namespacectrw.html", "d8/d34/namespacectrw" ],
-    [ "FieldOptions", "d5/d33/namespace_field_options.html", null ],
     [ "geometry", "d5/d5f/namespacegeometry.html", "d5/d5f/namespacegeometry" ],
-    [ "grid", "d9/d48/namespacegrid.html", "d9/d48/namespacegrid" ],
     [ "modular", "da/d32/namespacemodular.html", [
       [ "circMinus", "da/d32/namespacemodular.html#a643d0959ac1436296d4bf1801c946d18", null ],
       [ "circMinus", "da/d32/namespacemodular.html#afdbe629ef066e6d197505c3eb7700076", null ],
       [ "circPlus", "da/d32/namespacemodular.html#ab867d011fd1cf10aae8eb6a8db251545", null ],
       [ "circPlus", "da/d32/namespacemodular.html#abe4c260da8826c5178841288084f668c", null ],
       [ "convert", "da/d32/namespacemodular.html#a1a636ea75848db4d34fb09f926c3d16e", null ],
+      [ "convert", "da/d32/namespacemodular.html#ac6f93ad09ea918af0b8e6c29708a57c7", null ],
       [ "convert", "da/d32/namespacemodular.html#a06bfd3d3e6cce73064fc93d32fb1ff90", null ],
+      [ "convert", "da/d32/namespacemodular.html#a7d69796478dbe77dca7fb4c30ae963db", null ],
       [ "increment", "da/d32/namespacemodular.html#a751c3fd158800664390ee07d8932ae03", null ],
+      [ "increment", "da/d32/namespacemodular.html#a8751a12845164316558a4f8642da4578", null ],
       [ "increment", "da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc", null ],
+      [ "indexToPosition", "da/d32/namespacemodular.html#a53d9df1223e0020d0c29bb8ac84a02e6", null ],
       [ "indexToPosition", "da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0", null ],
       [ "positionToIndex", "da/d32/namespacemodular.html#ac097f25f765cb8774d3f147089590743", null ]
     ] ],
+    [ "notstd", "df/d5a/namespacenotstd.html", null ],
     [ "operation", "dc/dc5/namespaceoperation.html", [
       [ "abs", "dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab", null ],
       [ "abs_sq", "dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78", null ],
@@ -55,7 +59,7 @@ var namespaces_dup =
       [ "linearOp_InPlace", "dc/dc5/namespaceoperation.html#a6163694f84c59bc52662d346524f0f9b", null ],
       [ "mean", "dc/dc5/namespaceoperation.html#ac8520d1b08b63122d2ec56ed7f3e33f5", null ],
       [ "mean", "dc/dc5/namespaceoperation.html#a59a17daaab3386792a7643d6f1eefabc", null ],
-      [ "mean_InPlace", "dc/dc5/namespaceoperation.html#a2499d023a83b99e50fd1ad67a14b8ba1", null ],
+      [ "mean_InPlace", "dc/dc5/namespaceoperation.html#a7fd556b345038b405da3e68de58558b0", null ],
       [ "midpoints", "dc/dc5/namespaceoperation.html#afc4803eaad450dd24d24ba0edc49b3b7", null ],
       [ "midpoints", "dc/dc5/namespaceoperation.html#ae07b68b33121e33a64765edeae7d3aec", null ],
       [ "minus", "dc/dc5/namespaceoperation.html#a1e8045e5e42c102425b0245a05a079a9", null ],
@@ -94,9 +98,10 @@ var namespaces_dup =
       [ "times_scalar", "dc/dc5/namespaceoperation.html#a68f9f3922acccb2440557f9e25b41afa", null ],
       [ "times_scalar", "dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982", null ],
       [ "times_scalar_InPlace", "dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f", null ],
-      [ "widths", "dc/dc5/namespaceoperation.html#ad4b16fa3f56331492f9e266d671a5ca1", null ],
+      [ "widths", "dc/dc5/namespaceoperation.html#a780b2b66202523429c157d6144c5ba91", null ],
       [ "widths", "dc/dc5/namespaceoperation.html#ad8d1fda37a1896f129ea50da804e566f", null ]
     ] ],
+    [ "ParallelOptions", "db/dd0/namespace_parallel_options.html", null ],
     [ "ptof", "d2/dd1/namespaceptof.html", "d2/dd1/namespaceptof" ],
     [ "range", "d6/d48/namespacerange.html", "d6/d48/namespacerange" ],
     [ "useful", "df/d1d/namespaceuseful.html", "df/d1d/namespaceuseful" ]

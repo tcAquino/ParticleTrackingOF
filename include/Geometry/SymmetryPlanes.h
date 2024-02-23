@@ -1,9 +1,16 @@
-//
-//  SymmetryPlanes.h
-//
-//  Created by Tomás Aquino on 13/05/2020.
-//  Copyright © 2020 Tomás Aquino. All rights reserved.
-//
+/**
+ \file Geometry/SymmetryPlanes.h
+ \author Tomás Aquino
+ \date 13/05/2020
+ 
+ \brief Symmetry planes to describe general symmetries.
+ 
+ A SymmetryPlanes object must define:
+ - dim : The spatial dimension.
+ - length : The length of the unit cell along the normal vector associated with each plane.
+ - normal : A vector of unit normal vectors associated with each plane.
+ - translation : A vector of translation vectors associated with each plane.
+*/
 
 #ifndef SymmetryPlanes_h
 #define SymmetryPlanes_h
@@ -13,16 +20,12 @@
 
 namespace geometry
 {
-  // A SymmetryPlanes object must define:
-  // dim : the spatial dimension
-  // length : the length of the unit cell along the normal vector associated with each plane
-  // normal : a vector of unit normal vectors associated with each plane
-  // translation : a vector of translation vectors associated with each plane
-  
-  // Symmetry plane for bcc packing of unit radius
+  /** \struct SymmetryPlanes_Bcc Geometry/SymmetryPlanes.h "Geometry/SymmetryPlanes.h"
+   \brief Symmetry plane for body centered cubic sphere packing. */
   struct SymmetryPlanes_Bcc
   {
-    // Construct given bead radius
+    /** Constructor.
+    \brief Symmetry planes for unit sphere radius. */
     SymmetryPlanes_Bcc()
     : normal{
         operation::times_scalar(1./std::sqrt(2.),
@@ -42,17 +45,19 @@ namespace geometry
     }
     {}
     
-    static constexpr std::size_t dim{ 3 };
+    static constexpr std::size_t dim{ 3 };              /**< Spatial dimension. */
     const std::vector<double> length{
-      std::vector<double>(dim, 4./std::sqrt(6.)) };
-    const std::vector<std::vector<double>> normal;
-    const std::vector<std::vector<double>> translation;
+      std::vector<double>(dim, 4./std::sqrt(6.)) };     /**< Primitive cell side. */
+    const std::vector<std::vector<double>> normal;      /**< Unit normal vectors associated with each plane. */
+    const std::vector<std::vector<double>> translation; /**< Translation vectors associated with each plane.*/
   };
   
-  // Symmetry plane for sc packing of unit radius
+  /** \struct SymmetryPlanes_Sc Geometry/SymmetryPlanes.h "Geometry/SymmetryPlanes.h"
+  \brief Symmetry plane for simple cubic sphere packing. */
   struct SymmetryPlanes_Sc
   {
-    // Construct given bead radius
+    /** Constructor.
+    \brief Symmetry planes for unit sphere radius. */
     SymmetryPlanes_Sc()
     : normal{
         { 1., 0., 0. },
@@ -66,13 +71,20 @@ namespace geometry
     }
     {}
     
-    static constexpr std::size_t dim{ 3 };
+    static constexpr std::size_t dim{ 3 };                /**< Spatial dimension. */
     const std::vector<double> length{
-      std::vector<double>(dim, 1.) };
-    const std::vector<std::vector<double>> normal;
-    const std::vector<std::vector<double>> translation;
+      std::vector<double>(dim, 1.) };                     /**< Primitive cell side. */
+    const std::vector<std::vector<double>> normal;        /**< Unit normal vectors associated with each plane. */
+    const std::vector<std::vector<double>> translation;   /**< Translation vectors associated with each plane.*/
   };
   
+  /** \brief Compute component of projection along basis vectors of symmetry planes.
+   \param position Position to project.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param dd Component of project to compute.
+   \param scale Scale factor.
+   \return Projection component.
+   */
   template <typename Position, typename SymmetryPlanes>
   auto project
   (Position const& position, SymmetryPlanes const& symmetry_planes,
@@ -82,6 +94,12 @@ namespace geometry
       /(scale*symmetry_planes.length[dd]);
   }
   
+  /** \brief Compute projection along basis vectors of symmetry planes
+  \param position Position to project.
+  \param symmetry_planes Symmetry planes defining the periodic unit cell.
+  \param scale Scale factor.
+  \return Projection vector.
+  */
   template <typename Position, typename SymmetryPlanes>
   auto project
   (Position const& position, SymmetryPlanes const& symmetry_planes,
@@ -95,6 +113,14 @@ namespace geometry
     return projections;
   }
   
+  /** \brief Compute component of projection along basis vectors of symmetry planes.
+   \param position Position to project.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param dd Component of project to compute.
+   \param scale Scale factor.
+   \param origin Coordinate system origin.
+   \return Projection component.
+  */
   template <typename Position, typename SymmetryPlanes, typename Origin>
   auto project
   (Position const& position, SymmetryPlanes const& symmetry_planes,
@@ -104,6 +130,13 @@ namespace geometry
                    symmetry_planes, dd, scale);
   }
   
+  /** \brief Compute projection along basis vectors of symmetry planes.
+   \param position Position to project.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param scale Scale factor.
+   \param origin Coordinate system origin.
+   \return Projection.
+  */
   template <typename Position, typename SymmetryPlanes, typename Origin>
   auto project
   (Position const& position, SymmetryPlanes const& symmetry_planes,
@@ -113,9 +146,15 @@ namespace geometry
                    symmetry_planes, scale);
   }
   
+  /** \brief Translate position along basis vectors of symmetry planes.
+   \param position Position to translate.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param projections Pre-computed projections along basis vectors.
+   \param scale Scale factor.
+  */
   template <typename Position, typename SymmetryPlanes,
   typename Projections = std::vector<double>>
-  auto translate
+  void translate
   (Position& position, SymmetryPlanes const& symmetry_planes,
    Projections const& projections,
    double scale)
@@ -124,13 +163,17 @@ namespace geometry
       operation::plus_InPlace(position,
         operation::times_scalar(scale*projections[dd],
                                 symmetry_planes.translation[dd]));
-    
-    return projections;
   }
   
+  /** \brief Translate position backwards along basis vectors of symmetry planes.
+   \param position Position to translate.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param projections Pre-computed projections along basis vectors.
+   \param scale Scale factor.
+  */
   template <typename Position, typename SymmetryPlanes,
   typename Projections = std::vector<double>>
-  auto translate_back
+  void translate_back
   (Position& position, SymmetryPlanes const& symmetry_planes,
    Projections const& projections,
    double scale)
@@ -139,10 +182,14 @@ namespace geometry
       operation::minus_InPlace(position,
         operation::times_scalar(scale*projections[dd],
                                 symmetry_planes.translation[dd]));
-    
-    return projections;
   }
   
+  /** \brief Place particle in periodic unit cell according to symmetry planes.
+   \param position Position to place in unit cell.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param scale Scale factor.
+   \return Projection along basis vectors of symmetry planes.
+  */
   template <typename Position, typename SymmetryPlanes>
   auto place_in_unit_cell
   (Position& position, SymmetryPlanes const& symmetry_planes,
@@ -158,6 +205,13 @@ namespace geometry
     return projections;
   }
   
+  /** \brief Place particle in periodic unit cell according to symmetry planes.
+   \param position Position to place in unit cell.
+   \param symmetry_planes Symmetry planes defining the periodic unit cell.
+   \param scale Scale factor.
+   \param origin Coordinate system origin.
+   \return Projection along basis vectors of symmetry planes.
+  */
   template <typename Position, typename SymmetryPlanes, typename Origin>
   auto place_in_unit_cell
   (Position& position, SymmetryPlanes const& symmetry_planes,
@@ -173,9 +227,18 @@ namespace geometry
     return projections;
   }
   
-  // Add periodic velocity point images outside domain
-  // if the projection of a point is within a given fraction of
-  // the boundary along each symmetry plane, add an image along that plane
+  /** \brief Add periodic velocity point images outside domain.
+   \details If the projection of a point is within a given fraction of the boundary along each symmetry plane, add an image along that plane.
+   \param points Point positions, to add new points.
+   \param velocities Velocity values, to add new velocities.
+   \param fraction Fraction of original points to add.
+   \param boundary_periodic Object to enforce periodic boundary conditions.
+   \note \c Boundary_Periodic must define:
+   - symmetry_planes
+   - scale
+   - origin
+   - translate(Positions&, Projections const&)
+  */
   template
   <typename Points = std::vector<std::vector<double>>,
    typename Velocities = std::vector<std::vector<double>>,

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, Velocity, Boundary &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,76 +86,94 @@ $(document).ready(function(){initNavTree('de/de9/classctrw_1_1_transitions___pos
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, Velocity, Boundary &gt; Class Template Reference</div>  </div>
+<div class="title">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Update state.position according to a JumpGenerator object given state with time step according to prescribed jump size divided by velocity calculated accorsing to Velocity object given state.  
+<p>Update position according to velocity field with adapative time step to fix jump increments.  
  <a href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">CTRW/Transitions.h</a>&quot;</code></p>
 <div class="dynheader">
-Collaboration diagram for ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, Velocity, Boundary &gt;:</div>
+Collaboration diagram for ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d3/df7/classctrw_1_1_transitions___position___velocity_step__coll__graph.png" border="0" usemap="#actrw_1_1_transitions___position___velocity_step_3_01_jump_generator_00_01_velocity_00_01_boundary_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="actrw_1_1_transitions___position___velocity_step_3_01_jump_generator_00_01_velocity_00_01_boundary_01_4_coll__map" id="actrw_1_1_transitions___position___velocity_step_3_01_jump_generator_00_01_velocity_00_01_boundary_01_4_coll__map">
-<area shape="rect" title="Update state.position according to a JumpGenerator object given state with time step according to pre..." alt="" coords="5,109,232,165"/>
-<area shape="rect" href="../../dd/d2e/classgeometry_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="41,5,196,47"/>
+<div class="center"><img src="../../d3/df7/classctrw_1_1_transitions___position___velocity_step__coll__graph.png" border="0" usemap="#actrw_1_1_transitions___position___velocity_step_3_01_jump_generator_00_01_velocity_field_00_01_boundary_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="actrw_1_1_transitions___position___velocity_step_3_01_jump_generator_00_01_velocity_field_00_01_boundary_01_4_coll__map" id="actrw_1_1_transitions___position___velocity_step_3_01_jump_generator_00_01_velocity_field_00_01_boundary_01_4_coll__map">
+<area shape="rect" title="Update position according to velocity field with adapative time step to fix jump increments." alt="" coords="47,109,273,165"/>
+<area shape="rect" href="../../dd/d2e/classgeometry_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="5,5,160,47"/>
+<area shape="rect" title=" " alt="" coords="185,13,290,39"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2c9b3e681414cc09167a77028ed4ce38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a2c9b3e681414cc09167a77028ed4ce38">Transitions_Position_VelocityStep</a> (double <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aebd06aabead7b8f86961d497d509fcce">step_length</a>, JumpGenerator &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a78eec3c7fc39c71a61e2d8fdb8c34a5b">jump_generator</a>, Velocity &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aa7d8c65aa61c2d941889c405a1599c82">velocity</a>, Boundary &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#afc1b6062148cdeab9b80addca792f62c">boundary</a>)</td></tr>
-<tr class="separator:a2c9b3e681414cc09167a77028ed4ce38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e3fd8ff1781aa30c42ff437547a2779"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a7e3fd8ff1781aa30c42ff437547a2779">Transitions_Position_VelocityStep</a> (double <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aebd06aabead7b8f86961d497d509fcce">step_length</a>, JumpGenerator &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a78eec3c7fc39c71a61e2d8fdb8c34a5b">jump_generator</a>, Boundary &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#afc1b6062148cdeab9b80addca792f62c">boundary</a>={})</td></tr>
-<tr class="separator:a7e3fd8ff1781aa30c42ff437547a2779"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87eef34f8c75d22c380643f55ce05ee7"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a87eef34f8c75d22c380643f55ce05ee7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a87eef34f8c75d22c380643f55ce05ee7">operator()</a> (State &amp;state)</td></tr>
-<tr class="separator:a87eef34f8c75d22c380643f55ce05ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7d8c65aa61c2d941889c405a1599c82"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:aa7d8c65aa61c2d941889c405a1599c82"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aa7d8c65aa61c2d941889c405a1599c82">velocity</a> (State const &amp;state) const</td></tr>
-<tr class="separator:aa7d8c65aa61c2d941889c405a1599c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3529db42666fb0d10e34d0d435631775"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a3529db42666fb0d10e34d0d435631775">time_step</a> () const</td></tr>
-<tr class="separator:a3529db42666fb0d10e34d0d435631775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9927130a5ac9a90c19e39c7d89279061"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a9927130a5ac9a90c19e39c7d89279061">get_velocity_field</a> () const</td></tr>
-<tr class="separator:a9927130a5ac9a90c19e39c7d89279061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34d45e41f18af39471d942347247109f"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a34d45e41f18af39471d942347247109f">get_jump_generator</a> () const</td></tr>
-<tr class="separator:a34d45e41f18af39471d942347247109f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dd7b0061c95b76edf4b83355d7d7565"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a7dd7b0061c95b76edf4b83355d7d7565">get_boundary</a> () const</td></tr>
-<tr class="separator:a7dd7b0061c95b76edf4b83355d7d7565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3196707bd69e3fd8e38f95c6fe52d5ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a3196707bd69e3fd8e38f95c6fe52d5ce">Transitions_Position_VelocityStep</a> (double step_length, JumpGenerator &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a17c375018eaf84b0e5517de19272f040">jump_generator</a>, VelocityField &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#adcd84b60020e2ef7dfe1cc7d8e8e2388">velocity_field</a>, Boundary &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a1e58d39439a1c701c0757c3a4818fd03">boundary</a>)</td></tr>
+<tr class="separator:a3196707bd69e3fd8e38f95c6fe52d5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa69af80620e04c5d4141e0bd7c3c771b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aa69af80620e04c5d4141e0bd7c3c771b">Transitions_Position_VelocityStep</a> (double step_length, JumpGenerator &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a17c375018eaf84b0e5517de19272f040">jump_generator</a>, Boundary &amp;&amp;<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a1e58d39439a1c701c0757c3a4818fd03">boundary</a>={})</td></tr>
+<tr class="separator:aa69af80620e04c5d4141e0bd7c3c771b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96797d2706b1fc69830e2e27ae73f1bd"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:a96797d2706b1fc69830e2e27ae73f1bd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a96797d2706b1fc69830e2e27ae73f1bd">operator()</a> (State &amp;state)</td></tr>
+<tr class="separator:a96797d2706b1fc69830e2e27ae73f1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98ddcdbe6144201a497423b42ce9aba8"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:a98ddcdbe6144201a497423b42ce9aba8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a98ddcdbe6144201a497423b42ce9aba8">velocity</a> (State const &amp;state) const</td></tr>
+<tr class="separator:a98ddcdbe6144201a497423b42ce9aba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11230a59eb7852db7fa1c392b692ee2f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a11230a59eb7852db7fa1c392b692ee2f">time_step</a> () const</td></tr>
+<tr class="separator:a11230a59eb7852db7fa1c392b692ee2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17757fe64560e33a83927dbd6f637ec2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a17757fe64560e33a83927dbd6f637ec2">time_step</a> (double time_step) const</td></tr>
+<tr class="separator:a17757fe64560e33a83927dbd6f637ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcd84b60020e2ef7dfe1cc7d8e8e2388"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#adcd84b60020e2ef7dfe1cc7d8e8e2388">velocity_field</a> () const</td></tr>
+<tr class="separator:adcd84b60020e2ef7dfe1cc7d8e8e2388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17c375018eaf84b0e5517de19272f040"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a17c375018eaf84b0e5517de19272f040">jump_generator</a> () const</td></tr>
+<tr class="separator:a17c375018eaf84b0e5517de19272f040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e58d39439a1c701c0757c3a4818fd03"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a1e58d39439a1c701c0757c3a4818fd03">boundary</a> () const</td></tr>
+<tr class="separator:a1e58d39439a1c701c0757c3a4818fd03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:aebd06aabead7b8f86961d497d509fcce"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aebd06aabead7b8f86961d497d509fcce">step_length</a></td></tr>
-<tr class="separator:aebd06aabead7b8f86961d497d509fcce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78eec3c7fc39c71a61e2d8fdb8c34a5b"><td class="memItemLeft" align="right" valign="top">JumpGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a78eec3c7fc39c71a61e2d8fdb8c34a5b">jump_generator</a></td></tr>
-<tr class="separator:a78eec3c7fc39c71a61e2d8fdb8c34a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61253fb04f7b949f6242a4bcf126e8bb"><td class="memItemLeft" align="right" valign="top">Velocity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a61253fb04f7b949f6242a4bcf126e8bb">velocity_field</a></td></tr>
-<tr class="separator:a61253fb04f7b949f6242a4bcf126e8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc1b6062148cdeab9b80addca792f62c"><td class="memItemLeft" align="right" valign="top">Boundary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#afc1b6062148cdeab9b80addca792f62c">boundary</a></td></tr>
-<tr class="separator:afc1b6062148cdeab9b80addca792f62c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3142e8f5c6f8acb8e7076539fe97ce1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#ae3142e8f5c6f8acb8e7076539fe97ce1">_step_length</a></td></tr>
+<tr class="separator:ae3142e8f5c6f8acb8e7076539fe97ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec7747c09cd2ef7a2b60d956c750396d"><td class="memItemLeft" align="right" valign="top">JumpGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aec7747c09cd2ef7a2b60d956c750396d">_jump_generator</a></td></tr>
+<tr class="separator:aec7747c09cd2ef7a2b60d956c750396d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa64bd056e2fa46c014dc82261f6c48f4"><td class="memItemLeft" align="right" valign="top">VelocityField&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aa64bd056e2fa46c014dc82261f6c48f4">_velocity_field</a></td></tr>
+<tr class="separator:aa64bd056e2fa46c014dc82261f6c48f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeda719033753a40dcf66e08b1b57fc4f"><td class="memItemLeft" align="right" valign="top">Boundary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#aeda719033753a40dcf66e08b1b57fc4f">_boundary</a></td></tr>
+<tr class="separator:aeda719033753a40dcf66e08b1b57fc4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename JumpGenerator, typename Velocity, typename Boundary = geometry::Boundary_DoNothing&gt;<br />
-class ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, Velocity, Boundary &gt;</h3>
+<div class="textblock"><h3>template&lt;typename JumpGenerator, typename VelocityField, typename Boundary = geometry::Boundary_DoNothing&gt;<br />
+class ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;</h3>
 
-<p>Update state.position according to a JumpGenerator object given state with time step according to prescribed jump size divided by velocity calculated accorsing to Velocity object given state. </p>
-<p>Apply Boundary condition given new state and old state. </p>
+<p>Update position according to velocity field with adapative time step to fix jump increments. </p>
+<p>Tiime step is determined according to jump sizes divided by local velocity. Jump increments use forward Euler. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">JumpGenerator</td><td>Object to return jump given state. </td></tr>
+    <tr><td class="paramname">VelocityField</td><td>Object to return velocity value given state. </td></tr>
+    <tr><td class="paramname">Boundary</td><td>Object to enforce boundary condition on new state given new state and old state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position</li>
+<li>time</li>
+</ul>
+</dd></dl>
+<p>Velocity field may be passed to constructor or velocities may be obtained from jump_generator if JumpGenerator defines:</p><ul>
+<li>velocity(State const&amp;) </li>
+</ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2c9b3e681414cc09167a77028ed4ce38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c9b3e681414cc09167a77028ed4ce38">&#9670;&nbsp;</a></span>Transitions_Position_VelocityStep() <span class="overload">[1/2]</span></h2>
+<a id="a3196707bd69e3fd8e38f95c6fe52d5ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3196707bd69e3fd8e38f95c6fe52d5ce">&#9670;&nbsp;</a></span>Transitions_Position_VelocityStep() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">Transitions_Position_VelocityStep</a> </td>
+          <td class="memname"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">Transitions_Position_VelocityStep</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>step_length</em>, </td>
@@ -169,8 +187,8 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Velocity &amp;&amp;&#160;</td>
-          <td class="paramname"><em>velocity</em>, </td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -193,19 +211,19 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 
 </div>
 </div>
-<a id="a7e3fd8ff1781aa30c42ff437547a2779"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e3fd8ff1781aa30c42ff437547a2779">&#9670;&nbsp;</a></span>Transitions_Position_VelocityStep() <span class="overload">[2/2]</span></h2>
+<a id="aa69af80620e04c5d4141e0bd7c3c771b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa69af80620e04c5d4141e0bd7c3c771b">&#9670;&nbsp;</a></span>Transitions_Position_VelocityStep() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">Transitions_Position_VelocityStep</a> </td>
+          <td class="memname"><a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::<a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">Transitions_Position_VelocityStep</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>step_length</em>, </td>
@@ -238,19 +256,19 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7dd7b0061c95b76edf4b83355d7d7565"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dd7b0061c95b76edf4b83355d7d7565">&#9670;&nbsp;</a></span>get_boundary()</h2>
+<a id="a1e58d39439a1c701c0757c3a4818fd03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e58d39439a1c701c0757c3a4818fd03">&#9670;&nbsp;</a></span>boundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::get_boundary </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -265,19 +283,19 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 
 </div>
 </div>
-<a id="a34d45e41f18af39471d942347247109f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34d45e41f18af39471d942347247109f">&#9670;&nbsp;</a></span>get_jump_generator()</h2>
+<a id="a17c375018eaf84b0e5517de19272f040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17c375018eaf84b0e5517de19272f040">&#9670;&nbsp;</a></span>jump_generator()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::get_jump_generator </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::jump_generator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -292,40 +310,13 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 
 </div>
 </div>
-<a id="a9927130a5ac9a90c19e39c7d89279061"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9927130a5ac9a90c19e39c7d89279061">&#9670;&nbsp;</a></span>get_velocity_field()</h2>
+<a id="a96797d2706b1fc69830e2e27ae73f1bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96797d2706b1fc69830e2e27ae73f1bd">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::get_velocity_field </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a87eef34f8c75d22c380643f55ce05ee7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87eef34f8c75d22c380643f55ce05ee7">&#9670;&nbsp;</a></span>operator()()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <div class="memtemplate">
 template&lt;typename State &gt; </div>
 <table class="mlabels">
@@ -333,7 +324,7 @@ template&lt;typename State &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::operator() </td>
+          <td class="memname">void <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">State &amp;&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
@@ -346,22 +337,36 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../de/de9/classctrw_1_1_transitions___position___velocity_step_a96797d2706b1fc69830e2e27ae73f1bd_cgraph.png" border="0" usemap="#ade/de9/classctrw_1_1_transitions___position___velocity_step_a96797d2706b1fc69830e2e27ae73f1bd_cgraph" alt=""/></div>
+<map name="ade/de9/classctrw_1_1_transitions___position___velocity_step_a96797d2706b1fc69830e2e27ae73f1bd_cgraph" id="ade/de9/classctrw_1_1_transitions___position___velocity_step_a96797d2706b1fc69830e2e27ae73f1bd_cgraph">
+<area shape="rect" title=" " alt="" coords="5,49,192,90"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="269,19,384,45"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a1f1a4a899f7e1bcd82512126f8cf48a9" title="Element&#45;wise sum." alt="" coords="240,81,413,108"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="461,5,599,32"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="471,56,589,83"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="647,56,764,83"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="471,107,589,133"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a3529db42666fb0d10e34d0d435631775"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3529db42666fb0d10e34d0d435631775">&#9670;&nbsp;</a></span>time_step()</h2>
+<a id="a11230a59eb7852db7fa1c392b692ee2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11230a59eb7852db7fa1c392b692ee2f">&#9670;&nbsp;</a></span>time_step() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::time_step </td>
+          <td class="memname">auto <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::time_step </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -373,16 +378,62 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../de/de9/classctrw_1_1_transitions___position___velocity_step_a11230a59eb7852db7fa1c392b692ee2f_icgraph.png" border="0" usemap="#ade/de9/classctrw_1_1_transitions___position___velocity_step_a11230a59eb7852db7fa1c392b692ee2f_icgraph" alt=""/></div>
+<map name="ade/de9/classctrw_1_1_transitions___position___velocity_step_a11230a59eb7852db7fa1c392b692ee2f_icgraph" id="ade/de9/classctrw_1_1_transitions___position___velocity_step_a11230a59eb7852db7fa1c392b692ee2f_icgraph">
+<area shape="rect" title=" " alt="" coords="240,5,427,47"/>
+<area shape="rect" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a17757fe64560e33a83927dbd6f637ec2" title=" " alt="" coords="5,5,192,47"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="aa7d8c65aa61c2d941889c405a1599c82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7d8c65aa61c2d941889c405a1599c82">&#9670;&nbsp;</a></span>velocity()</h2>
+<a id="a17757fe64560e33a83927dbd6f637ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17757fe64560e33a83927dbd6f637ec2">&#9670;&nbsp;</a></span>time_step() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::time_step </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time_step</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../de/de9/classctrw_1_1_transitions___position___velocity_step_a17757fe64560e33a83927dbd6f637ec2_cgraph.png" border="0" usemap="#ade/de9/classctrw_1_1_transitions___position___velocity_step_a17757fe64560e33a83927dbd6f637ec2_cgraph" alt=""/></div>
+<map name="ade/de9/classctrw_1_1_transitions___position___velocity_step_a17757fe64560e33a83927dbd6f637ec2_cgraph" id="ade/de9/classctrw_1_1_transitions___position___velocity_step_a17757fe64560e33a83927dbd6f637ec2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,192,47"/>
+<area shape="rect" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html#a11230a59eb7852db7fa1c392b692ee2f" title=" " alt="" coords="240,5,427,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a98ddcdbe6144201a497423b42ce9aba8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98ddcdbe6144201a497423b42ce9aba8">&#9670;&nbsp;</a></span>velocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <div class="memtemplate">
 template&lt;typename State &gt; </div>
 <table class="mlabels">
@@ -390,7 +441,7 @@ template&lt;typename State &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::velocity </td>
+          <td class="memname">auto <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::velocity </td>
           <td>(</td>
           <td class="paramtype">State const &amp;&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
@@ -406,20 +457,47 @@ template&lt;typename State &gt; </div>
 
 </div>
 </div>
+<a id="adcd84b60020e2ef7dfe1cc7d8e8e2388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcd84b60020e2ef7dfe1cc7d8e8e2388">&#9670;&nbsp;</a></span>velocity_field()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto const&amp; <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::velocity_field </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="afc1b6062148cdeab9b80addca792f62c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc1b6062148cdeab9b80addca792f62c">&#9670;&nbsp;</a></span>boundary</h2>
+<a id="aeda719033753a40dcf66e08b1b57fc4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeda719033753a40dcf66e08b1b57fc4f">&#9670;&nbsp;</a></span>_boundary</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::boundary</td>
+          <td class="memname">Boundary <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::_boundary</td>
         </tr>
       </table>
   </td>
@@ -431,19 +509,19 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 
 </div>
 </div>
-<a id="a78eec3c7fc39c71a61e2d8fdb8c34a5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78eec3c7fc39c71a61e2d8fdb8c34a5b">&#9670;&nbsp;</a></span>jump_generator</h2>
+<a id="aec7747c09cd2ef7a2b60d956c750396d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec7747c09cd2ef7a2b60d956c750396d">&#9670;&nbsp;</a></span>_jump_generator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">JumpGenerator <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::jump_generator</td>
+          <td class="memname">JumpGenerator <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::_jump_generator</td>
         </tr>
       </table>
   </td>
@@ -455,19 +533,19 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 
 </div>
 </div>
-<a id="aebd06aabead7b8f86961d497d509fcce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebd06aabead7b8f86961d497d509fcce">&#9670;&nbsp;</a></span>step_length</h2>
+<a id="ae3142e8f5c6f8acb8e7076539fe97ce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3142e8f5c6f8acb8e7076539fe97ce1">&#9670;&nbsp;</a></span>_step_length</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::step_length</td>
+          <td class="memname">double <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::_step_length</td>
         </tr>
       </table>
   </td>
@@ -479,19 +557,19 @@ template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = ge
 
 </div>
 </div>
-<a id="a61253fb04f7b949f6242a4bcf126e8bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61253fb04f7b949f6242a4bcf126e8bb">&#9670;&nbsp;</a></span>velocity_field</h2>
+<a id="aa64bd056e2fa46c014dc82261f6c48f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa64bd056e2fa46c014dc82261f6c48f4">&#9670;&nbsp;</a></span>_velocity_field</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename JumpGenerator , typename Velocity , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
+template&lt;typename JumpGenerator , typename VelocityField , typename Boundary  = geometry::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Velocity <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, Velocity, Boundary &gt;::velocity_field</td>
+          <td class="memname">VelocityField <a class="el" href="../../de/de9/classctrw_1_1_transitions___position___velocity_step.html">ctrw::Transitions_Position_VelocityStep</a>&lt; JumpGenerator, VelocityField, Boundary &gt;::_velocity_field</td>
         </tr>
       </table>
   </td>

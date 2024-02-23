@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::Get_projection&lt; Getter &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: ctrw::Get_projection&lt; Getter &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -87,18 +87,18 @@ $(document).ready(function(){initNavTree('df/de2/structctrw_1_1_get__projection.
 <a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::Get_projection&lt; Getter &gt; Struct Template Reference</div>  </div>
+<div class="title">ctrw::Get_projection&lt; Getter &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Get projection of result of Getter object along direction.  
+<p>Get projection of property along direction.  
  <a href="../../df/de2/structctrw_1_1_get__projection.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5bbe31303ab448f21d8f2bb2ea442394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#a5bbe31303ab448f21d8f2bb2ea442394">Get_projection</a> (Getter &amp;&amp;<a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#aba5ebe0b9c817ae805ad2c65ed0697b3">get</a>, std::vector&lt; double &gt; const &amp;<a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#ad06755f66241f9884e66c1a95dac3eb3">direction</a>)</td></tr>
+<tr class="memitem:a5bbe31303ab448f21d8f2bb2ea442394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#a5bbe31303ab448f21d8f2bb2ea442394">Get_projection</a> (Getter &amp;&amp;get, std::vector&lt; double &gt; const &amp;<a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#ad06755f66241f9884e66c1a95dac3eb3">direction</a>)</td></tr>
 <tr class="separator:a5bbe31303ab448f21d8f2bb2ea442394"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac22027432f0205984f35755fd8fc9866"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:ac22027432f0205984f35755fd8fc9866"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#ac22027432f0205984f35755fd8fc9866">operator()</a> (State const &amp;state) const</td></tr>
@@ -111,14 +111,21 @@ Data Fields</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:aba5ebe0b9c817ae805ad2c65ed0697b3"><td class="memItemLeft" align="right" valign="top">Getter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#aba5ebe0b9c817ae805ad2c65ed0697b3">get</a></td></tr>
-<tr class="separator:aba5ebe0b9c817ae805ad2c65ed0697b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b53e3c844ea8a9425217ef294c67df3"><td class="memItemLeft" align="right" valign="top">Getter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/de2/structctrw_1_1_get__projection.html#a6b53e3c844ea8a9425217ef294c67df3">_get</a></td></tr>
+<tr class="separator:a6b53e3c844ea8a9425217ef294c67df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Getter&gt;<br />
-struct ctrw::Get_projection&lt; Getter &gt;</h3>
+class ctrw::Get_projection&lt; Getter &gt;</h3>
 
-<p>Get projection of result of Getter object along direction. </p>
+<p>Get projection of property along direction. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Getter</td><td>Object to extract quantity to project from state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Direction vector is normalized upon construction. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5bbe31303ab448f21d8f2bb2ea442394"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5bbe31303ab448f21d8f2bb2ea442394">&#9670;&nbsp;</a></span>Get_projection()</h2>
@@ -155,7 +162,6 @@ template&lt;typename Getter &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given Getter object and direction to project onto. </p>
 
 </div>
 </div>
@@ -187,10 +193,43 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/de2/structctrw_1_1_get__projection_ac22027432f0205984f35755fd8fc9866_cgraph.png" border="0" usemap="#adf/de2/structctrw_1_1_get__projection_ac22027432f0205984f35755fd8fc9866_cgraph" alt=""/></div>
+<map name="adf/de2/structctrw_1_1_get__projection_ac22027432f0205984f35755fd8fc9866_cgraph" id="adf/de2/structctrw_1_1_get__projection_ac22027432f0205984f35755fd8fc9866_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,157,47"/>
+<area shape="rect" href="../../dc/dc5/namespaceoperation.html#a598f8f9295e720e6929dc66fb44139a5" title="Dot product." alt="" coords="205,13,319,39"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a id="a6b53e3c844ea8a9425217ef294c67df3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b53e3c844ea8a9425217ef294c67df3">&#9670;&nbsp;</a></span>_get</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Getter &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Getter <a class="el" href="../../df/de2/structctrw_1_1_get__projection.html">ctrw::Get_projection</a>&lt; Getter &gt;::_get</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad06755f66241f9884e66c1a95dac3eb3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad06755f66241f9884e66c1a95dac3eb3">&#9670;&nbsp;</a></span>direction</h2>
 
@@ -207,31 +246,7 @@ template&lt;typename Getter &gt; </div>
 
 </div>
 </div>
-<a id="aba5ebe0b9c817ae805ad2c65ed0697b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba5ebe0b9c817ae805ad2c65ed0697b3">&#9670;&nbsp;</a></span>get</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Getter &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Getter <a class="el" href="../../df/de2/structctrw_1_1_get__projection.html">ctrw::Get_projection</a>&lt; Getter &gt;::get</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">StateGetter.h</a></li>
 </ul>
 </div><!-- contents -->

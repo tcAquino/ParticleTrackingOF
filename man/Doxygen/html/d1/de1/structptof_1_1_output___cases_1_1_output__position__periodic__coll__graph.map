@@ -1,8 +1,8 @@
 <map id="ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_periodic&lt; Boundary &gt;" name="ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_periodic&lt; Boundary &gt;">
-<area shape="rect" id="node1" title="Output time, tags, positions, and masses with position accounting for periodicity." alt="" coords="879,23,1096,93"/>
-<area shape="rect" id="node2" href="$d2/d71/structptof_1_1_output___cases_1_1_output_time.html" title="Polymorphic output handler for outputting time and some quantity." alt="" coords="537,30,728,86"/>
-<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title=" " alt="" coords="237,5,397,47"/>
-<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="5,13,140,39"/>
-<area shape="rect" id="node5" title=" " alt="" coords="265,71,370,98"/>
-<area shape="rect" id="node6" href="$dd/dd1/structctrw_1_1_get__position__periodic.html" title=" " alt="" coords="553,110,712,166"/>
+<area shape="rect" id="node1" title=" " alt="" coords="885,90,1103,161"/>
+<area shape="rect" id="node2" href="$d2/d71/structptof_1_1_output___cases_1_1_output_time.html" title=" " alt="" coords="544,35,735,91"/>
+<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="237,42,397,83"/>
+<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="5,15,140,41"/>
+<area shape="rect" id="node5" title=" " alt="" coords="265,108,370,135"/>
+<area shape="rect" id="node6" href="$dd/dd1/structctrw_1_1_get__position__periodic.html" title=" " alt="" coords="560,115,719,171"/>
 </map>

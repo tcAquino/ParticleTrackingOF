@@ -101,9 +101,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ada9e344c3c6954e3b9c2e6fb2b69611c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad728e7110bf218292256fd1af564137d"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:ad728e7110bf218292256fd1af564137d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d3c/classgeometry_1_1_boundary___reflecting.html#ad728e7110bf218292256fd1af564137d">outOfBounds</a> (Position const &amp;position) const</td></tr>
+<tr class="memdesc:ad728e7110bf218292256fd1af564137d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if position is out of bounds.  <a href="../../df/d3c/classgeometry_1_1_boundary___reflecting.html#ad728e7110bf218292256fd1af564137d">More...</a><br /></td></tr>
 <tr class="separator:ad728e7110bf218292256fd1af564137d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af15af6f1cb88b40ce9e7a8e8f5c4612b"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:af15af6f1cb88b40ce9e7a8e8f5c4612b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d3c/classgeometry_1_1_boundary___reflecting.html#af15af6f1cb88b40ce9e7a8e8f5c4612b">operator()</a> (State &amp;state, State const &amp;state_old={}) const</td></tr>
+<tr class="memdesc:af15af6f1cb88b40ce9e7a8e8f5c4612b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../df/d3c/classgeometry_1_1_boundary___reflecting.html#af15af6f1cb88b40ce9e7a8e8f5c4612b">More...</a><br /></td></tr>
 <tr class="separator:af15af6f1cb88b40ce9e7a8e8f5c4612b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -113,9 +115,10 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Reflecting boundaries along along each dimension. </p>
-<p>State must define:</p><ul>
-<li>position (vector type) </li>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li>position [vector type] </li>
 </ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ada9e344c3c6954e3b9c2e6fb2b69611c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada9e344c3c6954e3b9c2e6fb2b69611c">&#9670;&nbsp;</a></span>Boundary_Reflecting()</h2>
@@ -140,7 +143,12 @@ Data Fields</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct given lower and upper boundaries along each dimension. </p>
+<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -180,7 +188,16 @@ template&lt;typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Enforce boundary condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Particle state to apply BC to. </td></tr>
+    <tr><td class="paramname">state_old</td><td>Previous particle state (unused). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if there was an effect, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -209,7 +226,24 @@ template&lt;typename Position &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Check if position is out of bounds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if out of bounds, <code>false</code> otherwise. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d3c/classgeometry_1_1_boundary___reflecting_ad728e7110bf218292256fd1af564137d_cgraph.png" border="0" usemap="#adf/d3c/classgeometry_1_1_boundary___reflecting_ad728e7110bf218292256fd1af564137d_cgraph" alt=""/></div>
+<map name="adf/d3c/classgeometry_1_1_boundary___reflecting_ad728e7110bf218292256fd1af564137d_cgraph" id="adf/d3c/classgeometry_1_1_boundary___reflecting_ad728e7110bf218292256fd1af564137d_cgraph">
+<area shape="rect" title="Check if position is out of bounds." alt="" coords="5,5,192,47"/>
+<area shape="rect" href="../../d5/d5f/namespacegeometry.html#afffbc962e678d19f4051f218a7544840" title=" " alt="" coords="240,13,447,39"/>
+</map>
+</div>
 
 </div>
 </div>

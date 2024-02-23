@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::VelocityFromGenerator&lt; JumpGenerator &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: ctrw::VelocityFromGenerator&lt; JumpGenerator &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,18 +86,18 @@ $(document).ready(function(){initNavTree('d6/d82/structctrw_1_1_velocity_from_ge
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::VelocityFromGenerator&lt; JumpGenerator &gt; Struct Template Reference</div>  </div>
+<div class="title">ctrw::VelocityFromGenerator&lt; JumpGenerator &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helper class to return velocity from JumpGenerator object given state.  
+<p>Helper class to return velocity value from JumpGenerator object given state.  
  <a href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">Transitions.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7713638266ee0e08c3f77076d6d4f83b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#a7713638266ee0e08c3f77076d6d4f83b">VelocityFromGenerator</a> (JumpGenerator const &amp;<a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#ac2c75a679743d6e33e55b482b3b4f896">jump_generator</a>)</td></tr>
+<tr class="memitem:a7713638266ee0e08c3f77076d6d4f83b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#a7713638266ee0e08c3f77076d6d4f83b">VelocityFromGenerator</a> (JumpGenerator const &amp;jump_generator)</td></tr>
 <tr class="separator:a7713638266ee0e08c3f77076d6d4f83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd6bd45eabd248a488c5c490457e9870"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:abd6bd45eabd248a488c5c490457e9870"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#abd6bd45eabd248a488c5c490457e9870">operator()</a> (State const &amp;state) const</td></tr>
@@ -105,14 +105,24 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ac2c75a679743d6e33e55b482b3b4f896"><td class="memItemLeft" align="right" valign="top">JumpGenerator const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#ac2c75a679743d6e33e55b482b3b4f896">jump_generator</a></td></tr>
-<tr class="separator:ac2c75a679743d6e33e55b482b3b4f896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2650d73ff0074d158b797bb0f2ec42e1"><td class="memItemLeft" align="right" valign="top">JumpGenerator const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html#a2650d73ff0074d158b797bb0f2ec42e1">_jump_generator</a></td></tr>
+<tr class="separator:a2650d73ff0074d158b797bb0f2ec42e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename JumpGenerator&gt;<br />
-struct ctrw::VelocityFromGenerator&lt; JumpGenerator &gt;</h3>
+class ctrw::VelocityFromGenerator&lt; JumpGenerator &gt;</h3>
 
-<p>Helper class to return velocity from JumpGenerator object given state. </p>
+<p>Helper class to return velocity value from JumpGenerator object given state. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">JumpGenerator</td><td>Object to return jump given state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><code>JumpGenerator</code> must define:<ul>
+<li>velocity(State const&amp;) </li>
+</ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7713638266ee0e08c3f77076d6d4f83b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7713638266ee0e08c3f77076d6d4f83b">&#9670;&nbsp;</a></span>VelocityFromGenerator()</h2>
@@ -174,8 +184,8 @@ template&lt;typename State &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="ac2c75a679743d6e33e55b482b3b4f896"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2c75a679743d6e33e55b482b3b4f896">&#9670;&nbsp;</a></span>jump_generator</h2>
+<a id="a2650d73ff0074d158b797bb0f2ec42e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2650d73ff0074d158b797bb0f2ec42e1">&#9670;&nbsp;</a></span>_jump_generator</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,7 +196,7 @@ template&lt;typename JumpGenerator &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">JumpGenerator const&amp; <a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html">ctrw::VelocityFromGenerator</a>&lt; JumpGenerator &gt;::jump_generator</td>
+          <td class="memname">JumpGenerator const&amp; <a class="el" href="../../d6/d82/structctrw_1_1_velocity_from_generator.html">ctrw::VelocityFromGenerator</a>&lt; JumpGenerator &gt;::_jump_generator</td>
         </tr>
       </table>
   </td>
@@ -198,7 +208,7 @@ template&lt;typename JumpGenerator &gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">Transitions.h</a></li>
 </ul>
 </div><!-- contents -->

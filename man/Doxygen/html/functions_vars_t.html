@@ -102,6 +102,13 @@ $(document).ready(function(){initNavTree('functions_vars_t.html',''); initResiza
 , <a class="el" href="df/de9/structptof_1_1_state3_d.html#a0a7ea61ea8bfd4623671ebe76195c0f9">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#a56cda29d3cff8a66ad816775c99803f4">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
+<li>threshold
+: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a9cd3d210dd9a5b13a714e8657ce4c1af">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;</a>
+</li>
+<li>thresholds
+: <a class="el" href="dd/d8c/structptof_1_1_output___cases_1_1_output__mass__in__regions.html#acd8172d257b6b9b49ef118e4c52363b3">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_mass_in_regions&lt; Mask &gt;</a>
+, <a class="el" href="dd/dd4/structptof_1_1_output___cases_1_1_output__position__in__regions.html#a78ff45683c8c9c398d80aa0da93e4185">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Output_position_in_regions&lt; Mask &gt;</a>
+</li>
 <li>time
 : <a class="el" href="d7/d1a/structctrw_1_1_get__position__interp__velocity.html#a4b8135d7613a4f3574ec6738b69866b2">ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt;</a>
 , <a class="el" href="d3/da4/structctrw_1_1_state___periodic.html#abe81c9ccd0bf6b8f716b96084e4a1b3a">ctrw::State_Periodic&lt; Position_t, Periodicity_t, Mass_t, Time_t, Tag_t &gt;</a>
@@ -111,7 +118,7 @@ $(document).ready(function(){initNavTree('functions_vars_t.html',''); initResiza
 , <a class="el" href="db/dc9/structctrw_1_1_state___velocity.html#a7efd70314afde77c07a1d81f279bad90">ctrw::State_Velocity&lt; Position_t, Velocity_t, Time_t, Tag_t &gt;</a>
 , <a class="el" href="dd/d81/structctrw_1_1_state___velocity___mass.html#a8bec6ad57350b0bc60210d0803a2d8d0">ctrw::State_Velocity_Mass&lt; Position_t, Velocity_t, Mass_t, Time_t, Tag_t &gt;</a>
 , <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#a277719db28ac3f1df84a95883b96458c">ptof::DirectoriesOF</a>
-, <a class="el" href="dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html#a50ea0bda4bf38303de8374cb9e9cc22b">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters &gt;::PositionMaker</a>
+, <a class="el" href="dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html#a34bfd1dd9916c40f2d0ec0fceaffa00d">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;::PositionMaker</a>
 , <a class="el" href="da/dae/structptof_1_1_particle_maker.html#ac096f1092fed0a8efa6c732ad28e0e2d">ptof::ParticleMaker&lt; Particle, Locator &gt;</a>
 , <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#a0c906a6e8a24d8344f5f639f1a0d9aa7">ptof::ParticleMaker_Periodic&lt; Particle, Locator, Boundary &gt;</a>
 , <a class="el" href="d9/daf/structptof_1_1_state1_d.html#a17b3f97ffbdf2502f404bffaa7d08bfb">ptof::State1D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
@@ -121,69 +128,40 @@ $(document).ready(function(){initNavTree('functions_vars_t.html',''); initResiza
 , <a class="el" href="df/de9/structptof_1_1_state3_d.html#a3957d4a364e86f59fdbbe0efcdfdcd0e">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#ae9f11bed236dadf93f2d82ee6ac533f3">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
-<li>time_generator
-: <a class="el" href="df/deb/classctrw_1_1_transitions___locate___time___position.html#a48e6df2efb576c08222f207b137af966">ctrw::Transitions_Locate_Time_Position&lt; Locator, TimeGenerator, JumpGenerator, Boundary &gt;</a>
-, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#af5e24dd05cd6489bd233ea84743ac0a1">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary &gt;</a>
-, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#aeea1cf40af592a7ab86804b0fa72a895">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary &gt;</a>
-, <a class="el" href="d8/d5f/classctrw_1_1_transitions___reaction___position.html#af3c6b5f17572cba4c77bcb55e4d03cf6">ctrw::Transitions_Reaction_Position&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
-, <a class="el" href="d5/dd3/classctrw_1_1_transitions___reaction___position___conditional.html#a2978c4d40aece4370801c5f6114d42e5">ctrw::Transitions_Reaction_Position_Conditional&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
-, <a class="el" href="d4/d94/classctrw_1_1_transitions___time___position.html#ab849944a7fec34160662a5070e9bb3b6">ctrw::Transitions_Time_Position&lt; TimeGenerator, JumpGenerator, Boundary &gt;</a>
-</li>
-<li>time_generator_run
-: <a class="el" href="db/de4/classctrw_1_1_transitions___run_tumble.html#ae595bb9fab81c3cde20c92f456682592">ctrw::Transitions_RunTumble&lt; TimeGenerator_run, TimeGenerator_tumble, JumpGenerator, OrientationGenerator &gt;</a>
-</li>
-<li>time_generator_tumble
-: <a class="el" href="db/de4/classctrw_1_1_transitions___run_tumble.html#a509d6adbc61457ebbe4f070950dfbb1c">ctrw::Transitions_RunTumble&lt; TimeGenerator_run, TimeGenerator_tumble, JumpGenerator, OrientationGenerator &gt;</a>
-</li>
 <li>time_increment
 : <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aa086103359a124b82b5bbbb18ba3cff9">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
 </li>
 <li>time_max
 : <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a480ba26e98cb48294e5b0170fccdf9e1">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#aab61be3454106104253df7a85afb512f">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#aef69ec9d4a46abff42eb79c6d346d9e8">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 , <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a470c76963d043bc0e7e40fa926be19ed">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
 </li>
 <li>time_min
 : <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#af5ba256428cdd0205144de6689706b56">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#ad243353a760bd7f19d3b6f4520849a4e">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#a23d304d865571f6ae23ea85f047a3f5d">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 , <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aae77a1977b916892c1c7bbb8dfee9736">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
 </li>
-<li>time_name_input
-: <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#a6bf70e8ca1c07f41ec6e8e4a1123d7fb">ptof::DirectoriesOF</a>
-</li>
 <li>time_step
-: <a class="el" href="d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a2ec08acaa9a3e1c143b3f2ef723faa5f">ptof::model_advection_2d::Solvers::Parameters</a>
-, <a class="el" href="d1/d47/structptof_1_1model__advection__3d_1_1_solvers_1_1_parameters.html#a5d0a10eba77e93e8e73f9e6efaa341ed">ptof::model_advection_3d::Solvers::Parameters</a>
-, <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a4d42811fd6d42a97f38a107ff711dd55">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a3dafc87da6f731ca352771a5cbb56a85">ptof::model_advection_diffusion_2d::Solvers::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#a9444ca2aabe745695a0dd8ef151fe56c">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d03/structptof_1_1model__advection__diffusion__3d_1_1_solvers_1_1_parameters.html#a416b3d7c4733c987b778805eb1d197b3">ptof::model_advection_diffusion_3d::Solvers::Parameters</a>
+: <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a4d42811fd6d42a97f38a107ff711dd55">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#a848ac4c3417f69d1bc392c3c548dcfb9">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 </li>
 <li>time_step_accuracy_adv
 : <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a73c5c68cacdf8fd81704234cf6345f30">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#afc65bafa75b7953f861464a75d633153">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#a7f5fee13075a59a3fd7f131ec9c213b2">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 </li>
 <li>time_step_accuracy_diff
 : <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a818c891c2782b5a668846d41f66cd1f4">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#a7ad0b97baae857d586924883bd844b4f">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#af99499200385aeffa1245c162a1c2419">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 </li>
 <li>time_step_accuracy_react
 : <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a6341a1b67a217bb27e22ee04dabadf14">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#a91238d76fe0770ea480fc8c64fd9cbbe">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#a3d17d068603e0b9b9c5edd9fc53a2093">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 </li>
 <li>time_unit_factor
 : <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a109ae52ddcce9a8971bb0fcbf9a3001d">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
 </li>
 <li>time_units
 : <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a623dc22a32adad7ff20ac6c27ed2bba8">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
-</li>
-<li>timestep
-: <a class="el" href="dc/db1/classctrw_1_1_transitions___p_t_r_w___transport___reaction.html#a5f0f64da89026c7be2e7f1dfb3ada34a">ctrw::Transitions_PTRW_Transport_Reaction&lt; Transitions_Transport, Reaction &gt;</a>
-, <a class="el" href="db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#aa833018757b8863d603295be336acf4d">ctrw::Transitions_Velocity_Acceleration&lt; Acceleration, Boundary &gt;</a>
-</li>
-<li>transitions_transport
-: <a class="el" href="db/dbd/classctrw_1_1_transitions___c_t_r_w___transport___reaction.html#ad5482c09628be4661697e5d4af9852cd">ctrw::Transitions_CTRW_Transport_Reaction&lt; Transitions_Transport, Reaction &gt;</a>
-, <a class="el" href="dc/db1/classctrw_1_1_transitions___p_t_r_w___transport___reaction.html#a3423df6de63e0804a61367308f14a2c6">ctrw::Transitions_PTRW_Transport_Reaction&lt; Transitions_Transport, Reaction &gt;</a>
 </li>
 <li>translation
 : <a class="el" href="da/dce/structgeometry_1_1_symmetry_planes___bcc.html#a2fd42fa51f8603a41689843545350d37">geometry::SymmetryPlanes_Bcc</a>
@@ -192,18 +170,18 @@ $(document).ready(function(){initNavTree('functions_vars_t.html',''); initResiza
 <li>type
 : <a class="el" href="d8/d13/structptof_1_1_info___type.html#a951a6f62b19f9ed9c71efbf2728d5e42">ptof::Info_Type</a>
 , <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a1e0d4153727be7cd8d232c3e913223f9">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d3/d1f/structptof_1_1model__advection__diffusion__3d_1_1_initial_condition_1_1_parameters.html#a66cb35927d9b4eaaa9dc222b9f7bab1a">ptof::model_advection_diffusion_3d::InitialCondition::Parameters</a>
+, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#a7d11fb8c06f9d287fd3bd4f151bb9169">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
 </li>
 <li>type_to_name
-: <a class="el" href="d2/d5e/structptof_1_1_boundary_condition.html#aaa593f764669913eed39244bcc76b1fd">ptof::BoundaryCondition</a>
-, <a class="el" href="d6/dd9/structptof_1_1_boundary_condition_set.html#aecb30595f07d0ae17be38f418e913aa4">ptof::BoundaryConditionSet</a>
-, <a class="el" href="dd/d0d/structptof_1_1_end_criterion.html#a5bdb3a899b4d33b898b65f55e8411b52">ptof::EndCriterion</a>
-, <a class="el" href="dd/ddd/structptof_1_1_measure.html#a0aab231e3a319fd8da95cd08ed62f367">ptof::Measure</a>
-, <a class="el" href="d4/dd7/structptof_1_1_measure_spacing.html#ac2d8d979d680081f40c8e53a3661937e">ptof::MeasureSpacing</a>
-, <a class="el" href="d2/d80/structptof_1_1_measure_spacing_units.html#a880964efcb4d9a92e819e0fe92f0a602">ptof::MeasureSpacingUnits</a>
+: <a class="el" href="d2/d5e/structptof_1_1_boundary_condition.html#a443fa107aa3ec4aca99b2d6c9668a280">ptof::BoundaryCondition</a>
+, <a class="el" href="d6/dd9/structptof_1_1_boundary_condition_set.html#a50e838a6e3c8539a7455a8d7c1c6a102">ptof::BoundaryConditionSet</a>
+, <a class="el" href="dd/d0d/structptof_1_1_end_criterion.html#adfd5a03dcb524e639f3d72e090404522">ptof::EndCriterion</a>
+, <a class="el" href="dd/ddd/structptof_1_1_measure.html#abfe0928a51dc4c066a1d564421d9b863">ptof::Measure</a>
+, <a class="el" href="d4/dd7/structptof_1_1_measure_spacing.html#aed04fc99fd60ef0348c7d80aad446304">ptof::MeasureSpacing</a>
+, <a class="el" href="d2/d80/structptof_1_1_measure_spacing_units.html#a3fe270977bb992dafcaf38a255aae664">ptof::MeasureSpacingUnits</a>
 </li>
 <li>type_to_string
-: <a class="el" href="d5/d77/structptof_1_1_initial_conditions.html#af7cded657240be306dcc763c8467830b">ptof::InitialConditions</a>
+: <a class="el" href="d5/d77/structptof_1_1_initial_conditions.html#ac729095ef0d493c8f6582685bd4ad9bb">ptof::InitialConditions</a>
 </li>
 </ul>
 </div><!-- contents -->
