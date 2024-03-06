@@ -573,7 +573,7 @@ namespace ptof
   (OStream& output, ParametersOutput const& params, double time)
   {
     output << "Time "
-           << "[" << params.time_units << " times]: "
+           << "[" << params.time_units << " time units]: "
            << time/params.time_unit_factor
            << "\n";
   }

@@ -23,7 +23,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_decay_catalytic_2d_parallel;
+  using namespace ptof::model_periodic_cartesian_advection_diffusion_2d_parallel;
   using Phase = ptof::Phase;
   
   if (useful::check_options_help(argc, argv))

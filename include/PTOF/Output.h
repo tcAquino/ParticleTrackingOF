@@ -722,12 +722,23 @@ namespace ptof
         "Output\n"
         "--------------------------------------------------\n"
         "- Run number: " << parameters.run_nr << "\n"
-        "- End criterion: " << parameters.end_criterion << "\n"
+        "- End criterion: " << parameters.end_criterion << "\n";
+      if (EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::time
+          || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::mass_below
+          || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::mass_above
+          || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::fraction_absorbed)
+        output << "- End value: " << parameters.end_value << "\n";
+      output <<
         "- Time units: " << parameters.time_units << "\n"
         "- Measure spacing: " << parameters.measure_spacing << "\n"
         "- Minimum measurement time: " << parameters.time_min << "\n"
-        "- Maximum measurement time: " << std::to_string(parameters.time_max) << "\n"
-        "- Measurement types:";
+        "- Maximum measurement time: ";
+      if (EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::time
+          && MeasureSpacing::type(parameters.measure_spacing) == MeasureSpacing::Type::step)
+        output << parameters.end_value << "\n";
+      else
+        output << parameters.time_max << "\n";
+      output << "- Measurement types:";
       useful::print(output, parameters.measure_names, true, "\n\t");
       output << "\n";
       output <<
