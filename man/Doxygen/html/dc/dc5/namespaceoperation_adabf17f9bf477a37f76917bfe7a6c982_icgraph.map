@@ -1,0 +1,18 @@
+<map id="operation::times_scalar" name="operation::times_scalar">
+<area shape="rect" id="node1" title="Element&#45;wise multiplication by scalar." alt="" coords="744,187,919,214"/>
+<area shape="rect" id="node2" href="$d3/d4c/classctrw_1_1_jump_generator___velocity.html#afde4a75ecef22f6a35d00389477ed5c8" title=" " alt="" coords="520,5,675,47"/>
+<area shape="rect" id="node3" href="$d5/d5f/namespacegeometry.html#ad086cd428e32e4ab00c06bc5dfe2d550" title="Reflect off sphere exterior (in any dimension)." alt="" coords="499,71,696,112"/>
+<area shape="rect" id="node5" href="$d5/d5f/namespacegeometry.html#a98a36981a54776bd7c65fa2e9ea2224a" title="Reflect off sphere exterior (in any dimension)." alt="" coords="252,107,449,148"/>
+<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#a68f9f3922acccb2440557f9e25b41afa" title="Element&#45;wise multiplication by scalar." alt="" coords="510,187,685,214"/>
+<area shape="rect" id="node8" href="$dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f" title="Element&#45;wise multiplication by scalar." alt="" coords="510,239,685,280"/>
+<area shape="rect" id="node12" href="$d5/d5f/namespacegeometry.html#a2b45bfba74caca086225c1aa9b2da7a1" title="Translate position along basis vectors of symmetry planes." alt="" coords="522,414,673,441"/>
+<area shape="rect" id="node15" href="$d5/d5f/namespacegeometry.html#af008b22a40fd3d175279892dd942a2f0" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="503,515,691,542"/>
+<area shape="rect" id="node4" href="$d5/d5f/namespacegeometry.html#a3e694e2d693eded9ad17b9db37fb6783" title="Reflect off sphere exterior (in any dimension)." alt="" coords="252,41,449,83"/>
+<area shape="rect" id="node6" href="$d5/d5f/namespacegeometry.html#afc21cbcce2adca3e3ea4302e5645a6da" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,107,203,148"/>
+<area shape="rect" id="node9" href="$d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html#a9f4876b7aa543e0d9930dbc53dd2a0c3" title="Enforce boundary condition." alt="" coords="271,173,430,229"/>
+<area shape="rect" id="node10" href="$d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#ace73e13a2b0d7b2863cf3d895f0ff824" title="Enforce boundary condition." alt="" coords="263,253,439,309"/>
+<area shape="rect" id="node11" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#aab8567de2cefe3fdda201376a0cc8b9a" title=" " alt="" coords="257,333,444,375"/>
+<area shape="rect" id="node13" href="$d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes.html#a0f5af5c1929e4d4b9ac4f3d0b07c6183" title="Translate a position according to projection in periodic cell." alt="" coords="251,399,450,455"/>
+<area shape="rect" id="node14" href="$df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a8873afbb16ef1bfe209accc6533823d2" title="Translate a position according to projection in periodic cell." alt="" coords="251,479,451,535"/>
+<area shape="rect" id="node16" href="$d5/d5f/namespacegeometry.html#adb5c30ba87066cf2cfa9197c74ebe2ed" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="277,560,424,601"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="ptof::uniform" name="ptof::uniform">
+<area shape="rect" id="node1" title="Make particles distributed randomly uniformly over mesh cells where mask is above threshold." alt="" coords="5,56,112,83"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="168,5,295,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="164,56,299,83"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="160,123,303,149"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a42b0ae8508d0fe2d62c5311583c263e2" title="Remove cell/face indices if mask is above threshold." alt="" coords="351,31,504,73"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="552,39,715,65"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="763,39,909,65"/>
+<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="364,97,491,124"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="360,148,495,175"/>
+<area shape="rect" id="node10" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="369,199,485,225"/>
+<area shape="rect" id="node11" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="576,173,691,200"/>
+<area shape="rect" id="node15" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="567,224,699,251"/>
+<area shape="rect" id="node12" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="767,173,905,200"/>
+<area shape="rect" id="node13" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="777,224,895,251"/>
+<area shape="rect" id="node14" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="957,224,1075,251"/>
+</map>

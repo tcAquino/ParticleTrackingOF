@@ -1,0 +1,7 @@
+<map id="useful::parse_error" name="useful::parse_error">
+<area shape="rect" id="node1" title=" " alt="" coords="199,81,343,108"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="29,5,127,32"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="21,56,135,83"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="21,107,135,133"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="5,157,151,184"/>
+</map>

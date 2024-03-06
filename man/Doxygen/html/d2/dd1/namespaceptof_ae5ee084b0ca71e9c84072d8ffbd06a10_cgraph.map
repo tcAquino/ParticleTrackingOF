@@ -1,0 +1,13 @@
+<map id="ptof::uniform" name="ptof::uniform">
+<area shape="rect" id="node1" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="5,31,112,57"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="168,5,295,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="160,56,303,83"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="355,5,481,32"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="351,56,485,83"/>
+<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="360,107,476,133"/>
+<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="542,81,657,108"/>
+<area shape="rect" id="node11" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="533,132,665,159"/>
+<area shape="rect" id="node8" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="713,81,851,108"/>
+<area shape="rect" id="node9" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="723,132,841,159"/>
+<area shape="rect" id="node10" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="899,132,1016,159"/>
+</map>

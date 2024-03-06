@@ -1,0 +1,7 @@
+<map id="ptof::Boundary_Cases::next_intersection" name="ptof::Boundary_Cases::next_intersection">
+<area shape="rect" id="node1" title="Find next intersection with a boundary." alt="" coords="5,23,168,65"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="216,23,365,65"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="413,31,540,57"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="590,5,717,32"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="588,56,719,83"/>
+</map>

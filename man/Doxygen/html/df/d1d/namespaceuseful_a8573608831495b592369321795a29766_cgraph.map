@@ -1,0 +1,4 @@
+<map id="useful::swap_delete_if" name="useful::swap_delete_if">
+<area shape="rect" id="node1" title="Swap&#45;delete elements of container satisfying criterion." alt="" coords="5,5,173,32"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a8601248d39541a2b46801ef541b5252a" title="Like swap_erase(Container&amp;, std::size_t), but call delete on the removed element." alt="" coords="221,5,373,32"/>
+</map>

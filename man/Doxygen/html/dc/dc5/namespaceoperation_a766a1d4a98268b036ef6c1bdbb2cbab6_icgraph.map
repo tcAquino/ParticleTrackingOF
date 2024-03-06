@@ -1,0 +1,11 @@
+<map id="operation::linearOp" name="operation::linearOp">
+<area shape="rect" id="node1" title="lambda_1 *input_1 + lambda_2 * input2." alt="" coords="496,163,643,189"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#abb2cce6ec6dfe295fae223fe3e8b335f" title="lambda_1 * input_1 + lambda_2 * input2." alt="" coords="276,5,423,32"/>
+<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#a6163694f84c59bc52662d346524f0f9b" title="lambda_1 * input_1 + lambda_2 * input2." alt="" coords="276,57,423,98"/>
+<area shape="rect" id="node4" href="$db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#aaaf4045fd954e3cff7088704fdb56098" title=" " alt="" coords="256,122,443,163"/>
+<area shape="rect" id="node5" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#aab8567de2cefe3fdda201376a0cc8b9a" title=" " alt="" coords="256,187,443,229"/>
+<area shape="rect" id="node6" href="$d5/d5f/namespacegeometry.html#ad086cd428e32e4ab00c06bc5dfe2d550" title="Reflect off sphere exterior (in any dimension)." alt="" coords="251,253,448,294"/>
+<area shape="rect" id="node8" href="$d5/d5f/namespacegeometry.html#a98a36981a54776bd7c65fa2e9ea2224a" title="Reflect off sphere exterior (in any dimension)." alt="" coords="251,318,448,359"/>
+<area shape="rect" id="node7" href="$d5/d5f/namespacegeometry.html#a3e694e2d693eded9ad17b9db37fb6783" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,253,203,294"/>
+<area shape="rect" id="node9" href="$d5/d5f/namespacegeometry.html#afc21cbcce2adca3e3ea4302e5645a6da" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,318,203,359"/>
+</map>

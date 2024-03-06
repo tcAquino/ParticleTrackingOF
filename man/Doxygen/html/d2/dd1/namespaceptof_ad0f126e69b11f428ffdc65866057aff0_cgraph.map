@@ -1,0 +1,13 @@
+<map id="ptof::flux_weighted" name="ptof::flux_weighted">
+<area shape="rect" id="node1" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="5,35,152,61"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="210,5,337,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#ad09a1942f608f3e3d168700e0c929c3a" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="200,57,347,98"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="399,13,525,40"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="395,64,529,91"/>
+<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="404,115,520,141"/>
+<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="586,89,701,116"/>
+<area shape="rect" id="node11" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="577,140,709,167"/>
+<area shape="rect" id="node8" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="757,89,895,116"/>
+<area shape="rect" id="node9" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="767,140,885,167"/>
+<area shape="rect" id="node10" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="943,140,1060,167"/>
+</map>

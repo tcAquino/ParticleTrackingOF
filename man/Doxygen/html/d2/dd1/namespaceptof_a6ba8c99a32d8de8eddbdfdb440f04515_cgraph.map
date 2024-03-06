@@ -1,0 +1,9 @@
+<map id="ptof::nearest_boundary_face_dist" name="ptof::nearest_boundary_face_dist">
+<area shape="rect" id="node1" title=" " alt="" coords="5,23,177,65"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="225,31,341,57"/>
+<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="398,5,513,32"/>
+<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="389,56,521,83"/>
+<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="569,5,707,32"/>
+<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="579,56,697,83"/>
+<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="755,56,872,83"/>
+</map>

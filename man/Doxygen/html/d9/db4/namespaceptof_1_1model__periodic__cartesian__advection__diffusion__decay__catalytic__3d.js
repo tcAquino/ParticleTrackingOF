@@ -1,0 +1,4 @@
+var namespaceptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d =
+[
+    [ "Model", "da/d3b/structptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d_1_1_model.html", "da/d3b/structptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__3d_1_1_model" ]
+];

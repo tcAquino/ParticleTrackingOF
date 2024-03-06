@@ -1,0 +1,16 @@
+<map id="ptof::Output_Cases::Parameters::Parameters" name="ptof::Output_Cases::Parameters::Parameters">
+<area shape="rect" id="node1" title=" " alt="" coords="5,162,192,203"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="287,5,426,32"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466" title="Read next value from file." alt="" coords="570,139,669,165"/>
+<area shape="rect" id="node5" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a843875f22b7804e2ffaa0bd5aafcd04f" title="Read end criterion from input stream." alt="" coords="271,56,443,112"/>
+<area shape="rect" id="node8" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aac5351e60374d82176c7b3c13a80eac0" title="Read measure spacing type from input stream." alt="" coords="254,187,459,243"/>
+<area shape="rect" id="node11" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a25dffcb3be2fdafc2a403729e13c0cb0" title="Read measure spacing type from input stream." alt="" coords="240,333,473,374"/>
+<area shape="rect" id="node12" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a61479298004ab41b4abbf7c6d495f4c5" title="Read measure spacing time units from input stream." alt="" coords="248,267,465,309"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="531,5,707,32"/>
+<area shape="rect" id="node6" href="$dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062" title=" " alt="" coords="552,63,687,105"/>
+<area shape="rect" id="node7" href="$dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="796,63,931,105"/>
+<area shape="rect" id="node9" href="$d4/dd7/structptof_1_1_measure_spacing.html#a16b7443515ba29233e0276818b092e21" title=" " alt="" coords="538,194,701,235"/>
+<area shape="rect" id="node10" href="$d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc" title=" " alt="" coords="782,194,945,235"/>
+<area shape="rect" id="node13" href="$d2/d80/structptof_1_1_measure_spacing_units.html#a292e1ae835a0ca302c6d505f947909d9" title=" " alt="" coords="521,267,717,309"/>
+<area shape="rect" id="node14" href="$d2/d80/structptof_1_1_measure_spacing_units.html#a4f7edbeca47ecd98c4d4c4b7950e6c54" title=" " alt="" coords="765,267,961,309"/>
+</map>

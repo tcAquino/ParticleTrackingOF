@@ -1,0 +1,6 @@
+<map id="geometry::translate_back" name="geometry::translate_back">
+<area shape="rect" id="node1" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="5,31,193,57"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#a1a30d0a57035d3b63a84b072ba5f3194" title="Element&#45;wise subtraction." alt="" coords="241,5,428,32"/>
+<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982" title="Element&#45;wise multiplication by scalar." alt="" coords="247,56,422,83"/>
+<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="476,5,608,32"/>
+</map>

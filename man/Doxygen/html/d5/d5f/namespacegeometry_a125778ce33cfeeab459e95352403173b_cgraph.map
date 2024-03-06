@@ -1,0 +1,6 @@
+<map id="geometry::add_periodic_images" name="geometry::add_periodic_images">
+<area shape="rect" id="node1" title="Add periodic velocity point images outside domain." alt="" coords="5,35,180,76"/>
+<area shape="rect" id="node2" href="$d5/d5f/namespacegeometry.html#ad9c012675d0d8c9db47989283cd0d07f" title=" " alt="" coords="228,5,381,47"/>
+<area shape="rect" id="node3" href="$d5/d5f/namespacegeometry.html#a3a9815f6acd3a7cee748661f747159c8" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="236,71,373,98"/>
+<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a598f8f9295e720e6929dc66fb44139a5" title="Dot product." alt="" coords="429,71,543,98"/>
+</map>

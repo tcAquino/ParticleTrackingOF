@@ -1,0 +1,15 @@
+<map id="geometry::Boundary_RadialReflecting_2d::operator()" name="geometry::Boundary_RadialReflecting_2d::operator()">
+<area shape="rect" id="node1" title="Enforce boundary condition." alt="" coords="5,230,164,286"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="242,118,357,144"/>
+<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="453,86,591,112"/>
+<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="657,219,775,246"/>
+<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a598f8f9295e720e6929dc66fb44139a5" title="Dot product." alt="" coords="243,168,356,195"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#aa66a60dc66ffdd947d2bab609b5a6ac0" title="Implemented here because some versions of gcc have trouble with std::isnan." alt="" coords="247,219,352,246"/>
+<area shape="rect" id="node8" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="233,270,365,296"/>
+<area shape="rect" id="node9" href="$d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html#a6d7025626db3a369604d6b7c389f6fdb" title="Check if position is out of bounds." alt="" coords="220,38,379,94"/>
+<area shape="rect" id="node10" href="$dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="240,371,359,398"/>
+<area shape="rect" id="node11" href="$dc/dc5/namespaceoperation.html#a8b305455a85de0d116cd5f51a9919d6e" title="Rotate vector by angle." alt="" coords="234,422,365,448"/>
+<area shape="rect" id="node12" href="$dc/dc5/namespaceoperation.html#abb8bc4921a7cfee509196a155743166f" title="Element&#45;wise multiplication by scalar." alt="" coords="212,473,387,514"/>
+<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="463,219,581,246"/>
+<area shape="rect" id="node13" href="$dc/dc5/namespaceoperation.html#adabf17f9bf477a37f76917bfe7a6c982" title="Element&#45;wise multiplication by scalar." alt="" coords="435,480,609,507"/>
+</map>
