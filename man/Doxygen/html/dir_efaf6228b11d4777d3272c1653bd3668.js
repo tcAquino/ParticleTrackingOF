@@ -57,6 +57,7 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Output_position_variance_periodic", "d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic.html", "d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic" ],
       [ "Output_absorption_time", "d8/d3c/structptof_1_1_output___cases_1_1_output__absorption__time.html", "d8/d3c/structptof_1_1_output___cases_1_1_output__absorption__time" ]
     ] ],
+    [ "ParticleMaker.h", "da/d16/_particle_maker_8h.html", "da/d16/_particle_maker_8h" ],
     [ "Phase.h", "d9/daa/_phase_8h.html", [
       [ "Phase", "d0/d06/structptof_1_1_phase.html", "d0/d06/structptof_1_1_phase" ],
       [ "Parameters", "de/d93/structptof_1_1_phase_1_1_parameters.html", "de/d93/structptof_1_1_phase_1_1_parameters" ]
