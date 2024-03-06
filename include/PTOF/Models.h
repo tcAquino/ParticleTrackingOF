@@ -25,6 +25,7 @@
 #include "PTOF/Output.h"
 #include "PTOF/Reaction.h"
 #include "PTOF/State.h"
+#include "PTOF/ParticleMaker.h"
 #include "PTOF/Steppers.h"
 #include "PTOF/Transitions.h"
 
@@ -54,8 +55,7 @@ namespace ptof
     using Geometry = Geometry<2,
       BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
-    using State = StateDim<
-      Geometry::dim, Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     
     struct Solvers
@@ -462,15 +462,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -484,15 +483,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -757,8 +755,7 @@ namespace ptof
     using Geometry = Geometry<2,
       BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
-    using State = StateDim<Geometry::dim,
-      Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion_2d::Solvers;
     using model_advection_diffusion_2d::Transport;
@@ -775,15 +772,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -797,15 +793,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -957,8 +952,7 @@ namespace ptof
     using Geometry = Geometry_Periodic_Cartesian<2,
       BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_2d::Info;
-    using State = StateDim_Periodic<
-      Geometry::dim, Info, double, double, std::size_t>;
+    using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion_2d::Solvers;
     using model_advection_diffusion_2d::Transport;
@@ -975,8 +969,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -984,7 +977,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -998,8 +991,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1007,7 +999,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1137,8 +1129,7 @@ namespace ptof
     using Geometry = Geometry<3,
       BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
-    using State = StateDim<
-      Geometry::dim, Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using Solvers = model_advection_diffusion_2d::Solvers;
     
@@ -1272,15 +1263,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1294,15 +1284,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1370,8 +1359,7 @@ namespace ptof
     using Geometry = Geometry<3,
       BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
-    using State = StateDim<Geometry::dim,
-      Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion_3d::Solvers;
     using model_advection_diffusion_3d::Transport;
@@ -1388,15 +1376,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1410,15 +1397,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1569,8 +1555,7 @@ namespace ptof
     using Geometry = Geometry_Periodic_Cartesian<3,
       BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_3d::Info;
-    using State = StateDim_Periodic<
-      Geometry::dim, Info, double, double, std::size_t>;
+    using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion_3d::Solvers;
     using model_advection_diffusion_3d::Transport;
@@ -1587,8 +1572,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1596,7 +1580,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1610,8 +1594,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1619,7 +1602,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1751,7 +1734,7 @@ namespace ptof
       BoundaryConditionSet::Type::transport,
       BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_2d::Info;
-    using State = StateDim_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+    using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion_2d::Solvers;
     using model_advection_diffusion_2d::VelocityField;
@@ -1767,8 +1750,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1776,7 +1758,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1790,8 +1772,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1799,7 +1780,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };

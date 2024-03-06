@@ -25,6 +25,7 @@
 #include "PTOF/Output.h"
 #include "PTOF/Reaction_Parallel.h"
 #include "PTOF/State.h"
+#include "PTOF/ParticleMaker.h"
 #include "PTOF/Steppers.h"
 #include "PTOF/Transitions.h"
 
@@ -51,10 +52,9 @@ namespace ptof
     };
     
     using Geometry = Geometry_Parallel<2,
-    BoundaryConditionSet::Type::transport>;
+      BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
-    using State = StateDim<
-    Geometry::dim, Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     
     struct Solvers
@@ -462,15 +462,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -484,15 +483,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -904,10 +902,9 @@ namespace ptof
     };
     
     using Geometry = Geometry_Parallel<2,
-    BoundaryConditionSet::Type::firstpassage>;
+      BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
-    using State = StateDim<Geometry::dim,
-    Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::Transport;
@@ -924,15 +921,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -946,15 +942,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1151,10 +1146,9 @@ namespace ptof
     };
     
     using Geometry = Geometry_Periodic_Cartesian_Parallel<2,
-    BoundaryConditionSet::Type::transport>;
+      BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_2d_parallel::Info;
-    using State = StateDim_Periodic<
-    Geometry::dim, Info, double, double, std::size_t>;
+    using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::Transport;
@@ -1171,8 +1165,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1180,7 +1173,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1194,8 +1187,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1203,7 +1195,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1310,7 +1302,7 @@ namespace ptof
     };
     
     using Geometry = Geometry_Periodic_Cartesian_Parallel<2,
-    BoundaryConditionSet::Type::firstpassage>;
+      BoundaryConditionSet::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::State;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::CTRW;
@@ -1420,10 +1412,9 @@ namespace ptof
     };
     
     using Geometry = Geometry_Parallel<3,
-    BoundaryConditionSet::Type::transport>;
+      BoundaryConditionSet::Type::transport>;
     using Info = ptof::Info_Absorbed;
-    using State = StateDim<
-    Geometry::dim, Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using Solvers = model_advection_diffusion_2d_parallel::Solvers;
     
@@ -1558,15 +1549,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1580,15 +1570,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1698,10 +1687,9 @@ namespace ptof
     };
     
     using Geometry = Geometry_Parallel<3,
-    BoundaryConditionSet::Type::firstpassage>;
+      BoundaryConditionSet::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
-    using State = StateDim<Geometry::dim,
-    Info, double, double, std::size_t>;
+    using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_3d_parallel::Solvers;
     using model_advection_diffusion_3d_parallel::Transport;
@@ -1718,15 +1706,14 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1740,15 +1727,14 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -1944,10 +1930,9 @@ namespace ptof
     };
     
     using Geometry = Geometry_Periodic_Cartesian_Parallel<3,
-    BoundaryConditionSet::Type::transport>;
+      BoundaryConditionSet::Type::transport>;
     using model_advection_diffusion_3d_parallel::Info;
-    using State = StateDim_Periodic<
-    Geometry::dim, Info, double, double, std::size_t>;
+    using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_3d_parallel::Solvers;
     using model_advection_diffusion_3d_parallel::Transport;
@@ -1964,8 +1949,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1973,7 +1957,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -1987,8 +1971,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1996,7 +1979,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -2103,7 +2086,7 @@ namespace ptof
     };
     
     using Geometry = Geometry_Periodic_Cartesian_Parallel<3,
-    BoundaryConditionSet::Type::firstpassage>;
+      BoundaryConditionSet::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d_parallel::Info;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::State;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::CTRW;
@@ -2214,10 +2197,10 @@ namespace ptof
     };
     
     using Geometry = Geometry_Bcc_Parallel<3,
-    BoundaryConditionSet::Type::transport,
-    BoundaryConditionSet::Type::cartesian>;
+      BoundaryConditionSet::Type::transport,
+      BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_2d_parallel::Info;
-    using State = StateDim_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+    using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::VelocityField;
@@ -2233,8 +2216,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
-       double time = 0.)
+       Parameters const& params)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -2242,7 +2224,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params };
       }
@@ -2256,8 +2238,7 @@ namespace ptof
        VelocityField const& velocity_field,
        Parameters const& params,
        Mask const& mask,
-       double threshold = 0.,
-       double time = 0.)
+       double threshold = 0.)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -2265,7 +2246,7 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            time,
+            params.time_min,
             params.initial_mass/params.nr_particles },
           params,
           mask, threshold };
@@ -2518,8 +2499,8 @@ namespace ptof
     };
     
     using Geometry = Geometry_Bcc_Parallel<3,
-    BoundaryConditionSet::Type::firstpassage,
-    BoundaryConditionSet::Type::cartesian>;
+      BoundaryConditionSet::Type::firstpassage,
+      BoundaryConditionSet::Type::cartesian>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_bcc_cartesian_advection_diffusion_parallel::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
@@ -2866,8 +2847,8 @@ namespace ptof
     };
     
     using Geometry = Geometry_Bcc_Parallel<3,
-    BoundaryConditionSet::Type::transport,
-    BoundaryConditionSet::Type::symmetryplanes>;
+      BoundaryConditionSet::Type::transport,
+      BoundaryConditionSet::Type::symmetryplanes>;
     using model_bcc_cartesian_advection_diffusion_parallel::Info;
     using model_bcc_cartesian_advection_diffusion_parallel::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
@@ -2923,8 +2904,8 @@ namespace ptof
     };
     
     using Geometry = Geometry_Bcc_Parallel<3,
-    BoundaryConditionSet::Type::firstpassage,
-    BoundaryConditionSet::Type::symmetryplanes>;
+      BoundaryConditionSet::Type::firstpassage,
+      BoundaryConditionSet::Type::symmetryplanes>;
     using model_advection_diffusion_fpt_2d_parallel::Info;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::State;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::CTRW;
