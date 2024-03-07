@@ -10,7 +10,7 @@ then
 	make ParticleTrackingOF_Parallel
   if [[ $? -eq 0 ]]
   then
-    mv "../bin/ParticleTrackingOF_Parallel" "../bin/ParticleTrackingOF_$1_parallel${NC}"
+    mv "../bin/ParticleTrackingOF_Parallel" "../bin/ParticleTrackingOF_$1_parallel"
     echo -e "${GREEN}Done.${NC}"
   else
     echo -e "${RED}Failed.${NC}"
