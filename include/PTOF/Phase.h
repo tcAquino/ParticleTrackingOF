@@ -29,10 +29,10 @@ namespace ptof
      \brief Parameters for phase-related quantities. */
     struct Parameters
     {
-      std::string excluded_phase_name;    /**< Name of phase saturation field where transport should not occur. */
-      double leakage_coefficient;         /**< Ratio of concentrations between excluded phase and other phase. */
-      bool excluded_phase;                /**< Weather to read excluded phase or other phase from file. */
+      std::string phase_name;             /**< Name of phase saturation field to be read from file. */
+      bool excluded_phase;                /**< Weather named phase is excluded phase or carrier phase from file. */
       bool compute_gradient;              /**< Weather to compute or read from file gradient of excluded phase. */
+      double leakage_coefficient;         /**< Ratio of concentrations between excluded phase and carrier phase. */
       double phase_threshold;             /**< Tolerance in local phase saturation to consider pure phase. */
       
       /** Constructor.
@@ -45,14 +45,14 @@ namespace ptof
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_phase_"
                                        + name + ".dat");
-        useful::read(input, excluded_phase_name);
+        useful::read(input, phase_name);
         std::string phase_transport;
         useful::read(input, phase_transport);
         if (phase_transport == "excluded")
         {
           excluded_phase = true;
         }
-        else if (phase_transport == "transport")
+        else if (phase_transport == "carrier")
         {
           excluded_phase = false;
         }
@@ -89,12 +89,12 @@ namespace ptof
           "--------------------------------------------------\n"
           "Phase parameters\n"
           "--------------------------------------------------\n"
-          "- Name of phase\n"
-          "- Excluded or transport phase\n"
+          "- Name of phase to be read from file\n"
+          "- Whether named phase is excluded or carrier phase\n"
           "\texcluded: No transport in this phase\n"
-          "\ttransport: Transport in this phase\n"
+          "\tcarrier: Transport in this phase\n"
           "- Wheteher to read or compute gradient of excluded phase\n"
-          "  (ignored if transport phase is given)\n"
+          "  (ignored if carrier phase is given)\n"
           "\tread: Read gradient\n"
           "\tcompute: Compute gradient\n"
           "- Leakage tolerance\n"
@@ -104,7 +104,7 @@ namespace ptof
     };
     
     /** \return Excluded phase saturation field.
-     \details Obtained from OpenFOAM file data for either the excluded phase or the other phase. */
+     \details Obtained from OpenFOAM file data for either the excluded phase or the carrier phase. */
     template <typename Mesh>
     static auto get_excluded_phase_data
     (Mesh const& mesh, Parameters const& parameters)
@@ -112,7 +112,7 @@ namespace ptof
       if (parameters.excluded_phase)
         return PhaseField{
           Foam::IOobject{
-            std::string("alpha.") + parameters.excluded_phase_name,
+            std::string("alpha.") + parameters.phase_name,
             mesh.time().timeName(),
             mesh,
             Foam::IOobject::MUST_READ,
@@ -122,7 +122,7 @@ namespace ptof
       else
         return PhaseField(1. - Foam::volScalarField{
           Foam::IOobject{
-            std::string("alpha.") + parameters.excluded_phase_name,
+            std::string("alpha.") + parameters.phase_name,
             mesh.time().timeName(),
             mesh,
             Foam::IOobject::MUST_READ,
@@ -139,7 +139,7 @@ namespace ptof
     {
       return GradPhaseField{
         Foam::IOobject{
-          std::string("gradAlpha.") + parameters.excluded_phase_name,
+          std::string("gradAlpha.") + parameters.phase_name,
           mesh.time().timeName(),
           mesh,
           Foam::IOobject::MUST_READ,

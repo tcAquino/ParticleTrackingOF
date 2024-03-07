@@ -105,7 +105,7 @@ namespace ptof
             "- Global time step in terms of characteristic advection time\n"
             "- Global time step in terms of characteristic diffusion time\n"
             "- Global time step in terms of surface reaction time\n"
-            "\t(Note: minimum between processes and maximum between local and global is used)\n"
+            "  (Note: minimum between processes and maximum between local and global is used)\n"
             "--------------------------------------------------\n";
         }
       };
@@ -215,9 +215,11 @@ namespace ptof
             "- Reference lengthscale\n"
             "- Diffusion coefficient\n"
             "- Whether and how to rescale velocity field:\n"
-            "\t(Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called)\n"
+            "  (Note: Rescaling of the velocity field is not handled when transport parameters are set;\n"
+            "         rescale method must be called)\n"
             "\tno_rescale: Do not rescale\n"
-            "\t\t(Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity)\n"
+            "\t            (Note: rescale method should still be called to compute the Peclet number,\n"
+            "\t                   advection time, and mean velocity)\n"
             "\trescale_to_peclet: Rescale according to imposed peclet number\n"
             "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
             "\trescale_to_advection_time: Rescale according to imposed advection time\n"
@@ -316,7 +318,7 @@ namespace ptof
       typename SolverParameters>
       static auto makeReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
@@ -329,7 +331,7 @@ namespace ptof
       typename SolverParameters>
       static auto makeSurfaceReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
@@ -462,16 +464,16 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -481,7 +483,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -490,9 +492,9 @@ namespace ptof
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -570,8 +572,8 @@ namespace ptof
             "--------------------------------------------------\n"
             "- Local timestep accuracy in terms of cell-based advection time\n"
             "- Global timestep accuracy in terms of characteristic advection time\n"
-            "\t(Note: Minimum between processes and maximum between local and global is used)\n"
-            "\t(Note: Initial values (e.g., of flow) are used for global quantities)\n"
+            "  (Note: Minimum between processes and maximum between local and global is used)\n"
+            "  (Note: Initial values (e.g., of flow) are used for global quantities)\n"
             "--------------------------------------------------\n";
         }
       };
@@ -664,9 +666,11 @@ namespace ptof
             "- Reference lengthscale\n"
             "- Diffusion coefficient\n"
             "- Whether and how to rescale velocity field:\n"
-            "\t(Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called)\n"
+            "  (Note: Rescaling of the velocity field is not handled when transport parameters are set;\n"
+            "         rescale method must be called)\n"
             "\tno_rescale: Do not rescale\n"
-            "\t\t(Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity)\n"
+            "\t            (Note: rescale method should still be called to compute the Peclet number,\n"
+            "\t                   advection time, and mean velocity)\n"
             "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
             "\trescale_to_advection_time: Rescale according to imposed advection time\n"
             "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
@@ -772,16 +776,16 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -791,7 +795,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -800,9 +804,9 @@ namespace ptof
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -887,7 +891,7 @@ namespace ptof
       typename SolverParameters>
       static auto makeReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
@@ -900,20 +904,20 @@ namespace ptof
       typename SolverParameters>
       static auto makeSurfaceReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
-        if (params.initial_distribution == "uniform")
+        if (parameters.initial_distribution == "uniform")
           return SurfaceReaction_AFluidPlusASolidtoASolid{
-            params.rate_constant,
+            parameters.rate_constant,
             params_transport.diff_coeff,
-            uniform_solid_reactant_patches(params.surface_concentration,
+            uniform_solid_reactant_patches(parameters.surface_concentration,
                                                { "wallFluidSolid" },
                                                geometry.mesh() ) };
         throw std::runtime_error{
           "Initial reactant distribution "
-          + params.initial_distribution
+          + parameters.initial_distribution
           + " not supported"
         };
       }
@@ -969,7 +973,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -977,9 +981,9 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -989,7 +993,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -999,9 +1003,9 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -1225,7 +1229,7 @@ namespace ptof
       typename SolverParameters>
       static auto makeReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
@@ -1238,7 +1242,7 @@ namespace ptof
       typename SolverParameters>
       static auto makeSurfaceReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
@@ -1263,16 +1267,16 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -1282,7 +1286,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -1291,9 +1295,9 @@ namespace ptof
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -1376,16 +1380,16 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -1395,7 +1399,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -1404,9 +1408,9 @@ namespace ptof
           ParticleMaker{
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -1491,7 +1495,7 @@ namespace ptof
       typename SolverParameters>
       static auto makeReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
@@ -1504,20 +1508,20 @@ namespace ptof
       typename SolverParameters>
       static auto makeSurfaceReaction
       (Geometry const& geometry,
-       Parameters const& params,
+       Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
-        if (params.initial_distribution == "uniform")
+        if (parameters.initial_distribution == "uniform")
           return SurfaceReaction_AFluidPlusASolidtoASolid{
-            params.rate_constant,
+            parameters.rate_constant,
             params_transport.diff_coeff,
-            uniform_solid_reactant_patches(params.surface_concentration,
+            uniform_solid_reactant_patches(parameters.surface_concentration,
                                                { "wallFluidSolid" },
                                                geometry.mesh() ) };
         throw std::runtime_error{
           "Initial reactant distribution "
-          + params.initial_distribution
+          + parameters.initial_distribution
           + " not supported" };
       }
       
@@ -1572,7 +1576,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1580,9 +1584,9 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -1592,7 +1596,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -1602,9 +1606,9 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -1750,7 +1754,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params)
+       Parameters const& parameters)
       {
         return InitialCondition_Cases{
           geometry, velocity_field,
@@ -1758,9 +1762,9 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params };
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters };
       }
       
       template
@@ -1770,7 +1774,7 @@ namespace ptof
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& params,
+       Parameters const& parameters,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -1780,9 +1784,9 @@ namespace ptof
             useful::Selector_t<CTRW::Particle>{},
             geometry.locator,
             geometry.boundary_periodic,
-            params.time_min,
-            params.initial_mass/params.nr_particles },
-          params,
+            parameters.time_min,
+            parameters.initial_mass/parameters.nr_particles },
+          parameters,
           mask, threshold };
       }
     };
@@ -1921,9 +1925,11 @@ namespace ptof
             "\tcorner: Left bottom corner at the origin\n"
             "- Diffusion coefficient\n"
             "- Whether and how to rescale velocity field:\n"
-            "\t(Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called)\n"
+            "  (Note: Rescaling of the velocity field is not handled when transport parameters are set;\n"
+            "         rescale method must be called)\n"
             "\tno_rescale: Do not rescale\n"
-            "\t\t(Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity)\n"
+            "\t            (Note: rescale method should still be called to compute the Peclet number,\n"
+            "\t                   advection time, and mean velocity)\n"
             "\trescale_to_peclet: Rescale according to imposed peclet number\n"
             "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
             "\trescale_to_advection_time: Rescale according to imposed advection time\n"
@@ -2172,9 +2178,11 @@ namespace ptof
             "\tcentered: Centered at the origin\n"
             "\tcorner: Left bottom corner at the origin\n"
             "- Whether and how to rescale velocity field:\n"
-            "\t(Note: Rescaling of the velocity field is not handled when transport parameters are set; rescale method must be called)\n"
+            "  (Note: Rescaling of the velocity field is not handled when transport parameters are set;\n"
+            "         rescale method must be called)\n"
             "\tno_rescale: Do not rescale\n"
-            "\t\t(Note: rescale method should still be called to compute the Peclet number, advection time, and mean velocity)\n"
+            "\t            (Note: rescale method should still be called to compute the Peclet number,\n"
+            "\t                   advection time, and mean velocity)\n"
             "\trescale_to_mean: Rescale according to imposed mean flow velocity\n"
             "\trescale_to_advection_time: Rescale according to imposed advection time\n"
             "- Mean flow velocity (pass only if rescaling with rescale_to_mean)\n"
