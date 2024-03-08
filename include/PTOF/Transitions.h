@@ -23,7 +23,7 @@ namespace ptof
   typename ReactionParameters,
   typename SolverParameters>
   auto makeTransportTransitions
-  (VelocityField&& velocity_field,
+  (VelocityField const& velocity_field,
    Geometry const& geometry,
    Boundary& boundary,
    TransportParameters const& params_transport,
@@ -41,7 +41,7 @@ namespace ptof
           params_solvers,
           CheckOptions::Warn{} },
         Steppers::makeTimeGenerator(params_solvers),
-        Steppers::makeJumpGenerator(std::forward<VelocityField>(velocity_field),
+        Steppers::makeJumpGenerator(velocity_field,
                                     boundary,
                                     params_transport,
                                     params_solvers,
@@ -59,7 +59,7 @@ namespace ptof
   typename ReactionParameters,
   typename SolverParameters>
   auto makeTransportTransitions_Advection
-  (VelocityField&& velocity_field,
+  (VelocityField const& velocity_field,
    Geometry const& geometry,
    Boundary& boundary,
    TransportParameters const& params_transport,
@@ -77,7 +77,7 @@ namespace ptof
           params_solvers,
           CheckOptions::Warn{} },
         Steppers::makeTimeGenerator(params_solvers),
-        Steppers::makeJumpGenerator_Advection(std::forward<VelocityField>(velocity_field),
+        Steppers::makeJumpGenerator_Advection(velocity_field,
                                               boundary,
                                               params_transport,
                                               params_solvers,

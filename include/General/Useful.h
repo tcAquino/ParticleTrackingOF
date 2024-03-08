@@ -1035,8 +1035,26 @@ namespace useful
           sizeof(has_time_step_setter::test((typename std::remove_reference<T>::type*)0));
   };
   
+  /** \class has_time_step_getter General/Useful.h "General/Useful.h"
+   \brief Check if type T has member function double time_step().
+   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
+  */
+  template <typename T> struct has_time_step_getter
+  {
+      typedef char (&Yes)[1];
+      typedef char (&No)[2];
+
+      template<class U>
+      static Yes test(U* data,
+                      typename std::enable_if<std::is_same<
+                        double,
+                        decltype(data->time_step())>::value>::type* = 0);
+      static No test(...);
+      static const bool value = sizeof(Yes) == sizeof(has_time_step_getter::test((typename std::remove_reference<T>::type*)0));
+  };
+  
   /** \class has_time_step General/Useful.h "General/Useful.h"
-   \brief Check if type T has member function void time_step().
+   \brief Check if type T has member variable double time_step.
    \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
   */
   template <typename T> struct has_time_step

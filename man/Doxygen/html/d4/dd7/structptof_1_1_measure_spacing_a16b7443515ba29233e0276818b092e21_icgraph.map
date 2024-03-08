@@ -1,8 +1,9 @@
 <map id="ptof::MeasureSpacing::type" name="ptof::MeasureSpacing::type">
-<area shape="rect" id="node1" title=" " alt="" coords="493,43,656,84"/>
-<area shape="rect" id="node2" href="$d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc" title=" " alt="" coords="261,5,424,47"/>
-<area shape="rect" id="node4" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aac5351e60374d82176c7b3c13a80eac0" title="Read measure spacing type from input stream." alt="" coords="240,71,445,127"/>
-<area shape="rect" id="node6" href="$d5/de8/classptof_1_1_output___cases.html#a00e9cee1c53bc391d5159ae26b2fc71a" title="Set time of next measurement." alt="" coords="249,152,436,193"/>
-<area shape="rect" id="node3" href="$d4/dd7/structptof_1_1_measure_spacing.html#afdf40210547a65aa50e0d58526270734" title=" " alt="" coords="17,5,180,47"/>
-<area shape="rect" id="node5" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#ac6bd99a728c941b9fcac49b5003b5fce" title=" " alt="" coords="5,79,192,120"/>
+<area shape="rect" id="node1" title=" " alt="" coords="493,71,656,112"/>
+<area shape="rect" id="node2" href="$d5/de8/classptof_1_1_output___cases.html#abab934dd80604743743306855ee76a51" title="Output information about current object." alt="" coords="270,5,415,47"/>
+<area shape="rect" id="node3" href="$d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc" title=" " alt="" coords="261,71,424,112"/>
+<area shape="rect" id="node5" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aac5351e60374d82176c7b3c13a80eac0" title="Read measure spacing type from input stream." alt="" coords="240,137,445,193"/>
+<area shape="rect" id="node7" href="$d5/de8/classptof_1_1_output___cases.html#a00e9cee1c53bc391d5159ae26b2fc71a" title="Set time of next measurement." alt="" coords="249,217,436,259"/>
+<area shape="rect" id="node4" href="$d4/dd7/structptof_1_1_measure_spacing.html#afdf40210547a65aa50e0d58526270734" title=" " alt="" coords="17,71,180,112"/>
+<area shape="rect" id="node6" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#ac6bd99a728c941b9fcac49b5003b5fce" title=" " alt="" coords="5,144,192,185"/>
 </map>

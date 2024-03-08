@@ -107,14 +107,14 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:affa85b26d432bc4a6f34c8cd0cf45f60"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#affa85b26d432bc4a6f34c8cd0cf45f60">excluded_phase_name</a></td></tr>
-<tr class="separator:affa85b26d432bc4a6f34c8cd0cf45f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0786ef6a202823f00900e4b14d2af0c5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#a0786ef6a202823f00900e4b14d2af0c5">leakage_coefficient</a></td></tr>
-<tr class="separator:a0786ef6a202823f00900e4b14d2af0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff8e274a267ba3d88439fe08fc40cd6d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#aff8e274a267ba3d88439fe08fc40cd6d">phase_name</a></td></tr>
+<tr class="separator:aff8e274a267ba3d88439fe08fc40cd6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e9d874c6a28052e5d09f3d86133d8f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#a3e9d874c6a28052e5d09f3d86133d8f8">excluded_phase</a></td></tr>
 <tr class="separator:a3e9d874c6a28052e5d09f3d86133d8f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7cc17e30c708ecc68d2e73da46bf4f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#ad7cc17e30c708ecc68d2e73da46bf4f4">compute_gradient</a></td></tr>
 <tr class="separator:ad7cc17e30c708ecc68d2e73da46bf4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0786ef6a202823f00900e4b14d2af0c5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#a0786ef6a202823f00900e4b14d2af0c5">leakage_coefficient</a></td></tr>
+<tr class="separator:a0786ef6a202823f00900e4b14d2af0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1b1a6734759b7c9bb62126ce5914aa8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html#ad1b1a6734759b7c9bb62126ce5914aa8">phase_threshold</a></td></tr>
 <tr class="separator:ad1b1a6734759b7c9bb62126ce5914aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -231,22 +231,7 @@ template&lt;typename OStream &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Weather to read excluded phase or other phase from file. </p>
-
-</div>
-</div>
-<a id="affa85b26d432bc4a6f34c8cd0cf45f60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affa85b26d432bc4a6f34c8cd0cf45f60">&#9670;&nbsp;</a></span>excluded_phase_name</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string ptof::Phase::Parameters::excluded_phase_name</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Name of phase saturation field where transport should not occur. </p>
+<p>Weather named phase is excluded phase or carrier phase from file. </p>
 
 </div>
 </div>
@@ -261,7 +246,22 @@ template&lt;typename OStream &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Ratio of concentrations between excluded phase and other phase. </p>
+<p>Ratio of concentrations between excluded phase and carrier phase. </p>
+
+</div>
+</div>
+<a id="aff8e274a267ba3d88439fe08fc40cd6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff8e274a267ba3d88439fe08fc40cd6d">&#9670;&nbsp;</a></span>phase_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ptof::Phase::Parameters::phase_name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Name of phase saturation field to be read from file. </p>
 
 </div>
 </div>

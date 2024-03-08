@@ -29,8 +29,7 @@ namespace ptof
         mesh.time().timeName(),
         mesh,
         Foam::IOobject::MUST_READ,
-        Foam::IOobject::NO_WRITE
-      },
+        Foam::IOobject::NO_WRITE },
       mesh };
   }
   

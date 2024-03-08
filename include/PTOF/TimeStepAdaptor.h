@@ -149,11 +149,11 @@ namespace ptof
         _params_solvers.global_time_step_adv*_params_transport.diffusion_time,
         _params_solvers.global_time_step_adv*_params_reaction.reaction_time }));
       
-      if constexpr (has_time_step_setter<TimeGenerator>::value)
+      if constexpr (useful::has_time_step_setter<TimeGenerator>::value)
         time_generator.time_step(time_step);
-      if constexpr (has_time_step_setter<JumpGenerator>::value)
+      if constexpr (useful::has_time_step_setter<JumpGenerator>::value)
         jump_generator.time_step(time_step);
-      if constexpr (has_time_step_setter<SurfaceReaction>::value)
+      if constexpr (useful::has_time_step_setter<SurfaceReaction>::value)
         _reaction.time_step(time_step);
       
       return time_step;
@@ -207,26 +207,6 @@ namespace ptof
           *std::min_element(min.begin(), min.end());
       }
     }
-    
-    /** \class has_time_step_setter
-     \brief Check if type T has member function void time_step(double).
-     \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
-    */
-    template <typename T>
-    struct has_time_step_setter
-    {
-        typedef char (&Yes)[1];
-        typedef char (&No)[2];
-
-        template<class U>
-        static Yes test(U* data,
-                        typename std::enable_if<std::is_void<
-                          decltype(data->time_step(0.))>::value>::type* = 0);
-        static No test(...);
-        static const bool value =
-          sizeof(Yes) ==
-            sizeof(has_time_step_setter::test((typename std::remove_reference<T>::type*)0));
-    };
     
     /** Check if position is out of bounds
     \param position Position to check.
