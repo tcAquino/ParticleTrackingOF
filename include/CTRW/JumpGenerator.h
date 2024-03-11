@@ -96,7 +96,7 @@ namespace ctrw
     auto const& jump_generator_2() const
     { return _jump_generator_2; }
     
-    /** \return Update the time step. */
+    /** \param time_step Time step to set. */
     void time_step(double time_step)
     {
       if constexpr (useful::has_time_step_setter<JumpGenerator_1>::value)
@@ -261,9 +261,9 @@ namespace ctrw
     double _time_step;          /**< Time step.            */
     double _diff_coeff;        /**< Diffusion coefficient.*/
     
-    double _diff_aux{ std::sqrt(2.*_diff_coeff*_time_step) };   /**< Typicall jump size.      */
+    double _diff_aux{ std::sqrt(2.*_diff_coeff*_time_step) };   /**< Typicall jump size. */
     RNG _rng{ std::random_device{}() };                         /**< Random number generator. */
-    std::normal_distribution<double> _normal_dist{ 0., 1. };   /**< Unit normal distribution.*/
+    std::normal_distribution<double> _normal_dist{ 0., 1. };    /**< Unit normal distribution.*/
 
   public:
 
@@ -304,7 +304,9 @@ namespace ctrw
     */
     template <typename State = useful::Empty>
     double operator() (State const& state = {})
-    { return _diff_aux*_normal_dist(_rng); }
+    {
+      return _diff_aux*_normal_dist(_rng);
+    }
   };
   
   /** \class JumpGenerator_Diffusion CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"

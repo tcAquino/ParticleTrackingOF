@@ -1607,7 +1607,7 @@ namespace ptof
           {
             OutputTime::_output << OutputTime::_delimiter << state.tag;
             auto cell = OutputTime::_locator(state);
-            if (cell < 0)
+            if (outside(cell))
               useful::print(OutputTime::_output,
                             std::vector<double>(Geometry::dim, 0.),
                             true, OutputTime::_delimiter);

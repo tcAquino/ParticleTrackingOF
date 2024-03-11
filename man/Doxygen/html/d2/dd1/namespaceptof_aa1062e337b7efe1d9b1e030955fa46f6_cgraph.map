@@ -1,11 +1,12 @@
 <map id="ptof::uniform_near_boundary_patches" name="ptof::uniform_near_boundary_patches">
-<area shape="rect" id="node1" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="5,70,153,111"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a3c85b81a804f529745e4f53c6b35ec53" title=" " alt="" coords="201,48,368,75"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a280ab3fb7f79ce8854a0d2c228f9623b" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="213,99,356,141"/>
+<area shape="rect" id="node1" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="5,95,153,137"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a3c85b81a804f529745e4f53c6b35ec53" title=" " alt="" coords="201,73,368,100"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a280ab3fb7f79ce8854a0d2c228f9623b" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="213,125,356,166"/>
 <area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="450,31,566,57"/>
 <area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="449,81,567,108"/>
 <area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="443,132,573,159"/>
-<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, pointing inward." alt="" coords="416,183,600,209"/>
+<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="457,183,559,209"/>
+<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, pointing inward." alt="" coords="416,233,600,260"/>
 <area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="657,5,771,32"/>
 <area shape="rect" id="node9" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="648,56,780,83"/>
 <area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="828,5,965,32"/>

@@ -42,7 +42,7 @@ namespace ptof
     , _locator{ std::forward<Locator>(locator) }
     {
       static_assert(check_if_outside == false && warn_if_outside == false,
-      "Bad template argument for no bounds checking.");
+                    "Bad class template arguments for no bounds checking.");
     }
     
     /** Constructor.
@@ -56,7 +56,7 @@ namespace ptof
     , _locator{ std::forward<Locator>(locator) }
     {
       static_assert(check_if_outside == true && warn_if_outside == false,
-      "Bad template argument for bounds checking.");
+                    "Bad class template arguments for bounds checking.");
     }
     
     /** Constructor.
@@ -70,7 +70,7 @@ namespace ptof
     , _locator{ std::forward<Locator>(locator) }
     {
       static_assert(check_if_outside == true && warn_if_outside == true,
-      "Bad template argument for bounds warning.");
+                    "Bad class template arguments for bounds warning.");
     }
     
     /**
@@ -79,10 +79,11 @@ namespace ptof
      \param cell Hint for mesh cell index position is in.
      \return interpolated field value.
     */
-    auto operator()(Point const& position, Index cell) const
+    auto operator()(Point const& position, Index cell = -1) const
     {
+      cell = _locator(position, cell);
       if constexpr (check_if_outside)
-        if (outside(position, cell))
+        if (outside<warn_if_outside>(cell, position, "Assigning zero."))
           return Vector::zero;
       
       return _interpolant.interpolate(position, cell);
@@ -90,56 +91,26 @@ namespace ptof
     
     /**
      \brief Interpolate field.
-     \param position 3D position.
-     \return interpolated field value.
-    */
-    auto operator()(Point const& position) const
-    {
-      return (*this)(position, _locator(position));
-    }
-    
-    /**
-     \brief Interpolate field.
      \param position 2D position.
      \param cell Hint for mesh cell index position is in.
      \return interpolated field value.
     */
-    auto operator()(Point2D const& position, Index cell) const
+    auto operator()(Point2D const& position, Index cell = -1) const
     {
       auto interp = (*this)(make_point(position), cell);
       
       return Vector2D{ interp[0], interp[1] };
     }
-    
-    /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \return interpolated field value.
-    */
-    auto operator()(Point2D const& position) const
-    {
-      return (*this)(position, _locator(position));
-    }
-    
+  
     /**
      \brief Interpolate field.
      \param position 1D position.
      \param cell Hint for mesh cell index position is in.
      \return interpolated field value.
     */
-    auto operator()(Scalar position, Index cell) const
+    auto operator()(Scalar position, Index cell = -1) const
     {
       return (*this)(make_point(position), cell)[0];
-    }
-    
-    /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \return interpolated field value.
-    */
-    auto operator()(Scalar position) const
-    {
-      return (*this)(position, _locator(position));
     }
     
     /**
@@ -150,7 +121,7 @@ namespace ptof
     auto operator()
     (State const& state) const
     {
-      return (*this)(state.position, _locator(state));
+      return (*this)(state.position, state.cell);
     }
     
     /**
@@ -163,11 +134,11 @@ namespace ptof
     { return _locator(state); }
     
     /** \return Underlying field data. */
-    auto const& get_field() const
+    auto const& field() const
     { return _field; }
     
     /** \return Locator object to find positions in mesh. */
-    auto const& get_locator() const
+    auto const& locator() const
     { return _locator; }
     
     /** \brief Rescale underlying field.
@@ -178,47 +149,22 @@ namespace ptof
     
     /**
      \brief Sum to underlying field.
-     \param other_field field to sum
+     \param field field to sum
     */
-    auto sum(Field const& other_field)
-    { _field += other_field; }
+    auto sum(Field const& field)
+    { _field += field; }
     
     /**
      \brief Change underlying field data.
      \param field Set field data to this field.
     */
     auto set(Field const& field)
-    {
-      _field = field;
-    }
+    { _field = field; }
     
   private:
     Field _field;      /**< Vector field cell data to interpolate. */
     Locator _locator;  /**< Locator to find positions in mesh. */
     Foam::interpolationCellPoint<Vector> _interpolant{ _field };  /**< Interpolation object. */
-    
-    /**
-     \brief Check if position is out of bounds.
-     \param position Position to check.
-     \param cell Hint for mesh cell index position is in.
-    */
-    bool outside
-    (Point const& position, Index cell) const
-    {
-      if (cell == -1)
-      {
-        if constexpr (warn_if_outside)
-          std::cerr
-            << "Warning: Requested field value at position "
-            << "("
-            << position[0] << ", "
-            << position[1] << ", "
-            << position[2] << ")"
-            << " outside mesh. Assigning zero\n";
-        return 1;
-      }
-      return 0;
-    }
   };
   template
   <typename Field, typename Locator>
@@ -266,7 +212,7 @@ namespace ptof
     , _locator{ std::forward<Locator>(locator) }
     {
       static_assert(check_if_outside == false && warn_if_outside == false,
-      "Bad template argument for no bounds checking.");
+                    "Bad class template arguments for no bounds checking.");
     }
     
     /** Constructor.
@@ -280,7 +226,7 @@ namespace ptof
     , _locator{ std::forward<Locator>(locator) }
     {
       static_assert(check_if_outside == true && warn_if_outside == false,
-      "Bad template argument for bounds checking.");
+                    "Bad class template arguments for bounds checking.");
     }
     
     /** Constructor.
@@ -294,7 +240,7 @@ namespace ptof
     , _locator{ std::forward<Locator>(locator) }
     {
       static_assert(check_if_outside == true && warn_if_outside == true,
-      "Bad template argument for bounds warning.");
+                    "Bad class template arguments for bounds warning.");
     }
     
     /**
@@ -303,10 +249,11 @@ namespace ptof
      \param cell Hint for mesh cell index position is in.
      \return interpolated field value.
     */
-    auto operator()(Point const& position, Index cell) const
+    auto operator()(Point const& position, Index cell = -1) const
     {
+      cell = _locator(position, cell);
       if constexpr (check_if_outside)
-        if (outside(position, cell))
+        if (outside<warn_if_outside>(cell, position, "Assigning zero."))
           return 0.;
       
       return _interpolant.interpolate(position, cell);
@@ -314,33 +261,13 @@ namespace ptof
     
     /**
      \brief Interpolate field.
-     \param position 3D position.
-     \return interpolated field value.
-    */
-    auto operator()(Point const& position) const
-    {
-      return (*this)(position, _locator(position));
-    }
-    
-    /**
-     \brief Interpolate field.
      \param position 2D position.
      \param cell Hint for mesh cell index position is in.
      \return interpolated field value.
     */
-    auto operator()(Point2D const& position, Index cell) const
+    auto operator()(Point2D const& position, Index cell = -1) const
     {
       return (*this)(make_point(position), cell);
-    }
-    
-    /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \return interpolated field value.
-    */
-    auto operator()(Point2D const& position) const
-    {
-      return (*this)(position, _locator(position));
     }
     
     /**
@@ -349,19 +276,9 @@ namespace ptof
      \param cell Hint for mesh cell index position is in.
      \return interpolated field value.
     */
-    auto operator()(Scalar position, Index cell) const
+    auto operator()(Scalar position, Index cell = -1) const
     {
       return (*this)(make_point(position), cell);
-    }
-    
-    /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \return interpolated field value.
-    */
-    auto operator()(Scalar position) const
-    {
-      return (*this)(position, _locator(position));
     }
     
     /**
@@ -372,7 +289,7 @@ namespace ptof
     auto operator()
     (State const& state) const
     {
-      return (*this)(state.position, _locator(state));
+      return (*this)(state.position, state.cell);
     }
     
     /**
@@ -385,11 +302,11 @@ namespace ptof
     { return _locator(state); }
     
     /** \return Underlying field data. */
-    auto const& get_field() const
+    auto const& field() const
     { return _field; }
     
     /** \return Locator object to find positions in mesh. */
-    auto const& get_locator() const
+    auto const& locator() const
     { return _locator; }
     
     /** \brief Rescale underlying field.
@@ -400,47 +317,22 @@ namespace ptof
     
     /**
      \brief Sum to underlying field.
-     \param other_field field to sum
+     \param field field to sum
     */
-    auto sum(Field const& other_field)
-    { _field += other_field; }
+    auto sum(Field const& field)
+    { _field += field; }
     
     /**
      \brief Change underlying field data.
      \param field Set field data to this field.
     */
     auto set(Field const& field)
-    {
-      _field = field;
-    }
+    { _field = field; }
     
   private:
     Field _field;      /**< Scalar field cell data to interpolate.         */
     Locator _locator;  /**< Locator to find positions in mesh. */
     Foam::interpolationCellPoint<Scalar> _interpolant{ _field }; /**< Interpolation object. */
-    
-    /**
-     \brief Check if position is out of bounds.
-     \param position Position to check.
-     \param cell Hint for mesh cell index position is in.
-    */
-    bool outside
-    (Point const& position, Index cell) const
-    {
-      if (cell == -1)
-      {
-        if constexpr (warn_if_outside)
-          std::cerr
-            << "Warning: Requested field value at position "
-            << "("
-            << position[0] << ", "
-            << position[1] << ", "
-            << position[2] << ")"
-            << " outside mesh. Assigning zero\n";
-        return 1;
-      }
-      return 0;
-    }
   };
   template
   <typename Field, typename Locator>

@@ -402,7 +402,7 @@ namespace ptof
       auto unit_normal = unit_normal_inward(face_ids[rand], mesh);
       auto position = face_center(face_ids[rand], mesh);
         + distance*unit_normal;
-      if (locator.mesh_search().findCell(position) == -1
+      if (outside(locator.mesh_search().findCell(position))
           || locator.mesh_search().findNearestBoundaryFace(position)
             != face_ids[rand])
         continue;

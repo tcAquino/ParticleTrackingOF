@@ -82,7 +82,7 @@ var hierarchy =
     [ "ctrw::Get_velocity_component< dd >", "de/d39/structctrw_1_1_get__velocity__component.html", null ],
     [ "ctrw::Get_velocity_property< Property >", "d9/d1a/structctrw_1_1_get__velocity__property.html", null ],
     [ "useful::has_time_step< T >", "d5/dc6/structuseful_1_1has__time__step.html", null ],
-    [ "ptof::TimeStepAdaptor_CellSize_SurfaceReaction< Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, check_if_outside, warn_if_outside >::has_time_step_setter< T >", "d3/d6f/structptof_1_1_time_step_adaptor___cell_size___surface_reaction_1_1has__time__step__setter.html", null ],
+    [ "useful::has_time_step_getter< T >", "dc/d7c/structuseful_1_1has__time__step__getter.html", null ],
     [ "useful::has_time_step_setter< T >", "d5/d31/structuseful_1_1has__time__step__setter.html", null ],
     [ "useful::has_value_type< T >", "d3/d44/classuseful_1_1has__value__type.html", null ],
     [ "useful::hash_container< Container >", "d4/de0/structuseful_1_1hash__container.html", null ],

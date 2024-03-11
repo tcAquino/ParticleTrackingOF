@@ -1,10 +1,5 @@
 var NAVTREEINDEX11 =
 {
-"dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a77cf875f218a54c24572d05eda09d117":[7,0,0,8,4],
-"dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a90ac43f457ad2d26c54b8d9582ef0c1e":[7,0,0,8,5],
-"dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aa536ca8ad810c5ce892d3444c70e2fcd":[7,0,0,8,0],
-"dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aa54e9ec4844fcb40ee3c6725bdfcf07a":[7,0,0,8,1],
-"dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#ab97c0b90800c124d0188c1ec528c2dcf":[7,0,0,8,2],
 "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aedc920cf96ed35635d5a954e56df6e7d":[7,0,0,8,3],
 "dd/d8c/_locator___parallel_8h.html":[8,0,3,9],
 "dd/d8c/_locator___parallel_8h_source.html":[8,0,3,9],
@@ -189,8 +184,8 @@ var NAVTREEINDEX11 =
 "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#ae163db9a3759d5a5c5c3acb6ab92d47c":[7,0,2,82,0,1],
 "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#af162acd6c2438f4014f6062119ffdbf5":[7,0,2,82,0,5],
 "de/db0/_p_t_o_f_2_transitions_8h.html":[8,0,3,21],
-"de/db0/_p_t_o_f_2_transitions_8h.html#a4ef54f81dc5a9316ae0aec787955a0a8":[8,0,3,21,1],
-"de/db0/_p_t_o_f_2_transitions_8h.html#aa6d78263c3529ae0c12b0bfe1fdc5942":[8,0,3,21,0],
+"de/db0/_p_t_o_f_2_transitions_8h.html#a023b14ec7e97f0ad7626be42797d8119":[8,0,3,21,1],
+"de/db0/_p_t_o_f_2_transitions_8h.html#a8764a901055b75d22226c474a83efef8":[8,0,3,21,0],
 "de/db0/_p_t_o_f_2_transitions_8h_source.html":[8,0,3,21],
 "de/dbb/namespaceptof_1_1model__advection__diffusion__fpt__3d.html":[6,0,8,15],
 "de/dbb/namespaceptof_1_1model__advection__diffusion__fpt__3d.html#a02479c3b7942d4ccbb0816d5922b8314":[6,0,8,15,3],
@@ -249,5 +244,10 @@ var NAVTREEINDEX11 =
 "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html#a195e051c974ff848e0bfca21ab8af932":[7,0,2,4,4,2],
 "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html#ab5bc880d837f60e6015934a1c8a785f8":[7,0,2,4,4,1],
 "df/d0b/structctrw_1_1_get__position__component__sq.html":[7,0,0,29],
-"df/d0b/structctrw_1_1_get__position__component__sq.html#a7245a53d588764507c53d1cb29ad3eeb":[7,0,0,29,0]
+"df/d0b/structctrw_1_1_get__position__component__sq.html#a7245a53d588764507c53d1cb29ad3eeb":[7,0,0,29,0],
+"df/d19/structuseful_1_1_parameters__or__empty.html":[7,0,4,28],
+"df/d19/structuseful_1_1_parameters__or__empty.html#a57b1c32ebdceecc9e692babba37815f4":[7,0,4,28,0],
+"df/d1d/namespaceuseful.html":[6,0,10],
+"df/d1d/namespaceuseful.html#a02a9939fa943b12a637531483ace046d":[6,0,10,70],
+"df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466":[6,0,10,93]
 };

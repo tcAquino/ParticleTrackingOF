@@ -32,7 +32,7 @@ namespace ptof
       std::string phase_name;             /**< Name of phase saturation field to be read from file. */
       bool excluded_phase;                /**< Weather named phase is excluded phase or carrier phase from file. */
       bool compute_gradient;              /**< Weather to compute or read from file gradient of excluded phase. */
-      double leakage_coefficient;         /**< Ratio of concentrations between excluded phase and carrier phase. */
+      double leakage_coefficient;         /**< Log of ratio of concentrations between excluded phase and carrier phase. */
       double phase_threshold;             /**< Tolerance in local phase saturation to consider pure phase. */
       
       /** Constructor.

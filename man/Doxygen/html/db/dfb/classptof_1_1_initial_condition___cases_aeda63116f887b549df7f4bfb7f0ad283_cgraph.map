@@ -1,41 +1,42 @@
 <map id="ptof::InitialCondition_Cases::operator()" name="ptof::InitialCondition_Cases::operator()">
-<area shape="rect" id="node1" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="5,332,160,373"/>
-<area shape="rect" id="node2" href="$db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="208,332,383,373"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="458,17,593,43"/>
-<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="1341,56,1493,97"/>
-<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a423f1c66f72fe07e0545aba4ecee8c56" title="Maker particles over a time window according to given pulse properties." alt="" coords="431,547,620,574"/>
-<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#ad0f126e69b11f428ffdc65866057aff0" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="452,263,599,290"/>
-<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#ad09a1942f608f3e3d168700e0c929c3a" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="678,265,825,307"/>
-<area shape="rect" id="node20" href="$d2/dd1/namespaceptof.html#a8971466e08138b1fe0470371860cfa78" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="452,416,599,457"/>
-<area shape="rect" id="node29" href="$d5/d77/structptof_1_1_initial_conditions.html#ae02f386901fa33ae454e041e53e4da1a" title=" " alt="" coords="445,599,606,640"/>
-<area shape="rect" id="node31" href="$d2/dd1/namespaceptof.html#aedc246759e2a830f7ce2c15a17868c8e" title=" " alt="" coords="431,665,620,691"/>
-<area shape="rect" id="node33" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="472,213,579,239"/>
-<area shape="rect" id="node34" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="680,163,823,190"/>
-<area shape="rect" id="node35" href="$d2/dd1/namespaceptof.html#aa1062e337b7efe1d9b1e030955fa46f6" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="451,481,599,523"/>
-<area shape="rect" id="node38" href="$d2/dd1/namespaceptof.html#a9e9ee78fd15660c1b244aef3eb64cb0e" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="443,365,607,391"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a42b0ae8508d0fe2d62c5311583c263e2" title="Remove cell/face indices if mask is above threshold." alt="" coords="675,5,828,47"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="893,13,1056,39"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="1131,13,1277,39"/>
-<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="1543,173,1670,199"/>
-<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="688,214,815,241"/>
-<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="907,173,1042,199"/>
-<area shape="rect" id="node14" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="917,274,1033,301"/>
-<area shape="rect" id="node15" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="1147,274,1261,301"/>
-<area shape="rect" id="node19" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="1138,223,1270,250"/>
-<area shape="rect" id="node16" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="1349,223,1486,250"/>
-<area shape="rect" id="node17" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="1359,325,1476,351"/>
-<area shape="rect" id="node18" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="1548,325,1665,351"/>
-<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#a8b2228b67b8e91f964d1ad0b0c9e018c" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="678,468,825,509"/>
-<area shape="rect" id="node28" href="$d2/dd1/namespaceptof.html#a3c85b81a804f529745e4f53c6b35ec53" title=" " alt="" coords="668,417,835,443"/>
-<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="915,541,1034,567"/>
-<area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="1541,506,1672,533"/>
-<area shape="rect" id="node24" href="$d2/dd1/namespaceptof.html#ac1010c1948fbd50120a52c1c082e3226" title="Make particle at given mesh face&#39;s center." alt="" coords="901,420,1048,461"/>
-<area shape="rect" id="node25" href="$d2/dd1/namespaceptof.html#a157fda891beb78212b2f6d40eac9c3ae" title=" " alt="" coords="1343,528,1492,569"/>
-<area shape="rect" id="node26" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="1115,426,1293,453"/>
-<area shape="rect" id="node27" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="1354,375,1481,402"/>
-<area shape="rect" id="node30" href="$d5/d77/structptof_1_1_initial_conditions.html#ab875f1de2b50d662c4db29c115b49259" title=" " alt="" coords="671,599,832,640"/>
-<area shape="rect" id="node32" href="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="686,665,817,691"/>
-<area shape="rect" id="node36" href="$d2/dd1/namespaceptof.html#a280ab3fb7f79ce8854a0d2c228f9623b" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="680,533,823,575"/>
-<area shape="rect" id="node37" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, pointing inward." alt="" coords="883,591,1067,618"/>
-<area shape="rect" id="node39" href="$d2/dd1/namespaceptof.html#ac2a70b619d6d1492ec15d5447329351b" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="677,365,825,391"/>
+<area shape="rect" id="node1" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="5,315,160,357"/>
+<area shape="rect" id="node2" href="$db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="208,315,383,357"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="458,33,593,60"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="675,83,827,125"/>
+<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a423f1c66f72fe07e0545aba4ecee8c56" title="Maker particles over a time window according to given pulse properties." alt="" coords="431,528,620,555"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#ad0f126e69b11f428ffdc65866057aff0" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="452,243,599,269"/>
+<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#ad09a1942f608f3e3d168700e0c929c3a" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="678,269,825,310"/>
+<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#a8971466e08138b1fe0470371860cfa78" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="452,462,599,503"/>
+<area shape="rect" id="node30" href="$d5/d77/structptof_1_1_initial_conditions.html#ae02f386901fa33ae454e041e53e4da1a" title=" " alt="" coords="445,579,606,621"/>
+<area shape="rect" id="node32" href="$d2/dd1/namespaceptof.html#aedc246759e2a830f7ce2c15a17868c8e" title=" " alt="" coords="431,645,620,672"/>
+<area shape="rect" id="node34" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="472,192,579,219"/>
+<area shape="rect" id="node35" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="680,167,823,193"/>
+<area shape="rect" id="node36" href="$d2/dd1/namespaceptof.html#aa1062e337b7efe1d9b1e030955fa46f6" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="451,345,599,386"/>
+<area shape="rect" id="node39" href="$d2/dd1/namespaceptof.html#a9e9ee78fd15660c1b244aef3eb64cb0e" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="443,411,607,437"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a42b0ae8508d0fe2d62c5311583c263e2" title="Remove cell/face indices if mask is above threshold." alt="" coords="675,9,828,50"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="893,5,1056,32"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="1131,5,1277,32"/>
+<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="1541,208,1667,235"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="923,107,1026,133"/>
+<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="688,217,815,244"/>
+<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="907,208,1042,235"/>
+<area shape="rect" id="node15" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="917,309,1033,336"/>
+<area shape="rect" id="node16" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="1147,309,1261,336"/>
+<area shape="rect" id="node20" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="1138,259,1270,285"/>
+<area shape="rect" id="node17" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="1347,259,1485,285"/>
+<area shape="rect" id="node18" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="1357,360,1475,387"/>
+<area shape="rect" id="node19" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="1545,360,1663,387"/>
+<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a8b2228b67b8e91f964d1ad0b0c9e018c" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="678,513,825,554"/>
+<area shape="rect" id="node29" href="$d2/dd1/namespaceptof.html#a3c85b81a804f529745e4f53c6b35ec53" title=" " alt="" coords="668,411,835,437"/>
+<area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="915,461,1034,488"/>
+<area shape="rect" id="node24" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="1539,537,1669,564"/>
+<area shape="rect" id="node25" href="$d2/dd1/namespaceptof.html#ac1010c1948fbd50120a52c1c082e3226" title="Make particle at given mesh face&#39;s center." alt="" coords="901,513,1048,554"/>
+<area shape="rect" id="node26" href="$d2/dd1/namespaceptof.html#a157fda891beb78212b2f6d40eac9c3ae" title=" " alt="" coords="1341,614,1491,655"/>
+<area shape="rect" id="node27" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="1115,512,1293,539"/>
+<area shape="rect" id="node28" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="1353,461,1479,488"/>
+<area shape="rect" id="node31" href="$d5/d77/structptof_1_1_initial_conditions.html#ab875f1de2b50d662c4db29c115b49259" title=" " alt="" coords="671,579,832,621"/>
+<area shape="rect" id="node33" href="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="686,645,817,672"/>
+<area shape="rect" id="node37" href="$d2/dd1/namespaceptof.html#a280ab3fb7f79ce8854a0d2c228f9623b" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="680,345,823,386"/>
+<area shape="rect" id="node38" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, pointing inward." alt="" coords="883,411,1067,437"/>
+<area shape="rect" id="node40" href="$d2/dd1/namespaceptof.html#ac2a70b619d6d1492ec15d5447329351b" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="677,461,825,488"/>
 </map>

@@ -177,7 +177,7 @@ namespace ptof
         void rescale
         (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.field(), mesh);
           if (rescale_velocity_field == "rescale_to_peclet")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
@@ -634,7 +634,7 @@ namespace ptof
         void rescale
         (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.field(), mesh);
           if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
@@ -1878,7 +1878,7 @@ namespace ptof
         void rescale
         (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.field(), mesh);
           if (rescale_velocity_field == "rescale_to_peclet")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;
@@ -2138,7 +2138,7 @@ namespace ptof
         void rescale
         (VelocityField& velocity_field, Mesh const& mesh)
         {
-          double current_mean = ptof::magnitude_of_average(velocity_field.get_field(), mesh);
+          double current_mean = ptof::magnitude_of_average(velocity_field.field(), mesh);
           if (rescale_velocity_field == "rescale_to_mean")
           {
             velocity_rescaling_factor = mean_velocity/current_mean;

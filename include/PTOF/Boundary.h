@@ -315,7 +315,7 @@ namespace ptof
     bool outOfBounds(Position const& position) const
     {
       Foam::label cell = _locator.mesh_search().findCell(make_point(position));
-      return cell < 0;
+      return outside(cell);
     }
 
     /**
@@ -331,22 +331,26 @@ namespace ptof
       /** Find first intersection with boundary patch. */
       auto intersection =
         _locator.mesh_search().intersection(make_point(state_old.position),
-                                           make_point(state.position));
+                                            make_point(state.position));
       
       // When the start point is on a cell face,
       // sometimes the intersection with it is not found
       // Avoid breaking by checking for intersections with a small
       // backwards offset when the final state is out of bounds
-      state.cell = _locator(state);
-      if (!intersection.hit()
-          && state.cell < 0)
-        intersection =
-          _locator.mesh_search().intersection(offset_backward_cell(make_point(state_old.position),
-                                                                  state_old.cell,
-                                                                  make_point(state.position)
-                                                                  -make_point(state_old.position),
-                                                                  _locator),
-                                             make_point(state.position));
+      if (!intersection.hit())
+      {
+        state.cell = _locator(state);
+        if (outside(state.cell))
+        {
+          intersection =
+            _locator.mesh_search().intersection(offset_backward_cell(make_point(state_old.position),
+                                                                     state_old.cell,
+                                                                     make_point(state.position)
+                                                                     - make_point(state_old.position),
+                                                                     _locator),
+                                                make_point(state.position));
+        }
+      }
       else
       {
         // Ignore new intersection if offset went beyond final point

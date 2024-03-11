@@ -35,6 +35,7 @@ var _general_2_useful_8h =
     [ "Parameters_or_empty", "df/d19/structuseful_1_1_parameters__or__empty.html", "df/d19/structuseful_1_1_parameters__or__empty" ],
     [ "Parameters_or_empty< true, T >", "d4/d06/structuseful_1_1_parameters__or__empty_3_01true_00_01_t_01_4.html", "d4/d06/structuseful_1_1_parameters__or__empty_3_01true_00_01_t_01_4" ],
     [ "has_time_step_setter", "d5/d31/structuseful_1_1has__time__step__setter.html", "d5/d31/structuseful_1_1has__time__step__setter" ],
+    [ "has_time_step_getter", "dc/d7c/structuseful_1_1has__time__step__getter.html", "dc/d7c/structuseful_1_1has__time__step__getter" ],
     [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ],
     [ "begin_result", "d9/d18/_general_2_useful_8h.html#a9825870413a3e014c0cebd482cfcdc1e", null ],
     [ "has_and", "d9/d18/_general_2_useful_8h.html#aaf899ef2db6f7b681e1d0acc6eb4d26e", null ],

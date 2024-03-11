@@ -111,7 +111,7 @@ namespace ctrw
     void operator() (State& state)
     {
       auto state_old = state;
-      _time_step = _time_step_adaptor(state, _time_generator, _jump_generator);
+      _time_step_adaptor(state, _time_generator, _jump_generator);
       operation::plus_InPlace(state.position, _jump_generator(state));
       state.time += _time_generator(state);
       _boundary(state, state_old);

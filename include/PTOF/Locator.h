@@ -220,7 +220,7 @@ namespace ptof
       for (auto dd : degenerate_dimensions)
         center[dd] = degenerate_dimensions[dd];
       auto cell_id = locator.mesh_search().findCell(center);
-      if (cell_id >= 0)
+      if (!outside(cell_id))
         cell_ids.insert(cell_id);
     }
 

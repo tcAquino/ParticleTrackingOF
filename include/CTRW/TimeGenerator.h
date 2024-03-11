@@ -37,18 +37,18 @@ namespace ctrw
   public:
     using value_type = val_type;
 
-    TimeGenerator_Step(val_type time_step = 0.)
+    TimeGenerator_Step(value_type time_step = 0.)
     : _time_step{ time_step }
     {}
 
-    void time_step(val_type time_step)
+    void time_step(value_type time_step)
     { _time_step = time_step; }
 
-    val_type time_step() const
+    value_type time_step() const
     { return _time_step; }
 
     template <typename State = useful::Empty>
-    val_type operator()(State const& = {})
+    value_type operator()(State const& = {})
     { return _time_step; }
   };
   

@@ -13,6 +13,7 @@
 #include <type_traits>
 #include <vector>
 #include "General/Useful.h"
+#include "PTOF/Useful.h"
 
 namespace ptof
 {
@@ -154,7 +155,7 @@ namespace ptof
    Tag tag = {})
   {
     Foam::label cell_id = locator(position);
-    if (cell_id == -1)
+    if (outside(cell_id))
       throw std::runtime_error{
         "Particle initialized outside mesh" };
     return { position, cell_id, time, mass, tag };
@@ -177,7 +178,7 @@ namespace ptof
    Tag tag ={})
   {
     Foam::label cell_id = locator(position);
-    if (cell_id == -1)
+    if (outside(cell_id))
       throw std::runtime_error{
         "Particle initialized outside mesh" };
     return { position, cell_id, time, mass, tag };
@@ -200,7 +201,7 @@ namespace ptof
    Tag tag = {})
   {
     Foam::label cell_id = locator(position);
-    if (cell_id == -1)
+    if (outside(cell_id))
       throw std::runtime_error{
         "Particle initialized outside mesh" };
     return { position, cell_id, time, mass, tag };
@@ -426,7 +427,7 @@ namespace ptof
    Tag tag = {})
   {
     Foam::label cell_id = locator(position);
-    if (cell_id == -1)
+    if (outside(cell_id))
       throw std::runtime_error{
         "Particle initialized outside mesh" };
     return { position, periodicity, cell_id, time, mass, tag };
@@ -450,7 +451,7 @@ namespace ptof
    Tag tag ={})
   {
     Foam::label cell_id = locator(position);
-    if (cell_id == -1)
+    if (outside(cell_id))
       throw std::runtime_error{
         "Particle initialized outside mesh" };
     return { position, periodicity, cell_id, time, mass, tag };
@@ -474,7 +475,7 @@ namespace ptof
    Tag tag = {})
   {
     Foam::label cell_id = locator(position);
-    if (cell_id == -1)
+    if (outside(cell_id))
       throw std::runtime_error{
         "Particle initialized outside mesh" };
     return { position, periodicity, cell_id, time, mass, tag };

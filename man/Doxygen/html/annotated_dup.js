@@ -366,6 +366,7 @@ var annotated_dup =
       [ "Parameters_or_empty", "df/d19/structuseful_1_1_parameters__or__empty.html", "df/d19/structuseful_1_1_parameters__or__empty" ],
       [ "Parameters_or_empty< true, T >", "d4/d06/structuseful_1_1_parameters__or__empty_3_01true_00_01_t_01_4.html", "d4/d06/structuseful_1_1_parameters__or__empty_3_01true_00_01_t_01_4" ],
       [ "has_time_step_setter", "d5/d31/structuseful_1_1has__time__step__setter.html", "d5/d31/structuseful_1_1has__time__step__setter" ],
+      [ "has_time_step_getter", "dc/d7c/structuseful_1_1has__time__step__getter.html", "dc/d7c/structuseful_1_1has__time__step__getter" ],
       [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ]
     ] ],
     [ "Info_type", "d4/d6e/struct_info__type.html", null ],

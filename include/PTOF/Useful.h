@@ -7,9 +7,12 @@
 #ifndef PTOF_USEFUL_H
 #define PTOF_USEFUL_H
 
+#include <iostream>
+#include <string>
 #include <type_traits>
 #include <fieldTypes.H>
 #include "CTRW/StateGetter.h"
+#include "General/Useful.h"
 
 namespace ptof
 {
@@ -26,6 +29,52 @@ namespace ptof
   {
     using Serial = useful::Selector<int, 0>;  /**< Serial implementations.           */
     using Parallel = useful::Selector<int, 1>;    /**< Parallel implementations.  */
+  }
+  
+  /** \brief Return whether cell index indicates outside mesh
+  \tparam warn_if_outside Output warning if true, do not if false
+  \param position Position to check.
+  \param cell Mesh index of cell position is in.
+  \return true if outside, false otherwise.
+   \note \p cell is the actual index of the cell position is in, determined elsewhere, not a hint.
+  */
+  bool outside
+  (Foam::label cell)
+  {
+    if (cell < 0)
+      return 1;
+    return 0;
+  }
+  
+  /** \brief Return whether cell index indicates outside mesh, and warn and print position if warning is enabled
+  \tparam warn_if_outside Output warning if true, do not if false
+  \param position Position to check.
+  \param cell Mesh index of cell position is in.
+  \param extra_warning_info Additional information to output if warning is issued.
+  \return true if outside, false otherwise.
+   \note \p cell is the actual index of the cell position is in, determined elsewhere, not a hint.
+  */
+  template <bool warn_if_outside>
+  bool outside
+  (Foam::label cell, Foam::point const& position, std::string const& extra_warning_info = {})
+  {
+    if (cell < 0)
+    {
+      if constexpr (warn_if_outside)
+      {
+        std::cerr << "Warning: Requested cell side at position "
+                  << "("
+                  << position[0] << ", "
+                  << position[1] << ", "
+                  << position[2] << ")"
+                  << " outside mesh.";
+        if (!extra_warning_info.empty())
+          std::cerr << " ";
+        std::cerr << extra_warning_info << "\n";
+      }
+      return 1;
+    }
+    return 0;
   }
   
   /** \brief Make 3D point from 2D point. */
@@ -593,8 +642,6 @@ namespace ptof
           << 1. - double(ptof::nr_absorbed(subject, time))/subject.size()
           << "\n";
   }
-  
-  
 }
 
 #endif /* PTOF_USEFUL_H */

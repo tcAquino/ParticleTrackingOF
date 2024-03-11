@@ -13,6 +13,7 @@
 #include <zero.H>
 #include "PTOF/Field.h"
 #include "PTOF/Reaction.h"
+#include "PTOF/Useful.h"
 
 namespace ptof
 {
@@ -36,7 +37,7 @@ namespace ptof
      \brief Without checking if particle is in bounds.
      \param geometry Domain geometry info and utilities.
      \param velocity_field Velocity field.
-     \param reaction Surface reaction handler.
+     \param surface_reaction Surface reaction handler.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
@@ -44,13 +45,13 @@ namespace ptof
     TimeStepAdaptor_CellSize_SurfaceReaction
     (Geometry const& geometry,
      VelocityField const& velocity_field,
-     SurfaceReaction& reaction,
+     SurfaceReaction& surface_reaction,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      CheckOptions::NoCheck)
     : TimeStepAdaptor_CellSize_SurfaceReaction{
-        geometry, velocity_field, reaction,
+        geometry, velocity_field, surface_reaction,
         params_transport, params_reaction, params_solvers }
     {
       static_assert(check_if_outside == false && warn_if_outside == false,
@@ -61,7 +62,7 @@ namespace ptof
      \brief With checking if particle is in bounds but no warning if not.
      \param geometry Domain geometry info and utilities.
      \param velocity_field Velocity field.
-     \param reaction Surface reaction handler.
+     \param surface_reaction Surface reaction handler.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
@@ -69,13 +70,13 @@ namespace ptof
     TimeStepAdaptor_CellSize_SurfaceReaction
     (Geometry const& geometry,
      VelocityField const& velocity_field,
-     SurfaceReaction& reaction,
+     SurfaceReaction& surface_reaction,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      CheckOptions::Check)
     : TimeStepAdaptor_CellSize_SurfaceReaction{
-        geometry, velocity_field, reaction,
+        geometry, velocity_field, surface_reaction,
         params_transport, params_reaction, params_solvers }
     {
       static_assert(check_if_outside == true && warn_if_outside == false,
@@ -86,7 +87,7 @@ namespace ptof
      \brief With warning if particle is out of bounds.
      \param geometry Domain geometry info and utilities.
      \param velocity_field Velocity field.
-     \param reaction Surface reaction handler.
+     \param surface_reaction Surface reaction handler.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
@@ -94,13 +95,13 @@ namespace ptof
     TimeStepAdaptor_CellSize_SurfaceReaction
     (Geometry const& geometry,
      VelocityField const& velocity_field,
-     SurfaceReaction& reaction,
+     SurfaceReaction& surface_reaction,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      CheckOptions::Warn)
     : TimeStepAdaptor_CellSize_SurfaceReaction{
-        geometry, velocity_field, reaction,
+        geometry, velocity_field, surface_reaction,
         params_transport, params_reaction, params_solvers }
     {
       static_assert(check_if_outside == true && warn_if_outside == true,
@@ -121,7 +122,7 @@ namespace ptof
       state.cell = _geometry.locator(state);
       auto cell_id = state.cell;
       if constexpr (check_if_outside)
-        if (outside(make_point(state.position), state.cell))
+        if (outside<warn_if_outside>(state.cell, make_point(state.position), "Using nearest cell."))
         {
           cell_id = _geometry.locator.nearest_cell(state);
         }
@@ -134,7 +135,7 @@ namespace ptof
       if constexpr (!std::is_same_v<SurfaceReaction, Reaction_DoNothing>)
         for (auto face : _geometry.mesh().cells()[cell_id])
         {
-          double rate = _reaction.rate(face);
+          double rate = _surface_reaction.rate(face);
           if (rate > reaction_rate)
             reaction_rate = rate;
         }
@@ -154,7 +155,7 @@ namespace ptof
       if constexpr (useful::has_time_step_setter<JumpGenerator>::value)
         jump_generator.time_step(time_step);
       if constexpr (useful::has_time_step_setter<SurfaceReaction>::value)
-        _reaction.time_step(time_step);
+        _surface_reaction.time_step(time_step);
       
       return time_step;
     }
@@ -162,17 +163,17 @@ namespace ptof
   private:
     Geometry const& _geometry;                     /**< Domain geometry info and utilities. */
     VelocityField const& _velocity_field;          /**< Velocity field. */
-    SurfaceReaction& _reaction;                    /**< Surface reaction. */
+    SurfaceReaction& _surface_reaction;            /**< Surface reaction. */
     TransportParameters const& _params_transport;  /**< Transport parameters. */
     ReactionParameters const& _params_reaction;    /**< Reaction parameters. */
     SolverParameters const& _params_solvers;       /**< Solver parameters. */
     double _volume_factor;                         /**< Volume factor to correct cell volumes in 1D and 2D. */
     
-    /** Base constructor.
-     \brief Called by different public constructors.
+    /** Constructor.
+     \brief Base constructor called by different public constructors.
      \param geometry Domain geometry info and utilities.
      \param velocity_field Velocity field.
-     \param reaction Surface reaction handler.
+     \param surface_reaction Surface reaction handler.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
@@ -180,13 +181,13 @@ namespace ptof
     TimeStepAdaptor_CellSize_SurfaceReaction
     (Geometry const& geometry,
      VelocityField const& velocity_field,
-     SurfaceReaction& reaction,
+     SurfaceReaction& surface_reaction,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers)
     : _geometry{ geometry }
     , _velocity_field{ velocity_field }
-    , _reaction{ reaction }
+    , _surface_reaction{ surface_reaction }
     , _params_transport{ params_transport }
     , _params_reaction{ params_reaction }
     , _params_solvers{ params_solvers }
@@ -206,28 +207,6 @@ namespace ptof
         _volume_factor *= *std::max_element(max.begin(), max.end()) -
           *std::min_element(min.begin(), min.end());
       }
-    }
-    
-    /** Check if position is out of bounds
-    \param position Position to check.
-    \param cell Hint of which mesh cell position is in.
-    \return true if outside, false otherwise.
-    */
-    bool outside
-    (Foam::point const& position, Foam::label cell) const
-    {
-      if (cell == -1)
-      {
-        if constexpr (warn_if_outside)
-          std::cerr << "Warning: Requested cell side at position "
-                    << "("
-                    << position[0] << ", "
-                    << position[1] << ", "
-                    << position[2] << ")"
-                    << " outside mesh. Using nearest cell\n";
-        return 1;
-      }
-      return 0;
     }
   };
   template
