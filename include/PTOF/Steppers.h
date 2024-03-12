@@ -21,17 +21,15 @@ namespace ptof
   struct Steppers_Advection_RK4_Diffusion_Euler
   {
     /**
-     \param solver_params Solver parameters.
+     \param params_solvers Solver parameters.
      \return Deterministic time step TimeGenerator.
-     \note
-     \p solver_params must define:
-     - time_step
+     \note If \p params_solvers does not define \c time_step, the time step is initially set to zero.
     */
     template <typename SolverParameters>
-    static auto makeTimeGenerator(SolverParameters const& solver_params)
+    static auto makeTimeGenerator(SolverParameters const& params_solvers)
     {
       if constexpr (useful::has_time_step<SolverParameters>::value)
-        return ctrw::TimeGenerator_Step{ solver_params.time_step };
+        return ctrw::TimeGenerator_Step{ params_solvers.time_step };
       return ctrw::TimeGenerator_Step{ 0. };
     }
     
@@ -44,10 +42,9 @@ namespace ptof
      \return Advection--diffusion JumpGenerator.
      \note
      \p params_transport must define:
-     - diff_coeff
+     - \c diff_coeff
      
-     \p params_solvers must define:
-     - time_step
+     If \p params_solvers does not define \c time_step, the time step is initially set to zero.
      */
     template
     <typename VelocityField,
@@ -91,10 +88,7 @@ namespace ptof
      \param params_solvers Solver parameters.
      \param dim Spatial dimension.
      \return Pure advection JumpGenerator.
-     \note
-     \p params_solvers must define:
-     - time_step
-    */
+     \note If \p params_solvers does not define \c time_step, the time step is initially set to zero. */
     template
     <typename VelocityField,
     typename Boundary,
@@ -126,17 +120,14 @@ namespace ptof
   struct Steppers_Advection_Euler_Diffusion_Euler
   {
     /**
-     \param solver_params Solver parameters.
+     \param params_solvers Solver parameters.
      \return Deterministic time step TimeGenerator.
-     \note
-     \p solver_params must define:
-     - time_step
-    */
+     \note If \p params_solvers does not define \c time_step, the time step is initially set to zero. */
     template <typename SolverParameters>
-    static auto makeTimeGenerator(SolverParameters const& solver_params)
+    static auto makeTimeGenerator(SolverParameters const& params_solvers)
     {
       if constexpr (useful::has_time_step<SolverParameters>::value)
-        return ctrw::TimeGenerator_Step{ solver_params.time_step };
+        return ctrw::TimeGenerator_Step{ params_solvers.time_step };
       return ctrw::TimeGenerator_Step{ 0. };
     }
     
@@ -149,10 +140,9 @@ namespace ptof
       \return Advection--diffusion JumpGenerator.
       \note
       \p params_transport must define:
-      - diff_coeff
+      - \c diff_coeff
      
-      \p params_solvers must define:
-      - time_step
+      If \p params_solvers does not define \c time_step, the time step is initially set to zero.
      */
     template
     <typename VelocityField,
@@ -194,10 +184,7 @@ namespace ptof
      \param params_solvers Solver parameters.
      \param dim Spatial dimension.
      \return Pure advection JumpGenerator.
-     \note
-     \p params_solvers must define:
-     - time_step
-    */
+     \note If \p params_solvers does not define \c time_step, the time step is initially set to zero. */
     template
     <typename VelocityField,
     typename Boundary,

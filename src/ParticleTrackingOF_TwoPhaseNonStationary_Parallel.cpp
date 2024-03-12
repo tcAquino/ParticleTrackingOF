@@ -23,8 +23,12 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
+  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt_parallel;
   using Phase = ptof::Phase;
+  using VelocityField
+    = decltype(Transport::makeVelocityInterpolator(std::declval<Geometry>(),
+                                                   std::declval<Foam::volVectorField>()));
+  using Output = Output<VelocityField>;
   
   if (useful::check_options_help(argc, argv))
   {
@@ -171,9 +175,6 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   auto excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh(),
                                                              params_phase);
-  auto grad_excluded_phase_field = Phase::grad_excluded_phase(geometry.mesh(),
-                                                              params_phase,
-                                                              excluded_phase_field);
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
@@ -181,13 +182,17 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = Transport::makeVelocityInterpolator(geometry);
+  auto velocity_field
+    = Transport::makeVelocityInterpolator(geometry,
+                                          static_cast<Foam::volVectorField>
+                                          (Foam::dimensionedScalar("",
+                                                                   Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
+                                                                   params_transport.diff_coeff)
+                                           * params_phase.leakage_coefficient
+                                           * Phase::grad_excluded_phase(geometry.mesh(),
+                                                                        params_phase,
+                                                                        excluded_phase_field)));
   params_transport.rescale(velocity_field, geometry.mesh());
-  velocity_field.sum(Foam::dimensionedScalar("",
-                                             Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
-                                             params_transport.diff_coeff)
-                     * params_phase.leakage_coefficient
-                     * grad_excluded_phase_field);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -311,10 +316,7 @@ int main(int argc, char * argv[])
   Foam::label time_index = closest_time_index(current_time);
   double next_flow_time = std::numeric_limits<double>::infinity();
   if (time_index < flow_times.size()-1)
-  {
     next_flow_time = flow_times[time_index+1].value();
-  }
-  
   while (!measurer.done(current_time))
   {
     if (time_index < flow_times.size()-1)
@@ -335,19 +337,18 @@ int main(int argc, char * argv[])
         std::cout << "Updating phase field...\n";
         excluded_phase_field = Phase::get_excluded_phase_data(geometry.mesh(),
                                                               params_phase);
-        grad_excluded_phase_field = Phase::grad_excluded_phase(geometry.mesh(),
-                                                               params_phase,
-                                                               excluded_phase_field);
+        velocity_field.set_uninterpolated(Foam::dimensionedScalar("",
+                                                                  Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
+                                                                  params_transport.diff_coeff)
+                                          * params_phase.leakage_coefficient
+                                          * Phase::grad_excluded_phase(geometry.mesh(),
+                                                                       params_phase,
+                                                                       excluded_phase_field));
         std::cout << "Done!\n";
         std::cout << "Updating velocity field...\n";
         velocity_field.set(ptof::get_velocity_data(geometry.mesh()));
         if (params_transport.velocity_rescaling_factor != 1.)
           velocity_field.rescale(params_transport.velocity_rescaling_factor);
-        velocity_field.sum(Foam::dimensionedScalar("",
-                                                   Foam::dimensionSet(0, 2, -1, 0, 0, 0, 0),
-                                                   params_transport.diff_coeff)
-                           * params_phase.leakage_coefficient
-                           * grad_excluded_phase_field);
         std::cout << "Done!\n";
         std::cout << "Done!\n";
       }

@@ -257,19 +257,39 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh(),
-                                           average_velocity_magnitude));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh()));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -501,6 +521,7 @@ namespace ptof
     
     using VelocityField = VectorField_LinearInterpolation_OF
     <Foam::volVectorField, Locator_Cell const&, 1, 1>;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
@@ -706,19 +727,39 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh(),
-                                           average_velocity_magnitude));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh()));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
+
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -765,6 +806,7 @@ namespace ptof
     using model_advection_diffusion_2d::Transport;
     using model_advection_diffusion_2d::Reaction;
     using model_advection_diffusion_2d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -962,6 +1004,7 @@ namespace ptof
     using model_advection_diffusion_2d::Transport;
     using model_advection_diffusion_2d::Reaction;
     using model_advection_diffusion_2d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -1075,6 +1118,7 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d::Reaction;
     using model_periodic_cartesian_advection_diffusion_2d::InitialCondition;
     using model_periodic_cartesian_advection_diffusion_2d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
@@ -1168,19 +1212,39 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh(),
-                                           average_velocity_magnitude));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh()));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -1304,6 +1368,7 @@ namespace ptof
     
     using VelocityField = VectorField_LinearInterpolation_OF
     <Foam::volVectorField, Locator_Cell const&, 1, 1>;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
 
@@ -1369,6 +1434,7 @@ namespace ptof
     using model_advection_diffusion_3d::Transport;
     using model_advection_diffusion_3d::Reaction;
     using model_advection_diffusion_3d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -1565,6 +1631,7 @@ namespace ptof
     using model_advection_diffusion_3d::Transport;
     using model_advection_diffusion_3d::Reaction;
     using model_advection_diffusion_3d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -1678,6 +1745,7 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d::Reaction;
     using model_periodic_cartesian_advection_diffusion_3d::InitialCondition;
     using model_periodic_cartesian_advection_diffusion_3d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
 
@@ -1742,6 +1810,7 @@ namespace ptof
     using CTRW = ctrw::CTRW<State>;
     using model_advection_diffusion_2d::Solvers;
     using model_advection_diffusion_2d::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     using model_advection_diffusion_2d::Reaction;
     
@@ -1967,19 +2036,39 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh(),
-                                           average_velocity_magnitude));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh()));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -2028,6 +2117,7 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion::Reaction;
     using model_bcc_cartesian_advection_diffusion::Transport;
     using model_bcc_cartesian_advection_diffusion::InitialCondition;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   
@@ -2218,19 +2308,39 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data_rescaled(geometry.mesh(),
-                                           average_velocity_magnitude));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude));
       }
      
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-          geometry,
-          ptof::get_velocity_data(geometry.mesh()));
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
      
       template <typename OStream>
@@ -2311,6 +2421,7 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion::Transport;
     using model_bcc_cartesian_advection_diffusion::InitialCondition;
     using model_bcc_cartesian_advection_diffusion::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     using model_bcc_cartesian_advection_diffusion::Reaction;
   }
@@ -2347,6 +2458,7 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion::Reaction;
     using model_bcc_symmetryplanes_advection_diffusion::Transport;
     using model_bcc_symmetryplanes_advection_diffusion::InitialCondition;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
   }
   

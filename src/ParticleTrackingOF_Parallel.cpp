@@ -18,7 +18,8 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
+  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt_parallel;
+  using Output = Output<>;
   
   if (useful::check_options_help(argc, argv))
   {

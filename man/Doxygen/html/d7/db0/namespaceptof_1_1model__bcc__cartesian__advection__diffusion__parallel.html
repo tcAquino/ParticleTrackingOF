@@ -108,14 +108,15 @@ Typedefs</h2></td></tr>
 <tr class="separator:a63b5f40b0bcbac570e25d37e3a209415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d5629125715758abebc84d3061acb76"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a2d5629125715758abebc84d3061acb76">CTRW</a> = <a class="el" href="../../d7/dfc/classctrw_1_1_c_t_r_w___parallel.html">ctrw::CTRW_Parallel</a>&lt; <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a63b5f40b0bcbac570e25d37e3a209415">State</a> &gt;</td></tr>
 <tr class="separator:a2d5629125715758abebc84d3061acb76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9df0c303c9851fc64b0c6c8e2f698a1d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a9df0c303c9851fc64b0c6c8e2f698a1d">Output</a> = <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a2d5629125715758abebc84d3061acb76">CTRW</a>, VelocityField, <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#af630935536ed2fc3f4c0b48b3254a85f">Geometry</a> &gt;</td></tr>
-<tr class="separator:a9df0c303c9851fc64b0c6c8e2f698a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a892ebcbd5e9aeb932b70e869646e3841"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = VelocityField&gt; </td></tr>
+<tr class="memitem:a892ebcbd5e9aeb932b70e869646e3841"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a892ebcbd5e9aeb932b70e869646e3841">Output</a> = <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a2d5629125715758abebc84d3061acb76">CTRW</a>, VelocityField, <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#af630935536ed2fc3f4c0b48b3254a85f">Geometry</a> &gt;</td></tr>
+<tr class="separator:a892ebcbd5e9aeb932b70e869646e3841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac07298606c8add42f2bd30cb4a44b8cb"><td class="memTemplParams" colspan="2">template&lt;typename Boundary &gt; </td></tr>
-<tr class="memitem:ac07298606c8add42f2bd30cb4a44b8cb"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#ac07298606c8add42f2bd30cb4a44b8cb">makeTransitions</a> (VelocityField const &amp;velocity_field, <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#af630935536ed2fc3f4c0b48b3254a85f">Geometry</a> const &amp;geometry, Boundary &amp;boundary, <a class="el" href="../../d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html">Transport::Parameters</a> const &amp;params_transport, <a class="el" href="../../d5/d66/structptof_1_1model__advection__diffusion__2d__parallel_1_1_reaction_1_1_parameters.html">Reaction::Parameters</a> const &amp;params_reaction, <a class="el" href="../../d2/dc2/structptof_1_1model__advection__diffusion__2d__parallel_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;params_solvers, <a class="el" href="../../d0/d17/structptof_1_1model__advection__diffusion__2d__parallel_1_1_reaction.html#a7c2d1ca65691fe8bd70726a82e50bd39">Reaction::ReactionType</a> const &amp;reaction, std::size_t num_threads)</td></tr>
-<tr class="separator:ac07298606c8add42f2bd30cb4a44b8cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6917974dcdeb627c61ee6a041a12bbe"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Boundary &gt; </td></tr>
+<tr class="memitem:ae6917974dcdeb627c61ee6a041a12bbe"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#ae6917974dcdeb627c61ee6a041a12bbe">makeTransitions</a> (VelocityField const &amp;velocity_field, <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#af630935536ed2fc3f4c0b48b3254a85f">Geometry</a> const &amp;geometry, Boundary &amp;boundary, <a class="el" href="../../d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html">Transport::Parameters</a> const &amp;params_transport, <a class="el" href="../../d5/d66/structptof_1_1model__advection__diffusion__2d__parallel_1_1_reaction_1_1_parameters.html">Reaction::Parameters</a> const &amp;params_reaction, <a class="el" href="../../d2/dc2/structptof_1_1model__advection__diffusion__2d__parallel_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;params_solvers, <a class="el" href="../../d0/d17/structptof_1_1model__advection__diffusion__2d__parallel_1_1_reaction.html#a7c2d1ca65691fe8bd70726a82e50bd39">Reaction::ReactionType</a> const &amp;reaction, std::size_t num_threads)</td></tr>
+<tr class="separator:ae6917974dcdeb627c61ee6a041a12bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definitions for 3D advective&ndash;diffusive transport in a body centered cubic pack, based on the primitive unit cel, in parallel. </p>
@@ -148,14 +149,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9df0c303c9851fc64b0c6c8e2f698a1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9df0c303c9851fc64b0c6c8e2f698a1d">&#9670;&nbsp;</a></span>Output</h2>
+<a id="a892ebcbd5e9aeb932b70e869646e3841"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a892ebcbd5e9aeb932b70e869646e3841">&#9670;&nbsp;</a></span>Output</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename VelocityField  = VelocityField&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a9df0c303c9851fc64b0c6c8e2f698a1d">ptof::model_bcc_cartesian_advection_diffusion_parallel::Output</a> = typedef <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt;<a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a2d5629125715758abebc84d3061acb76">CTRW</a>, VelocityField, <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#af630935536ed2fc3f4c0b48b3254a85f">Geometry</a>&gt;</td>
+          <td class="memname">using <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a892ebcbd5e9aeb932b70e869646e3841">ptof::model_bcc_cartesian_advection_diffusion_parallel::Output</a> = typedef <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt;<a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a2d5629125715758abebc84d3061acb76">CTRW</a>, VelocityField, <a class="el" href="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#af630935536ed2fc3f4c0b48b3254a85f">Geometry</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -177,13 +180,13 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac07298606c8add42f2bd30cb4a44b8cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac07298606c8add42f2bd30cb4a44b8cb">&#9670;&nbsp;</a></span>makeTransitions()</h2>
+<a id="ae6917974dcdeb627c61ee6a041a12bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6917974dcdeb627c61ee6a041a12bbe">&#9670;&nbsp;</a></span>makeTransitions()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Boundary &gt; </div>
+template&lt;typename VelocityField , typename Boundary &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto ptof::model_bcc_cartesian_advection_diffusion_parallel::makeTransitions </td>
@@ -243,8 +246,8 @@ template&lt;typename Boundary &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ac07298606c8add42f2bd30cb4a44b8cb_cgraph.png" border="0" usemap="#ad7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ac07298606c8add42f2bd30cb4a44b8cb_cgraph" alt=""/></div>
-<map name="ad7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ac07298606c8add42f2bd30cb4a44b8cb_cgraph" id="ad7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ac07298606c8add42f2bd30cb4a44b8cb_cgraph">
+<div class="center"><img src="../../d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ae6917974dcdeb627c61ee6a041a12bbe_cgraph.png" border="0" usemap="#ad7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ae6917974dcdeb627c61ee6a041a12bbe_cgraph" alt=""/></div>
+<map name="ad7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ae6917974dcdeb627c61ee6a041a12bbe_cgraph" id="ad7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel_ae6917974dcdeb627c61ee6a041a12bbe_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,217,61"/>
 <area shape="rect" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#a06a3e598ddc84c423f504354d578cbef" title=" " alt="" coords="265,5,432,61"/>
 </map>

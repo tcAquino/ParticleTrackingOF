@@ -67,16 +67,17 @@ namespace ptof
    \brief Make a linear interpolator for a field using OpenFOAM interpolation.
    \param geometry Domain geometry info and utilities.
    \param field OpenFOAM vector field data
-   \param thread Parallel thread number
+   \param uninterpolated OpenFOAM vector field data to be added to \c field without interpolation
    \return Vector field interpolator
   */
-  template <typename Geometry, typename Field>
+  template <typename Geometry, typename Field, typename Uninterpolated>
   auto makeLinearInterpolator
-  (Geometry const& geometry, Field&& field, std::size_t thread)
+  (Geometry const& geometry, Field&& field, Uninterpolated&& uninterpolated)
   {
     return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
       geometry.locator,
+      std::forward<Uninterpolated>(uninterpolated),
       CheckOptions::Warn{} };
   };
 }

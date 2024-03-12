@@ -134,7 +134,7 @@ namespace geometry
    * \brief Periodic boundary in 1d./
    * 
    * \note State must define:
-   * - position [scalar type] */
+   * - \c position [scalar] */
 	class Boundary_Periodic_1d
 	{
 	public:
@@ -185,7 +185,7 @@ namespace geometry
    * \brief  Periodic boundaries along each dimension.
    * 
    * \note State must define:
-   * - position [vector type] */
+   * - \c position [container] */
 	class Boundary_Periodic
 	{
 	public:
@@ -255,7 +255,7 @@ namespace geometry
    * \brief Periodic boundary along dimension dd.
    * 
    * \note State must define:
-   * - position [vector type] */
+   * - \c position [container] */
   template <std::size_t dd>
   class Boundary_Periodic_Dim
   {
@@ -306,8 +306,8 @@ namespace geometry
    * with information about where position would be outside domain.
    * 
    * \note State must define:
-   * - position [vector type]
-   * - periodicity (std::vector<int>) counting how many domains have been traveled along each dimension */
+   * - \c position [container]
+   * - \c periodicity [container of signed integers] (counting how many domains have been traveled along each dimension) */
   class Boundary_Periodic_WithOutsideInfo
   {
   public:
@@ -383,7 +383,7 @@ namespace geometry
    * \brief Reflecting boundary in one dimension.
    * 
    * \note State must define:
-   * - position [scalar type] */
+   * - \c position [scalar] */
 	class Boundary_Reflecting_1d
 	{
 	public:
@@ -423,7 +423,7 @@ namespace geometry
    * \brief Reflecting boundaries along along each dimension. 
    * 
    * \note State must define:
-   * - position [vector type] */
+   * - \c position [container] */
 	class Boundary_Reflecting
 	{
 	public:
@@ -465,7 +465,7 @@ namespace geometry
    * \brief Reflecting boundary along dimension dd.
    * 
    * \note State must define:
-   * - position [vector type] */
+   * - \c position [container] */
   template <std::size_t dd>
   class Boundary_Reflecting_Dim
   {
@@ -514,7 +514,7 @@ namespace geometry
    * \brief Reflecting boundaries on the inside of a circle. 
    * 
    * \note State must define:
-   * - position [vector type] */
+   * - \c position [container] */
   class Boundary_RadialReflecting_2d
   {
   public:
@@ -610,7 +610,7 @@ namespace geometry
    Cylinder longitudinal axis is dd_open, which may be 0 or 2.
                                                
    \note State must define:
-   - position [vector type] */
+   - \c position [container] */
   template <std::size_t dd_open = 0>
   class Boundary_Open_RadialReflecting_3d
   {
@@ -729,7 +729,7 @@ namespace geometry
    * \brief Periodic boundaries along each symmetry plane. 
    * 
    * \note State must define:
-   * - position [vector type] */
+   * - \c position [container] */
   template <typename SymmetryPlanes>
   class Boundary_Periodic_SymmetryPlanes
   {
@@ -817,8 +817,8 @@ namespace geometry
    * with information about where position would be outside domain.
    * 
    * \note State must define:
-   * - position [vector type]
-   * - periodicity [signed integer vector type] counting how many domains have been traveled along each dimension. */
+   * - \c position [container]
+   * - \c periodicity [container of signed integers] (counting how many domains have been traveled along each dimension) */
   template <typename SymmetryPlanes>
   class Boundary_Periodic_SymmetryPlanes_WithOutsideInfo
   {

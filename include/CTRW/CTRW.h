@@ -51,7 +51,8 @@ namespace ctrw
     
     /** Constructor.
      \brief Tag particles in ascending order.
-     \note State must define: tag.
+     \note State must define:
+     - \c tag
      \param particles Container with particles.
     */
     CTRW(Container particles, Tag)
@@ -71,7 +72,8 @@ namespace ctrw
     
     /** Constructor.
      \brief Tag particles in ascending order reserve space for maximum number of particles.
-     \note State must define: tag.
+     \note State must define:
+     - \c tag
      \param particles Container with particles.
      \param max_nr_particles Number of particles to reserve space for.
     */
@@ -199,7 +201,8 @@ namespace ctrw
     { _particles.clear(); }
 
     /** \brief Evolve particle states in time.
-     \note State must define: time.
+     \note State must define:
+     - \c time
      \param time_to Particles make transitions until their time is >= time_to.
      \param transitions Handle changes to particle states in each step.
     */
@@ -214,7 +217,8 @@ namespace ctrw
 
     /** \brief Evolve particle states in space in 1D.
      \note
-     - State must define: position (scalar).
+     State must define:
+     - \c position [scalar].
      \param length_to Particles make transitions until their position is >= length_to.
      \param transitions Handle changes to particle states in each step.
     */

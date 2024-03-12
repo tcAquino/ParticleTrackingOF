@@ -171,7 +171,7 @@ namespace ctrw
     \brief Jump according to a velocity field and time step, using RK4 scheme.
     \details Boundary conditions are enforced in predictor-corrector steps.
     \note Particle state must define:
-      - position */
+      - \c position */
   template <typename VelocityField, typename Boundary = geometry::Boundary_DoNothing>
   class JumpGenerator_Velocity_RK4
   {
@@ -453,7 +453,7 @@ namespace ctrw
   /** \class JumpGenerator_JumpAngle_2d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
     \brief Random walk jumps along current orientation with fixed step size.
     \note Particle state must define:
-    -  orientation [scalar type]
+    -  \c orientation [scalar]
    */
   class JumpGenerator_JumpAngle_2d
   {
@@ -482,7 +482,7 @@ namespace ctrw
   /** \class OrientationGenerator_Gradient_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
     \brief Gaussian-distributed angle jumps around local gradient towards preferred concentration value.
     \note State must define:
-    - orientation [scalar type] */
+    - \c orientation [scalar] */
   template
   <typename Concentration, typename Gradient, typename RNG = std::mt19937>
   class OrientationGenerator_Gradient_1d

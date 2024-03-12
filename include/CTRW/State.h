@@ -24,11 +24,11 @@ namespace ctrw
    * Periodicity information keeps track of the periodic cell the position is in.
    *
    * Defines:
-   * - position
-   * - periodicity
-   * - mass
-   * - time
-   * - tag. */
+   * - \c position
+   * - \c periodicity
+   * - \c mass
+   * - \c time
+   * - \c tag. */
   template
   <typename Position_t, typename Periodicity_t = std::vector<int>, typename Mass_t = double,
   typename Time_t = double, typename Tag_t = useful::Empty>
@@ -62,10 +62,10 @@ namespace ctrw
   
   /** \struct State_Velocity CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position
-   *  - velocity
-   *  - time
-   *  - tag */
+   *  - \c position
+   *  - \c velocity
+   *  - \c time
+   *  - \c tag */
   template
   <typename Position_t, typename Velocity_t,
   typename Time_t = double, typename Tag_t = useful::Empty>
@@ -96,11 +96,11 @@ namespace ctrw
   
   /** \struct State_Velocity_Mass CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position
-   *  - velocity
-   *  - mass
-   *  - time
-   *  - tag */
+   *  - \c position
+   *  - \c velocity
+   *  - \c mass
+   *  - \c time
+   *  - \c tag */
   template
   <typename Position_t, typename Velocity_t, typename Mass_t = double,
   typename Time_t = double, typename Tag_t = useful::Empty>
@@ -134,9 +134,9 @@ namespace ctrw
 
   /** \struct State_Position CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position
-   *  - time
-   *  - tag */
+   *  - \c position
+   *  - \c time
+   *  - \c tag */
   template <typename Position_t, typename Time_t = double, typename Tag_t = useful::Empty>
   struct State_position
   {
@@ -160,10 +160,10 @@ namespace ctrw
   
   /** \struct State_Position_Mass CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position
-   *  - mass
-   *  - time
-   *  - tag */
+   *  - \c position
+   *  - \c mass
+   *  - \c time
+   *  - \c tag */
   template <typename Position_t, typename Mass_t = double, typename Time_t = double, typename Tag_t = useful::Empty>
   struct State_Position_Mass
   {
@@ -191,7 +191,7 @@ namespace ctrw
 
   /** \struct State_PTRW_Position CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position */
+   *  - \c position */
   template <typename Position_t>
   struct State_PTRW_Position
   {
@@ -209,10 +209,10 @@ namespace ctrw
   
   /** \struct State_RunTumble CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position
-   *  - orientation
-   *  - run
-   *  - tag */
+   *  - \c position
+   *  - \c orientation
+   *  - \c run
+   *  - \c tag */
   template <typename Orientation_t, typename Tag_t = useful::Empty>
   struct State_RunTumble
   {
@@ -243,10 +243,10 @@ namespace ctrw
   
   /** \struct State_RunTumble_PTRW CTRW/State.h "CTRW/State.h"
    *  \details Defines:
-   *  - position
-   *  - orientation
-   *  - state
-   *  - tag */
+   *  - \c position
+   *  - \c orientation
+   *  - \c state
+   *  - \c tag */
   template <typename Orientation_t = double,
   typename Tag_t = std::size_t,
   typename Position_t = std::vector<double>>

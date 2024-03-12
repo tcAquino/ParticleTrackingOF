@@ -1673,7 +1673,7 @@ namespace ptof
           Foam::IOobject::NO_WRITE },
           geometry.mesh() },
         geometry.locator,
-        CheckOptions::Check{} }
+        CheckOptions::Warn{} }
       {
         if (parameters.velocity_rescaling != 1.)
           pressure.rescale(parameters.velocity_rescaling);
@@ -1697,7 +1697,7 @@ namespace ptof
       }
       
       ptof::ScalarField_LinearInterpolation_OF
-      <Foam::volScalarField, typename Geometry::Locator const&, 1, 0> pressure;
+      <Foam::volScalarField, typename Geometry::Locator const&, 1, 1> pressure;
     };
         
     /** \class Output_Cases::Output_position_periodic PTOF/Output.h "PTOF/Output.h"

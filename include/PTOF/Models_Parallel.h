@@ -243,20 +243,19 @@ namespace ptof
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions<
-        Geometry, Solvers::Steppers>(velocity_field,
-                                     geometry,
-                                     boundary,
-                                     params_transport,
-                                     params_reaction,
-                                     params_solvers);
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_reaction,
+                                       params_solvers);
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data_rescaled(geometry.mesh(),
                                                                        average_velocity_magnitude));
       }
@@ -265,9 +264,30 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -502,6 +522,7 @@ namespace ptof
     
     using VelocityField = VectorField_LinearInterpolation_OF
     <Foam::volVectorField, Locator_Cell_Parallel const&, 1, 1>;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     template
@@ -580,9 +601,9 @@ namespace ptof
       std::size_t _num_threads;
       
       using Transitions = decltype(ctrw::Transitions_CTRW_Transport_Reaction{
-          Transport::makeTransitions(_velocity_field,
-                                     _geometry, _boundary,
-                                     _params_transport, _params_reaction, _params_solvers),
+        Transport::makeTransitions(_velocity_field,
+                                   _geometry, _boundary,
+                                   _params_transport, _params_reaction, _params_solvers),
           _reaction });
     };
     template
@@ -608,7 +629,7 @@ namespace ptof
     TransportParameters, ReactionParameters, SolverParameters,
     Reaction>;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -619,16 +640,15 @@ namespace ptof
      Reaction::ReactionType const& reaction,
      std::size_t num_threads)
     {
-      return
-      model_advection_diffusion_2d_parallel::TransitionMaker(velocity_field,
-                                                             geometry,
-                                                             boundary,
-                                                             params_transport,
-                                                             params_reaction,
-                                                             params_solvers,
-                                                             reaction,
-                                                             num_threads,
-                                                             useful::Selector_t<Transport>{})();
+      return TransitionMaker(velocity_field,
+                             geometry,
+                             boundary,
+                             params_transport,
+                             params_reaction,
+                             params_solvers,
+                             reaction,
+                             num_threads,
+                             useful::Selector_t<Transport>{})();
     }
   }
   
@@ -821,20 +841,19 @@ namespace ptof
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions_Advection<
-        Geometry, Solvers::Steppers>(velocity_field,
-                                     geometry,
-                                     boundary,
-                                     params_transport,
-                                     params_reaction,
-                                     params_solvers);
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_reaction,
+                                       params_solvers);
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data_rescaled(geometry.mesh(),
                                                                        average_velocity_magnitude));
       }
@@ -843,9 +862,30 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -861,7 +901,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -914,6 +954,7 @@ namespace ptof
     using model_advection_diffusion_2d_parallel::Transport;
     using model_advection_diffusion_2d_parallel::Reaction;
     using model_advection_diffusion_2d_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -960,7 +1001,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1105,7 +1146,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1158,6 +1199,7 @@ namespace ptof
     using model_advection_diffusion_2d_parallel::Transport;
     using model_advection_diffusion_2d_parallel::Reaction;
     using model_advection_diffusion_2d_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -1206,7 +1248,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1261,7 +1303,7 @@ namespace ptof
     using model_advection_2d_parallel::VelocityField;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Output;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1315,9 +1357,10 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Reaction;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::InitialCondition;
     using model_periodic_cartesian_advection_diffusion_2d_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1372,7 +1415,7 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_2d_parallel::Output;
     using model_advection_diffusion_decay_catalytic_2d_parallel::Reaction;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1441,19 +1484,18 @@ namespace ptof
       {
         return makeTransportTransitions<
           Geometry, Solvers::Steppers>(velocity_field,
-                                       geometry,
-                                       boundary,
-                                       params_transport,
-                                       params_reaction,
-                                       params_solvers);
+                                     geometry,
+                                     boundary,
+                                     params_transport,
+                                     params_reaction,
+                                     params_solvers);
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data_rescaled(geometry.mesh(),
                                                                        average_velocity_magnitude));
       }
@@ -1462,9 +1504,30 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -1590,9 +1653,10 @@ namespace ptof
     
     using VelocityField = VectorField_LinearInterpolation_OF
     <Foam::volVectorField, Locator_Cell_Parallel const&, 1, 1>;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1646,7 +1710,7 @@ namespace ptof
     using model_advection_2d_parallel::Solvers;
     using model_advection_2d_parallel::Transport;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1699,6 +1763,7 @@ namespace ptof
     using model_advection_diffusion_3d_parallel::Transport;
     using model_advection_diffusion_3d_parallel::Reaction;
     using model_advection_diffusion_3d_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -1745,7 +1810,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1889,7 +1954,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -1942,6 +2007,7 @@ namespace ptof
     using model_advection_diffusion_3d_parallel::Transport;
     using model_advection_diffusion_3d_parallel::Reaction;
     using model_advection_diffusion_3d_parallel::VelocityField;
+    template< typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
     struct InitialCondition final
@@ -1990,7 +2056,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2045,7 +2111,7 @@ namespace ptof
     using model_advection_3d_parallel::VelocityField;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Output;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2099,9 +2165,10 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Reaction;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::InitialCondition;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2156,7 +2223,7 @@ namespace ptof
     using model_periodic_cartesian_advection_diffusion_3d_parallel::Output;
     using model_advection_diffusion_decay_catalytic_3d_parallel::Reaction;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2208,6 +2275,7 @@ namespace ptof
     using CTRW = ctrw::CTRW_Parallel<State>;
     using model_advection_diffusion_2d_parallel::Solvers;
     using model_advection_diffusion_2d_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     using model_advection_diffusion_2d_parallel::Reaction;
     
@@ -2420,20 +2488,19 @@ namespace ptof
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions<
-        Geometry, Solvers::Steppers>(velocity_field,
-                                     geometry,
-                                     boundary,
-                                     params_transport,
-                                     params_reaction,
-                                     params_solvers);
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_reaction,
+                                       params_solvers);
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data_rescaled(geometry.mesh(),
                                                                        average_velocity_magnitude));
       }
@@ -2442,9 +2509,30 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -2460,7 +2548,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2511,14 +2599,14 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion_parallel::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
     using model_bcc_cartesian_advection_diffusion_parallel::Solvers;
-    using model_bcc_cartesian_advection_diffusion_parallel::VelocityField;
     using model_bcc_cartesian_advection_diffusion_parallel::Reaction;
     using model_bcc_cartesian_advection_diffusion_parallel::Transport;
-    using model_advection_diffusion_2d_parallel::VelocityField;
+    using model_bcc_cartesian_advection_diffusion_parallel::VelocityField;
     using model_bcc_cartesian_advection_diffusion_parallel::InitialCondition;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2715,20 +2803,19 @@ namespace ptof
        Solvers::Parameters const& params_solvers)
       {
         return makeTransportTransitions_Advection<
-        Geometry, Solvers::Steppers>(velocity_field,
-                                     geometry,
-                                     boundary,
-                                     params_transport,
-                                     params_reaction,
-                                     params_solvers);
+          Geometry, Solvers::Steppers>(velocity_field,
+                                       geometry,
+                                       boundary,
+                                       params_transport,
+                                       params_reaction,
+                                       params_solvers);
       }
       
       template <typename Geometry>
       static auto makeVelocityInterpolator
       (Geometry const& geometry, double average_velocity_magnitude)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data_rescaled(geometry.mesh(),
                                                                        average_velocity_magnitude));
       }
@@ -2737,9 +2824,30 @@ namespace ptof
       static auto makeVelocityInterpolator
       (Geometry const& geometry)
       {
-        return makeLinearInterpolator(
-                                      geometry,
+        return makeLinearInterpolator(geometry,
                                       ptof::get_velocity_data(geometry.mesh()));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated,
+       double average_velocity_magnitude)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data_rescaled(geometry.mesh(),
+                                                                       average_velocity_magnitude),
+                                      std::forward<Uninterpolated>(uninterpolated));
+      }
+      
+      template <typename Geometry, typename Uninterpolated>
+      static auto makeVelocityInterpolator
+      (Geometry const& geometry,
+       Uninterpolated&& uninterpolated)
+      {
+        return makeLinearInterpolator(geometry,
+                                      ptof::get_velocity_data(geometry.mesh()),
+                                      std::forward<Uninterpolated>(uninterpolated));
       }
       
       template <typename OStream>
@@ -2755,7 +2863,7 @@ namespace ptof
       }
     };
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2810,7 +2918,7 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion_parallel::Output;
     using model_advection_diffusion_decay_catalytic_2d_parallel::Reaction;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2864,10 +2972,11 @@ namespace ptof
     using model_bcc_cartesian_advection_diffusion_parallel::Transport;
     using model_bcc_cartesian_advection_diffusion_parallel::InitialCondition;
     using model_bcc_cartesian_advection_diffusion_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     using model_bcc_cartesian_advection_diffusion_parallel::Reaction;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2918,14 +3027,14 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion_parallel::State;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::CTRW;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Solvers;
-    using model_bcc_symmetryplanes_advection_diffusion_parallel::VelocityField;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Reaction;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Transport;
     using model_bcc_symmetryplanes_advection_diffusion_parallel::InitialCondition;
-    using model_advection_diffusion_2d_parallel::VelocityField;
+    using model_bcc_symmetryplanes_advection_diffusion_parallel::VelocityField;
+    template <typename VelocityField = VelocityField>
     using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -2980,7 +3089,7 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Output;
     using model_bcc_cartesian_advection_parallel::Reaction;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -3035,7 +3144,7 @@ namespace ptof
     using model_bcc_symmetryplanes_advection_diffusion_parallel::Output;
     using model_advection_diffusion_decay_catalytic_2d_parallel::Reaction;
     
-    template <typename Boundary>
+    template <typename VelocityField, typename Boundary>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,

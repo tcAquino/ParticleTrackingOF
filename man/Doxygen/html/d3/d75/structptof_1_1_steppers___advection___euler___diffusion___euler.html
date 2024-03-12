@@ -96,9 +96,9 @@ $(document).ready(function(){initNavTree('d3/d75/structptof_1_1_steppers___advec
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae6827107db9200cd6889d5d4281489c0"><td class="memTemplParams" colspan="2">template&lt;typename SolverParameters &gt; </td></tr>
-<tr class="memitem:ae6827107db9200cd6889d5d4281489c0"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#ae6827107db9200cd6889d5d4281489c0">makeTimeGenerator</a> (SolverParameters const &amp;solver_params)</td></tr>
-<tr class="separator:ae6827107db9200cd6889d5d4281489c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f228d645b27704766e09bc7b6f3c0a"><td class="memTemplParams" colspan="2">template&lt;typename SolverParameters &gt; </td></tr>
+<tr class="memitem:a44f228d645b27704766e09bc7b6f3c0a"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a44f228d645b27704766e09bc7b6f3c0a">makeTimeGenerator</a> (SolverParameters const &amp;params_solvers)</td></tr>
+<tr class="separator:a44f228d645b27704766e09bc7b6f3c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a347af85f50a49855d3a44b903628567f"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </td></tr>
 <tr class="memitem:a347af85f50a49855d3a44b903628567f"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a347af85f50a49855d3a44b903628567f">makeJumpGenerator</a> (VelocityField &amp;&amp;velocity_field, Boundary &amp;&amp;boundary, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers, std::size_t dim)</td></tr>
 <tr class="separator:a347af85f50a49855d3a44b903628567f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,12 +174,10 @@ template&lt;typename VelocityField , typename Boundary , typename TransportParam
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Advection&ndash;diffusion JumpGenerator. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd><code>params_transport</code> must define:<ul>
-<li>diff_coeff</li>
+<li><code>diff_coeff</code> </li>
 </ul>
 </dd></dl>
-<p><code>params_solvers</code> must define:</p><ul>
-<li>time_step </li>
-</ul>
+<p>If <code>params_solvers</code> does not define <code>time_step</code>, the time step is initially set to zero. </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -260,10 +258,7 @@ template&lt;typename VelocityField , typename Boundary , typename TransportParam
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pure advection JumpGenerator. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd><code>params_solvers</code> must define:<ul>
-<li>time_step </li>
-</ul>
-</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If <code>params_solvers</code> does not define <code>time_step</code>, the time step is initially set to zero. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -277,8 +272,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="ae6827107db9200cd6889d5d4281489c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6827107db9200cd6889d5d4281489c0">&#9670;&nbsp;</a></span>makeTimeGenerator()</h2>
+<a id="a44f228d645b27704766e09bc7b6f3c0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f228d645b27704766e09bc7b6f3c0a">&#9670;&nbsp;</a></span>makeTimeGenerator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -292,7 +287,7 @@ template&lt;typename SolverParameters &gt; </div>
           <td class="memname">static auto ptof::Steppers_Advection_Euler_Diffusion_Euler::makeTimeGenerator </td>
           <td>(</td>
           <td class="paramtype">SolverParameters const &amp;&#160;</td>
-          <td class="paramname"><em>solver_params</em></td><td>)</td>
+          <td class="paramname"><em>params_solvers</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -304,20 +299,17 @@ template&lt;typename SolverParameters &gt; </div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">solver_params</td><td>Solver parameters. </td></tr>
+    <tr><td class="paramname">params_solvers</td><td>Solver parameters. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Deterministic time step TimeGenerator. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd><code>solver_params</code> must define:<ul>
-<li>time_step </li>
-</ul>
-</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If <code>params_solvers</code> does not define <code>time_step</code>, the time step is initially set to zero. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_ae6827107db9200cd6889d5d4281489c0_cgraph.png" border="0" usemap="#ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_ae6827107db9200cd6889d5d4281489c0_cgraph" alt=""/></div>
-<map name="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_ae6827107db9200cd6889d5d4281489c0_cgraph" id="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_ae6827107db9200cd6889d5d4281489c0_cgraph">
+<div class="center"><img src="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a44f228d645b27704766e09bc7b6f3c0a_cgraph.png" border="0" usemap="#ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a44f228d645b27704766e09bc7b6f3c0a_cgraph" alt=""/></div>
+<map name="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a44f228d645b27704766e09bc7b6f3c0a_cgraph" id="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a44f228d645b27704766e09bc7b6f3c0a_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,189,61"/>
 <area shape="rect" href="../../d1/d01/classctrw_1_1_time_generator___step.html#a1d024c13d127e161b2e2b26b38ac3d16" title=" " alt="" coords="237,13,392,54"/>
 <area shape="rect" href="../../d1/d01/classctrw_1_1_time_generator___step.html#ac960ba86a20662cca83f7f548eb4abaa" title=" " alt="" coords="440,13,595,54"/>

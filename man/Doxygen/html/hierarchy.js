@@ -270,8 +270,8 @@ var hierarchy =
     [ "ptof::model_advection_diffusion_decay_catalytic_3d_parallel::Reaction", "da/d8b/structptof_1_1model__advection__diffusion__decay__catalytic__3d__parallel_1_1_reaction.html", null ],
     [ "ptof::Reaction_DoNothing", "da/dfd/classptof_1_1_reaction___do_nothing.html", null ],
     [ "useful::notstd::right_shift", "db/dc9/structuseful_1_1notstd_1_1right__shift.html", null ],
-    [ "ptof::ScalarField_LinearInterpolation_OF< Field, Locator, check_if_outside, warn_if_outside >", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html", null ],
-    [ "ptof::ScalarField_LinearInterpolation_OF< Foam::volScalarField, typename ptof::Locator_Cell const &, 1, 0 >", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html", null ],
+    [ "ptof::ScalarField_LinearInterpolation_OF< Field, Locator, check_if_outside, warn_if_outside, Uninterpolated >", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html", null ],
+    [ "ptof::ScalarField_LinearInterpolation_OF< Foam::volScalarField, typename ptof::Locator_Cell const &, 1, 1 >", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html", null ],
     [ "useful::Selector< TT, >", "d7/dd2/structuseful_1_1_selector.html", null ],
     [ "useful::Selector_t< TT >", "d3/d42/structuseful_1_1_selector__t.html", null ],
     [ "ptof::model_advection_2d::Solvers", "df/d8b/structptof_1_1model__advection__2d_1_1_solvers.html", null ],
@@ -349,7 +349,7 @@ var hierarchy =
     ] ],
     [ "useful::has_value_type< T >::Two", "dd/d71/structuseful_1_1has__value__type_1_1_two.html", null ],
     [ "useful::types<... >", "dc/d50/structuseful_1_1types.html", null ],
-    [ "ptof::VectorField_LinearInterpolation_OF< Field, Locator, check_if_outside, warn_if_outside >", "d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html", null ],
+    [ "ptof::VectorField_LinearInterpolation_OF< Field, Locator, check_if_outside, warn_if_outside, Uninterpolated >", "d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html", null ],
     [ "ctrw::VelocityFromGenerator< JumpGenerator >", "d6/d82/structctrw_1_1_velocity_from_generator.html", null ],
     [ "useful::voider<... >", "d2/dac/structuseful_1_1voider.html", null ]
 ];

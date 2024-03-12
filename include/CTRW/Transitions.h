@@ -38,8 +38,8 @@ namespace ctrw
    * \tparam TimeGenerator Object to return time increment given state.
    * \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    * \note State must define:
-   * - position
-   * - time */
+   * - \c position
+   * - \c time */
 	template <typename TimeGenerator, typename JumpGenerator,
   typename Boundary = geometry::Boundary_DoNothing>
 	class Transitions_Time_Position
@@ -89,8 +89,8 @@ namespace ctrw
   \tparam JumpGenerator Object to return jump given state.
   \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
   \note State must define:
-  - position
-  - time */
+  - \c position
+  - \c time */
   template <typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator,
   typename Boundary = geometry::Boundary_DoNothing>
   class Transitions_AdaptiveTimeStep_Time_Position
@@ -148,7 +148,7 @@ namespace ctrw
    \tparam JumpGenerator Object to return jump given state.
    \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    \note State must define:
-   - position */
+   - \c position */
   template <typename JumpGenerator, typename Boundary = geometry::Boundary_DoNothing>
   class Transitions_Position
   {
@@ -196,7 +196,7 @@ namespace ctrw
    *  \brief Helper class to return velocity value from JumpGenerator object given state.
    *  \tparam JumpGenerator Object to return jump given state.
    *  \note \p JumpGenerator must define:
-   *  - velocity(State const&) */
+   *  - <tt>velocity(State const&)</tt> */
   template <typename JumpGenerator>
   struct VelocityFromGenerator
   {
@@ -220,11 +220,11 @@ namespace ctrw
    \tparam VelocityField Object to return velocity value given state.
    \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    \note State must define:
-   - position
-   - time
+   - \c position
+   - \c time
    
    Velocity field may be passed to constructor or velocities may be obtained from jump_generator if JumpGenerator defines:
-   - velocity(State const&) */
+   - <tt>velocity(State const&)</tt> */
   template <typename JumpGenerator,
   typename VelocityField,
   typename Boundary = geometry::Boundary_DoNothing>
@@ -309,8 +309,8 @@ namespace ctrw
    \tparam FlowField Object to return velocity value given position.
    \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    \note State must define:
-   - position
-   - time */
+   - \c position
+   - \c time */
 	template <typename FlowField, typename Boundary = geometry::Boundary_DoNothing,
   typename RNG = std::mt19937>
 	class Transitions_PTRW_FlowField_Diff
@@ -399,8 +399,8 @@ namespace ctrw
    \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    \tparam RNG Random number generator.
    \note State must define:
-   - position
-   - time */
+   - \c position
+   - \c time */
   template <typename Boundary = geometry::Boundary_DoNothing, typename RNG = std::mt19937>
   class Transitions_PTRW_Diffusion_1d
   {
@@ -462,7 +462,7 @@ namespace ctrw
    \note
    - \p Transitions_Transport should enforce any boundary conditions.
    - Time step needed for reaction may be specified or extracted from transport transitions if \p Transitions_Transport defines:
-    -# time_step() */
+    -# \c time_step() */
   template <typename Transitions_Transport, typename Reaction>
   class Transitions_PTRW_Transport_Reaction
   {
@@ -526,7 +526,7 @@ namespace ctrw
    \tparam Transitions_Transport Update particle state according to transport.
    \tparam Reaction Update particle state according to reaction, given state and time increment.
    \note State must define:
-   - time
+   - \c time
    
    \p Transitions_Transport should enforce any boundary conditions. */
   template <typename Transitions_Transport, typename Reaction>
@@ -570,8 +570,8 @@ namespace ctrw
    * \tparam JumpGenerator Object to return jump given state.
    * \tparam Reaction Update particle state according to reaction, given state and time increment.
    * \note State must define:
-   * - position
-   * - time
+   * - \c position
+   * - \c time
    *
    * \p JumpGenerator should enforce any boundary conditions. */
 	template <typename TimeGenerator,
@@ -625,8 +625,9 @@ namespace ctrw
    * \tparam JumpGenerator Object to return jump given state.
    * \tparam Reaction Update particle state according to reaction, given state and time increment. Must return true when applied if reaction occurs and false otherwise.
    * \note State must define:
-   * - position
-   * - time
+   * - \c position
+   * - \c time
+   *
    * \p JumpGenerator should enforce any boundary conditions. */
   template <typename TimeGenerator,
   typename JumpGenerator, typename Reaction>
@@ -685,10 +686,10 @@ namespace ctrw
    * \tparam JumpGenerator Object to return jump given state.
    * \tparam OrientationGenerator Object to return orientation increments given state.
    * \note State must define:
-   * - position
-   * - time
-   * - orientation
-   * - run
+   * - \c position
+   * - \c time
+   * - \c orientation
+   * - \c run
    *
    * \p JumpGenerator should enforce any boundary conditions. */
   template
@@ -778,13 +779,14 @@ namespace ctrw
    * \tparam OrientationGenerator Object to return orientation increments given state.
    * \tparam OrientationGenerator_Wall Object to return orientation increments given state.
    * \note State must define:
-   *  - position
-   *  - orientation
-   *  - state
+   *  - \c position
+   *  - \c orientation
+   *  - \c state
    * \c StateSwitcher must define:
-   *  - int run(State const&)
-   *  - int tumble(State const&)
-   *  - int wall_tumble(State const&)
+   *  - <tt>int run(State const&)</tt>
+   *  - <tt>int tumble(State const&)</tt>
+   *  - <tt>int wall_tumble(State const&)</tt>
+   *
    * \c Boundary object should set wall_tumble state when appropriate. */
   template
   <typename Boundary, typename StateSwitcher,
@@ -893,8 +895,8 @@ namespace ctrw
    * \tparam Acceleration Object to return acceleration given state.
    * \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    * \note State must define:
-   * - position
-   * - velocity */
+   * - \c position
+   * - \c velocity */
   template <typename Acceleration, typename Boundary = useful::Empty>
   class Transitions_Velocity_Acceleration
   {

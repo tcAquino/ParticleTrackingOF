@@ -6,10 +6,10 @@
  \brief Symmetry planes to describe general symmetries.
  
  A SymmetryPlanes object must define:
- - dim : The spatial dimension.
- - length : The length of the unit cell along the normal vector associated with each plane.
- - normal : A vector of unit normal vectors associated with each plane.
- - translation : A vector of translation vectors associated with each plane.
+ - \c dim : The spatial dimension.
+ - \c length : The length of the unit cell along the normal vector associated with each plane.
+ - \c normal : A vector of unit normal vectors associated with each plane.
+ - \c translation : A vector of translation vectors associated with each plane.
 */
 
 #ifndef SymmetryPlanes_h
@@ -234,10 +234,10 @@ namespace geometry
    \param fraction Fraction of original points to add.
    \param boundary_periodic Object to enforce periodic boundary conditions.
    \note \c Boundary_Periodic must define:
-   - symmetry_planes
-   - scale
-   - origin
-   - translate(Positions&, Projections const&)
+   - \c symmetry_planes
+   - \c scale
+   - \c origin
+   - <tt>translate(Positions&, Projections const&)</tt>
   */
   template
   <typename Points = std::vector<std::vector<double>>,

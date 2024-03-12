@@ -301,7 +301,7 @@ namespace ctrw
   
   /** \class Get_position_periodic CTRW/StateGetter.h "CTRW/StateGetter.h"
    *  \brief Get absolute position given state from position and periodicity
-   * \tparam Boundary Object that must define translate method given position and periodicity, which changes the first according to the latter. */
+   * \tparam Boundary Object that must define \c translate method given position and periodicity, which changes the first according to the latter. */
   template <typename Boundary>
   struct Get_position_periodic
   {

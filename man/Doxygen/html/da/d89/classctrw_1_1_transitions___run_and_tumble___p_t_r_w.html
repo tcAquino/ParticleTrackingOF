@@ -150,13 +150,14 @@ class ctrw::Transitions_RunAndTumble_PTRW&lt; Boundary, StateSwitcher, JumpGener
 </dl>
 <dl class="section note"><dt>Note</dt><dd>State must define:</dd></dl>
 </li>
-<li>position</li>
-<li>orientation</li>
-<li>state <code>StateSwitcher</code> must define:</li>
-<li>int run(State const&amp;)</li>
-<li>int tumble(State const&amp;)</li>
-<li>int wall_tumble(State const&amp;) <code>Boundary</code> object should set wall_tumble state when appropriate. </li>
+<li><code>position</code> </li>
+<li><code>orientation</code> </li>
+<li><code>state</code> <code>StateSwitcher</code> must define:</li>
+<li><code>int run(State const&amp;)</code></li>
+<li><code>int tumble(State const&amp;)</code></li>
+<li><code>int wall_tumble(State const&amp;)</code></li>
 </ul>
+<p><code>Boundary</code> object should set wall_tumble state when appropriate. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa680dc7c48036c5b2b975e284927908f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa680dc7c48036c5b2b975e284927908f">&#9670;&nbsp;</a></span>Transitions_RunAndTumble_PTRW() <span class="overload">[1/2]</span></h2>

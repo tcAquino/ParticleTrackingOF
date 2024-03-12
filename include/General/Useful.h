@@ -609,7 +609,7 @@ namespace useful
   template<class X, class Y> using has_and = op_valid<X, Y, notstd::operator_and>;
   
   /** \class has_value_type General/Useful.h "General/Useful.h"
-   \brief Check if class defines the type value_type
+   \brief Check if class defines the type \c value_type
    \details
    From here: https://gist.github.com/ilya-biryukov/887b7e543b72b49376ed . */
   template <class T>

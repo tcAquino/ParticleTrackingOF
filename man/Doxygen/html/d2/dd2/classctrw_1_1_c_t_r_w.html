@@ -401,7 +401,10 @@ template&lt;typename State_t &gt; </div>
 </div><div class="memdoc">
 
 <p><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order. </p>
-<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>State must define: tag. </dd></dl>
+<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>tag</code> </li>
+</ul>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">particles</td><td>Container with particles. </td></tr>
@@ -519,7 +522,10 @@ template&lt;typename State_t &gt; </div>
 </div><div class="memdoc">
 
 <p><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order reserve space for maximum number of particles. </p>
-<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>State must define: tag. </dd></dl>
+<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>tag</code> </li>
+</ul>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">particles</td><td>Container with particles. </td></tr>
@@ -835,8 +841,8 @@ template&lt;typename Transitions &gt; </div>
 </div><div class="memdoc">
 
 <p>Evolve particle states in space in 1D. </p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>State must define: position (scalar). </li>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>position</code> [scalar]. </li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -898,7 +904,10 @@ template&lt;typename Transitions &gt; </div>
 </div><div class="memdoc">
 
 <p>Evolve particle states in time. </p>
-<dl class="section note"><dt>Note</dt><dd>State must define: time. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>time</code> </li>
+</ul>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time_to</td><td>Particles make transitions until their time is &gt;= time_to. </td></tr>

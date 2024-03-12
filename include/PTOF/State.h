@@ -20,12 +20,12 @@ namespace ptof
   /** \class State1D PTOF/State.h "PTOF/State.h"
    \brief State for 1D positions.
    \details Defines:
-   - position
-   - cell
-   - time
-   - mass
-   - tag
-   - info */
+   - \c position
+   - \c cell
+   - \c time
+   - \c mass
+   - \c tag
+   - \c info */
   template
   <typename Info_t,
   typename Time_t = useful::Empty,
@@ -59,12 +59,12 @@ namespace ptof
   /** \class State2D PTOF/State.h "PTOF/State.h"
    \brief State for 2D positions.
    \details Defines:
-   - position
-   - cell
-   - time
-   - mass
-   - tag
-   - info */
+   - \c position
+   - \c cell
+   - \c time
+   - \c mass
+   - \c tag
+   - \c info */
   template
   <typename Info_t,
   typename Time_t = useful::Empty,
@@ -101,12 +101,12 @@ namespace ptof
   /** \class State3D PTOF/State.h "PTOF/State.h"
    \brief State for 3D positions.
    \details Defines:
-   - position
-   - cell
-   - time
-   - mass
-   - tag
-   - info */
+   - \c position
+   - \c cell
+   - \c time
+   - \c mass
+   - \c tag
+   - \c info */
   template
   <typename Info_t,
   typename Time_t = useful::Empty,
@@ -277,13 +277,13 @@ namespace ptof
   \brief State for 1D positions with periodicity info.
   \details State periodicity holds signed number of cells away from unit cell along each basis direction.
   \details Defines:
-  - position
-  - periodicity
-  - cell
-  - time
-  - mass
-  - tag
-  - info */
+  - \c position
+  - \c periodicity
+  - \c cell
+  - \c time
+  - \c mass
+  - \c tag
+  - \c info */
   template
   <typename Info_t,
   typename Time_t = useful::Empty,
@@ -321,13 +321,13 @@ namespace ptof
   \brief State for 2D positions with periodicity info.
   \details State periodicity holds signed number of cells away from unit cell along each basis direction.
   \details Defines:
-  - position
-  - periodicity
-  - cell
-  - time
-  - mass
-  - tag
-  - info */
+  - \c position
+  - \c periodicity
+  - \c cell
+  - \c time
+  - \c mass
+  - \c tag
+  - \c info */
   template
   <typename Info_t,
   typename Time_t = useful::Empty,
@@ -368,13 +368,13 @@ namespace ptof
   \brief State for 3D positions with periodicity info
   \details State periodicity holds signed number of cells away from unit cell along each basis direction.
   \details Defines:
-  - position
-  - periodicity
-  - cell
-  - time
-  - mass
-  - tag
-  - info */
+  - \c position
+  - \c periodicity
+  - \c cell
+  - \c time
+  - \c mass
+  - \c tag
+  - \c info */
   template
   <typename Info_t,
   typename Time_t = useful::Empty,
