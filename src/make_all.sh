@@ -1,3 +1,4 @@
+#!/bin/bash
 GREEN='\033[1;32m'
 RED='\033[1;31m'
 NC='\033[0m'
@@ -6,7 +7,7 @@ err=0
 ((err+=$?))
 ./make.sh advection_diffusion_fpt_2d
 ((err+=$?))
-./make.sh advection_diffusion_decay_catalytic_2d
+./make.sh advection_diffusion_surface_decay_2d
 ((err+=$?))
 ./make.sh advection_2d
 ((err+=$?))
@@ -14,7 +15,7 @@ err=0
 ((err+=$?))
 ./make.sh periodic_cartesian_advection_diffusion_fpt_2d
 ((err+=$?))
-./make.sh periodic_cartesian_advection_diffusion_decay_catalytic_2d
+./make.sh periodic_cartesian_advection_diffusion_surface_decay_2d
 ((err+=$?))
 ./make.sh periodic_cartesian_advection_2d
 ((err+=$?))
@@ -22,7 +23,7 @@ err=0
 ((err+=$?))
 ./make.sh advection_diffusion_fpt_3d
 ((err+=$?))
-./make.sh advection_diffusion_decay_catalytic_3d
+./make.sh advection_diffusion_surface_decay_3d
 ((err+=$?))
 ./make.sh advection_3d
 ((err+=$?))
@@ -30,7 +31,7 @@ err=0
 ((err+=$?))
 ./make.sh periodic_cartesian_advection_diffusion_fpt_3d
 ((err+=$?))
-./make.sh periodic_cartesian_advection_diffusion_decay_catalytic_3d
+./make.sh periodic_cartesian_advection_diffusion_surface_decay_3d
 ((err+=$?))
 ./make.sh periodic_cartesian_advection_3d
 ((err+=$?))
@@ -38,7 +39,7 @@ err=0
 ((err+=$?))
 ./make.sh bcc_cartesian_advection_diffusion_fpt
 ((err+=$?))
-./make.sh bcc_cartesian_advection_diffusion_decay_catalytic
+./make.sh bcc_cartesian_advection_diffusion_surface_decay
 ((err+=$?))
 ./make.sh bcc_cartesian_advection
 ((err+=$?))
@@ -46,7 +47,7 @@ err=0
 ((err+=$?))
 ./make.sh bcc_symmetryplanes_advection_diffusion_fpt
 ((err+=$?))
-./make.sh bcc_symmetryplanes_advection_diffusion_decay_catalytic
+./make.sh bcc_symmetryplanes_advection_diffusion_surface_decay
 ((err+=$?))
 ./make.sh bcc_symmetryplanes_advection
 ((err+=$?))

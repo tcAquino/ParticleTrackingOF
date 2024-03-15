@@ -15,8 +15,8 @@ namespace ptof
 {
   /** \brief Make transitions object to handle advective-diffusive transport. */
   template
-  <typename Geometry,
-  typename Steppers,
+  <typename Steppers,
+  typename Geometry,
   typename VelocityField,
   typename Boundary,
   typename TransportParameters,
@@ -51,8 +51,8 @@ namespace ptof
   
   /** \brief Make transitions object to handle purely-advective transport. */
   template
-  <typename Geometry,
-  typename Steppers,
+  <typename Steppers,
+  typename Geometry,
   typename VelocityField,
   typename Boundary,
   typename TransportParameters,

@@ -1,27 +1,17 @@
 <map id="useful::read" name="useful::read">
-<area shape="rect" id="node1" title="Read next value from file." alt="" coords="543,958,641,985"/>
-<area shape="rect" id="node2" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="295,5,439,47"/>
-<area shape="rect" id="node3" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a8de3841c86d622269727b0c87ed7430d" title=" " alt="" coords="274,71,461,127"/>
-<area shape="rect" id="node4" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#ad989b30026c2df387d67cd29ef32511c" title=" " alt="" coords="270,151,465,207"/>
-<area shape="rect" id="node5" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#aeeea09e2650448315389645c6ce81f9b" title=" " alt="" coords="255,231,479,287"/>
-<area shape="rect" id="node6" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a4d5347ec71c0d3ac018e963a4a428421" title=" " alt="" coords="271,311,463,367"/>
-<area shape="rect" id="node7" href="$df/d6c/structptof_1_1model__advection__diffusion__2d__parallel_1_1_transport_1_1_parameters.html#a752403dca62dd5f92fc846fe11511039" title=" " alt="" coords="281,392,453,463"/>
-<area shape="rect" id="node8" href="$d5/dac/structptof_1_1model__advection__2d__parallel_1_1_transport_1_1_parameters.html#a4f8ca418d24c64945a59a786a97c032c" title=" " alt="" coords="274,487,461,543"/>
-<area shape="rect" id="node9" href="$d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html#a4e0e2043149e3285c950a87424e6a417" title=" " alt="" coords="240,567,495,623"/>
-<area shape="rect" id="node10" href="$df/d2a/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_transport_1_1_parameters.html#a9bbc913bf91c02e46e4fc8e2533bfcc3" title=" " alt="" coords="259,647,476,703"/>
-<area shape="rect" id="node11" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#adc82b825c4c82104511cdcd0af850cde" title=" " alt="" coords="279,728,455,769"/>
-<area shape="rect" id="node12" href="$d8/dbc/structptof_1_1model__advection__diffusion__decay__catalytic__2d_1_1_reaction_1_1_parameters.html#a6970d1b5a63dad575b54a4c9529e6d62" title=" " alt="" coords="270,793,465,864"/>
-<area shape="rect" id="node13" href="$d5/daa/structptof_1_1model__advection__diffusion__decay__catalytic__3d_1_1_reaction_1_1_parameters.html#a1932d3c60fe250d5f19d56cf837bb691" title=" " alt="" coords="270,888,465,959"/>
-<area shape="rect" id="node14" href="$d0/d5d/structptof_1_1model__advection__diffusion__decay__catalytic__2d__parallel_1_1_reaction_1_1_parameters.html#a776c771da140c423dbf8a32ba493b613" title=" " alt="" coords="243,983,491,1053"/>
-<area shape="rect" id="node15" href="$d6/d05/structptof_1_1model__advection__diffusion__decay__catalytic__3d__parallel_1_1_reaction_1_1_parameters.html#a9a4dd9491c509b2827e1ed969fd6f518" title=" " alt="" coords="243,1077,491,1148"/>
-<area shape="rect" id="node16" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a7d2bf1a54248ae2018fd8d80e7522098" title=" " alt="" coords="274,1173,461,1229"/>
-<area shape="rect" id="node17" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a85449ff64dd91f84c8bf556d05d93589" title=" " alt="" coords="276,1253,459,1309"/>
-<area shape="rect" id="node18" href="$d2/dc2/structptof_1_1model__advection__diffusion__2d__parallel_1_1_solvers_1_1_parameters.html#a1f4a9d12dccbec29436d8b22957c758a" title=" " alt="" coords="283,1333,451,1404"/>
-<area shape="rect" id="node19" href="$d0/d48/structptof_1_1model__advection__2d__parallel_1_1_solvers_1_1_parameters.html#a4f43de3ddd8114fb98602a5042c1e66b" title=" " alt="" coords="274,1429,461,1485"/>
-<area shape="rect" id="node20" href="$dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a619eda26315288df3d1bb3eaf01b6877" title=" " alt="" coords="260,1509,475,1565"/>
-<area shape="rect" id="node21" href="$d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#ae5539f58d18d7ee51c62130f15469055" title=" " alt="" coords="262,1589,473,1660"/>
-<area shape="rect" id="node22" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#ac6bd99a728c941b9fcac49b5003b5fce" title=" " alt="" coords="5,1783,192,1824"/>
-<area shape="rect" id="node23" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a843875f22b7804e2ffaa0bd5aafcd04f" title="Read end criterion from input stream." alt="" coords="281,1735,453,1791"/>
-<area shape="rect" id="node24" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aac5351e60374d82176c7b3c13a80eac0" title="Read measure spacing type from input stream." alt="" coords="265,1815,470,1871"/>
-<area shape="rect" id="node25" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a61479298004ab41b4abbf7c6d495f4c5" title="Read measure spacing time units from input stream." alt="" coords="259,1896,476,1937"/>
+<area shape="rect" id="node1" title="Read next value from file." alt="" coords="512,479,611,506"/>
+<area shape="rect" id="node2" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="280,5,424,47"/>
+<area shape="rect" id="node3" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a8de3841c86d622269727b0c87ed7430d" title=" " alt="" coords="259,71,445,127"/>
+<area shape="rect" id="node4" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#ad989b30026c2df387d67cd29ef32511c" title=" " alt="" coords="255,151,449,207"/>
+<area shape="rect" id="node5" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#aeeea09e2650448315389645c6ce81f9b" title=" " alt="" coords="240,231,464,287"/>
+<area shape="rect" id="node6" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a4d5347ec71c0d3ac018e963a4a428421" title=" " alt="" coords="256,311,448,367"/>
+<area shape="rect" id="node7" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#adc82b825c4c82104511cdcd0af850cde" title=" " alt="" coords="264,392,440,433"/>
+<area shape="rect" id="node8" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a8b2d5d3c511edae6f107639df147699b" title=" " alt="" coords="256,457,448,528"/>
+<area shape="rect" id="node9" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a7d2bf1a54248ae2018fd8d80e7522098" title=" " alt="" coords="259,553,445,609"/>
+<area shape="rect" id="node10" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a85449ff64dd91f84c8bf556d05d93589" title=" " alt="" coords="261,633,443,689"/>
+<area shape="rect" id="node11" href="$dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#aca24a5d29b671cb87b00e0f97ab79635" title=" " alt="" coords="245,713,459,769"/>
+<area shape="rect" id="node12" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a843875f22b7804e2ffaa0bd5aafcd04f" title="Read end criterion from input stream." alt="" coords="266,793,438,849"/>
+<area shape="rect" id="node14" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#aac5351e60374d82176c7b3c13a80eac0" title="Read measure spacing type from input stream." alt="" coords="249,873,455,929"/>
+<area shape="rect" id="node15" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#a61479298004ab41b4abbf7c6d495f4c5" title="Read measure spacing time units from input stream." alt="" coords="243,953,461,995"/>
+<area shape="rect" id="node13" href="$dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#ac6bd99a728c941b9fcac49b5003b5fce" title=" " alt="" coords="5,880,192,921"/>
 </map>

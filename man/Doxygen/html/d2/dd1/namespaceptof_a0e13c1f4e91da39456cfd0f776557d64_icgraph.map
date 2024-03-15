@@ -1,8 +1,5 @@
 <map id="ptof::uniform_solid_reactant" name="ptof::uniform_solid_reactant">
-<area shape="rect" id="node1" title=" " alt="" coords="505,137,649,178"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a6f4bb4c354fd4058a6f16025f9f877d6" title=" " alt="" coords="313,137,457,178"/>
-<area shape="rect" id="node3" href="$d6/d1d/structptof_1_1model__advection__diffusion__decay__catalytic__2d_1_1_reaction.html#a36d67195afc2f643e1e3ecff45a7c3e6" title=" " alt="" coords="5,5,265,61"/>
-<area shape="rect" id="node4" href="$de/d46/structptof_1_1model__advection__diffusion__decay__catalytic__3d_1_1_reaction.html#a0db62921b52a5d635c55cbfd244036db" title=" " alt="" coords="5,85,265,141"/>
-<area shape="rect" id="node5" href="$d9/d02/structptof_1_1model__advection__diffusion__decay__catalytic__2d__parallel_1_1_reaction.html#a5b01ecb1c00e207a43fa0eb5c2a0011e" title=" " alt="" coords="6,166,265,237"/>
-<area shape="rect" id="node6" href="$da/d8b/structptof_1_1model__advection__diffusion__decay__catalytic__3d__parallel_1_1_reaction.html#add5c1b329986d29b19d3f097fabeffd9" title=" " alt="" coords="6,261,265,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="505,13,649,54"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a6f4bb4c354fd4058a6f16025f9f877d6" title=" " alt="" coords="313,13,457,54"/>
+<area shape="rect" id="node3" href="$d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a7384c98d2beb12756f61b520c5ea6c92" title=" " alt="" coords="5,5,265,61"/>
 </map>

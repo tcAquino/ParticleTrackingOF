@@ -9,6 +9,6 @@ var structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters =
     [ "lengthscale", "dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aad44e86d154e1541471e37a1885f9b3d", null ],
     [ "mean_velocity", "dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a7d4fce9283edd240575a57a4c11c8a9e", null ],
     [ "peclet", "dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a52619526ab6d4fdf74d12c8bb2767ba8", null ],
-    [ "rescale_velocity_field", "dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aa900524452e99bf65d58c5469cab859b", null ],
+    [ "peclet_option", "dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a04b7496ee2a7b9e61324a77892c3b478", null ],
     [ "velocity_rescaling_factor", "dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a2a8130558b76a46fe65141891fb3e67f", null ]
 ];

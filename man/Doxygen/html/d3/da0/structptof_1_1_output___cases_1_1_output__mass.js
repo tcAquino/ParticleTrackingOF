@@ -2,7 +2,6 @@ var structptof_1_1_output___cases_1_1_output__mass =
 [
     [ "Output_mass", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#affd9ca40f3da61071fe1f8d44ae453fc", null ],
     [ "open_write", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a8abca2101343ce0010981443a97d23ef", null ],
-    [ "open_write", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a51c0179147b9a89a2a34b6cb729c1780", null ],
     [ "operator()", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#afd8a99bd2d513fc10a2dd4754a6bc757", null ],
     [ "_delimiter", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a80eb9f47273c9764eb51cfbcfc2052f1", null ],
     [ "_geometry", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#a15ba20aaf9d476817a2147dc5e60a043", null ],

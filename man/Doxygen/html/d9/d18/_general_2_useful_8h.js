@@ -37,6 +37,7 @@ var _general_2_useful_8h =
     [ "has_time_step_setter", "d5/d31/structuseful_1_1has__time__step__setter.html", "d5/d31/structuseful_1_1has__time__step__setter" ],
     [ "has_time_step_getter", "dc/d7c/structuseful_1_1has__time__step__getter.html", "dc/d7c/structuseful_1_1has__time__step__getter" ],
     [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ],
+    [ "has_periodicity", "dd/d08/structuseful_1_1has__periodicity.html", "dd/d08/structuseful_1_1has__periodicity" ],
     [ "begin_result", "d9/d18/_general_2_useful_8h.html#a9825870413a3e014c0cebd482cfcdc1e", null ],
     [ "has_and", "d9/d18/_general_2_useful_8h.html#aaf899ef2db6f7b681e1d0acc6eb4d26e", null ],
     [ "has_begin", "d9/d18/_general_2_useful_8h.html#aa6178e941b5cde0a9df4aa36b4ab3674", null ],

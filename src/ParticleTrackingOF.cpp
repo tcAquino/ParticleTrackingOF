@@ -16,16 +16,20 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt;
-  using Output = Output<>;
+  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using InitialCondition = InitialCondition<CTRW>;
+  using VelocityField
+    = decltype(Transport::makeVelocityInterpolator(std::declval<Geometry>(),
+                                                   std::declval<Transport::Parameters&>()));
+  using Output = Output<CTRW, VelocityField, Geometry>;
+  std::string banner =
+    "--------------------------------------------------\n"
+    "ParticleTrackingOF\n"
+    "--------------------------------------------------\n";
   
   if (useful::check_options_help(argc, argv))
   {
-    std::cout <<
-      "--------------------------------------------------\n"
-      "ParticleTrackingOF\n"
-      "--------------------------------------------------\n";
-    std::cout << std::endl;
+    std::cout << banner << std::endl;
     std::cout <<
       "--------------------------------------------------\n"
       "Executable parameters (pass '' for default in []):\n"
@@ -38,6 +42,7 @@ int main(int argc, char * argv[])
       "- Name of initial condition parameter set\n"
       "- Name of output parameter set\n"
       "- Output directory [<Case directory>/output]\n"
+      "- Run number (nonnegative integer to index output) [none]\n"
       "--------------------------------------------------\n";
     std::cout << std::endl;
     Model::info(std::cout);
@@ -64,31 +69,38 @@ int main(int argc, char * argv[])
     std::cout << std::endl;
     return 0;
   }
-  if (argc != 9)
+  if (argc != 10)
     throw useful::bad_parameters_help();
   
   std::size_t arg = 1;
   std::string dir = argv[arg++];
   std::string case_name = argv[arg++];
-  std::string parameters_transport_name = argv[arg++];
-  std::string parameters_reaction_name = argv[arg++];
-  std::string parameters_solvers_name = argv[arg++];
-  std::string parameters_initial_condition_name = argv[arg++];
-  std::string parameters_output_name = argv[arg++];
+  std::string params_transport_name = argv[arg++];
+  std::string params_reaction_name = argv[arg++];
+  std::string params_solvers_name = argv[arg++];
+  std::string params_initial_condition_name = argv[arg++];
+  std::string params_output_name = argv[arg++];
   std::string dir_output = argv[arg++];
+  std::string run_nr = argv[arg++];
   
+  std::cout << banner << std::endl;
+  Model::info(std::cout);
   ptof::Directories directories{ dir, case_name, dir_output };
   directories.info_runtime(std::cout);
   std::cout << std::endl;
   ptof::DirectoriesOF directories_of{ directories };
   directories_of.info_runtime(std::cout);
-  
+  if (!useful::empty(run_nr))
+    std::cout << std::endl <<
+      "--------------------------------------------------\n"
+      "Run number: " << std::stoul(run_nr) << "\n"
+      "--------------------------------------------------\n";
   std::cout << std::setprecision(2) << std::scientific;
   
   std::cout << "\n" << "Importing transport parameters..." << std::endl;
   auto execution_begin = std::chrono::high_resolution_clock::now();
   Transport::Parameters params_transport{ directories,
-    parameters_transport_name };
+    params_transport_name };
   auto execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -98,7 +110,7 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Importing reaction parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Reaction::Parameters params_reaction{ directories,
-    parameters_reaction_name,
+    params_reaction_name,
     params_transport };
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -109,7 +121,7 @@ int main(int argc, char * argv[])
   std::cout << "\n"  << "Importing solver parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Solvers::Parameters params_solvers{ directories,
-    parameters_solvers_name, params_transport, params_reaction };
+    params_solvers_name, params_transport, params_reaction };
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -119,7 +131,7 @@ int main(int argc, char * argv[])
   std::cout << "\n"  << "Importing initial condition parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   InitialCondition::Parameters params_initial_condition{ directories,
-    parameters_initial_condition_name,
+    params_initial_condition_name,
     params_transport, params_reaction, params_solvers };
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -140,8 +152,7 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = Transport::makeVelocityInterpolator(geometry);
-  params_transport.rescale(velocity_field, geometry.mesh());
+  auto velocity_field = Transport::makeVelocityInterpolator(geometry, params_transport);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -195,11 +206,12 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   CTRW ctrw{ initial_condition(), CTRW::Tag{} };
-  ctrw::Transitions_CTRW_Transport_Reaction transitions{
-    Transport::makeTransitions(velocity_field,
-                               geometry, boundary,
-                               params_transport, params_reaction, params_solvers),
-    reaction };
+  auto transitions = makeTransitions<Transport, Solvers>(velocity_field,
+                                                         geometry, boundary,
+                                                         params_transport,
+                                                         params_reaction,
+                                                         params_solvers,
+                                                         reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -209,7 +221,7 @@ int main(int argc, char * argv[])
   std::cout << "\n"  << "Importing output parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Output::Parameters params_output{ directories,
-    parameters_output_name,
+    params_output_name,
     params_transport, params_reaction, params_solvers,
     params_transport.velocity_rescaling_factor };
   execution_end = std::chrono::high_resolution_clock::now();
@@ -226,14 +238,24 @@ int main(int argc, char * argv[])
     geometry,
     directories,
     params_output,
-    "M_" + Model::name
-      + "_C_" + case_name
-      + "_OF_" + directories_of.case_name
-      + "_T_" + parameters_transport_name
-      + "_R_" + parameters_reaction_name
-      + "_S_" + parameters_solvers_name
-      + "_I_" + parameters_initial_condition_name
-      + "_O_" + parameters_output_name };
+    empty(run_nr)
+    ? ptof::identifier(Model::name,
+                       case_name,
+                       directories_of.case_name,
+                       params_transport_name,
+                       params_reaction_name,
+                       params_solvers_name,
+                       params_initial_condition_name,
+                       params_output_name)
+    : ptof::identifier(Model::name,
+                       case_name,
+                       directories_of.case_name,
+                       params_transport_name,
+                       params_reaction_name,
+                       params_solvers_name,
+                       params_initial_condition_name,
+                       params_output_name,
+                       std::stoul(run_nr)) };
   measurer.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";

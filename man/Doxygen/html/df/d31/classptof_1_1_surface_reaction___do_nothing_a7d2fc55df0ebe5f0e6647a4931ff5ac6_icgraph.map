@@ -1,7 +1,4 @@
 <map id="ptof::SurfaceReaction_DoNothing::info" name="ptof::SurfaceReaction_DoNothing::info">
-<area shape="rect" id="node1" title="Output generic information about object." alt="" coords="260,108,421,149"/>
+<area shape="rect" id="node1" title="Output generic information about object." alt="" coords="260,5,421,47"/>
 <area shape="rect" id="node2" href="$d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html#a1b7177585ff33728376d55d7a5387a88" title=" " alt="" coords="5,5,212,47"/>
-<area shape="rect" id="node3" href="$d7/d0e/structptof_1_1model__advection__diffusion__3d_1_1_reaction.html#acef367719fe7a6cf11c041bda1eaeb06" title=" " alt="" coords="5,71,212,112"/>
-<area shape="rect" id="node4" href="$d0/d17/structptof_1_1model__advection__diffusion__2d__parallel_1_1_reaction.html#aa62485dfaf7b13494e5f5b042c1652ba" title=" " alt="" coords="25,137,192,193"/>
-<area shape="rect" id="node5" href="$d6/d0b/structptof_1_1model__advection__diffusion__3d__parallel_1_1_reaction.html#aa752f01dccf68297ebadc505603750a8" title=" " alt="" coords="25,217,192,273"/>
 </map>

@@ -99,13 +99,13 @@ $(document).ready(function(){initNavTree('functions_vars_p.html',''); initResiza
 </li>
 <li>peclet
 : <a class="el" href="d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#abea9a9093fb5a1952caf76c892eaf1a2">ptof::model_advection_2d::Transport::Parameters</a>
-, <a class="el" href="d5/dac/structptof_1_1model__advection__2d__parallel_1_1_transport_1_1_parameters.html#a5b3c1ae4ab89a3f8d26dc9e57b988296">ptof::model_advection_2d_parallel::Transport::Parameters</a>
 , <a class="el" href="dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a52619526ab6d4fdf74d12c8bb2767ba8">ptof::model_advection_diffusion_2d::Transport::Parameters</a>
-, <a class="el" href="df/d6c/structptof_1_1model__advection__diffusion__2d__parallel_1_1_transport_1_1_parameters.html#aa993680e6aa5e2582881895a7eaf23e2">ptof::model_advection_diffusion_2d_parallel::Transport::Parameters</a>
 , <a class="el" href="db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a07a1fc6f329566dfa06b0468f99395fc">ptof::model_bcc_cartesian_advection::Transport::Parameters</a>
 , <a class="el" href="d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a56f690f956a6fafde7053baf258a5fa9">ptof::model_bcc_cartesian_advection_diffusion::Transport::Parameters</a>
-, <a class="el" href="d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html#a1ab7709f0837c78f1d34a2556df29cd9">ptof::model_bcc_cartesian_advection_diffusion_parallel::Transport::Parameters</a>
-, <a class="el" href="df/d2a/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_transport_1_1_parameters.html#a108885228077de84a09ee2e6453caeed">ptof::model_bcc_cartesian_advection_parallel::Transport::Parameters</a>
+</li>
+<li>peclet_option
+: <a class="el" href="dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a04b7496ee2a7b9e61324a77892c3b478">ptof::model_advection_diffusion_2d::Transport::Parameters</a>
+, <a class="el" href="d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#af1d17870217f4fc80c914a7b51ae1097">ptof::model_bcc_cartesian_advection_diffusion::Transport::Parameters</a>
 </li>
 <li>periodicity
 : <a class="el" href="d3/da4/structctrw_1_1_state___periodic.html#a69f813df0e704e63aaa598613d037f22">ctrw::State_Periodic&lt; Position_t, Periodicity_t, Mass_t, Time_t, Tag_t &gt;</a>
@@ -137,8 +137,7 @@ $(document).ready(function(){initNavTree('functions_vars_p.html',''); initResiza
 , <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#a7b6251c2ee953d179faf4a4136decd46">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>position_data
-: <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#ac8587bc0c8a616f74f4266563468daa1">ptof::model_advection_diffusion_2d::InitialCondition::Parameters</a>
-, <a class="el" href="d2/d31/structptof_1_1model__advection__diffusion__2d__parallel_1_1_initial_condition_1_1_parameters.html#a1443435f8df6e455fc72fcd017be5c45">ptof::model_advection_diffusion_2d_parallel::InitialCondition::Parameters</a>
+: <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a2212de5b77b4d2323595e0b290fa38be">ptof::model_advection_diffusion_2d::InitialCondition&lt; CTRW &gt;::Parameters</a>
 </li>
 <li>preferred_concentration
 : <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ae63e6b468301d3781577c6680cfaf6b5">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, RNG &gt;</a>
@@ -149,8 +148,10 @@ $(document).ready(function(){initNavTree('functions_vars_p.html',''); initResiza
 <li>primitive_cell_boundaries
 : <a class="el" href="db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#ab19609873f82a6cdfa3d5710cce07b11">ptof::model_bcc_cartesian_advection::Transport::Parameters</a>
 , <a class="el" href="d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#ab997104b5ff79098c66f98dea1349cca">ptof::model_bcc_cartesian_advection_diffusion::Transport::Parameters</a>
-, <a class="el" href="d5/d8e/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_transport_1_1_parameters.html#abb4296f7d4aa930021a03e16dff737be">ptof::model_bcc_cartesian_advection_diffusion_parallel::Transport::Parameters</a>
-, <a class="el" href="df/d2a/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_transport_1_1_parameters.html#a4c6a84eee9a7d008760b2c7c7232e293">ptof::model_bcc_cartesian_advection_parallel::Transport::Parameters</a>
+</li>
+<li>primitive_cell_location_option
+: <a class="el" href="db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a50b33e5cfe5a976f205c9dc2bc79c3fc">ptof::model_bcc_cartesian_advection::Transport::Parameters</a>
+, <a class="el" href="d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a77caa668e3350e7a0bbb26f0d8d4d560">ptof::model_bcc_cartesian_advection_diffusion::Transport::Parameters</a>
 </li>
 <li>property
 : <a class="el" href="d0/d9a/structctrw_1_1_get__position__property.html#ab56cd219d707869c4a891539c14b3d7f">ctrw::Get_position_property&lt; Property &gt;</a>

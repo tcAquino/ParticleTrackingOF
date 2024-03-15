@@ -33,6 +33,7 @@ var namespaceuseful =
     [ "has_time_step_setter", "d5/d31/structuseful_1_1has__time__step__setter.html", "d5/d31/structuseful_1_1has__time__step__setter" ],
     [ "has_time_step_getter", "dc/d7c/structuseful_1_1has__time__step__getter.html", "dc/d7c/structuseful_1_1has__time__step__getter" ],
     [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ],
+    [ "has_periodicity", "dd/d08/structuseful_1_1has__periodicity.html", "dd/d08/structuseful_1_1has__periodicity" ],
     [ "begin_result", "df/d1d/namespaceuseful.html#a9825870413a3e014c0cebd482cfcdc1e", null ],
     [ "has_and", "df/d1d/namespaceuseful.html#aaf899ef2db6f7b681e1d0acc6eb4d26e", null ],
     [ "has_begin", "df/d1d/namespaceuseful.html#aa6178e941b5cde0a9df4aa36b4ab3674", null ],

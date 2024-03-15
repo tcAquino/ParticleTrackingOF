@@ -385,7 +385,6 @@ namespace ptof
     struct Parameters
     {
       double velocity_rescaling;
-      std::size_t run_nr;
       std::string time_units;
       double time_unit_factor;
       std::string end_criterion;
@@ -419,7 +418,6 @@ namespace ptof
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_output_"
                                        + name + ".dat");
-        useful::read(input, run_nr);
         read_time_units(input, params_transport, params_reaction);
         read_end_criterion(input);
         read_measure_spacing(input,
@@ -436,7 +434,6 @@ namespace ptof
           "--------------------------------------------------\n"
           "Output parameters\n"
           "--------------------------------------------------\n"
-          "- Run number (nonnegative integer to index output)\n"
           "- Time units to rescale measurement times:\n"
           "\tdiffusion: Rescale by diffusion time\n"
           "\tadvection: Rescale by reaction time\n"
@@ -721,7 +718,6 @@ namespace ptof
         "--------------------------------------------------\n"
         "Output\n"
         "--------------------------------------------------\n"
-        "- Run number: " << parameters.run_nr << "\n"
         "- End criterion: " << parameters.end_criterion << "\n";
       if (EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::time
           || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::mass_below
@@ -1128,7 +1124,7 @@ namespace ptof
       , _velocity_field{ velocity_field }
       , _geometry{ geometry }
       , _locator{ geometry.locator }
-      , _output{ open_write(directories, output_name, identifier, parameters.run_nr) }
+      , _output{ open_write(directories, output_name, identifier) }
       , _delimiter{ delimiter }
       {
         _output << std::setprecision(precision)
@@ -1141,26 +1137,6 @@ namespace ptof
       typename Geometry::Locator const& _locator;   /**< Object to locate positions in mesh. */
       std::ofstream _output;                        /**< Output stream. */
       std::string _delimiter;                       /**< Delimiter between output values on same line. */
-        
-      /** \brief Open output file for a given output type, tagged with run number identifier.
-       \param directories Current case directory information.
-       \param output_name Name of output type.
-       \param identifier String to include in names of output files.
-       \param run_nr Unsigned integer to index output file.
-       \return Output stream. */
-      std::ofstream open_write
-      (Directories const& directories,
-       std::string const& output_name,
-       std::string const& identifier,
-       std::size_t run_nr)
-      {
-        return
-          useful::open_write(directories.dir_output
-          + "/Data_" + output_name
-          + (identifier.empty() ? "" : "_" + identifier)
-          + "_RUN_" + std::to_string(run_nr)
-          + ".dat") ;
-      }
         
       /** \brief Open output file for a given output type.
       \param directories Current case directory information.
@@ -1216,7 +1192,7 @@ namespace ptof
       , _velocity_field{ velocity_field }
       , _geometry{ geometry }
       , _locator{ geometry.locator }
-      , _output{ open_write(directories, output_name, identifier, parameters.run_nr) }
+      , _output{ open_write(directories, output_name, identifier) }
       , _delimiter{ delimiter }
       {
         _output << std::setprecision(precision)
@@ -1229,26 +1205,6 @@ namespace ptof
       typename Geometry::Locator const& _locator;   /**< Object to locate positions in mesh. */
       std::ofstream _output;                        /**< Output stream. */
       std::string _delimiter;                       /**< Delimiter between output values on same line. */
-      
-      /** \brief Open output file for a given output type, tagged with run number identifier.
-      \param directories Current case directory information.
-      \param output_name Name of output type.
-      \param identifier String to include in names of output files.
-      \param run_nr Unsigned integer to index output file.
-      \return Output stream. */
-      std::ofstream open_write
-      (Directories const& directories,
-       std::string const& output_name,
-       std::string const& identifier,
-       std::size_t run_nr)
-      {
-        return
-          useful::open_write(directories.dir_output
-          + "/Data_" + output_name
-          + (identifier.empty() ? "" : "_" + identifier)
-          + "_RUN_" + std::to_string(run_nr)
-          + ".dat");
-      }
       
       /**
       \param directories Current case directory information.

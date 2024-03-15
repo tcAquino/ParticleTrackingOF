@@ -1070,6 +1070,24 @@ namespace useful
       static No test(...);
       static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
   };
+  
+  /** \class has_periodicidity General/Useful.h "General/Useful.h"
+   \brief Check if type T has member variable std::vector<int> periodicity.
+   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
+  */
+  template <typename T> struct has_periodicity
+  {
+      typedef char (&Yes)[1];
+      typedef char (&No)[2];
+
+      template<class U>
+      static Yes test(U* data,
+                      typename std::enable_if<std::is_same<
+                        std::vector<int>,
+                        decltype(data->periodicity)>::value>::type* = 0);
+      static No test(...);
+      static const bool value = sizeof(Yes) == sizeof(has_periodicity::test((typename std::remove_reference<T>::type*)0));
+  };
 }
 
 #endif /* GENERAL_USEFUL_H */

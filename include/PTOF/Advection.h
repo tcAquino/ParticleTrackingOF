@@ -53,14 +53,18 @@ namespace ptof
    \param field OpenFOAM vector field data
    \return Vector field interpolator
   */
-  template <typename Geometry, typename Field>
-  auto makeLinearInterpolator
-  (Geometry const& geometry, Field&& field)
+  template <typename Geometry, typename Field, typename TransportParameters>
+  auto makeLinearVelocityInterpolator
+  (Geometry const& geometry, Field&& field,
+   TransportParameters& params_transport)
   {
-    return ptof::VectorField_LinearInterpolation_OF{
+    auto velocity_field = ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
       geometry.locator,
       CheckOptions::Warn{} };
+    params_transport.rescale(velocity_field, geometry.mesh());
+    
+    return velocity_field;
   };
   
   /**
@@ -70,15 +74,20 @@ namespace ptof
    \param uninterpolated OpenFOAM vector field data to be added to \c field without interpolation
    \return Vector field interpolator
   */
-  template <typename Geometry, typename Field, typename Uninterpolated>
-  auto makeLinearInterpolator
-  (Geometry const& geometry, Field&& field, Uninterpolated&& uninterpolated)
+  template <typename Geometry, typename Field, typename Uninterpolated, typename TransportParameters>
+  auto makeLinearVelocityInterpolator
+  (Geometry const& geometry, Field&& field,
+   Uninterpolated&& uninterpolated,
+   TransportParameters& params_transport)
   {
-    return ptof::VectorField_LinearInterpolation_OF{
+    auto velocity_field =  ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field),
       geometry.locator,
       std::forward<Uninterpolated>(uninterpolated),
       CheckOptions::Warn{} };
+    params_transport.rescale(velocity_field, geometry.mesh());
+    
+    return velocity_field;
   };
 }
 

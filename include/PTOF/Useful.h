@@ -642,6 +642,100 @@ namespace ptof
           << 1. - double(ptof::nr_absorbed(subject, time))/subject.size()
           << "\n";
   }
+  
+  /** \return Identifier string for output file names. */
+  std::string identifier
+  (std::string const& model_name,
+   std::string const& case_name,
+   std::string const& of_case_name,
+   std::string const& params_transport_name,
+   std::string const& params_reaction_name,
+   std::string const& params_solvers_name,
+   std::string const& params_initial_condition_name,
+   std::string const& params_output_name)
+  {
+    return "M_" + model_name
+      + "_C_" + case_name
+      + "_OF_" + of_case_name
+      + "_T_" + params_transport_name
+      + "_R_" + params_reaction_name
+      + "_S_" + params_solvers_name
+      + "_I_" + params_initial_condition_name
+      + "_O_" + params_output_name;
+  }
+  
+  /** \return Identifier string for output file names. */
+  std::string identifier
+  (std::string const& model_name,
+   std::string const& case_name,
+   std::string const& of_case_name,
+   std::string const& params_transport_name,
+   std::string const& params_reaction_name,
+   std::string const& params_solvers_name,
+   std::string const& params_initial_condition_name,
+   std::string const& params_output_name,
+   std::size_t run_nr)
+  {
+    return identifier(model_name,
+                      case_name,
+                      of_case_name,
+                      params_transport_name,
+                      params_reaction_name,
+                      params_solvers_name,
+                      params_initial_condition_name,
+                      params_output_name)
+      + "_RUN_" + std::to_string(run_nr);
+  }
+  
+  /** \return Identifier string for output file names. */
+  std::string identifier
+  (std::string const& model_name,
+   std::string const& case_name,
+   std::string const& of_case_name,
+   std::string const& params_transport_name,
+   std::string const& params_phase_name,
+   std::string const& params_reaction_name,
+   std::string const& params_solvers_name,
+   std::string const& params_initial_condition_name,
+   std::string const& params_output_name)
+  {
+    return "M_" + model_name
+      + "_C_" + case_name
+      + "_OF_" + of_case_name
+      + "_T_" + params_transport_name
+      + "_P_" + params_phase_name
+      + "_R_" + params_reaction_name
+      + "_S_" + params_solvers_name
+      + "_I_" + params_initial_condition_name
+      + "_O_" + params_output_name;
+  }
+  
+  /** \return Identifier string for output file names. */
+  std::string identifier
+  (std::string const& model_name,
+   std::string const& case_name,
+   std::string const& of_case_name,
+   std::string const& params_transport_name,
+   std::string const& params_phase_name,
+   std::string const& params_reaction_name,
+   std::string const& params_solvers_name,
+   std::string const& params_initial_condition_name,
+   std::string const& params_output_name,
+   std::size_t run_nr)
+  {
+    return identifier(model_name,
+                      case_name,
+                      of_case_name,
+                      params_transport_name,
+                      params_phase_name,
+                      params_reaction_name,
+                      params_solvers_name,
+                      params_initial_condition_name,
+                      params_output_name)
+      + "_RUN_" + std::to_string(run_nr);
+  }
+  
+                         
 }
 
 #endif /* PTOF_USEFUL_H */

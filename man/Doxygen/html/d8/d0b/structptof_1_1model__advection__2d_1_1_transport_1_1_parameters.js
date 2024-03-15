@@ -9,6 +9,6 @@ var structptof_1_1model__advection__2d_1_1_transport_1_1_parameters =
     [ "lengthscale", "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#aaf33ea2fabc267587e495d8a15f2acd0", null ],
     [ "mean_velocity", "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a98a3058258f5cfecfc3bf5762b6a9183", null ],
     [ "peclet", "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#abea9a9093fb5a1952caf76c892eaf1a2", null ],
-    [ "rescale_velocity_field", "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a80e8e18bbde56664ca2b46a1643b2584", null ],
+    [ "rescale_velocity_option", "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4554e5925a455684c8961645bdb49fbc", null ],
     [ "velocity_rescaling_factor", "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a88cbe54fced1542fbf500a125d5e724a", null ]
 ];
