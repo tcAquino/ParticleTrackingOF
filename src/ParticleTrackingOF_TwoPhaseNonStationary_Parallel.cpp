@@ -23,7 +23,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_2d_parallel;
+  using namespace ptof::model_advection_diffusion_surface_decay_2d_parallel;
   using InitialCondition = InitialCondition<CTRW>;
   using Phase = ptof::Phase;
   using VelocityField

@@ -150,13 +150,15 @@ namespace ptof
     for (std::size_t ll = 0; ll < header_lines; ++ll)
       getline(file, line);
     
-    while (getline(file, line))
+    while (getline(file, line)) 
     {
       std::vector<std::string> split_line;
       boost::trim_if(line, boost::is_any_of(delims+"\r"));
       boost::algorithm::split(split_line, line,
                               boost::is_any_of(delims),
                               boost::token_compress_on);
+      if (split_line.size() != 2)
+        throw useful::parse_error(filename, line);
       boundary_conditions[split_line[0]] = split_line[1];
     }
     file.close();
