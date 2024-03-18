@@ -1,4 +1,4 @@
-<map id="ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;" name="ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;">
-<area shape="rect" id="node1" title="Linear interpolation of scalar field cell data based on OpenFOAM routines." alt="" coords="5,95,255,165"/>
-<area shape="rect" id="node2" href="$da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="74,5,186,32"/>
+<map id="ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;" name="ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;">
+<area shape="rect" id="node1" title="Linear interpolation of scalar field cell data based on OpenFOAM routines." alt="" coords="5,95,291,151"/>
+<area shape="rect" id="node2" href="$da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="92,5,204,32"/>
 </map>

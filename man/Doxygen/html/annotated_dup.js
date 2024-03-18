@@ -293,6 +293,16 @@ var annotated_dup =
       [ "Store_Absorbed_Reinjections", "de/dbb/structptof_1_1_store___absorbed___reinjections.html", "de/dbb/structptof_1_1_store___absorbed___reinjections" ],
       [ "Store_Info_Contact", "d0/d38/structptof_1_1_store___info___contact.html", "d0/d38/structptof_1_1_store___info___contact" ],
       [ "TimeStepAdaptor_CellSize_SurfaceReaction", "d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html", "d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction" ],
+      [ "CheckOptions", "d3/d06/structptof_1_1_check_options.html", [
+        [ "Check", "d3/d51/structptof_1_1_check_options_1_1_check.html", null ],
+        [ "NoCheck", "de/de1/structptof_1_1_check_options_1_1_no_check.html", null ],
+        [ "Warn", "d0/dd6/structptof_1_1_check_options_1_1_warn.html", null ]
+      ] ],
+      [ "ParallelOptions", "d9/dbc/structptof_1_1_parallel_options.html", [
+        [ "Parallel", "dc/da6/structptof_1_1_parallel_options_1_1_parallel.html", null ],
+        [ "Serial", "d3/d09/structptof_1_1_parallel_options_1_1_serial.html", null ]
+      ] ],
+      [ "SearchOptions", "d7/d21/structptof_1_1_search_options.html", "d7/d21/structptof_1_1_search_options" ],
       [ "Has_periodicity", "d4/db0/structptof_1_1_has__periodicity.html", null ],
       [ "Has_periodicity< State, decltype((void) State::periodicity, 0)>", "de/ddc/structptof_1_1_has__periodicity_3_01_state_00_01decltype_07_07void_08_01_state_1_1periodicity_00_010_08_4.html", null ]
     ] ],
@@ -342,11 +352,14 @@ var annotated_dup =
       [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ],
       [ "has_periodicity", "dd/d08/structuseful_1_1has__periodicity.html", "dd/d08/structuseful_1_1has__periodicity" ]
     ] ],
+    [ "Check", "d2/df7/struct_check_options_1_1_check.html", null ],
     [ "has_periodicidity", "d5/d14/classhas__periodicidity.html", null ],
     [ "Info_type", "d4/d6e/struct_info__type.html", null ],
+    [ "NeighborPrecheck", "d9/df7/struct_search_options_1_1_neighbor_precheck.html", null ],
     [ "NextMeasureTime", "de/da1/struct_output___cases_1_1_next_measure_time.html", null ],
     [ "NextMeasureTime_log", "de/d81/struct_output___cases_1_1_next_measure_time__log.html", null ],
     [ "NextMeasureTime_step", "d6/d19/struct_output___cases_1_1_next_measure_time__step.html", null ],
+    [ "NoChecl", "d5/d05/struct_check_options_1_1_no_checl.html", null ],
     [ "Output", "d3/dc7/struct_output___cases_1_1_output.html", null ],
     [ "Output_absorption_time", "d6/da2/struct_output___cases_1_1_output__absorption__time.html", null ],
     [ "Output_mass", "de/d7f/struct_output___cases_1_1_output__mass.html", null ],
@@ -364,11 +377,14 @@ var annotated_dup =
     [ "Output_velocity", "d7/da1/struct_output___cases_1_1_output__velocity.html", null ],
     [ "Output_velocity_gradient", "de/dc2/struct_output___cases_1_1_output__velocity__gradient.html", null ],
     [ "OutputTime", "da/d2f/struct_output___cases_1_1_output_time.html", null ],
+    [ "Parallel", "d3/d1f/struct_parallel_options_1_1_parallel.html", null ],
     [ "Parameters", "d8/d4a/struct_output___cases_1_1_parameters.html", null ],
     [ "Parameters", "d4/d48/struct_phase_1_1_parameters.html", null ],
+    [ "Serial", "da/da3/struct_parallel_options_1_1_serial.html", null ],
     [ "State_Position", "df/d93/struct_state___position.html", null ],
     [ "TimeStepAdaptor_CellSize", "d9/da7/class_time_step_adaptor___cell_size.html", null ],
     [ "Transition_Time_Position", "d8/dc1/class_transition___time___position.html", null ],
     [ "Transitions_Positions", "d5/da5/class_transitions___positions.html", null ],
-    [ "Transitions_RunTumble", "db/dbe/class_transitions___run_tumble.html", null ]
+    [ "Transitions_RunTumble", "db/dbe/class_transitions___run_tumble.html", null ],
+    [ "Warn", "da/ded/struct_check_options_1_1_warn.html", null ]
 ];

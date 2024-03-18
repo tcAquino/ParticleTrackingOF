@@ -86,24 +86,27 @@ $(document).ready(function(){initNavTree('functions_s.html',''); initResizable()
 
 <h3><a id="index_s"></a>- s -</h3><ul>
 <li>Scalar
-: <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#ab50eef9f475bb736e9b660fd35c8ef84">ptof::Locator_Cell</a>
-, <a class="el" href="d5/db8/structptof_1_1_locator___cell___parallel.html#a316c4e2a81408d21592eddfbd11a8290">ptof::Locator_Cell_Parallel</a>
-, <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a7a939053ea56a3cc38f794e4fc526309">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
-, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a7b5436e5676d2ca12e7dc955d5794604">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
+: <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">ptof::Locator_Cell&lt; SearchOption &gt;</a>
+, <a class="el" href="d5/db8/structptof_1_1_locator___cell___parallel.html#a2952db29c2f4eac48214da6ee7a444d7">ptof::Locator_Cell_Parallel&lt; SearchOption &gt;</a>
+, <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a516b75a1105715b3df59338fed45a774">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a0d5980bb8bcf19caeedaf3cf4f99b7f4">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>ScalarField_LinearInterpolation_OF()
-: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a42a80c1cdfac234e4b43ae21844867aa">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a9e10f9d3f48e9c7e1ae8450d11a2efe9">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>scale
 : <a class="el" href="d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes.html#a782d99c6bc9396e414ee81fa6c2ac0b9">geometry::Boundary_Periodic_SymmetryPlanes&lt; SymmetryPlanes &gt;</a>
 , <a class="el" href="df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#aec443781e676d1617fff6822ccd0af9c">geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo&lt; SymmetryPlanes &gt;</a>
 </li>
+<li>SecondNeighborPrecheck
+: <a class="el" href="d7/d21/structptof_1_1_search_options.html#a64e787e00bd0300226da129ba568da3b">ptof::SearchOptions</a>
+</li>
 <li>set()
 : <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a5d2f69ff6a005c210c39ea179689c7a9">ctrw::CTRW&lt; State_t &gt;</a>
 , <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#aeabb17fe7e5b8800c0f5ea4813eaa591">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
 , <a class="el" href="d5/d4b/classctrw_1_1_particle.html#a69c34f5bb244f3dede15d37de5b22037">ctrw::Particle&lt; State_t &gt;</a>
-, <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a598d853ba8828b1008127bdc4a5f5224">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
-, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a7b3ad2cea4d571f2ed964f0a0fd3181e">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
+, <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a4750c6f199fb8615c57f3835e13c2e5f">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a45c7fc46587326442e1fa58e78151602">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>set_end_criterion()
 : <a class="el" href="d5/de8/classptof_1_1_output___cases.html#acf26fb5818bfaccf33b76b6d7c087713">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;</a>
@@ -129,8 +132,8 @@ $(document).ready(function(){initNavTree('functions_s.html',''); initResizable()
 , <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#a7498b7f3f7c47de91e28276274ee885d">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>set_uninterpolated()
-: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a7bfc44608999e387bb45e1171178e245">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
-, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a4732f53a1800422b9ce2505c62644dda">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a94847de52430b6eb28de14d6a8c1fc09">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ad8297a53b418c9786b8960a68b3240cc">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>size()
 : <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#aa3c3e346ae273e685f7741a29aa6c8b8">ctrw::CTRW&lt; State_t &gt;</a>
@@ -171,13 +174,13 @@ $(document).ready(function(){initNavTree('functions_s.html',''); initResizable()
 : <a class="el" href="d9/d28/structctrw_1_1_state__position.html#a33d81d95385855ff47e0d873e7976d15">ctrw::State_position&lt; Position_t, Time_t, Tag_t &gt;</a>
 </li>
 <li>State_Position_Mass()
-: <a class="el" href="de/d11/structctrw_1_1_state___position___mass.html#a69f5e4748eed60fe26f843cdeec534f7">ctrw::State_Position_Mass&lt; Position_t, Mass_t, Time_t, Tag_t &gt;</a>
+: <a class="el" href="de/d11/structctrw_1_1_state___position___mass.html#a54598db08824f185da30eb83a7aef4af">ctrw::State_Position_Mass&lt; Position_t, Mass_t, Time_t, Tag_t &gt;</a>
 </li>
 <li>State_PTRW_Position()
 : <a class="el" href="df/ddd/structctrw_1_1_state___p_t_r_w___position.html#a1d4ccbee4e72fa62bd4eaa747d0e8a5b">ctrw::State_PTRW_Position&lt; Position_t &gt;</a>
 </li>
 <li>State_RunTumble()
-: <a class="el" href="d0/d9a/structctrw_1_1_state___run_tumble.html#af72a12e55ffd08eb73e06e233b3fd110">ctrw::State_RunTumble&lt; Orientation_t, Tag_t &gt;</a>
+: <a class="el" href="d0/d9a/structctrw_1_1_state___run_tumble.html#a2d359d58c551a15caa6a1d101439020b">ctrw::State_RunTumble&lt; Orientation_t, Tag_t &gt;</a>
 </li>
 <li>State_RunTumble_PTRW()
 : <a class="el" href="d3/d83/structctrw_1_1_state___run_tumble___p_t_r_w.html#ad678545b8f81f70f80715bb759481880">ctrw::State_RunTumble_PTRW&lt; Orientation_t, Tag_t, Position_t &gt;</a>
@@ -204,12 +207,12 @@ $(document).ready(function(){initNavTree('functions_s.html',''); initResizable()
 : <a class="el" href="d5/d77/structptof_1_1_initial_conditions.html#a45844e0d728a9c070a4fcf3f0c6f1d9c">ptof::InitialConditions</a>
 </li>
 <li>sum()
-: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#acfe923c149497b8a92aa76e40d83a722">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
-, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ab3f53fc6a64f9afd7032be7027371f31">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a042b3f81a3dea8e100c322892c05407b">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a29c62124297aeba867879119ce49502d">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>sum_uninterpolated()
-: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a3ec67ad890a1c36f6cd41fc35b7ee971">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
-, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ab45356d710055215e863d00f104e8ee5">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, check_if_outside, warn_if_outside, Uninterpolated &gt;</a>
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#ad429a5d08df1c993cf3628bf73f467a7">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#adc44e5b12aaf66210bce48f4ecab5cc2">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>surface_concentration
 : <a class="el" href="d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a055451e10d2c656fafa37a9b75f5f902">ptof::model_advection_diffusion_surface_decay_2d::Reaction::Parameters</a>

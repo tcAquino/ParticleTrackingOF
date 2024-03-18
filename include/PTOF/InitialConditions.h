@@ -34,16 +34,16 @@ namespace ptof
     enum class Type
     {
       uniform,                        /**< Homogeneous throughout the domain.                     */
-      flux_weighted,                  /**< Flux-weighted throughout the domain.                   */
+      fluxweighted,                   /**< Flux-weighted throughout the domain.                   */
       uniform_inlet,                  /**< Homogeneous at the inlet.                              */
-      flux_weighted_inlet,            /**< Flux-weighted at the inlet.                            */
+      fluxweighted_inlet,             /**< Flux-weighted at the inlet.                            */
       uniform_solid,                  /**< Homogeneous at the solid surface.                      */
       uniform_near_solid,             /**< Homogeneous at a fixed distance to the solid interface.*/
       uniform_region_cartesian,       /**< Homogeneous in a Cartesian region        */
-      flux_weighted_region_cartesian, /**< Flux-weighted in a Cartesian region        */
+      fluxweighted_region_cartesian,  /**< Flux-weighted in a Cartesian region        */
       prescribed_positions,           /**< Prescribed positions                               */
       uniform_inlet_continuous,       /**< Continuous injection homogeneous at the inlet.         */
-      flux_weighted_inlet_continuous, /**< Continuous injection flux-weighted at the inlet.       */
+      fluxweighted_inlet_continuous,  /**< Continuous injection flux-weighted at the inlet.       */
     };
     
     /** Type from name. */
@@ -63,16 +63,16 @@ namespace ptof
     std::unordered_map<std::string, Type> string_to_type
     {
       { "uniform", Type::uniform },
-      { "flux_weighted", Type::flux_weighted },
+      { "fluxweighted", Type::fluxweighted },
       { "uniform_inlet", Type::uniform_inlet },
-      { "flux_weighted_inlet", Type::flux_weighted_inlet },
+      { "fluxweighted_inlet", Type::fluxweighted_inlet },
       { "uniform_solid", Type::uniform_solid },
       { "uniform_near_solid", Type::uniform_near_solid },
       { "uniform_region_cartesian", Type::uniform_region_cartesian },
-      { "flux_weighted_region_cartesian", Type::flux_weighted_region_cartesian },
+      { "fluxweighted_region_cartesian", Type::fluxweighted_region_cartesian },
       { "prescribed_positions", Type::prescribed_positions },
       { "uniform_inlet_continuous", Type::uniform_inlet_continuous },
-      { "flux_weighted_inlet_continuous", Type::flux_weighted_inlet_continuous }
+      { "fluxweighted_inlet_continuous", Type::fluxweighted_inlet_continuous }
     };
     
     /** Map types to names. */
@@ -80,16 +80,16 @@ namespace ptof
     std::unordered_map<Type, std::string> type_to_string
     {
       { Type::uniform, "uniform", },
-      { Type::flux_weighted, "flux_weighted" },
+      { Type::fluxweighted, "fluxweighted" },
       { Type::uniform_inlet, "uniform_inlet" },
-      { Type::flux_weighted_inlet, "flux_weighted_inlet" },
+      { Type::fluxweighted_inlet, "fluxweighted_inlet" },
       { Type::uniform_solid, "uniform_solid" },
       { Type::uniform_near_solid, "uniform_near_solid" },
       { Type::uniform_region_cartesian, "uniform_region_cartesian" },
-      { Type::flux_weighted_region_cartesian, "flux_weighted_region_cartesian" },
-      { Type::flux_weighted_region_cartesian, "prescribed_positions" },
+      { Type::fluxweighted_region_cartesian, "fluxweighted_region_cartesian" },
+      { Type::fluxweighted_region_cartesian, "prescribed_positions" },
       { Type::uniform_inlet_continuous, "uniform_inlet_continuous" },
-      { Type::flux_weighted_inlet_continuous, "flux_weighted_inlet_continuous" }
+      { Type::fluxweighted_inlet_continuous, "fluxweighted_inlet_continuous" }
     };
   };
   
@@ -182,7 +182,7 @@ namespace ptof
   typename Mesh,
   typename RNG,
   typename ParticleMaker>
-  auto flux_weighted_cells
+  auto fluxweighted_cells
   (std::size_t nr_particles,
    Container const& cell_ids,
    VelocityField const& velocity_field,
@@ -324,7 +324,7 @@ namespace ptof
   typename Locator,
   typename RNG,
   typename ParticleMaker>
-  auto flux_weighted_faces
+  auto fluxweighted_faces
   (std::size_t nr_particles,
    Container const& face_ids,
    VelocityField const& velocity_field,
@@ -474,14 +474,14 @@ namespace ptof
   typename Mesh,
   typename RNG,
   typename ParticleMaker>
-  auto flux_weighted
+  auto fluxweighted
   (std::size_t nr_particles,
    VelocityField const& velocity_field,
    Mesh const& mesh,
    RNG& rng,
    ParticleMaker& particle_maker)
   {
-    return flux_weighted_cells(nr_particles,
+    return fluxweighted_cells(nr_particles,
                                all_cell_ids(mesh),
                                velocity_field,
                                mesh, rng, particle_maker);
@@ -503,7 +503,7 @@ namespace ptof
   typename RNG,
   typename ParticleMaker,
   typename Mask>
-  auto flux_weighted
+  auto fluxweighted
   (std::size_t nr_particles,
    VelocityField const& velocity_field,
    Mesh const& mesh,
@@ -512,7 +512,7 @@ namespace ptof
    Mask const& mask,
    double threshold = 0.)
   {
-    return flux_weighted_cells(nr_particles,
+    return fluxweighted_cells(nr_particles,
                                apply_mask(all_cell_ids(mesh),
                                           mask, threshold),
                                velocity_field,
@@ -597,7 +597,7 @@ namespace ptof
   typename Locator,
   typename RNG,
   typename ParticleMaker>
-  auto flux_weighted_patches
+  auto fluxweighted_patches
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    VelocityField const& velocity_field,
@@ -606,7 +606,7 @@ namespace ptof
    RNG& rng,
    ParticleMaker& particle_maker)
   {
-    return flux_weighted_faces(nr_particles,
+    return fluxweighted_faces(nr_particles,
                                patches_face_ids(mesh, patch_names),
                                velocity_field,
                                mesh, locator,
@@ -632,7 +632,7 @@ namespace ptof
   typename RNG,
   typename ParticleMaker,
   typename Mask>
-  auto flux_weighted_patches
+  auto fluxweighted_patches
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    VelocityField const& velocity_field,
@@ -643,7 +643,7 @@ namespace ptof
    Mask const& mask,
    double threshold = 0.)
   {
-    return flux_weighted_faces(nr_particles,
+    return fluxweighted_faces(nr_particles,
                                apply_mask(patches_face_ids(mesh, patch_names),
                                           mask, threshold),
                                velocity_field,
@@ -981,13 +981,13 @@ namespace ptof
           else
             return uniform(nr_particles, mesh, rng, particle_maker,
                            mask, threshold);
-        case InitialConditions::Type::flux_weighted:
+        case InitialConditions::Type::fluxweighted:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
-            return flux_weighted(nr_particles,
+            return fluxweighted(nr_particles,
                                  velocity_field,
                                  mesh, rng, particle_maker);
           else
-            return flux_weighted(nr_particles,
+            return fluxweighted(nr_particles,
                                  velocity_field,
                                  mesh, rng, particle_maker,
                                  mask, threshold);
@@ -1003,15 +1003,15 @@ namespace ptof
                                    mesh, locator,
                                    rng, particle_maker,
                                    mask, threshold);
-        case InitialConditions::Type::flux_weighted_inlet:
+        case InitialConditions::Type::fluxweighted_inlet:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
-            return flux_weighted_patches(nr_particles,
+            return fluxweighted_patches(nr_particles,
                                          { "inlet" },
                                          velocity_field,
                                          mesh, locator,
                                          rng, particle_maker);
           else
-            return flux_weighted_patches(nr_particles,
+            return fluxweighted_patches(nr_particles,
                                          { "inlet" },
                                          velocity_field,
                                          mesh, locator,
@@ -1055,16 +1055,16 @@ namespace ptof
                                                                       mesh, locator),
                                             mask, threshold),
                                  mesh, rng, particle_maker);
-        case InitialConditions::Type::flux_weighted_region_cartesian:
+        case InitialConditions::Type::fluxweighted_region_cartesian:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
-            return flux_weighted_cells(nr_particles,
+            return fluxweighted_cells(nr_particles,
                                        cell_ids_region_cartesian(params.region_boundaries,
                                                                  mesh, locator),
                                        velocity_field,
                                        mesh,
                                        rng, particle_maker);
           else
-            return flux_weighted_cells(nr_particles,
+            return fluxweighted_cells(nr_particles,
                                        apply_mask(cell_ids_region_cartesian(params.region_boundaries,
                                                                             mesh, locator),
                                                   mask, threshold),
@@ -1105,12 +1105,12 @@ namespace ptof
                                         params.time_max,
                                         params.time_step,
                                         particle_maker);
-        case InitialConditions::Type::flux_weighted_inlet_continuous:
+        case InitialConditions::Type::fluxweighted_inlet_continuous:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return continuous_injection([this]
                                         (std::size_t nr_particles,
                                          ParticleMakerOther& particle_maker)
-                                        { return flux_weighted_patches(nr_particles,
+                                        { return fluxweighted_patches(nr_particles,
                                                                        { "inlet" },
                                                                        velocity_field,
                                                                        mesh, locator,
@@ -1125,7 +1125,7 @@ namespace ptof
             return continuous_injection([this]
                                         (std::size_t nr_particles,
                                          ParticleMakerOther& particle_maker)
-                                        { return flux_weighted_patches(nr_particles,
+                                        { return fluxweighted_patches(nr_particles,
                                                                        { "inlet" },
                                                                        velocity_field,
                                                                        mesh, locator,

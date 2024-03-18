@@ -408,7 +408,7 @@ namespace ptof
           if (type == InitialConditions::Type::uniform_near_solid)
             useful::read(input, distance_wall);
           if (type == InitialConditions::Type::uniform_region_cartesian ||
-              type == InitialConditions::Type::flux_weighted_region_cartesian)
+              type == InitialConditions::Type::fluxweighted_region_cartesian)
           {
             input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::string line;
@@ -432,7 +432,7 @@ namespace ptof
           useful::read(input, nr_particles);
           useful::read(input, time_min);
           if (type == InitialConditions::Type::uniform_inlet_continuous ||
-              type == InitialConditions::Type::flux_weighted_inlet_continuous)
+              type == InitialConditions::Type::fluxweighted_inlet_continuous)
           {
             useful::read(input, time_max);
             useful::read(input, time_step_accuracy_adv);
@@ -455,27 +455,26 @@ namespace ptof
           "--------------------------------------------------\n"
           "- Initial condition type:\n"
           "\tuniform: Homogeneous throughout the domain\n"
-          "\tflux_weighted: Flux-weighted throughout the domain\n"
+          "\tfluxweighted: Flux-weighted throughout the domain\n"
           "\tuniform_inlet: Homogeneous at the inlet\n"
-          "\tflux_weighted_inlet: Flux-weighted at the inlet\n"
+          "\tfluxweighted_inlet: Flux-weighted at the inlet\n"
           "\tuniform_solid: Homogeneous at the solid surface\n"
           "\tuniform_near_solid: Homogeneous at a fixed distance to the solid interface\n"
           "\tuniform_region_cartesian: Homogeneous in a prescribed cartesian region\n"
-          "\tflux_weighted_region_cartesian: Flux-weighted in a prescribed cartesian region\n"
+          "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed cartesian region\n"
           "\tprescribed_positions: Prescribed positions\n"
           "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
-          "\tflux_weighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
+          "\tfluxweighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
           "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
-          "- Region boundaries (pass only for types uniform_region_cartesian or flux_weighted_region_cartesian)\n"
+          "- Region boundaries (pass only for types uniform_region_cartesian or fluxweighted_region_cartesian)\n"
           "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
-          "- Total transported mass in each injection step\n"
+          "- Total injected mass in each injection step\n"
           "- Number of Lagrangian particles in each injection step\n"
           "- Initial injection time\n"
-          "- Final injection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-          "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-          "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-          "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or flux_weighted_inlet_continuous)\n"
-          "- Number of Lagrangian particles in each injection discretization\n"
+          "- Final injection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+          "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+          "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+          "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
           "--------------------------------------------------\n";
         }
       };
@@ -899,7 +898,7 @@ namespace ptof
           "Reaction parameters:\n"
           "--------------------------------------------------\n"
           "- Damkohler number\n"
-          "- Solid reactant initial distribution type\n"
+          "- Solid reactant initial distribution type:\n"
           "\tuniform: Homogeneous throughout the domain\n"
           "- Initial solid reactant surface concentration\n"
           "--------------------------------------------------\n";

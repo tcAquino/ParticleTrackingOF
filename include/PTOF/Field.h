@@ -15,12 +15,10 @@
 
 namespace ptof
 {
-
   /** \class VectorField_LinearInterpolation_OF PTOF/Field.h "PTOF/Field.h"
     *  \brief Linear interpolation of vector field cell data based on OpenFOAM routines. */
   template
-  <typename Field, typename Locator,
-  bool check_if_outside, bool warn_if_outside,
+  <typename Field, typename Locator, typename CheckOption,
   typename Uninterpolated = useful::Empty>
   class VectorField_LinearInterpolation_OF
   {
@@ -32,6 +30,12 @@ namespace ptof
     using Scalar = Foam::scalar;                    /**> Scalar (also 1D point). */
     using Index = Foam::label;                      /**> Cell index.*/
     
+    /** Whether to check if requested positions are outside of mesh. */
+    static constexpr bool check_if_outside = !std::is_same_v<CheckOption, CheckOptions::NoCheck>;
+    
+    /** Whether to warn when requested positions are outside of mesh. */
+    static constexpr bool warn_if_outside = std::is_same_v<CheckOption, CheckOptions::Warn>;
+    
     /** Constructor.
     \brief Without checking if position is in bounds.
     \param field Vector field cell data to interpolate.
@@ -39,10 +43,10 @@ namespace ptof
     */
     VectorField_LinearInterpolation_OF
     (Field&& field, Locator&& locator, CheckOptions::NoCheck)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
+    : VectorField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator))
     {
-      static_assert(check_if_outside == false && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::NoCheck>,
                     "Bad class template arguments for no bounds checking.");
     }
     
@@ -53,10 +57,10 @@ namespace ptof
     */
     VectorField_LinearInterpolation_OF
     (Field&& field, Locator&& locator, CheckOptions::Check)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
+    : VectorField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator))
     {
-      static_assert(check_if_outside == true && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Check>,
                     "Bad class template arguments for bounds checking.");
     }
     
@@ -67,10 +71,10 @@ namespace ptof
     */
     VectorField_LinearInterpolation_OF
     (Field&& field, Locator&& locator, CheckOptions::Warn)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
+    : VectorField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator))
     {
-      static_assert(check_if_outside == true && warn_if_outside == true,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Warn>,
                     "Bad class template arguments for bounds warning.");
     }
     
@@ -84,11 +88,11 @@ namespace ptof
     (Field&& field, Locator&& locator,
      Uninterpolated&& uninterpolated,
      CheckOptions::NoCheck)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
-    , _uninterpolated{ uninterpolated }
+    : VectorField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator),
+                                         std::forward<Uninterpolated>(uninterpolated))
     {
-      static_assert(check_if_outside == false && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::NoCheck>,
                     "Bad class template arguments for no bounds checking.");
     }
     
@@ -102,11 +106,11 @@ namespace ptof
     (Field&& field, Locator&& locator,
      Uninterpolated&& uninterpolated,
      CheckOptions::Check)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
-    , _uninterpolated{ uninterpolated }
+    : VectorField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator),
+                                         std::forward<Uninterpolated>(uninterpolated))
     {
-      static_assert(check_if_outside == true && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Check>,
                     "Bad class template arguments for bounds checking.");
     }
     
@@ -120,13 +124,48 @@ namespace ptof
     (Field&& field, Locator&& locator,
      Uninterpolated&& uninterpolated,
      CheckOptions::Warn)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
-    , _uninterpolated{ uninterpolated }
+    : VectorField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator),
+                                         std::forward<Uninterpolated>(uninterpolated))
     {
-      static_assert(check_if_outside == true && warn_if_outside == true,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Warn>,
                     "Bad class template arguments for bounds warning.");
     }
+    
+    /** Constructor.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+    */
+    VectorField_LinearInterpolation_OF
+    (Field&& field, Locator&& locator)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {}
+    
+    /** Constructor.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+     \param uninterpolated Uninterpolated field to add to interpolated field.
+    */
+    VectorField_LinearInterpolation_OF
+    (Field&& field, Locator&& locator,
+     Uninterpolated&& uninterpolated)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    , _uninterpolated{ std::forward<Uninterpolated>(uninterpolated) }
+    {}
+    
+    /** \brief Deleted copy constructor. */
+    VectorField_LinearInterpolation_OF(VectorField_LinearInterpolation_OF const&) = delete;
+    
+    /** Constructor.
+     \brief Move constructor. */
+    VectorField_LinearInterpolation_OF(VectorField_LinearInterpolation_OF&& field)
+    : _field{ std::move(field._field) }
+    , _locator{ std::move(field._locator) }
+    , _interpolant{ this->_field }
+    , _uninterpolated{ std::move(field._uninterpolated) }
+    {}
     
     /**
      \brief Interpolate field.
@@ -255,48 +294,47 @@ namespace ptof
   (Field&&, Locator&&,
    CheckOptions::NoCheck) ->
   VectorField_LinearInterpolation_OF
-  <Field, Locator, 0, 0, useful::Empty>;
+  <Field, Locator, CheckOptions::NoCheck, useful::Empty>;
   template
   <typename Field, typename Locator>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&,
    CheckOptions::Check) ->
   VectorField_LinearInterpolation_OF
-  <Field, Locator, 1, 0, useful::Empty>;
+  <Field, Locator, CheckOptions::Check, useful::Empty>;
   template
   <typename Field, typename Locator>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&,
    CheckOptions::Warn) ->
   VectorField_LinearInterpolation_OF
-  <Field, Locator, 1, 1, useful::Empty>;
+  <Field, Locator, CheckOptions::Warn, useful::Empty>;
   template
   <typename Field, typename Locator, typename Uninterpolated>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&, Uninterpolated&&,
    CheckOptions::NoCheck) ->
   VectorField_LinearInterpolation_OF
-  <Field, Locator, 0, 0, Uninterpolated>;
+  <Field, Locator, CheckOptions::NoCheck, Uninterpolated>;
   template
   <typename Field, typename Locator, typename Uninterpolated>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&, Uninterpolated&&,
    CheckOptions::Check) ->
   VectorField_LinearInterpolation_OF
-  <Field, Locator, 1, 0, Uninterpolated>;
+  <Field, Locator, CheckOptions::Check, Uninterpolated>;
   template
   <typename Field, typename Locator, typename Uninterpolated>
   VectorField_LinearInterpolation_OF
   (Field&&, Locator&&, Uninterpolated&&,
    CheckOptions::Warn) ->
   VectorField_LinearInterpolation_OF
-  <Field, Locator, 1, 1, Uninterpolated>;
+  <Field, Locator, CheckOptions::Warn, Uninterpolated>;
   
   /** \class ScalarField_LinearInterpolation_OF PTOF/Field.h "PTOF/Field.h"
    * \brief Linear interpolation of scalar field cell data based on OpenFOAM routines. */
   template
-  <typename Field, typename Locator,
-  bool check_if_outside, bool warn_if_outside,
+  <typename Field, typename Locator, typename CheckOption,
   typename Uninterpolated = useful::Empty>
   class ScalarField_LinearInterpolation_OF
   {
@@ -306,6 +344,12 @@ namespace ptof
     using Scalar = Foam::scalar;                    /**> Scalar (also 1D point). */
     using Index = Foam::label;                      /**> Cell index.*/
     
+    /** Whether to check if requested positions are outside of mesh. */
+    static constexpr bool check_if_outside = !std::is_same_v<CheckOption, CheckOptions::NoCheck>;
+    
+    /** Whether to warn when requested positions are outside of mesh. */
+    static constexpr bool warn_if_outside = std::is_same_v<CheckOption, CheckOptions::NoCheck>;
+    
     /** Constructor.
      \brief Without checking if position is in bounds.
      \param field Scalar field cell data to interpolate.
@@ -313,10 +357,10 @@ namespace ptof
      */
     ScalarField_LinearInterpolation_OF
     (Field&& field, Locator&& locator, CheckOptions::NoCheck)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
+    : ScalarField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator))
     {
-      static_assert(check_if_outside == false && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::NoCheck>,
                     "Bad class template arguments for no bounds checking.");
     }
     
@@ -327,11 +371,11 @@ namespace ptof
     */
     ScalarField_LinearInterpolation_OF
     (Field&& field, Locator&& locator, CheckOptions::Check)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
+    : ScalarField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator))
     {
-      static_assert(check_if_outside == true && warn_if_outside == false,
-                    "Bad class template arguments for bounds checking.");
+     static_assert(std::is_same_v<CheckOption, CheckOptions::Check>,
+                   "Bad class template arguments for bounds checking.");
     }
     
     /** Constructor.
@@ -341,10 +385,10 @@ namespace ptof
     */
     ScalarField_LinearInterpolation_OF
     (Field&& field, Locator&& locator, CheckOptions::Warn)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
+    : ScalarField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator))
     {
-      static_assert(check_if_outside == true && warn_if_outside == true,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Warn>,
                     "Bad class template arguments for bounds warning.");
     }
     
@@ -358,11 +402,11 @@ namespace ptof
     (Field&& field, Locator&& locator,
      Uninterpolated&& uninterpolated,
      CheckOptions::NoCheck)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
-    , _uninterpolated{ uninterpolated }
+    : ScalarField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator),
+                                         std::forward<Uninterpolated>(uninterpolated))
     {
-      static_assert(check_if_outside == false && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::NoCheck>,
                     "Bad class template arguments for no bounds checking.");
     }
     
@@ -376,11 +420,11 @@ namespace ptof
     (Field&& field, Locator&& locator,
      Uninterpolated&& uninterpolated,
      CheckOptions::Check)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
-    , _uninterpolated{ uninterpolated }
+    : ScalarField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator),
+                                         std::forward<Uninterpolated>(uninterpolated))
     {
-      static_assert(check_if_outside == true && warn_if_outside == false,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Check>,
                     "Bad class template arguments for bounds checking.");
     }
     
@@ -394,13 +438,48 @@ namespace ptof
     (Field&& field, Locator&& locator,
      Uninterpolated&& uninterpolated,
      CheckOptions::Warn)
-    : _field{ std::forward<Field>(field) }
-    , _locator{ std::forward<Locator>(locator) }
-    , _uninterpolated{ uninterpolated }
+    : ScalarField_LinearInterpolation_OF(std::forward<Field>(field),
+                                         std::forward<Locator>(locator),
+                                         std::forward<Uninterpolated>(uninterpolated))
     {
-      static_assert(check_if_outside == true && warn_if_outside == true,
+      static_assert(std::is_same_v<CheckOption, CheckOptions::Warn>,
                     "Bad class template arguments for bounds warning.");
     }
+    
+    /** Constructor.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+     */
+    ScalarField_LinearInterpolation_OF
+    (Field&& field, Locator&& locator)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    {}
+    
+    /** Constructor.
+     \param field Scalar field cell data to interpolate.
+     \param locator Mesh locator.
+     \param uninterpolated Uninterpolated field to add to interpolated field.
+    */
+    ScalarField_LinearInterpolation_OF
+    (Field&& field, Locator&& locator,
+     Uninterpolated&& uninterpolated)
+    : _field{ std::forward<Field>(field) }
+    , _locator{ std::forward<Locator>(locator) }
+    , _uninterpolated{ std::forward<Uninterpolated>(uninterpolated) }
+    {}
+    
+    /** \brief Deleted copy constructor. */
+    ScalarField_LinearInterpolation_OF(ScalarField_LinearInterpolation_OF const&) = delete;
+    
+    /** Constructor.
+    \brief Move constructor. */
+    ScalarField_LinearInterpolation_OF(ScalarField_LinearInterpolation_OF&& field)
+    : _field{ std::move(field._field) }
+    , _locator{ std::move(field._locator) }
+    , _interpolant{ this->_field }
+    , _uninterpolated{ std::move(field._uninterpolated) }
+    {}
     
     /**
      \brief Interpolate field.
@@ -420,7 +499,7 @@ namespace ptof
       
       return _interpolant.interpolate(position, cell);
     }
-    
+
     /**
      \brief Interpolate field.
      \param position 2D position.
@@ -527,42 +606,42 @@ namespace ptof
   (Field&&, Locator&&,
    CheckOptions::NoCheck) ->
   ScalarField_LinearInterpolation_OF
-  <Field, Locator, 0, 0, useful::Empty>;
+  <Field, Locator, CheckOptions::NoCheck, useful::Empty>;
   template
   <typename Field, typename Locator>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&,
    CheckOptions::Check) ->
   ScalarField_LinearInterpolation_OF
-  <Field, Locator, 1, 0, useful::Empty>;
+  <Field, Locator, CheckOptions::Check, useful::Empty>;
   template
   <typename Field, typename Locator>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&,
    CheckOptions::Warn) ->
   ScalarField_LinearInterpolation_OF
-  <Field, Locator, 1, 1, useful::Empty>;
+  <Field, Locator, CheckOptions::Warn, useful::Empty>;
   template
   <typename Field, typename Locator, typename Uninterpolated>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&, Uninterpolated&&,
    CheckOptions::NoCheck) ->
   ScalarField_LinearInterpolation_OF
-  <Field, Locator, 0, 0, Uninterpolated>;
+  <Field, Locator, CheckOptions::NoCheck, Uninterpolated>;
   template
   <typename Field, typename Locator, typename Uninterpolated>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&, Uninterpolated&&,
    CheckOptions::Check) ->
   ScalarField_LinearInterpolation_OF
-  <Field, Locator, 1, 0, Uninterpolated>;
+  <Field, Locator, CheckOptions::Check, Uninterpolated>;
   template
   <typename Field, typename Locator, typename Uninterpolated>
   ScalarField_LinearInterpolation_OF
   (Field&&, Locator&&, Uninterpolated&&,
    CheckOptions::Warn) ->
   ScalarField_LinearInterpolation_OF
-  <Field, Locator, 1, 1, Uninterpolated>;
+  <Field, Locator, CheckOptions::Warn, Uninterpolated>;
   
   /** \brief Compute magnitude of average of volumetric field (set of values associated with mesh cells). */
   template <typename Field, typename Mesh>
@@ -583,6 +662,5 @@ namespace ptof
     field *= average/magnitude_of_average(field, mesh);
   }
 }
-
 
 #endif /* PTOF_FIELD_H */

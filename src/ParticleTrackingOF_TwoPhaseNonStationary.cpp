@@ -283,26 +283,18 @@ int main(int argc, char * argv[])
     geometry,
     directories,
     params_output,
-    useful::empty(run_nr)
-    ? ptof::identifier(Model::name,
-                       case_name,
-                       directories_of.case_name,
-                       params_transport_name,
-                       params_phase_name,
-                       params_reaction_name,
-                       params_solvers_name,
-                       params_initial_condition_name,
-                       params_output_name)
-    : ptof::identifier(Model::name,
-                       case_name,
-                       directories_of.case_name,
-                       params_transport_name,
-                       params_phase_name,
-                       params_reaction_name,
-                       params_solvers_name,
-                       params_initial_condition_name,
-                       params_output_name,
-                       std::stoul(run_nr)),
+    ptof::identifier("TwoPhaseNonStationary_" + Model::name,
+                     case_name,
+                     directories_of.case_name,
+                     params_transport_name,
+                     params_phase_name,
+                     params_reaction_name,
+                     params_solvers_name,
+                     params_initial_condition_name,
+                     params_output_name)
+      + (useful::empty(run_nr)
+         ? ""
+         : "_RUN_" + run_nr),
     std::vector<Phase::PhaseField const*>{ &excluded_phase_field },
     { 1. - params_phase.phase_threshold } };
   measurer.info_runtime(std::cout);

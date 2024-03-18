@@ -1,8 +1,8 @@
 <map id="ptof::make_particle_at_face_center" name="ptof::make_particle_at_face_center">
 <area shape="rect" id="node1" title="Make particle at given mesh face&#39;s center." alt="" coords="1081,39,1228,80"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a8b2228b67b8e91f964d1ad0b0c9e018c" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="886,9,1033,51"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a698673f4614e12ca9b05fc29c2e3040f" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="890,9,1029,51"/>
 <area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#ac2a70b619d6d1492ec15d5447329351b" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="885,75,1033,102"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a8971466e08138b1fe0470371860cfa78" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="682,9,829,51"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2e01d324ac9b85ddbc170f0ae3dc1732" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="686,9,825,51"/>
 <area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="451,39,625,80"/>
 <area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
 <area shape="rect" id="node7" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aeda63116f887b549df7f4bfb7f0ad283" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>

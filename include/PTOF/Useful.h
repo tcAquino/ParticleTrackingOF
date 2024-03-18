@@ -16,20 +16,58 @@
 
 namespace ptof
 {
-  /** \namespace CheckOptions Options for checking conditions. */
-  namespace CheckOptions
+  /** \struct CheckOptions PTOF/Useful.h "PTOF/Useful.h"
+   \brief Options for checking conditions. */
+  struct CheckOptions
   {
-    using NoCheck = useful::Selector<int, 0>;  /**< No bounds checking.           */
-    using Check = useful::Selector<int, 1>;    /**< Bounds checking, no warning.  */
-    using Warn = useful::Selector<int, 2>;     /**< Bounds checking, warning.     */
-  }
+    /** \struct CheckOptions::NoChecl PTOF/Useful.h "PTOF/Useful.h"
+      \brief No bounds checking. */
+    struct NoCheck{};
+    
+    /** \struct CheckOptions::Check PTOF/Useful.h "PTOF/Useful.h"
+      \brief Bounds checking, no warning. */
+    struct Check{};
+    
+    /** \struct CheckOptions::Warn PTOF/Useful.h "PTOF/Useful.h"
+      \brief Bounds checking and warning. */
+    struct Warn{};
+  };
   
-  /** \namespace ParallelOptions Options to choose between serial and parallel implementations. */
-  namespace ParallelOptions
+  /** \struct ParallelOptions PTOF/Useful.h "PTOF/Useful.h"
+   \brief Options to choose between serial and parallel implementations. */
+  struct ParallelOptions
   {
-    using Serial = useful::Selector<int, 0>;  /**< Serial implementations.           */
-    using Parallel = useful::Selector<int, 1>;    /**< Parallel implementations.  */
-  }
+    /** \struct ParallelOptions::Serial PTOF/Useful.h "PTOF/Useful.h"
+    \brief Serial implementations. */
+    struct Serial{};
+    
+    /** \struct ParallelOptions::Parallel PTOF/Useful.h "PTOF/Useful.h"
+    \brief Parallel implementations. */
+    struct Parallel{};
+  };
+  
+  /** \struct SearchOptions PTOF/Useful.h "PTOF/Useful.h"
+   \brief Options for mesh searching. */
+  struct SearchOptions
+  {
+    /** \struct SearchOptions::NeighborPrecheck PTOF/Useful.h "PTOF/Useful.h"
+    \brief Level of neighbors to check before searching mesh for position.. */
+    template <int level>
+    struct NeighborPrecheck
+    { static constexpr int neighbor_check_level{ level }; };
+    
+    /** \brief Dot not check neighbors, even self, before searching mesh for position. */
+    using NoNeighborPrecheck = NeighborPrecheck<-1>;
+    
+    /** \brief Check if position is in given cell before searching mesh for position */
+    using ZeroNeighborPrecheck = NeighborPrecheck<0>;
+    
+    /** \brief Check if position is in given cell and in first orthogonal neighbors before searching mesh for position */
+    using FirstNeighborPrecheck = NeighborPrecheck<1>;
+    
+    /** \brief Check if position is in given cell and in first and second orthogonal neighbors before searching mesh for position */
+    using SecondNeighborPrecheck = NeighborPrecheck<2>;
+  };
   
   /** \brief Return whether cell index indicates outside mesh
   \tparam warn_if_outside Output warning if true, do not if false

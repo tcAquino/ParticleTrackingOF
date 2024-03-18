@@ -1,0 +1,16 @@
+<map id="ptof::fluxweighted_faces" name="ptof::fluxweighted_faces">
+<area shape="rect" id="node1" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="5,99,144,141"/>
+<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="207,31,323,57"/>
+<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="206,81,325,108"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="811,241,941,268"/>
+<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#ac1010c1948fbd50120a52c1c082e3226" title="Make particle at given mesh face&#39;s center." alt="" coords="192,234,339,275"/>
+<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="419,5,533,32"/>
+<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="410,56,542,83"/>
+<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="619,5,757,32"/>
+<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="629,56,747,83"/>
+<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="817,56,935,83"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="813,376,939,403"/>
+<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#a157fda891beb78212b2f6d40eac9c3ae" title=" " alt="" coords="613,234,763,275"/>
+<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="387,300,565,327"/>
+<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="625,351,751,377"/>
+</map>

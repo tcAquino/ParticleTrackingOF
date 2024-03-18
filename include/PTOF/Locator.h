@@ -8,6 +8,7 @@
 #define PTOF_LOCATOR_H
 
 #include <set>
+#include <type_traits>
 #include <vector>
 #include <boost/iterator/counting_iterator.hpp>
 #include <fieldTypes.H>
@@ -18,6 +19,7 @@ namespace ptof
 {
   /** \struct Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
    * \brief Object to locate positions or states in mesh. */
+  template <typename SearchOption = SearchOptions::FirstNeighborPrecheck>
   struct Locator_Cell
   {
     using Point = Foam::point;                      /**> 3D point. */
@@ -47,13 +49,20 @@ namespace ptof
     {
       if (hint != -1)
       {
-        auto const& mesh = mesh_search().mesh();
-        if (mesh.pointInCell(position, hint))
-          return hint;
+        if constexpr (SearchOption::neighbor_check_level >= 0)
+          if (mesh_search().mesh().pointInCell(position, hint))
+            return hint;
 
-        for (auto const& cell_index : mesh.cellCells()[hint])
-          if (mesh.pointInCell(position, cell_index))
-            return cell_index;
+        if constexpr (SearchOption::neighbor_check_level >= 1)
+          for (auto const& cell_index : mesh_search().mesh().cellCells()[hint])
+            if (mesh_search().mesh().pointInCell(position, cell_index))
+              return cell_index;
+        
+        if constexpr (SearchOption::neighbor_check_level >= 2)
+          for (auto const& cell_index_1 : mesh_search().mesh().cellCells()[hint])
+            for (auto const& cell_index : mesh_search().mesh().cellCells()[cell_index_1])
+              if (mesh_search().mesh().pointInCell(position, cell_index))
+                return cell_index;
       }
 
       return mesh_search().findCell(position, hint);

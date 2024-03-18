@@ -1,6 +1,5 @@
 var namespaces_dup =
 [
-    [ "CheckOptions", "d2/dba/namespace_check_options.html", null ],
     [ "constants", "d7/d28/namespaceconstants.html", [
       [ "gravity", "d7/d28/namespaceconstants.html#a947f2b7092909e060e3504a322f0dbfa", null ],
       [ "pi", "d7/d28/namespaceconstants.html#a204a0248d18871c4d4d1b3e9a69ff495", null ],
@@ -101,7 +100,6 @@ var namespaces_dup =
       [ "widths", "dc/dc5/namespaceoperation.html#a780b2b66202523429c157d6144c5ba91", null ],
       [ "widths", "dc/dc5/namespaceoperation.html#ad8d1fda37a1896f129ea50da804e566f", null ]
     ] ],
-    [ "ParallelOptions", "db/dd0/namespace_parallel_options.html", null ],
     [ "ptof", "d2/dd1/namespaceptof.html", "d2/dd1/namespaceptof" ],
     [ "range", "d6/d48/namespacerange.html", "d6/d48/namespacerange" ],
     [ "useful", "df/d1d/namespaceuseful.html", "df/d1d/namespaceuseful" ]

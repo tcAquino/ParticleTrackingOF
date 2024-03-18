@@ -40,7 +40,7 @@ namespace ptof
       mass_above,         /**< Total mass above value. */
       all_absorbed,       /**< All particles absorbed. */
       one_absorbed,       /**< One particle absorbed. */
-      fraction_absorbed   /**< A particle fraction absorbed. */
+      fraction_absorbed   /**< Particle fraction absorbed. */
     };
     
     /** \return Type from name. */
@@ -1628,8 +1628,7 @@ namespace ptof
           geometry.mesh(), Foam::IOobject::MUST_READ,
           Foam::IOobject::NO_WRITE },
           geometry.mesh() },
-        geometry.locator,
-        CheckOptions::Warn{} }
+        geometry.locator }
       {
         if (parameters.velocity_rescaling != 1.)
           pressure.rescale(parameters.velocity_rescaling);
@@ -1653,7 +1652,7 @@ namespace ptof
       }
       
       ptof::ScalarField_LinearInterpolation_OF
-      <Foam::volScalarField, typename Geometry::Locator const&, 1, 1> pressure;
+      <Foam::volScalarField, typename Geometry::Locator const&, CheckOptions::Check> pressure;
     };
         
     /** \class Output_Cases::Output_position_periodic PTOF/Output.h "PTOF/Output.h"

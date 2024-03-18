@@ -1,8 +1,8 @@
 <map id="ptof::apply_mask_in_place" name="ptof::apply_mask_in_place">
 <area shape="rect" id="node1" title="Remove cell/face indices if mask is above threshold." alt="" coords="856,151,1009,193"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="673,159,808,185"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a3bf776538f60aa1397627c402b39eb6b" title="Make particles distributed with probability proportional to local velocity magnitude over mesh cells ..." alt="" coords="465,5,611,32"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a7199bb173a46da0c5ad95a13614d17cf" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="465,57,611,98"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a6168f463d364c29a1a240af19744386e" title="Make particles distributed with probability proportional to local velocity magnitude over mesh cells ..." alt="" coords="469,5,607,32"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a4dc09f94f5268f83c2dc70d33a2abde3" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="469,57,607,98"/>
 <area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="451,122,625,163"/>
 <area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#aea5e83b8187769c291b52fa11286b151" title="Make particles distributed randomly uniformly over mesh cells where mask is above threshold." alt="" coords="485,188,591,215"/>
 <area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#aebefde667448a1c9babfee1717f51b6d" title="Make particles distributed randomly uniformly near cell faces in given patches where mask is above th..." alt="" coords="464,239,612,281"/>

@@ -18,7 +18,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
+  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_surface_decay_parallel;
   using InitialCondition = InitialCondition<CTRW>;
   using VelocityField
     = decltype(Transport::makeVelocityInterpolator(std::declval<Geometry>(),
@@ -252,24 +252,17 @@ int main(int argc, char * argv[])
     geometry,
     directories,
     params_output,
-    empty(run_nr)
-    ? ptof::identifier(Model::name,
-                       case_name,
-                       directories_of.case_name,
-                       params_transport_name,
-                       params_reaction_name,
-                       params_solvers_name,
-                       params_initial_condition_name,
-                       params_output_name)
-    : ptof::identifier(Model::name,
-                       case_name,
-                       directories_of.case_name,
-                       params_transport_name,
-                       params_reaction_name,
-                       params_solvers_name,
-                       params_initial_condition_name,
-                       params_output_name,
-                       std::stoul(run_nr)) };
+    ptof::identifier(Model::name,
+                     case_name,
+                     directories_of.case_name,
+                     params_transport_name,
+                     params_reaction_name,
+                     params_solvers_name,
+                     params_initial_condition_name,
+                     params_output_name)
+      + (useful::empty(run_nr)
+         ? ""
+         : "_RUN_" + run_nr) };
   measurer.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";

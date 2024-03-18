@@ -1,6 +1,6 @@
 <map id="ptof::patches_face_ids" name="ptof::patches_face_ids">
 <area shape="rect" id="node1" title=" " alt="" coords="971,107,1137,134"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a8971466e08138b1fe0470371860cfa78" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="767,5,914,47"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2e01d324ac9b85ddbc170f0ae3dc1732" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="771,5,910,47"/>
 <area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#aa1062e337b7efe1d9b1e030955fa46f6" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="767,71,915,112"/>
 <area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a9e9ee78fd15660c1b244aef3eb64cb0e" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="759,137,923,163"/>
 <area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a6f4bb4c354fd4058a6f16025f9f877d6" title=" " alt="" coords="769,188,913,229"/>

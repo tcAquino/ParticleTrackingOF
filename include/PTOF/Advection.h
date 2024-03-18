@@ -86,7 +86,7 @@ namespace ptof
       std::forward<Uninterpolated>(uninterpolated),
       CheckOptions::Warn{} };
     params_transport.rescale(velocity_field, geometry.mesh());
-    
+
     return velocity_field;
   };
 }

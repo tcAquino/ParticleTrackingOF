@@ -1,4 +1,4 @@
-<map id="ptof::Geometry_Bcc_Parallel&lt; dim_val, dynamics, periodicity_type &gt;" name="ptof::Geometry_Bcc_Parallel&lt; dim_val, dynamics, periodicity_type &gt;">
-<area shape="rect" id="node1" title="Geometry class for periodic representation of a body centered cubic beadpack." alt="" coords="5,109,172,180"/>
-<area shape="rect" id="node2" href="$d5/db8/structptof_1_1_locator___cell___parallel.html" title="Object to locate positions or states in mesh." alt="" coords="21,5,156,47"/>
+<map id="ptof::Geometry_Bcc_Parallel&lt; dim_val, dynamics, periodicity_type, SearchOption &gt;" name="ptof::Geometry_Bcc_Parallel&lt; dim_val, dynamics, periodicity_type, SearchOption &gt;">
+<area shape="rect" id="node1" title="Geometry class for periodic representation of a body centered cubic beadpack." alt="" coords="27,124,195,195"/>
+<area shape="rect" id="node2" href="$d5/db8/structptof_1_1_locator___cell___parallel.html" title=" " alt="" coords="5,5,216,61"/>
 </map>

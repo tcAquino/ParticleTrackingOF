@@ -99,13 +99,14 @@ namespace ptof
    * \brief Basic geometry class. */
   template
   <std::size_t dim_val,
-  BoundaryConditionSet::Type dynamics>
+  BoundaryConditionSet::Type dynamics,
+  typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry
   {
     static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
     using Mesh = Foam::fvMesh;                      /**< Mesh. */
     using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
-    using Locator = Locator_Cell;                   /**< Locate positions in mesh. */
+    using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using BoundaryInfo
       = std::conditional_t<
           dynamics
@@ -196,6 +197,7 @@ namespace ptof
         "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
+        "\treacting_reflecting: Reflection and surface reaction\n"
         "\tperiodic: No effect\n"
         "\tabsorbing: Absorbing\n"
         "\tinfo: Information upon crossing\n"
@@ -242,13 +244,14 @@ namespace ptof
    *  \brief Geometry class for geometry with Cartesian periodic BCs along some dimensions.*/
   template
   <std::size_t dim_val,
-  BoundaryConditionSet::Type dynamics>
+  BoundaryConditionSet::Type dynamics,
+  typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry_Periodic_Cartesian
   {
     static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
     using Mesh = Foam::fvMesh;                      /**< Mesh. */
     using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
-    using Locator = Locator_Cell;                   /**< Locate positions in mesh.*/
+    using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using Boundary_Periodic =
       geometry::Boundary_Periodic_WithOutsideInfo;  /**< Periodic boundary. */
     using BoundaryInfo = Store_Absorbed;            /**< What to store upon hitting a boundary. */
@@ -335,6 +338,7 @@ namespace ptof
         "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
+        "\treacting_reflecting: Reflection and surface reaction\n"
         "\tperiodic: Cartesian periodic, position extracted from mesh\n";
       output <<
         "\tabsorbing: Absorbing\n"
@@ -506,13 +510,14 @@ namespace ptof
   template
   <std::size_t dim_val,
   BoundaryConditionSet::Type dynamics,
-  BoundaryConditionSet::Type periodicity_type>
+  BoundaryConditionSet::Type periodicity_type,
+  typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry_Bcc
   {
     static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
     using Mesh = Foam::fvMesh;                      /**< Mesh. */
     using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
-    using Locator = Locator_Cell;                   /**< Locate positions in mesh. */
+    using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using Boundary_Periodic = std::conditional_t<
       periodicity_type
       == BoundaryConditionSet::Type::cartesian,
@@ -609,6 +614,7 @@ namespace ptof
         "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
+        "\treacting_reflecting: Reflection and surface reaction\n"
         "\tperiodic: ";
       output <<
         (BoundaryConditionSet::name(periodicity_type) == "cartesian"

@@ -1,12 +1,23 @@
 var _p_t_o_f_2_useful_8h =
 [
+    [ "CheckOptions", "d3/d06/structptof_1_1_check_options.html", [
+      [ "Check", "d3/d51/structptof_1_1_check_options_1_1_check.html", null ],
+      [ "NoCheck", "de/de1/structptof_1_1_check_options_1_1_no_check.html", null ],
+      [ "Warn", "d0/dd6/structptof_1_1_check_options_1_1_warn.html", null ]
+    ] ],
+    [ "NoCheck", "de/de1/structptof_1_1_check_options_1_1_no_check.html", null ],
+    [ "Check", "d3/d51/structptof_1_1_check_options_1_1_check.html", null ],
+    [ "Warn", "d0/dd6/structptof_1_1_check_options_1_1_warn.html", null ],
+    [ "ParallelOptions", "d9/dbc/structptof_1_1_parallel_options.html", [
+      [ "Parallel", "dc/da6/structptof_1_1_parallel_options_1_1_parallel.html", null ],
+      [ "Serial", "d3/d09/structptof_1_1_parallel_options_1_1_serial.html", null ]
+    ] ],
+    [ "Serial", "d3/d09/structptof_1_1_parallel_options_1_1_serial.html", null ],
+    [ "Parallel", "dc/da6/structptof_1_1_parallel_options_1_1_parallel.html", null ],
+    [ "SearchOptions", "d7/d21/structptof_1_1_search_options.html", "d7/d21/structptof_1_1_search_options" ],
+    [ "NeighborPrecheck", "da/dd0/structptof_1_1_search_options_1_1_neighbor_precheck.html", "da/dd0/structptof_1_1_search_options_1_1_neighbor_precheck" ],
     [ "Has_periodicity", "d4/db0/structptof_1_1_has__periodicity.html", null ],
     [ "Has_periodicity< State, decltype((void) State::periodicity, 0)>", "de/ddc/structptof_1_1_has__periodicity_3_01_state_00_01decltype_07_07void_08_01_state_1_1periodicity_00_010_08_4.html", null ],
-    [ "Check", "d0/df6/_p_t_o_f_2_useful_8h.html#aaae4720ab7867069cb637989f530a8f5", null ],
-    [ "NoCheck", "d0/df6/_p_t_o_f_2_useful_8h.html#a22960b800e4c92cc3e17b39cecb5f4ef", null ],
-    [ "Parallel", "d0/df6/_p_t_o_f_2_useful_8h.html#a92044edce3246f2921bd838cf9ca9acc", null ],
-    [ "Serial", "d0/df6/_p_t_o_f_2_useful_8h.html#a2d4706690ab07dd8e307ad892c786c17", null ],
-    [ "Warn", "d0/df6/_p_t_o_f_2_useful_8h.html#a9db96a4c8e4112987ed1b7df21171b61", null ],
     [ "cell_center", "d0/df6/_p_t_o_f_2_useful_8h.html#a65ce2f6ce88714c9a15798b95e9a17c7", null ],
     [ "cell_volume", "d0/df6/_p_t_o_f_2_useful_8h.html#a073efb12947b9e64f1a1e3f444cf2b11", null ],
     [ "face_area", "d0/df6/_p_t_o_f_2_useful_8h.html#a96af753324a65471bd534041a41eadbe", null ],
