@@ -200,12 +200,10 @@ namespace ptof
     std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
     (DirectoriesOF const& directories_of, std::size_t num_threads)
     {
-      std::cout << "ola1" << std::endl;
       std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
       mesh_searches.reserve(num_threads);
       for (std::size_t thread = 0; thread < num_threads; ++thread)
         mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
-      std::cout << "ola2" << std::endl;
 
       return mesh_searches;
     }
