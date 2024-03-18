@@ -148,9 +148,9 @@ namespace ptof
     auto file = useful::open_read(filename);
     std::string line;
     for (std::size_t ll = 0; ll < header_lines; ++ll)
-      getline(file, line);
+      std::getline(file, line);
     
-    while (getline(file, line)) 
+    while (std::getline(file, line))
     {
       std::vector<std::string> split_line;
       boost::trim_if(line, boost::is_any_of(delims+"\r"));

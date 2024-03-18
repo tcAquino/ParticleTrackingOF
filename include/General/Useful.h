@@ -348,9 +348,9 @@ namespace useful
     auto file = open_read(filename);
     std::string line;
     for (std::size_t ll = 0; ll < header_lines; ++ll)
-      getline(file, line);
+      std::getline(file, line);
     
-    while (getline(file, line))
+    while (std::getline(file, line))
     {
       std::vector<std::string> split_line = split(line, delim);
       if (split_line.size() != 1)
@@ -376,9 +376,9 @@ namespace useful
     auto file = open_read(filename);
     std::string line;
     for (std::size_t ll = 0; ll < header_lines; ++ll)
-      getline(file, line);
+      std::getline(file, line);
     
-    while (getline(file, line))
+    while (std::getline(file, line))
     {
       std::vector<std::string> split_line = split(line, delim);
       if (split_line.size() != 2)
@@ -409,9 +409,9 @@ namespace useful
     auto file = open_read(filename);
     std::string line;
     for (std::size_t ll = 0; ll < header_lines; ++ll)
-      getline(file, line);
+      std::getline(file, line);
     
-    while (getline(file, line))
+    while (std::getline(file, line))
     {
       std::vector<std::string> split_line = split(line, delim);
       if (split_line.size() != 3)
@@ -440,9 +440,9 @@ namespace useful
     auto file = open_read(filename);
     std::string line;
     for (std::size_t ll = 0; ll < header_lines; ++ll)
-      getline(file, line);
+      std::getline(file, line);
     
-    while (getline(file, line))
+    while (std::getline(file, line))
     {
       std::vector<std::string> split_line = split(line, delim);
       if (split_line.size() != nr_columns)
