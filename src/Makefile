@@ -1,4 +1,8 @@
-CXX = clang++
+ifneq ($(findstring darwin,$(WM_ARCH)),)
+	CXX = clang++
+else ifneq ($(findstring linux,$(WM_ARCH)),)
+	CXX = g++
+endif
 PTHOFINC = $(FOAM_SRC)
 PTHOFLIB = $(FOAM_LIBBIN)
 PTH = ../include

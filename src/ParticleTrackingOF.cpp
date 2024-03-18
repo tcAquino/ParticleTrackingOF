@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_periodic_cartesian_advection_3d;
+  using namespace ptof::model_bcc_symmetryplanes_advection;
   using InitialCondition = InitialCondition<CTRW>;
   using VelocityField
     = decltype(Transport::makeVelocityInterpolator(std::declval<Geometry>(),
