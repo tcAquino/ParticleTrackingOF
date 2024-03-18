@@ -22,7 +22,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_advection_diffusion_2d;
   using InitialCondition = InitialCondition<CTRW>;
   using Phase = ptof::Phase;
   using VelocityField
