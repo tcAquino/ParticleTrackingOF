@@ -287,9 +287,9 @@ Functions</h2></td></tr>
 <tr class="separator:abef9d705105d16af05ed41c6deb725ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68dbbfb3c5cf5780e4ae1db9ddb2e727"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a68dbbfb3c5cf5780e4ae1db9ddb2e727">btos</a> (bool val, bool boolalpha=true)</td></tr>
 <tr class="separator:a68dbbfb3c5cf5780e4ae1db9ddb2e727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e8e47c16f088bca805a505b45dc83db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db">empty</a> (std::string const &amp;str)</td></tr>
-<tr class="memdesc:a5e8e47c16f088bca805a505b45dc83db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if string is empty.  <a href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db">More...</a><br /></td></tr>
-<tr class="separator:a5e8e47c16f088bca805a505b45dc83db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0f844a68a460a99b4f6365388026c76"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#ac0f844a68a460a99b4f6365388026c76">is_empty</a> (std::string const &amp;str)</td></tr>
+<tr class="memdesc:ac0f844a68a460a99b4f6365388026c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if string is empty.  <a href="../../df/d1d/namespaceuseful.html#ac0f844a68a460a99b4f6365388026c76">More...</a><br /></td></tr>
+<tr class="separator:ac0f844a68a460a99b4f6365388026c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa05b9a269760eb360ebdb2ddf23deae1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#aa05b9a269760eb360ebdb2ddf23deae1">remove_extension</a> (std::string const &amp;filename)</td></tr>
 <tr class="memdesc:aa05b9a269760eb360ebdb2ddf23deae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove extension after last dot, including dot.  <a href="../../df/d1d/namespaceuseful.html#aa05b9a269760eb360ebdb2ddf23deae1">More...</a><br /></td></tr>
 <tr class="separator:aa05b9a269760eb360ebdb2ddf23deae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -445,6 +445,21 @@ Functions</h2></td></tr>
 <tr class="memitem:a44576fa5eedad2287b654b7461e6e696"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a44576fa5eedad2287b654b7461e6e696">for_each</a> (Tuple &amp;&amp;tuple, F &amp;&amp;f)</td></tr>
 <tr class="memdesc:a44576fa5eedad2287b654b7461e6e696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply function to each element of tuple.  <a href="../../df/d1d/namespaceuseful.html#a44576fa5eedad2287b654b7461e6e696">More...</a><br /></td></tr>
 <tr class="separator:a44576fa5eedad2287b654b7461e6e696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f3125fc16a442a73df3809c22d1ab4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4">getenv</a> (std::string const &amp;name)</td></tr>
+<tr class="memdesc:a17f3125fc16a442a73df3809c22d1ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of shell environment variable <code>name</code> (do not pass $ in <code>name</code>).  <a href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4">More...</a><br /></td></tr>
+<tr class="separator:a17f3125fc16a442a73df3809c22d1ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e0a3b48ee9d116db39e842f2787fdf7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7">getenv_home</a> ()</td></tr>
+<tr class="memdesc:a3e0a3b48ee9d116db39e842f2787fdf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get $HOME environment variable.  <a href="../../df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7">More...</a><br /></td></tr>
+<tr class="separator:a3e0a3b48ee9d116db39e842f2787fdf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6409f2c15bb32065bc3b04487359b786"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786">getenv_home_check</a> ()</td></tr>
+<tr class="memdesc:a6409f2c15bb32065bc3b04487359b786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get $HOME environment variable, throw if empty.  <a href="../../df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786">More...</a><br /></td></tr>
+<tr class="separator:a6409f2c15bb32065bc3b04487359b786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a830a4c998c929eb294f129376a821601"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601">expand_home_dir</a> (std::string dir)</td></tr>
+<tr class="memdesc:a830a4c998c929eb294f129376a821601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expand ~ if present at the beginning of directory <code>dir</code>.  <a href="../../df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601">More...</a><br /></td></tr>
+<tr class="separator:a830a4c998c929eb294f129376a821601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56b76344b061e88fa9b585f6d6015a52"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a56b76344b061e88fa9b585f6d6015a52">expand_home_dir_inplace</a> (std::string dir)</td></tr>
+<tr class="memdesc:a56b76344b061e88fa9b585f6d6015a52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expand ~ if present at the beginning of directory <code>dir</code>.  <a href="../../df/d1d/namespaceuseful.html#a56b76344b061e88fa9b585f6d6015a52">More...</a><br /></td></tr>
+<tr class="separator:a56b76344b061e88fa9b585f6d6015a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -1254,50 +1269,6 @@ template&lt;typename Clock &gt; </div>
 
 </div>
 </div>
-<a id="a5e8e47c16f088bca805a505b45dc83db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e8e47c16f088bca805a505b45dc83db">&#9670;&nbsp;</a></span>empty()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool useful::empty </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if string is empty. </p>
-<p>Strings are considered empty if they hold:</p><ul>
-<li>Nothing.</li>
-<li>''</li>
-<li>"" </li>
-</ul>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../df/d1d/namespaceuseful_a5e8e47c16f088bca805a505b45dc83db_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a5e8e47c16f088bca805a505b45dc83db_icgraph" alt=""/></div>
-<map name="adf/d1d/namespaceuseful_a5e8e47c16f088bca805a505b45dc83db_icgraph" id="adf/d1d/namespaceuseful_a5e8e47c16f088bca805a505b45dc83db_icgraph">
-<area shape="rect" title="Check if string is empty." alt="" coords="652,114,764,141"/>
-<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#ad2d5567fad80ee6464f95943abd67fb1" title=" " alt="" coords="460,41,604,83"/>
-<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="460,107,604,148"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c" title="Split string into vector of strings at instances of delimeter." alt="" coords="483,173,581,199"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a2640ab9f6140f04493af1a5f46c01825" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="233,5,377,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="255,71,354,98"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="248,122,361,149"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="248,173,361,199"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="232,223,377,250"/>
-<area shape="rect" href="../../dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#aca24a5d29b671cb87b00e0f97ab79635" title=" " alt="" coords="197,274,412,330"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="210,354,399,381"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#af975b6b07daa6c5d032a5fb003aa0af9" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
-</map>
-</div>
-
-</div>
-</div>
 <a id="a173e5e98bc5c345e6a54a6677934b698"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a173e5e98bc5c345e6a54a6677934b698">&#9670;&nbsp;</a></span>endsWith()</h2>
 
@@ -1416,12 +1387,92 @@ template&lt;typename T &gt; </div>
 <p>Expand environment variables. </p>
 <p>Based on Toby Speight's answer here: <a href="https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion">https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion</a> . </p>
 <div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_cgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_cgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_cgraph" id="adf/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_cgraph">
+<area shape="rect" title="Expand environment variables." alt="" coords="5,5,155,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="203,5,317,32"/>
+</map>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_icgraph" alt=""/></div>
 <map name="adf/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_icgraph" id="adf/d1d/namespaceuseful_aa9925e7422668d565dea472c38700497_icgraph">
 <area shape="rect" title="Expand environment variables." alt="" coords="197,13,347,39"/>
 <area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,5,149,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a830a4c998c929eb294f129376a821601"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a830a4c998c929eb294f129376a821601">&#9670;&nbsp;</a></span>expand_home_dir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string useful::expand_home_dir </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dir</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expand ~ if present at the beginning of directory <code>dir</code>. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_cgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_cgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_cgraph" id="adf/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_cgraph">
+<area shape="rect" title="Expand ~ if present at the beginning of directory dir." alt="" coords="5,13,192,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="240,5,399,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="447,13,605,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="653,13,768,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_icgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_icgraph" id="adf/d1d/namespaceuseful_a830a4c998c929eb294f129376a821601_icgraph">
+<area shape="rect" title="Expand ~ if present at the beginning of directory dir." alt="" coords="197,13,384,39"/>
+<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,5,149,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a56b76344b061e88fa9b585f6d6015a52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56b76344b061e88fa9b585f6d6015a52">&#9670;&nbsp;</a></span>expand_home_dir_inplace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string useful::expand_home_dir_inplace </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dir</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expand ~ if present at the beginning of directory <code>dir</code>. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a56b76344b061e88fa9b585f6d6015a52_cgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a56b76344b061e88fa9b585f6d6015a52_cgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a56b76344b061e88fa9b585f6d6015a52_cgraph" id="adf/d1d/namespaceuseful_a56b76344b061e88fa9b585f6d6015a52_cgraph">
+<area shape="rect" title="Expand ~ if present at the beginning of directory dir." alt="" coords="5,5,168,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="216,5,375,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="423,13,581,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="629,13,744,39"/>
 </map>
 </div>
 
@@ -1679,6 +1730,120 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a17f3125fc16a442a73df3809c22d1ab4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f3125fc16a442a73df3809c22d1ab4">&#9670;&nbsp;</a></span>getenv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string useful::getenv </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get value of shell environment variable <code>name</code> (do not pass $ in <code>name</code>). </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a17f3125fc16a442a73df3809c22d1ab4_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a17f3125fc16a442a73df3809c22d1ab4_icgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a17f3125fc16a442a73df3809c22d1ab4_icgraph" id="adf/d1d/namespaceuseful_a17f3125fc16a442a73df3809c22d1ab4_icgraph">
+<area shape="rect" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="845,35,960,61"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#aa9925e7422668d565dea472c38700497" title="Expand environment variables." alt="" coords="437,5,586,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="639,60,797,87"/>
+<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,23,149,65"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="432,57,591,98"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="197,56,384,83"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a56b76344b061e88fa9b585f6d6015a52" title="Expand ~ if present at the beginning of directory dir." alt="" coords="209,107,372,149"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3e0a3b48ee9d116db39e842f2787fdf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e0a3b48ee9d116db39e842f2787fdf7">&#9670;&nbsp;</a></span>getenv_home()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string useful::getenv_home </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get $HOME environment variable. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_cgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_cgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_cgraph" id="adf/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_cgraph">
+<area shape="rect" title="Get $HOME environment variable." alt="" coords="5,5,164,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="212,5,327,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_icgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_icgraph" id="adf/d1d/namespaceuseful_a3e0a3b48ee9d116db39e842f2787fdf7_icgraph">
+<area shape="rect" title="Get $HOME environment variable." alt="" coords="639,42,797,69"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="432,35,591,76"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="197,13,384,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a56b76344b061e88fa9b585f6d6015a52" title="Expand ~ if present at the beginning of directory dir." alt="" coords="209,64,372,105"/>
+<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,5,149,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6409f2c15bb32065bc3b04487359b786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6409f2c15bb32065bc3b04487359b786">&#9670;&nbsp;</a></span>getenv_home_check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string useful::getenv_home_check </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get $HOME environment variable, throw if empty. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_cgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_cgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_cgraph" id="adf/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_cgraph">
+<area shape="rect" title="Get $HOME environment variable, throw if empty." alt="" coords="5,5,164,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="212,13,371,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="419,13,533,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_icgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_icgraph" id="adf/d1d/namespaceuseful_a6409f2c15bb32065bc3b04487359b786_icgraph">
+<area shape="rect" title="Get $HOME environment variable, throw if empty." alt="" coords="432,35,591,76"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="197,13,384,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a56b76344b061e88fa9b585f6d6015a52" title="Expand ~ if present at the beginning of directory dir." alt="" coords="209,64,372,105"/>
+<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,5,149,47"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a2b1a736feb5c956a2a54cada14a36da0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b1a736feb5c956a2a54cada14a36da0">&#9670;&nbsp;</a></span>hash_combine()</h2>
 
@@ -1715,6 +1880,41 @@ Here is the caller graph for this function:</div>
 <map name="adf/d1d/namespaceuseful_a2b1a736feb5c956a2a54cada14a36da0_icgraph" id="adf/d1d/namespaceuseful_a2b1a736feb5c956a2a54cada14a36da0_icgraph">
 <area shape="rect" title="Combine seed with the hash of an object v." alt="" coords="195,13,359,39"/>
 <area shape="rect" href="../../dc/d50/structuseful_1_1hash__pair.html#a01a51c1660334a9cf7254a2d559c3659" title=" " alt="" coords="5,5,147,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac0f844a68a460a99b4f6365388026c76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0f844a68a460a99b4f6365388026c76">&#9670;&nbsp;</a></span>is_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool useful::is_empty </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if string is empty. </p>
+<p>Strings are considered empty if they hold:</p><ul>
+<li>Nothing.</li>
+<li>''</li>
+<li>"" </li>
+</ul>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/d1d/namespaceuseful_ac0f844a68a460a99b4f6365388026c76_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_ac0f844a68a460a99b4f6365388026c76_icgraph" alt=""/></div>
+<map name="adf/d1d/namespaceuseful_ac0f844a68a460a99b4f6365388026c76_icgraph" id="adf/d1d/namespaceuseful_ac0f844a68a460a99b4f6365388026c76_icgraph">
+<area shape="rect" title="Check if string is empty." alt="" coords="197,46,328,73"/>
+<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#ad2d5567fad80ee6464f95943abd67fb1" title=" " alt="" coords="5,5,149,47"/>
+<area shape="rect" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,71,149,112"/>
 </map>
 </div>
 
@@ -1807,8 +2007,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="152,56,296,83"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c" title="Split string into vector of strings at instances of delimeter." alt="" coords="175,107,273,133"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="344,5,520,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db" title="Check if string is empty." alt="" coords="376,81,488,108"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="367,132,497,159"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="367,107,497,133"/>
 </map>
 </div>
 
@@ -1863,8 +2062,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="167,56,311,83"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c" title="Split string into vector of strings at instances of delimeter." alt="" coords="189,107,288,133"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="359,5,535,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db" title="Check if string is empty." alt="" coords="391,81,503,108"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="381,132,512,159"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="381,107,512,133"/>
 </map>
 </div>
 
@@ -1919,8 +2117,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="167,56,311,83"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c" title="Split string into vector of strings at instances of delimeter." alt="" coords="189,107,288,133"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="359,5,535,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db" title="Check if string is empty." alt="" coords="391,81,503,108"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="381,132,512,159"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="381,107,512,133"/>
 </map>
 </div>
 
@@ -1975,8 +2172,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="199,56,343,83"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c" title="Split string into vector of strings at instances of delimeter." alt="" coords="221,107,320,133"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="391,5,567,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db" title="Check if string is empty." alt="" coords="423,81,535,108"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="413,132,544,159"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="413,107,544,133"/>
 </map>
 </div>
 
@@ -2216,11 +2412,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d1d/namespaceuseful_ac910633cf4fdd85cb44df30117f2d92e_icgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_ac910633cf4fdd85cb44df30117f2d92e_icgraph" alt=""/></div>
 <map name="adf/d1d/namespaceuseful_ac910633cf4fdd85cb44df30117f2d92e_icgraph" id="adf/d1d/namespaceuseful_ac910633cf4fdd85cb44df30117f2d92e_icgraph">
-<area shape="rect" title=" " alt="" coords="199,81,343,108"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="29,5,127,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="21,56,135,83"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="21,107,135,133"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="5,157,151,184"/>
+<area shape="rect" title=" " alt="" coords="391,122,535,149"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a2640ab9f6140f04493af1a5f46c01825" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="198,5,342,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="221,71,319,98"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="213,122,327,149"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="213,173,327,199"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="197,223,343,250"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#af975b6b07daa6c5d032a5fb003aa0af9" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
 </map>
 </div>
 
@@ -2503,9 +2701,8 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d1d/namespaceuseful_a1964a859875efb2ff16234cc6974066c_cgraph.png" border="0" usemap="#adf/d1d/namespaceuseful_a1964a859875efb2ff16234cc6974066c_cgraph" alt=""/></div>
 <map name="adf/d1d/namespaceuseful_a1964a859875efb2ff16234cc6974066c_cgraph" id="adf/d1d/namespaceuseful_a1964a859875efb2ff16234cc6974066c_cgraph">
-<area shape="rect" title="Split string into vector of strings at instances of delimeter." alt="" coords="5,31,104,57"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a5e8e47c16f088bca805a505b45dc83db" title="Check if string is empty." alt="" coords="161,5,273,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="152,56,283,83"/>
+<area shape="rect" title="Split string into vector of strings at instances of delimeter." alt="" coords="5,5,104,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a173e5e98bc5c345e6a54a6677934b698" title="Check if string ends with suffix." alt="" coords="152,5,283,32"/>
 </map>
 </div>
 <div class="dynheader">

@@ -18,7 +18,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
+  using namespace ptof::model_advection_diffusion_surface_decay_2d_parallel;
   using InitialCondition = InitialCondition<CTRW>;
   using VelocityField
     = decltype(Transport::makeVelocityInterpolator(std::declval<Geometry>(),
@@ -100,7 +100,7 @@ int main(int argc, char * argv[])
   directories_of.info_runtime(std::cout);
   std::cout << std::setprecision(2) << std::scientific;
   directories_of.info_runtime(std::cout);
-  if (!useful::empty(run_nr))
+  if (!useful::is_empty(run_nr))
     std::cout << std::endl <<
       "--------------------------------------------------\n"
       "Run number: " << std::stoul(run_nr) << "\n"
@@ -260,7 +260,7 @@ int main(int argc, char * argv[])
                      params_solvers_name,
                      params_initial_condition_name,
                      params_output_name)
-      + (useful::empty(run_nr)
+      + (useful::is_empty(run_nr)
          ? ""
          : "_RUN_" + run_nr) };
   measurer.info_runtime(std::cout);

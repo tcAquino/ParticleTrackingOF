@@ -1,7 +1,9 @@
 <map id="useful::parse_error" name="useful::parse_error">
-<area shape="rect" id="node1" title=" " alt="" coords="199,81,343,108"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="29,5,127,32"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="21,56,135,83"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="21,107,135,133"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="5,157,151,184"/>
+<area shape="rect" id="node1" title=" " alt="" coords="391,122,535,149"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2640ab9f6140f04493af1a5f46c01825" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="198,5,342,47"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="221,71,319,98"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="213,122,327,149"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="213,173,327,199"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="197,223,343,250"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#af975b6b07daa6c5d032a5fb003aa0af9" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
 </map>

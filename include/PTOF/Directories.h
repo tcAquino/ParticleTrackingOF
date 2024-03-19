@@ -33,13 +33,13 @@ namespace ptof
      std::string const& case_name,
      std::string const& dir_output)
     : dir_case{
-      (useful::empty(dir)
+      (useful::is_empty(dir)
        ? "../cases"
-       : dir) + "/" + case_name }
+       : useful::expand_env(useful::expand_home_dir(dir))) + "/" + case_name }
     , dir_output{
-      useful::empty(dir_output)
+      useful::is_empty(dir_output)
       ? dir_case + "/output"
-      : dir_output }
+      : useful::expand_env(useful::expand_home_dir(dir_output)) }
     , dir_parameters{ dir_case + "/parameters" }
     , dir_boundaryconditions{ dir_case + "/boundary_conditions" }
     {}
@@ -65,24 +65,26 @@ namespace ptof
   struct DirectoriesOF
   {
   private:
-    std::string _dir;              /**< \private OpenFOAM base cases directory.    */
-    std::string _time_name_input;  /**< \private Information about time directory. */
+    std::string _time_name_input;  /**< Information about time directory. */
     
   public:
-    std::string case_name;         /**< \public OpenFOAM case name.       */
-    std::string dir_case;          /**< \public OpenFOAM case directory.  */
-    Foam::Time time;               /**< \public OpenFOAM case time.       */
+    std::string case_name;         /**< OpenFOAM case name.       */
+    std::string dir_case;          /**< OpenFOAM case directory.  */
+    Foam::Time time;               /**< OpenFOAM case time.       */
     
     /** Constructor
      \param directories Current case directory information.*/
     DirectoriesOF(Directories const& directories)
     : time{ makeRunTime(directories) }
     {
-      if (useful::empty(_time_name_input))
+      if (useful::is_empty(_time_name_input))
         time.setTime(time.times().last(), 0);
       else
         time.setTime(Foam::instant(std::stod(_time_name_input)), 0);
     }
+    
+    /** \brief Deleted copy constructor. */
+    DirectoriesOF(DirectoriesOF const&) = delete;
     
     /** \brief Construct given Directories information. */
     template <typename OStream>
@@ -93,7 +95,7 @@ namespace ptof
         "OpenFOAM directories (pass '' for default in [])\n"
         "--------------------------------------------------\n"
         "OpenFOAM cases directory [$FOAM_RUN]\n"
-        "OpenFOAM case name [$FOAM_DIR]\n"
+        "OpenFOAM case name\n"
         "OpenFOAM case time [last OpenFOAM case time]\n"
         "--------------------------------------------------\n";
     }
@@ -119,17 +121,19 @@ namespace ptof
     {
       auto input = useful::open_read(directories.dir_parameters
                                      + "/of.dat");
-      useful::read(input, _dir);
+      std::string dir;
+      useful::read(input, dir);
       useful::read(input, case_name);
       useful::read(input, _time_name_input);
       input.close();
       
-      // Use OpenFOAM
-      if (useful::empty(_dir))
-        _dir = useful::expand_env("${FOAM_RUN}");
-      dir_case = _dir + "/" + case_name;
+      if (useful::is_empty(dir))
+        dir = "${FOAM_RUN}";
+      dir = useful::expand_env(useful::expand_home_dir(dir));
       
-      return { Foam::Time::controlDictName, _dir, case_name };
+      dir_case = dir + "/" + case_name;
+      
+      return { Foam::Time::controlDictName, dir, case_name };
     }
   };
 }

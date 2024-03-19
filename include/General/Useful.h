@@ -96,7 +96,7 @@ namespace useful
    - Nothing.
    - ''
    - "" */
-  bool empty(std::string const& str)
+  bool is_empty(std::string const& str)
   {
     return str == ""
       || str == "''"
@@ -1088,6 +1088,43 @@ namespace useful
       static No test(...);
       static const bool value = sizeof(Yes) == sizeof(has_periodicity::test((typename std::remove_reference<T>::type*)0));
   };
+  
+  /** \brief Get value of shell environment variable \c name (do not pass \$ in \c name). */
+  std::string getenv(std::string const& name)
+  {
+    char const* val = std::getenv(name.c_str());
+    return val == nullptr ? std::string{} : std::string{ val };
+  }
+  
+  /** \brief Get $HOME environment variable. */
+  std::string getenv_home()
+  { return getenv("HOME"); }
+  
+  /** \brief Get $HOME environment variable, throw if empty */
+  std::string getenv_home_check()
+  {
+    std::string home = getenv_home();
+    if (home.empty())
+      throw std::runtime_error{
+        "$HOME environmental variable is undefined" };
+    return home;
+  }
+  
+  /** \brief Expand ~ if present at the beginning of directory \c dir. */
+  std::string expand_home_dir(std::string dir)
+  {
+    if (dir[0] == '~')
+      dir.replace(0, 1, getenv_home_check());
+    return dir;
+  }
+  
+  /** \brief Expand ~ if present at the beginning of directory \c dir. */
+  std::string expand_home_dir_inplace(std::string dir)
+  {
+    if (dir[0] == '~')
+      dir.replace(0, 1, getenv_home_check());
+    return dir;
+  }
 }
 
 #endif /* GENERAL_USEFUL_H */

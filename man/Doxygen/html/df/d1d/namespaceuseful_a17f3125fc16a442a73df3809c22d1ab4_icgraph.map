@@ -1,0 +1,9 @@
+<map id="useful::getenv" name="useful::getenv">
+<area shape="rect" id="node1" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="845,35,960,61"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#aa9925e7422668d565dea472c38700497" title="Expand environment variables." alt="" coords="437,5,586,32"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="639,60,797,87"/>
+<area shape="rect" id="node3" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,23,149,65"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="432,57,591,98"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="197,56,384,83"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a56b76344b061e88fa9b585f6d6015a52" title="Expand ~ if present at the beginning of directory dir." alt="" coords="209,107,372,149"/>
+</map>
