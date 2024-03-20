@@ -95,9 +95,9 @@ $(document).ready(function(){initNavTree('dc/d05/structptof_1_1model__advection_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7d2bf1a54248ae2018fd8d80e7522098"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters &gt; </td></tr>
-<tr class="memitem:a7d2bf1a54248ae2018fd8d80e7522098"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a7d2bf1a54248ae2018fd8d80e7522098">Parameters</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;name, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction)</td></tr>
-<tr class="separator:a7d2bf1a54248ae2018fd8d80e7522098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6008256293cc43d3d73a1da012a64c79"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename TransportParameters , typename ReactionParameters &gt; </td></tr>
+<tr class="memitem:a6008256293cc43d3d73a1da012a64c79"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79">Parameters</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;name, <a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;geometry, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction)</td></tr>
+<tr class="separator:a6008256293cc43d3d73a1da012a64c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -107,6 +107,8 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
+<tr class="memitem:a58d146e7976ef356a8a52db0ec2dddbb"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a58d146e7976ef356a8a52db0ec2dddbb">nr_particles</a></td></tr>
+<tr class="separator:a58d146e7976ef356a8a52db0ec2dddbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a88c590477506c4154e16a098822dcf"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a3a88c590477506c4154e16a098822dcf">local_time_step_adv</a></td></tr>
 <tr class="separator:a3a88c590477506c4154e16a098822dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af39f5bbd2313aafb86a5560b726d7571"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#af39f5bbd2313aafb86a5560b726d7571">local_time_step_diff</a></td></tr>
@@ -121,13 +123,13 @@ Data Fields</h2></td></tr>
 <tr class="separator:a077e84521edd35cd1e560e325f4c8951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7d2bf1a54248ae2018fd8d80e7522098"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d2bf1a54248ae2018fd8d80e7522098">&#9670;&nbsp;</a></span>Parameters()</h2>
+<a id="a6008256293cc43d3d73a1da012a64c79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6008256293cc43d3d73a1da012a64c79">&#9670;&nbsp;</a></span>Parameters()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TransportParameters , typename ReactionParameters &gt; </div>
+template&lt;typename Geometry , typename TransportParameters , typename ReactionParameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -143,6 +145,12 @@ template&lt;typename TransportParameters , typename ReactionParameters &gt; </di
           <td></td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#ae6a08ae5c2189e3300362e390310ba58">Geometry</a> const &amp;&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -171,8 +179,8 @@ template&lt;typename TransportParameters , typename ReactionParameters &gt; </di
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a7d2bf1a54248ae2018fd8d80e7522098_cgraph.png" border="0" usemap="#adc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a7d2bf1a54248ae2018fd8d80e7522098_cgraph" alt=""/></div>
-<map name="adc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a7d2bf1a54248ae2018fd8d80e7522098_cgraph" id="adc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a7d2bf1a54248ae2018fd8d80e7522098_cgraph">
+<div class="center"><img src="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a6008256293cc43d3d73a1da012a64c79_cgraph.png" border="0" usemap="#adc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a6008256293cc43d3d73a1da012a64c79_cgraph" alt=""/></div>
+<map name="adc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a6008256293cc43d3d73a1da012a64c79_cgraph" id="adc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters_a6008256293cc43d3d73a1da012a64c79_cgraph">
 <area shape="rect" title=" " alt="" coords="5,16,192,72"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="240,5,379,32"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466" title="Read next value from file." alt="" coords="260,56,359,83"/>
@@ -290,6 +298,20 @@ template&lt;typename OStream &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">double ptof::model_advection_diffusion_2d::Solvers::Parameters::local_time_step_react</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58d146e7976ef356a8a52db0ec2dddbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58d146e7976ef356a8a52db0ec2dddbb">&#9670;&nbsp;</a></span>nr_particles</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t ptof::model_advection_diffusion_2d::Solvers::Parameters::nr_particles</td>
         </tr>
       </table>
 </div><div class="memdoc">

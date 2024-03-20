@@ -11,6 +11,8 @@
 #include <cstddef>
 #include <exception>
 #include <fstream>
+#include <iterator>
+#include <limits>
 #include <string>
 #include <type_traits>
 #include <unordered_map>
@@ -750,6 +752,116 @@ namespace ptof
   Boundary_Reinject
   (InitialCondition&&)->
   Boundary_Reinject<InitialCondition>;
+  
+  /** \brief For boundaries conditions indicated as type \c periodic, extract the corresponding boundary positions.
+   \param boundary_conditions Associative container of patch names and associated boundary condition types.
+   \param mesh OpenFOAM mesh.
+   \param dim Spatial dimensionality.
+   \return Container of pairs of periodic boundary positions along each periodic dimension.
+   \note
+   - Periodic boundaries are assumed to be perpendicular to the cartesian axes. There must be an even number.
+   - Periodic conditions are checked in order across Cartesian dimensions. If there are periodic BCs in all dimensions starting from 0 up to some dimension, output only those boundaries. If there are gap dimensions between periodic dimensions, add {-inf, inf} boundaries.*/
+  template <typename BCs, typename Mesh>
+  auto extract_cartesian_periodic_boundaries
+  (BCs const& boundary_conditions,
+   Mesh const& mesh,
+   std::size_t dim)
+  {
+    std::vector<std::vector<double>> boundaries_dim(dim);
+    for (auto const& bc : boundary_conditions)
+      if (bc.second == "periodic")
+      {
+        // Find average and variance of patch face centers.
+        auto const& patch_id =
+          mesh.boundaryMesh().findPatchID(bc.first, false);
+        auto const& patch = mesh.boundaryMesh()[patch_id];
+        auto face_start = patch.start();
+        Foam::point average_face_center = Foam::point::zero;
+        Foam::point variance_face_center = Foam::point::zero;
+        Foam::scalar total_area = 0.;
+        for (auto face = face_start;
+             face < face_start + patch.size(); ++face)
+        {
+          auto area = face_area(face, mesh);
+          auto weighted_center = area*face_center(face, mesh);
+          total_area += area;
+          average_face_center += weighted_center;
+          for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd)
+            variance_face_center[dd] +=
+              weighted_center[dd]*weighted_center[dd];
+        }
+        average_face_center /= total_area;
+        variance_face_center /= total_area*total_area;
+        for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd)
+          variance_face_center[dd] -=
+            average_face_center[dd]*average_face_center[dd];
+        
+        // Choose dimension with least variance.
+        auto it_min = std::min_element(variance_face_center.begin(),
+                                       variance_face_center.end());
+        std::size_t dd = std::distance(variance_face_center.begin(),
+                                       it_min);
+        boundaries_dim[dd].push_back(average_face_center[dd]);
+      }
+    
+    // Check which dimensions have periodic BCs.
+    // If a dimension has periodic BCs they must be exactly two.
+    std::vector<bool> dim_has_periodic_bcs(dim, 0);
+    for (std::size_t dd = 0; dd < dim; ++dd)
+      if (boundaries_dim[dd].size() != 0)
+      {
+        if (boundaries_dim[dd].size() != 2)
+          throw std::runtime_error{
+            "Extracted "
+            + std::to_string(boundaries_dim[dd].size())
+            + " periodic boundaries "
+            "along cartesian dimension "
+            + std::to_string(dd) };
+        
+        dim_has_periodic_bcs[dd] = 1;
+      }
+    
+    // Periodic conditions are checked in order
+    // across Cartesian dimensions.
+    // If there are periodic BCs in all dimensions
+    // starting from 0 up to some dimension, add only those boundaries
+    // If there are gap dimensions between periodic dimensions,
+    // add {-inf, inf} boundaries.
+    bool found_nonperiodic = 0;
+    bool nonconsecutive_dims = 0;
+    for (bool periodic : dim_has_periodic_bcs)
+    {
+      if (found_nonperiodic && periodic)
+      {
+        nonconsecutive_dims = 1;
+        break;
+      }
+      if (!periodic)
+        found_nonperiodic = 1;
+    }
+    std::vector<std::pair<double, double>> boundaries;
+    for (std::size_t dd = 0; dd < dim; ++dd)
+    {
+      if (dim_has_periodic_bcs[dd])
+      {
+        boundaries.push_back({
+          std::min(boundaries_dim[dd][0],
+                   boundaries_dim[dd][1]),
+          std::max(boundaries_dim[dd][0],
+                   boundaries_dim[dd][1])
+        });
+      }
+      else if (nonconsecutive_dims)
+      {
+        boundaries.push_back({
+          -std::numeric_limits<double>::infinity(),
+          std::numeric_limits<double>::infinity()
+        });
+      }
+    }
+    
+    return boundaries;
+  }
 }
 
 

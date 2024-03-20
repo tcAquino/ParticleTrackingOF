@@ -1,6 +1,6 @@
 var structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters =
 [
-    [ "Parameters", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#aeeea09e2650448315389645c6ce81f9b", null ],
+    [ "Parameters", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187", null ],
     [ "info", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a17742cbb15cf6795b76f6e75aef60612", null ],
     [ "rescale", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a111fe45f2a69ed4fb27e5c57ede87e33", null ],
     [ "advection_time", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a0071fff78895281d3de853d5b81ef7fc", null ],
@@ -14,6 +14,5 @@ var structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_
     [ "peclet_option", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#af1d17870217f4fc80c914a7b51ae1097", null ],
     [ "primitive_cell_boundaries", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#ab997104b5ff79098c66f98dea1349cca", null ],
     [ "primitive_cell_location_option", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a77caa668e3350e7a0bbb26f0d8d4d560", null ],
-    [ "radius", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a9f4bbd8d8b78a0d4c02c612b7196c1a7", null ],
     [ "velocity_rescaling_factor", "d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a6d539674a3940abb1c02f1839ebacb66", null ]
 ];

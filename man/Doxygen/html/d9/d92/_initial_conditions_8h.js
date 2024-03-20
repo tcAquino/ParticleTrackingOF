@@ -12,8 +12,6 @@ var _initial_conditions_8h =
     [ "fluxweighted_faces", "d9/d92/_initial_conditions_8h.html#a698673f4614e12ca9b05fc29c2e3040f", null ],
     [ "fluxweighted_patches", "d9/d92/_initial_conditions_8h.html#a2e01d324ac9b85ddbc170f0ae3dc1732", null ],
     [ "fluxweighted_patches", "d9/d92/_initial_conditions_8h.html#a4dc09f94f5268f83c2dc70d33a2abde3", null ],
-    [ "InitialCondition_Cases", "d9/d92/_initial_conditions_8h.html#aebf810dfcff30af1422b2dedadf874b4", null ],
-    [ "InitialCondition_Cases", "d9/d92/_initial_conditions_8h.html#a0da1e40b25d3921f53479899287c04bd", null ],
     [ "make_particle_at_face_center", "d9/d92/_initial_conditions_8h.html#ac1010c1948fbd50120a52c1c082e3226", null ],
     [ "prescribed_positions", "d9/d92/_initial_conditions_8h.html#aedc246759e2a830f7ce2c15a17868c8e", null ],
     [ "prescribed_positions", "d9/d92/_initial_conditions_8h.html#a328db19f0cdcebf4879101663f4a1f13", null ],

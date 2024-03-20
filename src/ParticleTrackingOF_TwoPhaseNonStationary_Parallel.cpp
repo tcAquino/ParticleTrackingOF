@@ -23,7 +23,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_surface_decay_2d_parallel;
+  using namespace ptof::model_advection_diffusion_fpt_2d_parallel;
   using InitialCondition = InitialCondition<CTRW>;
   using Phase = ptof::Phase;
   using VelocityField
@@ -108,7 +108,6 @@ int main(int argc, char * argv[])
   directories.info_runtime(std::cout);
   std::cout << std::endl;
   ptof::DirectoriesOF directories_of{ directories };
-  std::cout << std::setprecision(2) << std::scientific;
   directories_of.info_runtime(std::cout);
   if (!useful::is_empty(run_nr))
     std::cout << std::endl <<
@@ -119,12 +118,24 @@ int main(int argc, char * argv[])
     "--------------------------------------------------\n"
     "Number of parallel threads: " << int(num_threads) << "\n"
     "--------------------------------------------------\n";
+  std::cout << std::setprecision(2) << std::scientific;
+  
+  std::cout << "\n" << "Setting up geometry...\n";
+  auto execution_begin = std::chrono::high_resolution_clock::now();
+  Geometry geometry{ directories_of, directories, num_threads };
+  geometry.info_runtime(std::cout);
+  auto execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
   
   std::cout << "\n" << "Importing transport parameters..." << std::endl;
-  auto execution_begin = std::chrono::high_resolution_clock::now();
+  execution_begin = std::chrono::high_resolution_clock::now();
   Transport::Parameters params_transport{ directories,
-    params_transport_name };
-  auto execution_end = std::chrono::high_resolution_clock::now();
+    params_transport_name,
+    geometry };
+  execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
@@ -133,52 +144,8 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Importing phase parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Phase::Parameters params_phase{ directories,
-    params_phase_name };
-  execution_end = std::chrono::high_resolution_clock::now();
-  std::cout << "Done!";
-  std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
-  std::cout << ")" << std::endl;
-  
-  std::cout << "\n" << "Importing reaction parameters..." << std::endl;
-  execution_begin = std::chrono::high_resolution_clock::now();
-  Reaction::Parameters params_reaction{ directories,
-    params_reaction_name,
-    params_transport };
-  execution_end = std::chrono::high_resolution_clock::now();
-  std::cout << "Done!";
-  std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
-  std::cout << ")" << std::endl;
-  
-  std::cout << "\n"  << "Importing solver parameters..." << std::endl;
-  execution_begin = std::chrono::high_resolution_clock::now();
-  Solvers::Parameters params_solvers{ directories,
-    params_solvers_name, params_transport, params_reaction };
-  execution_end = std::chrono::high_resolution_clock::now();
-  std::cout << "Done!";
-  std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
-  std::cout << ")" << std::endl;
-  
-  std::cout << "\n"  << "Importing initial condition parameters..." << std::endl;
-  execution_begin = std::chrono::high_resolution_clock::now();
-  InitialCondition::Parameters params_initial_condition{ directories,
-    params_initial_condition_name,
-    params_transport, params_reaction, params_solvers,
-    
-  };
-  execution_end = std::chrono::high_resolution_clock::now();
-  std::cout << "Done!";
-  std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
-  std::cout << ")" << std::endl;
-  
-  std::cout << "\n" << "Setting up geometry...\n";
-  execution_begin = std::chrono::high_resolution_clock::now();
-  Geometry geometry{
-    directories_of, directories, num_threads, params_transport };
-  geometry.info_runtime(std::cout);
+    params_phase_name,
+    geometry };
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -213,6 +180,30 @@ int main(int argc, char * argv[])
   useful::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
   
+  std::cout << "\n" << "Importing reaction parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  Reaction::Parameters params_reaction{ directories,
+    params_reaction_name,
+    geometry,
+    params_transport };
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
+  std::cout << "\n"  << "Importing solver parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  Solvers::Parameters params_solvers{ directories,
+    params_solvers_name,
+    geometry,
+    params_transport, params_reaction };
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
   std::cout << "\n" << "Setting up reaction..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   auto reaction = Reaction::makeReaction(geometry,
@@ -225,12 +216,25 @@ int main(int argc, char * argv[])
   useful::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
   
+  std::cout << "\n"  << "Importing initial condition parameters..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  InitialCondition::Parameters params_initial_condition{ directories,
+    params_initial_condition_name,
+    geometry,
+    params_transport, params_reaction };
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+  
   std::cout << "\n" << "Setting up initial condition...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
   auto initial_condition
     = InitialCondition::makeInitialCondition(geometry,
                                              velocity_field,
                                              params_initial_condition,
+                                             params_solvers,
                                              excluded_phase_field,
                                              params_phase.phase_threshold);
   initial_condition.info_runtime(std::cout);
@@ -279,8 +283,8 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   Output::Parameters params_output{ directories,
     params_output_name,
-    params_transport, params_reaction, params_solvers,
-    params_transport.velocity_rescaling_factor };
+    geometry,
+    params_transport, params_reaction, params_solvers };
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

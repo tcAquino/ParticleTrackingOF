@@ -424,7 +424,7 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;  : std::true_type { };</div>
 <div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;  </div>
 <div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Subject&gt;</div>
-<div class="line"><a name="l00500"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#a264ecbd1aed23f45f0d73deb284775ea">  500</a></span>&#160;  <span class="keyword">auto</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a264ecbd1aed23f45f0d73deb284775ea">nr_absorbed</a></div>
+<div class="line"><a name="l00500"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">  500</a></span>&#160;  std::size_t <a class="code" href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">nr_absorbed</a></div>
 <div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;  (Subject <span class="keyword">const</span>&amp; subject, <span class="keywordtype">double</span> time)</div>
 <div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;  {</div>
 <div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    std::size_t absorbed = 0;</div>
@@ -545,7 +545,7 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;  (OStream&amp; output, Subject <span class="keyword">const</span>&amp; subject, <span class="keywordtype">double</span> time)</div>
 <div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;  {</div>
 <div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;    output &lt;&lt; <span class="stringliteral">&quot;Fraction not absorbed: &quot;</span></div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;          &lt;&lt; 1. - double(<a class="code" href="../../d2/dd1/namespaceptof.html#a264ecbd1aed23f45f0d73deb284775ea">ptof::nr_absorbed</a>(subject, time))/subject.size()</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;          &lt;&lt; 1. - double(<a class="code" href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">ptof::nr_absorbed</a>(subject, time))/subject.size()</div>
 <div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;          &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;  }</div>
 <div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;  </div>
@@ -636,11 +636,9 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;                      params_output_name)</div>
 <div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      + <span class="stringliteral">&quot;_RUN_&quot;</span> + std::to_string(run_nr);</div>
 <div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;  }</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;  </div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;                         </div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;}</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160; </div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PTOF_USEFUL_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;}</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160; </div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PTOF_USEFUL_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="a_general_2_useful_8h_html"><div class="ttname"><a href="../../d9/d18/_general_2_useful_8h.html">Useful.h</a></div></div>
 <div class="ttc" id="a_state_getter_8h_html"><div class="ttname"><a href="../../dd/ddd/_state_getter_8h.html">StateGetter.h</a></div><div class="ttdoc">Handlers to extract information from particles and particle states.</div></div>
 <div class="ttc" id="anamespaceptof_html"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html">ptof</a></div><div class="ttdef"><b>Definition:</b> Advection.h:17</div></div>
@@ -653,7 +651,7 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="ttc" id="anamespaceptof_html_a1cf7b993521b555fe198dbb5980eb438"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a1cf7b993521b555fe198dbb5980eb438">ptof::offset_cell</a></div><div class="ttdeci">Foam::vector offset_cell(Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset outward along face normal starting from face center.</div><div class="ttdef"><b>Definition:</b> Useful.h:376</div></div>
 <div class="ttc" id="anamespaceptof_html_a218beff88363f0d2ba3306e2e574bacc"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">ptof::make_point</a></div><div class="ttdeci">auto make_point(Foam::Vector2D&lt; Foam::scalar &gt; const &amp;point)</div><div class="ttdoc">Make 3D point from 2D point.</div><div class="ttdef"><b>Definition:</b> Useful.h:119</div></div>
 <div class="ttc" id="anamespaceptof_html_a2454b3742dec17f5af7a104d80cd8454"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a2454b3742dec17f5af7a104d80cd8454">ptof::offset_outward_face</a></div><div class="ttdeci">Foam::point offset_outward_face(Foam::label face, Locator const &amp;locator)</div><div class="ttdoc">Small offset outward along face normal starting from face center.</div><div class="ttdef"><b>Definition:</b> Useful.h:342</div></div>
-<div class="ttc" id="anamespaceptof_html_a264ecbd1aed23f45f0d73deb284775ea"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a264ecbd1aed23f45f0d73deb284775ea">ptof::nr_absorbed</a></div><div class="ttdeci">auto nr_absorbed(Subject const &amp;subject, double time)</div><div class="ttdef"><b>Definition:</b> Useful.h:501</div></div>
+<div class="ttc" id="anamespaceptof_html_a264d1e003d2d971ee7b42743e8db9fa8"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">ptof::nr_absorbed</a></div><div class="ttdeci">std::size_t nr_absorbed(Subject const &amp;subject, double time)</div><div class="ttdef"><b>Definition:</b> Useful.h:501</div></div>
 <div class="ttc" id="anamespaceptof_html_a3ef3e25c8c2505a2225c174ccc046480"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a3ef3e25c8c2505a2225c174ccc046480">ptof::position_variance</a></div><div class="ttdeci">auto position_variance(Subject const &amp;subject, double time, GetterPosition getter_position={})</div><div class="ttdef"><b>Definition:</b> Useful.h:643</div></div>
 <div class="ttc" id="anamespaceptof_html_a403f2134a620767dd025954e733b68c5"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5">ptof::offset_backward_cell_keep_inside</a></div><div class="ttdeci">Foam::point offset_backward_cell_keep_inside(Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset backward.</div><div class="ttdef"><b>Definition:</b> Useful.h:465</div></div>
 <div class="ttc" id="anamespaceptof_html_a5bc754535412500a84cc47c7f639cc8e"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a5bc754535412500a84cc47c7f639cc8e">ptof::mass</a></div><div class="ttdeci">auto mass(Subject const &amp;subject, double time)</div><div class="ttdef"><b>Definition:</b> Useful.h:522</div></div>

@@ -384,7 +384,7 @@ namespace ptof
      *  \brief Output parameters. */
     struct Parameters
     {
-      double velocity_rescaling;
+      double velocity_rescaling_factor;
       std::string time_units;
       double time_unit_factor;
       std::string end_criterion;
@@ -400,8 +400,7 @@ namespace ptof
        \param name Name of parameter set.
        \param params_transport Transport parameters.
        \param params_reaction Reaction parameters.
-       \param params_solvers Solver parameters.
-       \param velocity_rescaling Factor by which velocity field was rescaled, used to rescale, e.g., velocity gradients. */
+       \param params_solvers Solver parameters. */
       template
       <typename TransportParameters,
       typename ReactionParameters,
@@ -409,12 +408,16 @@ namespace ptof
       Parameters
       (Directories const& directories,
        std::string const& name,
+       Geometry const& geometry,
        TransportParameters const& params_transport,
        ReactionParameters const& params_reaction,
-       SolverParameters const& params_solvers,
-       double velocity_rescaling)
-      : velocity_rescaling{ velocity_rescaling }
+       SolverParameters const& params_solvers)
       {
+        if constexpr (useful::has_velocity_rescaling_factor<TransportParameters>::value)
+          velocity_rescaling_factor = params_transport.velocity_rescaling_factor;
+        else
+          velocity_rescaling_factor = 1.;
+          
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_output_"
                                        + name + ".dat");
@@ -1548,8 +1551,8 @@ namespace ptof
           Foam::IOobject::NO_WRITE },
           geometry.mesh() }
       {
-        if (parameters.velocity_rescaling != 1.)
-          velocity_gradient *= parameters.velocity_rescaling;
+        if (parameters.velocity_rescaling_factor != 1.)
+          velocity_gradient *= parameters.velocity_rescaling_factor;
       }
 
       void operator()(double time) override
@@ -1630,8 +1633,8 @@ namespace ptof
           geometry.mesh() },
         geometry.locator }
       {
-        if (parameters.velocity_rescaling != 1.)
-          pressure.rescale(parameters.velocity_rescaling);
+        if (parameters.velocity_rescaling_factor != 1.)
+          pressure.rescale(parameters.velocity_rescaling_factor);
       }
 
       void operator()(double time) override

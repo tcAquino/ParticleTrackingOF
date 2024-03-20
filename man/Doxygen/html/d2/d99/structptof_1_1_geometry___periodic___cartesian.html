@@ -88,14 +88,13 @@ $(document).ready(function(){initNavTree('d2/d99/structptof_1_1_geometry___perio
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for geometry with Cartesian periodic BCs along some dimensions.  
+<p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for geometry to handle periodic BCs along any number of Cartesian dimensions.  
  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d1/d4e/_geometry_8h_source.html">PTOF/Geometry.h</a>&quot;</code></p>
@@ -104,7 +103,7 @@ Collaboration diagram for ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamic
 <div class="dyncontent">
 <div class="center"><img src="../../df/d18/structptof_1_1_geometry___periodic___cartesian__coll__graph.png" border="0" usemap="#aptof_1_1_geometry___periodic___cartesian_3_01dim__val_00_01dynamics_00_01_search_option_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aptof_1_1_geometry___periodic___cartesian_3_01dim__val_00_01dynamics_00_01_search_option_01_4_coll__map" id="aptof_1_1_geometry___periodic___cartesian_3_01dim__val_00_01dynamics_00_01_search_option_01_4_coll__map">
-<area shape="rect" title="Geometry class for geometry with Cartesian periodic BCs along some dimensions." alt="" coords="424,43,657,99"/>
+<area shape="rect" title="Geometry class for geometry to handle periodic BCs along any number of Cartesian dimensions." alt="" coords="424,43,657,99"/>
 <area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,251,61"/>
 <area shape="rect" href="../../db/d57/classgeometry_1_1_boundary___periodic___with_outside_info.html" title="Periodic boundaries along each dimension with information about where position would be outside domai..." alt="" coords="31,86,225,127"/>
 </map>
@@ -125,14 +124,13 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ade80a95ebf964146662218703ccd7119"><td class="memTemplParams" colspan="2">template&lt;typename Parameters &gt; </td></tr>
-<tr class="memitem:ade80a95ebf964146662218703ccd7119"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ade80a95ebf964146662218703ccd7119">Geometry_Periodic_Cartesian</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;parameters=<a class="el" href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a>{})</td></tr>
-<tr class="memdesc:ade80a95ebf964146662218703ccd7119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ade80a95ebf964146662218703ccd7119">More...</a><br /></td></tr>
-<tr class="separator:ade80a95ebf964146662218703ccd7119"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e7809711f70124513d8d6aa97316c1"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename Parameters  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a66e7809711f70124513d8d6aa97316c1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a66e7809711f70124513d8d6aa97316c1">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> &amp;&amp;parameters={}) const</td></tr>
-<tr class="memdesc:a66e7809711f70124513d8d6aa97316c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for Cartesian periodicity.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a66e7809711f70124513d8d6aa97316c1">More...</a><br /></td></tr>
-<tr class="separator:a66e7809711f70124513d8d6aa97316c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a826332fecfcb244a0c00ac62384c9f5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a826332fecfcb244a0c00ac62384c9f5d">Geometry_Periodic_Cartesian</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
+<tr class="memdesc:a826332fecfcb244a0c00ac62384c9f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a826332fecfcb244a0c00ac62384c9f5d">More...</a><br /></td></tr>
+<tr class="separator:a826332fecfcb244a0c00ac62384c9f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a031625619d802355594b991a6e55a335"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
+<tr class="memitem:a031625619d802355594b991a6e55a335"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a031625619d802355594b991a6e55a335">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, InitialCondition &amp;&amp;initial_condition={}) const</td></tr>
+<tr class="memdesc:a031625619d802355594b991a6e55a335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for Cartesian periodicity.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a031625619d802355594b991a6e55a335">More...</a><br /></td></tr>
+<tr class="separator:a031625619d802355594b991a6e55a335"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a324b47a69573c6b112c7ed38cdbe6e60"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:a324b47a69573c6b112c7ed38cdbe6e60"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a324b47a69573c6b112c7ed38cdbe6e60">info_runtime</a> (OStream &amp;output) const</td></tr>
 <tr class="memdesc:a324b47a69573c6b112c7ed38cdbe6e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a324b47a69573c6b112c7ed38cdbe6e60">More...</a><br /></td></tr>
@@ -159,12 +157,6 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a847a0b9dce43cb6cf76ad8e5e572d3e0"><td class="memItemLeft" align="right" valign="top">static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a847a0b9dce43cb6cf76ad8e5e572d3e0">dim</a> { dim_val }</td></tr>
 <tr class="separator:a847a0b9dce43cb6cf76ad8e5e572d3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a1f5a8fa98af70dbdf368c7e502fd1c25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a39650514fa420deb16851fb26c1e4da3">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a1f5a8fa98af70dbdf368c7e502fd1c25">make_boundary_periodic</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
-<tr class="memdesc:a1f5a8fa98af70dbdf368c7e502fd1c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a boundary object to enforce periodicity based on cartesian planes.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a1f5a8fa98af70dbdf368c7e502fd1c25">More...</a><br /></td></tr>
-<tr class="separator:a1f5a8fa98af70dbdf368c7e502fd1c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:aba3a01a7725e6000759d152071e6dcbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a350316b323a28e92cfba2f1135f11717">Mesh</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#aba3a01a7725e6000759d152071e6dcbd">_mesh</a></td></tr>
@@ -176,7 +168,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><h3>template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
 class ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;</h3>
 
-<p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for geometry with Cartesian periodic BCs along some dimensions. </p>
+<p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for geometry to handle periodic BCs along any number of Cartesian dimensions. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a39650514fa420deb16851fb26c1e4da3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a39650514fa420deb16851fb26c1e4da3">&#9670;&nbsp;</a></span>Boundary_Periodic</h2>
@@ -264,15 +256,13 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ade80a95ebf964146662218703ccd7119"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade80a95ebf964146662218703ccd7119">&#9670;&nbsp;</a></span>Geometry_Periodic_Cartesian()</h2>
+<a id="a826332fecfcb244a0c00ac62384c9f5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a826332fecfcb244a0c00ac62384c9f5d">&#9670;&nbsp;</a></span>Geometry_Periodic_Cartesian()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
-<div class="memtemplate">
-template&lt;typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -287,13 +277,7 @@ template&lt;typename Parameters &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directories</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>parameters</em> = <code><a class="el" href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a>{}</code>&#160;</td>
+          <td class="paramname"><em>directories</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -313,7 +297,6 @@ template&lt;typename Parameters &gt; </div>
   <table class="params">
     <tr><td class="paramname">directories_of</td><td>OpenFOAM case directory information. </td></tr>
     <tr><td class="paramname">directories</td><td>Current case directory information. </td></tr>
-    <tr><td class="paramname">parameters</td><td>Additional parameters (unused) </td></tr>
   </table>
   </dd>
 </dl>
@@ -404,63 +387,15 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a1f5a8fa98af70dbdf368c7e502fd1c25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f5a8fa98af70dbdf368c7e502fd1c25">&#9670;&nbsp;</a></span>make_boundary_periodic()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a39650514fa420deb16851fb26c1e4da3">Boundary_Periodic</a> <a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html">ptof::Geometry_Periodic_Cartesian</a>&lt; dim_val, dynamics, SearchOption &gt;::make_boundary_periodic </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directories</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Make a boundary object to enforce periodicity based on cartesian planes. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">directories</td><td>Current case directory information. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Periodic boundary object. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d2/d99/structptof_1_1_geometry___periodic___cartesian_a1f5a8fa98af70dbdf368c7e502fd1c25_cgraph.png" border="0" usemap="#ad2/d99/structptof_1_1_geometry___periodic___cartesian_a1f5a8fa98af70dbdf368c7e502fd1c25_cgraph" alt=""/></div>
-<map name="ad2/d99/structptof_1_1_geometry___periodic___cartesian_a1f5a8fa98af70dbdf368c7e502fd1c25_cgraph" id="ad2/d99/structptof_1_1_geometry___periodic___cartesian_a1f5a8fa98af70dbdf368c7e502fd1c25_cgraph">
-<area shape="rect" title="Make a boundary object to enforce periodicity based on cartesian planes." alt="" coords="5,41,208,97"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="286,5,405,32"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="280,56,411,83"/>
-<area shape="rect" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a0b0603572f99b2307a7194317507d1a3" title=" " alt="" coords="256,107,435,149"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a66e7809711f70124513d8d6aa97316c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66e7809711f70124513d8d6aa97316c1">&#9670;&nbsp;</a></span>makeBoundary()</h2>
+<a id="a031625619d802355594b991a6e55a335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a031625619d802355594b991a6e55a335">&#9670;&nbsp;</a></span>makeBoundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
-template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename Parameters  = useful::Empty&gt; </div>
+template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -498,8 +433,8 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>parameters</em> = <code>{}</code>&#160;</td>
+          <td class="paramtype">InitialCondition &amp;&amp;&#160;</td>
+          <td class="paramname"><em>initial_condition</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -522,7 +457,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
     <tr><td class="paramname">params_reaction</td><td>Reaction parameters. </td></tr>
     <tr><td class="paramname">params_solvers</td><td>Solver parameters. </td></tr>
     <tr><td class="paramname">surface_reaction</td><td>Surface reaction. </td></tr>
-    <tr><td class="paramname">parameters</td><td>Additional parameters (initial condition object for reinjection). </td></tr>
+    <tr><td class="paramname">initial_condition</td><td>Initial condition object for reinjection (for FPT dynamics). </td></tr>
   </table>
   </dd>
 </dl>
@@ -560,9 +495,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/d99/structptof_1_1_geometry___periodic___cartesian_a0b0603572f99b2307a7194317507d1a3_icgraph.png" border="0" usemap="#ad2/d99/structptof_1_1_geometry___periodic___cartesian_a0b0603572f99b2307a7194317507d1a3_icgraph" alt=""/></div>
 <map name="ad2/d99/structptof_1_1_geometry___periodic___cartesian_a0b0603572f99b2307a7194317507d1a3_icgraph" id="ad2/d99/structptof_1_1_geometry___periodic___cartesian_a0b0603572f99b2307a7194317507d1a3_icgraph">
-<area shape="rect" title=" " alt="" coords="256,43,435,84"/>
-<area shape="rect" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a324b47a69573c6b112c7ed38cdbe6e60" title="Output information about current object." alt="" coords="15,5,198,47"/>
-<area shape="rect" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a1f5a8fa98af70dbdf368c7e502fd1c25" title="Make a boundary object to enforce periodicity based on cartesian planes." alt="" coords="5,71,208,127"/>
+<area shape="rect" title=" " alt="" coords="236,5,415,47"/>
+<area shape="rect" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a324b47a69573c6b112c7ed38cdbe6e60" title="Output information about current object." alt="" coords="5,5,188,47"/>
 </map>
 </div>
 

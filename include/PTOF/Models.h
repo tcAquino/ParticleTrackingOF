@@ -63,6 +63,7 @@ namespace ptof
       
       struct Parameters
       {
+        std::size_t nr_particles;
         double local_time_step_adv;
         double local_time_step_diff;
         double local_time_step_react;
@@ -71,17 +72,20 @@ namespace ptof
         double global_time_step_react;
         
         template
-        <typename TransportParameters,
+        <typename Geometry,
+        typename TransportParameters,
         typename ReactionParameters>
         Parameters
         (Directories const& directories,
          std::string const& name,
+         Geometry const& geometry,
          TransportParameters const& params_transport,
          ReactionParameters const& params_reaction)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
+          useful::read(input, nr_particles);
           useful::read(input, local_time_step_adv);
           useful::read(input, local_time_step_diff);
           useful::read(input, local_time_step_react);
@@ -98,13 +102,15 @@ namespace ptof
           "--------------------------------------------------\n"
           "Solver parameters\n"
           "--------------------------------------------------\n"
+          "- Number of Lagrangian particles in each injection step\n"
           "- Local time step in terms of cell-based advection time\n"
           "- Local time step in terms of cell-based diffusion time\n"
           "- Local time step in terms of cell-based surface reaction time\n"
           "- Global time step in terms of characteristic advection time\n"
           "- Global time step in terms of characteristic diffusion time\n"
           "- Global time step in terms of surface reaction time\n"
-          "  (Note: minimum between processes and maximum between local and global is used)\n"
+          "  (Note: Minimum between processes and maximum between local and global is used.\n"
+          "         Initial values (e.g., of flow) are used for global quantities.)\n"
           "--------------------------------------------------\n";
         }
       };
@@ -135,8 +141,11 @@ namespace ptof
         double mean_velocity;
         double velocity_rescaling_factor;
         
+        template <typename Geometry>
         Parameters
-        (Directories const& directories, std::string const& name)
+        (Directories const& directories,
+         std::string const& name,
+         Geometry const& geometry)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
@@ -314,10 +323,13 @@ namespace ptof
         double rate_constant{ 0. };
         double reaction_time{ std::numeric_limits<double>::infinity() };
         
-        template <typename TransportParameters>
+        Parameters(){}
+        
+        template <typename Geometry, typename TransportParameters>
         Parameters
         (Directories const& dir,
          std::string const& name,
+         Geometry const& geometry,
          TransportParameters const& params_transport)
         {}
         
@@ -378,7 +390,6 @@ namespace ptof
         std::vector<std::pair<double, double>> region_boundaries;
         std::string position_data;
         double initial_mass;
-        std::size_t nr_particles;
         double time_min;
         double time_step_accuracy_adv;
         double time_step_accuracy_diff;
@@ -387,15 +398,15 @@ namespace ptof
         double time_step;
         
         template
-        <typename TransportParameters,
-        typename ReactionParameters,
-        typename SolverParameters>
+        <typename Geometry,
+        typename TransportParameters,
+        typename ReactionParameters>
         Parameters
         (Directories const& directories,
          std::string const& name,
+         Geometry const& geometry,
          TransportParameters const& params_transport,
-         ReactionParameters const& params_reaction,
-         SolverParameters const& params_solvers)
+         ReactionParameters const& params_reaction)
         {
           std::string ic_name;
           auto input = useful::open_read(directories.dir_parameters
@@ -429,7 +440,6 @@ namespace ptof
           if (type == InitialConditions::Type::prescribed_positions)
             useful::read(input, position_data);
           useful::read(input, initial_mass);
-          useful::read(input, nr_particles);
           useful::read(input, time_min);
           if (type == InitialConditions::Type::uniform_inlet_continuous ||
               type == InitialConditions::Type::fluxweighted_inlet_continuous)
@@ -469,7 +479,6 @@ namespace ptof
           "- Region boundaries (pass only for types uniform_region_cartesian or fluxweighted_region_cartesian)\n"
           "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
           "- Total injected mass in each injection step\n"
-          "- Number of Lagrangian particles in each injection step\n"
           "- Initial injection time\n"
           "- Final injection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
           "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
@@ -481,11 +490,13 @@ namespace ptof
       
       template
       <typename Geometry,
-      typename VelocityField>
+      typename VelocityField,
+      typename SolverParameters>
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
-       Parameters const& parameters)
+       Parameters const& parameters,
+       SolverParameters const& params_solvers)
       {
         if constexpr (useful::has_periodicity<typename CTRW::State>::value)
           return InitialCondition_Cases{
@@ -495,7 +506,8 @@ namespace ptof
               geometry.locator,
               geometry.boundary_periodic,
               parameters.time_min,
-              parameters.initial_mass/parameters.nr_particles },
+              parameters.initial_mass/params_solvers.nr_particles },
+            params_solvers.nr_particles,
             parameters };
         else
           return InitialCondition_Cases{
@@ -504,18 +516,21 @@ namespace ptof
               useful::Selector_t<typename CTRW::Particle>{},
               geometry.locator,
               parameters.time_min,
-              parameters.initial_mass/parameters.nr_particles },
+              parameters.initial_mass/params_solvers.nr_particles },
+            params_solvers.nr_particles,
             parameters };
       }
       
       template
       <typename Geometry,
       typename VelocityField,
+      typename SolverParameters,
       typename Mask>
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& parameters,
+       SolverParameters const& params_solvers,
        Mask const& mask,
        double threshold = 0.)
       {
@@ -527,7 +542,8 @@ namespace ptof
               geometry.locator,
               geometry.boundary_periodic,
               parameters.time_min,
-              parameters.initial_mass/parameters.nr_particles },
+              parameters.initial_mass/params_solvers.nr_particles },
+            params_solvers.nr_particles,
             parameters,
             mask, threshold };
         else
@@ -537,7 +553,8 @@ namespace ptof
               useful::Selector_t<typename CTRW::Particle>{},
               geometry.locator,
               parameters.time_min,
-              parameters.initial_mass/parameters.nr_particles },
+              parameters.initial_mass/params_solvers.nr_particles },
+            params_solvers.nr_particles,
             parameters,
             mask, threshold };
       }
@@ -605,6 +622,7 @@ namespace ptof
       
       struct Parameters
       {
+        std::size_t nr_particles;
         double local_time_step_adv;
         double local_time_step_diff = std::numeric_limits<double>::infinity();
         double local_time_step_react = std::numeric_limits<double>::infinity();
@@ -613,17 +631,20 @@ namespace ptof
         double global_time_step_react = std::numeric_limits<double>::infinity();
         
         template
-        <typename TransportParameters,
+        <typename Geometry,
+        typename TransportParameters,
         typename ReactionParameters>
         Parameters
         (Directories const& directories,
          std::string const& name,
+         Geometry const& geometry,
          TransportParameters const& params_transport,
          ReactionParameters const& params_reaction)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
+          useful::read(input, nr_particles);
           useful::read(input, local_time_step_adv);
           useful::read(input, global_time_step_adv);
           input.close();
@@ -636,10 +657,11 @@ namespace ptof
           "--------------------------------------------------\n"
           "Solver parameters\n"
           "--------------------------------------------------\n"
+          "- Number of Lagrangian particles in each injection step\n"
           "- Local timestep accuracy in terms of cell-based advection time\n"
           "- Global timestep accuracy in terms of characteristic advection time\n"
-          "  (Note: Minimum between processes and maximum between local and global is used)\n"
-          "  (Note: Initial values (e.g., of flow) are used for global quantities)\n"
+          "  (Note: Minimum between processes and maximum between local and global is used.\n"
+          "         Initial values (e.g., of flow) are used for global quantities.)\n"
           "--------------------------------------------------\n";
         }
       };
@@ -669,8 +691,11 @@ namespace ptof
         double mean_velocity;
         double velocity_rescaling_factor;
         
+        template <typename Geometry>
         Parameters
-        (Directories const& directories, std::string const& name)
+        (Directories const& directories,
+         std::string const& name,
+         Geometry const& geometry)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
@@ -872,10 +897,11 @@ namespace ptof
         double rate_constant;
         double reaction_time;
         
-        template <typename TransportParameters>
+        template <typename Geometry, typename TransportParameters>
         Parameters
         (Directories const& directories,
          std::string const& name,
+         Geometry const& geometry,
          TransportParameters const& params_transport)
         {
           auto input = useful::open_read(directories.dir_parameters
@@ -885,7 +911,7 @@ namespace ptof
           useful::read(input, initial_distribution);
           useful::read(input, surface_concentration);
           rate_constant = params_transport.lengthscale*damkohler/
-          (surface_concentration*params_transport.diffusion_time);
+            (surface_concentration*params_transport.diffusion_time);
           reaction_time = params_transport.diffusion_time/damkohler;
           input.close();
         }
@@ -1385,7 +1411,6 @@ namespace ptof
         std::string peclet_option;
         std::string lengthscale_option;
         std::string primitive_cell_location_option;
-        double radius;
         double lengthscale;
         double peclet;
         double diff_coeff;
@@ -1397,15 +1422,18 @@ namespace ptof
         std::vector<std::pair<double, double>> primitive_cell_boundaries;
         double advection_time;
         
-        Parameters(Directories const& directories, std::string const& name)
+        template <typename Geometry>
+        Parameters
+        (Directories const& directories,
+         std::string const& name,
+         Geometry const& geometry)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
           useful::read(input, peclet_option);
           useful::read(input, lengthscale_option);
-          useful::read(input, primitive_cell_location_option);
-          useful::read(input, radius);
+          double radius = geometry.radius;
           cell_side = 4./std::sqrt(3.)*radius;
           if (lengthscale_option == "radius")
             lengthscale = radius;
@@ -1461,16 +1489,6 @@ namespace ptof
           else
             throw std::runtime_error{ "Peclet number setting option "
               + peclet_option
-              + " not supported" };
-          if (primitive_cell_location_option == "centered")
-            primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>(3, { -cell_side/2., cell_side/2. });
-          else if (primitive_cell_location_option == "corner")
-            primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>(3, { 0., cell_side });
-          else
-            throw std::runtime_error{ "Primitive cell location option "
-              + primitive_cell_location_option
               + " not supported" };
           input.close();
         }
@@ -1531,10 +1549,6 @@ namespace ptof
           "\tdiameter: bead diameter\n"
           "\tcell_side: primitive cubic cell side\n"
           "\tcustom: custom value\n"
-          "- Location of primitive cell:\n"
-          "\tcentered: Centered at the origin\n"
-          "\tcorner: Left bottom corner at the origin\n"
-          "- Bead radius\n"
           "- Reference length scale value (pass only if reference lengthscale is custom)\n"
           "- Peclet number (do not pass if Peclet option is compute_from_diff_coeff or compute_from_diff_time)\n"
           "- Mean flow velocity (pass only if Peclet option is rescale_velocity_to_mean)\n"
@@ -1674,7 +1688,6 @@ namespace ptof
         std::string rescale_velocity_option;
         std::string lengthscale_option;
         std::string primitive_cell_location_option;
-        double radius;
         double lengthscale;
         const double diff_coeff{ 0. };
         const double diffusion_time { std::numeric_limits<double>::infinity() };
@@ -1686,15 +1699,18 @@ namespace ptof
         std::vector<std::pair<double, double>> primitive_cell_boundaries;
         double advection_time;
         
-        Parameters(Directories const& directories, std::string const& name)
+        template <typename Geometry>
+        Parameters
+        (Directories const& directories,
+         std::string const& name,
+         Geometry const& geometry)
         {
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
           useful::read(input, rescale_velocity_option);
           useful::read(input, lengthscale_option);
-          useful::read(input, primitive_cell_location_option);
-          useful::read(input, radius);
+          double radius;
           cell_side = 4./std::sqrt(3.)*radius;
           if (lengthscale_option == "radius")
             lengthscale = radius;
@@ -1723,16 +1739,6 @@ namespace ptof
           else
             throw std::runtime_error{ "Flow velocity field rescaling option "
               + rescale_velocity_option
-              + " not supported" };
-          if (primitive_cell_location_option == "centered")
-            primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>(3, { -cell_side/2., cell_side/2. });
-          else if (primitive_cell_location_option == "corner")
-            primitive_cell_boundaries
-              = std::vector<std::pair<double, double>>(3, { 0., cell_side });
-          else
-            throw std::runtime_error{ "Primitive cell location option "
-              + primitive_cell_location_option
               + " not supported" };
           input.close();
         }
@@ -1779,10 +1785,6 @@ namespace ptof
           "\tdiameter: bead diameter\n"
           "\tcell_side: primitive cubic cell side\n"
           "\tcustom: custom value\n"
-          "- Location of primitive cell:\n"
-          "\tcentered: Centered at the origin\n"
-          "\tcorner: Left bottom corner at the origin\n"
-          "- Bead radius\n"
           "- Reference length scale value (pass only if reference lengthscale is custom)\n"
           "- Peclet number (do not pass if Peclet option is compute_from_diff_coeff or compute_from_diff_time)\n"
           "- Mean flow velocity (pass only if rescaling with rescale_velocity_to_mean)\n"

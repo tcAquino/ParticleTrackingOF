@@ -189,8 +189,8 @@ namespace ptof
         _params_solvers.local_time_step_react*local_reaction_time }),
                                   std::min({
         _params_solvers.global_time_step_adv*_params_transport.advection_time,
-        _params_solvers.global_time_step_adv*_params_transport.diffusion_time,
-        _params_solvers.global_time_step_adv*_params_reaction.reaction_time }));
+        _params_solvers.global_time_step_diff*_params_transport.diffusion_time,
+        _params_solvers.global_time_step_react*_params_reaction.reaction_time }));
       
       if constexpr (useful::has_time_step_setter<TimeGenerator>::value)
         time_generator.time_step(time_step);

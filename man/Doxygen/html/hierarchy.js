@@ -90,6 +90,7 @@ var hierarchy =
     [ "useful::has_time_step_getter< T >", "dc/d7c/structuseful_1_1has__time__step__getter.html", null ],
     [ "useful::has_time_step_setter< T >", "d5/d31/structuseful_1_1has__time__step__setter.html", null ],
     [ "useful::has_value_type< T >", "d3/d44/classuseful_1_1has__value__type.html", null ],
+    [ "useful::has_velocity_rescaling_factor< T >", "d7/d02/structuseful_1_1has__velocity__rescaling__factor.html", null ],
     [ "useful::hash_container< Container >", "d4/de0/structuseful_1_1hash__container.html", null ],
     [ "useful::hash_pair< S, T >", "dc/d50/structuseful_1_1hash__pair.html", null ],
     [ "useful::indices< Indices >", "d1/d28/structuseful_1_1indices.html", null ],

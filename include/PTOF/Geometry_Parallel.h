@@ -50,14 +50,11 @@ namespace ptof
      \param directories_of OpenFOAM case directory information.
      \param directories Current case directory information.
      \param num_threads Number of parallel threads.
-     \param parameters Additional parameters (unused).
      */
-    template <typename Parameters>
     Geometry_Parallel
     (DirectoriesOF const& directories_of,
      Directories const& directories,
-     std::size_t num_threads,
-     Parameters const& parameters = useful::Empty{})
+     std::size_t num_threads)
     : _meshes(make_meshes(directories_of, num_threads))
     , _mesh_searches(make_mesh_searches(directories_of, num_threads))
     , locator{ _mesh_searches }
@@ -74,7 +71,7 @@ namespace ptof
       \param params_reaction Reaction parameters.
       \param params_solvers Solver parameters.
       \param surface_reaction Surface reaction.
-      \param parameters Additional parameters (unused).
+      \param initial_condition Initial condition object for reinjection (for FPT dynamics).
       \return Boundary object.
      */
     template
@@ -82,18 +79,31 @@ namespace ptof
     typename ReactionParameters,
     typename SolverParameters,
     typename SurfaceReaction,
-    typename Parameters = useful::Empty>
+    typename InitialCondition = useful::Empty>
     auto makeBoundary
     (Directories const& directories,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      SurfaceReaction&& surface_reaction,
-     Parameters&& parameters = {}) const
+     InitialCondition&& initial_condition = {}) const
     {
+      auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
+      for (auto const& bc : boundary_conditions)
+        if (bc.second == "periodic")
+          throw std::runtime_error{
+            "Boundary conditions of type periodic not supported by Geometry type" };
+      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+        for (auto const& bc : boundary_conditions)
+          if (bc.second == "custom")
+            throw std::runtime_error{
+              std::string{ "Boundary conditions of type custom not supported for " }
+              + BoundaryConditionSet::name(dynamics)
+              + " dynamics" };
+      
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
-          get_boundary_conditions<dynamics>(directories),
+          boundary_conditions,
           locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
@@ -101,11 +111,11 @@ namespace ptof
           std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
-          get_boundary_conditions<dynamics>(directories),
+          boundary_conditions,
           locator,
           BoundaryInfo{},
           Boundary_DoNothing{},
-          Boundary_Reinject{ parameters } };
+          Boundary_Reinject{ std::forward<InitialCondition>(initial_condition) } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
           + BoundaryConditionSet::name(dynamics)
@@ -128,14 +138,12 @@ namespace ptof
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
         "\treacting_reflecting: Reflection and surface reaction\n"
-        "\tperiodic: No effect\n"
         "\tabsorbing: Absorbing\n"
         "\tinfo: Information upon crossing\n"
         "\tcustom: ";
-      output <<
-        (BoundaryConditionSet::name(dynamics) == "transport"
-         ? "No effect\n"
-         : "Reinject according to initial condition\n");
+      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+        output <<
+          "\tcustom: Reinject according to initial condition\n";
       output <<
         "\tempty: No effect (default for unspecified patches in mesh)\n"
         "--------------------------------------------------\n";
@@ -229,14 +237,11 @@ namespace ptof
      \param directories_of OpenFOAM case directory information.
      \param directories Current case directory information.
      \param num_threads Number of parallel threads.
-     \param parameters Additional parameters (unused)
     */
-    template <typename Parameters>
     Geometry_Periodic_Cartesian_Parallel
     (DirectoriesOF const& directories_of,
      Directories const& directories,
-     std::size_t num_threads,
-     Parameters const& parameters = useful::Empty{})
+     std::size_t num_threads)
     : _meshes{ make_meshes(directories_of, num_threads) }
     , _mesh_searches{ make_mesh_searches(directories_of, num_threads) }
     , locator{ _mesh_searches }
@@ -250,26 +255,34 @@ namespace ptof
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
      \param surface_reaction Surface reaction.
-     \param parameters Additional parameters (initial condition object for reinjection).
-     \return Boundary object.
-    */
+     \param initial_condition Initial condition object for reinjection (for FPT dynamics).
+     \return Boundary object. */
     template
     <typename TransportParameters,
     typename ReactionParameters,
     typename SolverParameters,
     typename SurfaceReaction,
-    typename Parameters = useful::Empty>
+    typename InitialCondition = useful::Empty>
     auto makeBoundary
     (Directories const& directories,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      SurfaceReaction&& surface_reaction,
-     Parameters&& parameters = {}) const
+     InitialCondition&& initial_condition = {}) const
     {
+      auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
+      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+        for (auto const& bc : boundary_conditions)
+          if (bc.second == "custom")
+            throw std::runtime_error{
+              std::string{ "Boundary conditions of type custom not supported for " }
+              + BoundaryConditionSet::name(dynamics)
+              + " dynamics" };
+      
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
-          get_boundary_conditions<dynamics>(directories),
+          boundary_conditions,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
@@ -279,13 +292,13 @@ namespace ptof
           std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
-          get_boundary_conditions<dynamics>(directories),
+          boundary_conditions,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
             locator },
-          Boundary_Reinject{ parameters } };
+          Boundary_Reinject{ std::forward<InitialCondition>(initial_condition) } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
           + BoundaryConditionSet::name(dynamics)
@@ -308,12 +321,10 @@ namespace ptof
         "\tperiodic: Cartesian periodic, position extracted from mesh\n";
       output <<
         "\tabsorbing: Absorbing\n"
-        "\tinfo: Information upon crossing\n"
-        "\tcustom: ";
-      output <<
-        (BoundaryConditionSet::name(dynamics) == "transport"
-         ? "No effect\n"
-         : "Reinject according to initial condition\n");
+        "\tinfo: Information upon crossing\n";
+      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+        output <<
+          "\tcustom: Reinject according to initial condition\n";
       output <<
         "\tempty: No effect (default for unspecified patches in mesh)\n"
       "--------------------------------------------------\n";
@@ -373,8 +384,7 @@ namespace ptof
     Boundary_Periodic makeboundary_periodic
     (Directories const& directories)
     {
-      auto boundary_conditions =
-        get_boundary_conditions<dynamics>(directories);
+      auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
       
       std::vector<std::vector<double>> boundaries_dim(dim);
       for (auto const& bc : boundary_conditions)
@@ -530,21 +540,22 @@ namespace ptof
      \param directories_of OpenFOAM case directory information.
      \param directories Current case directory information.
      \param num_threads Number of parallel threads.
-     \param parameters Additional parameters for periodic boundary.
      */
-    template <typename Parameters>
     Geometry_Bcc_Parallel
     (DirectoriesOF const& directories_of,
      Directories const& directories,
-     std::size_t num_threads,
-     Parameters const& parameters)
+     std::size_t num_threads)
     : _meshes(make_meshes(directories_of, num_threads))
     , _mesh_searches(make_mesh_searches(directories_of, num_threads))
     , locator{ _mesh_searches }
+    , radius{
+      std::is_same_v<periodicity_type, BoundaryConditionSet::Type::cartesian>
+      ? std::pow(sum(mesh().V())/(1.-std::sqrt(3.)*constants::pi/8.), 1./3.)*std::sqrt(3.)/4.
+      : 1. }
     , boundary_periodic{ makeboundary_periodic(useful::Selector<
                                                BoundaryConditionSet::Type,
                                                periodicity_type>{},
-                                               parameters) }
+                                               directories) }
     {}
     
     /**
@@ -557,24 +568,33 @@ namespace ptof
       \param params_reaction Reaction parameters.
       \param params_solvers Solver parameters.
       \param surface_reaction Surface reaction.
-      \param parameters Additional parameters (initial condition object for reinjection). */
+      \param initial_condition Initial condition object for reinjection (for FPT dynamics). */
     template
     <typename TransportParameters,
     typename ReactionParameters,
     typename SolverParameters,
     typename SurfaceReaction,
-    typename Parameters = useful::Empty>
+    typename InitialCondition = useful::Empty>
     auto makeBoundary
     (Directories const& directories,
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers,
      SurfaceReaction&& surface_reaction,
-     Parameters&& parameters = {}) const
+     InitialCondition&& initial_condition = {}) const
     {
+      auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
+      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+        for (auto const& bc : boundary_conditions)
+          if (bc.second == "custom")
+            throw std::runtime_error{
+              std::string{ "Boundary conditions of type custom not supported for " }
+              + BoundaryConditionSet::name(dynamics)
+              + " dynamics" };
+      
       if constexpr (dynamics == BoundaryConditionSet::Type::transport)
         return ptof::Boundary_Cases{
-          get_boundary_conditions<dynamics>(directories),
+          boundary_conditions,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
@@ -584,13 +604,13 @@ namespace ptof
           std::forward<SurfaceReaction>(surface_reaction) };
       if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
         return ptof::Boundary_Cases{
-          get_boundary_conditions<dynamics>(directories),
+          boundary_conditions,
           locator,
           BoundaryInfo{},
           Boundary_Periodic_OF{
             boundary_periodic,
             locator },
-          Boundary_Reinject{ parameters } };
+          Boundary_Reinject{ std::forward<InitialCondition>(initial_condition) } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
           + BoundaryConditionSet::name(dynamics)
@@ -619,12 +639,10 @@ namespace ptof
          : "Periodic in the minimal unit cell\n");
       output <<
         "\tabsorbing: Absorbing\n"
-        "\tinfo: Information upon crossing\n"
-        "\tcustom: ";
-      output <<
-        (BoundaryConditionSet::name(dynamics) == "transport"
-         ? "No effect\n"
-         : "Reinject according to initial condition\n");
+        "\tinfo: Information upon crossing\n";
+      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
+        output <<
+          "\tcustom: Reinject according to initial condition\n";
       output <<
         "\tempty: No effect (default for unspecified patches in mesh)\n"
       "--------------------------------------------------\n";
@@ -652,47 +670,41 @@ namespace ptof
     { return *_meshes[omp_get_thread_num()]; }
     
   private:
-    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools type. */
+    using MeshSearch = Foam::meshSearch;                      /**< Mesh searching tools type. */
     
     std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh copies needed for parallel searches. */
     std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
     
   public:
+    const double radius;                                      /**< Bead radius. */
     Locator locator;                                          /**< Object to locate positions in mesh. */
     Boundary_Periodic boundary_periodic;                      /**< Boundary object to enforce periodicity.*/
   
   private:
     /**
      \brief Make a boundary object to enforce cartesian periodicity.
-     \param parameters Additional parameters (Should hold primitive_cell_boundaries).
      \return Periodic boundary object.
      */
-    template <typename Parameters>
     Boundary_Periodic makeboundary_periodic
     (useful::Selector<BoundaryConditionSet::Type,
       BoundaryConditionSet::Type::cartesian>,
-      Parameters const& parameters)
+      Directories const& directories)
     {
-      return { parameters.primitive_cell_boundaries };
+      return {
+        extract_cartesian_periodic_boundaries(get_boundary_conditions<dynamics>(directories),
+                                              mesh(),
+                                              dim) };
     };
   
     /**
     \brief Make a boundary object to enforce periodicity based on symmetry planes.
-    \param parameters Additional parameters (Should hold radius and primitive_cell_boundaries).
     \return Periodic boundary object.
     */
-    template <typename Parameters>
     Boundary_Periodic makeboundary_periodic
     (useful::Selector<BoundaryConditionSet::Type,
       BoundaryConditionSet::Type::symmetryplanes>,
-     Parameters const& parameters)
-    {
-      std::vector<double> midpoint;
-      for (auto const& boundary
-           : parameters.primitive_cell_boundaries)
-        midpoint.push_back( (boundary.first + boundary.second)/2. );
-      return { parameters.radius, midpoint };
-    }
+     Directories const& directories)
+    { return { radius }; }
     
     std::vector<std::unique_ptr<Mesh>> make_meshes
     (DirectoriesOF const& directories_of, std::size_t num_threads)

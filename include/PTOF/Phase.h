@@ -39,8 +39,10 @@ namespace ptof
        \param directories Current case directory information.
        \param name Name of phase parameters set.
       */
+      template <typename Geometry>
       Parameters
-      (Directories const& directories, std::string const& name)
+      (Directories const& directories, std::string const& name,
+       Geometry const& geometry)
       {
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_phase_"

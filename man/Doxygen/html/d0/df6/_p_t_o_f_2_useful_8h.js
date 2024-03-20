@@ -35,7 +35,7 @@ var _p_t_o_f_2_useful_8h =
     [ "make_point", "d0/df6/_p_t_o_f_2_useful_8h.html#a17099482c96df7b882205c050f9aef1d", null ],
     [ "mass", "d0/df6/_p_t_o_f_2_useful_8h.html#a5bc754535412500a84cc47c7f639cc8e", null ],
     [ "mass", "d0/df6/_p_t_o_f_2_useful_8h.html#a950144e4aefb73500b9d2b357f6f5b66", null ],
-    [ "nr_absorbed", "d0/df6/_p_t_o_f_2_useful_8h.html#a264ecbd1aed23f45f0d73deb284775ea", null ],
+    [ "nr_absorbed", "d0/df6/_p_t_o_f_2_useful_8h.html#a264d1e003d2d971ee7b42743e8db9fa8", null ],
     [ "offset_backward_cell", "d0/df6/_p_t_o_f_2_useful_8h.html#aa74dcf8fcf3cb084637b7f209ff24fc4", null ],
     [ "offset_backward_cell_keep_inside", "d0/df6/_p_t_o_f_2_useful_8h.html#a403f2134a620767dd025954e733b68c5", null ],
     [ "offset_backward_face", "d0/df6/_p_t_o_f_2_useful_8h.html#a1a70e9f5db937c669e3accf8b457f995", null ],

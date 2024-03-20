@@ -497,7 +497,7 @@ namespace ptof
    - info.asorbed [std::size_t]
    - time */
   template <typename Subject>
-  auto nr_absorbed
+  std::size_t nr_absorbed
   (Subject const& subject, double time)
   {
     std::size_t absorbed = 0;
@@ -772,8 +772,6 @@ namespace ptof
                       params_output_name)
       + "_RUN_" + std::to_string(run_nr);
   }
-  
-                         
 }
 
 #endif /* PTOF_USEFUL_H */

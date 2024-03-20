@@ -121,14 +121,13 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad09a0f7110b66d0287178cc551bd7776"><td class="memTemplParams" colspan="2">template&lt;typename Parameters &gt; </td></tr>
-<tr class="memitem:ad09a0f7110b66d0287178cc551bd7776"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#ad09a0f7110b66d0287178cc551bd7776">Geometry</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;parameters=<a class="el" href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a>{})</td></tr>
-<tr class="memdesc:ad09a0f7110b66d0287178cc551bd7776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../dc/d30/structptof_1_1_geometry.html#ad09a0f7110b66d0287178cc551bd7776">More...</a><br /></td></tr>
-<tr class="separator:ad09a0f7110b66d0287178cc551bd7776"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0bbc744190b579fca13f55a1be68493"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename Parameters  = useful::Empty&gt; </td></tr>
-<tr class="memitem:ab0bbc744190b579fca13f55a1be68493"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#ab0bbc744190b579fca13f55a1be68493">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> &amp;&amp;parameters={}) const</td></tr>
-<tr class="memdesc:ab0bbc744190b579fca13f55a1be68493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics.  <a href="../../dc/d30/structptof_1_1_geometry.html#ab0bbc744190b579fca13f55a1be68493">More...</a><br /></td></tr>
-<tr class="separator:ab0bbc744190b579fca13f55a1be68493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1962bcf0640175672f210b1b53543007"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a1962bcf0640175672f210b1b53543007">Geometry</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
+<tr class="memdesc:a1962bcf0640175672f210b1b53543007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../dc/d30/structptof_1_1_geometry.html#a1962bcf0640175672f210b1b53543007">More...</a><br /></td></tr>
+<tr class="separator:a1962bcf0640175672f210b1b53543007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45b73340fea58de4ec45d37416ba01a7"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
+<tr class="memitem:a45b73340fea58de4ec45d37416ba01a7"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a45b73340fea58de4ec45d37416ba01a7">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, InitialCondition &amp;&amp;initial_condition={}) const</td></tr>
+<tr class="memdesc:a45b73340fea58de4ec45d37416ba01a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics.  <a href="../../dc/d30/structptof_1_1_geometry.html#a45b73340fea58de4ec45d37416ba01a7">More...</a><br /></td></tr>
+<tr class="separator:a45b73340fea58de4ec45d37416ba01a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec99b2741cc963798f183184e05f20a"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:aaec99b2741cc963798f183184e05f20a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#aaec99b2741cc963798f183184e05f20a">info_runtime</a> (OStream &amp;output) const</td></tr>
 <tr class="memdesc:aaec99b2741cc963798f183184e05f20a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../dc/d30/structptof_1_1_geometry.html#aaec99b2741cc963798f183184e05f20a">More...</a><br /></td></tr>
@@ -161,10 +160,11 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a9a14bf698e69de6ee8902e60ff5117ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
+<div class="textblock"><h3>template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
 class ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</h3>
 
 <p>Basic geometry class. </p>
+<dl class="section note"><dt>Note</dt><dd>Does not handle periodic boundaries. </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a7ac0160fc627140fb7f0ac1d90ab519e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ac0160fc627140fb7f0ac1d90ab519e">&#9670;&nbsp;</a></span>BoundaryInfo</h2>
@@ -172,7 +172,7 @@ class ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</h3>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7ac0160fc627140fb7f0ac1d90ab519e">BoundaryInfo</a> =  std::conditional_t&lt; dynamics == <a class="el" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#aca3e35639dc3bdb3f5e916623a6d0298a7b334b7260361141659fa9862e803476">BoundaryConditionSet::Type::transport</a>, <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a>, <a class="el" href="../../de/dbb/structptof_1_1_store___absorbed___reinjections.html">Store_Absorbed_Reinjections</a>&gt;</td>
@@ -189,7 +189,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Locator</a> =  <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt;SearchOption&gt;</td>
@@ -206,7 +206,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0">Mesh</a> =  Foam::fvMesh</td>
@@ -223,7 +223,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#aa8ab478b2c30def3fd1c9fabd882c4f4">MeshSearch</a> =  Foam::meshSearch</td>
@@ -235,15 +235,13 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad09a0f7110b66d0287178cc551bd7776"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad09a0f7110b66d0287178cc551bd7776">&#9670;&nbsp;</a></span>Geometry()</h2>
+<a id="a1962bcf0640175672f210b1b53543007"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1962bcf0640175672f210b1b53543007">&#9670;&nbsp;</a></span>Geometry()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
-<div class="memtemplate">
-template&lt;typename Parameters &gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -258,13 +256,7 @@ template&lt;typename Parameters &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directories</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>parameters</em> = <code><a class="el" href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a>{}</code>&#160;</td>
+          <td class="paramname"><em>directories</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -284,7 +276,6 @@ template&lt;typename Parameters &gt; </div>
   <table class="params">
     <tr><td class="paramname">directories_of</td><td>OpenFOAM case directory information. </td></tr>
     <tr><td class="paramname">directories</td><td>Current case directory information. </td></tr>
-    <tr><td class="paramname">parameters</td><td>Additional parameters (unused). </td></tr>
   </table>
   </dd>
 </dl>
@@ -298,7 +289,7 @@ template&lt;typename Parameters &gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -346,7 +337,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -381,15 +372,15 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="ab0bbc744190b579fca13f55a1be68493"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0bbc744190b579fca13f55a1be68493">&#9670;&nbsp;</a></span>makeBoundary()</h2>
+<a id="a45b73340fea58de4ec45d37416ba01a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45b73340fea58de4ec45d37416ba01a7">&#9670;&nbsp;</a></span>makeBoundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
-template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename Parameters  = useful::Empty&gt; </div>
+template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -427,8 +418,8 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>parameters</em> = <code>{}</code>&#160;</td>
+          <td class="paramtype">InitialCondition &amp;&amp;&#160;</td>
+          <td class="paramname"><em>initial_condition</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -454,7 +445,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
     <tr><td class="paramname">params_reaction</td><td>Reaction parameters. </td></tr>
     <tr><td class="paramname">params_solvers</td><td>Solver parameters. </td></tr>
     <tr><td class="paramname">surface_reaction</td><td>Surface reaction. </td></tr>
-    <tr><td class="paramname">parameters</td><td>Additional parameters (unused). </td></tr>
+    <tr><td class="paramname">initial_condition</td><td>Initial condition object for reinjection (for FPT dynamics). </td></tr>
   </table>
   </dd>
 </dl>
@@ -470,7 +461,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -510,7 +501,7 @@ Here is the caller graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -535,7 +526,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -560,7 +551,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -585,7 +576,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Locator</a> <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::locator { <a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a9a14bf698e69de6ee8902e60ff5117ad">_mesh_search</a> }</td>

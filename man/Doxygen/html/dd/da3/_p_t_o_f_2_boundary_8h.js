@@ -15,6 +15,7 @@ var _p_t_o_f_2_boundary_8h =
     [ "Boundary_Periodic_OF", "dd/da3/_p_t_o_f_2_boundary_8h.html#a61fd22c5ac4850a20228eed71c2b8022", null ],
     [ "boundary_reflecting", "dd/da3/_p_t_o_f_2_boundary_8h.html#af894073228a9ff955cee4a2de71ba6c3", null ],
     [ "Boundary_Reinject", "dd/da3/_p_t_o_f_2_boundary_8h.html#a19481e160a937a8e4e42c74d4397554d", null ],
+    [ "extract_cartesian_periodic_boundaries", "dd/da3/_p_t_o_f_2_boundary_8h.html#a46aa74cea53512de3676e0154da276f8", null ],
     [ "get_boundary_conditions", "dd/da3/_p_t_o_f_2_boundary_8h.html#a2640ab9f6140f04493af1a5f46c01825", null ],
     [ "periodic_intersection", "dd/da3/_p_t_o_f_2_boundary_8h.html#a4a979c6dbff09b46400fc4854dc2d048", null ],
     [ "verify_boundary_conditions", "dd/da3/_p_t_o_f_2_boundary_8h.html#a5b717e763775a18552b8633a02ee22dc", null ]

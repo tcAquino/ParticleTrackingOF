@@ -1,10 +1,9 @@
 var structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters =
 [
-    [ "Parameters", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#aca24a5d29b671cb87b00e0f97ab79635", null ],
+    [ "Parameters", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a561415515e0b2e5adf3367b7e0f43df7", null ],
     [ "info", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a244f0ab854672e1a204dc8c18d949386", null ],
     [ "distance_wall", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a27d673c08948ddf9c3624fc2608dd374", null ],
     [ "initial_mass", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a05e2b1c8d9b38fb5377a2414077c3c55", null ],
-    [ "nr_particles", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a19595e39396d4ec12a161359313a372e", null ],
     [ "position_data", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a2212de5b77b4d2323595e0b290fa38be", null ],
     [ "region_boundaries", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a4d63edb4855171c8fbde6b42b58f641b", null ],
     [ "time_max", "dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#ad65fad3064f98e31951121a29ccbf558", null ],

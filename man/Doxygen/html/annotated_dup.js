@@ -350,7 +350,8 @@ var annotated_dup =
       [ "has_time_step_setter", "d5/d31/structuseful_1_1has__time__step__setter.html", "d5/d31/structuseful_1_1has__time__step__setter" ],
       [ "has_time_step_getter", "dc/d7c/structuseful_1_1has__time__step__getter.html", "dc/d7c/structuseful_1_1has__time__step__getter" ],
       [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ],
-      [ "has_periodicity", "dd/d08/structuseful_1_1has__periodicity.html", "dd/d08/structuseful_1_1has__periodicity" ]
+      [ "has_periodicity", "dd/d08/structuseful_1_1has__periodicity.html", "dd/d08/structuseful_1_1has__periodicity" ],
+      [ "has_velocity_rescaling_factor", "d7/d02/structuseful_1_1has__velocity__rescaling__factor.html", "d7/d02/structuseful_1_1has__velocity__rescaling__factor" ]
     ] ],
     [ "Check", "d2/df7/struct_check_options_1_1_check.html", null ],
     [ "has_periodicidity", "d5/d14/classhas__periodicidity.html", null ],

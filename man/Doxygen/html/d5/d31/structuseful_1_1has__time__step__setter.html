@@ -91,10 +91,10 @@ $(document).ready(function(){initNavTree('d5/d31/structuseful_1_1has__time__step
 </div><!--header-->
 <div class="contents">
 
-<p>Check if type T has member function void time_step(double).  
+<p>Check if type T has member function <code>void time_step(double)</code>.  
  <a href="../../d5/d31/structuseful_1_1has__time__step__setter.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d9/d18/_general_2_useful_8h_source.html">General/Useful.h</a>&quot;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d9/d18/_general_2_useful_8h_source.html">Useful.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -120,7 +120,7 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
 class useful::has_time_step_setter&lt; T &gt;</h3>
 
-<p>Check if type T has member function void time_step(double). </p>
+<p>Check if type T has member function <code>void time_step(double)</code>. </p>
 <p>Adapted from kispaljr's answer here: <a href="https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function">https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function</a> . </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a45c5a293114ffa0e0fac52bcc365c3a9"></a>
@@ -255,7 +255,7 @@ template&lt;typename T &gt; </div>
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
 <div class="line">        <span class="keyword">sizeof</span>(<a class="code" href="../../d5/d31/structuseful_1_1has__time__step__setter.html#a7c257d3f72ed2d010051a793d373e1a8">Yes</a>) ==</div>
 <div class="line">          <span class="keyword">sizeof</span>(<a class="code" href="../../d5/d31/structuseful_1_1has__time__step__setter.html#ad943a5b5bdccae0218164551d32473bc">has_time_step_setter::test</a>((<span class="keyword">typename</span> std::remove_reference&lt;T&gt;::type*)0))</div>
-<div class="ttc" id="astructuseful_1_1has__time__step__setter_html_a7c257d3f72ed2d010051a793d373e1a8"><div class="ttname"><a href="../../d5/d31/structuseful_1_1has__time__step__setter.html#a7c257d3f72ed2d010051a793d373e1a8">useful::has_time_step_setter::Yes</a></div><div class="ttdeci">char(&amp; Yes)[1]</div><div class="ttdef"><b>Definition:</b> Useful.h:1025</div></div>
+<div class="ttc" id="astructuseful_1_1has__time__step__setter_html_a7c257d3f72ed2d010051a793d373e1a8"><div class="ttname"><a href="../../d5/d31/structuseful_1_1has__time__step__setter.html#a7c257d3f72ed2d010051a793d373e1a8">useful::has_time_step_setter::Yes</a></div><div class="ttdeci">char(&amp; Yes)[1]</div><div class="ttdef"><b>Definition:</b> Useful.h:1062</div></div>
 <div class="ttc" id="astructuseful_1_1has__time__step__setter_html_ad943a5b5bdccae0218164551d32473bc"><div class="ttname"><a href="../../d5/d31/structuseful_1_1has__time__step__setter.html#ad943a5b5bdccae0218164551d32473bc">useful::has_time_step_setter::test</a></div><div class="ttdeci">static Yes test(U *data, typename std::enable_if&lt; std::is_void&lt; decltype(data-&gt;time_step(0.))&gt;::value &gt;::type *=0)</div></div>
 </div><!-- fragment -->
 </div>
