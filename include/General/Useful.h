@@ -619,7 +619,7 @@ namespace useful
       struct Two { char a[2]; };
 
       template <class U>
-      static One foo(typename U::type*);
+      static One foo(typename U::value_type*);
 
       template <class U>
       static Two foo(...);

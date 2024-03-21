@@ -115,7 +115,7 @@ namespace ptof
   struct State3D
   {
     // Typedefs for state quantities
-    using Position = Foam::vector;
+    using Position = Foam::point;
     using Index = Foam::label;
     using Time = Time_t;
     using Mass = Mass_t;
@@ -383,7 +383,7 @@ namespace ptof
   struct State3D_Periodic
   {
     // Typedefs for state quantities
-    using Position = Foam::vector;
+    using Position = Foam::point;
     using Periodicity = std::vector<int>;
     using Index = Foam::label;
     using Info = Info_t;

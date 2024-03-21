@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <fieldTypes.H>
 #include "CTRW/StateGetter.h"
+#include "General/Operations.h"
 #include "General/Useful.h"
 
 namespace ptof
@@ -729,10 +730,10 @@ namespace ptof
    GetterPosition getter_position = {})
   {
     auto position_mean_sq = position_mean(subject, time, getter_position);
-    for (std::size_t dd = 0; dd < position_mean_sq.size(); ++dd)
-      position_mean_sq[dd] *= position_mean_sq[dd];
-    return (position_second_moment(subject, time, getter_position)-
-              position_mean_sq)/mass(subject, time);
+    operation::times_InPlace(position_mean_sq, position_mean_sq);
+    auto total_mass = mass(subject, time);
+    return (position_second_moment(subject, time, getter_position)
+            - position_mean_sq/total_mass) / total_mass;
   };
   
   /** \brief Output time information.

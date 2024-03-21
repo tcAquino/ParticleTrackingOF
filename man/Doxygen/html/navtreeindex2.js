@@ -210,7 +210,7 @@ var NAVTREEINDEX2 =
 "d3/d42/structuseful_1_1_selector__t.html":[7,0,4,19],
 "d3/d44/classuseful_1_1has__value__type.html":[7,0,4,8],
 "d3/d44/classuseful_1_1has__value__type.html#a886b8b2171ec986165a568c0c2e25c06":[7,0,4,8,4],
-"d3/d44/classuseful_1_1has__value__type.html#a8c1a651820c63d38fd154c19a9f9ce6a":[7,0,4,8,3],
+"d3/d44/classuseful_1_1has__value__type.html#a932c6cb8ddae6e84885a875f8fc39762":[7,0,4,8,3],
 "d3/d44/classuseful_1_1has__value__type.html#ab3d9d6c46a26a73405c08250bb9fb851":[7,0,4,8,2],
 "d3/d4c/classctrw_1_1_jump_generator___velocity.html":[7,0,0,4],
 "d3/d4c/classctrw_1_1_jump_generator___velocity.html#a02389b8bfba92d1080e3b20a4c1772e0":[7,0,0,4,4],
