@@ -1,9 +1,5 @@
 var NAVTREEINDEX5 =
 {
-"d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model.html#aa40e130d454a13bcec28cc3d97e75636":[7,0,2,19,0,0],
-"d6/d56/classctrw_1_1_transitions___run_and_tumble.html":[7,0,0,60],
-"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a048ac1851d22d92f4bafd6357285d1c9":[7,0,0,60,8],
-"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a0e3b237864a2cc8f7763c1dcdee680ab":[7,0,0,60,5],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a12154aa2d380ea619148e4087a3c658f":[7,0,0,60,3],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a1a2e1fea4ee29fd4cba78fdad02a43de":[7,0,0,60,4],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a2ebfb7d0887aa483649673f6face5495":[7,0,0,60,7],
@@ -227,6 +223,10 @@ var NAVTREEINDEX5 =
 "d7/da1/struct_output___cases_1_1_output__velocity.html":[7,0,27],
 "d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html":[6,0,6,20],
 "d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a114c4fea1d5c1dd273c83244333baee7":[6,0,6,20,1],
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html":[7,0,2,81],
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#a507eafb2d8ca96d747e3ac296abf2954":[7,0,2,81,2],
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#a881c85fe07b4acf97e4a669166eb8ebe":[7,0,2,81,1],
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#af99a9c763c1710f5ee9ec831d0cc958e":[7,0,2,81,0],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html":[6,0,6,42],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html#a70cfcc46bbb4e5b7b7cf79978656e1e0":[6,0,6,42,3],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html#a7681aad81b66c91dbba3d2f932df2cf2":[6,0,6,42,1],

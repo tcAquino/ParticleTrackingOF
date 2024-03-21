@@ -81,7 +81,7 @@ var namespaceptof =
     [ "Criterion_mass_above", "d0/d36/structptof_1_1_criterion__mass__above.html", "d0/d36/structptof_1_1_criterion__mass__above" ],
     [ "Criterion_all_absorbed", "da/d25/structptof_1_1_criterion__all__absorbed.html", "da/d25/structptof_1_1_criterion__all__absorbed" ],
     [ "Criterion_one_absorbed", "dc/df3/structptof_1_1_criterion__one__absorbed.html", "dc/df3/structptof_1_1_criterion__one__absorbed" ],
-    [ "Criterion_fraction_absorbed", "d4/d26/structptof_1_1_criterion__fraction__absorbed.html", "d4/d26/structptof_1_1_criterion__fraction__absorbed" ],
+    [ "Criterion_fraction_not_absorbed", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed" ],
     [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
     [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
     [ "ParticleMaker", "da/dae/structptof_1_1_particle_maker.html", "da/dae/structptof_1_1_particle_maker" ],

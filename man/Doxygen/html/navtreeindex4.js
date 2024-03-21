@@ -1,9 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"d5/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_model.html#a181faf985157d89566c59fd569bd261e":[7,0,2,38,0,0],
-"d5/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_model.html#a2df3157cdd955b680a83c441b201d75c":[7,0,2,38,0,1],
-"d5/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_model.html#a4faa401dce8f48f8c9f2dccb4c35128a":[7,0,2,38,0,2],
-"d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance.html":[7,0,2,83,15],
 "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance.html#a15ba20aaf9d476817a2147dc5e60a043":[7,0,2,83,15,4],
 "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance.html#a16b196e928656e040bdaf40436404afb":[7,0,2,83,15,8],
 "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance.html#a2aabb511b5ba2560616c9ef8fee5bfa7":[7,0,2,83,15,0],
@@ -249,5 +245,9 @@ var NAVTREEINDEX4 =
 "d6/d50/structptof_1_1model__advection__3d__parallel_1_1_model.html#aaab0bca95c2b6cd5734b289fab03c44a":[7,0,2,3,0,1],
 "d6/d50/structptof_1_1model__advection__3d__parallel_1_1_model.html#ae9fbf678580d5d163d315ce369313240":[7,0,2,3,0,0],
 "d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model.html":[7,0,2,19,0],
-"d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model.html#a39e2cbddb4ea9c38fc607637229ba73f":[7,0,2,19,0,1]
+"d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model.html#a39e2cbddb4ea9c38fc607637229ba73f":[7,0,2,19,0,1],
+"d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model.html#aa40e130d454a13bcec28cc3d97e75636":[7,0,2,19,0,0],
+"d6/d56/classctrw_1_1_transitions___run_and_tumble.html":[7,0,0,60],
+"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a048ac1851d22d92f4bafd6357285d1c9":[7,0,0,60,8],
+"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a0e3b237864a2cc8f7763c1dcdee680ab":[7,0,0,60,5]
 };

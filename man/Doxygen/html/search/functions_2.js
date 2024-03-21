@@ -23,7 +23,7 @@ var searchData=
   ['create_1331',['create',['../df/d1d/namespaceuseful.html#ad7eec99e483d55ef2b707ced08a4b366',1,'useful']]],
   ['criterion_1332',['Criterion',['../d9/d13/structptof_1_1_criterion.html#a33547a6b6d68a2822eca409477186259',1,'ptof::Criterion']]],
   ['criterion_5fall_5fabsorbed_1333',['Criterion_all_absorbed',['../da/d25/structptof_1_1_criterion__all__absorbed.html#a2b5dd68709c13363cd262b321a094bc7',1,'ptof::Criterion_all_absorbed']]],
-  ['criterion_5ffraction_5fabsorbed_1334',['Criterion_fraction_absorbed',['../d4/d26/structptof_1_1_criterion__fraction__absorbed.html#ad9bf13436d916004e454239b6b213aee',1,'ptof::Criterion_fraction_absorbed']]],
+  ['criterion_5ffraction_5fnot_5fabsorbed_1334',['Criterion_fraction_not_absorbed',['../d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#af99a9c763c1710f5ee9ec831d0cc958e',1,'ptof::Criterion_fraction_not_absorbed']]],
   ['criterion_5fmass_5fabove_1335',['Criterion_mass_above',['../d0/d36/structptof_1_1_criterion__mass__above.html#a69451c9b82f8d9e673c3d4b032fbb3ee',1,'ptof::Criterion_mass_above']]],
   ['criterion_5fmass_5fbelow_1336',['Criterion_mass_below',['../da/df1/structptof_1_1_criterion__mass__below.html#a1195c98a8c49c7d6270719b9ce6b25ce',1,'ptof::Criterion_mass_below']]],
   ['criterion_5fone_5fabsorbed_1337',['Criterion_one_absorbed',['../dc/df3/structptof_1_1_criterion__one__absorbed.html#aecefa90fd21cc7f686d86a3b5eb91bae',1,'ptof::Criterion_one_absorbed']]],

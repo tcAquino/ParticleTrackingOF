@@ -7,7 +7,7 @@ var structptof_1_1_end_criterion =
       [ "mass_above", "dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5ac733bf658f06dfb48fe6b69831e0ed1e", null ],
       [ "all_absorbed", "dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5afd6905cef0f993a6213d32adb502f9ee", null ],
       [ "one_absorbed", "dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5a01d39e365269da0d9f7506b98389c4e7", null ],
-      [ "fraction_absorbed", "dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5aa3c375e95b1b9854147a6e5270fb50b1", null ]
+      [ "fraction_not_absorbed", "dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5a5d3a7064e9f3158a89a58f3568ebf0fd", null ]
     ] ],
     [ "exists", "dd/d0d/structptof_1_1_end_criterion.html#a074d012cd1ab92a5ca6c03f3e3b1017f", null ],
     [ "name", "dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b", null ],

@@ -26,7 +26,7 @@ var hierarchy =
     [ "useful::Creator< T >", "d5/d03/structuseful_1_1_creator.html", null ],
     [ "ptof::Criterion< Subject >", "d9/d13/structptof_1_1_criterion.html", [
       [ "ptof::Criterion_all_absorbed< Subject >", "da/d25/structptof_1_1_criterion__all__absorbed.html", null ],
-      [ "ptof::Criterion_fraction_absorbed< Subject >", "d4/d26/structptof_1_1_criterion__fraction__absorbed.html", null ],
+      [ "ptof::Criterion_fraction_not_absorbed< Subject >", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html", null ],
       [ "ptof::Criterion_mass_above< Subject >", "d0/d36/structptof_1_1_criterion__mass__above.html", null ],
       [ "ptof::Criterion_mass_below< Subject >", "da/df1/structptof_1_1_criterion__mass__below.html", null ],
       [ "ptof::Criterion_one_absorbed< Subject >", "dc/df3/structptof_1_1_criterion__one__absorbed.html", null ],

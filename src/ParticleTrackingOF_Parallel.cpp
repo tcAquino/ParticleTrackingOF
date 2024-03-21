@@ -18,7 +18,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_fpt_2d_parallel;
+  using namespace ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d_parallel;
   
   std::string banner =
     "--------------------------------------------------\n"
@@ -246,23 +246,23 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto measurer = Output::makeOutput(ctrw,
-                                     velocity_field,
-                                     geometry,
-                                     directories,
-                                     params_output,
-                                     ptof::identifier(Model::name,
-                                                      case_name,
-                                                      directories_of.case_name,
-                                                      params_transport_name,
-                                                      params_reaction_name,
-                                                      params_solvers_name,
-                                                      params_initial_condition_name,
-                                                      params_output_name)
-                                     + (useful::is_empty(run_nr)
-                                        ? ""
-                                        : "_RUN_" + run_nr));
-  measurer.info_runtime(std::cout);
+  auto output = Output::makeOutput(ctrw,
+                                   velocity_field,
+                                   geometry,
+                                   directories,
+                                   params_output,
+                                   ptof::identifier(Model::name,
+                                                    case_name,
+                                                    directories_of.case_name,
+                                                    params_transport_name,
+                                                    params_reaction_name,
+                                                    params_solvers_name,
+                                                    params_initial_condition_name,
+                                                    params_output_name)
+                                   + (useful::is_empty(run_nr)
+                                      ? ""
+                                      : "_RUN_" + run_nr));
+  output.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -273,31 +273,31 @@ int main(int argc, char * argv[])
   execution_begin = std::chrono::high_resolution_clock::now();
   double current_time = 0.;
   ptof::info_time(std::cout, params_output, current_time);
-  while (!measurer.done(current_time))
+  while (!output.done(current_time))
   {
-    while (measurer.next_measure_time() <= current_time)
+    while (output.next_measure_time() <= current_time)
     {
       std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, params_output, measurer.next_measure_time());
-      ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
-      measurer(measurer.next_measure_time());
+      ptof::info_time(std::cout, params_output, output.next_measure_time());
+      ptof::info_fraction_not_absorbed(std::cout, ctrw, output.next_measure_time());
+      output(output.next_measure_time());
       std::cout << "Done!\n";
     }
-    current_time = measurer.next_measure_time();
+    current_time = output.next_measure_time();
     ctrw.evolve([current_time](CTRW::Particle const& part)
                 { return part.state_new().time < current_time
                     && !part.state_new().info.absorbed; },
                 transitions);
   }
-  if (measurer.next_measure_time() <= current_time)
+  if (output.next_measure_time() <= current_time)
   {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, params_output, measurer.next_measure_time());
-    ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
-    measurer(measurer.next_measure_time());
+    ptof::info_time(std::cout, params_output, output.next_measure_time());
+    ptof::info_fraction_not_absorbed(std::cout, ctrw, output.next_measure_time());
+    output(output.next_measure_time());
     std::cout << "Done!\n";
   }
-  measurer();
+  output();
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

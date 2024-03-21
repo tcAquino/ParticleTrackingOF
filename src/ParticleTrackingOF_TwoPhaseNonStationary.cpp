@@ -22,7 +22,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_fpt_2d;
+  using namespace ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d;
   using Phase = ptof::Phase;
   
   std::string banner =
@@ -276,26 +276,27 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto measurer = Output::makeOutput(ctrw,
-                                     velocity_field,
-                                     geometry,
-                                     directories,
-                                     params_output,
-                                     ptof::identifier("TwoPhaseNonStationary_" + Model::name,
-                                                      case_name,
-                                                      directories_of.case_name,
-                                                      params_transport_name,
-                                                      params_phase_name,
-                                                      params_reaction_name,
-                                                      params_solvers_name,
-                                                      params_initial_condition_name,
-                                                      params_output_name)
-                                     + (useful::is_empty(run_nr)
-                                        ? ""
-                                        : "_RUN_" + run_nr),
-                                     { std::cref(excluded_phase_field) },
-                                     { 1. - params_phase.phase_threshold });
-  measurer.info_runtime(std::cout);
+  auto output = Output::makeOutput(ctrw,
+                                   velocity_field,
+                                   geometry,
+                                   directories,
+                                   params_output,
+                                   ptof::identifier("TwoPhaseNonStationary_"
+                                                    + Model::name,
+                                                    case_name,
+                                                    directories_of.case_name,
+                                                    params_transport_name,
+                                                    params_phase_name,
+                                                    params_reaction_name,
+                                                    params_solvers_name,
+                                                    params_initial_condition_name,
+                                                    params_output_name)
+                                   + (useful::is_empty(run_nr)
+                                      ? ""
+                                      : "_RUN_" + run_nr),
+                                   { std::cref(excluded_phase_field) },
+                                   { 1. - params_phase.phase_threshold });
+  output.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -322,7 +323,7 @@ int main(int argc, char * argv[])
   double next_flow_time = std::numeric_limits<double>::infinity();
   if (time_index < flow_times.size()-1)
     next_flow_time = flow_times[time_index+1].value();
-  while (!measurer.done(current_time))
+  while (!output.done(current_time))
   {
     if (time_index < flow_times.size()-1)
     {
@@ -358,31 +359,31 @@ int main(int argc, char * argv[])
         std::cout << "Done!\n";
       }
     }
-    while (measurer.next_measure_time() <= current_time)
+    while (output.next_measure_time() <= current_time)
     {
       std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, params_output, measurer.next_measure_time());
-      ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
-      measurer(measurer.next_measure_time());
+      ptof::info_time(std::cout, params_output, output.next_measure_time());
+      ptof::info_fraction_not_absorbed(std::cout, ctrw, output.next_measure_time());
+      output(output.next_measure_time());
       std::cout << "Done!\n";
     }
     current_time = next_flow_time > current_time
-      ? std::min(measurer.next_measure_time(), next_flow_time)
-      : measurer.next_measure_time();
+      ? std::min(output.next_measure_time(), next_flow_time)
+      : output.next_measure_time();
     ctrw.evolve([current_time](CTRW::Particle const& part)
                 { return part.state_new().time < current_time
                     && !part.state_new().info.absorbed; },
                 transitions);
   }
-  if (measurer.next_measure_time() <= current_time)
+  if (output.next_measure_time() <= current_time)
   {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, params_output, measurer.next_measure_time());
-    ptof::info_fraction_not_absorbed(std::cout, ctrw, measurer.next_measure_time());
-    measurer(measurer.next_measure_time());
+    ptof::info_time(std::cout, params_output, output.next_measure_time());
+    ptof::info_fraction_not_absorbed(std::cout, ctrw, output.next_measure_time());
+    output(output.next_measure_time());
     std::cout << "Done!\n";
   }
-  measurer();
+  output();
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

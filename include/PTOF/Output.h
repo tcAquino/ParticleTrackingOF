@@ -36,13 +36,13 @@ namespace ptof
      *  \brief Implemented types. */
     enum class Type
     {
-      time,               /**< Specified time. */
-      time_max,           /**< Maximum output time. */
-      mass_below,         /**< Total mass below value. */
-      mass_above,         /**< Total mass above value. */
-      all_absorbed,       /**< All particles absorbed. */
-      one_absorbed,       /**< One particle absorbed. */
-      fraction_absorbed   /**< Particle fraction absorbed. */
+      time,                 /**< Specified time. */
+      time_max,             /**< Maximum output time. */
+      mass_below,           /**< Total mass below value. */
+      mass_above,           /**< Total mass above value. */
+      all_absorbed,         /**< All particles absorbed. */
+      one_absorbed,         /**< One particle absorbed. */
+      fraction_not_absorbed /**< Particle fraction not absorbed. */
     };
     
     /** \return Type from name. */
@@ -67,7 +67,7 @@ namespace ptof
       { "mass_above", Type::mass_above },
       { "all_absorbed", Type::all_absorbed },
       { "one_absorbed", Type::one_absorbed },
-      { "fraction_absorbed", Type::fraction_absorbed }
+      { "fraction_not_absorbed", Type::fraction_not_absorbed }
     };
     
     /** Map of types to names. */
@@ -80,7 +80,7 @@ namespace ptof
       { Type::mass_above, "mass_above" },
       { Type::all_absorbed, "all_absorbed" },
       { Type::one_absorbed, "one_absorbed" },
-      { Type::fraction_absorbed, "fraction_absorbed" }
+      { Type::fraction_not_absorbed, "fraction_not_absorbed" }
     };
   };
   
@@ -357,19 +357,19 @@ namespace ptof
     }
   };
   
-  /** \class Criterion_fraction_absorbed PTOF/Output.h "PTOF/Output.h"
-   *  \brief Check if at a least a given fraction of particles have been absorbed. */
+  /** \class Criterion_fraction_not_absorbed PTOF/Output.h "PTOF/Output.h"
+   *  \brief Check if the fraction of particles that have not been absorbed is at most a certain value. */
   template <typename Subject>
-  struct Criterion_fraction_absorbed final : Criterion<Subject>
+  struct Criterion_fraction_not_absorbed final : Criterion<Subject>
   {
-    Criterion_fraction_absorbed(double end_value)
+    Criterion_fraction_not_absorbed(double end_value)
     : end_value{ end_value }
     {}
     
     bool operator()
     (Subject const& subject, double time) const override
     {
-      return nr_absorbed(subject, time) >= end_value*subject.size();
+      return subject.size() - nr_absorbed(subject, time) <= std::size_t(end_value*subject.size());
     }
       
     double end_value;
@@ -445,7 +445,7 @@ namespace ptof
         "\tmass_above: Total mass above value\n"
         "\tall_absorbed: All particles absorbed\n"
         "\tone_absorbed: One particle absorbed\n"
-        "\tfraction_absorbed: Fraction of particles absorbed\n"
+        "\tfraction_not_absorbed: Fraction of particles not absorbed below value\n"
         "- End value, if required by end criterion\n"
         "- Measure spacing:\n"
         "\tstep: Linear spacing, specified time step (no maximum time)\n"
@@ -497,7 +497,7 @@ namespace ptof
           break;
         case EndCriterion::Type::one_absorbed:
           break;
-        case EndCriterion::Type::fraction_absorbed:
+        case EndCriterion::Type::fraction_not_absorbed:
         {
           useful::read(input, end_value);
           break;
@@ -793,7 +793,7 @@ namespace ptof
       if (EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::time
           || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::mass_below
           || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::mass_above
-          || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::fraction_absorbed)
+          || EndCriterion::type(parameters.end_criterion) == EndCriterion::Type::fraction_not_absorbed)
         output << "- End value: " << parameters.end_value << "\n";
       output <<
         "- Time units: " << parameters.time_units << "\n"
@@ -1051,10 +1051,10 @@ namespace ptof
             Criterion_one_absorbed<Subject>>();
           break;
         }
-        case EndCriterion::Type::fraction_absorbed:
+        case EndCriterion::Type::fraction_not_absorbed:
         {
           _end_criterion = std::make_unique<
-            Criterion_fraction_absorbed<Subject>>(parameters.end_value);
+            Criterion_fraction_not_absorbed<Subject>>(parameters.end_value);
           break;
         }
         default:

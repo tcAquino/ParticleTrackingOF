@@ -22,5 +22,5 @@ var searchData=
   ['forward_257',['Forward',['../df/d34/structuseful_1_1_forward.html',1,'useful']]],
   ['forward_3c_20double_20_3e_258',['Forward&lt; double &gt;',['../df/d34/structuseful_1_1_forward.html',1,'useful']]],
   ['forward_5fref_259',['Forward_ref',['../d6/d37/structuseful_1_1_forward__ref.html',1,'useful']]],
-  ['fraction_5fabsorbed_260',['fraction_absorbed',['../dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5aa3c375e95b1b9854147a6e5270fb50b1',1,'ptof::EndCriterion']]]
+  ['fraction_5fnot_5fabsorbed_260',['fraction_not_absorbed',['../dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5a5d3a7064e9f3158a89a58f3568ebf0fd',1,'ptof::EndCriterion']]]
 ];
