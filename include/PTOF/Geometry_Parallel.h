@@ -545,11 +545,11 @@ namespace ptof
     , _mesh_searches(make_mesh_searches(directories_of, num_threads))
     , locator{ _mesh_searches }
     , radius{
-      periodicity == Periodicity::Type::cartesian
-      ? std::pow(sum(mesh().cellVolumes())
-               / (1.-std::sqrt(3.)*constants::pi/8.),
-               1./3.) * std::sqrt(3.)/4.
-      : 1. }
+    periodicity == Periodicity::Type::cartesian
+    ? std::pow(sum(mesh().cellVolumes())
+             / (1.-std::sqrt(3.)*constants::pi/8.),
+             1./3.) * std::sqrt(3.)/4.
+    : 1. }
     , boundary_periodic{ makeboundary_periodic(useful::Selector<Periodicity::Type, periodicity>{},
                                                directories) }
     {}
@@ -672,8 +672,8 @@ namespace ptof
     std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
     
   public:
-    const double radius;                                      /**< Bead radius. */
     Locator locator;                                          /**< Object to locate positions in mesh. */
+    const double radius;                                      /**< Bead radius. */
     Boundary_Periodic boundary_periodic;                      /**< Boundary object to enforce periodicity.*/
   
   private:

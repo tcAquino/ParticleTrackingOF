@@ -509,8 +509,8 @@ namespace ptof
     MeshSearch _mesh_search{ _mesh };       /**< Mesh searching tools. */
     
   public:
-    const double radius;                    /**< Bead radius. */
     Locator locator{ _mesh_search };        /**< To locate positions in mesh.*/
+    const double radius;                    /**< Bead radius. */
     Boundary_Periodic boundary_periodic;    /**< Boundary object to enforce periodicity. */
   
   private:

@@ -1741,7 +1741,7 @@ namespace ptof
                                          + name + ".dat");
           useful::read(input, rescale_velocity_option);
           useful::read(input, lengthscale_option);
-          double radius;
+          double radius = geometry.radius;
           cell_side = 4./std::sqrt(3.)*radius;
           if (lengthscale_option == "radius")
             lengthscale = radius;
