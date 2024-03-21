@@ -1,11 +1,11 @@
 <map id="useful::split" name="useful::split">
-<area shape="rect" id="node1" title="Split string into vector of strings at instances of delimeter." alt="" coords="460,173,559,199"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2640ab9f6140f04493af1a5f46c01825" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="233,5,377,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="255,71,354,98"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="248,122,361,149"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="248,173,361,199"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="232,223,377,250"/>
-<area shape="rect" id="node8" href="$dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a561415515e0b2e5adf3367b7e0f43df7" title=" " alt="" coords="197,274,412,330"/>
-<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="210,354,399,381"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#af975b6b07daa6c5d032a5fb003aa0af9" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
+<area shape="rect" id="node1" title="Split string into vector of strings at instances of delimeter." alt="" coords="540,187,639,214"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2640ab9f6140f04493af1a5f46c01825" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="273,5,417,47"/>
+<area shape="rect" id="node4" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="197,71,492,112"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="295,137,394,163"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="288,187,401,214"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="288,238,401,265"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="272,289,417,315"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="250,339,439,366"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2c7e11a97d81041f116824d43ee0ef34" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
 </map>

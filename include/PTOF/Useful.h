@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+#include <unordered_map>
 #include <fieldTypes.H>
 #include "CTRW/StateGetter.h"
 #include "General/Useful.h"
@@ -67,6 +68,88 @@ namespace ptof
     
     /** \brief Check if position is in given cell and in first and second orthogonal neighbors before searching mesh for position */
     using SecondNeighborPrecheck = NeighborPrecheck<2>;
+  };
+  
+  /** \struct Dynamics PTOF/Useful.h "PTOF/Useful.h"
+     \brief Keep track of names of dynamics types for different types of simulations. */
+  struct Dynamics
+  {
+    /** \enum Dynamics::Type
+     *  \brief Implemented dynamics types. */
+    enum class Type
+    {
+      transport,       /**< No parameters, custom boundary does nothing.   */
+      firstpassage,    /**< Parameters should hold InitialCondition object.*/
+    };
+    
+    /** \brief Get type from name. */
+    static auto type(std::string const& name)
+    { return name_to_type.at(name); }
+    
+    /** \brief Get name from type. */
+    static auto name(Type type)
+    { return type_to_name.at(type); }
+    
+    /** \brief Check if name exists. */
+    static bool contains(std::string const& name)
+    { return name_to_type.count(name); }
+    
+    /** \brief Map names to types. */
+    inline static const
+    std::unordered_map<std::string, Type> name_to_type
+    {
+      { "transport", Type::transport },
+      { "firstpassage", Type::firstpassage },
+    };
+    
+    /** \brief Map types to names. */
+    inline static const
+    std::unordered_map<Type, std::string> type_to_name
+    {
+      { Type::transport, "transport" },
+      { Type::firstpassage, "firstpassage" },
+    };
+  };
+  
+  /** \struct Periodicity PTOF/Useful.h "PTOF/Useful.h"
+     \brief Keep track of names of periodicity types for boundary conditions. */
+  struct Periodicity
+  {
+    /** \enum Periodicity::Type
+     *  \brief Implemented periodicity types. */
+    enum class Type
+    {
+      cartesian,       /**< Cartesian periodicity.                         */
+      symmetryplanes   /**< Periodicity according to symmetry planes.      */
+    };
+    
+    /** \brief Get type from name. */
+    static auto type(std::string const& name)
+    { return name_to_type.at(name); }
+    
+    /** \brief Get name from type. */
+    static auto name(Type type)
+    { return type_to_name.at(type); }
+    
+    /** \brief Check if name exists. */
+    static bool contains(std::string const& name)
+    { return name_to_type.count(name); }
+    
+    /** \brief Map names to types. */
+    inline static const
+    std::unordered_map<std::string, Type> name_to_type
+    {
+      { "cartesian", Type::cartesian },
+      { "symmetryplanes", Type::symmetryplanes }
+    };
+    
+    /** \brief Map types to names. */
+    inline static const
+    std::unordered_map<Type, std::string> type_to_name
+    {
+      { Type::cartesian, "cartesian" },
+      { Type::symmetryplanes, "symmetryplanes" }
+    };
   };
   
   /** \brief Return whether cell index indicates outside mesh
@@ -535,18 +618,20 @@ namespace ptof
    \param subject CTRW object.
    \param time Current time.
    \param locator Object to locate positions in mesh.
-   \param masks Vector of pointers to Masks. Masks are scalar fields assigned values to mesh cells through operator[].
+   \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
    \param tolerances Vector of tolerances for each mask, such that cells where a mask is above the tolerance are considered.
    \return Total masses in regions specified by masks.
-   \note Particle states must implement:
-   - mass [double]
-   - info.asorbed [std::size_t]
-   - time */
+   \note -Particle states must implement:
+   -# mass [double]
+   -# info.asorbed [std::size_t]
+   -# time
+   
+   = \c tolerances must have at least the same size as \c masks  */
   template <typename Subject, typename Locator, typename Mask>
   auto mass
   (Subject const& subject, double time,
    Locator const& locator,
-   std::vector<Mask const*> masks,
+   std::vector<std::reference_wrapper<const Mask>> masks,
    std::vector<double> tolerances)
   {
     std::vector<double> masses(masks.size(), 0.);
@@ -558,7 +643,7 @@ namespace ptof
         auto cell = locator(part.state_new());
         for (std::size_t ii = 0; ii < masks.size(); ++ii)
         {
-          if (cell != -1 && (*masks[ii])[cell] > tolerances[ii])
+          if (cell != -1 && masks[ii].get()[cell] > tolerances[ii])
             masses[ii] += part.state_new().mass;
         }
       }

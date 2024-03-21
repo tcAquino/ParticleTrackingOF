@@ -168,6 +168,32 @@ namespace ptof
     return boundary_conditions;
   }
   
+  /**
+   \brief Get boundary conditions for dynamics type.
+   \param directories Current case directory information.
+   */
+  template <Dynamics::Type dynamics>
+  auto get_boundary_conditions
+  (Directories const& directories,
+   std::size_t header_lines = 0,
+   std::string const& delims = "\t,| ")
+  {
+    if constexpr (dynamics == Dynamics::Type::transport)
+      return get_boundary_conditions(directories.dir_boundaryconditions
+                                     + "/boundary_conditions_"
+                                     + Dynamics::name(dynamics)
+                                     + ".dat",
+                                     header_lines,
+                                     delims);
+    if constexpr (dynamics == Dynamics::Type::firstpassage)
+      return get_boundary_conditions(directories.dir_boundaryconditions
+                                     + "/boundary_conditions_"
+                                     + Dynamics::name(dynamics)
+                                     + ".dat",
+                                     header_lines,
+                                     delims);
+  }
+  
   /** \brief Throw if any patch name does not exist in mesh or associated boundary condition type is not implemented.
    \param boundary_conditions Container of pairs of patch names and boundary condition types.
    \param mesh OpenFOAM mesh.

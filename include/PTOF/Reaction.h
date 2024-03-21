@@ -133,7 +133,7 @@ namespace ptof
   };
   
   /** \class SurfaceReaction_DoNothing
-   * \brief Surface reaction object that does nothing. */
+   * \brief Surface reaction that does nothing. */
   class SurfaceReaction_DoNothing
   {
   public:
@@ -163,9 +163,9 @@ namespace ptof
     }
   };
   
-  /** \class Reaction_DoNothing PTOF/Reaction.h "PTOF/Reaction.h"
-   * \brief Reaction object that does nothing. */
-  class Reaction_DoNothing
+  /** \class BulkReaction_DoNothing PTOF/Reaction.h "PTOF/Reaction.h"
+   * \brief Bulk reaction that does nothing. */
+  class BulkReaction_DoNothing
   {
   public:
     /** \param state State of particle to react (unused).
@@ -181,7 +181,7 @@ namespace ptof
     {
       output <<
         "--------------------------------------------------\n"
-        "Reaction\n"
+        "Bulk reaction\n"
         "--------------------------------------------------\n"
         "None\n"
         "--------------------------------------------------\n";

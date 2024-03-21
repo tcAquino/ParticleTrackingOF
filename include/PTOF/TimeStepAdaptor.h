@@ -174,7 +174,7 @@ namespace ptof
       double local_diffusion_time = cell_side*cell_side/(2.*_params_transport.diff_coeff);
       
       double reaction_rate = 0.;
-      if constexpr (!std::is_same_v<SurfaceReaction, Reaction_DoNothing>)
+      if constexpr (!std::is_same_v<SurfaceReaction, SurfaceReaction_DoNothing>)
         for (auto face : _geometry.mesh().cells()[cell_id])
         {
           double rate = _surface_reaction.rate(face);

@@ -7,14 +7,18 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "DirectoriesOF", "d1/d82/structptof_1_1_directories_o_f.html", "d1/d82/structptof_1_1_directories_o_f" ]
     ] ],
     [ "Field.h", "df/d96/_field_8h.html", "df/d96/_field_8h" ],
-    [ "Geometry.h", "d1/d4e/_geometry_8h.html", "d1/d4e/_geometry_8h" ],
+    [ "Geometry.h", "d1/d4e/_geometry_8h.html", [
+      [ "Geometry", "dc/d30/structptof_1_1_geometry.html", "dc/d30/structptof_1_1_geometry" ],
+      [ "Geometry_Periodic_Cartesian", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html", "d2/d99/structptof_1_1_geometry___periodic___cartesian" ],
+      [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ]
+    ] ],
     [ "Geometry_Parallel.h", "d5/d99/_geometry___parallel_8h.html", [
       [ "Geometry_Parallel", "df/dfc/structptof_1_1_geometry___parallel.html", "df/dfc/structptof_1_1_geometry___parallel" ],
       [ "Geometry_Periodic_Cartesian_Parallel", "df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html", "df/dae/structptof_1_1_geometry___periodic___cartesian___parallel" ],
       [ "Geometry_Bcc_Parallel", "d1/d3e/structptof_1_1_geometry___bcc___parallel.html", "d1/d3e/structptof_1_1_geometry___bcc___parallel" ]
     ] ],
     [ "Info.h", "d2/d32/_info_8h.html", "d2/d32/_info_8h" ],
-    [ "InitialConditions.h", "d9/d92/_initial_conditions_8h.html", "d9/d92/_initial_conditions_8h" ],
+    [ "InitialCondition.h", "d6/d44/_initial_condition_8h.html", "d6/d44/_initial_condition_8h" ],
     [ "Locator.h", "db/dcf/_locator_8h.html", "db/dcf/_locator_8h" ],
     [ "Locator_Parallel.h", "dd/d8c/_locator___parallel_8h.html", [
       [ "Locator_Cell_Parallel", "d5/db8/structptof_1_1_locator___cell___parallel.html", "d5/db8/structptof_1_1_locator___cell___parallel" ]
@@ -33,8 +37,8 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Criterion_all_absorbed", "da/d25/structptof_1_1_criterion__all__absorbed.html", "da/d25/structptof_1_1_criterion__all__absorbed" ],
       [ "Criterion_one_absorbed", "dc/df3/structptof_1_1_criterion__one__absorbed.html", "dc/df3/structptof_1_1_criterion__one__absorbed" ],
       [ "Criterion_fraction_absorbed", "d4/d26/structptof_1_1_criterion__fraction__absorbed.html", "d4/d26/structptof_1_1_criterion__fraction__absorbed" ],
+      [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
       [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
-      [ "Parameters", "dd/dc8/structptof_1_1_output___cases_1_1_parameters.html", "dd/dc8/structptof_1_1_output___cases_1_1_parameters" ],
       [ "NextMeasureTime", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time" ],
       [ "NextMeasureTime_step", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step.html", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step" ],
       [ "NextMeasureTime_linear", "dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear.html", "dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear" ],

@@ -34,7 +34,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<2, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry_Parallel<2>;
     using model_advection_diffusion_2d::Info;
     using model_advection_diffusion_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -50,7 +50,7 @@ namespace ptof
     typename Geometry,
     typename Boundary,
     typename ReactionParameters,
-    typename Reaction>
+    typename BulkReaction>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -58,14 +58,14 @@ namespace ptof
      typename Transport::Parameters const& params_transport,
      ReactionParameters const& params_reaction,
      typename Solvers::Parameters const& params_solvers,
-     Reaction const& reaction,
+     BulkReaction const& bulk_reaction,
      std::size_t num_threads)
     {
       using Transitions = decltype(ctrw::Transitions_CTRW_Transport_Reaction{
         Transport::template makeTransitions<Solvers>(velocity_field,
                                                      geometry, boundary,
                                                      params_transport, params_reaction, params_solvers),
-        reaction });
+        bulk_reaction });
       std::vector<Transitions> transitions;
       for (std::size_t thread = 0; thread < num_threads; ++thread)
         transitions.emplace_back(Transport::template makeTransitions<Solvers>(velocity_field,
@@ -74,7 +74,7 @@ namespace ptof
                                                                               params_transport,
                                                                               params_reaction,
                                                                               params_solvers),
-                                 reaction);
+                                 bulk_reaction);
       
       return transitions;
     }
@@ -133,7 +133,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<2, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry_Parallel<2, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d::Info;
     using model_advection_diffusion_fpt_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -199,7 +199,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<2, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<2>;
     using model_periodic_cartesian_advection_diffusion_2d::Info;
     using model_periodic_cartesian_advection_diffusion_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -265,7 +265,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<2, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<2, Dynamics::Type::firstpassage>;
     using model_periodic_cartesian_advection_diffusion_fpt_2d::Info;
     using model_periodic_cartesian_advection_diffusion_fpt_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -330,7 +330,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<3, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry_Parallel<3>;
     using model_advection_diffusion_3d::Info;
     using model_advection_diffusion_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -395,7 +395,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<3, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry_Parallel<3, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d::Info;
     using model_advection_diffusion_fpt_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -461,7 +461,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<3, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<3>;
     using model_periodic_cartesian_advection_diffusion_3d::Info;
     using model_periodic_cartesian_advection_diffusion_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -527,7 +527,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<3, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry_Periodic_Cartesian_Parallel<3, Dynamics::Type::firstpassage>;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::Info;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -593,8 +593,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<3, BoundaryConditionSet::Type::transport,
-      BoundaryConditionSet::Type::cartesian>;
+    using Geometry = Geometry_Bcc_Parallel<>;
     using model_bcc_cartesian_advection_diffusion::Info;
     using model_bcc_cartesian_advection_diffusion::State;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::CTRW;
@@ -627,8 +626,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<3, BoundaryConditionSet::Type::firstpassage,
-      BoundaryConditionSet::Type::cartesian>;
+    using Geometry = Geometry_Bcc_Parallel<Periodicity::Type::cartesian, Dynamics::Type::firstpassage>;
     using model_bcc_cartesian_advection_diffusion_fpt::Info;
     using model_bcc_cartesian_advection_diffusion_fpt::State;
     using model_periodic_cartesian_advection_diffusion_fpt_3d_parallel::CTRW;
@@ -727,8 +725,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<3, BoundaryConditionSet::Type::transport,
-      BoundaryConditionSet::Type::symmetryplanes>;
+    using Geometry = Geometry_Bcc_Parallel<Periodicity::Type::symmetryplanes>;
     using model_bcc_symmetryplanes_advection_diffusion::Info;
     using model_bcc_symmetryplanes_advection_diffusion::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
@@ -761,8 +758,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<3, BoundaryConditionSet::Type::firstpassage,
-      BoundaryConditionSet::Type::symmetryplanes>;
+    using Geometry = Geometry_Bcc_Parallel<Periodicity::Type::symmetryplanes,
+      Dynamics::Type::firstpassage>;
     using model_bcc_symmetryplanes_advection_diffusion_fpt::Info;
     using model_bcc_symmetryplanes_advection_diffusion_fpt::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;

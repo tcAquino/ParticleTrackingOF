@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('df/dae/structptof_1_1_geometry___perio
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt; Struct Template Reference</div>  </div>
+<div class="title">ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -180,8 +180,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:acf73d541247b2887c64f3943158c69c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
-struct ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt;</h3>
+<div class="textblock"><h3>template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
+class ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt;</h3>
 
 <p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for geometry with Cartesian periodic BCs along some dimensions. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
@@ -191,7 +191,7 @@ struct ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchO
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html">ptof::Geometry_Periodic_Cartesian_Parallel</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a7ab39f8c70f623adeaafb34c0607a8b0">Boundary_Periodic</a> =  <a class="el" href="../../db/d57/classgeometry_1_1_boundary___periodic___with_outside_info.html">geometry::Boundary_Periodic_WithOutsideInfo</a></td>
@@ -208,7 +208,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html">ptof::Geometry_Periodic_Cartesian_Parallel</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a8248000dbc16d159df7c61d208ca3a9f">BoundaryInfo</a> =  <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a></td>
@@ -225,7 +225,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html">ptof::Geometry_Periodic_Cartesian_Parallel</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a1df7ffeae56c03b37694f3ad4fed8e7d">Locator</a> =  <a class="el" href="../../d5/db8/structptof_1_1_locator___cell___parallel.html">Locator_Cell_Parallel</a>&lt;SearchOption&gt;</td>
@@ -242,7 +242,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html">ptof::Geometry_Periodic_Cartesian_Parallel</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a5f32628b28f10ba22f9977d950d96349">Mesh</a> =  Foam::fvMesh</td>
@@ -259,7 +259,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -285,7 +285,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -340,7 +340,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -369,8 +369,8 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel_a1d0f78fd0bf4028f8c1e7afcfc1410cf_cgraph.png" border="0" usemap="#adf/dae/structptof_1_1_geometry___periodic___cartesian___parallel_a1d0f78fd0bf4028f8c1e7afcfc1410cf_cgraph" alt=""/></div>
 <map name="adf/dae/structptof_1_1_geometry___periodic___cartesian___parallel_a1d0f78fd0bf4028f8c1e7afcfc1410cf_cgraph" id="adf/dae/structptof_1_1_geometry___periodic___cartesian___parallel_a1d0f78fd0bf4028f8c1e7afcfc1410cf_cgraph">
 <area shape="rect" title="Output generic information about object." alt="" coords="5,5,184,47"/>
-<area shape="rect" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#ae4b805c7178f0d594b3db35598163f14" title="Get name from type." alt="" coords="232,5,432,47"/>
-<area shape="rect" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#a23926c77c9abc34791f92d6332afba90" title="Get type from name." alt="" coords="480,5,680,47"/>
+<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="232,13,397,39"/>
+<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="445,13,603,39"/>
 </map>
 </div>
 
@@ -382,7 +382,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -423,7 +423,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -469,7 +469,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -507,7 +507,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
@@ -585,7 +585,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -633,7 +633,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -672,7 +672,7 @@ Here is the caller graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -697,7 +697,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -722,7 +722,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a7ab39f8c70f623adeaafb34c0607a8b0">Boundary_Periodic</a> <a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html">ptof::Geometry_Periodic_Cartesian_Parallel</a>&lt; dim_val, dynamics, SearchOption &gt;::boundary_periodic</td>
@@ -739,7 +739,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -764,7 +764,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a1df7ffeae56c03b37694f3ad4fed8e7d">Locator</a> <a class="el" href="../../df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html">ptof::Geometry_Periodic_Cartesian_Parallel</a>&lt; dim_val, dynamics, SearchOption &gt;::locator</td>
@@ -775,7 +775,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics, typename S
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>PTOF/<a class="el" href="../../d5/d99/_geometry___parallel_8h_source.html">Geometry_Parallel.h</a></li>
 </ul>
 </div><!-- contents -->

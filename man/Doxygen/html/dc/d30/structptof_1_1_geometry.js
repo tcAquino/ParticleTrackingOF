@@ -1,6 +1,6 @@
 var structptof_1_1_geometry =
 [
-    [ "BoundaryInfo", "dc/d30/structptof_1_1_geometry.html#a7ac0160fc627140fb7f0ac1d90ab519e", null ],
+    [ "BoundaryInfo", "dc/d30/structptof_1_1_geometry.html#ad41ba48b8ae676023afb6d441f524739", null ],
     [ "Locator", "dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9", null ],
     [ "Mesh", "dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0", null ],
     [ "MeshSearch", "dc/d30/structptof_1_1_geometry.html#aa8ab478b2c30def3fd1c9fabd882c4f4", null ],

@@ -84,6 +84,8 @@ $(document).ready(function(){initNavTree('d2/dcb/structptof_1_1model__advection_
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">ptof::model_advection_diffusion_surface_decay_2d::Reaction Struct Reference</div>  </div>
@@ -97,11 +99,23 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html">Parameters</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a9335d09de311ee27e1fec4a156364e3c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a9335d09de311ee27e1fec4a156364e3c">BulkReaction</a> = <a class="el" href="../../dd/d75/classptof_1_1_bulk_reaction___do_nothing.html">BulkReaction_DoNothing</a></td></tr>
+<tr class="separator:a9335d09de311ee27e1fec4a156364e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d90a0760a1e2c6f919628dae906c3e9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a2d90a0760a1e2c6f919628dae906c3e9">SurfaceReaction</a> = <a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html">SurfaceReaction_AFluidPlusASolidtoASolid</a></td></tr>
+<tr class="separator:a2d90a0760a1e2c6f919628dae906c3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ab10b8b6faa94ee10c745f410311d1455"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#ab10b8b6faa94ee10c745f410311d1455">Reaction</a> ()=delete</td></tr>
+<tr class="separator:ab10b8b6faa94ee10c745f410311d1455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3a6123626df04de2704e510d367c74e2"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename TransportParameters , typename SolverParameters &gt; </td></tr>
-<tr class="memitem:a3a6123626df04de2704e510d367c74e2"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a3a6123626df04de2704e510d367c74e2">makeReaction</a> (Geometry const &amp;geometry, <a class="el" href="../../d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html">Parameters</a> const &amp;parameters, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers)</td></tr>
-<tr class="separator:a3a6123626df04de2704e510d367c74e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b3d9121bf49c0b866189d70ae33d122"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename TransportParameters , typename SolverParameters &gt; </td></tr>
+<tr class="memitem:a4b3d9121bf49c0b866189d70ae33d122"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a4b3d9121bf49c0b866189d70ae33d122">makeBulkReaction</a> (Geometry const &amp;geometry, <a class="el" href="../../d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html">Parameters</a> const &amp;parameters, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers)</td></tr>
+<tr class="separator:a4b3d9121bf49c0b866189d70ae33d122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7384c98d2beb12756f61b520c5ea6c92"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename TransportParameters , typename SolverParameters &gt; </td></tr>
 <tr class="memitem:a7384c98d2beb12756f61b520c5ea6c92"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a7384c98d2beb12756f61b520c5ea6c92">makeSurfaceReaction</a> (Geometry const &amp;geometry, <a class="el" href="../../d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html">Parameters</a> const &amp;parameters, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers)</td></tr>
 <tr class="separator:a7384c98d2beb12756f61b520c5ea6c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,6 +123,61 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a4463651c612669d5b1c05d49a505a2b9"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a4463651c612669d5b1c05d49a505a2b9">info</a> (OStream &amp;output)</td></tr>
 <tr class="separator:a4463651c612669d5b1c05d49a505a2b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a9335d09de311ee27e1fec4a156364e3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9335d09de311ee27e1fec4a156364e3c">&#9670;&nbsp;</a></span>BulkReaction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a9335d09de311ee27e1fec4a156364e3c">ptof::model_advection_diffusion_surface_decay_2d::Reaction::BulkReaction</a> =  <a class="el" href="../../dd/d75/classptof_1_1_bulk_reaction___do_nothing.html">BulkReaction_DoNothing</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2d90a0760a1e2c6f919628dae906c3e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d90a0760a1e2c6f919628dae906c3e9">&#9670;&nbsp;</a></span>SurfaceReaction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a2d90a0760a1e2c6f919628dae906c3e9">ptof::model_advection_diffusion_surface_decay_2d::Reaction::SurfaceReaction</a> =  <a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html">SurfaceReaction_AFluidPlusASolidtoASolid</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab10b8b6faa94ee10c745f410311d1455"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab10b8b6faa94ee10c745f410311d1455">&#9670;&nbsp;</a></span>Reaction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ptof::model_advection_diffusion_surface_decay_2d::Reaction::Reaction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a4463651c612669d5b1c05d49a505a2b9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4463651c612669d5b1c05d49a505a2b9">&#9670;&nbsp;</a></span>info()</h2>
@@ -142,14 +211,14 @@ Here is the call graph for this function:</div>
 <map name="ad2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_a4463651c612669d5b1c05d49a505a2b9_cgraph" id="ad2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_a4463651c612669d5b1c05d49a505a2b9_cgraph">
 <area shape="rect" title=" " alt="" coords="5,31,192,87"/>
 <area shape="rect" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a6c81478672c186c4a82add8a11b37eb9" title="Output generic information about object." alt="" coords="240,5,465,47"/>
-<area shape="rect" href="../../da/dfd/classptof_1_1_reaction___do_nothing.html#a95e47a737e9738f06a0f763059699226" title="Output generic information about object." alt="" coords="259,71,447,112"/>
+<area shape="rect" href="../../dd/d75/classptof_1_1_bulk_reaction___do_nothing.html#aabb0e8fcba14ca825677ddca87006735" title="Output generic information about object." alt="" coords="282,71,423,112"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a3a6123626df04de2704e510d367c74e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a6123626df04de2704e510d367c74e2">&#9670;&nbsp;</a></span>makeReaction()</h2>
+<a id="a4b3d9121bf49c0b866189d70ae33d122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b3d9121bf49c0b866189d70ae33d122">&#9670;&nbsp;</a></span>makeBulkReaction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,7 +229,7 @@ template&lt;typename Geometry , typename TransportParameters , typename SolverPa
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static auto ptof::model_advection_diffusion_surface_decay_2d::Reaction::makeReaction </td>
+          <td class="memname">static auto ptof::model_advection_diffusion_surface_decay_2d::Reaction::makeBulkReaction </td>
           <td>(</td>
           <td class="paramtype">Geometry const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>

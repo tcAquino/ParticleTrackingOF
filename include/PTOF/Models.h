@@ -19,7 +19,7 @@
 #include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Geometry.h"
-#include "PTOF/InitialConditions.h"
+#include "PTOF/InitialCondition.h"
 #include "PTOF/Info.h"
 #include "PTOF/Locator.h"
 #include "PTOF/Output.h"
@@ -38,6 +38,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{ "advection_diffusion_2d" };
       
       template <typename OStream>
@@ -52,13 +54,15 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<2, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry<2>;
     using Info = ptof::Info_Absorbed;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
     
     struct Solvers
     {
+      Solvers() = delete;
+      
       using Steppers = Steppers_Advection_Euler_Diffusion_Euler;
       
       struct Parameters
@@ -130,6 +134,8 @@ namespace ptof
     
     struct Transport
     {
+      Transport() = delete;
+      
       struct Parameters
       {
         std::string peclet_option;
@@ -317,6 +323,11 @@ namespace ptof
     
     struct Reaction
     {
+      Reaction() = delete;
+      
+      using BulkReaction = BulkReaction_DoNothing;
+      using SurfaceReaction = SurfaceReaction_DoNothing;
+      
       struct Parameters
       {
         double damkohler{ 0. };
@@ -349,13 +360,13 @@ namespace ptof
       <typename Geometry,
       typename TransportParameters,
       typename SolverParameters>
-      static auto makeReaction
+      static auto makeBulkReaction
       (Geometry const& geometry,
        Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
-        return Reaction_DoNothing{};
+        return BulkReaction{};
       }
       
       template
@@ -368,170 +379,36 @@ namespace ptof
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
-        return SurfaceReaction_DoNothing{};
+        return SurfaceReaction{};
       }
       
       template <typename OStream>
       static void info(OStream& output)
       {
-        Reaction_DoNothing::info(output);
+        BulkReaction::info(output);
         output << "\n";
-        SurfaceReaction_DoNothing::info(output);
+        SurfaceReaction::info(output);
       }
     };
     
-    template <typename CTRW>
     struct InitialCondition
     {
-      struct Parameters
-      {
-        InitialConditions::Type type;
-        double distance_wall;
-        std::vector<std::pair<double, double>> region_boundaries;
-        std::string position_data;
-        double initial_mass;
-        double time_min;
-        double time_step_accuracy_adv;
-        double time_step_accuracy_diff;
-        double time_step_accuracy_react;
-        double time_max;
-        double time_step;
-        
-        template
-        <typename Geometry,
-        typename TransportParameters,
-        typename ReactionParameters>
-        Parameters
-        (Directories const& directories,
-         std::string const& name,
-         Geometry const& geometry,
-         TransportParameters const& params_transport,
-         ReactionParameters const& params_reaction)
-        {
-          std::string ic_name;
-          auto input = useful::open_read(directories.dir_parameters
-                                         + "/parameters_initial_condition_"
-                                         + name + ".dat");
-          useful::read(input, ic_name);
-          verify_initial_condition(ic_name,
-                                   InitialConditions{});
-          type = InitialConditions::type(ic_name);
-          if (type == InitialConditions::Type::uniform_near_solid)
-            useful::read(input, distance_wall);
-          if (type == InitialConditions::Type::uniform_region_cartesian ||
-              type == InitialConditions::Type::fluxweighted_region_cartesian)
-          {
-            input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::string line;
-            std::getline(input, line);
-            std::vector<std::string> split_line;
-            boost::trim_if(line, boost::is_any_of("\t,|\r "));
-            boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
-                                    boost::token_compress_on);
-            if (split_line.size()%2 != 0)
-              std::runtime_error{
-                "Initial condition region boundaries must come in pairs" };
-            for (std::size_t ii = 0; ii < split_line.size(); ii += 2)
-            {
-              region_boundaries.push_back( {
-                std::stod(split_line[ii]), std::stod(split_line[ii+1]) } );
-            }
-          }
-          if (type == InitialConditions::Type::prescribed_positions)
-            useful::read(input, position_data);
-          useful::read(input, initial_mass);
-          useful::read(input, time_min);
-          if (type == InitialConditions::Type::uniform_inlet_continuous ||
-              type == InitialConditions::Type::fluxweighted_inlet_continuous)
-          {
-            useful::read(input, time_max);
-            useful::read(input, time_step_accuracy_adv);
-            useful::read(input, time_step_accuracy_diff);
-            useful::read(input, time_step_accuracy_react);
-            time_step =
-            std::min({
-              time_step_accuracy_adv*params_transport.advection_time,
-              time_step_accuracy_diff*params_transport.diffusion_time,
-              time_step_accuracy_react*params_reaction.reaction_time });
-          }
-        }
-        
-        template <typename OStream>
-        static void info(OStream& output)
-        {
-          output <<
-          "--------------------------------------------------\n"
-          "Initial condition parameters\n"
-          "--------------------------------------------------\n"
-          "- Initial condition type:\n"
-          "\tuniform: Homogeneous throughout the domain\n"
-          "\tfluxweighted: Flux-weighted throughout the domain\n"
-          "\tuniform_inlet: Homogeneous at the inlet\n"
-          "\tfluxweighted_inlet: Flux-weighted at the inlet\n"
-          "\tuniform_solid: Homogeneous at the solid surface\n"
-          "\tuniform_near_solid: Homogeneous at a fixed distance to the solid interface\n"
-          "\tuniform_region_cartesian: Homogeneous in a prescribed cartesian region\n"
-          "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed cartesian region\n"
-          "\tprescribed_positions: Prescribed positions\n"
-          "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
-          "\tfluxweighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
-          "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
-          "- Region boundaries (pass only for types uniform_region_cartesian or fluxweighted_region_cartesian)\n"
-          "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
-          "- Total injected mass in each injection step\n"
-          "- Initial injection time\n"
-          "- Final injection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-          "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-          "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-          "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-          "--------------------------------------------------\n";
-        }
-      };
+      InitialCondition() = delete;
+      
+      using Parameters = InitialConditionParameters_Cases;
       
       template
-      <typename Geometry,
-      typename VelocityField,
-      typename SolverParameters>
-      static auto makeInitialCondition
-      (Geometry const& geometry,
-       VelocityField const& velocity_field,
-       Parameters const& parameters,
-       SolverParameters const& params_solvers)
-      {
-        if constexpr (useful::has_periodicity<typename CTRW::State>::value)
-          return InitialCondition_Cases{
-            geometry, velocity_field,
-            ParticleMaker_Periodic{
-              useful::Selector_t<typename CTRW::Particle>{},
-              geometry.locator,
-              geometry.boundary_periodic,
-              parameters.time_min,
-              parameters.initial_mass/params_solvers.nr_particles },
-            params_solvers.nr_particles,
-            parameters };
-        else
-          return InitialCondition_Cases{
-            geometry, velocity_field,
-            ParticleMaker{
-              useful::Selector_t<typename CTRW::Particle>{},
-              geometry.locator,
-              parameters.time_min,
-              parameters.initial_mass/params_solvers.nr_particles },
-            params_solvers.nr_particles,
-            parameters };
-      }
-      
-      template
-      <typename Geometry,
+      <typename CTRW,
+      typename Geometry,
       typename VelocityField,
       typename SolverParameters,
-      typename Mask>
+      typename Mask = useful::Empty>
       static auto makeInitialCondition
       (Geometry const& geometry,
        VelocityField const& velocity_field,
        Parameters const& parameters,
        SolverParameters const& params_solvers,
-       Mask const& mask,
+       Mask&& mask = {},
        double threshold = 0.)
       {
         if constexpr (useful::has_periodicity<typename CTRW::State>::value)
@@ -545,7 +422,7 @@ namespace ptof
               parameters.initial_mass/params_solvers.nr_particles },
             params_solvers.nr_particles,
             parameters,
-            mask, threshold };
+            std::forward<Mask>(mask), threshold };
         else
           return InitialCondition_Cases{
             geometry, velocity_field,
@@ -556,12 +433,119 @@ namespace ptof
               parameters.initial_mass/params_solvers.nr_particles },
             params_solvers.nr_particles,
             parameters,
-            mask, threshold };
+            std::forward<Mask>(mask), threshold };
       }
     };
     
-    template <typename CTRW, typename VelocityField, typename Geometry>
-    using Output = ptof::Output_Cases<CTRW, VelocityField, Geometry>;
+    struct Output
+    {
+      Output() = delete;
+      
+      using Parameters = OutputParameters_Cases;
+      
+      template
+      <typename Subject, typename VelocityField, typename Geometry,
+      typename Mask = useful::Empty>
+      static auto makeOutput
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       Parameters parameters,
+       std::string const& identifier,
+       std::vector<std::reference_wrapper<const Mask>> masks = {},
+       std::vector<double> thresholds = {},
+       int precision = 8, std::string delimiter = "\t")
+      {
+        return Output_Cases{ subject, velocity_field, geometry,
+          directories, parameters, identifier,
+          masks, thresholds,
+          precision, delimiter };
+      }
+
+      template
+      <typename Subject, typename VelocityField, typename Geometry,
+      typename Mask>
+      static auto makeOutput
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       Parameters parameters,
+       std::string const& identifier,
+       std::initializer_list<std::reference_wrapper<const Mask>> masks,
+       std::initializer_list<double> thresholds = {},
+       int precision = 8, std::string delimiter = "\t")
+      {
+        return Output_Cases{ subject, velocity_field, geometry,
+          directories, parameters, identifier,
+          masks, thresholds,
+          precision, delimiter };
+      }
+
+      template
+      <typename Subject, typename VelocityField, typename Geometry,
+      typename Mask>
+      static auto makeOutput
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       Parameters parameters,
+       std::string const& identifier,
+       std::vector<std::reference_wrapper<const Mask>> masks,
+       std::initializer_list<double> thresholds = {},
+       int precision = 8, std::string delimiter = "\t")
+      {
+        return Output_Cases{ subject, velocity_field, geometry,
+          directories, parameters, identifier,
+          masks, thresholds,
+          precision, delimiter };
+      }
+      
+      template<typename Subject, typename VelocityField, typename Geometry,
+      typename Mask>
+      static auto makeOutput
+      (Subject const& subject,
+       VelocityField const& velocity_field,
+       Geometry const& geometry,
+       Directories const& directories,
+       Parameters parameters,
+       std::string const& identifier,
+       std::initializer_list<std::reference_wrapper<const Mask>> masks,
+       std::vector<double> thresholds = {},
+       int precision = 8, std::string delimiter = "\t")
+      {
+        return Output_Cases{ subject, velocity_field, geometry,
+          directories, parameters, identifier,
+          masks, thresholds,
+          precision, delimiter };
+      }
+    };
+    
+    template <typename Transport,
+    typename Solvers,
+    typename Reaction,
+    typename VelocityField,
+    typename Geometry,
+    typename Boundary>
+    auto makeTransitions
+    (VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Boundary& boundary,
+     typename Transport::Parameters const& params_transport,
+     typename Reaction::Parameters const& params_reaction,
+     typename Solvers::Parameters const& params_solvers)
+    {
+      return ctrw::Transitions_CTRW_Transport_Reaction{
+        Transport::template makeTransitions<Solvers>(velocity_field,
+                                                     geometry, boundary,
+                                                     params_transport, params_reaction, params_solvers),
+        Reaction::makeBulkReaction(geometry,
+                                   params_reaction,
+                                   params_transport,
+                                   params_solvers) };
+    }
     
     template <typename Transport,
     typename Solvers,
@@ -569,7 +553,7 @@ namespace ptof
     typename Geometry,
     typename Boundary,
     typename ReactionParameters,
-    typename Reaction>
+    typename BulkReaction>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -577,13 +561,13 @@ namespace ptof
      typename Transport::Parameters const& params_transport,
      ReactionParameters const& params_reaction,
      typename Solvers::Parameters const& params_solvers,
-     Reaction const& reaction)
+     BulkReaction const& bulk_reaction)
     {
       return ctrw::Transitions_CTRW_Transport_Reaction{
         Transport::template makeTransitions<Solvers>(velocity_field,
                                                      geometry, boundary,
-                                                     params_transport, params_reaction, params_solvers),
-        reaction };
+                                                     params_transport, params_reaction, params_solvers ),
+        bulk_reaction };
     }
   }
   
@@ -593,6 +577,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{ "advection_2d" };
       
       template <typename OStream>
@@ -618,6 +604,8 @@ namespace ptof
     
     struct Solvers
     {
+      Solvers() = delete;
+      
       using Steppers = Steppers_Advection_Euler_Diffusion_Euler;
       
       struct Parameters
@@ -680,6 +668,8 @@ namespace ptof
     
     struct Transport
     {
+      Transport() = delete;
+      
       struct Parameters
       {
         std::string rescale_velocity_option;
@@ -829,6 +819,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "advection_diffusion_fpt_2d" };
       
@@ -844,7 +836,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<2, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry<2, Dynamics::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -862,6 +854,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "advection_diffusion_surface_decay_2d" };
       
@@ -888,7 +882,12 @@ namespace ptof
     using model_advection_diffusion_2d::makeTransitions;
     
     struct Reaction
-    { 
+    {
+      Reaction() = delete;
+      
+      using BulkReaction = BulkReaction_DoNothing;
+      using SurfaceReaction = SurfaceReaction_AFluidPlusASolidtoASolid;
+      
       struct Parameters
       {
         double damkohler;
@@ -935,13 +934,13 @@ namespace ptof
       <typename Geometry,
       typename TransportParameters,
       typename SolverParameters>
-      static auto makeReaction
+      static auto makeBulkReaction
       (Geometry const& geometry,
        Parameters const& parameters,
        TransportParameters const& params_transport,
        SolverParameters const& params_solvers)
       {
-        return Reaction_DoNothing{};
+        return BulkReaction{};
       }
       
       template
@@ -955,7 +954,7 @@ namespace ptof
        SolverParameters const& params_solvers)
       {
         if (parameters.initial_distribution == "uniform")
-          return SurfaceReaction_AFluidPlusASolidtoASolid{
+          return SurfaceReaction{
             parameters.rate_constant,
             params_transport.diff_coeff,
             uniform_solid_reactant_patches(parameters.surface_concentration,
@@ -971,9 +970,9 @@ namespace ptof
       template <typename OStream>
       static void info(OStream& output)
       {
-        Reaction_DoNothing::info(output);
+        BulkReaction::info(output);
         output << "\n";
-        SurfaceReaction_AFluidPlusASolidtoASolid::info(output);
+        SurfaceReaction::info(output);
       }
     };
   }
@@ -984,6 +983,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_diffusion_2d" };
       
@@ -999,7 +1000,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<2, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry_Periodic_Cartesian<2>;
     using model_advection_diffusion_2d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1017,6 +1018,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_2d" };
       
@@ -1050,6 +1053,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_diffusion_fpt_2d" };
       
@@ -1065,7 +1070,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<2, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry_Periodic_Cartesian<2, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1083,6 +1088,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_diffusion_surface_decay_2d" };
       
@@ -1116,6 +1123,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{ "advection_diffusion_3d" };
       
       template <typename OStream>
@@ -1130,7 +1139,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<3, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry<3>;
     using Info = ptof::Info_Absorbed;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1148,6 +1157,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{ "advection_3d" };
       
       template <typename OStream>
@@ -1180,6 +1191,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "advection_diffusion_fpt_3d" };
       
@@ -1195,7 +1208,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<3, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry<3, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d::Info;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1213,6 +1226,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "advection_diffusion_surface_decay_3d" };
       
@@ -1246,6 +1261,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_diffusion_3d" };
       
@@ -1261,7 +1278,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<3, BoundaryConditionSet::Type::transport>;
+    using Geometry = Geometry_Periodic_Cartesian<3>;
     using model_advection_diffusion_3d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1279,6 +1296,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_3d" };
       
@@ -1312,6 +1331,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_diffusion_fpt_3d" };
       
@@ -1327,7 +1348,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<3, BoundaryConditionSet::Type::firstpassage>;
+    using Geometry = Geometry_Periodic_Cartesian<3, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1345,6 +1366,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "periodic_cartesian_advection_diffusion_surface_decay_3d" };
       
@@ -1378,6 +1401,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_cartesian_advection_diffusion" };
       
@@ -1393,8 +1418,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<3, BoundaryConditionSet::Type::transport,
-      BoundaryConditionSet::Type::cartesian>;
+    using Geometry = Geometry_Bcc<>;
     using model_periodic_cartesian_advection_diffusion_3d::Info;
     using model_periodic_cartesian_advection_diffusion_3d::State;
     using model_periodic_cartesian_advection_diffusion_3d::CTRW;
@@ -1406,6 +1430,8 @@ namespace ptof
     
     struct Transport
     {
+      Transport() = delete;
+      
       struct Parameters
       {
         std::string peclet_option;
@@ -1622,6 +1648,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_cartesian_advection_diffusion_fpt" };
       
@@ -1637,8 +1665,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<3, BoundaryConditionSet::Type::firstpassage,
-      BoundaryConditionSet::Type::cartesian>;
+    using Geometry = Geometry_Bcc<Periodicity::Type::cartesian, Dynamics::Type::firstpassage>;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::Info;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::State;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::CTRW;
@@ -1656,6 +1683,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_cartesian_advection" };
       
@@ -1683,6 +1712,8 @@ namespace ptof
     
     struct Transport
     {
+      Transport() = delete;
+      
       struct Parameters
       {
         std::string rescale_velocity_option;
@@ -1857,6 +1888,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_cartesian_advection_diffusion_surface_decay" };
       
@@ -1890,6 +1923,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_symmetryplanes_advection_diffusion" };
       
@@ -1905,8 +1940,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<3, BoundaryConditionSet::Type::transport,
-      BoundaryConditionSet::Type::symmetryplanes>;
+    using Geometry = Geometry_Bcc<Periodicity::Type::symmetryplanes>;
     using model_bcc_cartesian_advection_diffusion::Info;
     using model_bcc_cartesian_advection_diffusion::State;
     using model_bcc_cartesian_advection_diffusion::CTRW;
@@ -1924,6 +1958,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_cartesian_advection_diffusion_fpt" };
       
@@ -1939,8 +1975,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<3, BoundaryConditionSet::Type::firstpassage,
-      BoundaryConditionSet::Type::symmetryplanes>;
+    using Geometry = Geometry_Bcc<Periodicity::Type::symmetryplanes, Dynamics::Type::firstpassage>;
     using model_bcc_cartesian_advection_diffusion_fpt::Info;
     using model_bcc_cartesian_advection_diffusion_fpt::State;
     using model_bcc_cartesian_advection_diffusion_fpt::CTRW;
@@ -1958,6 +1993,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_symmetryplanes_advection" };
       
@@ -1991,6 +2028,8 @@ namespace ptof
   {
     struct Model
     {
+      Model() = delete;
+      
       inline static const std::string name{
         "bcc_symmetryplanes_advection_diffusion_surface_decay" };
       

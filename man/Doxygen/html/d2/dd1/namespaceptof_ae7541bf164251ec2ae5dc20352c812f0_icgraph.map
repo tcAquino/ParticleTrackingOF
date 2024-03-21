@@ -1,4 +1,4 @@
 <map id="ptof::verify_initial_condition" name="ptof::verify_initial_condition">
-<area shape="rect" id="node1" title="Verify if initial condition is implemented." alt="" coords="268,13,404,54"/>
-<area shape="rect" id="node2" href="$dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a561415515e0b2e5adf3367b7e0f43df7" title=" " alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node1" title="Verify if initial condition is implemented." alt="" coords="348,5,484,47"/>
+<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="5,5,300,47"/>
 </map>

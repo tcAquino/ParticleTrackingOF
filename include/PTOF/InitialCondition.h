@@ -24,7 +24,7 @@
 
 namespace ptof
 {
-  /** \struct InitialConditions PTOF/InitialConditions.h "PTOF/InitialConditions.h"
+  /** \struct InitialConditions PTOF/InitialCondition.h "PTOF/InitialCondition.h"
    * \brief Keep track of names and
    * types of initial conditions. */
   struct InitialConditions
@@ -850,24 +850,133 @@ namespace ptof
     return prescribed_positions(position_data, particle_maker);
   }
   
-  /** \class InitialCondition_Cases PTOF/InitialConditions.h "PTOF/InitialConditions.h"
+  /** \class InitialConditionParameters_Cases PTOF/InitialCondition.h "PTOF/InitialCondition.h"
+  *  \brief Initial condition condition parameters to handle all initial condition types in \c InitialCondition_Cases. */
+  struct InitialConditionParameters_Cases
+  {
+    InitialConditions::Type type;
+    double distance_wall;
+    std::vector<std::pair<double, double>> region_boundaries;
+    std::string position_data;
+    double initial_mass;
+    double time_min;
+    double time_step_accuracy_adv;
+    double time_step_accuracy_diff;
+    double time_step_accuracy_react;
+    double time_max;
+    double time_step;
+    
+    template
+    <typename Geometry, typename TransportParameters,
+    typename ReactionParameters>
+    InitialConditionParameters_Cases
+    (Directories const& directories,
+     std::string const& name,
+     Geometry const& geometry,
+     TransportParameters const& params_transport,
+     ReactionParameters const& params_reaction)
+    {
+      std::string ic_name;
+      auto input = useful::open_read(directories.dir_parameters
+                                     + "/parameters_initial_condition_"
+                                     + name + ".dat");
+      useful::read(input, ic_name);
+      verify_initial_condition(ic_name,
+                               InitialConditions{});
+      type = InitialConditions::type(ic_name);
+      if (type == InitialConditions::Type::uniform_near_solid)
+        useful::read(input, distance_wall);
+      if (type == InitialConditions::Type::uniform_region_cartesian ||
+          type == InitialConditions::Type::fluxweighted_region_cartesian)
+      {
+        input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::string line;
+        std::getline(input, line);
+        std::vector<std::string> split_line;
+        boost::trim_if(line, boost::is_any_of("\t,|\r "));
+        boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
+                                boost::token_compress_on);
+        if (split_line.size()%2 != 0)
+          std::runtime_error{
+            "Initial condition region boundaries must come in pairs" };
+        for (std::size_t ii = 0; ii < split_line.size(); ii += 2)
+        {
+          region_boundaries.push_back( {
+            std::stod(split_line[ii]), std::stod(split_line[ii+1]) } );
+        }
+      }
+      if (type == InitialConditions::Type::prescribed_positions)
+        useful::read(input, position_data);
+      useful::read(input, initial_mass);
+      useful::read(input, time_min);
+      if (type == InitialConditions::Type::uniform_inlet_continuous ||
+          type == InitialConditions::Type::fluxweighted_inlet_continuous)
+      {
+        useful::read(input, time_max);
+        useful::read(input, time_step_accuracy_adv);
+        useful::read(input, time_step_accuracy_diff);
+        useful::read(input, time_step_accuracy_react);
+        time_step =
+        std::min({
+          time_step_accuracy_adv*params_transport.advection_time,
+          time_step_accuracy_diff*params_transport.diffusion_time,
+          time_step_accuracy_react*params_reaction.reaction_time });
+      }
+    }
+    
+    template <typename OStream>
+    static void info(OStream& output)
+    {
+      output <<
+      "--------------------------------------------------\n"
+      "Initial condition parameters\n"
+      "--------------------------------------------------\n"
+      "- Initial condition type:\n"
+      "\tuniform: Homogeneous throughout the domain\n"
+      "\tfluxweighted: Flux-weighted throughout the domain\n"
+      "\tuniform_inlet: Homogeneous at the inlet\n"
+      "\tfluxweighted_inlet: Flux-weighted at the inlet\n"
+      "\tuniform_solid: Homogeneous at the solid surface\n"
+      "\tuniform_near_solid: Homogeneous at a fixed distance to the solid interface\n"
+      "\tuniform_region_cartesian: Homogeneous in a prescribed cartesian region\n"
+      "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed cartesian region\n"
+      "\tprescribed_positions: Prescribed positions\n"
+      "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
+      "\tfluxweighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
+      "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
+      "- Region boundaries (pass only for types uniform_region_cartesian or fluxweighted_region_cartesian)\n"
+      "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
+      "- Total injected mass in each injection step\n"
+      "- Initial injection time\n"
+      "- Final injection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+      "- Maximum timestep for continuous injection discretization in units of advection time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+      "- Maximum timestep for continuous injection discretization in units of diffusion time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+      "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+      "--------------------------------------------------\n";
+    }
+  };
+  
+  /** \class InitialCondition_Cases PTOF/InitialCondition.h "PTOF/InitialCondition.h"
    *  \brief InitialCondition object to handle implemented initial condition types. */
   template
   <typename Geometry,
   typename VelocityField,
   typename ParticleMaker,
-  typename Parameters,
   typename Mask = useful::Empty>
   class InitialCondition_Cases
   {
+  public:
+    using Parameters = InitialConditionParameters_Cases; /**< Initial condition parameters.*/
+    const Parameters parameters;                         /**< Initial condition parameters. */
+    
+  private:
     typename Geometry::Mesh const& _mesh;                /**< Underlying mesh.                  */
     typename Geometry::Locator const& _locator;          /**< Object to search mesh.            */
     VelocityField const& _velocity_field;                /**< Underlying flow field.            */
     ParticleMaker _particle_maker;                       /**< Makes a particle given a position.*/
     std::size_t _nr_particles;                           /**< Number of particles per injection step. */
-    Parameters _parameters;                              /**< Initial condition parameters. */
     std::mt19937 _rng{ std::random_device{}() };         /**< Random number generator.          */
-    Mask _mask{ useful::Empty{} };                       /**< Mask to disallow cells/faces        */
+    Mask _mask{};                                        /**< Mask to disallow cells/faces        */
     double _threshold{ 0. };                             /**< Threshold for mask        */
     
     struct PositionMaker
@@ -876,7 +985,7 @@ namespace ptof
       auto operator()(Foam::point const& position)
       { return position; }
     } _position_maker;                                   /** Functor to forward positions and hold time value.*/
- 
+    
   public:
     /** Constructor.
      \param geometry Domain geometry info and utilities.
@@ -890,12 +999,12 @@ namespace ptof
      ParticleMaker particle_maker,
      std::size_t nr_particles,
      Parameters const& parameters)
-    : _mesh{ geometry.mesh() }
+    : parameters{ parameters }
+    , _mesh{ geometry.mesh() }
     , _locator{ geometry.locator }
     , _velocity_field{ velocity_field }
     , _particle_maker{ particle_maker }
     , _nr_particles{ nr_particles }
-    , _parameters{ parameters }
     {}
     
     /** Constructor.
@@ -912,15 +1021,15 @@ namespace ptof
      ParticleMaker particle_maker,
      std::size_t nr_particles,
      Parameters const& parameters,
-     Mask const& mask,
+     Mask&& mask,
      double threshold = 0.)
-    : _mesh{ geometry.mesh() }
+    : parameters{ parameters }
+    , _mesh{ geometry.mesh() }
     , _locator{ geometry.locator }
     , _velocity_field{ velocity_field }
     , _particle_maker{ particle_maker }
     , _nr_particles{ nr_particles }
-    , _parameters{ parameters }
-    , _mask{ mask }
+    , _mask{ std::forward<Mask>(mask) }
     , _threshold{ threshold }
     {}
     
@@ -929,7 +1038,7 @@ namespace ptof
      \return Container with particles.  */
     auto operator()(std::size_t nr_particles)
     {
-      return make_particles(nr_particles, _parameters.type, _particle_maker);
+      return make_particles(nr_particles, parameters.type, _particle_maker);
     }
     
     /** \brief Make particles according to prescribed initial condition and particle maker, with \c nr_particles particles as specified in \c parameters.
@@ -954,7 +1063,7 @@ namespace ptof
       // This works by slightly abusing make_particles with a position maker
       // instead of a particle maker, in order to produce only positions instead of particles,
       // but according to the same prescription as for producing particles.
-      return make_particles(nr_positions, _parameters.type,
+      return make_particles(nr_positions, parameters.type,
                             _position_maker);
     }
     
@@ -1038,39 +1147,39 @@ namespace ptof
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform_near_boundary_patches(nr_particles,
                                                  { "wallFluidSolid" },
-                                                 _parameters.distance_wall,
+                                                 parameters.distance_wall,
                                                  _mesh, _locator,
                                                  _rng, particle_maker);
           else
             return uniform_near_boundary_patches(nr_particles,
                                                  { "wallFluidSolid" },
-                                                 _parameters.distance_wall,
+                                                 parameters.distance_wall,
                                                  _mesh, _locator,
                                                  _rng, particle_maker,
                                                  _mask, _threshold);
         case InitialConditions::Type::uniform_region_cartesian:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform_cells(nr_particles,
-                                 cell_ids_region_cartesian(_parameters.region_boundaries,
+                                 cell_ids_region_cartesian(parameters.region_boundaries,
                                                            _mesh, _locator),
                                  _mesh, _rng, particle_maker);
           else
             return uniform_cells(nr_particles,
-                                 apply_mask(cell_ids_region_cartesian(_parameters.region_boundaries,
+                                 apply_mask(cell_ids_region_cartesian(parameters.region_boundaries,
                                                                       _mesh, _locator),
                                             _mask, _threshold),
                                  _mesh, _rng, particle_maker);
         case InitialConditions::Type::fluxweighted_region_cartesian:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return fluxweighted_cells(nr_particles,
-                                      cell_ids_region_cartesian(_parameters.region_boundaries,
+                                      cell_ids_region_cartesian(parameters.region_boundaries,
                                                                 _mesh, _locator),
                                       _velocity_field,
                                       _mesh,
                                       _rng, particle_maker);
           else
             return fluxweighted_cells(nr_particles,
-                                      apply_mask(cell_ids_region_cartesian(_parameters.region_boundaries,
+                                      apply_mask(cell_ids_region_cartesian(parameters.region_boundaries,
                                                                            _mesh, _locator),
                                                  _mask, _threshold),
                                        _velocity_field,
@@ -1078,7 +1187,7 @@ namespace ptof
                                        _rng, particle_maker);
         case InitialConditions::Type::prescribed_positions:
           return prescribed_positions(nr_particles,
-                                      _parameters.position_data,
+                                      parameters.position_data,
                                       particle_maker);
         case InitialConditions::Type::uniform_inlet_continuous:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
@@ -1091,9 +1200,9 @@ namespace ptof
                                                                  _rng,
                                                                  particle_maker); },
                                         nr_particles,
-                                        _parameters.time_min,
-                                        _parameters.time_max,
-                                        _parameters.time_step,
+                                        parameters.time_min,
+                                        parameters.time_max,
+                                        parameters.time_step,
                                         particle_maker);
           else
             return continuous_injection([this]
@@ -1106,9 +1215,9 @@ namespace ptof
                                                                  particle_maker,
                                                                  _mask, _threshold); },
                                         nr_particles,
-                                        _parameters.time_min,
-                                        _parameters.time_max,
-                                        _parameters.time_step,
+                                        parameters.time_min,
+                                        parameters.time_max,
+                                        parameters.time_step,
                                         particle_maker);
         case InitialConditions::Type::fluxweighted_inlet_continuous:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
@@ -1122,9 +1231,9 @@ namespace ptof
                                                                       _rng,
                                                                       particle_maker); },
                                         nr_particles,
-                                        _parameters.time_min,
-                                        _parameters.time_max,
-                                        _parameters.time_step,
+                                        parameters.time_min,
+                                        parameters.time_max,
+                                        parameters.time_step,
                                         particle_maker);
           else
             return continuous_injection([this]
@@ -1138,14 +1247,14 @@ namespace ptof
                                                                       particle_maker,
                                                                       _mask, _threshold); },
                                         nr_particles,
-                                        _parameters.time_min,
-                                        _parameters.time_max,
-                                        _parameters.time_step,
+                                        parameters.time_min,
+                                        parameters.time_max,
+                                        parameters.time_step,
                                         particle_maker);
         default:
           throw std::runtime_error{
             std::string{ "Initial condition type " }
-            + InitialConditions::name(_parameters.type)
+            + InitialConditions::name(parameters.type)
             + " not supported" };
       }
     }
@@ -1159,10 +1268,18 @@ namespace ptof
         "--------------------------------------------------\n"
         "Initial condition\n"
         "--------------------------------------------------\n"
-        "Type: " + InitialConditions::name(_parameters.type) + "\n"
+        "Type: " + InitialConditions::name(parameters.type) + "\n"
         "--------------------------------------------------\n";
     }
   };
+  template
+  <typename Geometry, typename VelocityField, typename ParticleMaker,
+  typename Parameters, typename Mask>
+  InitialCondition_Cases
+  (Geometry const&, VelocityField const&, ParticleMaker,
+   std::size_t, Parameters const&,
+   Mask&&, double) ->
+  InitialCondition_Cases<Geometry, VelocityField, ParticleMaker, Mask>;
 }
 
 #endif /* PTOF_INITIALCONDITIONS_H */

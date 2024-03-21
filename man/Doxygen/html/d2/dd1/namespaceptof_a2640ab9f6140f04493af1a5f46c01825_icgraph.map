@@ -1,4 +1,4 @@
 <map id="ptof::get_boundary_conditions" name="ptof::get_boundary_conditions">
 <area shape="rect" id="node1" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="197,5,341,47"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#af975b6b07daa6c5d032a5fb003aa0af9" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2c7e11a97d81041f116824d43ee0ef34" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
 </map>

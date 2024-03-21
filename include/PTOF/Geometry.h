@@ -12,7 +12,6 @@
 #include <limits>
 #include <string>
 #include <type_traits>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 #include <fvMesh.H>
@@ -27,80 +26,12 @@
 
 namespace ptof
 {
-  /** \struct BoundaryConditionSet PTOF/Geometry.h "PTOF/Geometry.h"
-     \brief Keep track of names of types of boundary condition sets  for different types of simulations. */
-  struct BoundaryConditionSet
-  {
-    /** \enum Type
-     *  \brief Implemented types. */  
-    enum class Type
-    {
-      transport,       /**< No parameters, custom boundary does nothing.   */
-      firstpassage,    /**< Parameters should hold InitialCondition object.*/
-      cartesian,       /**< Cartesian periodicity.                         */
-      symmetryplanes   /**< Periodicity according to symmetry planes.      */
-    };
-    
-    /** \brief Get type from name. */
-    static auto type(std::string const& name)
-    { return name_to_type.at(name); }
-    
-    /** \brief Get name from type. */
-    static auto name(Type type)
-    { return type_to_name.at(type); }
-    
-    /** \brief Check if name exists. */
-    static bool contains(std::string const& name)
-    { return name_to_type.count(name); }
-    
-    /** \brief Map names to types. */
-    inline static const
-    std::unordered_map<std::string, Type> name_to_type
-    {
-      { "transport", Type::transport },
-      { "firstpassage", Type::firstpassage },
-      { "cartesian", Type::cartesian },
-      { "symmetryplanes", Type::symmetryplanes }
-    };
-    
-    /** \brief Map types to names. */
-    inline static const
-    std::unordered_map<Type, std::string> type_to_name
-    {
-      { Type::transport, "transport" },
-      { Type::firstpassage, "firstpassage" },
-      { Type::cartesian, "cartesian" },
-      { Type::symmetryplanes, "symmetryplanes" }
-    };
-  };
-  
-  /**
-   \brief Get boundary conditions for dynamics type.
-   \param directories Current case directory information.
-   */
-  template <BoundaryConditionSet::Type dynamics>
-  auto get_boundary_conditions(Directories const& directories)
-  {
-    if constexpr (dynamics == BoundaryConditionSet::Type::transport)
-      return
-        ptof::get_boundary_conditions(directories.dir_boundaryconditions
-                                      + "/boundary_conditions_"
-                                      + BoundaryConditionSet::name(dynamics)
-                                      + ".dat");
-    if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
-      return
-        ptof::get_boundary_conditions(directories.dir_boundaryconditions
-                                      + "/boundary_conditions_"
-                                      + BoundaryConditionSet::name(dynamics)
-                                      + ".dat");
-  }
-  
   /** \class Geometry PTOF/Geometry.h "PTOF/Geometry.h"
    * \brief Basic geometry class.
    \note Does not handle periodic boundaries. */
   template
   <std::size_t dim_val,
-  BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport,
+  Dynamics::Type dynamics = Dynamics::Type::transport,
   typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry
   {
@@ -109,9 +40,7 @@ namespace ptof
     using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
     using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using BoundaryInfo
-      = std::conditional_t<
-          dynamics
-            == BoundaryConditionSet::Type::transport,
+      = std::conditional_t<dynamics == Dynamics::Type::transport,
           Store_Absorbed,
           Store_Absorbed_Reinjections>;             /**< What to store upon hitting a boundary. */
     
@@ -164,15 +93,15 @@ namespace ptof
         if (bc.second == "periodic")
           throw std::runtime_error{
             "Boundary conditions of type periodic not supported by Geometry type" };
-      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics != Dynamics::Type::firstpassage)
         for (auto const& bc : boundary_conditions)
           if (bc.second == "custom")
             throw std::runtime_error{
               std::string{ "Boundary conditions of type custom not supported for " }
-              + BoundaryConditionSet::name(dynamics)
+              + Dynamics::name(dynamics)
               + " dynamics" };
       
-      if constexpr (dynamics == BoundaryConditionSet::Type::transport)
+      if constexpr (dynamics == Dynamics::Type::transport)
         return ptof::Boundary_Cases{
           boundary_conditions,
           locator,
@@ -180,7 +109,7 @@ namespace ptof
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction) };
-      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics == Dynamics::Type::firstpassage)
         return ptof::Boundary_Cases{
           boundary_conditions,
           locator,
@@ -189,7 +118,7 @@ namespace ptof
           Boundary_Reinject{ std::forward<InitialCondition>(initial_condition) } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
-          + BoundaryConditionSet::name(dynamics)
+          + Dynamics::name(dynamics)
           + " not supported" };
     }
     
@@ -205,14 +134,14 @@ namespace ptof
         "Geometry\n"
         "--------------------------------------------------\n"
         "Spatial dimension: " + std::to_string(dim) + "\n"
-        "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
+        "Boundary conditions for: " + Dynamics::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
         "\treacting_reflecting: Reflection and surface reaction\n"
         "\tabsorbing: Absorbing\n"
         "\tinfo: Information upon crossing\n"
         "\tcustom: ";
-      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics != Dynamics::Type::firstpassage)
         output <<
           "\tcustom: Reinject according to initial condition\n";
       output <<
@@ -253,7 +182,7 @@ namespace ptof
    *  \brief Geometry class for geometry to handle periodic BCs along any number of Cartesian dimensions.*/
   template
   <std::size_t dim_val,
-  BoundaryConditionSet::Type dynamics,
+  Dynamics::Type dynamics = Dynamics::Type::transport,
   typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry_Periodic_Cartesian
   {
@@ -310,15 +239,15 @@ namespace ptof
      InitialCondition&& initial_condition = {}) const
     {
       auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
-      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics != Dynamics::Type::firstpassage)
         for (auto const& bc : boundary_conditions)
           if (bc.second == "custom")
             throw std::runtime_error{
               std::string{ "Boundary conditions of type custom not supported for " }
-              + BoundaryConditionSet::name(dynamics)
+              + Dynamics::name(dynamics)
               + " dynamics" };
       
-      if constexpr (dynamics == BoundaryConditionSet::Type::transport)
+      if constexpr (dynamics == Dynamics::Type::transport)
         return ptof::Boundary_Cases{
           boundary_conditions,
           locator,
@@ -328,7 +257,7 @@ namespace ptof
             locator },
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction) };
-      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics == Dynamics::Type::firstpassage)
         return ptof::Boundary_Cases{
           boundary_conditions,
           locator,
@@ -339,7 +268,7 @@ namespace ptof
           Boundary_Reinject{ std::forward<InitialCondition>(initial_condition) } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
-          + BoundaryConditionSet::name(dynamics)
+          + Dynamics::name(dynamics)
           + " not supported" };
     }
     
@@ -352,7 +281,7 @@ namespace ptof
         "Geometry\n"
         "--------------------------------------------------\n"
         "Spatial dimension: " + std::to_string(dim) + "\n"
-        "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
+        "Boundary conditions for: " + Dynamics::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
         "\treacting_reflecting: Reflection and surface reaction\n"
@@ -360,7 +289,7 @@ namespace ptof
       output <<
         "\tabsorbing: Absorbing\n"
         "\tinfo: Information upon crossing\n";
-      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics != Dynamics::Type::firstpassage)
         output <<
           "\tcustom: Reinject according to initial condition\n";
       output <<
@@ -423,19 +352,17 @@ namespace ptof
    \brief Geometry class for periodic representation of a body centered cubic beadpack.
    \details Holds spatial dimension info, mesh, mesh search objects, and periodic boundary to enforce periodicity. */
   template
-  <std::size_t dim_val,
-  BoundaryConditionSet::Type dynamics,
-  BoundaryConditionSet::Type periodicity_type,
+  <Periodicity::Type periodicity = Periodicity::Type::cartesian,
+  Dynamics::Type dynamics = Dynamics::Type::transport,
   typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry_Bcc
   {
-    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
+    static constexpr std::size_t dim{ 3 };          /**< Spatial dimension. */
     using Mesh = Foam::fvMesh;                      /**< Mesh. */
     using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
     using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using Boundary_Periodic = std::conditional_t<
-      periodicity_type
-      == BoundaryConditionSet::Type::cartesian,
+      periodicity == Periodicity::Type::cartesian,
     geometry::Boundary_Periodic_WithOutsideInfo,
     geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
       geometry::SymmetryPlanes_Bcc>>;              /**< Periodic boundary type. */
@@ -456,13 +383,13 @@ namespace ptof
           directories_of.time,
           Foam::IOobject::MUST_READ } }
     , radius{
-      std::is_same_v<periodicity_type, BoundaryConditionSet::Type::cartesian>
-      ? std::pow(sum(mesh().V())/(1.-std::sqrt(3.)*constants::pi/8.), 1./3.)*std::sqrt(3.)/4.
+      periodicity == Periodicity::Type::cartesian
+      ? std::pow(sum(mesh().cellVolumes())
+                 / (1.-std::sqrt(3.)*constants::pi/8.),
+                 1./3.) * std::sqrt(3.)/4.
       : 1. }
     , boundary_periodic{
-        make_boundary_periodic(useful::Selector<
-                                BoundaryConditionSet::Type,
-                                periodicity_type>{},
+        make_boundary_periodic(useful::Selector<Periodicity::Type, periodicity>{},
                                directories) }
     {}
     
@@ -492,15 +419,15 @@ namespace ptof
      InitialCondition&& initial_condition = {}) const
     {
       auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
-      if constexpr (dynamics != BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics != Dynamics::Type::firstpassage)
         for (auto const& bc : boundary_conditions)
           if (bc.second == "custom")
             throw std::runtime_error{
               std::string{ "Boundary conditions of type custom not supported for " }
-              + BoundaryConditionSet::name(dynamics)
+              + Dynamics::name(dynamics)
               + " dynamics" };
       
-      if constexpr (dynamics == BoundaryConditionSet::Type::transport)
+      if constexpr (dynamics == Dynamics::Type::transport)
         return ptof::Boundary_Cases{
           boundary_conditions,
           locator,
@@ -510,7 +437,7 @@ namespace ptof
             locator },
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction) };
-      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics == Dynamics::Type::firstpassage)
         return ptof::Boundary_Cases{
           boundary_conditions,
           locator,
@@ -521,7 +448,7 @@ namespace ptof
           Boundary_Reinject{ std::forward<InitialCondition>(initial_condition) } };
       throw std::runtime_error{
         std::string{ "Boundary conditions for " }
-          + BoundaryConditionSet::name(dynamics)
+          + Dynamics::name(dynamics)
           + " not supported" };
     }
     
@@ -536,19 +463,19 @@ namespace ptof
         "Geometry\n"
         "--------------------------------------------------\n"
         "Spatial dimension: " + std::to_string(dim) + "\n"
-        "Boundary conditions for: " + BoundaryConditionSet::name(dynamics) + "\n"
+        "Boundary conditions for: " + Dynamics::name(dynamics) + "\n"
         "Boundary condition types:\n"
         "\treflecting: Reflecting\n"
         "\treacting_reflecting: Reflection and surface reaction\n"
         "\tperiodic: ";
       output <<
-        (BoundaryConditionSet::name(periodicity_type) == "cartesian"
+        (Periodicity::name(periodicity) == "cartesian"
          ? "Periodic in the primitive unit cell\n"
          : "Periodic in the minimal unit cell\n");
       output <<
         "\tabsorbing: Absorbing\n"
         "\tinfo: Information upon crossing\n";
-      if constexpr (dynamics == BoundaryConditionSet::Type::firstpassage)
+      if constexpr (dynamics == Dynamics::Type::firstpassage)
         output <<
           "\tcustom: Reinject according to initial condition\n";
       output <<
@@ -592,8 +519,7 @@ namespace ptof
     \return Periodic boundary object.
     */
     Boundary_Periodic make_boundary_periodic
-    (useful::Selector<BoundaryConditionSet::Type,
-      BoundaryConditionSet::Type::cartesian>,
+    (useful::Selector<Periodicity::Type, Periodicity::Type::cartesian>,
      Directories const& directories)
     {
       return {
@@ -607,8 +533,7 @@ namespace ptof
     \return Periodic boundary object.
     */
     Boundary_Periodic make_boundary_periodic
-    (useful::Selector<BoundaryConditionSet::Type,
-     BoundaryConditionSet::Type::symmetryplanes>,
+    (useful::Selector<Periodicity::Type, Periodicity::Type::symmetryplanes>,
      Directories const& directories)
     { return { radius }; }
   };

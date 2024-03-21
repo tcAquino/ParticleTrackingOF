@@ -104,7 +104,8 @@ var annotated_dup =
         [ "Solvers", "d0/d22/structptof_1_1model__advection__diffusion__2d_1_1_solvers.html", "d0/d22/structptof_1_1model__advection__diffusion__2d_1_1_solvers" ],
         [ "Transport", "da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html", "da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport" ],
         [ "Reaction", "d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html", "d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction" ],
-        [ "InitialCondition", "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html", "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition" ]
+        [ "InitialCondition", "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html", "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition" ],
+        [ "Output", "d0/d89/structptof_1_1model__advection__diffusion__2d_1_1_output.html", "d0/d89/structptof_1_1model__advection__diffusion__2d_1_1_output" ]
       ] ],
       [ "model_advection_diffusion_2d_parallel", "d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html", [
         [ "Model", "d2/d0a/structptof_1_1model__advection__diffusion__2d__parallel_1_1_model.html", "d2/d0a/structptof_1_1model__advection__diffusion__2d__parallel_1_1_model" ]
@@ -247,7 +248,6 @@ var annotated_dup =
       [ "DirectoriesOF", "d1/d82/structptof_1_1_directories_o_f.html", "d1/d82/structptof_1_1_directories_o_f" ],
       [ "VectorField_LinearInterpolation_OF", "d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html", "d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f" ],
       [ "ScalarField_LinearInterpolation_OF", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f" ],
-      [ "BoundaryConditionSet", "d6/dd9/structptof_1_1_boundary_condition_set.html", "d6/dd9/structptof_1_1_boundary_condition_set" ],
       [ "Geometry", "dc/d30/structptof_1_1_geometry.html", "dc/d30/structptof_1_1_geometry" ],
       [ "Geometry_Periodic_Cartesian", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html", "d2/d99/structptof_1_1_geometry___periodic___cartesian" ],
       [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ],
@@ -258,6 +258,7 @@ var annotated_dup =
       [ "Info_Absorbed", "d6/df0/structptof_1_1_info___absorbed.html", "d6/df0/structptof_1_1_info___absorbed" ],
       [ "Info_Absorbed_Reinjections", "dc/d06/structptof_1_1_info___absorbed___reinjections.html", "dc/d06/structptof_1_1_info___absorbed___reinjections" ],
       [ "InitialConditions", "d5/d77/structptof_1_1_initial_conditions.html", "d5/d77/structptof_1_1_initial_conditions" ],
+      [ "InitialConditionParameters_Cases", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html", "dd/d20/structptof_1_1_initial_condition_parameters___cases" ],
       [ "InitialCondition_Cases", "db/dfb/classptof_1_1_initial_condition___cases.html", "db/dfb/classptof_1_1_initial_condition___cases" ],
       [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html", "d0/d4f/structptof_1_1_locator___cell" ],
       [ "Locator_Cell_Parallel", "d5/db8/structptof_1_1_locator___cell___parallel.html", "d5/db8/structptof_1_1_locator___cell___parallel" ],
@@ -272,13 +273,14 @@ var annotated_dup =
       [ "Criterion_all_absorbed", "da/d25/structptof_1_1_criterion__all__absorbed.html", "da/d25/structptof_1_1_criterion__all__absorbed" ],
       [ "Criterion_one_absorbed", "dc/df3/structptof_1_1_criterion__one__absorbed.html", "dc/df3/structptof_1_1_criterion__one__absorbed" ],
       [ "Criterion_fraction_absorbed", "d4/d26/structptof_1_1_criterion__fraction__absorbed.html", "d4/d26/structptof_1_1_criterion__fraction__absorbed" ],
+      [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
       [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
       [ "ParticleMaker", "da/dae/structptof_1_1_particle_maker.html", "da/dae/structptof_1_1_particle_maker" ],
       [ "ParticleMaker_Periodic", "d5/d84/structptof_1_1_particle_maker___periodic.html", "d5/d84/structptof_1_1_particle_maker___periodic" ],
       [ "Phase", "d0/d06/structptof_1_1_phase.html", "d0/d06/structptof_1_1_phase" ],
       [ "SurfaceReaction_AFluidPlusASolidtoASolid", "d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html", "d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid" ],
       [ "SurfaceReaction_DoNothing", "df/d31/classptof_1_1_surface_reaction___do_nothing.html", "df/d31/classptof_1_1_surface_reaction___do_nothing" ],
-      [ "Reaction_DoNothing", "da/dfd/classptof_1_1_reaction___do_nothing.html", "da/dfd/classptof_1_1_reaction___do_nothing" ],
+      [ "BulkReaction_DoNothing", "dd/d75/classptof_1_1_bulk_reaction___do_nothing.html", "dd/d75/classptof_1_1_bulk_reaction___do_nothing" ],
       [ "State1D", "d9/daf/structptof_1_1_state1_d.html", "d9/daf/structptof_1_1_state1_d" ],
       [ "State2D", "d1/d58/structptof_1_1_state2_d.html", "d1/d58/structptof_1_1_state2_d" ],
       [ "State3D", "df/de9/structptof_1_1_state3_d.html", "df/de9/structptof_1_1_state3_d" ],
@@ -303,6 +305,8 @@ var annotated_dup =
         [ "Serial", "d3/d09/structptof_1_1_parallel_options_1_1_serial.html", null ]
       ] ],
       [ "SearchOptions", "d7/d21/structptof_1_1_search_options.html", "d7/d21/structptof_1_1_search_options" ],
+      [ "Dynamics", "d9/d9c/structptof_1_1_dynamics.html", "d9/d9c/structptof_1_1_dynamics" ],
+      [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ],
       [ "Has_periodicity", "d4/db0/structptof_1_1_has__periodicity.html", null ],
       [ "Has_periodicity< State, decltype((void) State::periodicity, 0)>", "de/ddc/structptof_1_1_has__periodicity_3_01_state_00_01decltype_07_07void_08_01_state_1_1periodicity_00_010_08_4.html", null ]
     ] ],
@@ -379,7 +383,6 @@ var annotated_dup =
     [ "Output_velocity_gradient", "de/dc2/struct_output___cases_1_1_output__velocity__gradient.html", null ],
     [ "OutputTime", "da/d2f/struct_output___cases_1_1_output_time.html", null ],
     [ "Parallel", "d3/d1f/struct_parallel_options_1_1_parallel.html", null ],
-    [ "Parameters", "d8/d4a/struct_output___cases_1_1_parameters.html", null ],
     [ "Parameters", "d4/d48/struct_phase_1_1_parameters.html", null ],
     [ "Serial", "da/da3/struct_parallel_options_1_1_serial.html", null ],
     [ "State_Position", "df/d93/struct_state___position.html", null ],

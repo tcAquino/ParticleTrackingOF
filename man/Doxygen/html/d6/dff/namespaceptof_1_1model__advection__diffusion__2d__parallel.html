@@ -98,16 +98,16 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ab87a996abc796fa80409f874124f5acd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#ab87a996abc796fa80409f874124f5acd">Geometry</a> = <a class="el" href="../../df/dfc/structptof_1_1_geometry___parallel.html">Geometry_Parallel</a>&lt; 2, <a class="el" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#aca3e35639dc3bdb3f5e916623a6d0298a7b334b7260361141659fa9862e803476">BoundaryConditionSet::Type::transport</a> &gt;</td></tr>
-<tr class="separator:ab87a996abc796fa80409f874124f5acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af02bfd39d7feeacedee8c40cefceb0ac"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#af02bfd39d7feeacedee8c40cefceb0ac">Geometry</a> = <a class="el" href="../../df/dfc/structptof_1_1_geometry___parallel.html">Geometry_Parallel</a>&lt; 2 &gt;</td></tr>
+<tr class="separator:af02bfd39d7feeacedee8c40cefceb0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a2153a1c44c8f6b4b0a9ed11eca00ab"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#a1a2153a1c44c8f6b4b0a9ed11eca00ab">CTRW</a> = <a class="el" href="../../d7/dfc/classctrw_1_1_c_t_r_w___parallel.html">ctrw::CTRW_Parallel</a>&lt; <a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &gt;</td></tr>
 <tr class="separator:a1a2153a1c44c8f6b4b0a9ed11eca00ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3e6725717575fafb6366303a401d0906"><td class="memTemplParams" colspan="2">template&lt;typename Transport , typename Solvers , typename VelocityField , typename Geometry , typename Boundary , typename ReactionParameters , typename Reaction &gt; </td></tr>
-<tr class="memitem:a3e6725717575fafb6366303a401d0906"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#a3e6725717575fafb6366303a401d0906">makeTransitions</a> (VelocityField const &amp;velocity_field, <a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#ab87a996abc796fa80409f874124f5acd">Geometry</a> const &amp;geometry, Boundary &amp;boundary, typename <a class="el" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html">Transport::Parameters</a> const &amp;params_transport, ReactionParameters const &amp;params_reaction, typename <a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;params_solvers, <a class="el" href="../../d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html">Reaction</a> const &amp;reaction, std::size_t num_threads)</td></tr>
-<tr class="separator:a3e6725717575fafb6366303a401d0906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2604e54f5901ae63ddbe33455c0055df"><td class="memTemplParams" colspan="2">template&lt;typename Transport , typename Solvers , typename VelocityField , typename Geometry , typename Boundary , typename ReactionParameters , typename BulkReaction &gt; </td></tr>
+<tr class="memitem:a2604e54f5901ae63ddbe33455c0055df"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#a2604e54f5901ae63ddbe33455c0055df">makeTransitions</a> (VelocityField const &amp;velocity_field, <a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#af02bfd39d7feeacedee8c40cefceb0ac">Geometry</a> const &amp;geometry, Boundary &amp;boundary, typename <a class="el" href="../../dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html">Transport::Parameters</a> const &amp;params_transport, ReactionParameters const &amp;params_reaction, typename <a class="el" href="../../dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html">Solvers::Parameters</a> const &amp;params_solvers, BulkReaction const &amp;bulk_reaction, std::size_t num_threads)</td></tr>
+<tr class="separator:a2604e54f5901ae63ddbe33455c0055df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definitions for 2D advective&ndash;diffusive transport, in parallel. </p>
@@ -126,14 +126,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab87a996abc796fa80409f874124f5acd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab87a996abc796fa80409f874124f5acd">&#9670;&nbsp;</a></span>Geometry</h2>
+<a id="af02bfd39d7feeacedee8c40cefceb0ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af02bfd39d7feeacedee8c40cefceb0ac">&#9670;&nbsp;</a></span>Geometry</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#ab87a996abc796fa80409f874124f5acd">ptof::model_advection_diffusion_2d_parallel::Geometry</a> = typedef <a class="el" href="../../df/dfc/structptof_1_1_geometry___parallel.html">Geometry_Parallel</a>&lt;2, <a class="el" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#aca3e35639dc3bdb3f5e916623a6d0298a7b334b7260361141659fa9862e803476">BoundaryConditionSet::Type::transport</a>&gt;</td>
+          <td class="memname">using <a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#af02bfd39d7feeacedee8c40cefceb0ac">ptof::model_advection_diffusion_2d_parallel::Geometry</a> = typedef <a class="el" href="../../df/dfc/structptof_1_1_geometry___parallel.html">Geometry_Parallel</a>&lt;2&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -141,13 +141,13 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a3e6725717575fafb6366303a401d0906"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e6725717575fafb6366303a401d0906">&#9670;&nbsp;</a></span>makeTransitions()</h2>
+<a id="a2604e54f5901ae63ddbe33455c0055df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2604e54f5901ae63ddbe33455c0055df">&#9670;&nbsp;</a></span>makeTransitions()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Transport , typename Solvers , typename VelocityField , typename Geometry , typename Boundary , typename ReactionParameters , typename Reaction &gt; </div>
+template&lt;typename Transport , typename Solvers , typename VelocityField , typename Geometry , typename Boundary , typename ReactionParameters , typename BulkReaction &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto ptof::model_advection_diffusion_2d_parallel::makeTransitions </td>
@@ -158,7 +158,7 @@ template&lt;typename Transport , typename Solvers , typename VelocityField , typ
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#ab87a996abc796fa80409f874124f5acd">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html#af02bfd39d7feeacedee8c40cefceb0ac">Geometry</a> const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -188,8 +188,8 @@ template&lt;typename Transport , typename Solvers , typename VelocityField , typ
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html">Reaction</a> const &amp;&#160;</td>
-          <td class="paramname"><em>reaction</em>, </td>
+          <td class="paramtype">BulkReaction const &amp;&#160;</td>
+          <td class="paramname"><em>bulk_reaction</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

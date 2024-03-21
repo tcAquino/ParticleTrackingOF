@@ -12,7 +12,9 @@
 #include <cstddef>
 #include <exception>
 #include <fstream>
+#include <functional>
 #include <memory>
+#include <initializer_list>
 #include <iomanip>
 #include <string>
 #include <type_traits>
@@ -373,6 +375,245 @@ namespace ptof
     double end_value;
   };
   
+  /** \struct OutputParameters_Cases PTOF/Output.h "PTOF/Output.h"
+   *  \brief Output parameters to handle the output types in Output_Cases. */
+  struct OutputParameters_Cases
+  {
+    double velocity_rescaling_factor;
+    std::string time_units;
+    double time_unit_factor;
+    std::string end_criterion;
+    double end_value;
+    std::string measure_spacing;
+    double time_min;
+    double time_max;
+    double time_increment;
+    std::vector<std::string> measure_names;
+    
+    /** Constructor.
+     \param directories Current case directory information.
+     \param name Name of parameter set.
+     \param params_transport Transport parameters.
+     \param params_reaction Reaction parameters.
+     \param params_solvers Solver parameters. */
+    template
+    <typename Geometry,
+    typename TransportParameters,
+    typename ReactionParameters,
+    typename SolverParameters>
+    OutputParameters_Cases
+    (Directories const& directories,
+     std::string const& name,
+     Geometry const& geometry,
+     TransportParameters const& params_transport,
+     ReactionParameters const& params_reaction,
+     SolverParameters const& params_solvers)
+    {
+      if constexpr (useful::has_velocity_rescaling_factor<TransportParameters>::value)
+        velocity_rescaling_factor = params_transport.velocity_rescaling_factor;
+      else
+        velocity_rescaling_factor = 1.;
+        
+      auto input = useful::open_read(directories.dir_parameters
+                                     + "/parameters_output_"
+                                     + name + ".dat");
+      read_time_units(input, params_transport, params_reaction);
+      read_end_criterion(input);
+      read_measure_spacing(input,
+                           params_transport, params_reaction);
+      read_output_types(input);
+      input.close();
+    }
+    
+    /** \brief Output generic information about object. */
+    template <typename OStream>
+    static void info(OStream& output)
+    {
+      output <<
+        "--------------------------------------------------\n"
+        "Output parameters\n"
+        "--------------------------------------------------\n"
+        "- Time units to rescale measurement times:\n"
+        "\tdiffusion: Rescale by diffusion time\n"
+        "\tadvection: Rescale by reaction time\n"
+        "\treaction: Rescale by reaction time\n"
+        "\tarbitrary: Do not rescale\n"
+        "- End criterion to finish dynamics:\n"
+        "\ttime: Specified time\n"
+        "\ttime_max: Maximum output time\n"
+        "\tmass_below: Total mass below value\n"
+        "\tmass_above: Total mass above value\n"
+        "\tall_absorbed: All particles absorbed\n"
+        "\tone_absorbed: One particle absorbed\n"
+        "\tfraction_absorbed: Fraction of particles absorbed\n"
+        "- End value, if required by end criterion\n"
+        "- Measure spacing:\n"
+        "\tstep: Linear spacing, specified time step (no maximum time)\n"
+        "\tlinear: Linear spacing, specified maximum time and number of measurements\n"
+        "\tlog: Log spacing, specified maximum time and number of measurements\n"
+        "- Minimum measurement time\n"
+        "- Measurement time increment, if required by measure spacing\n"
+        "- Maximum measurement time, if required by measure spacing\n"
+        "- Number of measurements, if required by measure spacing\n"
+        "- Measurement types (any number):\n"
+        "\tposition: Time, particle tags, particle positions, and particle masses\n"
+        "\tposition: Time, particle tags, particle positions, and particle masses within regions specified by masks\n"
+        "\tposition_mean: Time and mean position\n"
+        "\tposition_second_moment: Time and position second moment\n"
+        "\tposition_variance: Time and position variance\n"
+        "\tmass: Time and total mass\n"
+        "\tmass_in_regions: Time and total mass within regions specified by masks\n"
+        "\tabsorption_time: Particle absorption times, particle tags, and particle masses at end of dynamics\n"
+        "--------------------------------------------------\n";
+    }
+    
+  private:
+    /** \brief Read end criterion from input stream. */
+    template <typename IStream>
+    void read_end_criterion(IStream& input)
+    {
+      useful::read(input, end_criterion);
+      switch (EndCriterion::type(end_criterion))
+      {
+        case EndCriterion::Type::time:
+        {
+          useful::read(input, end_value);
+          end_value *= time_unit_factor;
+          break;
+        }
+        case EndCriterion::Type::time_max:
+          break;
+        case EndCriterion::Type::mass_below:
+        {
+          useful::read(input, end_value);
+          break;
+        }
+        case EndCriterion::Type::mass_above:
+        {
+          useful::read(input, end_value);
+          break;
+        }
+        case EndCriterion::Type::all_absorbed:
+          break;
+        case EndCriterion::Type::one_absorbed:
+          break;
+        case EndCriterion::Type::fraction_absorbed:
+        {
+          useful::read(input, end_value);
+          break;
+        }
+        default:
+          throw std::runtime_error{
+            std::string("End criterion ")
+            + end_criterion
+            + " not supported" };
+      }
+    }
+    
+    /** \brief Read measure spacing time units from input stream. */
+    template <typename IStream,
+    typename TransportParameters,
+    typename ReactionParameters>
+    void read_time_units
+    (IStream& input,
+     TransportParameters const& params_transport,
+     ReactionParameters const& params_reaction)
+    {
+      useful::read(input, time_units);
+      switch (MeasureSpacingUnits::type(time_units))
+      {
+        case MeasureSpacingUnits::Type::diffusion:
+        {
+          time_unit_factor = params_transport.diffusion_time;
+          break;
+        }
+        case MeasureSpacingUnits::Type::advection:
+        {
+          time_unit_factor = params_transport.advection_time;
+          break;
+        }
+        case MeasureSpacingUnits::Type::reaction:
+        {
+          time_unit_factor = params_reaction.reaction_time;
+          break;
+        }
+        case MeasureSpacingUnits::Type::arbitrary:
+        {
+          time_unit_factor = 1.;
+          break;
+        }
+        default:
+          throw std::runtime_error{
+            std::string("Measure spacing units ")
+            + time_units
+            + " not supported" };
+      }
+    }
+    
+    /** \brief Read measure spacing type from input stream. */
+    template <typename IStream,
+    typename TransportParameters,
+    typename ReactionParameters>
+    void read_measure_spacing
+    (IStream& input,
+     TransportParameters const& params_transport,
+     ReactionParameters const& params_reaction)
+    {
+      useful::read(input, measure_spacing);
+      useful::read(input, time_min);
+      time_min *= time_unit_factor;
+      switch (MeasureSpacing::type(measure_spacing))
+      {
+        case MeasureSpacing::Type::step:
+        {
+          useful::read(input, time_increment);
+          time_increment *= time_unit_factor;
+          time_max = std::numeric_limits<double>::infinity();
+          break;
+        }
+        case MeasureSpacing::Type::linear:
+        {
+          useful::read(input, time_max);
+          time_max *= time_unit_factor;
+          std::size_t nr_measures;
+          useful::read(input, nr_measures);
+          time_increment = (time_max - time_min)/(nr_measures - 1);
+          break;
+        }
+        case MeasureSpacing::Type::log:
+        {
+          useful::read(input, time_max);
+          time_max *= time_unit_factor;
+          std::size_t nr_measures;
+          useful::read(input, nr_measures);
+          time_increment = std::pow(time_max/time_min, 1./(nr_measures - 1));
+          break;
+        }
+        default:
+          throw std::runtime_error{
+            std::string("Measure spacing ")
+            + measure_spacing
+            + " not supported" };
+      }
+    }
+    
+    /** \brief Read measure spacing type from input stream. */
+    template <typename IStream>
+    void read_output_types
+    (IStream& input)
+    {
+      while (1)
+      {
+        std::string measurement;
+        input >> measurement;
+        if (!input.fail())
+          measure_names.push_back(measurement);
+        else
+          break;
+      }
+    }
+  };
+  
   /** \class Output_Cases PTOF/Output.h "PTOF/Output.h"
    * \brief Output object to handle implemented output options. */
   template
@@ -380,243 +621,7 @@ namespace ptof
   class Output_Cases
   {
   public:
-    /** \struct Output_Cases::Parameters PTOF/Output.h "PTOF/Output.h"
-     *  \brief Output parameters. */
-    struct Parameters
-    {
-      double velocity_rescaling_factor;
-      std::string time_units;
-      double time_unit_factor;
-      std::string end_criterion;
-      double end_value;
-      std::string measure_spacing;
-      double time_min;
-      double time_max;
-      double time_increment;
-      std::vector<std::string> measure_names;
-      
-      /** Constructor.
-       \param directories Current case directory information.
-       \param name Name of parameter set.
-       \param params_transport Transport parameters.
-       \param params_reaction Reaction parameters.
-       \param params_solvers Solver parameters. */
-      template
-      <typename TransportParameters,
-      typename ReactionParameters,
-      typename SolverParameters>
-      Parameters
-      (Directories const& directories,
-       std::string const& name,
-       Geometry const& geometry,
-       TransportParameters const& params_transport,
-       ReactionParameters const& params_reaction,
-       SolverParameters const& params_solvers)
-      {
-        if constexpr (useful::has_velocity_rescaling_factor<TransportParameters>::value)
-          velocity_rescaling_factor = params_transport.velocity_rescaling_factor;
-        else
-          velocity_rescaling_factor = 1.;
-          
-        auto input = useful::open_read(directories.dir_parameters
-                                       + "/parameters_output_"
-                                       + name + ".dat");
-        read_time_units(input, params_transport, params_reaction);
-        read_end_criterion(input);
-        read_measure_spacing(input,
-                             params_transport, params_reaction);
-        read_output_types(input);
-        input.close();
-      }
-      
-      /** \brief Output generic information about object. */
-      template <typename OStream>
-      static void info(OStream& output)
-      {
-        output <<
-          "--------------------------------------------------\n"
-          "Output parameters\n"
-          "--------------------------------------------------\n"
-          "- Time units to rescale measurement times:\n"
-          "\tdiffusion: Rescale by diffusion time\n"
-          "\tadvection: Rescale by reaction time\n"
-          "\treaction: Rescale by reaction time\n"
-          "\tarbitrary: Do not rescale\n"
-          "- End criterion to finish dynamics:\n"
-          "\ttime: Specified time\n"
-          "\ttime_max: Maximum output time\n"
-          "\tmass_below: Total mass below value\n"
-          "\tmass_above: Total mass above value\n"
-          "\tall_absorbed: All particles absorbed\n"
-          "\tone_absorbed: One particle absorbed\n"
-          "\tfraction_absorbed: Fraction of particles absorbed\n"
-          "- End value, if required by end criterion\n"
-          "- Measure spacing:\n"
-          "\tstep: Linear spacing, specified time step (no maximum time)\n"
-          "\tlinear: Linear spacing, specified maximum time and number of measurements\n"
-          "\tlog: Log spacing, specified maximum time and number of measurements\n"
-          "- Minimum measurement time\n"
-          "- Measurement time increment, if required by measure spacing\n"
-          "- Maximum measurement time, if required by measure spacing\n"
-          "- Number of measurements, if required by measure spacing\n"
-          "- Measurement types (any number):\n"
-          "\tposition: Time, particle tags, particle positions, and particle masses\n"
-          "\tposition: Time, particle tags, particle positions, and particle masses within regions specified by masks\n"
-          "\tposition_mean: Time and mean position\n"
-          "\tposition_second_moment: Time and position second moment\n"
-          "\tposition_variance: Time and position variance\n"
-          "\tmass: Time and total mass\n"
-          "\tmass_in_regions: Time and total mass within regions specified by masks\n"
-          "\tabsorption_time: Particle absorption times, particle tags, and particle masses at end of dynamics\n"
-          "--------------------------------------------------\n";
-      }
-      
-    private:
-      /** \brief Read end criterion from input stream. */
-      template <typename IStream>
-      void read_end_criterion(IStream& input)
-      {
-        useful::read(input, end_criterion);
-        switch (EndCriterion::type(end_criterion))
-        {
-          case EndCriterion::Type::time:
-          {
-            useful::read(input, end_value);
-            end_value *= time_unit_factor;
-            break;
-          }
-          case EndCriterion::Type::time_max:
-            break;
-          case EndCriterion::Type::mass_below:
-          {
-            useful::read(input, end_value);
-            break;
-          }
-          case EndCriterion::Type::mass_above:
-          {
-            useful::read(input, end_value);
-            break;
-          }
-          case EndCriterion::Type::all_absorbed:
-            break;
-          case EndCriterion::Type::one_absorbed:
-            break;
-          case EndCriterion::Type::fraction_absorbed:
-          {
-            useful::read(input, end_value);
-            break;
-          }
-          default:
-            throw std::runtime_error{
-              std::string("End criterion ")
-              + end_criterion
-              + " not supported" };
-        }
-      }
-      
-      /** \brief Read measure spacing time units from input stream. */
-      template <typename IStream,
-      typename TransportParameters,
-      typename ReactionParameters>
-      void read_time_units
-      (IStream& input,
-       TransportParameters const& params_transport,
-       ReactionParameters const& params_reaction)
-      {
-        useful::read(input, time_units);
-        switch (MeasureSpacingUnits::type(time_units))
-        {
-          case MeasureSpacingUnits::Type::diffusion:
-          {
-            time_unit_factor = params_transport.diffusion_time;
-            break;
-          }
-          case MeasureSpacingUnits::Type::advection:
-          {
-            time_unit_factor = params_transport.advection_time;
-            break;
-          }
-          case MeasureSpacingUnits::Type::reaction:
-          {
-            time_unit_factor = params_reaction.reaction_time;
-            break;
-          }
-          case MeasureSpacingUnits::Type::arbitrary:
-          {
-            time_unit_factor = 1.;
-            break;
-          }
-          default:
-            throw std::runtime_error{
-              std::string("Measure spacing units ")
-              + time_units
-              + " not supported" };
-        }
-      }
-      
-      /** \brief Read measure spacing type from input stream. */
-      template <typename IStream,
-      typename TransportParameters,
-      typename ReactionParameters>
-      void read_measure_spacing
-      (IStream& input,
-       TransportParameters const& params_transport,
-       ReactionParameters const& params_reaction)
-      {
-        useful::read(input, measure_spacing);
-        useful::read(input, time_min);
-        time_min *= time_unit_factor;
-        switch (MeasureSpacing::type(measure_spacing))
-        {
-          case MeasureSpacing::Type::step:
-          {
-            useful::read(input, time_increment);
-            time_increment *= time_unit_factor;
-            time_max = std::numeric_limits<double>::infinity();
-            break;
-          }
-          case MeasureSpacing::Type::linear:
-          {
-            useful::read(input, time_max);
-            time_max *= time_unit_factor;
-            std::size_t nr_measures;
-            useful::read(input, nr_measures);
-            time_increment = (time_max - time_min)/(nr_measures - 1);
-            break;
-          }
-          case MeasureSpacing::Type::log:
-          {
-            useful::read(input, time_max);
-            time_max *= time_unit_factor;
-            std::size_t nr_measures;
-            useful::read(input, nr_measures);
-            time_increment = std::pow(time_max/time_min, 1./(nr_measures - 1));
-            break;
-          }
-          default:
-            throw std::runtime_error{
-              std::string("Measure spacing ")
-              + measure_spacing
-              + " not supported" };
-        }
-      }
-      
-      /** \brief Read measure spacing type from input stream. */
-      template <typename IStream>
-      void read_output_types
-      (IStream& input)
-      {
-        while (1)
-        {
-          std::string measurement;
-          input >> measurement;
-          if (!input.fail())
-            measure_names.push_back(measurement);
-          else
-            break;
-        }
-      }
-    };
+    using Parameters = OutputParameters_Cases;    /**< Output parameters. */
     
     /** Constructor.
      \param subject CTRW object to measure.
@@ -625,7 +630,7 @@ namespace ptof
      \param directories Current case directory information.
      \param parameters Output parameters.
      \param identifier String to include in names of output files.
-     \param masks Vector of pointers to Masks. Masks are scalar fields assigning values to mesh cell indices through operator[].
+     \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
      \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered.
      \param precision Number of digits after decimal point in output, in scientific notation.
      \param delimiter Delimiter between output values on same line.
@@ -638,7 +643,7 @@ namespace ptof
      Directories const& directories,
      Parameters parameters,
      std::string const& identifier,
-     std::vector<Mask const*> masks = {},
+     std::vector<std::reference_wrapper<const Mask>> masks = {},
      std::vector<double> thresholds = {},
      int precision = 8, std::string delimiter = "\t")
     : parameters{ parameters }
@@ -652,6 +657,69 @@ namespace ptof
       set_end_criterion();
       set_next_measure_time();
     }
+    
+    /** Constructor.
+     \brief Overload for initializer list arguments.
+    */
+    template <typename Mask>
+    Output_Cases
+    (Subject const& subject,
+     VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Directories const& directories,
+     Parameters parameters,
+     std::string const& identifier,
+     std::initializer_list<std::reference_wrapper<const Mask>> masks,
+     std::initializer_list<double> thresholds = {},
+     int precision = 8, std::string delimiter = "\t")
+    : Output_Cases(subject, velocity_field, geometry, directories,
+                   parameters, identifier,
+                   std::vector<std::reference_wrapper<const Mask>>(masks),
+                   std::vector<double>(thresholds),
+                   precision, delimiter)
+    {}
+    
+    /** Constructor.
+     \brief Overload for initializer list arguments.
+    */
+    template <typename Mask>
+    Output_Cases
+    (Subject const& subject,
+     VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Directories const& directories,
+     Parameters parameters,
+     std::string const& identifier,
+     std::vector<std::reference_wrapper<const Mask>> masks,
+     std::initializer_list<double> thresholds = {},
+     int precision = 8, std::string delimiter = "\t")
+    : Output_Cases(subject, velocity_field, geometry, directories,
+                   parameters, identifier,
+                   masks,
+                   std::vector<double>(thresholds),
+                   precision, delimiter)
+    {}
+    
+    /** Constructor.
+     \brief Overload for initializer list arguments.
+    */
+    template <typename Mask>
+    Output_Cases
+    (Subject const& subject,
+     VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Directories const& directories,
+     Parameters parameters,
+     std::string const& identifier,
+     std::initializer_list<std::reference_wrapper<const Mask>> masks,
+     std::vector<double> thresholds = {},
+     int precision = 8, std::string delimiter = "\t")
+    : Output_Cases(subject, velocity_field, geometry, directories,
+                   parameters, identifier,
+                   std::vector<std::reference_wrapper<const Mask>>(masks),
+                   thresholds,
+                   precision, delimiter)
+    {}
     
     /** \return \c true  if end simulation criterion is satisfied, \c false otherwise. */
     bool done(double time) const
@@ -748,7 +816,7 @@ namespace ptof
     /** \brief Set up output streams for requested output types.
      \param directories Current case directory information.
      \param identifier String to include in names of output files.
-     \param masks Vector of pointers to Masks. Masks are scalar fields assigning values to mesh cell indices through operator[].
+     \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
      \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered.
      \param precision Number of digits after decimal point in output, in scientific notation.
      \param delimiter Delimiter between output values on same line. */
@@ -756,7 +824,7 @@ namespace ptof
     void set_measure_types
     (Directories const& directories,
      std::string const& identifier,
-     std::vector<Mask const*> masks = {},
+     std::vector<std::reference_wrapper<const Mask>> masks = {},
      std::vector<double> thresholds = {},
      int precision = 8,
      std::string delimiter = "\t")
@@ -1279,7 +1347,7 @@ namespace ptof
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       std::vector<Mask const*> masks,
+       std::vector<std::reference_wrapper<const Mask>> masks,
        std::vector<double> thresholds = {},
        int precision = 8,
        std::string delimiter = "\t")
@@ -1305,7 +1373,7 @@ namespace ptof
               if (!state.info.absorbed
                   && part.state_old().time <= time
                   && cell >= 0
-                  && (*masks[ii])[cell] > thresholds[ii])
+                  && masks[ii].get()[cell] > thresholds[ii])
               {
                 OutputTime::_output << OutputTime::_delimiter << state.tag;
                 useful::print(OutputTime::_output, state.position,
@@ -1318,7 +1386,7 @@ namespace ptof
         OutputTime::_output << "\n";
       }
       
-      std::vector<Mask const*> masks;
+      std::vector<std::reference_wrapper<const Mask>> masks;
       std::vector<double> thresholds;
     };
     
@@ -1452,7 +1520,7 @@ namespace ptof
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       std::vector<Mask const*> masks,
+       std::vector<std::reference_wrapper<const Mask>> masks,
        std::vector<double> thresholds = {},
        int precision = 8,
        std::string delimiter = "\t")
@@ -1480,7 +1548,7 @@ namespace ptof
         }
       }
       
-      std::vector<Mask const*> masks;
+      std::vector<std::reference_wrapper<const Mask>> masks;
       std::vector<double> thresholds;
     };
         

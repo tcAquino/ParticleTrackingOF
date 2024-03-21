@@ -116,8 +116,8 @@ Public Types</h2></td></tr>
 <tr class="separator:aa8ab478b2c30def3fd1c9fabd882c4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5676edc418d01ea86c350b06895db0c9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Locator</a> = <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt; SearchOption &gt;</td></tr>
 <tr class="separator:a5676edc418d01ea86c350b06895db0c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ac0160fc627140fb7f0ac1d90ab519e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7ac0160fc627140fb7f0ac1d90ab519e">BoundaryInfo</a> = std::conditional_t&lt; dynamics==<a class="el" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#aca3e35639dc3bdb3f5e916623a6d0298a7b334b7260361141659fa9862e803476">BoundaryConditionSet::Type::transport</a>, <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a>, <a class="el" href="../../de/dbb/structptof_1_1_store___absorbed___reinjections.html">Store_Absorbed_Reinjections</a> &gt;</td></tr>
-<tr class="separator:a7ac0160fc627140fb7f0ac1d90ab519e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad41ba48b8ae676023afb6d441f524739"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#ad41ba48b8ae676023afb6d441f524739">BoundaryInfo</a> = std::conditional_t&lt; dynamics==<a class="el" href="../../d9/d9c/structptof_1_1_dynamics.html#a56660dfe4a836f51ac8ab5c85da3dba9a7b334b7260361141659fa9862e803476">Dynamics::Type::transport</a>, <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a>, <a class="el" href="../../de/dbb/structptof_1_1_store___absorbed___reinjections.html">Store_Absorbed_Reinjections</a> &gt;</td></tr>
+<tr class="separator:ad41ba48b8ae676023afb6d441f524739"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -160,22 +160,22 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a9a14bf698e69de6ee8902e60ff5117ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
+<div class="textblock"><h3>template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
 class ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</h3>
 
 <p>Basic geometry class. </p>
 <dl class="section note"><dt>Note</dt><dd>Does not handle periodic boundaries. </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a7ac0160fc627140fb7f0ac1d90ab519e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ac0160fc627140fb7f0ac1d90ab519e">&#9670;&nbsp;</a></span>BoundaryInfo</h2>
+<a id="ad41ba48b8ae676023afb6d441f524739"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad41ba48b8ae676023afb6d441f524739">&#9670;&nbsp;</a></span>BoundaryInfo</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7ac0160fc627140fb7f0ac1d90ab519e">BoundaryInfo</a> =  std::conditional_t&lt; dynamics == <a class="el" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#aca3e35639dc3bdb3f5e916623a6d0298a7b334b7260361141659fa9862e803476">BoundaryConditionSet::Type::transport</a>, <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a>, <a class="el" href="../../de/dbb/structptof_1_1_store___absorbed___reinjections.html">Store_Absorbed_Reinjections</a>&gt;</td>
+          <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#ad41ba48b8ae676023afb6d441f524739">BoundaryInfo</a> =  std::conditional_t&lt;dynamics == <a class="el" href="../../d9/d9c/structptof_1_1_dynamics.html#a56660dfe4a836f51ac8ab5c85da3dba9a7b334b7260361141659fa9862e803476">Dynamics::Type::transport</a>, <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a>, <a class="el" href="../../de/dbb/structptof_1_1_store___absorbed___reinjections.html">Store_Absorbed_Reinjections</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -189,7 +189,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Locator</a> =  <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt;SearchOption&gt;</td>
@@ -206,7 +206,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0">Mesh</a> =  Foam::fvMesh</td>
@@ -223,7 +223,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::<a class="el" href="../../dc/d30/structptof_1_1_geometry.html#aa8ab478b2c30def3fd1c9fabd882c4f4">MeshSearch</a> =  Foam::meshSearch</td>
@@ -241,7 +241,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -289,7 +289,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -323,9 +323,9 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dc/d30/structptof_1_1_geometry_a2b2eef30359a22b6b663624a2c07738d_cgraph.png" border="0" usemap="#adc/d30/structptof_1_1_geometry_a2b2eef30359a22b6b663624a2c07738d_cgraph" alt=""/></div>
 <map name="adc/d30/structptof_1_1_geometry_a2b2eef30359a22b6b663624a2c07738d_cgraph" id="adc/d30/structptof_1_1_geometry_a2b2eef30359a22b6b663624a2c07738d_cgraph">
-<area shape="rect" title="Output generic information about object." alt="" coords="5,13,157,39"/>
-<area shape="rect" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#ae4b805c7178f0d594b3db35598163f14" title="Get name from type." alt="" coords="205,5,405,47"/>
-<area shape="rect" href="../../d6/dd9/structptof_1_1_boundary_condition_set.html#a23926c77c9abc34791f92d6332afba90" title="Get type from name." alt="" coords="453,5,653,47"/>
+<area shape="rect" title="Output generic information about object." alt="" coords="5,5,157,32"/>
+<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="205,5,371,32"/>
+<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="419,5,576,32"/>
 </map>
 </div>
 
@@ -337,7 +337,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -378,7 +378,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
@@ -461,7 +461,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -501,7 +501,7 @@ Here is the caller graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -526,7 +526,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -551,7 +551,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -576,7 +576,7 @@ template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryC
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t dim_val, BoundaryConditionSet::Type dynamics = BoundaryConditionSet::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;std::size_t dim_val, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Locator</a> <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a>&lt; dim_val, dynamics, SearchOption &gt;::locator { <a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a9a14bf698e69de6ee8902e60ff5117ad">_mesh_search</a> }</td>

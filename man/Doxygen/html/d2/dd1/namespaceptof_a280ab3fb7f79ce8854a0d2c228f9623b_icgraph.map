@@ -1,8 +1,8 @@
 <map id="ptof::uniform_near_boundary_faces" name="ptof::uniform_near_boundary_faces">
 <area shape="rect" id="node1" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="869,39,1012,80"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aa1062e337b7efe1d9b1e030955fa46f6" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="673,39,821,80"/>
-<area shape="rect" id="node3" href="$db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="451,39,625,80"/>
-<area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
-<area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aeda63116f887b549df7f4bfb7f0ad283" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>
-<area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a10c229da4e32ffd7db3c9a3c705dc186" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
+<area shape="rect" id="node3" href="$db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="451,39,625,80"/>
+<area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
+<area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>
+<area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
 </map>

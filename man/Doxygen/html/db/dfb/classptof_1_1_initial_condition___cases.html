@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,29 +84,31 @@ $(document).ready(function(){initNavTree('db/dfb/classptof_1_1_initial_condition
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt; Class Template Reference</div>  </div>
+<div class="title">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>InitialCondition object to handle implemented initial condition types.  
  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d9/d92/_initial_conditions_8h_source.html">PTOF/InitialConditions.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d6/d44/_initial_condition_8h_source.html">PTOF/InitialCondition.h</a>&quot;</code></p>
 <div class="dynheader">
-Collaboration diagram for ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;:</div>
+Collaboration diagram for ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/d5d/classptof_1_1_initial_condition___cases__coll__graph.png" border="0" usemap="#aptof_1_1_initial_condition___cases_3_01_geometry_00_01_velocity_field_00_01_particle_maker_00_01_parameters_00_01_mask_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aptof_1_1_initial_condition___cases_3_01_geometry_00_01_velocity_field_00_01_particle_maker_00_01_parameters_00_01_mask_01_4_coll__map" id="aptof_1_1_initial_condition___cases_3_01_geometry_00_01_velocity_field_00_01_particle_maker_00_01_parameters_00_01_mask_01_4_coll__map">
-<area shape="rect" title="InitialCondition object to handle implemented initial condition types." alt="" coords="408,129,663,185"/>
-<area shape="rect" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="71,5,183,32"/>
-<area shape="rect" href="../../dd/dc8/structptof_1_1_output___cases_1_1_parameters.html" title=" " alt="" coords="33,56,221,112"/>
-<area shape="rect" href="../../da/dae/structptof_1_1_particle_maker.html" title="Functor to make particles given position." alt="" coords="49,137,205,178"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="57,202,196,243"/>
-<area shape="rect" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html" title=" " alt="" coords="5,267,248,338"/>
+<div class="center"><img src="../../db/d5d/classptof_1_1_initial_condition___cases__coll__graph.png" border="0" usemap="#aptof_1_1_initial_condition___cases_3_01_geometry_00_01_velocity_field_00_01_particle_maker_00_01_mask_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aptof_1_1_initial_condition___cases_3_01_geometry_00_01_velocity_field_00_01_particle_maker_00_01_mask_01_4_coll__map" id="aptof_1_1_initial_condition___cases_3_01_geometry_00_01_velocity_field_00_01_particle_maker_00_01_mask_01_4_coll__map">
+<area shape="rect" title="InitialCondition object to handle implemented initial condition types." alt="" coords="437,115,680,171"/>
+<area shape="rect" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html" title="Initial condition condition parameters to handle all initial condition types in InitialCondition_Case..." alt="" coords="27,5,255,47"/>
+<area shape="rect" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="85,71,197,98"/>
+<area shape="rect" href="../../da/dae/structptof_1_1_particle_maker.html" title="Functor to make particles given position." alt="" coords="63,123,219,164"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="72,188,211,229"/>
+<area shape="rect" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html" title=" " alt="" coords="5,254,277,310"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -115,81 +117,107 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html">PositionMaker</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:acc000dfa2f40f0e5d80aee5fc170fc4f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> = <a class="el" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html">InitialConditionParameters_Cases</a></td></tr>
+<tr class="separator:acc000dfa2f40f0e5d80aee5fc170fc4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad1da03e9429278952be860ac3ea65f32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ad1da03e9429278952be860ac3ea65f32">InitialCondition_Cases</a> (<a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, VelocityField const &amp;velocity_field, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a> particle_maker, std::size_t nr_particles, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;parameters)</td></tr>
-<tr class="separator:ad1da03e9429278952be860ac3ea65f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4789495b538384351f57292491ca3248"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a4789495b538384351f57292491ca3248">InitialCondition_Cases</a> (<a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, VelocityField const &amp;velocity_field, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a> particle_maker, std::size_t nr_particles, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;parameters, Mask const &amp;mask, double threshold=0.)</td></tr>
-<tr class="separator:a4789495b538384351f57292491ca3248"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeda63116f887b549df7f4bfb7f0ad283"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aeda63116f887b549df7f4bfb7f0ad283">operator()</a> (std::size_t nr_particles)</td></tr>
-<tr class="memdesc:aeda63116f887b549df7f4bfb7f0ad283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make particles according to prescribed initial condition and particle maker.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aeda63116f887b549df7f4bfb7f0ad283">More...</a><br /></td></tr>
-<tr class="separator:aeda63116f887b549df7f4bfb7f0ad283"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fce4d5fde49361e792f5d28e8f51bf2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2fce4d5fde49361e792f5d28e8f51bf2">operator()</a> ()</td></tr>
-<tr class="memdesc:a2fce4d5fde49361e792f5d28e8f51bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make particles according to prescribed initial condition and particle maker, with <code>nr_particles</code> particles as specified in <code>parameters</code>.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2fce4d5fde49361e792f5d28e8f51bf2">More...</a><br /></td></tr>
-<tr class="separator:a2fce4d5fde49361e792f5d28e8f51bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a732c1cce5ceb03355043d04ae7d78671"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a732c1cce5ceb03355043d04ae7d78671">make_particle</a> ()</td></tr>
-<tr class="memdesc:a732c1cce5ceb03355043d04ae7d78671"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a single particle according to prescribed initial condition and particle maker.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a732c1cce5ceb03355043d04ae7d78671">More...</a><br /></td></tr>
-<tr class="separator:a732c1cce5ceb03355043d04ae7d78671"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c5fb30eca27303b8c200902c91f068d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d">make_positions</a> (std::size_t nr_positions)</td></tr>
-<tr class="memdesc:a2c5fb30eca27303b8c200902c91f068d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make positions according to prescribed initial condition.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d">More...</a><br /></td></tr>
-<tr class="separator:a2c5fb30eca27303b8c200902c91f068d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10c229da4e32ffd7db3c9a3c705dc186"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a10c229da4e32ffd7db3c9a3c705dc186">make_position</a> ()</td></tr>
-<tr class="memdesc:a10c229da4e32ffd7db3c9a3c705dc186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a single position according to prescribed initial condition and particle maker.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a10c229da4e32ffd7db3c9a3c705dc186">More...</a><br /></td></tr>
-<tr class="separator:a10c229da4e32ffd7db3c9a3c705dc186"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0c2b5318d8210b78c36862a68082014"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:ac0c2b5318d8210b78c36862a68082014"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ac0c2b5318d8210b78c36862a68082014">info_runtime</a> (OStream &amp;output) const</td></tr>
-<tr class="memdesc:ac0c2b5318d8210b78c36862a68082014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ac0c2b5318d8210b78c36862a68082014">More...</a><br /></td></tr>
-<tr class="separator:ac0c2b5318d8210b78c36862a68082014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d304132ea139a9fca4a88f522fe2858"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a7d304132ea139a9fca4a88f522fe2858">InitialCondition_Cases</a> (<a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, VelocityField const &amp;velocity_field, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a> particle_maker, std::size_t nr_particles, <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> const &amp;<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a310fed4781661220ab24b9894396b248">parameters</a>)</td></tr>
+<tr class="separator:a7d304132ea139a9fca4a88f522fe2858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae13732bfb890cafead7c40626aeef775"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ae13732bfb890cafead7c40626aeef775">InitialCondition_Cases</a> (<a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, VelocityField const &amp;velocity_field, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a> particle_maker, std::size_t nr_particles, <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> const &amp;<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a310fed4781661220ab24b9894396b248">parameters</a>, Mask &amp;&amp;mask, double threshold=0.)</td></tr>
+<tr class="separator:ae13732bfb890cafead7c40626aeef775"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c958f9fd3216cf66c87beb4c251e29f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f">operator()</a> (std::size_t nr_particles)</td></tr>
+<tr class="memdesc:a4c958f9fd3216cf66c87beb4c251e29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make particles according to prescribed initial condition and particle maker.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f">More...</a><br /></td></tr>
+<tr class="separator:a4c958f9fd3216cf66c87beb4c251e29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a667d93399289329f1741ad10da0fdd70"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a667d93399289329f1741ad10da0fdd70">operator()</a> ()</td></tr>
+<tr class="memdesc:a667d93399289329f1741ad10da0fdd70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make particles according to prescribed initial condition and particle maker, with <code>nr_particles</code> particles as specified in <code>parameters</code>.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a667d93399289329f1741ad10da0fdd70">More...</a><br /></td></tr>
+<tr class="separator:a667d93399289329f1741ad10da0fdd70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e389aa5912f5a2999558a4c0c70c9a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a17e389aa5912f5a2999558a4c0c70c9a">make_particle</a> ()</td></tr>
+<tr class="memdesc:a17e389aa5912f5a2999558a4c0c70c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a single particle according to prescribed initial condition and particle maker.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a17e389aa5912f5a2999558a4c0c70c9a">More...</a><br /></td></tr>
+<tr class="separator:a17e389aa5912f5a2999558a4c0c70c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff6c122b2e5bca61cc0561af804334ce"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce">make_positions</a> (std::size_t nr_positions)</td></tr>
+<tr class="memdesc:aff6c122b2e5bca61cc0561af804334ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make positions according to prescribed initial condition.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce">More...</a><br /></td></tr>
+<tr class="separator:aff6c122b2e5bca61cc0561af804334ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0649dea52e39c2356e1419705213082b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b">make_position</a> ()</td></tr>
+<tr class="memdesc:a0649dea52e39c2356e1419705213082b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a single position according to prescribed initial condition and particle maker.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b">More...</a><br /></td></tr>
+<tr class="separator:a0649dea52e39c2356e1419705213082b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12af326efbe388ed5595039042fa6563"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
+<tr class="memitem:a12af326efbe388ed5595039042fa6563"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a12af326efbe388ed5595039042fa6563">info_runtime</a> (OStream &amp;output) const</td></tr>
+<tr class="memdesc:a12af326efbe388ed5595039042fa6563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a12af326efbe388ed5595039042fa6563">More...</a><br /></td></tr>
+<tr class="separator:a12af326efbe388ed5595039042fa6563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a310fed4781661220ab24b9894396b248"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a310fed4781661220ab24b9894396b248">parameters</a></td></tr>
+<tr class="separator:a310fed4781661220ab24b9894396b248"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:ab58c221be4492c9ac66689090d015fcf"><td class="memTemplParams" colspan="2">template&lt;typename ParticleMakerOther &gt; </td></tr>
-<tr class="memitem:ab58c221be4492c9ac66689090d015fcf"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf">make_particles</a> (std::size_t nr_particles, <a class="el" href="../../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94c">InitialConditions::Type</a> type, ParticleMakerOther &amp;particle_maker)</td></tr>
-<tr class="memdesc:ab58c221be4492c9ac66689090d015fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make given number of particles.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf">More...</a><br /></td></tr>
-<tr class="separator:ab58c221be4492c9ac66689090d015fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acde3c58c20a25e1957e6913e548ee5d0"><td class="memTemplParams" colspan="2">template&lt;typename ParticleMakerOther &gt; </td></tr>
+<tr class="memitem:acde3c58c20a25e1957e6913e548ee5d0"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0">make_particles</a> (std::size_t nr_particles, <a class="el" href="../../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94c">InitialConditions::Type</a> type, ParticleMakerOther &amp;particle_maker)</td></tr>
+<tr class="memdesc:acde3c58c20a25e1957e6913e548ee5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make given number of particles.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0">More...</a><br /></td></tr>
+<tr class="separator:acde3c58c20a25e1957e6913e548ee5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a6ccebf4a570cc7f455845f91e8652451"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0">Geometry::Mesh</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a6ccebf4a570cc7f455845f91e8652451">_mesh</a></td></tr>
-<tr class="separator:a6ccebf4a570cc7f455845f91e8652451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38960e2cf3c1138fa677bee8e43420e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Geometry::Locator</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a38960e2cf3c1138fa677bee8e43420e4">_locator</a></td></tr>
-<tr class="separator:a38960e2cf3c1138fa677bee8e43420e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a074928c5294d86cd87a2b2d5595bf3e0"><td class="memItemLeft" align="right" valign="top">VelocityField const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a074928c5294d86cd87a2b2d5595bf3e0">_velocity_field</a></td></tr>
-<tr class="separator:a074928c5294d86cd87a2b2d5595bf3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a868cf49e6b2b6492cc0ef6b0bd8dd8b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a868cf49e6b2b6492cc0ef6b0bd8dd8b3">_particle_maker</a></td></tr>
-<tr class="separator:a868cf49e6b2b6492cc0ef6b0bd8dd8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada7b7c075ca552243f2acba28b8f7989"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ada7b7c075ca552243f2acba28b8f7989">_nr_particles</a></td></tr>
-<tr class="separator:ada7b7c075ca552243f2acba28b8f7989"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e5f6d09e764b0f0bd8c2e3e496b264c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a3e5f6d09e764b0f0bd8c2e3e496b264c">_parameters</a></td></tr>
-<tr class="separator:a3e5f6d09e764b0f0bd8c2e3e496b264c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4b15fc6e771bd9221a127b068d82fc6"><td class="memItemLeft" align="right" valign="top">std::mt19937&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aa4b15fc6e771bd9221a127b068d82fc6">_rng</a> { std::random_device{}() }</td></tr>
-<tr class="separator:aa4b15fc6e771bd9221a127b068d82fc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a366818235461553e5855372022043708"><td class="memItemLeft" align="right" valign="top">Mask&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a366818235461553e5855372022043708">_mask</a> { <a class="el" href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a>{} }</td></tr>
-<tr class="separator:a366818235461553e5855372022043708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21a745b93da27dfc6113ab1a332f14f3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a21a745b93da27dfc6113ab1a332f14f3">_threshold</a> { 0. }</td></tr>
-<tr class="separator:a21a745b93da27dfc6113ab1a332f14f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bbed7c0360341927e8d3b8b3a924287"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html">ptof::InitialCondition_Cases::PositionMaker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a3bbed7c0360341927e8d3b8b3a924287">_position_maker</a></td></tr>
-<tr class="separator:a3bbed7c0360341927e8d3b8b3a924287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06c8b2eb4182f82175dbef3e2b9a1a00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0">Geometry::Mesh</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a06c8b2eb4182f82175dbef3e2b9a1a00">_mesh</a></td></tr>
+<tr class="separator:a06c8b2eb4182f82175dbef3e2b9a1a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7076d52e07de85ad9b7a40e39ec5d020"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Geometry::Locator</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a7076d52e07de85ad9b7a40e39ec5d020">_locator</a></td></tr>
+<tr class="separator:a7076d52e07de85ad9b7a40e39ec5d020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a224be13ba7cc3ed7ffd383654a827eed"><td class="memItemLeft" align="right" valign="top">VelocityField const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a224be13ba7cc3ed7ffd383654a827eed">_velocity_field</a></td></tr>
+<tr class="separator:a224be13ba7cc3ed7ffd383654a827eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cf16886a8853328e8af9e467651f2da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a3cf16886a8853328e8af9e467651f2da">_particle_maker</a></td></tr>
+<tr class="separator:a3cf16886a8853328e8af9e467651f2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65323f5b200f0986bf33ba76f8b07de6"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a65323f5b200f0986bf33ba76f8b07de6">_nr_particles</a></td></tr>
+<tr class="separator:a65323f5b200f0986bf33ba76f8b07de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23814b8b4fdca227dd18aceedfbd6b7"><td class="memItemLeft" align="right" valign="top">std::mt19937&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aa23814b8b4fdca227dd18aceedfbd6b7">_rng</a> { std::random_device{}() }</td></tr>
+<tr class="separator:aa23814b8b4fdca227dd18aceedfbd6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95b3a1ae5e8c41d1085dfdfd90b6627"><td class="memItemLeft" align="right" valign="top">Mask&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ad95b3a1ae5e8c41d1085dfdfd90b6627">_mask</a> {}</td></tr>
+<tr class="separator:ad95b3a1ae5e8c41d1085dfdfd90b6627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeed8f7fc02565459bb8b506b615dcb0b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aeed8f7fc02565459bb8b506b615dcb0b">_threshold</a> { 0. }</td></tr>
+<tr class="separator:aeed8f7fc02565459bb8b506b615dcb0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3934c904771ba378ae0985c90c3855aa"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html">ptof::InitialCondition_Cases::PositionMaker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a3934c904771ba378ae0985c90c3855aa">_position_maker</a></td></tr>
+<tr class="separator:a3934c904771ba378ae0985c90c3855aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Geometry, typename VelocityField, typename ParticleMaker, typename Parameters, typename Mask = useful::Empty&gt;<br />
-class ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;</h3>
+<div class="textblock"><h3>template&lt;typename Geometry, typename VelocityField, typename ParticleMaker, typename Mask = useful::Empty&gt;<br />
+class ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</h3>
 
 <p>InitialCondition object to handle implemented initial condition types. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad1da03e9429278952be860ac3ea65f32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1da03e9429278952be860ac3ea65f32">&#9670;&nbsp;</a></span>InitialCondition_Cases() <span class="overload">[1/2]</span></h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="acc000dfa2f40f0e5d80aee5fc170fc4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc000dfa2f40f0e5d80aee5fc170fc4f">&#9670;&nbsp;</a></span>Parameters</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> =  <a class="el" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html">InitialConditionParameters_Cases</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial condition parameters. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7d304132ea139a9fca4a88f522fe2858"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d304132ea139a9fca4a88f522fe2858">&#9670;&nbsp;</a></span>InitialCondition_Cases() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">InitialCondition_Cases</a> </td>
+          <td class="memname"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">InitialCondition_Cases</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
@@ -215,7 +243,7 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> const &amp;&#160;</td>
           <td class="paramname"><em>parameters</em>&#160;</td>
         </tr>
         <tr>
@@ -243,19 +271,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a4789495b538384351f57292491ca3248"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4789495b538384351f57292491ca3248">&#9670;&nbsp;</a></span>InitialCondition_Cases() <span class="overload">[2/2]</span></h2>
+<a id="ae13732bfb890cafead7c40626aeef775"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae13732bfb890cafead7c40626aeef775">&#9670;&nbsp;</a></span>InitialCondition_Cases() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">InitialCondition_Cases</a> </td>
+          <td class="memname"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::<a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">InitialCondition_Cases</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
@@ -281,13 +309,13 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> const &amp;&#160;</td>
           <td class="paramname"><em>parameters</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Mask const &amp;&#160;</td>
+          <td class="paramtype">Mask &amp;&amp;&#160;</td>
           <td class="paramname"><em>mask</em>, </td>
         </tr>
         <tr>
@@ -324,13 +352,13 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac0c2b5318d8210b78c36862a68082014"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0c2b5318d8210b78c36862a68082014">&#9670;&nbsp;</a></span>info_runtime()</h2>
+<a id="a12af326efbe388ed5595039042fa6563"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12af326efbe388ed5595039042fa6563">&#9670;&nbsp;</a></span>info_runtime()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -338,7 +366,7 @@ template&lt;typename OStream &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::info_runtime </td>
+          <td class="memname">void <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::info_runtime </td>
           <td>(</td>
           <td class="paramtype">OStream &amp;&#160;</td>
           <td class="paramname"><em>output</em></td><td>)</td>
@@ -356,8 +384,8 @@ template&lt;typename OStream &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_ac0c2b5318d8210b78c36862a68082014_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_ac0c2b5318d8210b78c36862a68082014_cgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_ac0c2b5318d8210b78c36862a68082014_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_ac0c2b5318d8210b78c36862a68082014_cgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a12af326efbe388ed5595039042fa6563_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a12af326efbe388ed5595039042fa6563_cgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_a12af326efbe388ed5595039042fa6563_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a12af326efbe388ed5595039042fa6563_cgraph">
 <area shape="rect" title="Output information about current object." alt="" coords="5,5,164,47"/>
 <area shape="rect" href="../../d5/d77/structptof_1_1_initial_conditions.html#ae02f386901fa33ae454e041e53e4da1a" title=" " alt="" coords="212,5,373,47"/>
 <area shape="rect" href="../../d5/d77/structptof_1_1_initial_conditions.html#ab875f1de2b50d662c4db29c115b49259" title=" " alt="" coords="421,5,583,47"/>
@@ -366,19 +394,19 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a732c1cce5ceb03355043d04ae7d78671"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a732c1cce5ceb03355043d04ae7d78671">&#9670;&nbsp;</a></span>make_particle()</h2>
+<a id="a17e389aa5912f5a2999558a4c0c70c9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17e389aa5912f5a2999558a4c0c70c9a">&#9670;&nbsp;</a></span>make_particle()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::make_particle </td>
+          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::make_particle </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -397,22 +425,22 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a732c1cce5ceb03355043d04ae7d78671_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a732c1cce5ceb03355043d04ae7d78671_cgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_a732c1cce5ceb03355043d04ae7d78671_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a732c1cce5ceb03355043d04ae7d78671_cgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a17e389aa5912f5a2999558a4c0c70c9a_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a17e389aa5912f5a2999558a4c0c70c9a_cgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_a17e389aa5912f5a2999558a4c0c70c9a_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a17e389aa5912f5a2999558a4c0c70c9a_cgraph">
 <area shape="rect" title="Make a single particle according to prescribed initial condition and particle maker." alt="" coords="5,5,173,47"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2fce4d5fde49361e792f5d28e8f51bf2" title="Make particles according to prescribed initial condition and particle maker, with nr_particles partic..." alt="" coords="221,5,376,47"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a667d93399289329f1741ad10da0fdd70" title="Make particles according to prescribed initial condition and particle maker, with nr_particles partic..." alt="" coords="221,5,376,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ab58c221be4492c9ac66689090d015fcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab58c221be4492c9ac66689090d015fcf">&#9670;&nbsp;</a></span>make_particles()</h2>
+<a id="acde3c58c20a25e1957e6913e548ee5d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acde3c58c20a25e1957e6913e548ee5d0">&#9670;&nbsp;</a></span>make_particles()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <div class="memtemplate">
 template&lt;typename ParticleMakerOther &gt; </div>
 <table class="mlabels">
@@ -420,7 +448,7 @@ template&lt;typename ParticleMakerOther &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::make_particles </td>
+          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::make_particles </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>nr_particles</em>, </td>
@@ -463,8 +491,8 @@ template&lt;typename ParticleMakerOther &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_cgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_cgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_cgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_cgraph">
 <area shape="rect" title="Make given number of particles." alt="" coords="5,315,180,357"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="255,33,390,60"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="473,83,625,125"/>
@@ -509,30 +537,30 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_icgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_icgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_icgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_ab58c221be4492c9ac66689090d015fcf_icgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_icgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_icgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_icgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_acde3c58c20a25e1957e6913e548ee5d0_icgraph">
 <area shape="rect" title="Make given number of particles." alt="" coords="451,39,625,80"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aeda63116f887b549df7f4bfb7f0ad283" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a10c229da4e32ffd7db3c9a3c705dc186" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a10c229da4e32ffd7db3c9a3c705dc186"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10c229da4e32ffd7db3c9a3c705dc186">&#9670;&nbsp;</a></span>make_position()</h2>
+<a id="a0649dea52e39c2356e1419705213082b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0649dea52e39c2356e1419705213082b">&#9670;&nbsp;</a></span>make_position()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::make_position </td>
+          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::make_position </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -551,11 +579,11 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a10c229da4e32ffd7db3c9a3c705dc186_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a10c229da4e32ffd7db3c9a3c705dc186_cgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_a10c229da4e32ffd7db3c9a3c705dc186_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a10c229da4e32ffd7db3c9a3c705dc186_cgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a0649dea52e39c2356e1419705213082b_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a0649dea52e39c2356e1419705213082b_cgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_a0649dea52e39c2356e1419705213082b_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a0649dea52e39c2356e1419705213082b_cgraph">
 <area shape="rect" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,315,176,357"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a2c5fb30eca27303b8c200902c91f068d" title="Make positions according to prescribed initial condition." alt="" coords="224,315,403,357"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="451,315,625,357"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,315,403,357"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="451,315,625,357"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="701,33,835,60"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="918,83,1070,125"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a423f1c66f72fe07e0545aba4ecee8c56" title="Maker particles over a time window according to given pulse properties." alt="" coords="673,528,863,555"/>
@@ -599,19 +627,19 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a2c5fb30eca27303b8c200902c91f068d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c5fb30eca27303b8c200902c91f068d">&#9670;&nbsp;</a></span>make_positions()</h2>
+<a id="aff6c122b2e5bca61cc0561af804334ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff6c122b2e5bca61cc0561af804334ce">&#9670;&nbsp;</a></span>make_positions()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::make_positions </td>
+          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::make_positions </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>nr_positions</em></td><td>)</td>
@@ -637,10 +665,10 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_cgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_cgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_cgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_cgraph">
 <area shape="rect" title="Make positions according to prescribed initial condition." alt="" coords="5,315,184,357"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="232,315,407,357"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="232,315,407,357"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="482,33,617,60"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="699,83,851,125"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a423f1c66f72fe07e0545aba4ecee8c56" title="Maker particles over a time window according to given pulse properties." alt="" coords="455,528,644,555"/>
@@ -684,28 +712,28 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_icgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_icgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_icgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a2c5fb30eca27303b8c200902c91f068d_icgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_icgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_icgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_icgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_aff6c122b2e5bca61cc0561af804334ce_icgraph">
 <area shape="rect" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a10c229da4e32ffd7db3c9a3c705dc186" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a2fce4d5fde49361e792f5d28e8f51bf2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fce4d5fde49361e792f5d28e8f51bf2">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+<a id="a667d93399289329f1741ad10da0fdd70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a667d93399289329f1741ad10da0fdd70">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::operator() </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -724,28 +752,28 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a2fce4d5fde49361e792f5d28e8f51bf2_icgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a2fce4d5fde49361e792f5d28e8f51bf2_icgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_a2fce4d5fde49361e792f5d28e8f51bf2_icgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a2fce4d5fde49361e792f5d28e8f51bf2_icgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a667d93399289329f1741ad10da0fdd70_icgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a667d93399289329f1741ad10da0fdd70_icgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_a667d93399289329f1741ad10da0fdd70_icgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a667d93399289329f1741ad10da0fdd70_icgraph">
 <area shape="rect" title="Make particles according to prescribed initial condition and particle maker, with nr_particles partic..." alt="" coords="221,5,376,47"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a732c1cce5ceb03355043d04ae7d78671" title="Make a single particle according to prescribed initial condition and particle maker." alt="" coords="5,5,173,47"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a17e389aa5912f5a2999558a4c0c70c9a" title="Make a single particle according to prescribed initial condition and particle maker." alt="" coords="5,5,173,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aeda63116f887b549df7f4bfb7f0ad283"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeda63116f887b549df7f4bfb7f0ad283">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+<a id="a4c958f9fd3216cf66c87beb4c251e29f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c958f9fd3216cf66c87beb4c251e29f">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>nr_particles</em></td><td>)</td>
@@ -771,10 +799,10 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_aeda63116f887b549df7f4bfb7f0ad283_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_aeda63116f887b549df7f4bfb7f0ad283_cgraph" alt=""/></div>
-<map name="adb/dfb/classptof_1_1_initial_condition___cases_aeda63116f887b549df7f4bfb7f0ad283_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_aeda63116f887b549df7f4bfb7f0ad283_cgraph">
+<div class="center"><img src="../../db/dfb/classptof_1_1_initial_condition___cases_a4c958f9fd3216cf66c87beb4c251e29f_cgraph.png" border="0" usemap="#adb/dfb/classptof_1_1_initial_condition___cases_a4c958f9fd3216cf66c87beb4c251e29f_cgraph" alt=""/></div>
+<map name="adb/dfb/classptof_1_1_initial_condition___cases_a4c958f9fd3216cf66c87beb4c251e29f_cgraph" id="adb/dfb/classptof_1_1_initial_condition___cases_a4c958f9fd3216cf66c87beb4c251e29f_cgraph">
 <area shape="rect" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="5,315,160,357"/>
-<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#ab58c221be4492c9ac66689090d015fcf" title="Make given number of particles." alt="" coords="208,315,383,357"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="208,315,383,357"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="458,33,593,60"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="675,83,827,125"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a423f1c66f72fe07e0545aba4ecee8c56" title="Maker particles over a time window according to given pulse properties." alt="" coords="431,528,620,555"/>
@@ -819,19 +847,19 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a38960e2cf3c1138fa677bee8e43420e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38960e2cf3c1138fa677bee8e43420e4">&#9670;&nbsp;</a></span>_locator</h2>
+<a id="a7076d52e07de85ad9b7a40e39ec5d020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7076d52e07de85ad9b7a40e39ec5d020">&#9670;&nbsp;</a></span>_locator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Geometry::Locator</a> const&amp; <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_locator</td>
+          <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a5676edc418d01ea86c350b06895db0c9">Geometry::Locator</a> const&amp; <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_locator</td>
         </tr>
       </table>
   </td>
@@ -845,19 +873,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a366818235461553e5855372022043708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a366818235461553e5855372022043708">&#9670;&nbsp;</a></span>_mask</h2>
+<a id="ad95b3a1ae5e8c41d1085dfdfd90b6627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad95b3a1ae5e8c41d1085dfdfd90b6627">&#9670;&nbsp;</a></span>_mask</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Mask <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_mask { <a class="el" href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a>{} }</td>
+          <td class="memname">Mask <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_mask {}</td>
         </tr>
       </table>
   </td>
@@ -871,19 +899,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a6ccebf4a570cc7f455845f91e8652451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ccebf4a570cc7f455845f91e8652451">&#9670;&nbsp;</a></span>_mesh</h2>
+<a id="a06c8b2eb4182f82175dbef3e2b9a1a00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06c8b2eb4182f82175dbef3e2b9a1a00">&#9670;&nbsp;</a></span>_mesh</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0">Geometry::Mesh</a> const&amp; <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_mesh</td>
+          <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a7788849241dcda4b43e81f09a8e45be0">Geometry::Mesh</a> const&amp; <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_mesh</td>
         </tr>
       </table>
   </td>
@@ -897,19 +925,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="ada7b7c075ca552243f2acba28b8f7989"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada7b7c075ca552243f2acba28b8f7989">&#9670;&nbsp;</a></span>_nr_particles</h2>
+<a id="a65323f5b200f0986bf33ba76f8b07de6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65323f5b200f0986bf33ba76f8b07de6">&#9670;&nbsp;</a></span>_nr_particles</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_nr_particles</td>
+          <td class="memname">std::size_t <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_nr_particles</td>
         </tr>
       </table>
   </td>
@@ -922,44 +950,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a3e5f6d09e764b0f0bd8c2e3e496b264c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e5f6d09e764b0f0bd8c2e3e496b264c">&#9670;&nbsp;</a></span>_parameters</h2>
+<a id="a3cf16886a8853328e8af9e467651f2da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cf16886a8853328e8af9e467651f2da">&#9670;&nbsp;</a></span>_particle_maker</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a> <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_parameters</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Initial condition parameters. </p>
-
-</div>
-</div>
-<a id="a868cf49e6b2b6492cc0ef6b0bd8dd8b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a868cf49e6b2b6492cc0ef6b0bd8dd8b3">&#9670;&nbsp;</a></span>_particle_maker</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a> <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_particle_maker</td>
+          <td class="memname"><a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a> <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_particle_maker</td>
         </tr>
       </table>
   </td>
@@ -972,19 +975,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a3bbed7c0360341927e8d3b8b3a924287"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bbed7c0360341927e8d3b8b3a924287">&#9670;&nbsp;</a></span>_position_maker</h2>
+<a id="a3934c904771ba378ae0985c90c3855aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3934c904771ba378ae0985c90c3855aa">&#9670;&nbsp;</a></span>_position_maker</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">struct <a class="el" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html">ptof::InitialCondition_Cases::PositionMaker</a> <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_position_maker</td>
+          <td class="memname">struct <a class="el" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html">ptof::InitialCondition_Cases::PositionMaker</a> <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_position_maker</td>
         </tr>
       </table>
   </td>
@@ -996,19 +999,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="aa4b15fc6e771bd9221a127b068d82fc6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4b15fc6e771bd9221a127b068d82fc6">&#9670;&nbsp;</a></span>_rng</h2>
+<a id="aa23814b8b4fdca227dd18aceedfbd6b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23814b8b4fdca227dd18aceedfbd6b7">&#9670;&nbsp;</a></span>_rng</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::mt19937 <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_rng { std::random_device{}() }</td>
+          <td class="memname">std::mt19937 <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_rng { std::random_device{}() }</td>
         </tr>
       </table>
   </td>
@@ -1022,19 +1025,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a21a745b93da27dfc6113ab1a332f14f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21a745b93da27dfc6113ab1a332f14f3">&#9670;&nbsp;</a></span>_threshold</h2>
+<a id="aeed8f7fc02565459bb8b506b615dcb0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeed8f7fc02565459bb8b506b615dcb0b">&#9670;&nbsp;</a></span>_threshold</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_threshold { 0. }</td>
+          <td class="memname">double <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_threshold { 0. }</td>
         </tr>
       </table>
   </td>
@@ -1048,19 +1051,19 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
-<a id="a074928c5294d86cd87a2b2d5595bf3e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a074928c5294d86cd87a2b2d5595bf3e0">&#9670;&nbsp;</a></span>_velocity_field</h2>
+<a id="a224be13ba7cc3ed7ffd383654a827eed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a224be13ba7cc3ed7ffd383654a827eed">&#9670;&nbsp;</a></span>_velocity_field</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">VelocityField const&amp; <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, <a class="el" href="../../d8/d4a/struct_output___cases_1_1_parameters.html">Parameters</a>, Mask &gt;::_velocity_field</td>
+          <td class="memname">VelocityField const&amp; <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::_velocity_field</td>
         </tr>
       </table>
   </td>
@@ -1074,8 +1077,25 @@ template&lt;typename Geometry , typename VelocityField , typename ParticleMaker 
 
 </div>
 </div>
+<a id="a310fed4781661220ab24b9894396b248"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a310fed4781661220ab24b9894396b248">&#9670;&nbsp;</a></span>parameters</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Mask  = useful::Empty&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acc000dfa2f40f0e5d80aee5fc170fc4f">Parameters</a> <a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, <a class="el" href="../../da/dae/structptof_1_1_particle_maker.html">ParticleMaker</a>, Mask &gt;::parameters</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial condition parameters. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../d9/d92/_initial_conditions_8h_source.html">InitialConditions.h</a></li>
+<li>PTOF/<a class="el" href="../../d6/d44/_initial_condition_8h_source.html">InitialCondition.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -98,13 +98,15 @@ $(document).ready(function(){initNavTree('functions_i.html',''); initResizable()
 , <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ac3144e74657314c65b576a31f47d60d0">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>info()
-: <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#a2c49d3e2a82c7ca56e6bf9fe3fe395dd">ptof::DirectoriesOF</a>
+: <a class="el" href="dd/d75/classptof_1_1_bulk_reaction___do_nothing.html#aabb0e8fcba14ca825677ddca87006735">ptof::BulkReaction_DoNothing</a>
+, <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#a2c49d3e2a82c7ca56e6bf9fe3fe395dd">ptof::DirectoriesOF</a>
 , <a class="el" href="dc/d30/structptof_1_1_geometry.html#a2b2eef30359a22b6b663624a2c07738d">ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a48ee826c2aabf780c40ef722fcd0b381">ptof::Geometry_Bcc&lt; dim_val, dynamics, periodicity_type, SearchOption &gt;</a>
-, <a class="el" href="d1/d3e/structptof_1_1_geometry___bcc___parallel.html#a4af885d16adf321bfd7cfd00784fd609">ptof::Geometry_Bcc_Parallel&lt; dim_val, dynamics, periodicity_type, SearchOption &gt;</a>
+, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a61210504d01571db23029024d15cca85">ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="d1/d3e/structptof_1_1_geometry___bcc___parallel.html#a535fb71685c4e7c636721f77e9a35a93">ptof::Geometry_Bcc_Parallel&lt; periodicity, dynamics, SearchOption &gt;</a>
 , <a class="el" href="df/dfc/structptof_1_1_geometry___parallel.html#ae11e33a0fe103d94c2cec756fba78550">ptof::Geometry_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ac9f710c612cff52ae2aae784a49808dc">ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;</a>
 , <a class="el" href="df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a1d0f78fd0bf4028f8c1e7afcfc1410cf">ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
+, <a class="el" href="dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a0dd4f7cf6073fe3343b26654b82cd163">ptof::InitialConditionParameters_Cases</a>
 , <a class="el" href="d3/df2/structptof_1_1model__advection__2d_1_1_model.html#a3f5f4d3dcd910721fbc9b8cd0023bbba">ptof::model_advection_2d::Model</a>
 , <a class="el" href="df/d8b/structptof_1_1model__advection__2d_1_1_solvers.html#a4db26f7792d716520ed360db28ba1afb">ptof::model_advection_2d::Solvers</a>
 , <a class="el" href="d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a7370e20ff0f9424566cb40529d8a192b">ptof::model_advection_2d::Solvers::Parameters</a>
@@ -113,7 +115,6 @@ $(document).ready(function(){initNavTree('functions_i.html',''); initResizable()
 , <a class="el" href="d0/d0f/structptof_1_1model__advection__2d__parallel_1_1_model.html#afbd27f2d5fa000d659811f908d6d02d6">ptof::model_advection_2d_parallel::Model</a>
 , <a class="el" href="dc/d30/structptof_1_1model__advection__3d_1_1_model.html#a8c9d8d412d1c3672740af7a5f23e06b5">ptof::model_advection_3d::Model</a>
 , <a class="el" href="d6/d50/structptof_1_1model__advection__3d__parallel_1_1_model.html#ae9fbf678580d5d163d315ce369313240">ptof::model_advection_3d_parallel::Model</a>
-, <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a244f0ab854672e1a204dc8c18d949386">ptof::model_advection_diffusion_2d::InitialCondition&lt; CTRW &gt;::Parameters</a>
 , <a class="el" href="d8/d28/structptof_1_1model__advection__diffusion__2d_1_1_model.html#a691a77b8900a175b90c06bf0929c3c45">ptof::model_advection_diffusion_2d::Model</a>
 , <a class="el" href="d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html#a1b7177585ff33728376d55d7a5387a88">ptof::model_advection_diffusion_2d::Reaction</a>
 , <a class="el" href="de/d70/structptof_1_1model__advection__diffusion__2d_1_1_reaction_1_1_parameters.html#a352bf0c0fb56ff2d683b8573a8978d55">ptof::model_advection_diffusion_2d::Reaction::Parameters</a>
@@ -170,21 +171,20 @@ $(document).ready(function(){initNavTree('functions_i.html',''); initResizable()
 , <a class="el" href="df/d2e/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d__parallel_1_1_model.html#acb29d7868ff28c8026da70cba7596bc3">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d_parallel::Model</a>
 , <a class="el" href="d1/d0c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_model.html#a19c08b78e4d649a7e961fe0b34b81745">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_3d::Model</a>
 , <a class="el" href="d1/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d__parallel_1_1_model.html#af5978c831ae1aa8376113b84d7a1e988">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_3d_parallel::Model</a>
-, <a class="el" href="dd/dc8/structptof_1_1_output___cases_1_1_parameters.html#ac9f61724351e5708d1c60224dd20d03a">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;::Parameters</a>
+, <a class="el" href="d8/d12/structptof_1_1_output_parameters___cases.html#acc43bbe8a13869d2f9749e48d4dbca5c">ptof::OutputParameters_Cases</a>
 </li>
 <li>Info
 : <a class="el" href="da/dae/structptof_1_1_particle_maker.html#adc6f267672252ad97318f716008ec496">ptof::ParticleMaker&lt; Particle, Locator &gt;</a>
 </li>
 <li>info
 : <a class="el" href="da/dae/structptof_1_1_particle_maker.html#ab15354075939506dc106a3a704dcc219">ptof::ParticleMaker&lt; Particle, Locator &gt;</a>
+, <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#a306ee9fc9673d34f553666496b4ce11a">ptof::ParticleMaker_Periodic&lt; Particle, Locator, Boundary &gt;</a>
 </li>
 <li>Info
 : <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#a32475d4515a62c509ba723fcf4a673e1">ptof::ParticleMaker_Periodic&lt; Particle, Locator, Boundary &gt;</a>
 </li>
-<li>info
-: <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#a306ee9fc9673d34f553666496b4ce11a">ptof::ParticleMaker_Periodic&lt; Particle, Locator, Boundary &gt;</a>
-, <a class="el" href="de/d93/structptof_1_1_phase_1_1_parameters.html#a0ffd266845a158d0a8a4d832b74adabf">ptof::Phase::Parameters</a>
-, <a class="el" href="da/dfd/classptof_1_1_reaction___do_nothing.html#a95e47a737e9738f06a0f763059699226">ptof::Reaction_DoNothing</a>
+<li>info()
+: <a class="el" href="de/d93/structptof_1_1_phase_1_1_parameters.html#a0ffd266845a158d0a8a4d832b74adabf">ptof::Phase::Parameters</a>
 , <a class="el" href="d9/daf/structptof_1_1_state1_d.html#a8d5a72a07ceab4815569a467e1716638">ptof::State1D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>Info
@@ -201,23 +201,23 @@ $(document).ready(function(){initNavTree('functions_i.html',''); initResizable()
 </li>
 <li>Info
 : <a class="el" href="d1/d58/structptof_1_1_state2_d.html#a71340d78f1c216782d84b16fe0b734c6">ptof::State2D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
-, <a class="el" href="d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>info
 : <a class="el" href="d0/d68/structptof_1_1_state2_d___periodic.html#a245dc617ea65b64e8a391c15afdbc946">ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>Info
-: <a class="el" href="df/de9/structptof_1_1_state3_d.html#a351c01f97d277a4b8cd69ce9eb967b1f">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
+: <a class="el" href="d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>info
 : <a class="el" href="df/de9/structptof_1_1_state3_d.html#a22526d0879468033d76bab9a3ae50c27">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
-, <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#aa3167a37c5b97e18b9456f34ed92fd49">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>Info
-: <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#ade7a49a37e7cad81edb64220543e1ef6">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
+: <a class="el" href="df/de9/structptof_1_1_state3_d.html#a351c01f97d277a4b8cd69ce9eb967b1f">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
+, <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#ade7a49a37e7cad81edb64220543e1ef6">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
-<li>info()
-: <a class="el" href="d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a6c81478672c186c4a82add8a11b37eb9">ptof::SurfaceReaction_AFluidPlusASolidtoASolid</a>
+<li>info
+: <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#aa3167a37c5b97e18b9456f34ed92fd49">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
+, <a class="el" href="d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a6c81478672c186c4a82add8a11b37eb9">ptof::SurfaceReaction_AFluidPlusASolidtoASolid</a>
 , <a class="el" href="df/d31/classptof_1_1_surface_reaction___do_nothing.html#a7d2fc55df0ebe5f0e6647a4931ff5ac6">ptof::SurfaceReaction_DoNothing</a>
 </li>
 <li>info_runtime()
@@ -225,12 +225,12 @@ $(document).ready(function(){initNavTree('functions_i.html',''); initResizable()
 , <a class="el" href="df/d68/structptof_1_1_directories.html#a86629782240373bafa0f421ff064c887">ptof::Directories</a>
 , <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#ae3e6dcf88f63c39323d24a4ee6e1e808">ptof::DirectoriesOF</a>
 , <a class="el" href="dc/d30/structptof_1_1_geometry.html#aaec99b2741cc963798f183184e05f20a">ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a20a0b2f2617c6dfe7a1f5a9d11f2cd3b">ptof::Geometry_Bcc&lt; dim_val, dynamics, periodicity_type, SearchOption &gt;</a>
-, <a class="el" href="d1/d3e/structptof_1_1_geometry___bcc___parallel.html#aecddd13bfadf2d4f5166494d4d14caa3">ptof::Geometry_Bcc_Parallel&lt; dim_val, dynamics, periodicity_type, SearchOption &gt;</a>
+, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#acba9af63e3cec17c37499f0deb6102cd">ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="d1/d3e/structptof_1_1_geometry___bcc___parallel.html#a2bae7c483741395bbe9c5c5fbe109026">ptof::Geometry_Bcc_Parallel&lt; periodicity, dynamics, SearchOption &gt;</a>
 , <a class="el" href="df/dfc/structptof_1_1_geometry___parallel.html#ac2d6aaaf375dcf8233aa118af1733d58">ptof::Geometry_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a324b47a69573c6b112c7ed38cdbe6e60">ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;</a>
 , <a class="el" href="df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a6a5ee63c85d3527d2a3594d2e6c80495">ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#ac0c2b5318d8210b78c36862a68082014">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a12af326efbe388ed5595039042fa6563">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
 , <a class="el" href="d5/de8/classptof_1_1_output___cases.html#abab934dd80604743743306855ee76a51">ptof::Output_Cases&lt; Subject, VelocityField, Geometry &gt;</a>
 </li>
 <li>initial_condition
@@ -240,10 +240,16 @@ $(document).ready(function(){initNavTree('functions_i.html',''); initResizable()
 : <a class="el" href="d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a4795f2c59d670c09878955492c8e6fbd">ptof::model_advection_diffusion_surface_decay_2d::Reaction::Parameters</a>
 </li>
 <li>initial_mass
-: <a class="el" href="dd/d96/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition_1_1_parameters.html#a05e2b1c8d9b38fb5377a2414077c3c55">ptof::model_advection_diffusion_2d::InitialCondition&lt; CTRW &gt;::Parameters</a>
+: <a class="el" href="dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a221b49e8b3ee86bf50b827f9f46db128">ptof::InitialConditionParameters_Cases</a>
+</li>
+<li>InitialCondition()
+: <a class="el" href="df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html#aa9deed18efa617dd7db4b25d3a811e3d">ptof::model_advection_diffusion_2d::InitialCondition</a>
 </li>
 <li>InitialCondition_Cases()
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#ad1da03e9429278952be860ac3ea65f32">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Parameters, Mask &gt;</a>
+: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a7d304132ea139a9fca4a88f522fe2858">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+</li>
+<li>InitialConditionParameters_Cases()
+: <a class="el" href="dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d">ptof::InitialConditionParameters_Cases</a>
 </li>
 <li>inside()
 : <a class="el" href="d4/d45/structgeometry_1_1_parallelepiped.html#af93fb620de16e50723668e4f179e19d6">geometry::Parallelepiped&lt; Position_t &gt;</a>

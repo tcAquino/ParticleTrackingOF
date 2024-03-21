@@ -23,13 +23,8 @@
 int main(int argc, char * argv[])
 {
   using namespace ptof::model_advection_diffusion_fpt_2d;
-  using InitialCondition = InitialCondition<CTRW>;
   using Phase = ptof::Phase;
-  using VelocityField
-    = decltype(Transport::makeVelocityInterpolator(std::declval<Geometry>(),
-                                                   std::declval<Foam::volVectorField>(),
-                                                   std::declval<Transport::Parameters&>()));
-  using Output = Output<CTRW, VelocityField, Geometry>;
+  
   std::string banner =
     "--------------------------------------------------\n"
     "ParticleTrackingOF_TwoPhaseNonStationary\n"
@@ -195,10 +190,10 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up reaction..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto reaction = Reaction::makeReaction(geometry,
-                                         params_reaction,
-                                         params_transport,
-                                         params_solvers);
+  auto bulk_reaction = Reaction::makeBulkReaction(geometry,
+                                                  params_reaction,
+                                                  params_transport,
+                                                  params_solvers);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -220,12 +215,12 @@ int main(int argc, char * argv[])
   std::cout << "\n" << "Setting up initial condition...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
   auto initial_condition
-    = InitialCondition::makeInitialCondition(geometry,
-                                             velocity_field,
-                                             params_initial_condition,
-                                             params_solvers,
-                                             excluded_phase_field,
-                                             params_phase.phase_threshold);
+    = InitialCondition::makeInitialCondition<CTRW>(geometry,
+                                                   velocity_field,
+                                                   params_initial_condition,
+                                                   params_solvers,
+                                                   excluded_phase_field,
+                                                   params_phase.phase_threshold);
   initial_condition.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -260,7 +255,7 @@ int main(int argc, char * argv[])
                                                          params_transport,
                                                          params_reaction,
                                                          params_solvers,
-                                                         reaction);
+                                                         bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -281,26 +276,25 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  Output measurer{
-    ctrw,
-    velocity_field,
-    geometry,
-    directories,
-    params_output,
-    ptof::identifier("TwoPhaseNonStationary_" + Model::name,
-                     case_name,
-                     directories_of.case_name,
-                     params_transport_name,
-                     params_phase_name,
-                     params_reaction_name,
-                     params_solvers_name,
-                     params_initial_condition_name,
-                     params_output_name)
-      + (useful::is_empty(run_nr)
-         ? ""
-         : "_RUN_" + run_nr),
-    std::vector<Phase::PhaseField const*>{ &excluded_phase_field },
-    { 1. - params_phase.phase_threshold } };
+  auto measurer = Output::makeOutput(ctrw,
+                                     velocity_field,
+                                     geometry,
+                                     directories,
+                                     params_output,
+                                     ptof::identifier("TwoPhaseNonStationary_" + Model::name,
+                                                      case_name,
+                                                      directories_of.case_name,
+                                                      params_transport_name,
+                                                      params_phase_name,
+                                                      params_reaction_name,
+                                                      params_solvers_name,
+                                                      params_initial_condition_name,
+                                                      params_output_name)
+                                     + (useful::is_empty(run_nr)
+                                        ? ""
+                                        : "_RUN_" + run_nr),
+                                     { std::cref(excluded_phase_field) },
+                                     { 1. - params_phase.phase_threshold });
   measurer.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
