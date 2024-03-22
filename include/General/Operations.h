@@ -19,6 +19,7 @@
 
 #include <cmath>
 #include <functional>
+#include <type_traits>
 #include <vector>
 #include "General/Useful.h"
 
@@ -232,7 +233,11 @@ namespace operation
   void times_scalar(Scalar lambda, Container const& input, Container_out& output)
   {
     if constexpr (useful::has_multiplies<Scalar, Container>{})
-      output = lambda*input;
+    {
+      if constexpr (std::is_convertible_v<Container_out,
+                    std::decay_t<decltype(lambda*input)>>)
+        output = lambda*input;
+    }
     else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
@@ -251,7 +256,11 @@ namespace operation
   auto times_scalar(Scalar lambda, Container const& input)
   {
     if constexpr (useful::has_multiplies<Scalar, Container>{})
-      return lambda*input;
+    {
+      if constexpr (std::is_convertible_v<Container,
+                    std::decay_t<decltype(lambda*input)>>)
+        return lambda*input;
+    }
     else
     {
       Container output(input.size());
@@ -270,7 +279,11 @@ namespace operation
   void times(Container_1 const& input_1, Container_2 const& input_2, Container_out& output)
   {
     if constexpr (useful::has_multiplies<Container_1, Container_2>{})
-      output = input_1*input_2;
+    {
+      if constexpr (std::is_convertible_v<Container_out,
+                    std::decay_t<decltype(input_1*input_2)>>)
+        output = input_1*input_2;
+    }
     else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
@@ -289,7 +302,11 @@ namespace operation
   auto times(Container_1 const& input_1, Container_2 const& input_2)
   {
     if constexpr (useful::has_multiplies<Container_1, Container_2>{})
-      return input_1*input_2;
+    {
+      if constexpr (std::is_convertible_v<Container_1,
+                    std::decay_t<decltype(input_1*input_2)>>)
+        return input_1*input_2;
+    }
     else
     {
       Container_1 output(input_1.size());
@@ -394,7 +411,11 @@ namespace operation
     if constexpr (useful::has_multiplies<Type_1, Container_1>{}
                   && useful::has_multiplies<Type_2, Container_2>{}
                   && useful::has_plus<Container_1, Container_2>{})
-      output = lambda_1*input_1 + lambda_2*input_2;
+    {
+      if constexpr (std::is_convertible_v<Container_out,
+                    std::decay_t<decltype(lambda_1*input_1 + lambda_2*input_2)>>)
+        output = lambda_1*input_1 + lambda_2*input_2;
+    }
     else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
@@ -420,7 +441,11 @@ namespace operation
     if constexpr (useful::has_multiplies<Type_1, Container_1>{}
                   && useful::has_multiplies<Type_2, Container_2>{}
                   && useful::has_plus<Container_1, Container_2>{})
-      return lambda_1*input_1 + lambda_2*input_2;
+    {
+      if constexpr (std::is_convertible_v<Container_1,
+                    std::decay_t<decltype(lambda_1*input_1 + lambda_2*input_2)>>)
+        return lambda_1*input_1 + lambda_2*input_2;
+    }
     else
     {
       Container_1 output(input_1.size());
@@ -446,7 +471,11 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Type, Container_1>{}
                   && useful::has_plus<Container_1, Container_2>{})
-      output = lambda*input_1 + input_2;
+    {
+      if constexpr (std::is_convertible_v<Container_out,
+                    std::decay_t<decltype(lambda*input_1 + input_2)>>)
+        output = lambda*input_1 + input_2;
+    }
     else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
@@ -469,7 +498,11 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Type, Container_1>{}
                   && useful::has_plus<Container_1, Container_2>{})
-      return lambda*input_1 + input_2;
+    {
+      if constexpr (std::is_convertible_v<Container_1,
+                    std::decay_t<decltype(lambda*input_1 + input_2)>>)
+        return lambda*input_1 + input_2;
+    }
     else
     {
       Container_1 output(input_1.size());
@@ -491,7 +524,11 @@ namespace operation
   void square(Container const& input, Container_out& output)
   {
     if constexpr (useful::has_multiplies<Container, Container>{})
-      output = input*input;
+    {
+      if constexpr (std::is_convertible_v<Container_out,
+                    std::decay_t<decltype(input*input)>>)
+        output = input*input;
+    }
     else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
@@ -510,7 +547,11 @@ namespace operation
   auto square(Container const& input)
   {
     if constexpr (useful::has_multiplies<Container, Container>{})
-      input*input;
+    {
+      if constexpr (std::is_convertible_v<Container,
+                    std::decay_t<decltype(input*input)>>)
+        input*input;
+    }
     else
     {
       Container output(input.size());
@@ -573,7 +614,11 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Container_1, Container_2>{}
                   && useful::has_multiplies<double, Container_1>{})
-      output = 0.5*(input_1+input_2);
+    {
+      if constexpr (std::is_convertible_v<Container_out,
+                    std::decay_t<decltype(0.5*(input_1+input_2))>>)
+        output = 0.5*(input_1+input_2);
+    }
     else if constexpr (useful::has_value_type<Container_out>::value)
     {
       using value_type = typename Container_out::value_type;
@@ -593,7 +638,11 @@ namespace operation
   {
     if constexpr (useful::has_multiplies<Container_1, Container_2>{}
                   && useful::has_multiplies<double, Container_1>{})
-      return 0.5*(input_1+input_2);
+    {
+      if constexpr (std::is_convertible_v<Container_1,
+                    std::decay_t<decltype(0.5*(input_1+input_2))>>)
+        return 0.5*(input_1+input_2);
+    }
     else
     {
       Container_1 output(input_1.size());

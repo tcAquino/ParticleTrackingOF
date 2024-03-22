@@ -591,124 +591,123 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;  {</div>
 <div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;    <span class="keyword">auto</span> position_mean_sq = <a class="code" href="../../d2/dd1/namespaceptof.html#afa9d19c7a5e17ddede0cc867b993ccea">position_mean</a>(subject, time, getter_position);</div>
 <div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;    <a class="code" href="../../dc/dc5/namespaceoperation.html#a6867ab1b9ae2178f69a8fcb9ed82c691">operation::times_InPlace</a>(position_mean_sq, position_mean_sq);</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;    <span class="keyword">auto</span> total_mass = <a class="code" href="../../d2/dd1/namespaceptof.html#a5bc754535412500a84cc47c7f639cc8e">mass</a>(subject, time);</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;    <span class="keywordflow">return</span> (<a class="code" href="../../d2/dd1/namespaceptof.html#a01ecb53ae3d4241f08774ca21a23ea33">position_second_moment</a>(subject, time, getter_position)</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;            - position_mean_sq/total_mass) / total_mass;</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;  };</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;  </div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> OStream, <span class="keyword">typename</span> ParametersOutput&gt;</div>
-<div class="line"><a name="l00745"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#aa4c0cd4bc90f5d03e5f9dc3fb1a15aee">  745</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="../../d2/dd1/namespaceptof.html#aa4c0cd4bc90f5d03e5f9dc3fb1a15aee">info_time</a></div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;  (OStream&amp; output, ParametersOutput <span class="keyword">const</span>&amp; params, <span class="keywordtype">double</span> time)</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;  {</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;    output &lt;&lt; <span class="stringliteral">&quot;Time &quot;</span></div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;           &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; params.time_units &lt;&lt; <span class="stringliteral">&quot; time units]: &quot;</span></div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;           &lt;&lt; time/params.time_unit_factor</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;           &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;  }</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;  </div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> OStream, <span class="keyword">typename</span> Subject&gt;</div>
-<div class="line"><a name="l00762"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#a60d15f9df75c86cfe352fd4e812a9ca8">  762</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a60d15f9df75c86cfe352fd4e812a9ca8">info_fraction_not_absorbed</a></div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;  (OStream&amp; output, Subject <span class="keyword">const</span>&amp; subject, <span class="keywordtype">double</span> time)</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;  {</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;    output &lt;&lt; <span class="stringliteral">&quot;Fraction not absorbed: &quot;</span></div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;          &lt;&lt; 1. - double(<a class="code" href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">ptof::nr_absorbed</a>(subject, time))/subject.size()</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;          &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;  }</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;  </div>
-<div class="line"><a name="l00771"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">  771</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name)</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;  {</div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;M_&quot;</span> + model_name</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;      + <span class="stringliteral">&quot;_C_&quot;</span> + case_name</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      + <span class="stringliteral">&quot;_OF_&quot;</span> + of_case_name</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      + <span class="stringliteral">&quot;_T_&quot;</span> + params_transport_name</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      + <span class="stringliteral">&quot;_R_&quot;</span> + params_reaction_name</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      + <span class="stringliteral">&quot;_S_&quot;</span> + params_solvers_name</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      + <span class="stringliteral">&quot;_I_&quot;</span> + params_initial_condition_name</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;      + <span class="stringliteral">&quot;_O_&quot;</span> + params_output_name;</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;  }</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;  </div>
-<div class="line"><a name="l00792"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#aedb49ff2414c2b70843429b4d18d243f">  792</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name,</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   std::size_t run_nr)</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;  {</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>(model_name,</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;                      case_name,</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;                      of_case_name,</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;                      params_transport_name,</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;                      params_reaction_name,</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;                      params_solvers_name,</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;                      params_initial_condition_name,</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;                      params_output_name)</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;      + <span class="stringliteral">&quot;_RUN_&quot;</span> + std::to_string(run_nr);</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;  }</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;  </div>
-<div class="line"><a name="l00815"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#aece162fcdbbe23c908a563b62a4022fa">  815</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   std::string <span class="keyword">const</span>&amp; params_phase_name,</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name)</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;  {</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;M_&quot;</span> + model_name</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;      + <span class="stringliteral">&quot;_C_&quot;</span> + case_name</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;      + <span class="stringliteral">&quot;_OF_&quot;</span> + of_case_name</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;      + <span class="stringliteral">&quot;_T_&quot;</span> + params_transport_name</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;      + <span class="stringliteral">&quot;_P_&quot;</span> + params_phase_name</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;      + <span class="stringliteral">&quot;_R_&quot;</span> + params_reaction_name</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;      + <span class="stringliteral">&quot;_S_&quot;</span> + params_solvers_name</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;      + <span class="stringliteral">&quot;_I_&quot;</span> + params_initial_condition_name</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;      + <span class="stringliteral">&quot;_O_&quot;</span> + params_output_name;</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;  }</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;  </div>
-<div class="line"><a name="l00838"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#afe19fd66934088ac5e907886dc2a3877">  838</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;   std::string <span class="keyword">const</span>&amp; params_phase_name,</div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name,</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;   std::size_t run_nr)</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;  {</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>(model_name,</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;                      case_name,</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;                      of_case_name,</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;                      params_transport_name,</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;                      params_phase_name,</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;                      params_reaction_name,</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;                      params_solvers_name,</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;                      params_initial_condition_name,</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;                      params_output_name)</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;      + <span class="stringliteral">&quot;_RUN_&quot;</span> + std::to_string(run_nr);</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;  }</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;}</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160; </div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PTOF_USEFUL_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a01ecb53ae3d4241f08774ca21a23ea33">position_second_moment</a>(subject, time, getter_position)</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      - position_mean_sq;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;  };</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;  </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> OStream, <span class="keyword">typename</span> ParametersOutput&gt;</div>
+<div class="line"><a name="l00744"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#aa4c0cd4bc90f5d03e5f9dc3fb1a15aee">  744</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="../../d2/dd1/namespaceptof.html#aa4c0cd4bc90f5d03e5f9dc3fb1a15aee">info_time</a></div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;  (OStream&amp; output, ParametersOutput <span class="keyword">const</span>&amp; params, <span class="keywordtype">double</span> time)</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;  {</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;    output &lt;&lt; <span class="stringliteral">&quot;Time &quot;</span></div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;           &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; params.time_units &lt;&lt; <span class="stringliteral">&quot; time units]: &quot;</span></div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;           &lt;&lt; time/params.time_unit_factor</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;           &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;  }</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;  </div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> OStream, <span class="keyword">typename</span> Subject&gt;</div>
+<div class="line"><a name="l00761"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#a60d15f9df75c86cfe352fd4e812a9ca8">  761</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a60d15f9df75c86cfe352fd4e812a9ca8">info_fraction_not_absorbed</a></div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;  (OStream&amp; output, Subject <span class="keyword">const</span>&amp; subject, <span class="keywordtype">double</span> time)</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;  {</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;    output &lt;&lt; <span class="stringliteral">&quot;Fraction not absorbed: &quot;</span></div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;          &lt;&lt; 1. - double(<a class="code" href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">ptof::nr_absorbed</a>(subject, time))/subject.size()</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;          &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;  }</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;  </div>
+<div class="line"><a name="l00770"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">  770</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name)</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;  {</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;M_&quot;</span> + model_name</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;      + <span class="stringliteral">&quot;_C_&quot;</span> + case_name</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;      + <span class="stringliteral">&quot;_OF_&quot;</span> + of_case_name</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      + <span class="stringliteral">&quot;_T_&quot;</span> + params_transport_name</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      + <span class="stringliteral">&quot;_R_&quot;</span> + params_reaction_name</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      + <span class="stringliteral">&quot;_S_&quot;</span> + params_solvers_name</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      + <span class="stringliteral">&quot;_I_&quot;</span> + params_initial_condition_name</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      + <span class="stringliteral">&quot;_O_&quot;</span> + params_output_name;</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;  }</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;  </div>
+<div class="line"><a name="l00791"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#aedb49ff2414c2b70843429b4d18d243f">  791</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name,</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   std::size_t run_nr)</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;  {</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>(model_name,</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;                      case_name,</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;                      of_case_name,</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;                      params_transport_name,</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;                      params_reaction_name,</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;                      params_solvers_name,</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;                      params_initial_condition_name,</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;                      params_output_name)</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;      + <span class="stringliteral">&quot;_RUN_&quot;</span> + std::to_string(run_nr);</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;  }</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;  </div>
+<div class="line"><a name="l00814"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#aece162fcdbbe23c908a563b62a4022fa">  814</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   std::string <span class="keyword">const</span>&amp; params_phase_name,</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name)</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;  {</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;M_&quot;</span> + model_name</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;      + <span class="stringliteral">&quot;_C_&quot;</span> + case_name</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;      + <span class="stringliteral">&quot;_OF_&quot;</span> + of_case_name</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;      + <span class="stringliteral">&quot;_T_&quot;</span> + params_transport_name</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;      + <span class="stringliteral">&quot;_P_&quot;</span> + params_phase_name</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;      + <span class="stringliteral">&quot;_R_&quot;</span> + params_reaction_name</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;      + <span class="stringliteral">&quot;_S_&quot;</span> + params_solvers_name</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;      + <span class="stringliteral">&quot;_I_&quot;</span> + params_initial_condition_name</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;      + <span class="stringliteral">&quot;_O_&quot;</span> + params_output_name;</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;  }</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;  </div>
+<div class="line"><a name="l00837"></a><span class="lineno"><a class="line" href="../../d2/dd1/namespaceptof.html#afe19fd66934088ac5e907886dc2a3877">  837</a></span>&#160;  std::string <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a></div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;  (std::string <span class="keyword">const</span>&amp; model_name,</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   std::string <span class="keyword">const</span>&amp; case_name,</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   std::string <span class="keyword">const</span>&amp; of_case_name,</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   std::string <span class="keyword">const</span>&amp; params_transport_name,</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   std::string <span class="keyword">const</span>&amp; params_phase_name,</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;   std::string <span class="keyword">const</span>&amp; params_reaction_name,</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   std::string <span class="keyword">const</span>&amp; params_solvers_name,</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   std::string <span class="keyword">const</span>&amp; params_initial_condition_name,</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   std::string <span class="keyword">const</span>&amp; params_output_name,</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   std::size_t run_nr)</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;  {</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>(model_name,</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;                      case_name,</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;                      of_case_name,</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;                      params_transport_name,</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;                      params_phase_name,</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;                      params_reaction_name,</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;                      params_solvers_name,</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;                      params_initial_condition_name,</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;                      params_output_name)</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;      + <span class="stringliteral">&quot;_RUN_&quot;</span> + std::to_string(run_nr);</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;  }</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;}</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160; </div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PTOF_USEFUL_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="a_general_2_useful_8h_html"><div class="ttname"><a href="../../d9/d18/_general_2_useful_8h.html">Useful.h</a></div></div>
 <div class="ttc" id="a_operations_8h_html"><div class="ttname"><a href="../../d7/d14/_operations_8h.html">Operations.h</a></div><div class="ttdoc">Miscelaneous operations on containers.</div></div>
 <div class="ttc" id="a_state_getter_8h_html"><div class="ttname"><a href="../../dd/ddd/_state_getter_8h.html">StateGetter.h</a></div><div class="ttdoc">Handlers to extract information from particles and particle states.</div></div>
-<div class="ttc" id="anamespaceoperation_html_a6867ab1b9ae2178f69a8fcb9ed82c691"><div class="ttname"><a href="../../dc/dc5/namespaceoperation.html#a6867ab1b9ae2178f69a8fcb9ed82c691">operation::times_InPlace</a></div><div class="ttdeci">void times_InPlace(Container_1 &amp;input_1, Container_2 const &amp;input_2)</div><div class="ttdoc">Element-wise multiplication.</div><div class="ttdef"><b>Definition:</b> Operations.h:304</div></div>
+<div class="ttc" id="anamespaceoperation_html_a6867ab1b9ae2178f69a8fcb9ed82c691"><div class="ttname"><a href="../../dc/dc5/namespaceoperation.html#a6867ab1b9ae2178f69a8fcb9ed82c691">operation::times_InPlace</a></div><div class="ttdeci">void times_InPlace(Container_1 &amp;input_1, Container_2 const &amp;input_2)</div><div class="ttdoc">Element-wise multiplication.</div><div class="ttdef"><b>Definition:</b> Operations.h:321</div></div>
 <div class="ttc" id="anamespaceptof_html"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html">ptof</a></div><div class="ttdef"><b>Definition:</b> Advection.h:17</div></div>
 <div class="ttc" id="anamespaceptof_html_a01ecb53ae3d4241f08774ca21a23ea33"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a01ecb53ae3d4241f08774ca21a23ea33">ptof::position_second_moment</a></div><div class="ttdeci">auto position_second_moment(Subject const &amp;subject, double time, GetterPosition getter_position={})</div><div class="ttdef"><b>Definition:</b> Useful.h:697</div></div>
 <div class="ttc" id="anamespaceptof_html_a073efb12947b9e64f1a1e3f444cf2b11"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11">ptof::cell_volume</a></div><div class="ttdeci">auto cell_volume(Foam::label cell, Mesh const &amp;mesh)</div><div class="ttdoc">Volume of a cell.</div><div class="ttdef"><b>Definition:</b> Useful.h:265</div></div>
@@ -723,15 +722,15 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="ttc" id="anamespaceptof_html_a3ef3e25c8c2505a2225c174ccc046480"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a3ef3e25c8c2505a2225c174ccc046480">ptof::position_variance</a></div><div class="ttdeci">auto position_variance(Subject const &amp;subject, double time, GetterPosition getter_position={})</div><div class="ttdef"><b>Definition:</b> Useful.h:729</div></div>
 <div class="ttc" id="anamespaceptof_html_a403f2134a620767dd025954e733b68c5"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5">ptof::offset_backward_cell_keep_inside</a></div><div class="ttdeci">Foam::point offset_backward_cell_keep_inside(Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset backward.</div><div class="ttdef"><b>Definition:</b> Useful.h:549</div></div>
 <div class="ttc" id="anamespaceptof_html_a5bc754535412500a84cc47c7f639cc8e"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a5bc754535412500a84cc47c7f639cc8e">ptof::mass</a></div><div class="ttdeci">auto mass(Subject const &amp;subject, double time)</div><div class="ttdef"><b>Definition:</b> Useful.h:606</div></div>
-<div class="ttc" id="anamespaceptof_html_a5fd6254123a2771ee35249f3600c7ed1"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">ptof::identifier</a></div><div class="ttdeci">std::string identifier(std::string const &amp;model_name, std::string const &amp;case_name, std::string const &amp;of_case_name, std::string const &amp;params_transport_name, std::string const &amp;params_reaction_name, std::string const &amp;params_solvers_name, std::string const &amp;params_initial_condition_name, std::string const &amp;params_output_name)</div><div class="ttdef"><b>Definition:</b> Useful.h:772</div></div>
-<div class="ttc" id="anamespaceptof_html_a60d15f9df75c86cfe352fd4e812a9ca8"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a60d15f9df75c86cfe352fd4e812a9ca8">ptof::info_fraction_not_absorbed</a></div><div class="ttdeci">void info_fraction_not_absorbed(OStream &amp;output, Subject const &amp;subject, double time)</div><div class="ttdoc">Output information about fraction of particles that have not been absorbed.</div><div class="ttdef"><b>Definition:</b> Useful.h:763</div></div>
+<div class="ttc" id="anamespaceptof_html_a5fd6254123a2771ee35249f3600c7ed1"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">ptof::identifier</a></div><div class="ttdeci">std::string identifier(std::string const &amp;model_name, std::string const &amp;case_name, std::string const &amp;of_case_name, std::string const &amp;params_transport_name, std::string const &amp;params_reaction_name, std::string const &amp;params_solvers_name, std::string const &amp;params_initial_condition_name, std::string const &amp;params_output_name)</div><div class="ttdef"><b>Definition:</b> Useful.h:771</div></div>
+<div class="ttc" id="anamespaceptof_html_a60d15f9df75c86cfe352fd4e812a9ca8"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a60d15f9df75c86cfe352fd4e812a9ca8">ptof::info_fraction_not_absorbed</a></div><div class="ttdeci">void info_fraction_not_absorbed(OStream &amp;output, Subject const &amp;subject, double time)</div><div class="ttdoc">Output information about fraction of particles that have not been absorbed.</div><div class="ttdef"><b>Definition:</b> Useful.h:762</div></div>
 <div class="ttc" id="anamespaceptof_html_a65ce2f6ce88714c9a15798b95e9a17c7"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7">ptof::cell_center</a></div><div class="ttdeci">auto cell_center(Foam::label cell, Mesh const &amp;mesh)</div><div class="ttdoc">Center of a cell.</div><div class="ttdef"><b>Definition:</b> Useful.h:273</div></div>
 <div class="ttc" id="anamespaceptof_html_a67459c219dcedf37533595b362a7bed1"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a67459c219dcedf37533595b362a7bed1">ptof::offset_forward_face</a></div><div class="ttdeci">Foam::point offset_forward_face(Foam::point const &amp;begin, Foam::label face, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset forward from a point on a face.</div><div class="ttdef"><b>Definition:</b> Useful.h:333</div></div>
 <div class="ttc" id="anamespaceptof_html_a7673f1a07f55cb10bfe6bc1ffc851d5a"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a7673f1a07f55cb10bfe6bc1ffc851d5a">ptof::offset_forward_cell_keep_inside</a></div><div class="ttdeci">Foam::point offset_forward_cell_keep_inside(Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset forward.</div><div class="ttdef"><b>Definition:</b> Useful.h:502</div></div>
 <div class="ttc" id="anamespaceptof_html_a771b932077b91dda298c2ba0aa8b5959"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959">ptof::outside</a></div><div class="ttdeci">bool outside(Foam::label cell)</div><div class="ttdoc">Return whether cell index indicates outside mesh.</div><div class="ttdef"><b>Definition:</b> Useful.h:164</div></div>
 <div class="ttc" id="anamespaceptof_html_a91a1b931edc8a9eb0bd01b2d01f01164"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164">ptof::offset_face</a></div><div class="ttdeci">Foam::vector offset_face(Foam::point const &amp;begin, Foam::label face, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset forward given current face and direction.</div><div class="ttdef"><b>Definition:</b> Useful.h:290</div></div>
 <div class="ttc" id="anamespaceptof_html_a96af753324a65471bd534041a41eadbe"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe">ptof::face_area</a></div><div class="ttdeci">auto face_area(Foam::label face, Mesh const &amp;mesh)</div><div class="ttdoc">Area (magnitude) of a face.</div><div class="ttdef"><b>Definition:</b> Useful.h:249</div></div>
-<div class="ttc" id="anamespaceptof_html_aa4c0cd4bc90f5d03e5f9dc3fb1a15aee"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#aa4c0cd4bc90f5d03e5f9dc3fb1a15aee">ptof::info_time</a></div><div class="ttdeci">void info_time(OStream &amp;output, ParametersOutput const &amp;params, double time)</div><div class="ttdoc">Output time information.</div><div class="ttdef"><b>Definition:</b> Useful.h:746</div></div>
+<div class="ttc" id="anamespaceptof_html_aa4c0cd4bc90f5d03e5f9dc3fb1a15aee"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#aa4c0cd4bc90f5d03e5f9dc3fb1a15aee">ptof::info_time</a></div><div class="ttdeci">void info_time(OStream &amp;output, ParametersOutput const &amp;params, double time)</div><div class="ttdoc">Output time information.</div><div class="ttdef"><b>Definition:</b> Useful.h:745</div></div>
 <div class="ttc" id="anamespaceptof_html_aa74dcf8fcf3cb084637b7f209ff24fc4"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#aa74dcf8fcf3cb084637b7f209ff24fc4">ptof::offset_backward_cell</a></div><div class="ttdeci">Foam::point offset_backward_cell(Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset backward.</div><div class="ttdef"><b>Definition:</b> Useful.h:529</div></div>
 <div class="ttc" id="anamespaceptof_html_aa7f85fb4058ae942dc9b482221cfed96"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#aa7f85fb4058ae942dc9b482221cfed96">ptof::offset_forward_cell</a></div><div class="ttdeci">Foam::point offset_forward_cell(Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</div><div class="ttdoc">Small offset forward.</div><div class="ttdef"><b>Definition:</b> Useful.h:482</div></div>
 <div class="ttc" id="anamespaceptof_html_abf0aa3876390d4bac9c2877bfc88100b"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#abf0aa3876390d4bac9c2877bfc88100b">ptof::unit_normal_outward</a></div><div class="ttdeci">auto unit_normal_outward(Foam::label face, Mesh const &amp;mesh)</div><div class="ttdoc">Unit normal at boundary face, pointing outward.</div><div class="ttdef"><b>Definition:</b> Useful.h:233</div></div>

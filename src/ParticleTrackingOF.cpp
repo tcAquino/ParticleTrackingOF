@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_advection_diffusion_2d;
+  using namespace ptof::model_advection_diffusion_surface_decay_2d;
 
   std::string banner =
     "--------------------------------------------------\n"

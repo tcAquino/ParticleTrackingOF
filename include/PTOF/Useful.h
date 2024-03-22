@@ -731,9 +731,8 @@ namespace ptof
   {
     auto position_mean_sq = position_mean(subject, time, getter_position);
     operation::times_InPlace(position_mean_sq, position_mean_sq);
-    auto total_mass = mass(subject, time);
-    return (position_second_moment(subject, time, getter_position)
-            - position_mean_sq/total_mass) / total_mass;
+    return position_second_moment(subject, time, getter_position)
+      - position_mean_sq;
   };
   
   /** \brief Output time information.
