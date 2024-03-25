@@ -8,7 +8,7 @@
 #define PTOF_PHASE_H
 
 #include <cmath>
-#include <exception>
+#include <stdexcept>
 #include <fieldTypes.H>
 #include <fvcGrad.H>
 #include <string>

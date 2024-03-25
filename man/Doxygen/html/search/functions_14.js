@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['widths_1709',['widths',['../dc/dc5/namespaceoperation.html#ad8d1fda37a1896f129ea50da804e566f',1,'operation::widths(Container&lt; std::pair&lt; Value_type, Value_type &gt;&gt; const &amp;input, Container&lt; Value_type &gt; &amp;output)'],['../dc/dc5/namespaceoperation.html#a780b2b66202523429c157d6144c5ba91',1,'operation::widths(Container&lt; std::pair&lt; Value_type, Value_type &gt;&gt; const &amp;input)']]]
+  ['_7ecriterion_1726',['~Criterion',['../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6',1,'ptof::Criterion']]],
+  ['_7enextmeasuretime_1727',['~NextMeasureTime',['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#aa38f07280b9e0304aa2601e4aeb59dd5',1,'ptof::Output_Cases::NextMeasureTime']]],
+  ['_7eoutput_1728',['~Output',['../d0/d91/structptof_1_1_output___cases_1_1_output.html#a5c1a0ce6181c1f99ee4913f9f809b534',1,'ptof::Output_Cases::Output']]],
+  ['_7eoutputtime_1729',['~OutputTime',['../d2/d71/structptof_1_1_output___cases_1_1_output_time.html#aab1badc58b92973ea6d5f8d678db0d62',1,'ptof::Output_Cases::OutputTime']]]
 ];

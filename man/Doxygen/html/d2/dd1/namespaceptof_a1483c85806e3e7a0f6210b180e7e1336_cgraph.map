@@ -2,10 +2,10 @@
 <area shape="rect" id="node1" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="5,49,144,90"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="196,5,323,32"/>
 <area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="192,56,327,83"/>
-<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="201,107,317,133"/>
-<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="383,81,498,108"/>
-<area shape="rect" id="node9" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="375,132,507,159"/>
-<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="555,81,692,108"/>
-<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="565,132,682,159"/>
-<area shape="rect" id="node8" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="740,132,857,159"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="224,107,295,133"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="383,81,453,108"/>
+<area shape="rect" id="node9" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="375,132,461,159"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="509,81,600,108"/>
+<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="519,132,590,159"/>
+<area shape="rect" id="node8" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="648,132,719,159"/>
 </map>

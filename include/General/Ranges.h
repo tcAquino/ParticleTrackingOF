@@ -13,6 +13,7 @@
 #include <cmath>
 #include <vector>
 
+/** \namespace range Numerical sequences with different inter-element spacings. */
 namespace range
 {
   /** \return Linear partition of [\p x_L, \p x_R] with \p nr_points points. */

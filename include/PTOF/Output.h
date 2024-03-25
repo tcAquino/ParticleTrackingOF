@@ -10,20 +10,22 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
-#include <exception>
 #include <fstream>
 #include <functional>
-#include <memory>
 #include <initializer_list>
 #include <iomanip>
+#include <memory>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <vector>
 #include <zero.H>
 #include "CTRW/StateGetter.h"
+#include "CTRW/Meta.h"
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Field.h"
+#include "PTOF/Meta.h"
 #include "PTOF/Useful.h"
 
 namespace ptof
@@ -409,7 +411,7 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers)
     {
-      if constexpr (useful::has_velocity_rescaling_factor<TransportParameters>::value)
+      if constexpr (meta::has_velocity_rescaling_factor_v<TransportParameters>)
         velocity_rescaling_factor = params_transport.velocity_rescaling_factor;
       else
         velocity_rescaling_factor = 1.;
@@ -927,9 +929,7 @@ namespace ptof
           }
           case Measure::Type::position_periodic:
           {
-            if constexpr (Has_periodicity<
-                          typename Subject::Particle::State>::value
-                          == true)
+            if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
               (std::make_unique<Output_position_periodic<
                decltype(_geometry.boundary_periodic)>>
@@ -944,9 +944,7 @@ namespace ptof
           }
           case Measure::Type::position_mean_periodic:
           {
-            if constexpr (Has_periodicity<
-                          typename Subject::Particle::State>::value
-                          == true)
+            if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
               (std::make_unique<Output_position_mean_periodic<
                decltype(_geometry.boundary_periodic)>>
@@ -961,9 +959,7 @@ namespace ptof
           }
           case Measure::Type::position_second_moment_periodic:
           {
-            if constexpr (Has_periodicity<
-                          typename Subject::Particle::State>::value
-                          == true)
+            if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
               (std::make_unique<Output_position_second_moment_periodic<
                decltype(_geometry.boundary_periodic)>>
@@ -978,9 +974,7 @@ namespace ptof
           }
           case Measure::Type::position_variance_periodic:
           {
-            if constexpr (Has_periodicity<
-                          typename Subject::Particle::State>::value
-                          == true)
+            if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
               (std::make_unique<Output_position_variance_periodic<
                decltype(_geometry.boundary_periodic)>>

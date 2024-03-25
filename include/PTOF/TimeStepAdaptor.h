@@ -11,6 +11,7 @@
 #include <fieldTypes.H>
 #include <MinMax.H>
 #include <zero.H>
+#include "CTRW/Meta.h"
 #include "PTOF/Field.h"
 #include "PTOF/Reaction.h"
 #include "PTOF/Useful.h"
@@ -192,11 +193,11 @@ namespace ptof
         _params_solvers.global_time_step_diff*_params_transport.diffusion_time,
         _params_solvers.global_time_step_react*_params_reaction.reaction_time }));
       
-      if constexpr (useful::has_time_step_setter<TimeGenerator>::value)
+      if constexpr (meta::has_time_step_setter_v<TimeGenerator>)
         time_generator.time_step(time_step);
-      if constexpr (useful::has_time_step_setter<JumpGenerator>::value)
+      if constexpr (meta::has_time_step_setter_v<JumpGenerator>)
         jump_generator.time_step(time_step);
-      if constexpr (useful::has_time_step_setter<SurfaceReaction>::value)
+      if constexpr (meta::has_time_step_setter_v<SurfaceReaction>)
         _surface_reaction.time_step(time_step);
       
       return time_step;

@@ -29,6 +29,7 @@
 #include <random>
 #include <type_traits>
 #include <utility>
+#include "CTRW/Meta.h"
 #include "General/Constants.h"
 #include "General/Operations.h"
 #include "General/Useful.h"
@@ -84,8 +85,8 @@ namespace ctrw
     template <typename State = useful::Empty>
     auto operator() (State const& state = {})
     {
-      return operation::plus(_jump_generator_1(state),
-                             _jump_generator_2(state));
+      return op::plus(_jump_generator_1(state),
+                      _jump_generator_2(state));
     }
     
     /** \return First jump generator. */
@@ -99,9 +100,9 @@ namespace ctrw
     /** \param time_step Time step to set. */
     void time_step(double time_step)
     {
-      if constexpr (useful::has_time_step_setter<JumpGenerator_1>::value)
+      if constexpr (meta::has_time_step_setter_v<JumpGenerator_1>)
         _jump_generator_1.time_step(time_step);
-      if constexpr (useful::has_time_step_setter<JumpGenerator_2>::value)
+      if constexpr (meta::has_time_step_setter_v<JumpGenerator_2>)
         _jump_generator_2.time_step(time_step);
     }
     
@@ -142,7 +143,7 @@ namespace ctrw
     template <typename State>
     auto operator() (State const& state)
     {
-      return operation::times_scalar(_time_step, velocity(state));
+      return op::times_scalar(_time_step, velocity(state));
     }
     
     /**
@@ -206,25 +207,25 @@ namespace ctrw
       auto state_intermediate = state;
 
       auto k1 = velocity(state);
-      operation::linearOp(_time_step/2., k1, state.position,
-                          state_intermediate.position);
+      op::linearop(_time_step/2., k1, state.position,
+                   state_intermediate.position);
       boundary(state_intermediate, state);
       
       auto k2 = velocity(state_intermediate);
-      operation::linearOp(_time_step/2., k2, state.position,
+      op::linearop(_time_step/2., k2, state.position,
                           state_intermediate.position);
       boundary(state_intermediate, state);
       
       auto k3 = velocity(state_intermediate);
-      operation::linearOp(_time_step, k3, state.position,
+      op::linearop(_time_step, k3, state.position,
                           state_intermediate.position);
       boundary(state_intermediate, state);
 
       auto k4 = velocity(state_intermediate);
-      auto jump = operation::plus(k1, k4);
-      operation::linearOp(2., k2, jump, jump);
-      operation::linearOp(2., k3, jump, jump);
-      operation::times_scalar_InPlace(_time_step/6., jump);
+      auto jump = op::plus(k1, k4);
+      op::linearop(2., k2, jump, jump);
+      op::linearop(2., k3, jump, jump);
+      op::times_scalar_inplace(_time_step/6., jump);
       
       return jump;
     }
@@ -518,7 +519,7 @@ namespace ctrw
       std::vector<double> gradient_val = _gradient(state);
       
       // If local gradient is zero jump in a random direction
-      if (operation::abs(gradient_val) == 0.)
+      if (op::abs(gradient_val) == 0.)
         return constants::pi*(2.*_dist(_rng) - 1.);
       
       // Orient mean jump direction along gradient if below preferred concentration,

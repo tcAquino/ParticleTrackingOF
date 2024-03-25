@@ -93,7 +93,7 @@ namespace ctrw
   {
     template <typename State>
     auto operator()(State const& state) const
-    { return operation::project<dd>(state.position); }
+    { return op::project<dd>(state.position); }
   };
   
   /** \struct Get_position_component_arg CTRW/StateGetter.h "CTRW/StateGetter.h"
@@ -120,12 +120,12 @@ namespace ctrw
     std::vector<double> direction{};
     
     Get_position_projection(std::vector<double> const& direction)
-    : direction{ operation::div_scalar(direction, operation::abs(direction)) }
+    : direction{ op::div_scalar(direction, op::abs(direction)) }
     {}
     
     template <typename State>
     auto operator()(State const& state) const
-    { return operation::dot(state.position, direction); }
+    { return op::dot(state.position, direction); }
   };
   
   /** \class Get_position_component_sq CTRW/StateGetter.h "CTRW/StateGetter.h"
@@ -137,7 +137,7 @@ namespace ctrw
     template <typename State>
     auto operator()(State const& state) const
     {
-      double comp = operation::project<dd>(state.position);
+      double comp = op::project<dd>(state.position);
       return comp*comp;
     }
   };
@@ -148,7 +148,7 @@ namespace ctrw
   {
     template <typename State>
     auto operator()(State const& state) const
-    { return operation::abs_sq(state.position); }
+    { return op::abs_sq(state.position); }
   };
   
   /** \struct Get_time CTRW/StateGetter.h "CTRW/StateGetter.h"
@@ -186,7 +186,7 @@ namespace ctrw
   {
     template <typename State>
     auto operator()(State const& state) const
-    { return operation::project<dd>(state.velocity); }
+    { return op::project<dd>(state.velocity); }
   };
   
   /** \class Get_position_property CTRW/StateGetter.h "CTRW/StateGetter.h"
@@ -245,8 +245,8 @@ namespace ctrw
     template <typename State>
     auto operator()(State const& state) const
     {
-      return operation::plus(state.position,
-                             operation::times(domain_dimensions,
+      return op::plus(state.position,
+                             op::times(domain_dimensions,
                                               state.periodicity));
     }
   };
@@ -268,7 +268,7 @@ namespace ctrw
     template <typename State>
     auto operator()(State const& state) const
     {
-      return operation::project<dd>(get_position(state));
+      return op::project<dd>(get_position(state));
     }
   };
   
@@ -283,13 +283,13 @@ namespace ctrw
     Get_position_periodic_cartesian_projection
     (std::vector<double> domain_dimensions, std::vector<double> const& direction)
     : _get_position{ domain_dimensions }
-    , direction{ operation::div_scalar(direction, operation::abs(direction)) }
+    , direction{ op::div_scalar(direction, op::abs(direction)) }
     {}
     
     template <typename State>
     auto operator()(State const& state) const
     {
-      return operation::dot(_get_position(state), direction);
+      return op::dot(_get_position(state), direction);
     }
     
   private:
@@ -333,13 +333,13 @@ namespace ctrw
   {
     Get_projection(Getter&& get, std::vector<double> const& direction)
     : _get{ std::forward<Getter>(get) }
-    , direction{ operation::div_scalar(direction, operation::abs(direction)) }
+    , direction{ op::div_scalar(direction, op::abs(direction)) }
     {}
     
     template <typename State>
     auto operator()(State const& state) const
     {
-      return operation::dot(_get(state), direction);
+      return op::dot(_get(state), direction);
     }
     
   private:
@@ -420,7 +420,7 @@ namespace ctrw
     {
       double delta_t = time-state_old.time;
       auto vel = get_velocity(state_old.velocity);
-      return operation::plus(get(state_old.position), vel*delta_t);
+      return op::plus(get(state_old.position), vel*delta_t);
     }
   };
   template <typename Getter, typename Getter_velocity>

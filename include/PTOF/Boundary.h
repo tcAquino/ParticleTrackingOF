@@ -9,10 +9,10 @@
 
 #include <algorithm>
 #include <cstddef>
-#include <exception>
 #include <fstream>
 #include <iterator>
 #include <limits>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <unordered_map>

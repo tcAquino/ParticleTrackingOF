@@ -84,6 +84,33 @@ var annotated_dup =
       [ "SymmetryPlanes_Bcc", "da/dce/structgeometry_1_1_symmetry_planes___bcc.html", "da/dce/structgeometry_1_1_symmetry_planes___bcc" ],
       [ "SymmetryPlanes_Sc", "d4/da0/structgeometry_1_1_symmetry_planes___sc.html", "d4/da0/structgeometry_1_1_symmetry_planes___sc" ]
     ] ],
+    [ "meta", "d8/db6/namespacemeta.html", [
+      [ "notstd", "d2/dad/namespacemeta_1_1notstd.html", [
+        [ "left_shift", "d0/d34/structmeta_1_1notstd_1_1left__shift.html", "d0/d34/structmeta_1_1notstd_1_1left__shift" ],
+        [ "right_shift", "d5/d72/structmeta_1_1notstd_1_1right__shift.html", "d5/d72/structmeta_1_1notstd_1_1right__shift" ],
+        [ "operator_and", "dc/d4e/structmeta_1_1notstd_1_1operator__and.html", "dc/d4e/structmeta_1_1notstd_1_1operator__and" ]
+      ] ],
+      [ "Parameters_or_empty", "de/d1d/structmeta_1_1_parameters__or__empty.html", "de/d1d/structmeta_1_1_parameters__or__empty" ],
+      [ "Parameters_or_empty< true, T >", "d3/d54/structmeta_1_1_parameters__or__empty_3_01true_00_01_t_01_4.html", "d3/d54/structmeta_1_1_parameters__or__empty_3_01true_00_01_t_01_4" ],
+      [ "types", "d7/dab/structmeta_1_1types.html", "d7/dab/structmeta_1_1types" ],
+      [ "has_member_impl", "db/d1b/structmeta_1_1has__member__impl.html", null ],
+      [ "has_member_impl< Z, types< Ts... >, std::void_t< Z< Ts... > > >", "db/d68/structmeta_1_1has__member__impl_3_01_z_00_01types_3_01_ts_8_8_8_01_4_00_01std_1_1void__t_3_01_z_3_01_ts_8_8_8_01_4_01_4_01_4.html", null ],
+      [ "is_same", "dd/d94/structmeta_1_1is__same.html", "dd/d94/structmeta_1_1is__same" ],
+      [ "is_arithmetic", "d1/d84/structmeta_1_1is__arithmetic.html", "d1/d84/structmeta_1_1is__arithmetic" ],
+      [ "can_call_sqrt", "da/dd4/structmeta_1_1can__call__sqrt.html", null ],
+      [ "can_call_sqrt< std::void_t< decltype(std::sqrt(std::declval< Args >()...))>, Args... >", "d0/d7d/structmeta_1_1can__call__sqrt_3_01std_1_1void__t_3_01decltype_07std_1_1sqrt_07std_1_1declval_3_08d5bfbec0d91a76f978aad0e97e9a8e3.html", null ],
+      [ "can_call_abs", "d8/d2a/structmeta_1_1can__call__abs.html", null ],
+      [ "can_call_abs< std::void_t< decltype(std::abs(std::declval< Args >()...))>, Args... >", "d3/dbd/structmeta_1_1can__call__abs_3_01std_1_1void__t_3_01decltype_07std_1_1abs_07std_1_1declval_3_01_8378ae50039975643e5dcdd641310d1a.html", null ],
+      [ "op_valid", "dd/de4/structmeta_1_1op__valid.html", "dd/de4/structmeta_1_1op__valid" ],
+      [ "is_constructible_from_size_impl", "d0/d30/structmeta_1_1is__constructible__from__size__impl.html", "d0/d30/structmeta_1_1is__constructible__from__size__impl" ],
+      [ "is_convertible_from_multiplies_impl", "d3/dcc/structmeta_1_1is__convertible__from__multiplies__impl.html", "d3/dcc/structmeta_1_1is__convertible__from__multiplies__impl" ],
+      [ "is_convertible_from_plus_impl", "dd/d50/structmeta_1_1is__convertible__from__plus__impl.html", "dd/d50/structmeta_1_1is__convertible__from__plus__impl" ],
+      [ "is_convertible_from_minus_impl", "d3/d29/structmeta_1_1is__convertible__from__minus__impl.html", "d3/d29/structmeta_1_1is__convertible__from__minus__impl" ],
+      [ "is_convertible_from_divides_impl", "d7/d2c/structmeta_1_1is__convertible__from__divides__impl.html", "d7/d2c/structmeta_1_1is__convertible__from__divides__impl" ],
+      [ "is_convertible_from_abs_impl", "df/d22/structmeta_1_1is__convertible__from__abs__impl.html", "df/d22/structmeta_1_1is__convertible__from__abs__impl" ],
+      [ "is_convertible_from_sqrt_impl", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl.html", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl" ],
+      [ "indices", "d5/d37/structmeta_1_1indices.html", "d5/d37/structmeta_1_1indices" ]
+    ] ],
     [ "ptof", "d2/dd1/namespaceptof.html", [
       [ "model_advection_2d", "d6/d86/namespaceptof_1_1model__advection__2d.html", [
         [ "Model", "d3/df2/structptof_1_1model__advection__2d_1_1_model.html", "d3/df2/structptof_1_1model__advection__2d_1_1_model" ],
@@ -306,30 +333,13 @@ var annotated_dup =
       ] ],
       [ "SearchOptions", "d7/d21/structptof_1_1_search_options.html", "d7/d21/structptof_1_1_search_options" ],
       [ "Dynamics", "d9/d9c/structptof_1_1_dynamics.html", "d9/d9c/structptof_1_1_dynamics" ],
-      [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ],
-      [ "Has_periodicity", "d4/db0/structptof_1_1_has__periodicity.html", null ],
-      [ "Has_periodicity< State, decltype((void) State::periodicity, 0)>", "de/ddc/structptof_1_1_has__periodicity_3_01_state_00_01decltype_07_07void_08_01_state_1_1periodicity_00_010_08_4.html", null ]
+      [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ]
     ] ],
     [ "range", "d6/d48/namespacerange.html", [
       [ "gen", "d0/d5d/structrange_1_1gen.html", "d0/d5d/structrange_1_1gen" ]
     ] ],
     [ "useful", "df/d1d/namespaceuseful.html", [
-      [ "details", "d4/dcb/namespaceuseful_1_1details.html", [
-        [ "has_method", "d9/df8/structuseful_1_1details_1_1has__method.html", null ],
-        [ "has_method< Z, types< Ts... >, void_t< Z< Ts... > > >", "d5/d8a/structuseful_1_1details_1_1has__method_3_01_z_00_01types_3_01_ts_8_8_8_01_4_00_01void__t_3_01_z_3_01_ts_8_8_8_01_4_01_4_01_4.html", null ]
-      ] ],
-      [ "notstd", "dc/da6/namespaceuseful_1_1notstd.html", [
-        [ "left_shift", "db/dc4/structuseful_1_1notstd_1_1left__shift.html", "db/dc4/structuseful_1_1notstd_1_1left__shift" ],
-        [ "right_shift", "db/dc9/structuseful_1_1notstd_1_1right__shift.html", "db/dc9/structuseful_1_1notstd_1_1right__shift" ],
-        [ "operator_and", "dd/d5e/structuseful_1_1notstd_1_1operator__and.html", "dd/d5e/structuseful_1_1notstd_1_1operator__and" ]
-      ] ],
       [ "MultiArray", "dc/d1a/classuseful_1_1_multi_array.html", "dc/d1a/classuseful_1_1_multi_array" ],
-      [ "can_call_sqrt", "d8/d23/structuseful_1_1can__call__sqrt.html", null ],
-      [ "can_call_sqrt< std::void_t< decltype(std::sqrt(std::declval< Args >()...))>, Args... >", "d7/d36/structuseful_1_1can__call__sqrt_3_01std_1_1void__t_3_01decltype_07std_1_1sqrt_07std_1_1declval_3f39161ab8e763816eedc8e73fc5ae026.html", null ],
-      [ "can_call_abs", "d9/d78/structuseful_1_1can__call__abs.html", null ],
-      [ "can_call_abs< std::void_t< decltype(std::abs(std::declval< Args >()...))>, Args... >", "dd/d7a/structuseful_1_1can__call__abs_3_01std_1_1void__t_3_01decltype_07std_1_1abs_07std_1_1declval_3_09601e9b67dd27b3a4cf3f7c54a97df9b.html", null ],
-      [ "op_valid_impl", "d2/d99/structuseful_1_1op__valid__impl.html", "d2/d99/structuseful_1_1op__valid__impl" ],
-      [ "has_value_type", "d3/d44/classuseful_1_1has__value__type.html", "d3/d44/classuseful_1_1has__value__type" ],
       [ "StoreConst", "db/d1e/structuseful_1_1_store_const.html", "db/d1e/structuseful_1_1_store_const" ],
       [ "Store", "d3/d06/structuseful_1_1_store.html", "d3/d06/structuseful_1_1_store" ],
       [ "Empty", "da/d86/structuseful_1_1_empty.html", "da/d86/structuseful_1_1_empty" ],
@@ -343,23 +353,12 @@ var annotated_dup =
       [ "Selector_t", "d3/d42/structuseful_1_1_selector__t.html", null ],
       [ "Selector", "d7/dd2/structuseful_1_1_selector.html", null ],
       [ "hash_container", "d4/de0/structuseful_1_1hash__container.html", "d4/de0/structuseful_1_1hash__container" ],
-      [ "hash_pair", "dc/d50/structuseful_1_1hash__pair.html", "dc/d50/structuseful_1_1hash__pair" ],
-      [ "types", "dc/d50/structuseful_1_1types.html", "dc/d50/structuseful_1_1types" ],
-      [ "voider", "d2/dac/structuseful_1_1voider.html", "d2/dac/structuseful_1_1voider" ],
-      [ "indices", "d1/d28/structuseful_1_1indices.html", "d1/d28/structuseful_1_1indices" ],
-      [ "build_indices", "d0/d5b/structuseful_1_1build__indices.html", "d0/d5b/structuseful_1_1build__indices" ],
-      [ "build_indices< 0 >", "dd/d78/structuseful_1_1build__indices_3_010_01_4.html", "dd/d78/structuseful_1_1build__indices_3_010_01_4" ],
-      [ "Parameters_or_empty", "df/d19/structuseful_1_1_parameters__or__empty.html", "df/d19/structuseful_1_1_parameters__or__empty" ],
-      [ "Parameters_or_empty< true, T >", "d4/d06/structuseful_1_1_parameters__or__empty_3_01true_00_01_t_01_4.html", "d4/d06/structuseful_1_1_parameters__or__empty_3_01true_00_01_t_01_4" ],
-      [ "has_time_step_setter", "d5/d31/structuseful_1_1has__time__step__setter.html", "d5/d31/structuseful_1_1has__time__step__setter" ],
-      [ "has_time_step_getter", "dc/d7c/structuseful_1_1has__time__step__getter.html", "dc/d7c/structuseful_1_1has__time__step__getter" ],
-      [ "has_time_step", "d5/dc6/structuseful_1_1has__time__step.html", "d5/dc6/structuseful_1_1has__time__step" ],
-      [ "has_periodicity", "dd/d08/structuseful_1_1has__periodicity.html", "dd/d08/structuseful_1_1has__periodicity" ],
-      [ "has_velocity_rescaling_factor", "d7/d02/structuseful_1_1has__velocity__rescaling__factor.html", "d7/d02/structuseful_1_1has__velocity__rescaling__factor" ]
+      [ "hash_pair", "dc/d50/structuseful_1_1hash__pair.html", "dc/d50/structuseful_1_1hash__pair" ]
     ] ],
+    [ "Check", "d3/d64/struct_check.html", null ],
     [ "Check", "d2/df7/struct_check_options_1_1_check.html", null ],
-    [ "has_periodicidity", "d5/d14/classhas__periodicidity.html", null ],
     [ "Info_type", "d4/d6e/struct_info__type.html", null ],
+    [ "is_convertible_from_times_impl", "d2/dfa/classis__convertible__from__times__impl.html", null ],
     [ "NeighborPrecheck", "d9/df7/struct_search_options_1_1_neighbor_precheck.html", null ],
     [ "NextMeasureTime", "de/da1/struct_output___cases_1_1_next_measure_time.html", null ],
     [ "NextMeasureTime_log", "de/d81/struct_output___cases_1_1_next_measure_time__log.html", null ],

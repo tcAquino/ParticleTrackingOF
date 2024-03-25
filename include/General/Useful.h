@@ -2,9 +2,8 @@
  \file General/Useful.h
  \author Tomás Aquino
  \date 03/15/2011
+ \brief Miscelaneous collection of useful objects and algorithms
 */
-
-// Miscelaneous collection of useful objects and algorithms
 
 #ifndef GENERAL_USEFUL_H
 #define GENERAL_USEFUL_H
@@ -19,18 +18,19 @@
 #include <iostream>
 #include <list>
 #include <regex>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
+/** \namespace useful Miscellaneous utilities. */
 namespace useful
 {
-  /** \brief Display execution time in human-readable format.
-  \details Adapted from Howard Hinnant's answer here:
-   https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time */
+  // Adapted from Howard Hinnant's answer here:
+  // https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time
+  /** \brief Display execution time in human-readable format.  */
   template <typename Clock>
   std::ostream& display_duration
   (std::ostream& stream,
@@ -119,10 +119,9 @@ namespace useful
     return remove_extension(filename) + new_extension;
   }
 
-  /** \brief Expand environment variables.
-   \details
-   Based on Toby Speight's answer here:
-   https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion . */
+  // Based on Toby Speight's answer here:
+  // https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion
+  /** \brief Expand environment variables. */
   inline std::string expand_env(std::string text)
   {
     static const std::regex env_re{R"--(\$\{([^}]+)\})--"};
@@ -134,40 +133,6 @@ namespace useful
                    std::getenv(match[1].str().c_str()));
     }
     return text;
-  }
-  
-  /** \brief Compute widths of bins having given \p values as midpoints and given \p minimum (left edge).
-   \details Widths are computed sequentially as twice the distance between the next midpoint and the current left edge. */
-  template <typename Value_type = double>
-  std::vector<Value_type> get_bin_widths
-  (std::vector<Value_type> const& values, Value_type minimum)
-  {
-    std::vector<Value_type> widths;
-    widths.reserve(values.size());
-    double left_edge = minimum;
-    for (auto const& val : values)
-    {
-      widths.push_back(2.*(val-left_edge));
-      if (widths.back() < 0.)
-        throw std::runtime_error{ "Bad minimum value, could not determine PDF bin widths" };
-      left_edge += widths.back();
-    }
-    
-    return widths;
-  }
-  
-  /** \brief Compute widths of bins having given \p values as midpoints.
-   \details Leftmost bin edge is the minimum value minus half the width of the first bin.
-   
-   Widths are computed sequentially as twice the distance between the next midpoint and the current left edge. */
-  template <typename Value_type = double>
-  std::vector<Value_type> get_bin_widths
-  (std::vector<Value_type> const& values)
-  {
-    if (values.size() < 2)
-      throw std::runtime_error{ "Less than two values, could not determine PDF bin widths" };
-    double midpoint = (values[1]+values[0])/2.;
-    return get_bin_widths(values, values[0]-(midpoint-values[0]));
   }
   
   /** \brief Check if sorted \p container contains \p val.
@@ -205,17 +170,16 @@ namespace useful
   
 
   /** \brief Check if \p string ends with \p suffix. */
-  bool endsWith(const std::string& string, const std::string& suffix)
+  bool ends_with(const std::string& string, const std::string& suffix)
   {
     return string.size() >= suffix.size() &&
       string.substr(string.size() - suffix.size()) == suffix;
   }
   
+  // Adapted from Beder Acosta Borges's answer here:
+  // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
   /** \brief Split \p string into vector of strings at instances of \p delimeter.
-  \details Empty entries can be included or discarded.
-   
-  Adapted from Beder Acosta Borges's answer here:
-  https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c . */
+  \details Empty entries can be included or discarded. */
   std::vector<std::string> split
   (std::string const& string, std::string const& delimiter = " ",
    bool empty_entries = false)
@@ -234,7 +198,7 @@ namespace useful
     }
 
     if (empty_entries &&
-        (string.empty() || endsWith(string, delimiter)))
+        (string.empty() || ends_with(string, delimiter)))
       tokens.push_back("");
 
     return tokens;
@@ -479,154 +443,6 @@ namespace useful
     if (input.fail())
       throw std::runtime_error{ "Could not read value" };
   }
-  
-  /** \class can_call_sqrt General/Useful.h "General/Useful.h"
-   \brief To check whether class can call sqrt
-   \details From Passer By's answer here:
-   https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
-  template <typename = void, typename... Args>
-  struct can_call_sqrt : std::false_type {};
-  /** \class can_call_sqrt General/Useful.h "General/Useful.h"
-  \brief To check whether class can call sqrt.
-  \details From Passer By's answer here:
-  https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
-  template <typename... Args>
-  struct can_call_sqrt<
-  std::void_t<decltype(std::sqrt(std::declval<Args>()...))>, Args...>
-  : std::true_type {};
-  /**
-  \brief To check whether class can call sqrt.
-  \details From Passer By's answer here:
-  https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
-  template <typename... Args>
-  inline constexpr bool can_call_sqrt_v = can_call_sqrt<void, Args...>::value;
-  
-  template <typename = void, typename... Args>
-  struct can_call_abs : std::false_type {};
-  template <typename... Args>
-  struct can_call_abs<
-  std::void_t<decltype(std::abs(std::declval<Args>()...))>, Args...>
-  : std::true_type {};
-  /**
-  \brief To check whether class can call abs.
-  \details From Passer By's answer here:
-  https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
-  template <typename... Args>
-  inline constexpr bool can_call_abs_v = can_call_abs<void, Args...>::value;
-  
-  
-  /** Check whether classes can be used with binary operator
-  \details
-    From Richard Hodges's answer here:
-    https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain . */
-  template<class X, class Y, class Op>
-  struct op_valid_impl
-  {
-      template<class U, class L, class R>
-      static auto test(int) -> decltype(std::declval<U>()(std::declval<L>(), std::declval<R>()),
-                                        void(), std::true_type());
-
-      template<class U, class L, class R>
-      static auto test(...) -> std::false_type;
-
-      using type = decltype(test<Op, X, Y>(0));
-
-  };
-  template<class X, class Y, class Op> using op_valid = typename op_valid_impl<X, Y, Op>::type;
-  
-  /** \namespace notstd Operators not in std. */
-  namespace notstd {
-
-      /** \struct left_shift General/Useful.h "General/Useful.h"
-       \brief Left shift operator. */
-      struct left_shift {
-
-          template <class L, class R>
-          constexpr auto operator()(L&& l, R&& r) const
-          noexcept(noexcept(std::forward<L>(l) << std::forward<R>(r)))
-          -> decltype(std::forward<L>(l) << std::forward<R>(r))
-          {
-              return std::forward<L>(l) << std::forward<R>(r);
-          }
-      };
-
-      /** \struct right_shift General/Useful.h "General/Useful.h"
-      \brief Right shift operator. */
-      struct right_shift {
-
-          template <class L, class R>
-          constexpr auto operator()(L&& l, R&& r) const
-          noexcept(noexcept(std::forward<L>(l) >> std::forward<R>(r)))
-          -> decltype(std::forward<L>(l) >> std::forward<R>(r))
-          {
-              return std::forward<L>(l) >> std::forward<R>(r);
-          }
-      };
-    
-      /** \struct operator_and General/Useful.h "General/Useful.h"
-      \brief And operator. */
-      struct operator_and {
-
-          template <class L, class R>
-          constexpr auto operator()(L&& l, R&& r) const
-          noexcept(noexcept(std::forward<L>(l) & std::forward<R>(r)))
-          -> decltype(std::forward<L>(l) & std::forward<R>(r))
-          {
-              return std::forward<L>(l) & std::forward<R>(r);
-          }
-      };
-
-  }
-  /** \brief Check whether classes can be used with equality operator. */
-  template<class X, class Y> using has_equality = op_valid<X, Y, std::equal_to<>>;
-  /** \brief Check whether classes can be used with inequality operator. */
-  template<class X, class Y> using has_inequality = op_valid<X, Y, std::not_equal_to<>>;
-  /** \brief Check whether classes can be used with less than operator. */
-  template<class X, class Y> using has_less_than = op_valid<X, Y, std::less<>>;
-  /** \brief Check whether classes can be used with less than or equal operator. */
-  template<class X, class Y> using has_less_equal = op_valid<X, Y, std::less_equal<>>;\
-  /** \brief Check whether classes can be used with greater than operator. */
-  template<class X, class Y> using has_greater_than = op_valid<X, Y, std::greater<>>;
-  /** \brief Check whether classes can be used with greater than or equal operator. */
-  template<class X, class Y> using has_greater_equal = op_valid<X, Y, std::greater_equal<>>;
-  /** \brief Check whether classes can be used with bit xor operator. */
-  template<class X, class Y> using has_bit_xor = op_valid<X, Y, std::bit_xor<>>;
-  /** \brief Check whether classes can be used with bit or operator. */
-  template<class X, class Y> using has_bit_or = op_valid<X, Y, std::bit_or<>>;
-  /** \brief Check whether classes can be used with left shift operator. */
-  template<class X, class Y> using has_left_shift = op_valid<X, Y, notstd::left_shift>;
-  /** \brief Check whether classes can be used with right shift operator. */
-  template<class X, class Y> using has_right_shift = op_valid<X, Y, notstd::right_shift>;
-  /** \brief Check whether classes can be used with plus operator. */
-  template<class X, class Y> using has_plus = op_valid<X, Y, std::plus<>>;
-  /** \brief Check whether classes can be used with minus operator. */
-  template<class X, class Y> using has_minus = op_valid<X, Y, std::minus<>>;
-  /** \brief Check whether classes can be used with multiplication operator. */
-  template<class X, class Y> using has_multiplies = op_valid<X, Y, std::multiplies<>>;
-  /** \brief Check whether classes can be used with division operator. */
-  template<class X, class Y> using has_divides = op_valid<X, Y, std::divides<>>;
-  /** \brief Check whether classes can be used with and operator. */
-  template<class X, class Y> using has_and = op_valid<X, Y, notstd::operator_and>;
-  
-  /** \class has_value_type General/Useful.h "General/Useful.h"
-   \brief Check if class defines the type \c value_type
-   \details
-   From here: https://gist.github.com/ilya-biryukov/887b7e543b72b49376ed . */
-  template <class T>
-  class has_value_type
-  {
-      struct One { char a[1]; };
-      struct Two { char a[2]; };
-
-      template <class U>
-      static One foo(typename U::value_type*);
-
-      template <class U>
-      static Two foo(...);
-
-  public:
-      static const bool value = sizeof(foo<T>(nullptr)) == sizeof(One);
-  };
 
   /** \return Sign of \p val. */
   template <typename T> int sgn(T val)
@@ -791,17 +607,7 @@ namespace useful
   
   /** \class Selector General/Useful.h "General/Useful.h"
    \brief Type for selecting function implementations at compile time. */
-  template <typename TT, TT(val)> struct Selector{};
-
-  /** \brief Used along with ensure_ref(T const& obj) to ensure \p T is a reference type. */
-  template <typename T>
-  T& ensure_ref(T const* obj)
-  { return *obj; }
-
-  /** \brief Used along with ensure_ref(T const* obj) to ensure \p T is a reference type. */
-  template <typename T>
-  T& ensure_ref(T const& obj)
-  { return obj; }
+  template <typename TT, TT val> struct Selector{};
 
   /** \class hash_container General/Useful.h "General/Useful.h"
    \brief Simple hash for a container by combining element hashes. */
@@ -913,108 +719,6 @@ namespace useful
       if (criterion(container[ii]))
         swap_delete(container, ii);
   }
-
-  /** \class types General/Useful.h "General/Useful.h"
-   \brief Bundle of types. */
-  template <class...> struct types{using type=types;};
-  /** \class voider General/Useful.h "General/Useful.h"
-   \brief Metafunction to turn a bundle of type arguments into \c void. */
-  template <class...> struct voider{using type=void;};
-  /** \brief void_t General/Useful.h "General/Useful.h"
-   \brief For dists that do not to have \c void_t. */
-  template <class...Ts> using void_t = typename voider<Ts...>::type;
-  /** \namespace useful::details Implementation details. */
-  namespace details
-  {
-    template <template <class...> class Z, class types, class=void>
-    struct has_method : std::false_type {};
-    template <template <class...> class Z, class...Ts>
-    struct has_method<Z,types<Ts...>,void_t<Z<Ts...>>>:std::true_type{};
-  }
-  /** \brief types General/Useful.h "General/Useful.h"
-  \brief To check if a class has a method.
-  \details has_method<template, types...> is true iff template <types...> is valid.
-   
-   From here: https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat . */
-  template <template <class...> class Z, class...Ts>
-  using has_method=details::has_method<Z, types<Ts...>>;
-  
-  /** \brief begin_result General/Useful.h "General/Useful.h"
-  \brief Helper to check if a class has begin() method. */
-  template<class X>
-  using begin_result = decltype(std::declval<X>().begin());
-  /** \brief has_begin General/Useful.h "General/Useful.h"
-  \brief Check if a class has begin() method. */
-  template<class X>
-  using has_begin = has_method<begin_result, X>;
-  
-  /** \brief Implemented here because some versions of gcc have trouble with std::isnan. */
-  template <typename T>
-  bool isnan(T const& val)
-  { return val != val; }
-  
-  /** \brief Helper to apply function to each element of tuple. */
-  template <typename Tuple, typename F, std::size_t ...Indices>
-  void for_each_impl(Tuple const& tuple, F f, std::index_sequence<Indices...>)
-  {
-    using swallow = int[];
-    (void)swallow{ 1, (f(std::get<Indices>(tuple)), void(), int{})... };
-  }
-  
-  /** \brief Apply function to each element of tuple. */
-  template <typename Tuple, typename F>
-  void for_each(Tuple const& tuple, F f)
-  {
-    constexpr std::size_t N
-      = std::tuple_size<std::remove_reference_t<Tuple>>::value;
-    for_each_impl(tuple, f, std::make_index_sequence<N>{});
-  }
-  
-  /** \brief Helper to apply function to each element of tuple. */
-  template <typename Tuple, typename F, std::size_t ...Indices>
-  void for_each_impl
-  (Tuple&& tuple, F&& f, std::index_sequence<Indices...>)
-  {
-    using swallow = int[];
-    (void)swallow{ 1, (f(std::get<Indices>(std::forward<Tuple>(tuple))),
-                       void(),
-                       int{})... };
-  }
-  
-  /** \brief Apply function to each element of tuple. */
-  template <typename Tuple, typename F>
-  void for_each(Tuple&& tuple, F&& f)
-  {
-    constexpr std::size_t N = std::tuple_size<std::remove_reference_t<Tuple>>::value;
-    for_each_impl(std::forward<Tuple>(tuple),
-                  std::forward<F>(f),
-                  std::make_index_sequence<N>{});
-  }
-
-  /** \class indices General/Useful.h "General/Useful.h"
-   \brief Indices for template metamagic. */
-  template <std::size_t... Indices>
-  struct indices
-  { using next = indices<Indices..., sizeof...(Indices)>; };
-
-  /** \class build_indices General/Useful.h "General/Useful.h"
-  \brief Indices for template metamagic. */
-  template <std::size_t size>
-  struct build_indices
-  { using type = typename build_indices<size-1>::type::next; };
-  template <>
-  struct build_indices<0>
-  { using type = indices<>; };
-
-  /** \class Parameters_or_empty General/Useful.h "General/Useful.h"
-   \brief  Get Parameters type for true or Empty type for false. */
-  template <bool, typename>
-  struct Parameters_or_empty{ using type = useful::Empty; };
-  template <typename T>
-  struct Parameters_or_empty<true, T>
-  { using type = typename T::Parameters; };
-  template <bool condition, typename T>
-  using Parameters_or_empty_t = typename Parameters_or_empty<condition, T>::type;
   
   /** \brief Get value of shell environment variable \c name (do not pass \$ in \c name). */
   std::string getenv(std::string const& name)
@@ -1046,103 +750,12 @@ namespace useful
   }
   
   /** \brief Expand ~ if present at the beginning of directory \c dir. */
-  std::string expand_home_dir_inplace(std::string dir)
+  std::string& expand_home_dir_inplace(std::string& dir)
   {
     if (dir[0] == '~')
       dir.replace(0, 1, getenv_home_check());
     return dir;
   }
-  
-  /** \class has_time_step_setter GeneralUseful.h "GeneralUseful.h"
-   \brief Check if type T has member function <tt>void time_step(double)</tt>.
-   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
-  */
-  template <typename T> struct has_time_step_setter
-  {
-      typedef char (&Yes)[1];
-      typedef char (&No)[2];
-
-      template<class U>
-      static Yes test(U* data,
-                      typename std::enable_if<std::is_void<
-                        decltype(data->time_step(0.))>::value>::type* = 0);
-      static No test(...);
-      static const bool value =
-        sizeof(Yes) ==
-          sizeof(has_time_step_setter::test((typename std::remove_reference<T>::type*)0));
-  };
-  
-  /** \class has_time_step_getter GeneralUseful.h "GeneralUseful.h"
-   \brief Check if type T has member function <tt>double time_step()</tt>.
-   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
-  */
-  template <typename T> struct has_time_step_getter
-  {
-      typedef char (&Yes)[1];
-      typedef char (&No)[2];
-
-      template<class U>
-      static Yes test(U* data,
-                      typename std::enable_if<std::is_same<
-                        double,
-                        decltype(data->time_step())>::value>::type* = 0);
-      static No test(...);
-      static const bool value = sizeof(Yes) == sizeof(has_time_step_getter::test((typename std::remove_reference<T>::type*)0));
-  };
-  
-  /** \class has_time_step GeneralUseful.h "GeneralUseful.h"
-   \brief Check if type T has member variable <tt>double time_step</tt>.
-   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
-  */
-  template <typename T> struct has_time_step
-  {
-      typedef char (&Yes)[1];
-      typedef char (&No)[2];
-
-      template<class U>
-      static Yes test(U* data,
-                      typename std::enable_if<std::is_same<
-                        double,
-                        decltype(data->time_step)>::value>::type* = 0);
-      static No test(...);
-      static const bool value = sizeof(Yes) == sizeof(has_time_step::test((typename std::remove_reference<T>::type*)0));
-  };
-  
-  /** \class has_periodicidity GeneralUseful.h "GeneralUseful.h"
-   \brief Check if type T has member variable <tt>std::vector<int> periodicity</tt>.
-   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
-  */
-  template <typename T> struct has_periodicity
-  {
-      typedef char (&Yes)[1];
-      typedef char (&No)[2];
-
-      template<class U>
-      static Yes test(U* data,
-                      typename std::enable_if<std::is_same<
-                        std::vector<int>,
-                        decltype(data->periodicity)>::value>::type* = 0);
-      static No test(...);
-      static const bool value = sizeof(Yes) == sizeof(has_periodicity::test((typename std::remove_reference<T>::type*)0));
-  };
-  
-  /** \class has_velocity_rescaling_factor GeneralUseful.h "GeneralUseful.h"
-   \brief Check if type T has member variable <tt>double velocity_rescaling_factor</tt>.
-   \details Adapted from kispaljr's answer here: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function .
-  */
-  template <typename T> struct has_velocity_rescaling_factor
-  {
-      typedef char (&Yes)[1];
-      typedef char (&No)[2];
-
-      template<class U>
-      static Yes test(U* data,
-                      typename std::enable_if<std::is_same<
-                        double,
-                        decltype(data->velocity_rescaling_factor)>::value>::type* = 0);
-      static No test(...);
-      static const bool value = sizeof(Yes) == sizeof(has_velocity_rescaling_factor::test((typename std::remove_reference<T>::type*)0));
-  };
 }
 
 #endif /* GENERAL_USEFUL_H */

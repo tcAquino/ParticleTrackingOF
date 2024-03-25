@@ -1,0 +1,6 @@
+<map id="op::times_scalar_inplace" name="op::times_scalar_inplace">
+<area shape="rect" id="node1" title="Element&#45;wise multiplication by scalar." alt="" coords="240,100,423,127"/>
+<area shape="rect" id="node2" href="$d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html#a9f4876b7aa543e0d9930dbc53dd2a0c3" title="Enforce boundary condition." alt="" coords="19,5,178,61"/>
+<area shape="rect" id="node3" href="$d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#ace73e13a2b0d7b2863cf3d895f0ff824" title="Enforce boundary condition." alt="" coords="11,85,187,141"/>
+<area shape="rect" id="node4" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#aab8567de2cefe3fdda201376a0cc8b9a" title=" " alt="" coords="5,166,192,207"/>
+</map>

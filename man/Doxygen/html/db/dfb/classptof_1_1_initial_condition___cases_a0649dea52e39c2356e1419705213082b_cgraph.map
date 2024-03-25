@@ -21,12 +21,12 @@
 <area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="1166,107,1269,133"/>
 <area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="931,217,1057,244"/>
 <area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="1150,208,1285,235"/>
-<area shape="rect" id="node16" href="$dc/dc5/namespaceoperation.html#aa54e40e12e468b9d748c21d69ca54c1e" title="Euclidean distance." alt="" coords="1159,309,1275,336"/>
-<area shape="rect" id="node17" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="1389,309,1504,336"/>
-<area shape="rect" id="node21" href="$dc/dc5/namespaceoperation.html#ad96456c0270dd54050b3c94200a1f80c" title="Element&#45;wise subtraction." alt="" coords="1381,259,1513,285"/>
-<area shape="rect" id="node18" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="1590,259,1727,285"/>
-<area shape="rect" id="node19" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="1600,360,1717,387"/>
-<area shape="rect" id="node20" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="1788,360,1905,387"/>
+<area shape="rect" id="node16" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="1182,309,1253,336"/>
+<area shape="rect" id="node17" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="1412,309,1481,336"/>
+<area shape="rect" id="node21" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="1403,259,1490,285"/>
+<area shape="rect" id="node18" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="1613,259,1704,285"/>
+<area shape="rect" id="node19" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="1623,360,1694,387"/>
+<area shape="rect" id="node20" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="1811,360,1882,387"/>
 <area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#a698673f4614e12ca9b05fc29c2e3040f" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="925,513,1063,554"/>
 <area shape="rect" id="node30" href="$d2/dd1/namespaceptof.html#a3c85b81a804f529745e4f53c6b35ec53" title=" " alt="" coords="911,411,1077,437"/>
 <area shape="rect" id="node24" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="1158,461,1277,488"/>

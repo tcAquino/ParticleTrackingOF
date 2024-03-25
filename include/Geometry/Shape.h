@@ -152,7 +152,7 @@ namespace geometry
     /** \return Domain side sizes. */
     std::vector<double> dimensions() const
     {
-      if constexpr (std::is_same<Shape,geometry::Sphere<>>::value)
+      if constexpr (std::is_same_v<Shape,geometry::Sphere<>>)
         return std::vector<double>(box.dim(), 2.*box.radius);
       else
         return box.dimensions;

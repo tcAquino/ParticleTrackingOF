@@ -116,8 +116,6 @@ var namespaceptof =
     [ "SearchOptions", "d7/d21/structptof_1_1_search_options.html", "d7/d21/structptof_1_1_search_options" ],
     [ "Dynamics", "d9/d9c/structptof_1_1_dynamics.html", "d9/d9c/structptof_1_1_dynamics" ],
     [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ],
-    [ "Has_periodicity", "d4/db0/structptof_1_1_has__periodicity.html", null ],
-    [ "Has_periodicity< State, decltype((void) State::periodicity, 0)>", "de/ddc/structptof_1_1_has__periodicity_3_01_state_00_01decltype_07_07void_08_01_state_1_1periodicity_00_010_08_4.html", null ],
     [ "State", "d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6", null ],
     [ "State_Periodic", "d2/dd1/namespaceptof.html#a98479a93b9918fc130f9e65207185d59", null ],
     [ "add_unspecified_patches", "d2/dd1/namespaceptof.html#afe366724699bb4a97e5b3aeb0be4f06d", null ],

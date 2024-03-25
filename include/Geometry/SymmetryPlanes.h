@@ -28,20 +28,20 @@ namespace geometry
     \brief Symmetry planes for unit sphere radius. */
     SymmetryPlanes_Bcc()
     : normal{
-        operation::times_scalar(1./std::sqrt(2.),
-                                std::vector<double>{ 0., 1., 1. }),
-        operation::times_scalar(1./std::sqrt(2.),
-                                std::vector<double>{ 1., 0., 1. }),
-        operation::times_scalar(1./std::sqrt(2.),
-                                std::vector<double>{ 1., 1., 0. })
+        op::times_scalar(1./std::sqrt(2.),
+                         std::vector<double>{ 0., 1., 1. }),
+        op::times_scalar(1./std::sqrt(2.),
+                         std::vector<double>{ 1., 0., 1. }),
+        op::times_scalar(1./std::sqrt(2.),
+                         std::vector<double>{ 1., 1., 0. })
     }
     , translation{
-        operation::times_scalar(2./std::sqrt(3.),
-                                std::vector<double>{ -1., 1., 1. }),
-        operation::times_scalar(2./std::sqrt(3.),
-                                std::vector<double>{ 1., -1., 1. }),
-        operation::times_scalar(2./std::sqrt(3.),
-                                std::vector<double>{ 1., 1., -1. })
+        op::times_scalar(2./std::sqrt(3.),
+                         std::vector<double>{ -1., 1., 1. }),
+        op::times_scalar(2./std::sqrt(3.),
+                         std::vector<double>{ 1., -1., 1. }),
+        op::times_scalar(2./std::sqrt(3.),
+                         std::vector<double>{ 1., 1., -1. })
     }
     {}
     
@@ -90,7 +90,7 @@ namespace geometry
   (Position const& position, SymmetryPlanes const& symmetry_planes,
    std::size_t dd, double scale)
   {
-    return operation::dot(position, symmetry_planes.normal[dd])
+    return op::dot(position, symmetry_planes.normal[dd])
       /(scale*symmetry_planes.length[dd]);
   }
   
@@ -126,7 +126,7 @@ namespace geometry
   (Position const& position, SymmetryPlanes const& symmetry_planes,
    std::size_t dd, double scale, Origin const& origin)
   {
-    return project(operation::minus(position, origin),
+    return project(op::minus(position, origin),
                    symmetry_planes, dd, scale);
   }
   
@@ -142,7 +142,7 @@ namespace geometry
   (Position const& position, SymmetryPlanes const& symmetry_planes,
    double scale, Origin const& origin)
   {
-    return project(operation::minus(position, origin),
+    return project(op::minus(position, origin),
                    symmetry_planes, scale);
   }
   
@@ -160,9 +160,9 @@ namespace geometry
    double scale)
   {
     for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
-      operation::plus_InPlace(position,
-        operation::times_scalar(scale*projections[dd],
-                                symmetry_planes.translation[dd]));
+      op::plus_inplace(position,
+                       op::times_scalar(scale*projections[dd],
+                                        symmetry_planes.translation[dd]));
   }
   
   /** \brief Translate position backwards along basis vectors of symmetry planes.
@@ -179,9 +179,9 @@ namespace geometry
    double scale)
   {
     for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
-      operation::minus_InPlace(position,
-        operation::times_scalar(scale*projections[dd],
-                                symmetry_planes.translation[dd]));
+      op::minus_inplace(position,
+                        op::times_scalar(scale*projections[dd],
+                                         symmetry_planes.translation[dd]));
   }
   
   /** \brief Place particle in periodic unit cell according to symmetry planes.

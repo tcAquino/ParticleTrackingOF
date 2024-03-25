@@ -57,7 +57,7 @@ namespace ctrw
 		void operator() (State& state)
 		{
       auto state_old = state;
-      operation::plus_InPlace(state.position, _jump_generator(state));
+      op::plus_inplace(state.position, _jump_generator(state));
       state.time += _time_generator(state);
       _boundary(state, state_old);
 		}
@@ -112,7 +112,7 @@ namespace ctrw
     {
       auto state_old = state;
       _time_step_adaptor(state, _time_generator, _jump_generator);
-      operation::plus_InPlace(state.position, _jump_generator(state));
+      op::plus_inplace(state.position, _jump_generator(state));
       state.time += _time_generator(state);
       _boundary(state, state_old);
     }
@@ -163,7 +163,7 @@ namespace ctrw
     void operator()(State& state)
     {
       auto state_old = state;
-      operation::plus_InPlace(state.position, _jump_generator(state));
+      op::plus_inplace(state.position, _jump_generator(state));
       _boundary(state, state_old);
     }
     
@@ -256,13 +256,13 @@ namespace ctrw
     void operator() (State& state)
     {
       auto state_old = state;
-      _jump_generator.time_step(_step_length/operation::abs(_velocity(state)));
+      _jump_generator.time_step(_step_length/op::abs(_velocity(state)));
       if (_jump_generator.time_step() == std::numeric_limits<double>::infinity())
       {
         state.time = std::numeric_limits<double>::infinity();
         return;
       }
-      operation::plus_InPlace(state.position, _jump_generator(state));
+      op::plus_inplace(state.position, _jump_generator(state));
       state.time += _jump_generator.time_step();
       _boundary(state, state_old);
     }
@@ -830,22 +830,22 @@ namespace ctrw
       switch (state.state)
       {
         case 0:
-          operation::plus_InPlace(state.position,
-                                  _jump_generator(state));
+          op::plus_inplace(state.position,
+                           _jump_generator(state));
           if(!boundary(state, state_old))
             state.state = _state_switcher.run(state);
           break;
         case 1:
           state.state = _state_switcher.tumble(state);
           if (state.state == 0)
-            operation::plus_InPlace(state.orientation,
-                                    _orientation_generator(state));
+            op::plus_inplace(state.orientation,
+                             _orientation_generator(state));
           break;
         case 2:
           state.state = _state_switcher.wall_tumble(state);
           if (state.state == 0)
-            operation::plus_InPlace(state.orientation,
-                                    _orientation_generator_wall(state));
+            op::plus_inplace(state.orientation,
+                             _orientation_generator_wall(state));
           break;
         default:
           break;
@@ -921,10 +921,10 @@ namespace ctrw
     void operator() (State& state)
     {
       auto state_old = state;
-      operation::linearOp(time_step(), state.velocity, state.position,
-                          state.position);
-      operation::linearOp(time_step(), acceleration(state), state.velocity,
-                          state.velocity);
+      op::linearop(time_step(), state.velocity, state.position,
+                   state.position);
+      op::linearop(time_step(), acceleration(state), state.velocity,
+                   state.velocity);
       boundary(state, state_old);
     }
     

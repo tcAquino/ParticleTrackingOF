@@ -9,13 +9,14 @@
 
 #include <cmath>
 #include <cstddef>
-#include <exception>
 #include <limits>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <boost/algorithm/string.hpp>
 #include <meshSearch.H>
 #include "CTRW/CTRW.h"
+#include "CTRW/Meta.h"
 #include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Geometry.h"
@@ -411,7 +412,7 @@ namespace ptof
        Mask&& mask = {},
        double threshold = 0.)
       {
-        if constexpr (useful::has_periodicity<typename CTRW::State>::value)
+        if constexpr (meta::has_periodicity_v<typename CTRW::State>)
           return InitialCondition_Cases{
             geometry, velocity_field,
             ParticleMaker_Periodic{

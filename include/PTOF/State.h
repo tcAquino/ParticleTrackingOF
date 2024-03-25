@@ -8,7 +8,7 @@
 #define PTOF_STATE_H
 
 #include <cstddef>
-#include <exception>
+#include <stdexcept>
 #include <fieldTypes.H>
 #include <type_traits>
 #include <vector>

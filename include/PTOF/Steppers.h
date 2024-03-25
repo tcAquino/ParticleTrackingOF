@@ -12,7 +12,7 @@
 #include <utility>
 #include "CTRW/JumpGenerator.h"
 #include "CTRW/TimeGenerator.h"
-#include "General/Useful.h"
+#include "CTRW/Meta.h"
 
 namespace ptof
 {
@@ -28,7 +28,7 @@ namespace ptof
     template <typename SolverParameters>
     static auto makeTimeGenerator(SolverParameters const& params_solvers)
     {
-      if constexpr (useful::has_time_step<SolverParameters>::value)
+      if constexpr (meta::has_time_step_v<SolverParameters>)
         return ctrw::TimeGenerator_Step{ params_solvers.time_step };
       return ctrw::TimeGenerator_Step{ 0. };
     }
@@ -58,7 +58,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (useful::has_time_step<SolverParameters>::value)
+      if constexpr (meta::has_time_step_v<SolverParameters>)
         return
           ctrw::JumpGenerator_Add{
             ctrw::JumpGenerator_Velocity_RK4{
@@ -101,7 +101,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (useful::has_time_step<SolverParameters>::value)
+      if constexpr (meta::has_time_step_v<SolverParameters>)
         return
           ctrw::JumpGenerator_Velocity_RK4{
             std::forward<VelocityField>(velocity_field),
@@ -126,7 +126,7 @@ namespace ptof
     template <typename SolverParameters>
     static auto makeTimeGenerator(SolverParameters const& params_solvers)
     {
-      if constexpr (useful::has_time_step<SolverParameters>::value)
+      if constexpr (meta::has_time_step_v<SolverParameters>)
         return ctrw::TimeGenerator_Step{ params_solvers.time_step };
       return ctrw::TimeGenerator_Step{ 0. };
     }
@@ -156,7 +156,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (useful::has_time_step<SolverParameters>::value)
+      if constexpr (meta::has_time_step_v<SolverParameters>)
         return
           ctrw::JumpGenerator_Add{
             ctrw::JumpGenerator_Velocity{
@@ -197,7 +197,7 @@ namespace ptof
      SolverParameters const& params_solvers,
      std::size_t dim)
     {
-      if constexpr (useful::has_time_step<SolverParameters>::value)
+      if constexpr (meta::has_time_step_v<SolverParameters>)
         return
           ctrw::JumpGenerator_Velocity{
             std::forward<VelocityField>(velocity_field),

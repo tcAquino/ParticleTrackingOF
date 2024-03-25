@@ -18,8 +18,6 @@ var _p_t_o_f_2_useful_8h =
     [ "NeighborPrecheck", "da/dd0/structptof_1_1_search_options_1_1_neighbor_precheck.html", "da/dd0/structptof_1_1_search_options_1_1_neighbor_precheck" ],
     [ "Dynamics", "d9/d9c/structptof_1_1_dynamics.html", "d9/d9c/structptof_1_1_dynamics" ],
     [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ],
-    [ "Has_periodicity", "d4/db0/structptof_1_1_has__periodicity.html", null ],
-    [ "Has_periodicity< State, decltype((void) State::periodicity, 0)>", "de/ddc/structptof_1_1_has__periodicity_3_01_state_00_01decltype_07_07void_08_01_state_1_1periodicity_00_010_08_4.html", null ],
     [ "cell_center", "d0/df6/_p_t_o_f_2_useful_8h.html#a65ce2f6ce88714c9a15798b95e9a17c7", null ],
     [ "cell_volume", "d0/df6/_p_t_o_f_2_useful_8h.html#a073efb12947b9e64f1a1e3f444cf2b11", null ],
     [ "face_area", "d0/df6/_p_t_o_f_2_useful_8h.html#a96af753324a65471bd534041a41eadbe", null ],

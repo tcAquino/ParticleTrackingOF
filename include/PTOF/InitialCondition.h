@@ -10,9 +10,9 @@
 #include <algorithm>
 #include <cstddef>
 #include <cmath>
-#include <exception>
 #include <numeric>
 #include <random>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <unordered_map>

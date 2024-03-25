@@ -563,16 +563,6 @@ namespace ptof
     return point;
   }
   
-  /** \class Has_periodicity
-   \brief Check for existence of periodicity info (to use with State objects).
-  */
-  template <typename State, typename = int>
-  struct Has_periodicity : std::false_type { };
-  template <typename State>
-  struct Has_periodicity
-  <State, decltype((void) State::periodicity, 0)>
-  : std::true_type { };
-  
   /**
    \param subject CTRW object.
    \param time Current time.
@@ -704,12 +694,9 @@ namespace ptof
       auto const& state = part.state_new();
       if (!state.info.absorbed
           && part.state_old().time <= time)
-      {
-        auto position = getter_position(state);
-        for (std::size_t dd = 0; dd < second_moment.size(); ++dd)
-          second_moment[dd] += position[dd]*position[dd];
-        second_moment *= state.mass;
-      }
+        op::plus_inplace(second_moment,
+                                op::times_scalar(state.mass,
+                                                 op::square(getter_position(state))));
     }
     return second_moment/mass(subject, time);
   };
@@ -729,10 +716,8 @@ namespace ptof
   (Subject const& subject, double time,
    GetterPosition getter_position = {})
   {
-    auto position_mean_sq = position_mean(subject, time, getter_position);
-    operation::times_InPlace(position_mean_sq, position_mean_sq);
     return position_second_moment(subject, time, getter_position)
-      - position_mean_sq;
+      - op::square(position_mean(subject, time, getter_position));
   };
   
   /** \brief Output time information.

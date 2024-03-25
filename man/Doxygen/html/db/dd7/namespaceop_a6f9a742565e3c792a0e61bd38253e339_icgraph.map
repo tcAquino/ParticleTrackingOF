@@ -1,0 +1,7 @@
+<map id="op::linearop" name="op::linearop">
+<area shape="rect" id="node1" title="lambda_1*input_1+lambda_2*input2." alt="" coords="240,85,339,112"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a8fe3b492063e0c76b5475f1fb5df4708" title="lambda_1*input_1+lambda_2*input2." alt="" coords="49,5,148,32"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a74492bab6e568d339c9cb9f964d6ed8c" title="lambda_1*input_1+lambda_2*input2." alt="" coords="22,56,175,83"/>
+<area shape="rect" id="node4" href="$db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#aaaf4045fd954e3cff7088704fdb56098" title=" " alt="" coords="5,107,192,149"/>
+<area shape="rect" id="node5" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#aab8567de2cefe3fdda201376a0cc8b9a" title=" " alt="" coords="5,173,192,214"/>
+</map>

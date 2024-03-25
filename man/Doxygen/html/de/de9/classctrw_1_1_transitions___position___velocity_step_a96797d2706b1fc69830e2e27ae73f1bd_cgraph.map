@@ -1,9 +1,9 @@
 <map id="ctrw::Transitions_Position_VelocityStep::operator()" name="ctrw::Transitions_Position_VelocityStep::operator()">
 <area shape="rect" id="node1" title=" " alt="" coords="5,49,192,90"/>
-<area shape="rect" id="node2" href="$dc/dc5/namespaceoperation.html#adcabb5a09e146b26650b162d370b15ab" title="Euclidean norm." alt="" coords="269,19,384,45"/>
-<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a1f1a4a899f7e1bcd82512126f8cf48a9" title="Element&#45;wise sum." alt="" coords="240,81,413,108"/>
-<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#a2d9cf3a7b0ab8c0834fcf004e94d4b78" title="Euclidean norm squared." alt="" coords="461,5,599,32"/>
-<area shape="rect" id="node4" href="$dc/dc5/namespaceoperation.html#a9fec4a73f71e0adba69b17e93fc26337" title="Element&#45;wise square root." alt="" coords="471,56,589,83"/>
-<area shape="rect" id="node5" href="$dc/dc5/namespaceoperation.html#a3db5a7e1f907a648ed1b4c225f0482c4" title="Element&#45;wise square root." alt="" coords="647,56,764,83"/>
-<area shape="rect" id="node7" href="$dc/dc5/namespaceoperation.html#af97fc5d2bafda55ffaaadee6a267009e" title="Element&#45;wise sum." alt="" coords="471,107,589,133"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="269,19,338,45"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#afb06583511530d1d3e4390b149ad65ea" title="Element&#45;wise sum." alt="" coords="240,81,367,108"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="415,5,505,32"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="425,56,495,83"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="553,56,624,83"/>
+<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086" title="Element&#45;wise sum." alt="" coords="423,107,497,133"/>
 </map>

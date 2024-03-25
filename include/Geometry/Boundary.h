@@ -7,7 +7,7 @@
  
 A Boundary class should implement the following basic functionality:
 
- \code{.cpp}
+\code{.cpp}
 class Example_Boundary
 {
 public:
@@ -176,8 +176,8 @@ namespace geometry
     template <typename Position, typename Projection = double>
     void translate(Position& position, Projection projection) const
     {
-      operation::plus_InPlace(position,
-                      (boundaries.second-boundaries.first)*projection);
+      op::plus_inplace(position,
+                       (boundaries.second-boundaries.first)*projection);
     }
 	};
 
@@ -231,8 +231,8 @@ namespace geometry
     void translate
     (Position& position, Projections const& projections) const
     {
-      operation::plus_InPlace(position,
-                              operation::times(domain_dimensions, projections));
+      op::plus_inplace(position,
+                       op::times(domain_dimensions, projections));
     }
     
   private:
@@ -359,8 +359,8 @@ namespace geometry
     void translate
     (Position& position, Projections const& projections) const
     {
-      operation::plus_InPlace(position,
-                              operation::times(domain_dimensions, projections));
+      op::plus_inplace(position,
+                       op::times(domain_dimensions, projections));
     }
     
   private:
@@ -534,7 +534,7 @@ namespace geometry
     template <typename Position>
     bool outOfBounds(Position const& position) const
     {
-      return operation::abs_sq(position) > _radius_sq;
+      return op::abs_sq(position) > _radius_sq;
     }
 
     /** \brief Enforce boundary condition.
@@ -549,25 +549,25 @@ namespace geometry
         return false;
       
       auto position_old = state_old.position;
-      std::vector<double> jump = operation::minus(state.position, position_old);
+      std::vector<double> jump = op::minus(state.position, position_old);
       std::vector<double> tangent_at_contact(2);
       
       // Iterate reflection procedure until position is inside boundary
       while (1)
       {
         // Fraction alpha of jump up to the boundary
-        double pos_dot_jump = operation::dot(position_old, jump);
-        double norm_sq_jump = operation::abs_sq(jump);
-        double pos_sq_old = operation::abs_sq(position_old);
+        double pos_dot_jump = op::dot(position_old, jump);
+        double norm_sq_jump = op::abs_sq(jump);
+        double pos_sq_old = op::abs_sq(position_old);
         double aux = pos_dot_jump/norm_sq_jump;
         double alpha = std::sqrt(aux*aux
                                  +(_radius_sq-pos_sq_old)/norm_sq_jump)-aux;
         
         // Avoid numerical issues
-        if (alpha <= 0. || useful::isnan(alpha))
+        if (alpha <= 0. || std::isnan(alpha))
         {
-          operation::times_scalar_InPlace(radius/operation::abs(state.position),
-                                          state.position);
+          op::times_scalar_inplace(radius/op::abs(state.position),
+                                   state.position);
           break;
         }
         
@@ -580,17 +580,17 @@ namespace geometry
         tangent_at_contact[1] = -position_old[0]/radius;
 
         // Angle between jump and tangent to boundary at contact
-        double tangent_dot_jump = operation::dot(tangent_at_contact, jump);
+        double tangent_dot_jump = op::dot(tangent_at_contact, jump);
         double cos_contact_angle = tangent_dot_jump/std::sqrt(norm_sq_jump);
         double contact_angle = std::acos(cos_contact_angle);
 
         // Outgoing jump at collision, rotate outer jump and flip the direction
-        operation::rotate(jump, -2.*contact_angle);
-        operation::times_scalar_InPlace(1.-alpha, jump);
+        op::rotate(jump, -2.*contact_angle);
+        op::times_scalar_inplace(1.-alpha, jump);
         
         // Place particle at reflected position
-        operation::plus(position_old, jump,
-                        state.position);
+        op::plus(position_old, jump,
+                 state.position);
         
         // If inside boundary, done
         if(!outOfBounds(state.position))
@@ -671,13 +671,13 @@ namespace geometry
         double norm_sq_jump = std::inner_product(
           jump_radial.cbegin(), jump_radial.cend(),
           jump_radial.cbegin(), 0.);
-        double radial_pos_sq_old = operation::abs_sq(position_radial_old);
+        double radial_pos_sq_old = op::abs_sq(position_radial_old);
         double aux = pos_dot_jump/norm_sq_jump;
         double alpha = std::sqrt(aux*aux
                                  +(_radius_sq-radial_pos_sq_old)/norm_sq_jump)-aux;
         
         // Avoid numerical issues
-        if (alpha <= 0. || useful::isnan(alpha))
+        if (alpha <= 0. || std::isnan(alpha))
         {
            double radial_pos_sq = std::inner_product(
              state.position.cbegin()+_begin_transverse,
@@ -704,8 +704,8 @@ namespace geometry
         double contact_angle = std::acos(cos_contact_angle);
 
         // Outgoing jump at collision, rotate outer jump and flip the direction
-        operation::rotate(jump_radial, -2.*contact_angle);
-        operation::times_scalar_InPlace(1.-alpha, jump_radial);
+        op::rotate(jump_radial, -2.*contact_angle);
+        op::times_scalar_inplace(1.-alpha, jump_radial);
         
         // Place particle at reflected position
         for (std::size_t dd = 0; dd < 2; ++dd)
@@ -882,7 +882,7 @@ namespace geometry
         geometry::place_in_unit_cell(state.position,
                                      symmetry_planes,
                                      scale, origin);
-      operation::plus_InPlace(state.periodicity, projections);
+      op::plus_inplace(state.periodicity, projections);
       
       for (auto const& val : projections)
         if (val != 0)
