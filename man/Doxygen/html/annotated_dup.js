@@ -65,24 +65,24 @@ var annotated_dup =
       [ "Transitions_RunAndTumble_PTRW", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html", "da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w" ],
       [ "Transitions_Velocity_Acceleration", "db/d5a/classctrw_1_1_transitions___velocity___acceleration.html", "db/d5a/classctrw_1_1_transitions___velocity___acceleration" ]
     ] ],
-    [ "geometry", "d5/d5f/namespacegeometry.html", [
-      [ "Boundary_DoNothing", "dd/d2e/classgeometry_1_1_boundary___do_nothing.html", "dd/d2e/classgeometry_1_1_boundary___do_nothing" ],
-      [ "Boundary_Periodic_1d", "d3/d11/classgeometry_1_1_boundary___periodic__1d.html", "d3/d11/classgeometry_1_1_boundary___periodic__1d" ],
-      [ "Boundary_Periodic", "d7/d27/classgeometry_1_1_boundary___periodic.html", "d7/d27/classgeometry_1_1_boundary___periodic" ],
-      [ "Boundary_Periodic_Dim", "db/de1/classgeometry_1_1_boundary___periodic___dim.html", "db/de1/classgeometry_1_1_boundary___periodic___dim" ],
-      [ "Boundary_Periodic_WithOutsideInfo", "db/d57/classgeometry_1_1_boundary___periodic___with_outside_info.html", "db/d57/classgeometry_1_1_boundary___periodic___with_outside_info" ],
-      [ "Boundary_Reflecting_1d", "df/d79/classgeometry_1_1_boundary___reflecting__1d.html", "df/d79/classgeometry_1_1_boundary___reflecting__1d" ],
-      [ "Boundary_Reflecting", "df/d3c/classgeometry_1_1_boundary___reflecting.html", "df/d3c/classgeometry_1_1_boundary___reflecting" ],
-      [ "Boundary_Reflecting_Dim", "db/de4/classgeometry_1_1_boundary___reflecting___dim.html", "db/de4/classgeometry_1_1_boundary___reflecting___dim" ],
-      [ "Boundary_RadialReflecting_2d", "d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html", "d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d" ],
-      [ "Boundary_Open_RadialReflecting_3d", "d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html", "d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d" ],
-      [ "Boundary_Periodic_SymmetryPlanes", "d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes.html", "d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes" ],
-      [ "Boundary_Periodic_SymmetryPlanes_WithOutsideInfo", "df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html", "df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info" ],
-      [ "Parallelepiped", "d4/d45/structgeometry_1_1_parallelepiped.html", "d4/d45/structgeometry_1_1_parallelepiped" ],
-      [ "Sphere", "d5/da0/structgeometry_1_1_sphere.html", "d5/da0/structgeometry_1_1_sphere" ],
-      [ "Domain", "d5/db2/structgeometry_1_1_domain.html", "d5/db2/structgeometry_1_1_domain" ],
-      [ "SymmetryPlanes_Bcc", "da/dce/structgeometry_1_1_symmetry_planes___bcc.html", "da/dce/structgeometry_1_1_symmetry_planes___bcc" ],
-      [ "SymmetryPlanes_Sc", "d4/da0/structgeometry_1_1_symmetry_planes___sc.html", "d4/da0/structgeometry_1_1_symmetry_planes___sc" ]
+    [ "geom", "d2/dfa/namespacegeom.html", [
+      [ "Boundary_DoNothing", "d2/df1/classgeom_1_1_boundary___do_nothing.html", "d2/df1/classgeom_1_1_boundary___do_nothing" ],
+      [ "Boundary_Periodic_1d", "df/df5/classgeom_1_1_boundary___periodic__1d.html", "df/df5/classgeom_1_1_boundary___periodic__1d" ],
+      [ "Boundary_Periodic", "d8/d1f/classgeom_1_1_boundary___periodic.html", "d8/d1f/classgeom_1_1_boundary___periodic" ],
+      [ "Boundary_Periodic_Dim", "d4/d66/classgeom_1_1_boundary___periodic___dim.html", "d4/d66/classgeom_1_1_boundary___periodic___dim" ],
+      [ "Boundary_Periodic_WithOutsideInfo", "d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html", "d8/d11/classgeom_1_1_boundary___periodic___with_outside_info" ],
+      [ "Boundary_Reflecting_1d", "d6/d53/classgeom_1_1_boundary___reflecting__1d.html", "d6/d53/classgeom_1_1_boundary___reflecting__1d" ],
+      [ "Boundary_Reflecting", "db/dcb/classgeom_1_1_boundary___reflecting.html", "db/dcb/classgeom_1_1_boundary___reflecting" ],
+      [ "Boundary_Reflecting_Dim", "de/dc7/classgeom_1_1_boundary___reflecting___dim.html", "de/dc7/classgeom_1_1_boundary___reflecting___dim" ],
+      [ "Boundary_RadialReflecting_2d", "de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html", "de/dd9/classgeom_1_1_boundary___radial_reflecting__2d" ],
+      [ "Boundary_Open_RadialReflecting_3d", "df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html", "df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d" ],
+      [ "Boundary_Periodic_SymmetryPlanes", "d9/d18/classgeom_1_1_boundary___periodic___symmetry_planes.html", "d9/d18/classgeom_1_1_boundary___periodic___symmetry_planes" ],
+      [ "Boundary_Periodic_SymmetryPlanes_WithOutsideInfo", "d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html", "d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info" ],
+      [ "Parallelepiped", "dd/df2/structgeom_1_1_parallelepiped.html", "dd/df2/structgeom_1_1_parallelepiped" ],
+      [ "Sphere", "d0/da4/structgeom_1_1_sphere.html", "d0/da4/structgeom_1_1_sphere" ],
+      [ "Domain", "d6/d91/structgeom_1_1_domain.html", "d6/d91/structgeom_1_1_domain" ],
+      [ "SymmetryPlanes_Bcc", "d3/dac/structgeom_1_1_symmetry_planes___bcc.html", "d3/dac/structgeom_1_1_symmetry_planes___bcc" ],
+      [ "SymmetryPlanes_Sc", "dd/d48/structgeom_1_1_symmetry_planes___sc.html", "dd/d48/structgeom_1_1_symmetry_planes___sc" ]
     ] ],
     [ "meta", "d8/db6/namespacemeta.html", [
       [ "notstd", "d2/dad/namespacemeta_1_1notstd.html", [
@@ -335,9 +335,6 @@ var annotated_dup =
       [ "Dynamics", "d9/d9c/structptof_1_1_dynamics.html", "d9/d9c/structptof_1_1_dynamics" ],
       [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ]
     ] ],
-    [ "range", "d6/d48/namespacerange.html", [
-      [ "gen", "d0/d5d/structrange_1_1gen.html", "d0/d5d/structrange_1_1gen" ]
-    ] ],
     [ "useful", "df/d1d/namespaceuseful.html", [
       [ "MultiArray", "dc/d1a/classuseful_1_1_multi_array.html", "dc/d1a/classuseful_1_1_multi_array" ],
       [ "StoreConst", "db/d1e/structuseful_1_1_store_const.html", "db/d1e/structuseful_1_1_store_const" ],
@@ -370,6 +367,7 @@ var annotated_dup =
     [ "Output_mass_in_regions", "de/d9c/class_output___cases_1_1_output__mass__in__regions.html", null ],
     [ "Output_position", "df/d5e/struct_output___cases_1_1_output__position.html", null ],
     [ "Output_position_in_regions", "dc/dfc/class_output___cases_1_1_output__position__in__regions.html", null ],
+    [ "Output_position_in_regions_periodic", "dc/d1f/class_output___cases_1_1_output__position__in__regions__periodic.html", null ],
     [ "Output_position_mean", "d6/d70/struct_output___cases_1_1_output__position__mean.html", null ],
     [ "Output_position_mean_periodic", "da/dbc/class_output___cases_1_1_output__position__mean__periodic.html", null ],
     [ "Output_position_periodic", "d8/d7a/class_output___cases_1_1_output__position__periodic.html", null ],
@@ -377,9 +375,9 @@ var annotated_dup =
     [ "Output_position_second_moment_periodic", "d5/d3a/class_output___cases_1_1_output__position__second__moment__periodic.html", null ],
     [ "Output_position_variance", "dd/d84/struct_output___cases_1_1_output__position__variance.html", null ],
     [ "Output_position_variance_periodic", "d7/d3d/class_output___cases_1_1_output__position__variance__periodic.html", null ],
-    [ "Output_pressure", "de/dd7/struct_output___cases_1_1_output__pressure.html", null ],
-    [ "Output_velocity", "d7/da1/struct_output___cases_1_1_output__velocity.html", null ],
-    [ "Output_velocity_gradient", "de/dc2/struct_output___cases_1_1_output__velocity__gradient.html", null ],
+    [ "Output_scalar_field", "dd/d96/struct_output___cases_1_1_output__scalar__field.html", null ],
+    [ "Output_tensor_field", "de/d62/struct_output___cases_1_1_output__tensor__field.html", null ],
+    [ "Output_vector_field", "de/db0/class_output___cases_1_1_output__vector__field.html", null ],
     [ "OutputTime", "da/d2f/struct_output___cases_1_1_output_time.html", null ],
     [ "Parallel", "d3/d1f/struct_parallel_options_1_1_parallel.html", null ],
     [ "Parameters", "d4/d48/struct_phase_1_1_parameters.html", null ],

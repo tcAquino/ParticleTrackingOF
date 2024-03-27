@@ -18,7 +18,6 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-#include <boost/algorithm/string.hpp>
 #include "General/Useful.h"
 #include "General/Operations.h"
 #include "PTOF/Reaction.h"
@@ -154,11 +153,7 @@ namespace ptof
     
     while (std::getline(file, line))
     {
-      std::vector<std::string> split_line;
-      boost::trim_if(line, boost::is_any_of(delims+"\r"));
-      boost::algorithm::split(split_line, line,
-                              boost::is_any_of(delims),
-                              boost::token_compress_on);
+      auto split_line = useful::split(line, "\t,| ");
       if (split_line.size() != 2)
         throw useful::parse_error(filename, line);
       boundary_conditions[split_line[0]] = split_line[1];
@@ -253,7 +248,7 @@ namespace ptof
      \return \c false (always in bounds).
      */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     { return false; }
     
     /**
@@ -342,7 +337,7 @@ namespace ptof
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     {
       Foam::label cell = _locator.mesh_search().findCell(make_point(position));
       return outside(cell);
@@ -507,16 +502,31 @@ namespace ptof
       output <<
         "--------------------------------------------------\n"
         "Boundary conditions\n"
-        "--------------------------------------------------\n"
-        "Patch / Condition\n"
-        "\n";
+        "--------------------------------------------------\n";
+      if (_boundary_conditions.empty())
+      {
+        output << "None\n" <<
+          "--------------------------------------------------\n";
+        return;
+      }
+      int width_patch = int(std::max_element(_boundary_conditions.begin(),
+                                         _boundary_conditions.end(),
+                                         [](auto const& aa, auto const& bb)
+                                         { return aa.first.length() < bb.first.length(); })->first.length())
+        + 1;
+      int width_bc = int(std::max_element(_boundary_conditions.begin(),
+                                      _boundary_conditions.end(),
+                                      [](auto const& aa, auto const& bb)
+                                      { return aa.second.length() < bb.second.length(); })->second.length())
+        + 1;
+      width_bc = std::max(width_bc, int(_boundary_custom.name().length()));
       for (auto const& bc : _boundary_conditions)
       {
-        output << bc.first << "\t";
+        std::cout << std::left << std::setw(width_patch) << bc.first;
         if (bc.second == "custom")
-          output << _boundary_custom.name();
+          output << std::left << std::setw(width_bc) << _boundary_custom.name();
         else
-          output << bc.second;
+          output << std::left << std::setw(width_bc) << bc.second;
         output << "\n";
       }
       output <<
@@ -708,9 +718,9 @@ namespace ptof
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     {
-      return boundary_periodic.outOfBounds(position);
+      return boundary_periodic.out_of_bounds(position);
     }
     
     /** \brief Enforce boundary condition  and place intersection at its periodic image.

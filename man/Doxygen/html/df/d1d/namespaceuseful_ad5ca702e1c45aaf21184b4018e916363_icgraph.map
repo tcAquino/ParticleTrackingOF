@@ -1,0 +1,13 @@
+<map id="useful::split" name="useful::split">
+<area shape="rect" id="node1" title="Split string into vector of strings at instances of delimeter." alt="" coords="636,213,735,239"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2640ab9f6140f04493af1a5f46c01825" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="369,5,513,47"/>
+<area shape="rect" id="node4" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="293,71,588,112"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a60af58c786026bd2232b167a353f86bd" title="Load file into vector of vectors of doubles." alt="" coords="391,137,490,163"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ac1a12cf6f046429d84da7cca0a453e39" title="Load 1&#45;column file into vector of doubles." alt="" coords="384,187,497,214"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#ae9123bca61fc1ccacbe21f6b2665cee3" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="384,238,497,265"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a1b96ae8dd7d73996ba97dd47fe39f93e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="368,289,513,315"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="346,339,535,366"/>
+<area shape="rect" id="node10" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a36fac282aaee3f4f7b831f15200061e8" title="Read measure spacing type from input stream." alt="" coords="342,391,539,432"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2c7e11a97d81041f116824d43ee0ef34" title="Get boundary conditions for dynamics type." alt="" coords="53,5,197,47"/>
+<area shape="rect" id="node11" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907" title=" " alt="" coords="5,391,245,432"/>
+</map>

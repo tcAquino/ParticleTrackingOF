@@ -91,41 +91,46 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h.html','../
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;set&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &lt;fieldTypes.H&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../dd/ddd/_state_getter_8h_source.html">CTRW/StateGetter.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d7/d14/_operations_8h_source.html">General/Operations.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d9/d02/_ranges_8h_source.html">General/Ranges.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/d18/_general_2_useful_8h_source.html">General/Useful.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Useful.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d6b/_p_t_o_f_2_useful_8h__incl.png" border="0" usemap="#a_p_t_o_f_2_useful_8h" alt=""/></div>
 <map name="a_p_t_o_f_2_useful_8h" id="a_p_t_o_f_2_useful_8h">
-<area shape="rect" title=" " alt="" coords="185,5,300,32"/>
-<area shape="rect" title=" " alt="" coords="33,229,113,256"/>
-<area shape="rect" title=" " alt="" coords="137,229,196,256"/>
-<area shape="rect" title=" " alt="" coords="206,304,298,331"/>
-<area shape="rect" title=" " alt="" coords="481,80,605,107"/>
-<area shape="rect" title=" " alt="" coords="629,80,731,107"/>
-<area shape="rect" href="../../dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="306,80,457,107"/>
-<area shape="rect" href="../../d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="301,155,461,181"/>
-<area shape="rect" href="../../d9/d18/_general_2_useful_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="791,155,921,181"/>
-<area shape="rect" title=" " alt="" coords="877,304,937,331"/>
-<area shape="rect" title=" " alt="" coords="555,229,618,256"/>
-<area shape="rect" title=" " alt="" coords="339,304,426,331"/>
-<area shape="rect" title=" " alt="" coords="469,229,531,256"/>
-<area shape="rect" href="../../dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="321,229,444,256"/>
-<area shape="rect" title=" " alt="" coords="1155,229,1240,256"/>
-<area shape="rect" title=" " alt="" coords="1265,229,1335,256"/>
-<area shape="rect" title=" " alt="" coords="1359,229,1425,256"/>
-<area shape="rect" title=" " alt="" coords="1449,229,1522,256"/>
-<area shape="rect" title=" " alt="" coords="1546,229,1587,256"/>
-<area shape="rect" title=" " alt="" coords="643,229,685,256"/>
-<area shape="rect" title=" " alt="" coords="709,229,768,256"/>
-<area shape="rect" title=" " alt="" coords="944,229,1019,256"/>
-<area shape="rect" title=" " alt="" coords="1043,229,1130,256"/>
+<area shape="rect" title=" " alt="" coords="727,5,842,32"/>
+<area shape="rect" title=" " alt="" coords="733,229,813,256"/>
+<area shape="rect" title=" " alt="" coords="898,80,941,107"/>
+<area shape="rect" title=" " alt="" coords="837,229,895,256"/>
+<area shape="rect" title=" " alt="" coords="5,304,97,331"/>
+<area shape="rect" title=" " alt="" coords="965,80,1089,107"/>
+<area shape="rect" title=" " alt="" coords="1114,80,1215,107"/>
+<area shape="rect" href="../../dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="571,80,721,107"/>
+<area shape="rect" href="../../d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="194,155,354,181"/>
+<area shape="rect" href="../../d9/d02/_ranges_8h.html" title=" " alt="" coords="379,155,516,181"/>
+<area shape="rect" href="../../d9/d18/_general_2_useful_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="943,155,1074,181"/>
+<area shape="rect" title=" " alt="" coords="665,304,725,331"/>
+<area shape="rect" title=" " alt="" coords="373,229,436,256"/>
+<area shape="rect" title=" " alt="" coords="157,304,244,331"/>
+<area shape="rect" title=" " alt="" coords="287,229,349,256"/>
+<area shape="rect" href="../../dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="139,229,262,256"/>
+<area shape="rect" title=" " alt="" coords="461,229,546,256"/>
+<area shape="rect" title=" " alt="" coords="571,229,657,256"/>
+<area shape="rect" title=" " alt="" coords="1072,229,1143,256"/>
+<area shape="rect" title=" " alt="" coords="1167,229,1232,256"/>
+<area shape="rect" title=" " alt="" coords="1256,229,1329,256"/>
+<area shape="rect" title=" " alt="" coords="1353,229,1395,256"/>
+<area shape="rect" title=" " alt="" coords="1419,229,1494,256"/>
+<area shape="rect" title=" " alt="" coords="1518,229,1561,256"/>
+<area shape="rect" title=" " alt="" coords="1585,229,1643,256"/>
+<area shape="rect" title=" " alt="" coords="1667,229,1742,256"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -291,6 +296,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a403f2134a620767dd025954e733b68c5"><td class="memTemplItemLeft" align="right" valign="top">Foam::point&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5">ptof::offset_backward_cell_keep_inside</a> (Foam::point const &amp;begin, Foam::label cell, Foam::vector const &amp;direction, Locator const &amp;locator)</td></tr>
 <tr class="memdesc:a403f2134a620767dd025954e733b68c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Small offset backward.  <a href="../../d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5">More...</a><br /></td></tr>
 <tr class="separator:a403f2134a620767dd025954e733b68c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81f643e7c3eb24468a333190aa9a83ab"><td class="memTemplParams" colspan="2">template&lt;typename Mesh &gt; </td></tr>
+<tr class="memitem:a81f643e7c3eb24468a333190aa9a83ab"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab">ptof::all_cell_ids</a> (Mesh const &amp;mesh)</td></tr>
+<tr class="separator:a81f643e7c3eb24468a333190aa9a83ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c85b81a804f529745e4f53c6b35ec53"><td class="memTemplParams" colspan="2">template&lt;typename Mesh &gt; </td></tr>
+<tr class="memitem:a3c85b81a804f529745e4f53c6b35ec53"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a3c85b81a804f529745e4f53c6b35ec53">ptof::patches_face_ids</a> (Mesh const &amp;mesh, std::vector&lt; std::string &gt; const &amp;patch_names)</td></tr>
+<tr class="separator:a3c85b81a804f529745e4f53c6b35ec53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80a2f7ac6239f3f2c7c346dd54928212"><td class="memTemplParams" colspan="2">template&lt;typename Mesh , typename Locator &gt; </td></tr>
+<tr class="memitem:a80a2f7ac6239f3f2c7c346dd54928212"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212">ptof::cell_ids_region_cartesian</a> (std::vector&lt; std::pair&lt; double, double &gt;&gt; boundaries, Mesh const &amp;mesh, Locator const &amp;locator)</td></tr>
+<tr class="separator:a80a2f7ac6239f3f2c7c346dd54928212"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a264d1e003d2d971ee7b42743e8db9fa8"><td class="memTemplParams" colspan="2">template&lt;typename Subject &gt; </td></tr>
 <tr class="memitem:a264d1e003d2d971ee7b42743e8db9fa8"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a264d1e003d2d971ee7b42743e8db9fa8">ptof::nr_absorbed</a> (Subject const &amp;subject, double time)</td></tr>
 <tr class="separator:a264d1e003d2d971ee7b42743e8db9fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -4,11 +4,10 @@ Particle tracking based on OpenFOAM-generated meshes and flow fields, including 
 
 ## Dependencies
 
-Required external libraries (all free and open-source):
+Required external libraries (free and open-source):
 - OpenFOAM : CFD software (https://www.openfoam.com/)
-- boost : C++ library implementing useful features and extensions (boost.org)
 
-A version of the g++ or clang++ compiler compatible with C++17 and OpenMP are required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues. For compilation with clang++, llvm's OpenMP must be installed ("brew install libomp" on MacOS or "sudo apt install libomp-dev" on Linux).
+A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5 are required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues. For compilation of parallel implementations with clang++, llvm's OpenMP must be installed (to install from the terminal, run "brew install libomp" on MacOS or "sudo apt install libomp-dev" on Linux).
 
 ## Documentation
 
@@ -22,11 +21,10 @@ Please link to this repository (https://github.com/tcAquino/ParticleTrackingOF).
 
 License information can be found in the file LICENSE.txt.
 
-## Contributors
-
-- Tomás Aquino
-- Nolwenn Delouche
-
 ## About the author
 
 Tomás Aquino is a researcher at IDAEA-CSIC, Barcelona, Spain. He can be contacted at tomas.aquino@idaea.csic.es.
+
+## Collaborators
+
+- Nolwenn Delouche

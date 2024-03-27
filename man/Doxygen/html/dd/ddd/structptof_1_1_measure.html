@@ -110,12 +110,16 @@ Public Types</h2></td></tr>
 , <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c">velocity</a>
 , <br />
 &#160;&#160;<a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273">velocity_gradient</a>
-, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ad99fad96a5d0a7cb2eb41341ea556093">pressure</a>
-, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90">position_periodic</a>
-, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee">position_mean_periodic</a>
+, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1">scalar_field</a>
+, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a44ceac296cbd6aa6823cee4adb4a2f8e">vector_field</a>
+, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aecf4ecd0a178314739d81cb81ccde0d6">tensor_field</a>
 , <br />
-&#160;&#160;<a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa">position_second_moment_periodic</a>
-, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d">position_variance_periodic</a>
+&#160;&#160;<a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90">position_periodic</a>
+, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16">position_in_regions_periodic</a>
+, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee">position_mean_periodic</a>
+, <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa">position_second_moment_periodic</a>
+, <br />
+&#160;&#160;<a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d">position_variance_periodic</a>
 , <a class="el" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ac53af8b071ecb2fdae066118a9268109">absorption_time</a>
 <br />
  }</td></tr>
@@ -163,48 +167,41 @@ Static Public Attributes</h2></td></tr>
 
 <p>Implemented types. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a4757fe07fd492a8be0ea6a760d683d6e"></a>position&#160;</td><td class="fielddoc"><p>Time and particle tags, positions, and masses. <br  />
- </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a4757fe07fd492a8be0ea6a760d683d6e"></a>position&#160;</td><td class="fielddoc"><p>Time, particle tags, positions, and masses. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a477a36181bf2cb1f2e72a43a5372889b"></a>position_in_regions&#160;</td><td class="fielddoc"><p>Time and particle tags, positions, and masses in regions speciefied by masks. </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a477a36181bf2cb1f2e72a43a5372889b"></a>position_in_regions&#160;</td><td class="fielddoc"><p>Time, particle tags, positions, and masses in regions specified by masks. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a221babae9f54bb1a44bb0b7768b6088b"></a>position_mean&#160;</td><td class="fielddoc"><p>Time and mean position. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a221babae9f54bb1a44bb0b7768b6088b"></a>position_mean&#160;</td><td class="fielddoc"><p>Time and mean position. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617"></a>position_second_moment&#160;</td><td class="fielddoc"><p>Time and position second moment. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617"></a>position_second_moment&#160;</td><td class="fielddoc"><p>Time and position second moment. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58"></a>position_variance&#160;</td><td class="fielddoc"><p>Time and position variance. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58"></a>position_variance&#160;</td><td class="fielddoc"><p>Time and position variance. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ad90ccffa01275a7a7795fb6d1274e75f"></a>mass&#160;</td><td class="fielddoc"><p>Time and total mass. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ad90ccffa01275a7a7795fb6d1274e75f"></a>mass&#160;</td><td class="fielddoc"><p>Time and total mass. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7"></a>mass_in_regions&#160;</td><td class="fielddoc"><p>Time and total mass in regions speciefied by masks. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7"></a>mass_in_regions&#160;</td><td class="fielddoc"><p>Time and total mass in regions speciefied by masks. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c"></a>velocity&#160;</td><td class="fielddoc"><p>Time and particle tags and local velocities. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c"></a>velocity&#160;</td><td class="fielddoc"><p>Time, particle tags, and local velocities. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273"></a>velocity_gradient&#160;</td><td class="fielddoc"><p>Time and particle tags and local velocity gradient components. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273"></a>velocity_gradient&#160;</td><td class="fielddoc"><p>Time, particle tags, and local velocity gradients. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ad99fad96a5d0a7cb2eb41341ea556093"></a>pressure&#160;</td><td class="fielddoc"><p>Time and particle tags and local pressures. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1"></a>scalar_field&#160;</td><td class="fielddoc"><p>Time, particle tags, and local values of scalar field. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90"></a>position_periodic&#160;</td><td class="fielddoc"><p>Time and particle tags, true positions accounting for periodicity, and masses. </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a44ceac296cbd6aa6823cee4adb4a2f8e"></a>vector_field&#160;</td><td class="fielddoc"><p>Time, particle tags, and local values of vector field. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee"></a>position_mean_periodic&#160;</td><td class="fielddoc"><p>Time and true mean position accounting for periodicity. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8aecf4ecd0a178314739d81cb81ccde0d6"></a>tensor_field&#160;</td><td class="fielddoc"><p>Time, particle tags and local values of tensor field. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa"></a>position_second_moment_periodic&#160;</td><td class="fielddoc"><p>Time and true position second moment accounting for periodicity. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90"></a>position_periodic&#160;</td><td class="fielddoc"><p>Time, particle tags, true positions accounting for periodicity, and masses. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d"></a>position_variance_periodic&#160;</td><td class="fielddoc"><p>Time and true position variance accounting for periodicity. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16"></a>position_in_regions_periodic&#160;</td><td class="fielddoc"><p>Time, particle tags, true positions accounting for periodicity, and masses in regions specified by masks. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ac53af8b071ecb2fdae066118a9268109"></a>absorption_time&#160;</td><td class="fielddoc"><p>Particle absorption times, tags, and masses at end of dynamics. <br  />
- </p>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee"></a>position_mean_periodic&#160;</td><td class="fielddoc"><p>Time and true mean position accounting for periodicity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa"></a>position_second_moment_periodic&#160;</td><td class="fielddoc"><p>Time and true position second moment accounting for periodicity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d"></a>position_variance_periodic&#160;</td><td class="fielddoc"><p>Time and true position variance accounting for periodicity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a2ef7090e40ed67cd27ad2713ac7e7cd8ac53af8b071ecb2fdae066118a9268109"></a>absorption_time&#160;</td><td class="fielddoc"><p>Particle absorption times, tags, and masses at end of dynamics. </p>
 </td></tr>
 </table>
 
@@ -370,8 +367,11 @@ Here is the caller graph for this function:</div>
 <div class="line">      { <span class="stringliteral">&quot;mass_in_regions&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7">Type::mass_in_regions</a> },</div>
 <div class="line">      { <span class="stringliteral">&quot;velocity&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c">Type::velocity</a> },</div>
 <div class="line">      { <span class="stringliteral">&quot;velocity_gradient&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273">Type::velocity_gradient</a> },</div>
-<div class="line">      { <span class="stringliteral">&quot;pressure&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ad99fad96a5d0a7cb2eb41341ea556093">Type::pressure</a> },</div>
+<div class="line">      { <span class="stringliteral">&quot;scalar_field&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1">Type::scalar_field</a> },</div>
+<div class="line">      { <span class="stringliteral">&quot;vector_field&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1">Type::scalar_field</a> },</div>
+<div class="line">      { <span class="stringliteral">&quot;tensor_field&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1">Type::scalar_field</a> },</div>
 <div class="line">      { <span class="stringliteral">&quot;position_periodic&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90">Type::position_periodic</a> },</div>
+<div class="line">      { <span class="stringliteral">&quot;position_in_regions_periodic&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16">Type::position_in_regions_periodic</a> },</div>
 <div class="line">      { <span class="stringliteral">&quot;position_mean_periodic&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee">Type::position_mean_periodic</a> },</div>
 <div class="line">      { <span class="stringliteral">&quot;position_second_moment_periodic&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa">Type::position_second_moment_periodic</a> },</div>
 <div class="line">      { <span class="stringliteral">&quot;position_variance_periodic&quot;</span>, <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d">Type::position_variance_periodic</a> },</div>
@@ -385,12 +385,13 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273">ptof::Measure::Type::velocity_gradient</a></div><div class="ttdeci">@ velocity_gradient</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7">ptof::Measure::Type::mass_in_regions</a></div><div class="ttdeci">@ mass_in_regions</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d">ptof::Measure::Type::position_variance_periodic</a></div><div class="ttdeci">@ position_variance_periodic</div></div>
+<div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16">ptof::Measure::Type::position_in_regions_periodic</a></div><div class="ttdeci">@ position_in_regions_periodic</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90">ptof::Measure::Type::position_periodic</a></div><div class="ttdeci">@ position_periodic</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c">ptof::Measure::Type::velocity</a></div><div class="ttdeci">@ velocity</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617">ptof::Measure::Type::position_second_moment</a></div><div class="ttdeci">@ position_second_moment</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8ac53af8b071ecb2fdae066118a9268109"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ac53af8b071ecb2fdae066118a9268109">ptof::Measure::Type::absorption_time</a></div><div class="ttdeci">@ absorption_time</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8ad90ccffa01275a7a7795fb6d1274e75f"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ad90ccffa01275a7a7795fb6d1274e75f">ptof::Measure::Type::mass</a></div><div class="ttdeci">@ mass</div></div>
-<div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8ad99fad96a5d0a7cb2eb41341ea556093"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ad99fad96a5d0a7cb2eb41341ea556093">ptof::Measure::Type::pressure</a></div><div class="ttdeci">@ pressure</div></div>
+<div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ae2c1b0955aa1729315a16b97539c58f1">ptof::Measure::Type::scalar_field</a></div><div class="ttdeci">@ scalar_field</div></div>
 <div class="ttc" id="astructptof_1_1_measure_html_a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58"><div class="ttname"><a href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58">ptof::Measure::Type::position_variance</a></div><div class="ttdeci">@ position_variance</div></div>
 </div><!-- fragment --><p>Map of names to types. </p>
 
@@ -425,8 +426,8 @@ Here is the caller graph for this function:</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7">Type::mass_in_regions</a>, <span class="stringliteral">&quot;mass_in_regions&quot;</span> },</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aac1a453d0cdc1f19d9479ccfaa8b082c">Type::velocity</a>, <span class="stringliteral">&quot;velocity&quot;</span> },</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a6234cd64b747f077e9cd6cf419b5d273">Type::velocity_gradient</a>, <span class="stringliteral">&quot;velocity_gradient&quot;</span> },</div>
-<div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ad99fad96a5d0a7cb2eb41341ea556093">Type::pressure</a>, <span class="stringliteral">&quot;pressure&quot;</span> },</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90">Type::position_periodic</a>, <span class="stringliteral">&quot;position_periodic&quot;</span> },</div>
+<div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16">Type::position_in_regions_periodic</a>, <span class="stringliteral">&quot;position_in_regions_periodic&quot;</span> },</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee">Type::position_mean_periodic</a>, <span class="stringliteral">&quot;position_mean_periodic&quot;</span> },</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa">Type::position_second_moment_periodic</a>, <span class="stringliteral">&quot;position_second_moment_periodic&quot;</span> },</div>
 <div class="line">      { <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d">Type::position_variance_periodic</a>, <span class="stringliteral">&quot;position_variance_periodic&quot;</span> },</div>

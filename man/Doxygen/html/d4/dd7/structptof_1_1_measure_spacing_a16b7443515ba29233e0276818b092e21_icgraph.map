@@ -1,9 +1,9 @@
 <map id="ptof::MeasureSpacing::type" name="ptof::MeasureSpacing::type">
 <area shape="rect" id="node1" title=" " alt="" coords="568,71,731,112"/>
-<area shape="rect" id="node2" href="$d5/de8/classptof_1_1_output___cases.html#abab934dd80604743743306855ee76a51" title="Output information about current object." alt="" coords="334,5,479,47"/>
+<area shape="rect" id="node2" href="$d5/de8/classptof_1_1_output___cases.html#a065b1518ed2121f95b7580e7a3e6ba58" title="Output information about current object." alt="" coords="334,5,479,47"/>
 <area shape="rect" id="node3" href="$d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc" title=" " alt="" coords="325,71,488,112"/>
 <area shape="rect" id="node5" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a32f6c24576755576540beaffb640492d" title="Read measure spacing type from input stream." alt="" coords="293,136,520,177"/>
-<area shape="rect" id="node7" href="$d5/de8/classptof_1_1_output___cases.html#a00e9cee1c53bc391d5159ae26b2fc71a" title="Set time of next measurement." alt="" coords="313,201,500,243"/>
+<area shape="rect" id="node7" href="$d5/de8/classptof_1_1_output___cases.html#ab4ef05876f7df2fcd4f532343985843a" title="Set time of next measurement." alt="" coords="313,201,500,243"/>
 <area shape="rect" id="node4" href="$d4/dd7/structptof_1_1_measure_spacing.html#afdf40210547a65aa50e0d58526270734" title=" " alt="" coords="44,71,207,112"/>
 <area shape="rect" id="node6" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907" title=" " alt="" coords="5,136,245,177"/>
 </map>

@@ -1,0 +1,5 @@
+<map id="geom::Boundary_Periodic_1d::translate" name="geom::Boundary_Periodic_1d::translate">
+<area shape="rect" id="node1" title="Translate a position according to projection in periodic cell." alt="" coords="5,5,193,47"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#afb06583511530d1d3e4390b149ad65ea" title="Element&#45;wise sum." alt="" coords="241,13,368,39"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086" title="Element&#45;wise sum." alt="" coords="416,13,489,39"/>
+</map>

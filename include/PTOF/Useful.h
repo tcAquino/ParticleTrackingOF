@@ -8,12 +8,14 @@
 #define PTOF_USEFUL_H
 
 #include <iostream>
+#include <set>
 #include <string>
 #include <type_traits>
 #include <unordered_map>
 #include <fieldTypes.H>
 #include "CTRW/StateGetter.h"
 #include "General/Operations.h"
+#include "General/Ranges.h"
 #include "General/Useful.h"
 
 namespace ptof
@@ -564,6 +566,93 @@ namespace ptof
   }
   
   /**
+   \param mesh OpenFOAM mesh.
+   \return All mesh cell indices. */
+  template <typename Mesh>
+  auto all_cell_ids(Mesh const& mesh)
+  {
+    return range::range<std::vector>(0, mesh.nCells());
+  }
+  
+  /**
+   \param mesh OpenFOAM mesh.
+   \param patch_names Names of patches.
+   \return Mesh face indices of faces given patches. */
+  template <typename Mesh>
+  auto patches_face_ids
+  (Mesh const& mesh, std::vector<std::string> const& patch_names)
+  {
+    std::vector<Foam::label> face_ids;
+    for (auto const& name : patch_names)
+    {
+      Foam::label patch_id = mesh.boundary().findPatchID(name);
+      auto const& patch = mesh.boundaryMesh()[patch_id];
+      face_ids.reserve(face_ids.size()+patch.size());
+      Foam::label start = patch.start();
+      for (std::size_t idx = 0; idx < std::size_t(patch.size()); ++idx)
+        face_ids.push_back(start+idx);
+    }
+    return face_ids;
+  }
+  
+  /**
+   \param boundaries Container of pairs of lower and upper boundary locations along each dimension.
+   \param mesh OpenFOAM mesh.
+   \param locator Object to locate positions in mesh.
+   \return Mesh cell indices within boundaries. */
+  template <typename Mesh, typename Locator>
+  auto cell_ids_region_cartesian
+  (std::vector<std::pair<double, double>> boundaries,
+   Mesh const& mesh,
+   Locator const& locator)
+  {
+    // Identify degenerate dimensions
+    // (if some minimum and maximum boundary values are equal,
+    // the Cartesian region has lower dimension than the space)
+    std::vector<std::size_t> degenerate_dimensions;
+    std::vector<std::size_t> non_degenerate_dimensions;
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
+      if (boundaries[dd].first == boundaries[dd].second)
+        degenerate_dimensions.push_back(dd);
+      else
+        non_degenerate_dimensions.push_back(dd);
+    
+    std::set<Foam::label> cell_ids;
+    for (Foam::label cc = 0; cc < mesh.nCells(); ++cc)
+    {
+      auto center = cell_center(cc, mesh);
+      
+      bool cell_is_within_non_degenerate_boundaries = 1;
+      for (auto dd : non_degenerate_dimensions)
+      {
+        if (center[dd] < boundaries[dd].first ||
+            center[dd] > boundaries[dd].second)
+        {
+          cell_is_within_non_degenerate_boundaries = 0;
+          break;
+        }
+      }
+      if (!cell_is_within_non_degenerate_boundaries)
+        continue;
+      if (degenerate_dimensions.size() == 0)
+        cell_ids.insert(cc);
+      
+      // Consider a position equal to the cell center of the candidate cell
+      // but with components along the degenerate dimension
+      // equal to the prescribed value. If it is in the
+      // mesh, include it in the region
+      for (auto dd : degenerate_dimensions)
+        center[dd] = degenerate_dimensions[dd];
+      auto cell_id = locator.mesh_search().findCell(center);
+      if (!outside(cell_id))
+        cell_ids.insert(cell_id);
+    }
+
+    std::vector<Foam::label> cells(cell_ids.begin(), cell_ids.end());
+    return cells;
+  }
+  
+  /**
    \param subject CTRW object.
    \param time Current time.
    \return Number of absorbed particles.
@@ -634,7 +723,7 @@ namespace ptof
         auto cell = locator(part.state_new());
         for (std::size_t ii = 0; ii < masks.size(); ++ii)
         {
-          if (cell != -1 && masks[ii].get()[cell] > tolerances[ii])
+          if (cell >= 0 && masks[ii].get()[cell] > tolerances[ii])
             masses[ii] += part.state_new().mass;
         }
       }

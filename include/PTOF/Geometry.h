@@ -191,7 +191,7 @@ namespace ptof
     using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
     using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using Boundary_Periodic =
-      geometry::Boundary_Periodic_WithOutsideInfo;  /**< Periodic boundary. */
+      geom::Boundary_Periodic_WithOutsideInfo;      /**< Periodic boundary. */
     using BoundaryInfo = Store_Absorbed;            /**< What to store upon hitting a boundary. */
     
     /** Constructor.
@@ -363,9 +363,9 @@ namespace ptof
     using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
     using Boundary_Periodic = std::conditional_t<
       periodicity == Periodicity::Type::cartesian,
-    geometry::Boundary_Periodic_WithOutsideInfo,
-    geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
-      geometry::SymmetryPlanes_Bcc>>;              /**< Periodic boundary type. */
+      geom::Boundary_Periodic_WithOutsideInfo,
+      geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
+      geom::SymmetryPlanes_Bcc>>;              /**< Periodic boundary type. */
     using BoundaryInfo = Store_Absorbed;           /**< What to store upon hitting a boundary. */
     
     /** Constructor.

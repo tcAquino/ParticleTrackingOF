@@ -173,7 +173,7 @@ namespace ctrw
     \details Boundary conditions are enforced in predictor-corrector steps.
     \note Particle state must define:
       - \c position */
-  template <typename VelocityField, typename Boundary = geometry::Boundary_DoNothing>
+  template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
   class JumpGenerator_Velocity_RK4
   {
   public:

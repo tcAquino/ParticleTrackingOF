@@ -19,7 +19,9 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
     ] ],
     [ "Info.h", "d2/d32/_info_8h.html", "d2/d32/_info_8h" ],
     [ "InitialCondition.h", "d6/d44/_initial_condition_8h.html", "d6/d44/_initial_condition_8h" ],
-    [ "Locator.h", "db/dcf/_locator_8h.html", "db/dcf/_locator_8h" ],
+    [ "Locator.h", "db/dcf/_locator_8h.html", [
+      [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html", "d0/d4f/structptof_1_1_locator___cell" ]
+    ] ],
     [ "Locator_Parallel.h", "dd/d8c/_locator___parallel_8h.html", [
       [ "Locator_Cell_Parallel", "d5/db8/structptof_1_1_locator___cell___parallel.html", "d5/db8/structptof_1_1_locator___cell___parallel" ]
     ] ],
@@ -39,6 +41,7 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Criterion_one_absorbed", "dc/df3/structptof_1_1_criterion__one__absorbed.html", "dc/df3/structptof_1_1_criterion__one__absorbed" ],
       [ "Criterion_fraction_not_absorbed", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed" ],
       [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
+      [ "Measurement", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement" ],
       [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
       [ "NextMeasureTime", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time" ],
       [ "NextMeasureTime_step", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step.html", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step" ],
@@ -53,10 +56,11 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Output_position_variance", "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance.html", "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance" ],
       [ "Output_mass", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html", "d3/da0/structptof_1_1_output___cases_1_1_output__mass" ],
       [ "Output_mass_in_regions", "dd/d8c/structptof_1_1_output___cases_1_1_output__mass__in__regions.html", "dd/d8c/structptof_1_1_output___cases_1_1_output__mass__in__regions" ],
-      [ "Output_velocity", "df/d5f/structptof_1_1_output___cases_1_1_output__velocity.html", "df/d5f/structptof_1_1_output___cases_1_1_output__velocity" ],
-      [ "Output_velocity_gradient", "d0/d75/structptof_1_1_output___cases_1_1_output__velocity__gradient.html", "d0/d75/structptof_1_1_output___cases_1_1_output__velocity__gradient" ],
-      [ "Output_pressure", "d9/d3d/structptof_1_1_output___cases_1_1_output__pressure.html", "d9/d3d/structptof_1_1_output___cases_1_1_output__pressure" ],
+      [ "Output_scalar_field", "d8/d38/structptof_1_1_output___cases_1_1_output__scalar__field.html", "d8/d38/structptof_1_1_output___cases_1_1_output__scalar__field" ],
+      [ "Output_vector_field", "d3/dbb/structptof_1_1_output___cases_1_1_output__vector__field.html", "d3/dbb/structptof_1_1_output___cases_1_1_output__vector__field" ],
+      [ "Output_tensor_field", "d0/da0/structptof_1_1_output___cases_1_1_output__tensor__field.html", "d0/da0/structptof_1_1_output___cases_1_1_output__tensor__field" ],
       [ "Output_position_periodic", "d3/d84/structptof_1_1_output___cases_1_1_output__position__periodic.html", "d3/d84/structptof_1_1_output___cases_1_1_output__position__periodic" ],
+      [ "Output_position_in_regions_periodic", "d5/d8c/structptof_1_1_output___cases_1_1_output__position__in__regions__periodic.html", "d5/d8c/structptof_1_1_output___cases_1_1_output__position__in__regions__periodic" ],
       [ "Output_position_mean_periodic", "d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html", "d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic" ],
       [ "Output_position_second_moment_periodic", "da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic.html", "da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic" ],
       [ "Output_position_variance_periodic", "d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic.html", "d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic" ],

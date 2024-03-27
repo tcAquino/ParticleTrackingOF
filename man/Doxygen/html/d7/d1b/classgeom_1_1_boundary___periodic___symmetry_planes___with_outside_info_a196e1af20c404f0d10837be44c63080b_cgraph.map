@@ -1,0 +1,7 @@
+<map id="geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo::translate" name="geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo::translate">
+<area shape="rect" id="node1" title="Translate a position according to projection in periodic cell." alt="" coords="5,16,257,72"/>
+<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a77c587622e82bfc20ba4214f81f17424" title="Translate position along basis vectors of symmetry planes." alt="" coords="305,31,431,57"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#afb06583511530d1d3e4390b149ad65ea" title="Element&#45;wise sum." alt="" coords="480,5,607,32"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6" title="Element&#45;wise multiplication by scalar." alt="" coords="479,56,608,83"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086" title="Element&#45;wise sum." alt="" coords="656,5,729,32"/>
+</map>

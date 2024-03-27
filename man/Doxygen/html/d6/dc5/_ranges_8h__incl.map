@@ -1,6 +1,11 @@
 <map id="General/Ranges.h" name="General/Ranges.h">
-<area shape="rect" id="node1" title=" " alt="" coords="78,5,215,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="217,5,354,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,91,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="115,80,178,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="202,80,265,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="202,80,289,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="317,155,409,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="365,80,427,107"/>
+<area shape="rect" id="node7" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="452,80,575,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="451,155,538,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="562,155,622,181"/>
 </map>

@@ -11,7 +11,7 @@
 #include <vector>
 #include "general/Operations.h"
 
-namespace geometry
+namespace geom
 {
   /** \brief Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation)). */
   template <typename Container = std::vector<double>>

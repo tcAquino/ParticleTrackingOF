@@ -29,8 +29,8 @@ var NAVTREE =
     [ "Documentation", "index.html#autotoc_md2", null ],
     [ "Citations", "index.html#autotoc_md3", null ],
     [ "License", "index.html#autotoc_md4", null ],
-    [ "Contributors", "index.html#autotoc_md5", null ],
-    [ "About the author", "index.html#autotoc_md6", null ],
+    [ "About the author", "index.html#autotoc_md5", null ],
+    [ "Collaborators", "index.html#autotoc_md6", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -61,18 +61,18 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d0/df6/_p_t_o_f_2_useful_8h.html#aa74dcf8fcf3cb084637b7f209ff24fc4",
-"d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a2d90a0760a1e2c6f919628dae906c3e9",
-"d3/d74/_models_8h.html#a98cf23ee7268287e78c0f73bc2e96854",
-"d5/d10/structctrw_1_1_get__time__interp__velocity.html",
-"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a048ac1851d22d92f4bafd6357285d1c9",
-"d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic.html#ab64fc17756dc19a178a83699a9ce96de",
-"d8/db6/namespacemeta.html#a477fa5ad6977ace261a812d7123f4181",
-"da/d6a/structptof_1_1_state3_d___periodic.html#affbd8d51575ac7c7f2bebb8ba382c215",
-"db/dd7/namespaceop.html#a462162176f859cd654824fd276a3c48f",
-"dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b",
-"de/d81/struct_output___cases_1_1_next_measure_time__log.html",
-"df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a809dfcd6964b6e1a1f91bb895947e510"
+"d0/df6/_p_t_o_f_2_useful_8h.html#a771b932077b91dda298c2ba0aa8b5959",
+"d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html",
+"d3/d4c/classctrw_1_1_jump_generator___velocity.html#a50e2386ababd874471f074cc452b2808",
+"d4/dd7/structptof_1_1_measure_spacing.html#acd7306cfaa066f22540a9b4c5d7ef10eadc1d71bbb5c4d2a5e936db79ef10c19f",
+"d6/d44/_initial_condition_8h.html#ac1010c1948fbd50120a52c1c082e3226",
+"d7/d1d/classctrw_1_1_transitions___position.html#aef5641c7816a79df7a62375d7b5327fd",
+"d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#ad04b88b826d7b3715e88481f2d612a0d",
+"da/d16/_particle_maker_8h.html#a520bb53d8c35d2d68fea8ed6010f7e50",
+"db/dc9/structctrw_1_1_state___velocity.html#a63ad21028811bc91deeaf58b02b6d003",
+"dc/dba/_time_step_adaptor_8h.html",
+"dd/de4/structmeta_1_1op__valid.html#a7417e6cb0ef1016c8b9f9a2c7768309e",
+"df/d96/_field_8h.html#afaa9a48640e0e9b7389f209471463290"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

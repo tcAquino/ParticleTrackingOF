@@ -8,6 +8,7 @@
 #define PTOF_OUTPUT_H
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstddef>
 #include <fstream>
@@ -19,6 +20,8 @@
 #include <string>
 #include <type_traits>
 #include <vector>
+#include <fvcGrad.H>
+#include <Tensor.H>
 #include <zero.H>
 #include "CTRW/StateGetter.h"
 #include "CTRW/Meta.h"
@@ -187,21 +190,24 @@ namespace ptof
      *  \brief Implemented types. */  
     enum class Type
     {
-      position,                         /**< Time and particle tags, positions, and masses.                                 */
-      position_in_regions,              /**< Time and particle tags, positions, and masses in regions speciefied by masks. */
-      position_mean,                    /**< Time and mean position.                                                        */ 
-      position_second_moment,           /**< Time and position second moment.                                               */ 
-      position_variance,                /**< Time and position variance.                                                    */ 
-      mass,                             /**< Time and total mass.                                                           */
-      mass_in_regions,                  /**< Time and total mass in regions speciefied by masks.                                            */
-      velocity,                         /**< Time and particle tags and local velocities.                                   */ 
-      velocity_gradient,                /**< Time and particle tags and local velocity gradient components.                 */ 
-      pressure,                         /**< Time and particle tags and local pressures.                                    */ 
-      position_periodic,                /**< Time and particle tags, true positions accounting for periodicity, and masses. */ 
-      position_mean_periodic,           /**< Time and true mean position accounting for periodicity.                        */ 
-      position_second_moment_periodic,  /**< Time and true position second moment accounting for periodicity.               */ 
-      position_variance_periodic,       /**< Time and true position variance accounting for periodicity.                    */ 
-      absorption_time                   /**< Particle absorption times, tags, and masses at end of dynamics.                */ 
+      position,                         /**< Time, particle tags, positions, and masses. */
+      position_in_regions,              /**< Time, particle tags, positions, and masses in regions specified by masks. */
+      position_mean,                    /**< Time and mean position. */
+      position_second_moment,           /**< Time and position second moment. */
+      position_variance,                /**< Time and position variance. */
+      mass,                             /**< Time and total mass. */
+      mass_in_regions,                  /**< Time and total mass in regions speciefied by masks. */
+      velocity,                         /**< Time, particle tags, and local velocities. */
+      velocity_gradient,                /**< Time, particle tags, and local velocity gradients. */
+      scalar_field,                     /**< Time, particle tags, and local values of scalar field. */
+      vector_field,                     /**< Time, particle tags, and local values of vector field. */
+      tensor_field,                     /**< Time, particle tags and local values of tensor field. */
+      position_periodic,                /**< Time, particle tags, true positions accounting for periodicity, and masses. */
+      position_in_regions_periodic,     /**< Time, particle tags, true positions accounting for periodicity, and masses in regions specified by masks. */
+      position_mean_periodic,           /**< Time and true mean position accounting for periodicity. */
+      position_second_moment_periodic,  /**< Time and true position second moment accounting for periodicity. */
+      position_variance_periodic,       /**< Time and true position variance accounting for periodicity. */
+      absorption_time                   /**< Particle absorption times, tags, and masses at end of dynamics. */
     };
     
     /** \return Type from name. */
@@ -229,8 +235,11 @@ namespace ptof
       { "mass_in_regions", Type::mass_in_regions },
       { "velocity", Type::velocity },
       { "velocity_gradient", Type::velocity_gradient },
-      { "pressure", Type::pressure },
+      { "scalar_field", Type::scalar_field },
+      { "vector_field", Type::scalar_field },
+      { "tensor_field", Type::scalar_field },
       { "position_periodic", Type::position_periodic },
+      { "position_in_regions_periodic", Type::position_in_regions_periodic },
       { "position_mean_periodic", Type::position_mean_periodic },
       { "position_second_moment_periodic", Type::position_second_moment_periodic },
       { "position_variance_periodic", Type::position_variance_periodic },
@@ -250,8 +259,8 @@ namespace ptof
       { Type::mass_in_regions, "mass_in_regions" },
       { Type::velocity, "velocity" },
       { Type::velocity_gradient, "velocity_gradient" },
-      { Type::pressure, "pressure" },
       { Type::position_periodic, "position_periodic" },
+      { Type::position_in_regions_periodic, "position_in_regions_periodic" },
       { Type::position_mean_periodic, "position_mean_periodic" },
       { Type::position_second_moment_periodic, "position_second_moment_periodic" },
       { Type::position_variance_periodic, "position_variance_periodic" },
@@ -313,7 +322,7 @@ namespace ptof
   };
   
   /** \class Criterion_mass_above PTOF/Output.h "PTOF/Output.h"
-   *  \brief  Check if mass is greater than or equal to value. */
+   *  \brief Check if mass is greater than or equal to value. */
   template <typename Subject>
   struct Criterion_mass_above final : Criterion<Subject>
   {
@@ -331,7 +340,7 @@ namespace ptof
   };
   
   /** \class Criterion_all_absorbed PTOF/Output.h "PTOF/Output.h"
-   * \brief  Check if all particles have been absorbed. */
+   * \brief Check if all particles have been absorbed. */
   template <typename Subject>
   struct Criterion_all_absorbed final : Criterion<Subject>
   {
@@ -381,7 +390,6 @@ namespace ptof
    *  \brief Output parameters to handle the output types in Output_Cases. */
   struct OutputParameters_Cases
   {
-    double velocity_rescaling_factor;
     std::string time_units;
     double time_unit_factor;
     std::string end_criterion;
@@ -390,7 +398,17 @@ namespace ptof
     double time_min;
     double time_max;
     double time_increment;
-    std::vector<std::string> measure_names;
+    struct Measurement
+    {
+      Measurement(std::string name, std::string parameters = {})
+      : name{ name }
+      , parameters{ parameters }
+      {}
+      
+      std::string name;
+      std::string parameters;
+    };
+    std::vector<Measurement> measurements;
     
     /** Constructor.
      \param directories Current case directory information.
@@ -411,11 +429,6 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers)
     {
-      if constexpr (meta::has_velocity_rescaling_factor_v<TransportParameters>)
-        velocity_rescaling_factor = params_transport.velocity_rescaling_factor;
-      else
-        velocity_rescaling_factor = 1.;
-        
       auto input = useful::open_read(directories.dir_parameters
                                      + "/parameters_output_"
                                      + name + ".dat");
@@ -465,6 +478,16 @@ namespace ptof
         "\tposition_variance: Time and position variance\n"
         "\tmass: Time and total mass\n"
         "\tmass_in_regions: Time and total mass within regions specified by masks\n"
+        "\tvelocity: Time, particle tags, and local velocities\n"
+        "\tvelocity_gradient: Time, particle tags, and local velocity gradients\n"
+        "\tscalar_field: Time, particle tags, and local scalar field values (Specify field name on same line, to be read from OF file)\n"
+        "\tvector_field: Time, particle tags, and local vector field values (Specify field name on same line, to be read from OF file)\n"
+        "\ttensor_field: Time, particle tags, and local tensor field values (Specify field name on same line, to be read from OF file)\n"
+        "\tposition_periodic: Time, particle tags, true positions accounting for periodicity, and masses\n"
+        "\tposition_in_regions_periodic: Time, particle tags, true positions accounting for periodicity, and masses in regions speciefied by masks\n"
+        "\tposition_mean_periodic: Time and true mean position accounting for periodicity\n"
+        "\tposition_second_moment_periodic: Time and true position second moment accounting for periodicity\n"
+        "\tposition_variance_periodic: Time and true position variance accounting for periodicity\n"
         "\tabsorption_time: Particle absorption times, particle tags, and particle masses at end of dynamics\n"
         "--------------------------------------------------\n";
     }
@@ -604,14 +627,25 @@ namespace ptof
     void read_output_types
     (IStream& input)
     {
-      while (1)
+      std::string line;
+      while (std::getline(input, line))
       {
-        std::string measurement;
-        input >> measurement;
-        if (!input.fail())
-          measure_names.push_back(measurement);
-        else
-          break;
+        auto split_line = useful::split(useful::remove_carriage_return(line));
+        if (split_line.empty())
+          throw std::runtime_error{
+            "Could not parse measurement types" };
+        std::string const& name = split_line[0];
+        measurements.emplace_back(name);
+        if (name == "scalar_field" ||
+            name == "vector_field" ||
+            name == "tensor_field")
+        {
+          if (split_line.size() != 2)
+            throw std::runtime_error{
+              std::string("Measurement type ") + name + ": "
+                "Field name not provided" };
+          measurements.back().parameters = split_line[1];
+        }
       }
     }
   };
@@ -619,11 +653,17 @@ namespace ptof
   /** \class Output_Cases PTOF/Output.h "PTOF/Output.h"
    * \brief Output object to handle implemented output options. */
   template
-  <typename Subject, typename VelocityField, typename Geometry>
+  <typename Subject, typename Geometry>
   class Output_Cases
   {
   public:
     using Parameters = OutputParameters_Cases;    /**< Output parameters. */
+    /** Interpolation of scalar fields for outputs that need it. */
+    using InterpolatedScalarField = ptof::ScalarField_LinearInterpolation_OF
+      <Foam::volScalarField, typename Geometry::Locator const&, CheckOptions::Check>;
+    /** Interpolation of vector fields for outputs that need it. */
+    using InterpolatedVectorField = ptof::VectorField_LinearInterpolation_OF
+      <Foam::volVectorField, typename Geometry::Locator const&, CheckOptions::Check>;
     
     /** Constructor.
      \param subject CTRW object to measure.
@@ -635,9 +675,8 @@ namespace ptof
      \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
      \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered.
      \param precision Number of digits after decimal point in output, in scientific notation.
-     \param delimiter Delimiter between output values on same line.
     */
-    template <typename Mask = useful::Empty>
+    template <typename VelocityField, typename Mask = useful::Empty>
     Output_Cases
     (Subject const& subject,
      VelocityField const& velocity_field,
@@ -647,15 +686,15 @@ namespace ptof
      std::string const& identifier,
      std::vector<std::reference_wrapper<const Mask>> masks = {},
      std::vector<double> thresholds = {},
-     int precision = 8, std::string delimiter = "\t")
+     int precision = 8)
     : parameters{ parameters }
     , _subject{ subject }
-    , _velocity_field{ velocity_field }
     , _geometry{ geometry }
     {
       set_measure_types(directories, identifier,
+                        velocity_field,
                         masks, thresholds,
-                        precision, delimiter);
+                        precision);
       set_end_criterion();
       set_next_measure_time();
     }
@@ -663,7 +702,7 @@ namespace ptof
     /** Constructor.
      \brief Overload for initializer list arguments.
     */
-    template <typename Mask>
+    template <typename VelocityField, typename Mask>
     Output_Cases
     (Subject const& subject,
      VelocityField const& velocity_field,
@@ -673,18 +712,18 @@ namespace ptof
      std::string const& identifier,
      std::initializer_list<std::reference_wrapper<const Mask>> masks,
      std::initializer_list<double> thresholds = {},
-     int precision = 8, std::string delimiter = "\t")
+     int precision = 8)
     : Output_Cases(subject, velocity_field, geometry, directories,
                    parameters, identifier,
                    std::vector<std::reference_wrapper<const Mask>>(masks),
                    std::vector<double>(thresholds),
-                   precision, delimiter)
+                   precision)
     {}
     
     /** Constructor.
      \brief Overload for initializer list arguments.
     */
-    template <typename Mask>
+    template <typename VelocityField, typename Mask>
     Output_Cases
     (Subject const& subject,
      VelocityField const& velocity_field,
@@ -694,33 +733,97 @@ namespace ptof
      std::string const& identifier,
      std::vector<std::reference_wrapper<const Mask>> masks,
      std::initializer_list<double> thresholds = {},
-     int precision = 8, std::string delimiter = "\t")
+     int precision = 8)
     : Output_Cases(subject, velocity_field, geometry, directories,
                    parameters, identifier,
                    masks,
                    std::vector<double>(thresholds),
-                   precision, delimiter)
+                   precision)
+    {}
+    
+    /** Constructor.
+     \brief Overload without velocity field
+    */
+    template <typename Mask = useful::Empty>
+    Output_Cases
+    (Subject const& subject,
+     Geometry const& geometry,
+     Directories const& directories,
+     Parameters parameters,
+     std::string const& identifier,
+     std::vector<std::reference_wrapper<const Mask>> masks = {},
+     std::vector<double> thresholds = {},
+     int precision = 8)
+    : parameters{ parameters }
+    , _subject{ subject }
+    , _geometry{ geometry }
+    {
+      set_measure_types(directories, identifier,
+                        useful::Empty{},
+                        masks, thresholds,
+                        precision);
+      set_end_criterion();
+      set_next_measure_time();
+    }
+    
+    /** Constructor.
+     \brief Overload for initializer list arguments.
+    */
+    template <typename VelocityField, typename Mask>
+    Output_Cases
+    (Subject const& subject,
+     Geometry const& geometry,
+     Directories const& directories,
+     Parameters parameters,
+     std::string const& identifier,
+     std::initializer_list<std::reference_wrapper<const Mask>> masks,
+     std::initializer_list<double> thresholds = {},
+     int precision = 8)
+    : Output_Cases(subject, geometry, directories,
+                   parameters, identifier,
+                   std::vector<std::reference_wrapper<const Mask>>(masks),
+                   std::vector<double>(thresholds),
+                   precision)
     {}
     
     /** Constructor.
      \brief Overload for initializer list arguments.
     */
-    template <typename Mask>
+    template <typename VelocityField, typename Mask>
     Output_Cases
     (Subject const& subject,
-     VelocityField const& velocity_field,
+     Geometry const& geometry,
+     Directories const& directories,
+     Parameters parameters,
+     std::string const& identifier,
+     std::vector<std::reference_wrapper<const Mask>> masks,
+     std::initializer_list<double> thresholds = {},
+     int precision = 8)
+    : Output_Cases(subject, geometry, directories,
+                   parameters, identifier,
+                   masks,
+                   std::vector<double>(thresholds),
+                   precision)
+    {}
+    
+    /** Constructor.
+     \brief Overload for initializer list arguments.
+    */
+    template <typename VelocityField, typename Mask>
+    Output_Cases
+    (Subject const& subject,
      Geometry const& geometry,
      Directories const& directories,
      Parameters parameters,
      std::string const& identifier,
      std::initializer_list<std::reference_wrapper<const Mask>> masks,
      std::vector<double> thresholds = {},
-     int precision = 8, std::string delimiter = "\t")
-    : Output_Cases(subject, velocity_field, geometry, directories,
+     int precision = 8)
+    : Output_Cases(subject, geometry, directories,
                    parameters, identifier,
                    std::vector<std::reference_wrapper<const Mask>>(masks),
                    thresholds,
-                   precision, delimiter)
+                   precision)
     {}
     
     /** \return \c true  if end simulation criterion is satisfied, \c false otherwise. */
@@ -769,16 +872,23 @@ namespace ptof
     /** \brief Output requested measurements at given time and advance to next measurement. */
     void operator()(double time)
     {
-      for (auto const& measure : _output_time)
-        measure->operator()(time);
+      for (auto const& output : _output_time)
+        output->operator()(time);
       _next_measure->advance();
     }
     
     /** \brief Output current information. */
     void operator()()
     {
-      for (auto const& measure : _output)
-        measure->operator()();
+      for (auto const& output : _output)
+        output->operator()();
+    }
+    
+    /** \brief Update internal state. */
+    void update(double time, double time_of_change)
+    {
+      for (auto const& output : _output_time)
+        output->update(time, time_of_change);
     }
     
     const Parameters parameters;  /**< Output parameters .*/
@@ -807,153 +917,247 @@ namespace ptof
         output << parameters.end_value << "\n";
       else
         output << parameters.time_max << "\n";
-      output << "- Measurement types:";
-      useful::print(output, parameters.measure_names, true, "\n\t");
+      output << "- Measurement types:\n";
+      info_runtime_measurements(output, "\t");
       output << "\n";
       output <<
         "--------------------------------------------------\n";
     }
         
   private:
+    /** \brief Output information about measurement types. */
+    template <typename OStream>
+    void info_runtime_measurements(OStream& output, std::string const& prefix = "") const
+    {
+      if (parameters.measurements.empty())
+      {
+        output << "None\n";
+        return;
+      }
+      int width_name = int(std::max_element(parameters.measurements.begin(),
+                                            parameters.measurements.end(),
+                                            [](auto const& aa, auto const& bb)
+                                            { return aa.name.length() < bb.name.length(); })
+                           ->name.length()) + 1;
+      int width_field = int(std::max_element(parameters.measurements.begin(),
+                                             parameters.measurements.end(),
+                                             [](auto const& aa, auto const& bb)
+                                             { return aa.parameters.length() < bb.parameters.length(); })
+                            ->parameters.length()) + 1;
+      for (auto const& measurement : parameters.measurements)
+      {
+        output << prefix
+               << std::left << std::setw(width_name) << measurement.name;
+        if (!measurement.parameters.empty())
+          output << std::left << std::setw(width_field)
+                 << measurement.parameters;
+        output << "\n";
+      }
+    }
+    
     /** \brief Set up output streams for requested output types.
      \param directories Current case directory information.
      \param identifier String to include in names of output files.
      \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
      \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered.
-     \param precision Number of digits after decimal point in output, in scientific notation.
-     \param delimiter Delimiter between output values on same line. */
-    template <typename Mask = useful::Empty>
+     \param precision Number of digits after decimal point in output, in scientific notation. */
+    template <typename VelocityField = useful::Empty, typename Mask = useful::Empty>
     void set_measure_types
     (Directories const& directories,
      std::string const& identifier,
+     VelocityField const& velocity_field = {},
      std::vector<std::reference_wrapper<const Mask>> masks = {},
      std::vector<double> thresholds = {},
-     int precision = 8,
-     std::string delimiter = "\t")
+     int precision = 8)
     {
-      for (auto const& name : parameters.measure_names)
+      for (auto const& measurement : parameters.measurements)
       {
-        switch (Measure::type(name))
+        switch (Measure::type(measurement.name))
         {
           case Measure::Type::position:
           {
             _output_time.emplace_back
             (std::make_unique<Output_position>
-             (_subject, _velocity_field, _geometry,
-               directories, name, identifier, parameters,
-               precision, delimiter));
+             (_subject, _geometry,
+               directories, identifier, parameters,
+               precision));
             break;
           }
           case Measure::Type::position_in_regions:
           {
-            _output_time.emplace_back
-            (std::make_unique<Output_position_in_regions<Mask>>
-             (_subject, _velocity_field, _geometry,
-               directories, name, identifier, parameters,
-               masks, thresholds,
-               precision, delimiter));
+            if constexpr (!std::is_same_v<Mask, useful::Empty>)
+              _output_time.emplace_back
+              (std::make_unique<Output_position_in_regions<Mask>>
+               (_subject, _geometry,
+                 directories, identifier, parameters,
+                 masks, thresholds,
+                 precision));
+            else
+              throw std::runtime_error{
+                std::string("Measurement type ") + measurement.name + ": "
+                "Region masks not specified" };
             break;
           }
           case Measure::Type::position_mean:
           {
             _output_time.emplace_back
             (std::make_unique<Output_position_mean>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              precision));
             break;
           }
           case Measure::Type::position_second_moment:
           {
             _output_time.emplace_back
             (std::make_unique<Output_position_second_moment>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              precision));
             break;
           }
           case Measure::Type::position_variance:
           {
             _output_time.emplace_back
             (std::make_unique<Output_position_variance>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              precision));
             break;
           }
           case Measure::Type::mass:
           {
             _output_time.emplace_back
             (std::make_unique<Output_mass>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              precision));
             break;
           }
           case Measure::Type::mass_in_regions:
           {
-            _output_time.emplace_back
-            (std::make_unique<Output_mass_in_regions<Mask>>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              masks, thresholds,
-              precision, delimiter));
+            if constexpr (!std::is_same_v<Mask, useful::Empty>)
+              _output_time.emplace_back
+              (std::make_unique<Output_mass_in_regions<Mask>>
+               (_subject, _geometry,
+                directories, identifier, parameters,
+                masks, thresholds,
+                precision));
+            else
+              throw std::runtime_error{
+                std::string("Measurement type ") + measurement.name + ": "
+                "Region masks not specified" };
             break;
           }
           case Measure::Type::velocity:
           {
-            _output_time.emplace_back
-            (std::make_unique<Output_velocity>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+            if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+              _output_time.emplace_back
+              (std::make_unique<Output_vector_field<VelocityField const&>>
+               (_subject, velocity_field, _geometry,
+                directories, identifier, parameters,
+                "U",
+                precision));
+            else
+              throw std::runtime_error{
+                "Measurement type " + Measure::type(measurement.name) + ": "
+                + "Velocity field not provided" };
             break;
           }
           case Measure::Type::velocity_gradient:
           {
-            _output_time.emplace_back
-            (std::make_unique<Output_velocity_gradient>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+            if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+              _output_time.emplace_back
+              (std::make_unique<Output_tensor_field<>>
+               (_subject,
+                Foam::fvc::grad(velocity_field.field()),
+                _geometry,
+                directories, identifier, parameters,
+                "gradU",
+                precision));
+            else
+              throw std::runtime_error{
+                "Measurement type " + measurement.name + ": "
+                + "Velocity field not provided" };
             break;
           }
-          case Measure::Type::pressure:
+          case Measure::Type::scalar_field:
           {
             _output_time.emplace_back
-            (std::make_unique<Output_pressure>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+            (std::make_unique<Output_scalar_field<>>
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              measurement.parameters,
+              precision));
+            break;
+          }
+          case Measure::Type::vector_field:
+          {
+            _output_time.emplace_back
+            (std::make_unique<Output_vector_field<>>
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              measurement.parameters,
+              precision));
+            break;
+          }
+          case Measure::Type::tensor_field:
+          {
+            _output_time.emplace_back
+            (std::make_unique<Output_tensor_field<>>
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              measurement.parameters,
+              precision));
             break;
           }
           case Measure::Type::position_periodic:
           {
             if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
-              (std::make_unique<Output_position_periodic<
-               decltype(_geometry.boundary_periodic)>>
-               (_subject, _velocity_field, _geometry,
-                directories, name, identifier, parameters,
-                precision, delimiter));
+              (std::make_unique<Output_position_periodic>
+               (_subject, _geometry,
+                directories, identifier, parameters,
+                precision));
             else
               throw std::runtime_error{
-                std::string("Measurement type ") + name + ": "
+                std::string("Measurement type ") + measurement.name + ": "
                 "Particle state must define periodicity" };
+            break;
+          }
+          case Measure::Type::position_in_regions_periodic:
+          {
+            if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>
+                          && !std::is_same_v<Mask, useful::Empty>)
+              _output_time.emplace_back
+              (std::make_unique<Output_position_in_regions_periodic<Mask>>
+               (_subject, _geometry,
+                 directories, identifier, parameters,
+                 masks, thresholds,
+                 precision));
+            else
+            {
+              if constexpr (!meta::has_periodicity_v<typename Subject::Particle::State>)
+                throw std::runtime_error{
+                  std::string("Measurement type ") + measurement.name + ": "
+                  "Particle state must define periodicity" };
+              throw std::runtime_error{
+                std::string("Measurement type ") + measurement.name + ": "
+                            "Region masks not specified" };
+            }
             break;
           }
           case Measure::Type::position_mean_periodic:
           {
             if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
-              (std::make_unique<Output_position_mean_periodic<
-               decltype(_geometry.boundary_periodic)>>
-               (_subject, _velocity_field, _geometry,
-                directories, name, identifier, parameters,
-                precision, delimiter));
+              (std::make_unique<Output_position_mean_periodic>
+               (_subject, _geometry,
+                directories, identifier, parameters,
+                precision));
             else
               throw std::runtime_error{
-                std::string("Measurement type ") + name + ": "
+                std::string("Measurement type ") + measurement.name + ": "
                 "Particle state must define periodicity" };
             break;
           }
@@ -961,14 +1165,13 @@ namespace ptof
           {
             if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
-              (std::make_unique<Output_position_second_moment_periodic<
-               decltype(_geometry.boundary_periodic)>>
-               (_subject, _velocity_field, _geometry,
-                directories, name, identifier, parameters,
-                precision, delimiter));
+              (std::make_unique<Output_position_second_moment_periodic>
+               (_subject, _geometry,
+                directories, identifier, parameters,
+                precision));
             else
               throw std::runtime_error{
-                std::string("Measurement type ") + name + ": "
+                std::string("Measurement type ") + measurement.name + ": "
                 "Particle state must define periodicity" };
             break;
           }
@@ -976,14 +1179,13 @@ namespace ptof
           {
             if constexpr (meta::has_periodicity_v<typename Subject::Particle::State>)
               _output_time.emplace_back
-              (std::make_unique<Output_position_variance_periodic<
-               decltype(_geometry.boundary_periodic)>>
-               (_subject, _velocity_field, _geometry,
-                directories, name, identifier, parameters,
-                precision, delimiter));
+              (std::make_unique<Output_position_variance_periodic>
+               (_subject, _geometry,
+                directories, identifier, parameters,
+                precision));
             else
               throw std::runtime_error{
-                std::string("Measurement type ") + name + ": "
+                std::string("Measurement type ") + measurement.name + ": "
                 "Particle state must define periodicity" };
             break;
           }
@@ -991,14 +1193,14 @@ namespace ptof
           {
             _output.emplace_back
             (std::make_unique<Output_absorption_time>
-             (_subject, _velocity_field, _geometry,
-              directories, name, identifier, parameters,
-              precision, delimiter));
+             (_subject, _geometry,
+              directories, identifier, parameters,
+              precision));
             break;
           }
           default:
             throw std::runtime_error{
-              std::string("Measurement type ") + name + " "
+              std::string("Measurement type ") + measurement.name + " "
               "not supported" };
         }
       }
@@ -1164,44 +1366,40 @@ namespace ptof
       /** \brief Make measurement and output, given current time \c time. */
       virtual void operator()(double time) = 0;
       
+      /** \brief Update internal state. */
+      virtual void update(double time, double time_of_change)
+      {}
+      
     protected:
       /** \brief Set up output streams for requested output types.
       \param subject CTRW object to measure.
-      \param velocity_field Velocity field as a function of state.
       \param geometry Domain geometry info and utilities.
       \param directories Current case directory information.
       \param output_name Name of output type.
       \param identifier String to include in names of output files.
       \param parameters Output parameters.
-      \param precision Number of digits after decimal point in output, in scientific notation.
-      \param delimiter Delimiter between output values on same line. */
+      \param precision Number of digits after decimal point in output, in scientific notation. */
       OutputTime
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
+       int precision = 8)
       : _subject{ subject }
-      , _velocity_field{ velocity_field }
       , _geometry{ geometry }
       , _locator{ geometry.locator }
       , _output{ open_write(directories, output_name, identifier) }
-      , _delimiter{ delimiter }
       {
         _output << std::setprecision(precision)
                 << std::scientific;
       }
       
       Subject const& _subject;                      /**< CTRW object to measure. */
-      VelocityField const& _velocity_field;         /**< Velocity field as a function of state. */
       Geometry const& _geometry;                    /**< Domain geometry info and utilities. */
       typename Geometry::Locator const& _locator;   /**< Object to locate positions in mesh. */
       std::ofstream _output;                        /**< Output stream. */
-      std::string _delimiter;                       /**< Delimiter between output values on same line. */
         
       /** \brief Open output file for a given output type.
       \param directories Current case directory information.
@@ -1235,41 +1433,33 @@ namespace ptof
     protected:
       /** Constructor.
       \param subject CTRW object to measure.
-      \param velocity_field Velocity field as a function of state.
       \param geometry Domain geometry info and utilities.
       \param directories Current case directory information.
       \param output_name Name of output type.
       \param identifier String to include in names of output files.
       \param parameters Output parameters.
-      \param precision Number of digits after decimal point in output, in scientific notation.
-      \param delimiter Delimiter between output values on same line. */
+      \param precision Number of digits after decimal point in output, in scientific notation. */
       Output
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
        std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
+       int precision = 8)
       : _subject{ subject }
-      , _velocity_field{ velocity_field }
       , _geometry{ geometry }
       , _locator{ geometry.locator }
       , _output{ open_write(directories, output_name, identifier) }
-      , _delimiter{ delimiter }
       {
         _output << std::setprecision(precision)
                 << std::scientific;
       }
       
       Subject const& _subject;                      /**< CTRW object to measure. */
-      VelocityField const& _velocity_field;         /**< Velocity field as a function of state. */
       Geometry const& _geometry;                    /**< Domain geometry info and utilities. */
       typename Geometry::Locator const& _locator;   /**< Object to locate positions in mesh. */
       std::ofstream _output;                        /**< Output stream. */
-      std::string _delimiter;                       /**< Delimiter between output values on same line. */
       
       /**
       \param directories Current case directory information.
@@ -1295,37 +1485,52 @@ namespace ptof
     {
       Output_position
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      {}
+          "position", identifier, parameters,
+          precision }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_" }.length())),
+        std::max(9 + precision, int(1 + std::string{ "Mass" }.length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[2])
+                              << "Position_" + std::to_string(dd);
+        OutputTime::_output << std::setw(_column_widths[3]) << "Mass";
+          for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+        OutputTime::_output << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
+      }
       
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         for (auto const& part : OutputTime::_subject.particles())
         {
           auto const& state = part.state_new();
           if (!state.info.absorbed
               && part.state_old().time <= time)
           {
-            OutputTime::_output << OutputTime::_delimiter << state.tag;
-            useful::print(OutputTime::_output, state.position,
-                          true, OutputTime::_delimiter);
-            OutputTime::_output << OutputTime::_delimiter << state.mass;
+            OutputTime::_output << std::setw(_column_widths[1]) << state.tag;
+            useful::print(OutputTime::_output, state.position, _column_widths[2]);
+            OutputTime::_output << _column_widths[3] << state.mass;
           }
         }
         OutputTime::_output << "\n";
       }
+      
+    private:
+      std::array<int, 4> _column_widths;
     };
         
     /** \class Output_Cases::Output_position_in_regions PTOF/Output.h "PTOF/Output.h"
@@ -1335,53 +1540,73 @@ namespace ptof
     {
       Output_position_in_regions
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
        std::vector<std::reference_wrapper<const Mask>> masks,
        std::vector<double> thresholds = {},
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      , masks{ masks }
-      , thresholds{ thresholds }
-      {}
+          "position_in_regions", identifier, parameters,
+          precision }
+      , _masks{ masks }
+      , _thresholds{ thresholds }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_" }.length())),
+        std::max(9 + precision, int(1 + std::string{ "Mass" }.length())),
+        std::max(9, int(4 + std::string{ "In_region_" }.length())) }
+      {
+        _thresholds.resize(masks.size(), 0.);
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[2])
+                              << "Position_" + std::to_string(dd);
+        OutputTime::_output << std::setw(_column_widths[3]) << "Mass";
+        for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+          OutputTime::_output << std::setw(_column_widths[4])
+                              << "In_region_" + std::to_string(ii);
+        OutputTime::_output << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
+      }
       
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         for (auto const& part : OutputTime::_subject.particles())
         {
-          if constexpr (!std::is_same_v<Mask, useful::Empty>)
+          auto const& state = part.state_new();
+          auto cell = OutputTime::_locator(state);
+          OutputTime::_output << std::setw(_column_widths[1]) << state.tag;
+          if (!state.info.absorbed
+              && part.state_old().time <= time
+              && !outside(cell))
           {
-            auto const& state = part.state_new();
-            auto cell = OutputTime::_locator(state);
-            for (std::size_t ii = 0; ii < masks.size(); ++ii)
+            std::vector<int> in_region(_masks.size(), 0);
+            for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+              if (_masks[ii].get()[cell] > _thresholds[ii])
+                in_region[ii] = 1;
+            if (std::any_of(in_region.begin(), in_region.end(),
+                            [](int ii){ return ii > 0; }))
             {
-              if (!state.info.absorbed
-                  && part.state_old().time <= time
-                  && cell >= 0
-                  && masks[ii].get()[cell] > thresholds[ii])
-              {
-                OutputTime::_output << OutputTime::_delimiter << state.tag;
-                useful::print(OutputTime::_output, state.position,
-                              true, OutputTime::_delimiter);
-                OutputTime::_output << OutputTime::_delimiter << state.mass;
-              }
+              useful::print(OutputTime::_output, state.position, _column_widths[2]);
+              OutputTime::_output << std::setw(_column_widths[3]) << state.mass;
+              useful::print(OutputTime::_output, in_region, _column_widths[4]);
             }
           }
         }
         OutputTime::_output << "\n";
       }
       
-      std::vector<std::reference_wrapper<const Mask>> masks;
-      std::vector<double> thresholds;
+    private:
+      std::vector<std::reference_wrapper<const Mask>> _masks;
+      std::vector<double> _thresholds;
+      std::array<int, 5> _column_widths;
     };
     
     /** \struct Output_Cases::Output_position_mean PTOF/Output.h "PTOF/Output.h"
@@ -1390,28 +1615,37 @@ namespace ptof
     {
       Output_position_mean
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      {}
+          "position_mean", identifier, parameters,
+          precision }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(2 + std::string{ "Position_mean_" }.length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[1])
+                              << "Position_mean_" + std::to_string(dd);
+        OutputTime::_output << "\n";
+      }
       
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         useful::print(OutputTime::_output,
                       position_mean(OutputTime::_subject, time),
-                      true, OutputTime::_delimiter);
+                      _column_widths[1]);
         OutputTime::_output << "\n";
       }
+      
+    private:
+      std::array<int, 2> _column_widths;
     };
         
     /** \struct Output_Cases::Output_position_second_moment PTOF/Output.h "PTOF/Output.h"
@@ -1420,28 +1654,37 @@ namespace ptof
     {
       Output_position_second_moment
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      {}
+          "position_second_moment", identifier, parameters,
+          precision }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_second_moment_" }.length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[1])
+                              << "Position_second_moment_" + std::to_string(dd);
+        OutputTime::_output << "\n";
+      }
       
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         useful::print(OutputTime::_output,
                       position_second_moment(OutputTime::_subject, time),
-                      true, OutputTime::_delimiter);
+                      _column_widths[1]);
         OutputTime::_output << "\n";
       }
+      
+    private:
+      std::array<int, 2> _column_widths;
     };
         
     /** \struct Output_Cases::Output_position_variance PTOF/Output.h "PTOF/Output.h"
@@ -1450,28 +1693,37 @@ namespace ptof
     {
       Output_position_variance
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      {}
+          "position_variance", identifier, parameters,
+          precision }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_variance_" }.length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[1])
+                              << "Position_variance_" + std::to_string(dd);
+        OutputTime::_output << "\n";
+      }
       
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         useful::print(OutputTime::_output,
                       position_variance(OutputTime::_subject, time),
-                      true, OutputTime::_delimiter);
+                      _column_widths[1]);
         OutputTime::_output << "\n";
       }
+      
+    private:
+      std::array<int, 2> _column_widths;
     };
         
     /** \struct Output_Cases::Output_mass PTOF/Output.h "PTOF/Output.h"
@@ -1480,25 +1732,33 @@ namespace ptof
     {
       Output_mass
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      {}
+          "mass", identifier, parameters,
+          precision }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(9 + precision, int(1 + std::string{ "Mass" }.length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Mass"
+                            << "\n";
+      }
       
       void operator()(double time) override
       {
-        OutputTime::_output << time << OutputTime::_delimiter
-                            << mass(OutputTime::_subject, time) << "\n";
+        OutputTime::_output << std::setw(_column_widths[0]) << time
+                            << std::setw(_column_widths[1]) << mass(OutputTime::_subject, time)
+                            << "\n";
       }
+      
+    private:
+      std::array<int, 2> _column_widths;
     };
         
     /** \class Output_Cases::Output_mass_in_regions PTOF/Output.h "PTOF/Output.h"
@@ -1508,367 +1768,706 @@ namespace ptof
     {
       Output_mass_in_regions
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
        std::vector<std::reference_wrapper<const Mask>> masks,
        std::vector<double> thresholds = {},
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      , masks{ masks }
-      , thresholds{ thresholds }
+          "mass_in_regions", identifier, parameters,
+          precision }
+      , _masks{ masks }
+      , _thresholds{ thresholds }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(9 + precision, int(4 + std::string{ "Mass_region_" }.length())) }
       {
-        while(thresholds.size() < masks.size())
-          thresholds.push_back(0.);
+        _thresholds.resize(masks.size(), 0.);
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t ii = 0; ii < masks.size(); ++ii)
+          OutputTime::_output << std::setw(_column_widths[4])
+                              << "Mass_region_" + std::to_string(ii);
+        OutputTime::_output << "\n";
       }
       
       void operator()(double time) override
       {
-        if constexpr (!std::is_same_v<Mask, useful::Empty>)
-        {
-          auto masses = mass(OutputTime::_subject, time,
-                             OutputTime::_locator,
-                             masks, thresholds);
-          OutputTime::_output << time;
-          useful::print(OutputTime::_output, masses, true, OutputTime::_delimiter);
-          OutputTime::_output << "\n";
-        }
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        useful::print(OutputTime::_output,
+                      mass(OutputTime::_subject, time,
+                           OutputTime::_locator,
+                           _masks, _thresholds),
+                      _column_widths[1]);
+        OutputTime::_output << "\n";
       }
       
-      std::vector<std::reference_wrapper<const Mask>> masks;
-      std::vector<double> thresholds;
+    private:
+      std::vector<std::reference_wrapper<const Mask>> _masks;
+      std::vector<double> _thresholds;
+      std::array<int, 2> _column_widths;
     };
         
-     /** \struct Output_Cases::Output_velocity PTOF/Output.h "PTOF/Output.h"
-      *  \brief  Output time, tags, velocities. */
-    struct Output_velocity final : OutputTime
+        /**
+     \struct Output_Cases::Output_scalar_field PTOF/Output.h "PTOF/Output.h"
+     \brief Output time, tags, and scalar field values.
+    */
+    template <typename Field = InterpolatedScalarField>
+    struct Output_scalar_field final : OutputTime
     {
-      Output_velocity
+      Output_scalar_field
       (Subject const& subject,
-       VelocityField const& velocity_field,
+       Field&& field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       std::string const& field_name,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
+          std::string{ "scalar_field_" } + field_name,
+          identifier, parameters,
+          precision }
+      , _field_name{ field_name }
+      , _field{ std::forward<Field>(field) }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(2 + (field_name + "_").length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << field_name
+                            << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
+      }
+      
+      Output_scalar_field
+      (Subject const& subject,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& identifier,
+       Parameters const& parameters,
+       std::string const& field_name,
+       int precision = 8)
+      : Output_scalar_field{ subject,
+          typename Output_Cases::InterpolatedScalarField{
+            { Foam::IOobject{ field_name,
+              geometry.mesh().time().timeName(),
+              geometry.mesh(), Foam::IOobject::MUST_READ,
+              Foam::IOobject::NO_WRITE },
+            geometry.mesh() },
+            geometry.locator },
+          geometry, directories,
+          identifier, parameters,
+          field_name,
+          precision }
+      {}
+      
+      void operator()(double time) override
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        for (auto const& part : OutputTime::_subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
+            OutputTime::_output << std::setw(_column_widths[1]) << state.tag
+                                << std::setw(_column_widths[2]) << _field(state);
+        }
+        OutputTime::_output << "\n";
+      }
+      
+      void update(double time, double time_of_change) override
+      {
+        if constexpr (!std::is_reference_v<Field>)
+          if (time >= time_of_change)
+            _field.set({
+              Foam::IOobject{ _field_name,
+                OutputTime::_geometry.mesh().time().timeName(),
+                OutputTime::_geometry.mesh(), Foam::IOobject::MUST_READ,
+                Foam::IOobject::NO_WRITE },
+              OutputTime::_geometry.mesh() });
+      }
+      
+    private:
+      std::string _field_name;
+      Field _field;
+      std::array<int, 3> _column_widths;
+    };
+    template <typename Field>
+    Output_scalar_field
+    (Subject const&, Field&&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&,
+     int) ->
+    Output_scalar_field<Field>;
+    template <typename Field>
+    Output_scalar_field
+    (Subject const&, Field&&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&) ->
+    Output_scalar_field<Field>;
+    Output_scalar_field
+    (Subject const&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&,
+     int) ->
+    Output_scalar_field<typename Output_Cases::InterpolatedScalarField>;
+    Output_scalar_field
+    (Subject const&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&) ->
+    Output_scalar_field<typename Output_Cases::InterpolatedScalarField>;
+        
+     /** \class Output_Cases::Output_vector_field PTOF/Output.h "PTOF/Output.h"
+      *  \brief  Output time, tags, and vector field values. */
+    template <typename Field = InterpolatedVectorField>
+    struct Output_vector_field final : OutputTime
+    {
+      Output_vector_field
+      (Subject const& subject,
+       Field&& field,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& identifier,
+       Parameters const& parameters,
+       std::string const& field_name,
+       int precision = 8)
+      : OutputTime{ subject,
+          geometry, directories,
+          std::string{ "vector_field_" } + field_name,
+          identifier, parameters,
+          precision }
+      , _field{ std::forward<Field>(field) }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(2 + (field_name + "_").length())) }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[2])
+                              << field_name + "_" + std::to_string(dd);
+        OutputTime::_output << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
+      }
+      
+      Output_vector_field
+      (Subject const& subject,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& identifier,
+       Parameters const& parameters,
+       std::string const& field_name,
+       int precision = 8)
+      : Output_vector_field{ subject,
+          typename Output_Cases::InterpolatedVectorField{
+            { Foam::IOobject{ field_name,
+              geometry.mesh().time().timeName(),
+              geometry.mesh(), Foam::IOobject::MUST_READ,
+              Foam::IOobject::NO_WRITE },
+            geometry.mesh() },
+            geometry.locator },
+          geometry, directories,
+          identifier, parameters,
+          field_name,
+          precision }
       {}
 
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         for (auto const& part : OutputTime::_subject.particles())
         {
           auto const& state = part.state_new();
           if (!state.info.absorbed
               && part.state_old().time <= time)
           {
-            OutputTime::_output << OutputTime::_delimiter << state.tag;
+            OutputTime::_output << std::setw(_column_widths[1]) << state.tag;
             useful::print(OutputTime::_output,
-                          OutputTime::_velocity_field(state),
-                          true, OutputTime::_delimiter);
+                          _field(state),
+                          _column_widths[2]);
           }
         }
         OutputTime::_output << "\n";
       }
+      
+      void update(double time, double time_of_change) override
+      {
+        if constexpr (!std::is_reference_v<Field>)
+          if (time >= time_of_change)
+            _field.set({
+              Foam::IOobject{ _field_name,
+                OutputTime::_geometry.mesh().time().timeName(),
+                OutputTime::_geometry.mesh(), Foam::IOobject::MUST_READ,
+                Foam::IOobject::NO_WRITE },
+              OutputTime::_geometry.mesh() });
+      }
+       
+     private:
+      std::string _field_name;
+      Field _field;
+      std::array<int, 3> _column_widths;
     };
+    template <typename Field>
+    Output_vector_field
+    (Subject const&, Field&&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&,
+     int) ->
+    Output_vector_field<Field>;
+    template <typename Field>
+    Output_vector_field
+    (Subject const&, Field&&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&) ->
+    Output_vector_field<Field>;
+    Output_vector_field
+    (Subject const&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&,
+     int) ->
+    Output_vector_field<typename Output_Cases::InterpolatedVectorField>;
+    Output_vector_field
+    (Subject const&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&) ->
+    Output_vector_field<typename Output_Cases::InterpolatedVectorField>;
         
-     /** \struct Output_Cases::Output_velocity_gradient PTOF/Output.h "PTOF/Output.h"
-      *  \brief  Output time and velocity gradient components.
-      *  \details
-      * Component output order is xx, xy, xz, yx, yy, yz, zx, zy, zz.
-      * Spurious components are omitted if geometry dimension is < 3. */
-    struct Output_velocity_gradient final : OutputTime
+     /** \struct Output_Cases::Output_tensor_field PTOF/Output.h "PTOF/Output.h"
+      *  \brief  Output time, tag, and tensor field values. */
+    template <typename Field = Foam::volTensorField>
+    struct Output_tensor_field final : OutputTime
     {
-      Output_velocity_gradient
+      Output_tensor_field
       (Subject const& subject,
-       VelocityField const& velocity_field,
+       Field&& field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       std::string const& field_name,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      , velocity_gradient{
-        Foam::IOobject{
-          "gradU", geometry.mesh().time().timeName(),
-          geometry.mesh(), Foam::IOobject::MUST_READ,
-          Foam::IOobject::NO_WRITE },
-          geometry.mesh() }
+          std::string{ "tensor_field_" } + field_name,
+          identifier, parameters,
+          precision }
+      , _field{ std::forward<Field>(field) }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(3 + (field_name + "_").length())) }
       {
-        if (parameters.velocity_rescaling_factor != 1.)
-          velocity_gradient *= parameters.velocity_rescaling_factor;
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag";
+        for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
+          for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
+            OutputTime::_output << std::setw(_column_widths[2])
+                                << field_name + "_" + std::to_string(dd1) + std::to_string(dd2);
+        OutputTime::_output << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
       }
+      
+      Output_tensor_field
+      (Subject const& subject,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& identifier,
+       Parameters const& parameters,
+       std::string const& field_name,
+       int precision = 8)
+      : Output_tensor_field{ subject,
+          Foam::volTensorField{ Foam::IOobject{ field_name,
+            geometry.mesh().time().timeName(),
+            geometry.mesh(), Foam::IOobject::MUST_READ,
+            Foam::IOobject::NO_WRITE },
+            geometry.mesh() },
+          geometry, directories,
+          identifier, parameters,
+          field_name,
+          precision }
+      {}
 
       void operator()(double time) override
       {
-        OutputTime::_output << time;
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
         for (auto const& part : OutputTime::_subject.particles())
         {
           auto const& state = part.state_new();
           if (!state.info.absorbed
               && part.state_old().time <= time)
           {
-            OutputTime::_output << OutputTime::_delimiter << state.tag;
+            OutputTime::_output << std::setw(_column_widths[1]) << state.tag;
             auto cell = OutputTime::_locator(state);
             if (outside(cell))
-              useful::print(OutputTime::_output,
-                            std::vector<double>(Geometry::dim, 0.),
-                            true, OutputTime::_delimiter);
+              for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+                useful::print(OutputTime::_output,
+                              std::vector<double>(Geometry::dim, 0.),
+                              _column_widths[2]);
             else
+              for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
+                for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
+                  OutputTime::_output << std::setw(_column_widths[2])
+                                      << _field[cell].row(dd1)[dd2];
+          }
+        }
+        OutputTime::_output << "\n";
+      }
+
+      void update(double time, double time_of_change) override
+      {
+        if constexpr (!std::is_reference_v<Field>)
+          if (time >= time_of_change)
+            _field = {
+              Foam::IOobject{ _field_name,
+                OutputTime::_geometry.mesh().time().timeName(),
+                OutputTime::_geometry.mesh(), Foam::IOobject::MUST_READ,
+                Foam::IOobject::NO_WRITE },
+              OutputTime::_geometry.mesh() };
+      }
+    
+    private:
+      std::string _field_name;
+      Field _field;
+      std::array<int, 3> _column_widths;
+    };
+    template <typename Field>
+    Output_tensor_field
+    (Subject const&, Field&&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&,
+     int) ->
+    Output_tensor_field<Field>;
+    template <typename Field>
+    Output_tensor_field
+    (Subject const&, Field&&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&) ->
+    Output_tensor_field<Field>;
+    Output_tensor_field
+    (Subject const&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&,
+     int) ->
+    Output_tensor_field<Foam::volTensorField>;
+    Output_tensor_field
+    (Subject const&,
+     Geometry const&,
+     Directories const&,
+     std::string const&,
+     Parameters const&,
+     std::string const&) ->
+    Output_tensor_field<Foam::volTensorField>;
+        
+    /** \class Output_Cases::Output_position_periodic PTOF/Output.h "PTOF/Output.h"
+     *  \brief  Output time, tags, positions, and masses, with positions accounting for periodicity. */
+    struct Output_position_periodic final : OutputTime
+    {
+      Output_position_periodic
+      (Subject const& subject,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& identifier,
+       Parameters const& parameters,
+       int precision = 8)
+      : OutputTime{ subject,
+          geometry, directories,
+          "position_periodic", identifier, parameters,
+          precision }
+      , _getter_position{ geometry.boundary_periodic }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(3 + std::string{ "Position_" }.length())),
+        std::max(9 + precision, int(1 + std::string{ "Mass" }.length()))
+      }
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[2])
+                              << "Position_" + std::to_string(dd);
+        OutputTime::_output << std::setw(_column_widths[3]) << "Mass"
+                            << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
+      }
+      
+      void operator()(double time) override
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        for (auto const& part : OutputTime::_subject.particles())
+        {
+          auto const& state = part.state_new();
+          if (!state.info.absorbed
+              && part.state_old().time <= time)
+          {
+            OutputTime::_output << std::setw(_column_widths[1]) << state.tag;
+            useful::print(OutputTime::_output, _getter_position(state),
+                          _column_widths[2]);
+            OutputTime::_output << std::setw(_column_widths[3]) << state.mass;
+          }
+        }
+        OutputTime::_output << "\n";
+      }
+      
+    private:
+      using Boundary = std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
+      ctrw::Get_position_periodic<Boundary const&> _getter_position;
+      std::array<int, 4> _column_widths;
+    };
+        
+    /** \class Output_Cases::Output_position_in_regions_periodic PTOF/Output.h "PTOF/Output.h"
+     *  \brief  Output time, tags, positions, and masses within regions specified by masks. */
+    template <typename Mask>
+    struct Output_position_in_regions_periodic final : OutputTime
+    {
+      Output_position_in_regions_periodic
+      (Subject const& subject,
+       Geometry const& geometry,
+       Directories const& directories,
+       std::string const& identifier,
+       Parameters const& parameters,
+       std::vector<std::reference_wrapper<const Mask>> masks,
+       std::vector<double> thresholds = {},
+       int precision = 8)
+      : OutputTime{ subject,
+          geometry, directories,
+          "position_in_regions_periodic", identifier, parameters,
+          precision }
+      , _getter_position{ geometry.boundary_periodic }
+      , _masks{ masks }
+      , _thresholds{ thresholds }
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(1 + std::string{ "Tag" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_" }.length())),
+        std::max(9 + precision, int(1 + std::string{ "Mass" }.length())),
+        std::max(2, int(4 + std::string{ "In_region_" }.length())) }
+      {
+        _thresholds.resize(masks.size(), 0.);
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time"
+                            << std::setw(_column_widths[1]) << "Tag";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[2])
+                              << "Position_" + std::to_string(dd);
+        OutputTime::_output << std::setw(_column_widths[3]) << "Mass";
+        for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+          OutputTime::_output << std::setw(_column_widths[4])
+                              << "In_region_" + std::to_string(ii);
+        OutputTime::_output << std::setw(_column_widths[1]) << "Tag"
+                            << std::setw(_column_widths[2]) << "..."
+                            << "\n";
+      }
+      
+      void operator()(double time) override
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        for (auto const& part : OutputTime::_subject.particles())
+        {
+          auto const& state = part.state_new();
+          auto cell = OutputTime::_locator(state);
+          OutputTime::_output << std::setw(_column_widths[1]) << state.tag;
+          if (!state.info.absorbed
+              && part.state_old().time <= time
+              && !outside(cell))
+          {
+            std::vector<int> in_region(_masks.size(), 0);
+            for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+              if (_masks[ii].get()[cell] > _thresholds[ii])
+                in_region[ii] = 1;
+            if (std::any_of(in_region.begin(), in_region.end(),
+                            [](int ii){ return ii > 0; }))
             {
-              auto const& grad = velocity_gradient[cell];
-              if constexpr (Geometry::dim == 1)
-              {
-                OutputTime::_output << OutputTime::_delimiter << grad.xx();
-              }
-              if constexpr (Geometry::dim == 2)
-              {
-                OutputTime::_output << OutputTime::_delimiter << grad.xx();
-                OutputTime::_output << OutputTime::_delimiter << grad.xy();
-                OutputTime::_output << OutputTime::_delimiter << grad.yx();
-                OutputTime::_output << OutputTime::_delimiter << grad.yy();
-              }
-              if constexpr (Geometry::dim == 3)
-              {
-                OutputTime::_output << OutputTime::_delimiter << grad.xx();
-                OutputTime::_output << OutputTime::_delimiter << grad.xy();
-                OutputTime::_output << OutputTime::_delimiter << grad.xz();
-                OutputTime::_output << OutputTime::_delimiter << grad.yx();
-                OutputTime::_output << OutputTime::_delimiter << grad.yy();
-                OutputTime::_output << OutputTime::_delimiter << grad.yz();
-                OutputTime::_output << OutputTime::_delimiter << grad.zx();
-                OutputTime::_output << OutputTime::_delimiter << grad.zy();
-                OutputTime::_output << OutputTime::_delimiter << grad.zz();
-              }
+              useful::print(OutputTime::_output, _getter_position(state), _column_widths[2]);
+              OutputTime::_output << std::setw(_column_widths[3]) << state.mass;
+              useful::print(OutputTime::_output, in_region, _column_widths[4]);
             }
           }
         }
         OutputTime::_output << "\n";
       }
-
-      Foam::volTensorField velocity_gradient;
-    };
-        
-    /**
-     \struct Output_Cases::Output_pressure PTOF/Output.h "PTOF/Output.h"
-     \brief Output time, tags, and pressures.
-    */
-    struct Output_pressure final : OutputTime
-    {
-      Output_pressure
-      (Subject const& subject,
-       VelocityField const& velocity_field,
-       Geometry const& geometry,
-       Directories const& directories,
-       std::string const& output_name,
-       std::string const& identifier,
-       Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
-          geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      , pressure{
-        { Foam::IOobject{
-          "U", geometry.mesh().time().timeName(),
-          geometry.mesh(), Foam::IOobject::MUST_READ,
-          Foam::IOobject::NO_WRITE },
-          geometry.mesh() },
-        geometry.locator }
-      {
-        if (parameters.velocity_rescaling_factor != 1.)
-          pressure.rescale(parameters.velocity_rescaling_factor);
-      }
-
-      void operator()(double time) override
-      {
-        OutputTime::_output << time;
-        for (auto const& part : OutputTime::_subject.particles())
-        {
-          auto const& state = part.state_new();
-          if (!state.info.absorbed
-              && part.state_old().time <= time)
-          {
-            OutputTime::_output << OutputTime::_delimiter << state.tag;
-            useful::print(OutputTime::_output, pressure(state),
-                          true, OutputTime::_delimiter);
-          }
-        }
-        OutputTime::_output << "\n";
-      }
       
-      ptof::ScalarField_LinearInterpolation_OF
-      <Foam::volScalarField, typename Geometry::Locator const&, CheckOptions::Check> pressure;
-    };
-        
-    /** \class Output_Cases::Output_position_periodic PTOF/Output.h "PTOF/Output.h"
-     *  \brief  Output time, tags, positions, and masses, with positions accounting for periodicity. */
-    template <typename Boundary>
-    struct Output_position_periodic final : OutputTime
-    {
-      Output_position_periodic
-      (Subject const& subject,
-       VelocityField const& velocity_field,
-       Geometry const& geometry,
-       Directories const& directories,
-       std::string const& output_name,
-       std::string const& identifier,
-       Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
-          geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
-      , getter_position{ geometry.boundary_periodic }
-      {}
-      
-      void operator()(double time) override
-      {
-        OutputTime::_output << time;
-        for (auto const& part : OutputTime::_subject.particles())
-        {
-          auto const& state = part.state_new();
-          if (!state.info.absorbed
-              && part.state_old().time <= time)
-          {
-            OutputTime::_output << OutputTime::_delimiter << state.tag;
-            useful::print(OutputTime::_output, getter_position(state),
-                          true, OutputTime::_delimiter);
-            OutputTime::_output << OutputTime::_delimiter << state.mass;
-          }
-        }
-        OutputTime::_output << "\n";
-      }
-      
-      ctrw::Get_position_periodic<Boundary const&> getter_position;
+    private:
+      using Boundary = std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
+      ctrw::Get_position_periodic<Boundary const&> _getter_position;
+      std::vector<std::reference_wrapper<const Mask>> _masks;
+      std::vector<double> _thresholds;
+      std::array<int, 5> _column_widths;
     };
     
     /** \class Output_Cases::Output_position_mean_periodic PTOF/Output.h "PTOF/Output.h"
      *  \brief Output time and mean position (weighted by mass), with positions accounting for periodicity. */
-    template <typename Boundary>
     struct Output_position_mean_periodic final
     : OutputTime
     {
       Output_position_mean_periodic
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
+          "position_mean_periodic", identifier, parameters,
+          precision }
       , getter_position{ geometry.boundary_periodic }
-      {}
-      
-      void operator()(double time) override
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(12, int(2 + std::string{ "Position_mean_" }.length())) }
       {
-        OutputTime::_output << time;
-        useful::print(OutputTime::_output,
-                      position_mean(OutputTime::_subject, time,
-                                    getter_position),
-                      true, OutputTime::_delimiter);
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[1])
+                              << "Position_mean_" + std::to_string(dd);
         OutputTime::_output << "\n";
       }
       
+      void operator()(double time) override
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        useful::print(OutputTime::_output,
+                      position_mean(OutputTime::_subject, time,
+                                    getter_position),
+                      _column_widths[1]);
+        OutputTime::_output << "\n";
+      }
+      
+    private:
+      using Boundary = std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
       ctrw::Get_position_periodic<Boundary const&> getter_position;
+      std::array<int, 2> _column_widths;
     };
         
     /** \class Output_Cases::Output_position_second_moment_periodic PTOF/Output.h "PTOF/Output.h"
      *  \brief  Output time and second moment of position (weighted by mass), with position accounting for periodicity. */
-    template <typename Boundary>
     struct Output_position_second_moment_periodic final
     : OutputTime
     {
       Output_position_second_moment_periodic
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
+          "position_second_moment_periodic", identifier, parameters,
+          precision }
       , getter_position{ geometry.boundary_periodic }
-      {}
-      
-      void operator()(double time) override
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_second_moment_" }.length())) }
       {
-        OutputTime::_output << time;
-        useful::print(OutputTime::_output,
-                      position_second_moment(OutputTime::_subject, time,
-                                             getter_position),
-                      true, OutputTime::_delimiter);
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[1])
+                              << "Position_second_moment_" + std::to_string(dd);
         OutputTime::_output << "\n";
       }
       
-      ctrw::Get_position_periodic<Boundary const&> getter_position;
+      void operator()(double time) override
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        useful::print(OutputTime::_output,
+                      position_second_moment(OutputTime::_subject, time,
+                                             getter_position),
+                      _column_widths[1]);
+        OutputTime::_output << "\n";
+      }
+      
+      private:
+        using Boundary = std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
+        ctrw::Get_position_periodic<Boundary const&> getter_position;
+        std::array<int, 2> _column_widths;
     };
         
     /** \class Output_Cases::Output_position_variance_periodic PTOF/Output.h "PTOF/Output.h"
      *  \brief  Output time and position variance (weighted by mass), with position accounting for periodicity. */
-    template <typename Boundary>
     struct Output_position_variance_periodic final
     : OutputTime
     {
       Output_position_variance_periodic
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : OutputTime{ subject, velocity_field,
+       int precision = 8)
+      : OutputTime{ subject,
           geometry, directories,
-          output_name, identifier, parameters,
-          precision, delimiter }
+          "position_variance_periodic", identifier, parameters,
+          precision }
       , getter_position{ geometry.boundary_periodic }
-      {}
-      
-      void operator()(double time) override
+      , _column_widths{
+        std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+        std::max(9 + precision, int(2 + std::string{ "Position_variance_" }.length())) }
       {
-        OutputTime::_output << time;
-        useful::print(OutputTime::_output,
-                      position_variance(OutputTime::_subject, time,
-                                        getter_position),
-                      true, OutputTime::_delimiter);
+        OutputTime::_output << std::setw(_column_widths[0]) << "Time";
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+          OutputTime::_output << std::setw(_column_widths[1])
+                              << "Position_variance_" + std::to_string(dd);
         OutputTime::_output << "\n";
       }
       
-      ctrw::Get_position_periodic<Boundary const&> getter_position;
+      void operator()(double time) override
+      {
+        OutputTime::_output << std::setw(_column_widths[0]) << time;
+        useful::print(OutputTime::_output,
+                      position_variance(OutputTime::_subject, time,
+                                        getter_position),
+                      _column_widths[1]);
+        OutputTime::_output << "\n";
+      }
+      
+      private:
+        using Boundary = std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
+        ctrw::Get_position_periodic<Boundary const&> getter_position;
+        std::array<int, 2> _column_widths;
     };
         
     /** \struct Output_Cases::Output_absorption_time PTOF/Output.h "PTOF/Output.h"
@@ -1877,19 +2476,25 @@ namespace ptof
     {
       Output_absorption_time
       (Subject const& subject,
-       VelocityField const& velocity_field,
        Geometry const& geometry,
        Directories const& directories,
-       std::string const& output_name,
        std::string const& identifier,
        Parameters const& parameters,
-       int precision = 8,
-       std::string delimiter = "\t")
-      : Output{ subject, velocity_field,
+       int precision = 8)
+      : Output{ subject,
         geometry, directories,
-        output_name, identifier, parameters,
-        precision, delimiter }
-      {}
+        "absorption_time", identifier, parameters,
+        precision }
+      , _column_widths{
+          std::max(9 + precision, int(1 + std::string{ "Time" }.length())),
+          std::max(12, int(1 + std::string{ "Tag" }.length())),
+          std::max(9 + precision, int(1 + std::string{ "Mass" }.length())) }
+      {
+        Output::_output << std::setw(_column_widths[0]) << "Time"
+                        << std::setw(_column_widths[1]) << "Tag"
+                        << std::setw(_column_widths[2]) << "Mass"
+                        << "\n";
+      }
       
       void operator()() override
       {
@@ -1897,22 +2502,23 @@ namespace ptof
         {
           auto const& state = part.state_new();
           if (state.info.absorbed)
-          {
-            Output::_output << state.time << Output::_delimiter;
-            Output::_output << state.tag << Output::_delimiter;
-            Output::_output << state.mass << "\n";
-          }
+            Output::_output << std::setw(_column_widths[0]) << state.time
+                            << std::setw(_column_widths[1]) << state.tag
+                            << std::setw(_column_widths[2]) << state.mass
+                            << "\n";
         }
       }
+      
+      private:
+        std::array<int, 3> _column_widths;
     };
     
-    Subject const& _subject;                                /**< Subject to measure.                   */
-    VelocityField const& _velocity_field;                   /**< Compute velocity from particle state. */
-    Geometry const& _geometry;                              /**< Mesh and other domain information.    */
-    std::unique_ptr<Criterion<Subject>> _end_criterion;     /**< To check if end criterion is met.     */
-    std::unique_ptr<NextMeasureTime> _next_measure;         /**< Handle next measure time.             */
-    std::vector<std::unique_ptr<OutputTime>> _output_time;  /**< Handle each output type given time.   */
-    std::vector<std::unique_ptr<Output>> _output;           /**< Handle each output type given nothing.*/
+    Subject const& _subject;                                /**< Subject to measure. */
+    Geometry const& _geometry;                              /**< Domain geometry info and utilities.*/
+    std::unique_ptr<Criterion<Subject>> _end_criterion;     /**< To check if end criterion is met. */
+    std::unique_ptr<NextMeasureTime> _next_measure;         /**< Handle next measure time. */
+    std::vector<std::unique_ptr<OutputTime>> _output_time;  /**< Handle each output type given time. */
+    std::vector<std::unique_ptr<Output>> _output;           /**< Handle each output type given nothing. */
   };
 }
         

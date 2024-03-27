@@ -11,7 +11,8 @@
 #include <vector>
 #include "general/Operations.h"
 
-namespace geometry
+/** \namespace geom Miscallaneous geometry-related objects and utilities. */
+namespace geom
 {
   /** \struct Parallelepiped  Geometry/Shape.h "Geometry/Shape.h"
    \brief Rectangle in any dimension, aligned with Cartesian axes. */
@@ -137,22 +138,22 @@ namespace geometry
     \param spheres Spherical inclusions. */
     Domain
     (DomainShape box,
-     std::vector<geometry::Parallelepiped<>> parallelepipeds,
-     std::vector<geometry::Sphere<>> spheres)
+     std::vector<Parallelepiped<>> parallelepipeds,
+     std::vector<Sphere<>> spheres)
     : box{ box }
     , parallelepipeds{ parallelepipeds }
     , spheres{ spheres }
     {}
     
     Shape box;                                  /**< Bounding domain shape. */
-    std::vector<geometry::Parallelepiped<>>
+    std::vector<Parallelepiped<>>
       parallelepipeds;                          /**< Rectangular inclusions. */
-    std::vector<geometry::Sphere<>> spheres;    /**< Spherical inclusions. */
+    std::vector<Sphere<>> spheres;    /**< Spherical inclusions. */
     
     /** \return Domain side sizes. */
     std::vector<double> dimensions() const
     {
-      if constexpr (std::is_same_v<Shape,geometry::Sphere<>>)
+      if constexpr (std::is_same_v<Shape, Sphere<>>)
         return std::vector<double>(box.dim(), 2.*box.radius);
       else
         return box.dimensions;

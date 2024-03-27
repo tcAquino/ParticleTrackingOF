@@ -41,7 +41,7 @@ namespace ctrw
    * - \c position
    * - \c time */
 	template <typename TimeGenerator, typename JumpGenerator,
-  typename Boundary = geometry::Boundary_DoNothing>
+  typename Boundary = geom::Boundary_DoNothing>
 	class Transitions_Time_Position
 	{
 	public:
@@ -92,7 +92,7 @@ namespace ctrw
   - \c position
   - \c time */
   template <typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator,
-  typename Boundary = geometry::Boundary_DoNothing>
+  typename Boundary = geom::Boundary_DoNothing>
   class Transitions_AdaptiveTimeStep_Time_Position
   {
   public:
@@ -149,7 +149,7 @@ namespace ctrw
    \tparam Boundary Object to enforce boundary condition on new state given new state and old state.
    \note State must define:
    - \c position */
-  template <typename JumpGenerator, typename Boundary = geometry::Boundary_DoNothing>
+  template <typename JumpGenerator, typename Boundary = geom::Boundary_DoNothing>
   class Transitions_Position
   {
   public:
@@ -227,7 +227,7 @@ namespace ctrw
    - <tt>velocity(State const&)</tt> */
   template <typename JumpGenerator,
   typename VelocityField,
-  typename Boundary = geometry::Boundary_DoNothing>
+  typename Boundary = geom::Boundary_DoNothing>
   class Transitions_Position_VelocityStep
   {
   public:
@@ -311,7 +311,7 @@ namespace ctrw
    \note State must define:
    - \c position
    - \c time */
-	template <typename FlowField, typename Boundary = geometry::Boundary_DoNothing,
+	template <typename FlowField, typename Boundary = geom::Boundary_DoNothing,
   typename RNG = std::mt19937>
 	class Transitions_PTRW_FlowField_Diff
 	{
@@ -401,7 +401,7 @@ namespace ctrw
    \note State must define:
    - \c position
    - \c time */
-  template <typename Boundary = geometry::Boundary_DoNothing, typename RNG = std::mt19937>
+  template <typename Boundary = geom::Boundary_DoNothing, typename RNG = std::mt19937>
   class Transitions_PTRW_Diffusion_1d
   {
   public:

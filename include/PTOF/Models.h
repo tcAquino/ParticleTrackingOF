@@ -13,7 +13,6 @@
 #include <stdexcept>
 #include <string>
 #include <type_traits>
-#include <boost/algorithm/string.hpp>
 #include <meshSearch.H>
 #include "CTRW/CTRW.h"
 #include "CTRW/Meta.h"
@@ -456,12 +455,12 @@ namespace ptof
        std::string const& identifier,
        std::vector<std::reference_wrapper<const Mask>> masks = {},
        std::vector<double> thresholds = {},
-       int precision = 8, std::string delimiter = "\t")
+       int precision = 8)
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
           masks, thresholds,
-          precision, delimiter };
+          precision };
       }
 
       template
@@ -476,12 +475,12 @@ namespace ptof
        std::string const& identifier,
        std::initializer_list<std::reference_wrapper<const Mask>> masks,
        std::initializer_list<double> thresholds = {},
-       int precision = 8, std::string delimiter = "\t")
+       int precision = 8)
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
           masks, thresholds,
-          precision, delimiter };
+          precision };
       }
 
       template
@@ -496,12 +495,12 @@ namespace ptof
        std::string const& identifier,
        std::vector<std::reference_wrapper<const Mask>> masks,
        std::initializer_list<double> thresholds = {},
-       int precision = 8, std::string delimiter = "\t")
+       int precision = 8)
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
           masks, thresholds,
-          precision, delimiter };
+          precision };
       }
       
       template<typename Subject, typename VelocityField, typename Geometry,
@@ -515,12 +514,12 @@ namespace ptof
        std::string const& identifier,
        std::initializer_list<std::reference_wrapper<const Mask>> masks,
        std::vector<double> thresholds = {},
-       int precision = 8, std::string delimiter = "\t")
+       int precision = 8)
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
           masks, thresholds,
-          precision, delimiter };
+          precision };
       }
     };
     

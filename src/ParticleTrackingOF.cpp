@@ -16,7 +16,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_advection_diffusion_2d;
 
   std::string banner =
     "--------------------------------------------------\n"
@@ -233,22 +233,24 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
+  std::string filename_output_identifier =
+    ptof::identifier(Model::name,
+                     case_name,
+                     directories_of.case_name,
+                     params_transport_name,
+                     params_reaction_name,
+                     params_solvers_name,
+                     params_initial_condition_name,
+                     params_output_name)
+    + (useful::is_empty(run_nr)
+       ? ""
+       : "_RUN_" + run_nr);
   auto output = Output::makeOutput(ctrw,
                                    velocity_field,
                                    geometry,
                                    directories,
                                    params_output,
-                                   ptof::identifier(Model::name,
-                                                    case_name,
-                                                    directories_of.case_name,
-                                                    params_transport_name,
-                                                    params_reaction_name,
-                                                    params_solvers_name,
-                                                    params_initial_condition_name,
-                                                    params_output_name)
-                                   + (useful::is_empty(run_nr)
-                                      ? ""
-                                      : "_RUN_" + run_nr));
+                                   filename_output_identifier);
   output.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";

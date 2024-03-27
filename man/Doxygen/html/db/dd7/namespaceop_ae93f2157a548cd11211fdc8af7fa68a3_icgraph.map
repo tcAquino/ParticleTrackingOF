@@ -1,16 +1,15 @@
 <map id="op::dot" name="op::dot">
-<area shape="rect" id="node1" title="Dot product." alt="" coords="525,255,592,281"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a8b7d8feec2a26b12d5476f0f51ef8334" title="Container of containers dotted into container, =sum_j(\input_1)_{ij}(input_2)_j." alt="" coords="345,5,412,32"/>
-<area shape="rect" id="node3" href="$d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html#a9f4876b7aa543e0d9930dbc53dd2a0c3" title="Enforce boundary condition." alt="" coords="299,56,458,112"/>
-<area shape="rect" id="node4" href="$da/dd1/structctrw_1_1_get__position__projection.html#a98e0dd0db70f79c1d0daf9c9e078e18b" title=" " alt="" coords="295,137,462,178"/>
-<area shape="rect" id="node5" href="$d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection.html#aa6078c3ba3fa807fad4eb91b3d773aed" title=" " alt="" coords="295,203,462,259"/>
-<area shape="rect" id="node6" href="$df/de2/structctrw_1_1_get__projection.html#ac22027432f0205984f35755fd8fc9866" title=" " alt="" coords="303,283,455,325"/>
-<area shape="rect" id="node7" href="$d5/d5f/namespacegeometry.html#a3a9815f6acd3a7cee748661f747159c8" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="310,349,447,376"/>
-<area shape="rect" id="node11" href="$d5/d5f/namespacegeometry.html#ad086cd428e32e4ab00c06bc5dfe2d550" title="Reflect off sphere exterior (in any dimension)." alt="" coords="280,409,477,450"/>
-<area shape="rect" id="node13" href="$d5/d5f/namespacegeometry.html#a98a36981a54776bd7c65fa2e9ea2224a" title="Reflect off sphere exterior (in any dimension)." alt="" coords="280,474,477,515"/>
-<area shape="rect" id="node8" href="$d5/d5f/namespacegeometry.html#a125778ce33cfeeab459e95352403173b" title="Add periodic velocity point images outside domain." alt="" coords="31,189,206,230"/>
-<area shape="rect" id="node9" href="$d8/d63/classgeometry_1_1_boundary___periodic___symmetry_planes.html#a0f916081154bf98b9755c4c973d01bb0" title="Check if position is out of bounds." alt="" coords="19,255,218,311"/>
-<area shape="rect" id="node10" href="$df/de8/classgeometry_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a6da19ba80c472f92a8ced29c1e5f593a" title="Check if position is out of bounds." alt="" coords="5,335,232,391"/>
-<area shape="rect" id="node12" href="$d5/d5f/namespacegeometry.html#a3e694e2d693eded9ad17b9db37fb6783" title="Reflect off sphere exterior (in any dimension)." alt="" coords="20,415,217,457"/>
-<area shape="rect" id="node14" href="$d5/d5f/namespacegeometry.html#afc21cbcce2adca3e3ea4302e5645a6da" title="Reflect off sphere exterior (in any dimension)." alt="" coords="20,481,217,522"/>
+<area shape="rect" id="node1" title="Dot product." alt="" coords="596,240,663,267"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a8b7d8feec2a26b12d5476f0f51ef8334" title="Container of containers dotted into container, =sum_j(\input_1)_{ij}(input_2)_j." alt="" coords="393,5,460,32"/>
+<area shape="rect" id="node3" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="305,57,548,98"/>
+<area shape="rect" id="node4" href="$da/dd1/structctrw_1_1_get__position__projection.html#a98e0dd0db70f79c1d0daf9c9e078e18b" title=" " alt="" coords="343,122,510,163"/>
+<area shape="rect" id="node5" href="$d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection.html#aa6078c3ba3fa807fad4eb91b3d773aed" title=" " alt="" coords="343,188,510,244"/>
+<area shape="rect" id="node6" href="$df/de2/structctrw_1_1_get__projection.html#ac22027432f0205984f35755fd8fc9866" title=" " alt="" coords="351,269,503,310"/>
+<area shape="rect" id="node7" href="$d2/dfa/namespacegeom.html#ad3cb8154dbafd06a85a0f9b92653a97f" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="371,335,483,361"/>
+<area shape="rect" id="node10" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="341,393,513,434"/>
+<area shape="rect" id="node12" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="332,458,521,499"/>
+<area shape="rect" id="node8" href="$d9/d18/classgeom_1_1_boundary___periodic___symmetry_planes.html#a6459bdbd652347b172dc12ab8eeded4d" title="Check if position is out of bounds." alt="" coords="37,236,226,292"/>
+<area shape="rect" id="node9" href="$d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#aae96d8b9910727f43a07d9c914501593" title="Check if position is out of bounds." alt="" coords="5,316,257,372"/>
+<area shape="rect" id="node11" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="45,397,217,438"/>
+<area shape="rect" id="node13" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="37,462,226,503"/>
 </map>

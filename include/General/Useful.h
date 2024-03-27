@@ -16,6 +16,7 @@
 #include <functional>
 #include <ios>
 #include <iostream>
+#include <iomanip>
 #include <list>
 #include <regex>
 #include <sstream>
@@ -168,7 +169,6 @@ namespace useful
     return it != container.end() && comp_eq(*it, val);
   }
   
-
   /** \brief Check if \p string ends with \p suffix. */
   bool ends_with(const std::string& string, const std::string& suffix)
   {
@@ -176,29 +176,47 @@ namespace useful
       string.substr(string.size() - suffix.size()) == suffix;
   }
   
-  // Adapted from Beder Acosta Borges's answer here:
-  // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
   /** \brief Split \p string into vector of strings at instances of \p delimeter.
-  \details Empty entries can be included or discarded. */
+   \tparam empty_entries Whether to keep empty entries between delimiting characters */
+  template <bool empty_entries = false>
   std::vector<std::string> split
-  (std::string const& string, std::string const& delimiter = " ",
-   bool empty_entries = false)
+  (std::string const& str, std::string const& delims = "\t,|\r ")
   {
     std::vector<std::string> tokens;
-
-    for (std::size_t start = 0, end; start < string.length();
-         start = end+delimiter.length())
+    std::size_t pos_last_non_delim = str.find_last_not_of(delims);
+    std::size_t upper_limit = pos_last_non_delim != std::string::npos
+    ? pos_last_non_delim + 1
+    : str.length();
+    for (std::size_t start = str.find_first_not_of(delims), end;
+         start < upper_limit; start = end+1)
     {
-      std::size_t position = string.find(delimiter, start);
-      end = position != std::string::npos? position : string.length();
+      std::size_t position = str.find_first_of(delims, start);
+      end = position != std::string::npos ? position : str.length();
 
-      std::string token = string.substr(start, end-start);
-      if (empty_entries || !token.empty())
+      std::string token = str.substr(start, end-start);
+      if (!token.empty())
         tokens.push_back(token);
     }
 
-    if (empty_entries &&
-        (string.empty() || ends_with(string, delimiter)))
+    return tokens;
+  }
+  
+  template <>
+  std::vector<std::string> split<true>
+  (std::string const& str, std::string const& delims)
+  {
+    std::vector<std::string> tokens;
+    for (std::size_t start = 0, end; start < str.length();
+         start = end+1)
+    {
+      std::size_t position = str.find_first_of(delims, start);
+      end = position != std::string::npos ? position : str.length();
+      std::string token = str.substr(start, end-start);
+      tokens.push_back(token);
+    }
+    if(str.empty() || std::any_of(delims.begin(), delims.end(),
+                                  [&str](auto const& delim)
+                                  { return delim == str.back(); }))
       tokens.push_back("");
 
     return tokens;
@@ -444,6 +462,13 @@ namespace useful
       throw std::runtime_error{ "Could not read value" };
   }
 
+  std::string& remove_carriage_return(std::string& str)
+  {
+    if (!str.empty() && str.back() == '\r')
+      str.pop_back();
+    return str;
+  }
+  
   /** \return Sign of \p val. */
   template <typename T> int sgn(T val)
   { return (T(0) < val) - (val < T(0)); }
@@ -503,6 +528,19 @@ namespace useful
         delim = delimiter;
       }
     }
+  }
+  
+  /** \brief Print values in container. */
+  template <typename Stream, typename Container>
+  void print
+  (Stream& stream, Container const& container,
+   int width, std::ios_base& (*alignment)(std::ios_base&) = std::right)
+  {
+    if constexpr (std::is_pod<Container>::value)
+      stream << alignment << std::setw(width) << container;
+    else
+      for (auto const& val : container)
+        stream << alignment << std::setw(width) << val;
   }
   
   /** \brief Read contents of file as a sequence of doubles. */

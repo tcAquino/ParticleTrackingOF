@@ -117,10 +117,10 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91">Boundary_Cases</a> (<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a> boundary_conditions, Locator &amp;&amp;locator, Store_Info &amp;&amp;store_info, Boundary_Periodic &amp;&amp;boundary_periodic=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, Boundary_Custom &amp;&amp;boundary_custom=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, SurfaceReaction &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#adfda84bee13c7821bc8ea6023884fa29">surface_reaction</a>=<a class="el" href="../../df/d31/classptof_1_1_surface_reaction___do_nothing.html">SurfaceReaction_DoNothing</a>{})</td></tr>
 <tr class="separator:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ba31fda58f33dde1dd14741107c46de"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
-<tr class="memitem:a3ba31fda58f33dde1dd14741107c46de"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a3ba31fda58f33dde1dd14741107c46de">outOfBounds</a> (Position const &amp;position) const</td></tr>
-<tr class="memdesc:a3ba31fda58f33dde1dd14741107c46de"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d3/d64/struct_check.html">Check</a> if position is out of bounds.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#a3ba31fda58f33dde1dd14741107c46de">More...</a><br /></td></tr>
-<tr class="separator:a3ba31fda58f33dde1dd14741107c46de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
+<tr class="memitem:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3">out_of_bounds</a> (Position const &amp;position) const</td></tr>
+<tr class="memdesc:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d3/d64/struct_check.html">Check</a> if position is out of bounds.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3">More...</a><br /></td></tr>
+<tr class="separator:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state_old={})</td></tr>
 <tr class="memdesc:a0bb5e2c18e236af74c037be619467fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary conditions if necessary by choosing appropriate types.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">More...</a><br /></td></tr>
@@ -415,8 +415,8 @@ template&lt;typename State &gt; </div>
 
 </div>
 </div>
-<a id="a3ba31fda58f33dde1dd14741107c46de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ba31fda58f33dde1dd14741107c46de">&#9670;&nbsp;</a></span>outOfBounds()</h2>
+<a id="ac67c7a57aff7a2afeb3cca488c7b6ce3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac67c7a57aff7a2afeb3cca488c7b6ce3">&#9670;&nbsp;</a></span>out_of_bounds()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -429,7 +429,7 @@ template&lt;typename Position &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::outOfBounds </td>
+          <td class="memname">bool <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::out_of_bounds </td>
           <td>(</td>
           <td class="paramtype">Position const &amp;&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
@@ -454,8 +454,8 @@ template&lt;typename Position &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d4/d49/classptof_1_1_boundary___cases_a3ba31fda58f33dde1dd14741107c46de_cgraph.png" border="0" usemap="#ad4/d49/classptof_1_1_boundary___cases_a3ba31fda58f33dde1dd14741107c46de_cgraph" alt=""/></div>
-<map name="ad4/d49/classptof_1_1_boundary___cases_a3ba31fda58f33dde1dd14741107c46de_cgraph" id="ad4/d49/classptof_1_1_boundary___cases_a3ba31fda58f33dde1dd14741107c46de_cgraph">
+<div class="center"><img src="../../d4/d49/classptof_1_1_boundary___cases_ac67c7a57aff7a2afeb3cca488c7b6ce3_cgraph.png" border="0" usemap="#ad4/d49/classptof_1_1_boundary___cases_ac67c7a57aff7a2afeb3cca488c7b6ce3_cgraph" alt=""/></div>
+<map name="ad4/d49/classptof_1_1_boundary___cases_ac67c7a57aff7a2afeb3cca488c7b6ce3_cgraph" id="ad4/d49/classptof_1_1_boundary___cases_ac67c7a57aff7a2afeb3cca488c7b6ce3_cgraph">
 <area shape="rect" title="Check if position is out of bounds." alt="" coords="5,23,168,65"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="216,5,347,32"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="230,56,333,83"/>

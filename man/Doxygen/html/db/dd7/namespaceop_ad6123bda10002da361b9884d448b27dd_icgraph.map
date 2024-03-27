@@ -1,32 +1,32 @@
 <map id="op::minus" name="op::minus">
-<area shape="rect" id="node1" title="Element&#45;wise subtraction." alt="" coords="1376,439,1463,465"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="1194,195,1265,221"/>
-<area shape="rect" id="node18" href="$db/dd7/namespaceop.html#ac0b1f4a3bf634a96a232393d8c023c60" title="Euclidean distance squared." alt="" coords="1183,245,1275,272"/>
-<area shape="rect" id="node19" href="$d4/d45/structgeometry_1_1_parallelepiped.html#af93fb620de16e50723668e4f179e19d6" title=" " alt="" coords="1137,297,1321,338"/>
-<area shape="rect" id="node20" href="$d5/da0/structgeometry_1_1_sphere.html#a1c18c78f0261d94c45a8a5d6d371bf8b" title=" " alt="" coords="1137,363,1321,389"/>
-<area shape="rect" id="node21" href="$db/dd7/namespaceop.html#a32c2349150b0bc8820c900a6fa5ba324" title="Element&#45;wise subtraction." alt="" coords="1186,413,1273,440"/>
-<area shape="rect" id="node22" href="$db/dd7/namespaceop.html#a3ac65501117efd0085c21fb0c33abf57" title="Element&#45;wise subtraction." alt="" coords="1159,464,1299,491"/>
-<area shape="rect" id="node25" href="$d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html#a9f4876b7aa543e0d9930dbc53dd2a0c3" title="Enforce boundary condition." alt="" coords="1150,515,1309,571"/>
-<area shape="rect" id="node26" href="$d5/d5f/namespacegeometry.html#a017c760300d032e349706ab19cca34de" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="1161,595,1298,621"/>
-<area shape="rect" id="node27" href="$d5/d5f/namespacegeometry.html#ad086cd428e32e4ab00c06bc5dfe2d550" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1131,646,1328,687"/>
-<area shape="rect" id="node29" href="$d5/d5f/namespacegeometry.html#a98a36981a54776bd7c65fa2e9ea2224a" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1131,711,1328,753"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a1483c85806e3e7a0f6210b180e7e1336" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="915,27,1053,69"/>
-<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a698673f4614e12ca9b05fc29c2e3040f" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="915,93,1053,134"/>
-<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a6ba8c99a32d8de8eddbdfdb440f04515" title=" " alt="" coords="898,158,1070,199"/>
-<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="913,224,1055,251"/>
-<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#ac2a70b619d6d1492ec15d5447329351b" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="910,275,1058,301"/>
-<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a280ab3fb7f79ce8854a0d2c228f9623b" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="913,326,1055,367"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a90e9b957bb1654a8d03cff06c83b8d19" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="686,5,825,32"/>
+<area shape="rect" id="node1" title="Element&#45;wise subtraction." alt="" coords="1432,439,1519,465"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="1227,195,1298,221"/>
+<area shape="rect" id="node18" href="$db/dd7/namespaceop.html#ac0b1f4a3bf634a96a232393d8c023c60" title="Euclidean distance squared." alt="" coords="1217,245,1309,272"/>
+<area shape="rect" id="node19" href="$dd/df2/structgeom_1_1_parallelepiped.html#a7aab7c01df20908fc4a61169015c0830" title=" " alt="" coords="1183,297,1342,338"/>
+<area shape="rect" id="node20" href="$d0/da4/structgeom_1_1_sphere.html#aa06226ea58bea99b59c033ba20907f23" title=" " alt="" coords="1183,363,1342,389"/>
+<area shape="rect" id="node21" href="$db/dd7/namespaceop.html#a32c2349150b0bc8820c900a6fa5ba324" title="Element&#45;wise subtraction." alt="" coords="1219,413,1306,440"/>
+<area shape="rect" id="node22" href="$db/dd7/namespaceop.html#a3ac65501117efd0085c21fb0c33abf57" title="Element&#45;wise subtraction." alt="" coords="1193,464,1333,491"/>
+<area shape="rect" id="node25" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="1141,515,1384,557"/>
+<area shape="rect" id="node26" href="$d2/dfa/namespacegeom.html#ae3005c21e81df7df6b5e8e113690eb2f" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="1207,581,1319,608"/>
+<area shape="rect" id="node27" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1177,633,1349,674"/>
+<area shape="rect" id="node29" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1168,698,1357,739"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a1483c85806e3e7a0f6210b180e7e1336" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="929,27,1068,69"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a698673f4614e12ca9b05fc29c2e3040f" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="929,93,1068,134"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a6ba8c99a32d8de8eddbdfdb440f04515" title=" " alt="" coords="913,158,1085,199"/>
+<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="927,224,1070,251"/>
+<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#ac2a70b619d6d1492ec15d5447329351b" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="925,275,1073,301"/>
+<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a280ab3fb7f79ce8854a0d2c228f9623b" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="927,326,1070,367"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a90e9b957bb1654a8d03cff06c83b8d19" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="695,5,834,32"/>
 <area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="451,166,625,207"/>
 <area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,133,403,174"/>
 <area shape="rect" id="node8" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,198,391,239"/>
 <area shape="rect" id="node7" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,133,176,174"/>
-<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a2e01d324ac9b85ddbc170f0ae3dc1732" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="686,107,825,149"/>
-<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="702,224,809,251"/>
-<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a9e9ee78fd15660c1b244aef3eb64cb0e" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="673,275,837,301"/>
-<area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#aa1062e337b7efe1d9b1e030955fa46f6" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="681,326,829,367"/>
-<area shape="rect" id="node23" href="$d5/d5f/namespacegeometry.html#af008b22a40fd3d175279892dd942a2f0" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="890,464,1078,491"/>
-<area shape="rect" id="node24" href="$d5/d5f/namespacegeometry.html#adb5c30ba87066cf2cfa9197c74ebe2ed" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="682,457,829,498"/>
-<area shape="rect" id="node28" href="$d5/d5f/namespacegeometry.html#a3e694e2d693eded9ad17b9db37fb6783" title="Reflect off sphere exterior (in any dimension)." alt="" coords="885,646,1083,687"/>
-<area shape="rect" id="node30" href="$d5/d5f/namespacegeometry.html#afc21cbcce2adca3e3ea4302e5645a6da" title="Reflect off sphere exterior (in any dimension)." alt="" coords="885,711,1083,753"/>
+<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a2e01d324ac9b85ddbc170f0ae3dc1732" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="695,107,834,149"/>
+<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="711,224,818,251"/>
+<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a9e9ee78fd15660c1b244aef3eb64cb0e" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="683,275,847,301"/>
+<area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#aa1062e337b7efe1d9b1e030955fa46f6" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="691,326,839,367"/>
+<area shape="rect" id="node23" href="$d2/dfa/namespacegeom.html#a72c109c890c09212f7e4567dabaeda90" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="917,464,1080,491"/>
+<area shape="rect" id="node24" href="$d2/dfa/namespacegeom.html#a4fc84e21684ae11357a063628682fca9" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="673,464,856,491"/>
+<area shape="rect" id="node28" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="913,633,1085,674"/>
+<area shape="rect" id="node30" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="904,698,1093,739"/>
 </map>

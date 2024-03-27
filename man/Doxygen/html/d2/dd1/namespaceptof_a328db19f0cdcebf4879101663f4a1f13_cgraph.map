@@ -1,9 +1,9 @@
 <map id="ptof::prescribed_positions" name="ptof::prescribed_positions">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,195,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,85,195,112"/>
 <area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="268,5,407,32"/>
 <area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#aedc246759e2a830f7ce2c15a17868c8e" title=" " alt="" coords="243,56,432,83"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c" title="Split string into vector of strings at instances of delimeter." alt="" coords="288,107,387,133"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a49506338cfa81fcd43ec3c1294d847e9" title=" " alt="" coords="247,107,427,149"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="288,173,387,200"/>
 <area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="480,5,656,32"/>
 <area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="503,56,633,83"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a95cfeca489831a5d4acb5580668b60ff" title="Check if string ends with suffix." alt="" coords="500,107,636,133"/>
 </map>

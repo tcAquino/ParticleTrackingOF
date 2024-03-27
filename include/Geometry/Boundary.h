@@ -14,7 +14,7 @@ public:
 
    // Check if position is out of bounds
    template <typename Position>
-   bool outOfBounds(Position const& position) const
+   bool out_of_bounds(Position const& position) const
    {
      // Return true if boundary condition is to be applied, false otherwise
    }
@@ -41,7 +41,7 @@ public:
 #include "General/Operations.h"
 #include "Geometry/SymmetryPlanes.h"
 
-namespace geometry
+namespace geom
 {
   /**
    \param position 1D position.
@@ -89,7 +89,7 @@ namespace geometry
   \param position 1D position.
   \param boundaries Pair of lower and upper boundary location.
   \return \c true if \p position is out of bounds, \c false otherwise. */
-  bool outOfBounds_box(double position, std::pair<double,double> const& boundaries)
+  bool out_of_bounds_box(double position, std::pair<double,double> const& boundaries)
   {
     return position < boundaries.first || position > boundaries.second;
   }
@@ -100,10 +100,10 @@ namespace geometry
   \return \c true if \p position is out of bounds, \c false otherwise. */
   template <typename Position = std::vector<double>,
   typename Boundaries = std::vector<std::pair<double, double>>>
-  bool outOfBounds_box(Position const& position, Boundaries const& boundaries)
+  bool out_of_bounds_box(Position const& position, Boundaries const& boundaries)
   {
     for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
-      if (outOfBounds_box(position[dd], boundaries[dd]))
+      if (out_of_bounds_box(position[dd], boundaries[dd]))
         return true;
 
     return false;
@@ -117,7 +117,7 @@ namespace geometry
     /** \brief Check if \p position is out of bounds
      \return \c false (always in bounds). */
 		template <typename Position>
-		bool outOfBounds(Position const& position) const
+		bool out_of_bounds(Position const& position) const
 		{ return false; }
 
     /** \brief Enforce boundary condition
@@ -152,7 +152,7 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
 		template <typename Position>
-		bool outOfBounds(Position position) const
+		bool out_of_bounds(Position position) const
 		{ return OutOfBounds_Box(position, boundaries); }
 
     /** \brief Enforce boundary condition.
@@ -163,7 +163,7 @@ namespace geometry
 		template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
 		{
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       state.position += boundary_periodic(state.position, boundaries);
       return true;
@@ -205,8 +205,8 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
 		template <typename Position>
-		bool outOfBounds(Position const& position) const
-		{ return outOfBounds_box(position, boundaries); }
+		bool out_of_bounds(Position const& position) const
+		{ return out_of_bounds_box(position, boundaries); }
 
     /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
@@ -216,7 +216,7 @@ namespace geometry
 		template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
 		{
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
         state.position[dd] += boundary_periodic(state.position[dd], boundaries[dd]);
@@ -282,8 +282,8 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
-    { return outOfBounds_box(position[dd], boundaries); }
+    bool out_of_bounds(Position const& position) const
+    { return out_of_bounds_box(position[dd], boundaries); }
 
     /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
@@ -293,7 +293,7 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
     {
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       state.position[dd] +=
         boundary_periodic(state.position[dd], boundaries);
@@ -328,8 +328,8 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
-    { return outOfBounds_box(position, boundaries); }
+    bool out_of_bounds(Position const& position) const
+    { return out_of_bounds_box(position, boundaries); }
 
     /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
@@ -339,7 +339,7 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
     {
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
       {
@@ -401,8 +401,8 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
 		template <typename Position>
-		bool outOfBounds(Position const& position) const
-		{ return outOfBounds_box(position, boundaries); }
+		bool out_of_bounds(Position const& position) const
+		{ return out_of_bounds_box(position, boundaries); }
 
     /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
@@ -412,7 +412,7 @@ namespace geometry
 		template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
 		{
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       state.position += boundary_reflecting(state.position, boundaries);
       return true;
@@ -441,8 +441,8 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
 		template <typename Position>
-		bool outOfBounds(Position const& position) const
-		{ return outOfBounds_box(position, boundaries); }
+		bool out_of_bounds(Position const& position) const
+		{ return out_of_bounds_box(position, boundaries); }
 
     /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
@@ -452,7 +452,7 @@ namespace geometry
 		template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
 		{
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
 			for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
 				state.position[dd] +=
@@ -491,8 +491,8 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
-    { return outOfBounds_box(position[dd], boundaries); }
+    bool out_of_bounds(Position const& position) const
+    { return out_of_bounds_box(position[dd], boundaries); }
 
     /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
@@ -502,7 +502,7 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
     {
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       state.position[dd] +=
         boundary_reflecting(state.position[dd], boundaries);
@@ -532,7 +532,7 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     {
       return op::abs_sq(position) > _radius_sq;
     }
@@ -545,7 +545,7 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old) const
     {
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       
       auto position_old = state_old.position;
@@ -593,7 +593,7 @@ namespace geometry
                  state.position);
         
         // If inside boundary, done
-        if(!outOfBounds(state.position))
+        if(!out_of_bounds(state.position))
           break;
       }
       
@@ -631,7 +631,7 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     {
       double radial_pos_sq = std::inner_product(
         position.cbegin()+_begin_transverse, position.cbegin()+_begin_transverse+2,
@@ -647,7 +647,7 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old) const
     {
-      if (!outOfBounds(state.position))
+      if (!out_of_bounds(state.position))
         return false;
       
       std::vector<double> position_radial_old(2);
@@ -713,7 +713,7 @@ namespace geometry
             position_radial_old[dd]+jump_radial[dd];
         
         // If inside boundary, done
-        if(!outOfBounds(state.position))
+        if(!out_of_bounds(state.position))
           break;
       }
       
@@ -771,12 +771,12 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     {
       for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
-        if (std::floor(geometry::project(position,
-                                         symmetry_planes, dd,
-                                         scale, origin)) != 0.)
+        if (std::floor(project(position,
+                               symmetry_planes, dd,
+                               scale, origin)) != 0.)
           return 1;
       return 0;
     }
@@ -789,9 +789,9 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
     {
-      auto projections = geometry::place_in_unit_cell(state.position,
-                                                      symmetry_planes,
-                                                      scale, origin);
+      auto projections = place_in_unit_cell(state.position,
+                                            symmetry_planes,
+                                            scale, origin);
       
       for (auto const& val : projections)
         if (val != 0)
@@ -808,7 +808,7 @@ namespace geometry
     void translate
     (Position& position, Projections const& projections) const
     {
-      geometry::translate(position, symmetry_planes, projections, scale);
+      geom::translate(position, symmetry_planes, projections, scale);
     }
   };
   
@@ -860,12 +860,12 @@ namespace geometry
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
-    bool outOfBounds(Position const& position) const
+    bool out_of_bounds(Position const& position) const
     {
       for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
-        if (std::floor(geometry::project(position,
-                                         symmetry_planes, dd,
-                                         scale, origin)) != 0.)
+        if (std::floor(project(position,
+                               symmetry_planes, dd,
+                               scale, origin)) != 0.)
           return 1;
       return 0;
     }
@@ -878,10 +878,9 @@ namespace geometry
     template <typename State>
     bool operator()(State& state, State const& state_old = {}) const
     {
-      auto projections =
-        geometry::place_in_unit_cell(state.position,
-                                     symmetry_planes,
-                                     scale, origin);
+      auto projections = place_in_unit_cell(state.position,
+                                            symmetry_planes,
+                                            scale, origin);
       op::plus_inplace(state.periodicity, projections);
       
       for (auto const& val : projections)
@@ -899,7 +898,7 @@ namespace geometry
     void translate
     (Position& position, Projections const& projections) const
     {
-      geometry::translate(position, symmetry_planes, projections, scale);
+      geom::translate(position, symmetry_planes, projections, scale);
     }
   };
 }

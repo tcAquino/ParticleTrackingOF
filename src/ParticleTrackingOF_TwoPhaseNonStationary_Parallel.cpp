@@ -23,7 +23,7 @@
 
 int main(int argc, char * argv[])
 {
-  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
+  using namespace ptof::model_advection_diffusion_surface_decay_2d_parallel;
   using Phase = ptof::Phase;
   
   std::string banner =
@@ -288,24 +288,26 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
+  std::string filename_output_identifier =
+    ptof::identifier("TwoPhaseNonStationary_"
+                     + Model::name,
+                     case_name,
+                     directories_of.case_name,
+                     params_transport_name,
+                     params_phase_name,
+                     params_reaction_name,
+                     params_solvers_name,
+                     params_initial_condition_name,
+                     params_output_name)
+    + (useful::is_empty(run_nr)
+       ? ""
+       : "_RUN_" + run_nr);
   auto output = Output::makeOutput(ctrw,
                                    velocity_field,
                                    geometry,
                                    directories,
                                    params_output,
-                                   ptof::identifier("TwoPhaseNonStationary_"
-                                                    + Model::name,
-                                                    case_name,
-                                                    directories_of.case_name,
-                                                    params_transport_name,
-                                                    params_phase_name,
-                                                    params_reaction_name,
-                                                    params_solvers_name,
-                                                    params_initial_condition_name,
-                                                    params_output_name)
-                                   + (useful::is_empty(run_nr)
-                                      ? ""
-                                      : "_RUN_" + run_nr),
+                                   filename_output_identifier,
                                    { std::cref(excluded_phase_field) },
                                    { 1. - params_phase.phase_threshold });
   output.info_runtime(std::cout);
@@ -367,6 +369,9 @@ int main(int argc, char * argv[])
         velocity_field.set(ptof::get_velocity_data(geometry.mesh()));
         if (params_transport.velocity_rescaling_factor != 1.)
           velocity_field.rescale(params_transport.velocity_rescaling_factor);
+        std::cout << "Done!\n";
+        std::cout << "Updating output handlers...\n";
+        output.update(current_time, next_flow_time);
         std::cout << "Done!\n";
         std::cout << "Done!\n";
       }

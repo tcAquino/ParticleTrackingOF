@@ -18,7 +18,7 @@
 #include <cmath>
 #include "General/Operations.h"
 
-namespace geometry
+namespace geom
 {
   /** \struct SymmetryPlanes_Bcc Geometry/SymmetryPlanes.h "Geometry/SymmetryPlanes.h"
    \brief Symmetry plane for body centered cubic sphere packing. */
@@ -264,11 +264,10 @@ namespace geometry
     
     for (std::size_t pp = 0; pp < nr_points; ++pp)
     {
-      auto projections =
-        geometry::project(points[pp],
-                          boundary_periodic.symmetry_planes,
-                          boundary_periodic.scale,
-                          boundary_periodic.origin);
+      auto projections = project(points[pp],
+                                 boundary_periodic.symmetry_planes,
+                                 boundary_periodic.scale,
+                                 boundary_periodic.origin);
       for (std::size_t dd = 0; dd < dim; ++dd)
       {
         // If close to lower bound, make an image forward

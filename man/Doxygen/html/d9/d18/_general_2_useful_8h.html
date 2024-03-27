@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('d9/d18/_general_2_useful_8h.html','../
 <code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;ios&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;list&gt;</code><br />
 <code>#include &lt;regex&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
@@ -114,7 +115,7 @@ Include dependency graph for Useful.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/d57/_general_2_useful_8h__incl.png" border="0" usemap="#a_general_2_useful_8h" alt=""/></div>
 <map name="a_general_2_useful_8h" id="a_general_2_useful_8h">
-<area shape="rect" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="677,5,808,32"/>
+<area shape="rect" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="736,5,867,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,91,107"/>
 <area shape="rect" title=" " alt="" coords="115,80,178,107"/>
 <area shape="rect" title=" " alt="" coords="202,80,273,107"/>
@@ -123,14 +124,15 @@ Include dependency graph for Useful.h:</div>
 <area shape="rect" title=" " alt="" coords="483,80,570,107"/>
 <area shape="rect" title=" " alt="" coords="594,80,635,107"/>
 <area shape="rect" title=" " alt="" coords="660,80,740,107"/>
-<area shape="rect" title=" " alt="" coords="764,80,807,107"/>
-<area shape="rect" title=" " alt="" coords="831,80,889,107"/>
-<area shape="rect" title=" " alt="" coords="913,80,988,107"/>
-<area shape="rect" title=" " alt="" coords="1013,80,1099,107"/>
-<area shape="rect" title=" " alt="" coords="1124,80,1183,107"/>
-<area shape="rect" title=" " alt="" coords="1207,80,1299,107"/>
-<area shape="rect" title=" " alt="" coords="1323,80,1383,107"/>
-<area shape="rect" title=" " alt="" coords="1407,80,1470,107"/>
+<area shape="rect" title=" " alt="" coords="764,80,839,107"/>
+<area shape="rect" title=" " alt="" coords="863,80,905,107"/>
+<area shape="rect" title=" " alt="" coords="929,80,988,107"/>
+<area shape="rect" title=" " alt="" coords="1012,80,1087,107"/>
+<area shape="rect" title=" " alt="" coords="1111,80,1198,107"/>
+<area shape="rect" title=" " alt="" coords="1223,80,1281,107"/>
+<area shape="rect" title=" " alt="" coords="1306,80,1398,107"/>
+<area shape="rect" title=" " alt="" coords="1422,80,1482,107"/>
+<area shape="rect" title=" " alt="" coords="1506,80,1569,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -256,9 +258,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a95cfeca489831a5d4acb5580668b60ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a95cfeca489831a5d4acb5580668b60ff">useful::ends_with</a> (const std::string &amp;string, const std::string &amp;suffix)</td></tr>
 <tr class="memdesc:a95cfeca489831a5d4acb5580668b60ff"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d3/d64/struct_check.html">Check</a> if <code>string</code> ends with <code>suffix</code>.  <a href="../../df/d1d/namespaceuseful.html#a95cfeca489831a5d4acb5580668b60ff">More...</a><br /></td></tr>
 <tr class="separator:a95cfeca489831a5d4acb5580668b60ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1964a859875efb2ff16234cc6974066c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c">useful::split</a> (std::string const &amp;string, std::string const &amp;delimiter=&quot; &quot;, bool empty_entries=false)</td></tr>
-<tr class="memdesc:a1964a859875efb2ff16234cc6974066c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split <code>string</code> into vector of strings at instances of <code>delimeter</code>.  <a href="../../df/d1d/namespaceuseful.html#a1964a859875efb2ff16234cc6974066c">More...</a><br /></td></tr>
-<tr class="separator:a1964a859875efb2ff16234cc6974066c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ca702e1c45aaf21184b4018e916363"><td class="memTemplParams" colspan="2">template&lt;bool empty_entries = false&gt; </td></tr>
+<tr class="memitem:ad5ca702e1c45aaf21184b4018e916363"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363">useful::split</a> (std::string const &amp;str, std::string const &amp;delims=&quot;\t,|\r &quot;)</td></tr>
+<tr class="memdesc:ad5ca702e1c45aaf21184b4018e916363"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split <code>string</code> into vector of strings at instances of <code>delimeter</code>.  <a href="../../df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363">More...</a><br /></td></tr>
+<tr class="separator:ad5ca702e1c45aaf21184b4018e916363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afba1ca5f4bddc185d308b4267a0e1c06"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:afba1ca5f4bddc185d308b4267a0e1c06"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#afba1ca5f4bddc185d308b4267a0e1c06">useful::split&lt; true &gt;</a> (std::string const &amp;str, std::string const &amp;delims)</td></tr>
+<tr class="separator:afba1ca5f4bddc185d308b4267a0e1c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac910633cf4fdd85cb44df30117f2d92e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e">useful::parse_error</a> (std::string const &amp;filename, std::string const &amp;line)</td></tr>
 <tr class="separator:ac910633cf4fdd85cb44df30117f2d92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a226dd5c8011e58fb0a60e10c3a62b2d6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a226dd5c8011e58fb0a60e10c3a62b2d6">useful::parse_error_file</a> (std::string const &amp;filename)</td></tr>
@@ -305,6 +311,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a06a1cd9b983202c4bba74f5a0ec1b466"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466">useful::read</a> (std::ifstream &amp;input, Type &amp;val)</td></tr>
 <tr class="memdesc:a06a1cd9b983202c4bba74f5a0ec1b466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read next value from file.  <a href="../../df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466">More...</a><br /></td></tr>
 <tr class="separator:a06a1cd9b983202c4bba74f5a0ec1b466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49506338cfa81fcd43ec3c1294d847e9"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a49506338cfa81fcd43ec3c1294d847e9">useful::remove_carriage_return</a> (std::string &amp;str)</td></tr>
+<tr class="separator:a49506338cfa81fcd43ec3c1294d847e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6502aaeecc98e9ac539bf4762f5c5477"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a6502aaeecc98e9ac539bf4762f5c5477"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a6502aaeecc98e9ac539bf4762f5c5477">useful::sgn</a> (T val)</td></tr>
 <tr class="separator:a6502aaeecc98e9ac539bf4762f5c5477"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -312,6 +320,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a760db0aa4629f0aa166c019c86e5871d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a760db0aa4629f0aa166c019c86e5871d">useful::print</a> (Stream &amp;stream, Container const &amp;container, bool delimit_first=0, std::string delimiter=&quot;\t&quot;)</td></tr>
 <tr class="memdesc:a760db0aa4629f0aa166c019c86e5871d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print values in container.  <a href="../../df/d1d/namespaceuseful.html#a760db0aa4629f0aa166c019c86e5871d">More...</a><br /></td></tr>
 <tr class="separator:a760db0aa4629f0aa166c019c86e5871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513ff67b7b8e5c697b37881309ab1b82"><td class="memTemplParams" colspan="2">template&lt;typename Stream , typename Container &gt; </td></tr>
+<tr class="memitem:a513ff67b7b8e5c697b37881309ab1b82"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a513ff67b7b8e5c697b37881309ab1b82">useful::print</a> (Stream &amp;stream, Container const &amp;container, int width, std::ios_base &amp;(*alignment)(std::ios_base &amp;)=std::right)</td></tr>
+<tr class="memdesc:a513ff67b7b8e5c697b37881309ab1b82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print values in container.  <a href="../../df/d1d/namespaceuseful.html#a513ff67b7b8e5c697b37881309ab1b82">More...</a><br /></td></tr>
+<tr class="separator:a513ff67b7b8e5c697b37881309ab1b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b871e37b166f17966b037893789fc01"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01">useful::read</a> (std::string const &amp;filename)</td></tr>
 <tr class="memdesc:a1b871e37b166f17966b037893789fc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read contents of file as a sequence of doubles.  <a href="../../df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01">More...</a><br /></td></tr>
 <tr class="separator:a1b871e37b166f17966b037893789fc01"><td class="memSeparator" colspan="2">&#160;</td></tr>

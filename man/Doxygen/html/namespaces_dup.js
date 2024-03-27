@@ -6,7 +6,7 @@ var namespaces_dup =
       [ "von_karman", "d7/d28/namespaceconstants.html#a18c01616ccce2cded236f2cfbe02596e", null ]
     ] ],
     [ "ctrw", "d8/d34/namespacectrw.html", "d8/d34/namespacectrw" ],
-    [ "geometry", "d5/d5f/namespacegeometry.html", "d5/d5f/namespacegeometry" ],
+    [ "geom", "d2/dfa/namespacegeom.html", "d2/dfa/namespacegeom" ],
     [ "meta", "d8/db6/namespacemeta.html", "d8/db6/namespacemeta" ],
     [ "modular", "da/d32/namespacemodular.html", [
       [ "circMinus", "da/d32/namespacemodular.html#a643d0959ac1436296d4bf1801c946d18", null ],
@@ -108,6 +108,11 @@ var namespaces_dup =
       [ "times_scalar_inplace", "db/dd7/namespaceop.html#af0578f1c211262387290d1cfa4572dcb", null ]
     ] ],
     [ "ptof", "d2/dd1/namespaceptof.html", "d2/dd1/namespaceptof" ],
-    [ "range", "d6/d48/namespacerange.html", "d6/d48/namespacerange" ],
+    [ "range", "d6/d48/namespacerange.html", [
+      [ "linspace", "d6/d48/namespacerange.html#a6d49becb249d5ac7411499cdf0dff276", null ],
+      [ "logspace", "d6/d48/namespacerange.html#a182433bea7304096a75a1f167f74fa1b", null ],
+      [ "range", "d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64", null ],
+      [ "range", "d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48", null ]
+    ] ],
     [ "useful", "df/d1d/namespaceuseful.html", "df/d1d/namespaceuseful" ]
 ];

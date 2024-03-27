@@ -17,7 +17,6 @@
 #include <type_traits>
 #include <unordered_map>
 #include <vector>
-#include <boost/algorithm/string.hpp>
 #include <fvMesh.H>
 #include "PTOF/Boundary.h"
 #include "PTOF/Useful.h"
@@ -804,20 +803,17 @@ namespace ptof
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
     {
       std::string line;
-      std::getline(input, line);
-      std::vector<std::string> split_line;
-      boost::trim_if(line, boost::is_any_of("\t,|\r "));
-      boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
-                              boost::token_compress_on);
+      if (!std::getline(input, line))
+        throw std::runtime_error{
+          std::string{ "Could not parse prescribed position for " }
+          + std::to_string(pp) + "th particle" };
+      auto split_line = useful::split(useful::remove_carriage_return(line));
       position_data.emplace_back();
       position_data.back().reserve(split_line.size());
       for (auto const& position_component : split_line)
         position_data.back().push_back(std::stod(position_component));
     }
     input.close();
-    
-    if (nr_particles == 0)
-      nr_particles = position_data.size();
     
     return prescribed_positions(position_data, particle_maker);
   }
@@ -836,10 +832,7 @@ namespace ptof
     std::string line;
     while (std::getline(input, line))
     {
-      std::vector<std::string> split_line;
-      boost::trim_if(line, boost::is_any_of("\t,|\r "));
-      boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
-                              boost::token_compress_on);
+      auto split_line = useful::split(useful::remove_carriage_return(line));
       position_data.emplace_back();
       position_data.back().reserve(split_line.size());
       for (auto const& position_component : split_line)
@@ -892,10 +885,7 @@ namespace ptof
         input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::string line;
         std::getline(input, line);
-        std::vector<std::string> split_line;
-        boost::trim_if(line, boost::is_any_of("\t,|\r "));
-        boost::algorithm::split(split_line, line, boost::is_any_of("\t,| "),
-                                boost::token_compress_on);
+        auto split_line = useful::split(useful::remove_carriage_return(line));
         if (split_line.size()%2 != 0)
           std::runtime_error{
             "Initial condition region boundaries must come in pairs" };

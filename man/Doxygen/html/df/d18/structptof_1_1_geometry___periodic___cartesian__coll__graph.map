@@ -1,5 +1,5 @@
 <map id="ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;" name="ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;">
 <area shape="rect" id="node1" title="Geometry class for geometry to handle periodic BCs along any number of Cartesian dimensions." alt="" coords="424,43,657,99"/>
 <area shape="rect" id="node2" href="$d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,251,61"/>
-<area shape="rect" id="node3" href="$db/d57/classgeometry_1_1_boundary___periodic___with_outside_info.html" title="Periodic boundaries along each dimension with information about where position would be outside domai..." alt="" coords="31,86,225,127"/>
+<area shape="rect" id="node3" href="$d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html" title="Periodic boundaries along each dimension with information about where position would be outside domai..." alt="" coords="34,86,222,127"/>
 </map>

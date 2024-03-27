@@ -7,10 +7,9 @@
 #ifndef PTOF_LOCATOR_PARALLEL_H
 #define PTOF_LOCATOR_PARALLEL_H
 
-#include <set>
+#include <memory>
 #include <vector>
 #include <omp.h>
-#include <boost/iterator/counting_iterator.hpp>
 #include <fieldTypes.H>
 #include <meshSearch.H>
 #include "PTOF/Locator.h"
