@@ -99,9 +99,9 @@ namespace range
     ? -std::abs(increment)
     : std::abs(increment);
 
-    std::size_t nr_points = (xx2 - xx1)/increment;    
+    std::size_t nr_points = (xx2 - xx1)/increment;
     if (nr_points == 0)
-      return { xx1 };
+      return {};
 
     if constexpr (meta::has_push_back_v<Container<Scalar, Args...>>)
     {
