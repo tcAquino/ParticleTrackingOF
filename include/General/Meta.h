@@ -31,7 +31,7 @@ namespace meta
   using has_member = has_member_impl<Z, types<Ts...>>;
   /** \class is_same General/Useful.h "General/Useful.h"
    
-   \struct Check if X<Y> is the same type as Z. */
+   \class Check if X<Y> is the same type as Z. */
   template <template <typename> typename X, typename Y, typename Z>
   struct is_same
   { static constexpr bool value = std::is_same_v<X<Y>, Z>; };

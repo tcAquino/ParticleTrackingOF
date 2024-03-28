@@ -9,7 +9,7 @@
 <area shape="rect" id="node8" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="473,71,543,98"/>
 <area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="449,122,567,149"/>
 <area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="443,173,573,199"/>
-<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="457,223,559,250"/>
+<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="457,223,559,250"/>
 <area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, pointing inward." alt="" coords="416,274,600,301"/>
 <area shape="rect" id="node9" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="695,67,764,94"/>
 <area shape="rect" id="node13" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="686,118,773,145"/>

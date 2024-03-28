@@ -19,8 +19,7 @@ namespace meta
   template <typename X>
   using velocity_rescaling_factor_t
   = decltype(std::declval<X>().velocity_rescaling_factor);
-  /** \brief has_size General/Useful.h "General/Useful.h"
-  \brief Check if a class has member <tt>double velocity_rescaling_factor</tt>. */
+  /** \brief Check if a class has member <tt>double velocity_rescaling_factor</tt>. */
   template <typename X>
   inline constexpr bool has_velocity_rescaling_factor_v
   = has_member<velocity_rescaling_factor_t, X>::value

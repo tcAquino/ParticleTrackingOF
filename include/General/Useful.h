@@ -32,13 +32,10 @@ namespace useful
   // Adapted from Howard Hinnant's answer here:
   // https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time
   /** \brief Display execution time in human-readable format.  */
-  template <typename Clock>
   std::ostream& display_duration
   (std::ostream& stream,
-   std::chrono::time_point<Clock> start_time,
-   std::chrono::time_point<Clock> end_time)
+   std::chrono::nanoseconds ns)
   {
-    auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
     using days = std::chrono::duration<int, std::ratio<86400>>;
     char fill = stream.fill();
     stream.fill('0');
@@ -55,11 +52,23 @@ namespace useful
            << std::setw(2) << h.count() << "h:"
            << std::setw(2) << m.count() << "m:"
            << std::setw(2) << s.count() << "s:"
-           << std::setw(2) << ms.count() << "ms";
+           << std::setw(3) << ms.count() << "ms";
     stream.fill(fill);
     
     return stream;
   };
+  
+  /** \brief Display execution time in human-readable format.  */
+  template <typename Clock>
+  std::ostream& display_duration
+  (std::ostream& stream,
+   std::chrono::time_point<Clock> start_time,
+   std::chrono::time_point<Clock> end_time)
+  {
+    return display_duration(stream,
+                            std::chrono::duration_cast<std::chrono::nanoseconds>(end_time
+                                                                                 - start_time));
+  }
   
   /** \return Convert \p string to boolean. */
   bool stob(std::string const& string)
@@ -320,7 +329,7 @@ namespace useful
   auto load_1
   (std::string const& filename, std::size_t nr_estimate = 0,
    std::size_t header_lines = 0,
-   std::string const& delim = " ")
+   std::string const& delims = "\t,|\r ")
   {
     using Value = double;
     using Container = std::vector<Value>;
@@ -334,7 +343,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
-      std::vector<std::string> split_line = split(line, delim);
+      std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != 1)
         throw parse_error(filename, line);
       values.push_back(std::stod(split_line[0]));
@@ -347,7 +356,7 @@ namespace useful
   /** \brief Load 2-column file into pair of vectors of doubles. */
   auto load_2
   (std::string const& filename, std::size_t nr_estimate = 0,
-   std::size_t header_lines = 0, std::string const& delim = " ")
+   std::size_t header_lines = 0, std::string const& delims = "\t,|\r ")
   {
     using Value = double;
     using Container = std::vector<Value>;
@@ -362,7 +371,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
-      std::vector<std::string> split_line = split(line, delim);
+      std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != 2)
         throw parse_error(filename, line);
       
@@ -377,7 +386,7 @@ namespace useful
   /** \brief Load 3-column file,  first two columns into vector of pairs, last column into vector of doubles. */
   auto load_pair_1
   (std::string const& filename, std::size_t nr_estimate = 0,
-   std::size_t header_lines = 0, std::string const& delim = " ")
+   std::size_t header_lines = 0, std::string const& delims = "\t,|\r ")
   {
     using Value = double;
     using Container_pair = std::vector<std::pair<Value, Value>>;
@@ -395,7 +404,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
-      std::vector<std::string> split_line = split(line, delim);
+      std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != 3)
         throw parse_error(filename, line);
       
@@ -411,7 +420,7 @@ namespace useful
   auto load(std::string const& filename, std::size_t nr_columns,
             std::size_t nr_estimate = 0,
             std::size_t header_lines = 0,
-            std::string const& delim = " ")
+            std::string const& delims = "\t,|\r ")
   {
     using Value = double;
     using Container = std::vector<Value>;
@@ -426,7 +435,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
-      std::vector<std::string> split_line = split(line, delim);
+      std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != nr_columns)
         throw parse_error(filename, line);
       

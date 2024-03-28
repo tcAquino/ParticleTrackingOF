@@ -400,13 +400,21 @@ namespace ptof
     double time_increment;
     struct Measurement
     {
-      Measurement(std::string name, std::string parameters = {})
+      Measurement(std::string name, std::string field_name = {}, int precision = 8)
       : name{ name }
-      , parameters{ parameters }
+      , field_name{ field_name }
+      , precision{ precision }
+      {}
+      
+      Measurement(std::string name, int precision)
+      : name{ name }
+      , field_name{}
+      , precision{ precision }
       {}
       
       std::string name;
-      std::string parameters;
+      std::string field_name;
+      int precision;
     };
     std::vector<Measurement> measurements;
     
@@ -436,7 +444,8 @@ namespace ptof
       read_end_criterion(input);
       read_measure_spacing(input,
                            params_transport, params_reaction);
-      read_output_types(input);
+      input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      read_measurement_types(input);
       input.close();
     }
     
@@ -470,7 +479,7 @@ namespace ptof
         "- Measurement time increment, if required by measure spacing\n"
         "- Maximum measurement time, if required by measure spacing\n"
         "- Number of measurements, if required by measure spacing\n"
-        "- Measurement types (any number):\n"
+        "- Measurement types (any number, can pass precision [8] at the end of line):\n"
         "\tposition: Time, particle tags, particle positions, and particle masses\n"
         "\tposition: Time, particle tags, particle positions, and particle masses within regions specified by masks\n"
         "\tposition_mean: Time and mean position\n"
@@ -624,14 +633,16 @@ namespace ptof
     
     /** \brief Read measure spacing type from input stream. */
     template <typename IStream>
-    void read_output_types
+    void read_measurement_types
     (IStream& input)
     {
       std::string line;
       while (std::getline(input, line))
       {
+        std::cout << line << std::endl;
         auto split_line = useful::split(useful::remove_carriage_return(line));
-        if (split_line.empty())
+        std::size_t required_size = 1;
+        if (split_line.size() < required_size)
           throw std::runtime_error{
             "Could not parse measurement types" };
         std::string const& name = split_line[0];
@@ -640,12 +651,15 @@ namespace ptof
             name == "vector_field" ||
             name == "tensor_field")
         {
-          if (split_line.size() != 2)
+          required_size = 2;
+          if (split_line.size() < required_size)
             throw std::runtime_error{
               std::string("Measurement type ") + name + ": "
                 "Field name not provided" };
-          measurements.back().parameters = split_line[1];
+          measurements.back().field_name = split_line[1];
         }
+        if (split_line.size() > required_size)
+          measurements.back().precision = std::stod(split_line.back());
       }
     }
   };
@@ -674,7 +688,6 @@ namespace ptof
      \param identifier String to include in names of output files.
      \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
      \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered.
-     \param precision Number of digits after decimal point in output, in scientific notation.
     */
     template <typename VelocityField, typename Mask = useful::Empty>
     Output_Cases
@@ -685,16 +698,14 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::vector<std::reference_wrapper<const Mask>> masks = {},
-     std::vector<double> thresholds = {},
-     int precision = 8)
+     std::vector<double> thresholds = {})
     : parameters{ parameters }
     , _subject{ subject }
     , _geometry{ geometry }
     {
       set_measure_types(directories, identifier,
                         velocity_field,
-                        masks, thresholds,
-                        precision);
+                        masks, thresholds);
       set_end_criterion();
       set_next_measure_time();
     }
@@ -711,13 +722,11 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::initializer_list<std::reference_wrapper<const Mask>> masks,
-     std::initializer_list<double> thresholds = {},
-     int precision = 8)
+     std::initializer_list<double> thresholds = {})
     : Output_Cases(subject, velocity_field, geometry, directories,
                    parameters, identifier,
                    std::vector<std::reference_wrapper<const Mask>>(masks),
-                   std::vector<double>(thresholds),
-                   precision)
+                   std::vector<double>(thresholds))
     {}
     
     /** Constructor.
@@ -732,13 +741,11 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::vector<std::reference_wrapper<const Mask>> masks,
-     std::initializer_list<double> thresholds = {},
-     int precision = 8)
+     std::initializer_list<double> thresholds = {})
     : Output_Cases(subject, velocity_field, geometry, directories,
                    parameters, identifier,
                    masks,
-                   std::vector<double>(thresholds),
-                   precision)
+                   std::vector<double>(thresholds))
     {}
     
     /** Constructor.
@@ -752,16 +759,14 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::vector<std::reference_wrapper<const Mask>> masks = {},
-     std::vector<double> thresholds = {},
-     int precision = 8)
+     std::vector<double> thresholds = {})
     : parameters{ parameters }
     , _subject{ subject }
     , _geometry{ geometry }
     {
       set_measure_types(directories, identifier,
                         useful::Empty{},
-                        masks, thresholds,
-                        precision);
+                        masks, thresholds);
       set_end_criterion();
       set_next_measure_time();
     }
@@ -777,13 +782,11 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::initializer_list<std::reference_wrapper<const Mask>> masks,
-     std::initializer_list<double> thresholds = {},
-     int precision = 8)
+     std::initializer_list<double> thresholds = {})
     : Output_Cases(subject, geometry, directories,
                    parameters, identifier,
                    std::vector<std::reference_wrapper<const Mask>>(masks),
-                   std::vector<double>(thresholds),
-                   precision)
+                   std::vector<double>(thresholds))
     {}
     
     /** Constructor.
@@ -797,13 +800,11 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::vector<std::reference_wrapper<const Mask>> masks,
-     std::initializer_list<double> thresholds = {},
-     int precision = 8)
+     std::initializer_list<double> thresholds = {})
     : Output_Cases(subject, geometry, directories,
                    parameters, identifier,
                    masks,
-                   std::vector<double>(thresholds),
-                   precision)
+                   std::vector<double>(thresholds))
     {}
     
     /** Constructor.
@@ -817,13 +818,11 @@ namespace ptof
      Parameters parameters,
      std::string const& identifier,
      std::initializer_list<std::reference_wrapper<const Mask>> masks,
-     std::vector<double> thresholds = {},
-     int precision = 8)
+     std::vector<double> thresholds = {})
     : Output_Cases(subject, geometry, directories,
                    parameters, identifier,
                    std::vector<std::reference_wrapper<const Mask>>(masks),
-                   thresholds,
-                   precision)
+                   thresholds)
     {}
     
     /** \return \c true  if end simulation criterion is satisfied, \c false otherwise. */
@@ -919,7 +918,6 @@ namespace ptof
         output << parameters.time_max << "\n";
       output << "- Measurement types:\n";
       info_runtime_measurements(output, "\t");
-      output << "\n";
       output <<
         "--------------------------------------------------\n";
     }
@@ -942,15 +940,15 @@ namespace ptof
       int width_field = int(std::max_element(parameters.measurements.begin(),
                                              parameters.measurements.end(),
                                              [](auto const& aa, auto const& bb)
-                                             { return aa.parameters.length() < bb.parameters.length(); })
-                            ->parameters.length()) + 1;
+                                             { return aa.field_name.length() < bb.field_name.length(); })
+                            ->field_name.length()) + 1;
       for (auto const& measurement : parameters.measurements)
       {
         output << prefix
                << std::left << std::setw(width_name) << measurement.name;
-        if (!measurement.parameters.empty())
+        if (!measurement.field_name.empty())
           output << std::left << std::setw(width_field)
-                 << measurement.parameters;
+                 << measurement.field_name;
         output << "\n";
       }
     }
@@ -959,16 +957,14 @@ namespace ptof
      \param directories Current case directory information.
      \param identifier String to include in names of output files.
      \param masks Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].
-     \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered.
-     \param precision Number of digits after decimal point in output, in scientific notation. */
+     \param thresholds Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered. */
     template <typename VelocityField = useful::Empty, typename Mask = useful::Empty>
     void set_measure_types
     (Directories const& directories,
      std::string const& identifier,
      VelocityField const& velocity_field = {},
      std::vector<std::reference_wrapper<const Mask>> masks = {},
-     std::vector<double> thresholds = {},
-     int precision = 8)
+     std::vector<double> thresholds = {})
     {
       for (auto const& measurement : parameters.measurements)
       {
@@ -980,7 +976,7 @@ namespace ptof
             (std::make_unique<Output_position>
              (_subject, _geometry,
                directories, identifier, parameters,
-               precision));
+               measurement.precision));
             break;
           }
           case Measure::Type::position_in_regions:
@@ -989,9 +985,9 @@ namespace ptof
               _output_time.emplace_back
               (std::make_unique<Output_position_in_regions<Mask>>
                (_subject, _geometry,
-                 directories, identifier, parameters,
-                 masks, thresholds,
-                 precision));
+                directories, identifier, parameters,
+                masks, thresholds,
+                measurement.precision));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + measurement.name + ": "
@@ -1004,7 +1000,7 @@ namespace ptof
             (std::make_unique<Output_position_mean>
              (_subject, _geometry,
               directories, identifier, parameters,
-              precision));
+              measurement.precision));
             break;
           }
           case Measure::Type::position_second_moment:
@@ -1013,7 +1009,7 @@ namespace ptof
             (std::make_unique<Output_position_second_moment>
              (_subject, _geometry,
               directories, identifier, parameters,
-              precision));
+              measurement.precision));
             break;
           }
           case Measure::Type::position_variance:
@@ -1022,7 +1018,7 @@ namespace ptof
             (std::make_unique<Output_position_variance>
              (_subject, _geometry,
               directories, identifier, parameters,
-              precision));
+              measurement.precision));
             break;
           }
           case Measure::Type::mass:
@@ -1031,7 +1027,7 @@ namespace ptof
             (std::make_unique<Output_mass>
              (_subject, _geometry,
               directories, identifier, parameters,
-              precision));
+              measurement.precision));
             break;
           }
           case Measure::Type::mass_in_regions:
@@ -1042,7 +1038,7 @@ namespace ptof
                (_subject, _geometry,
                 directories, identifier, parameters,
                 masks, thresholds,
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + measurement.name + ": "
@@ -1057,7 +1053,7 @@ namespace ptof
                (_subject, velocity_field, _geometry,
                 directories, identifier, parameters,
                 "U",
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 "Measurement type " + Measure::type(measurement.name) + ": "
@@ -1074,7 +1070,7 @@ namespace ptof
                 _geometry,
                 directories, identifier, parameters,
                 "gradU",
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 "Measurement type " + measurement.name + ": "
@@ -1087,8 +1083,8 @@ namespace ptof
             (std::make_unique<Output_scalar_field<>>
              (_subject, _geometry,
               directories, identifier, parameters,
-              measurement.parameters,
-              precision));
+              measurement.field_name,
+              measurement.precision));
             break;
           }
           case Measure::Type::vector_field:
@@ -1097,8 +1093,8 @@ namespace ptof
             (std::make_unique<Output_vector_field<>>
              (_subject, _geometry,
               directories, identifier, parameters,
-              measurement.parameters,
-              precision));
+              measurement.field_name,
+              measurement.precision));
             break;
           }
           case Measure::Type::tensor_field:
@@ -1107,8 +1103,8 @@ namespace ptof
             (std::make_unique<Output_tensor_field<>>
              (_subject, _geometry,
               directories, identifier, parameters,
-              measurement.parameters,
-              precision));
+              measurement.field_name,
+              measurement.precision));
             break;
           }
           case Measure::Type::position_periodic:
@@ -1118,7 +1114,7 @@ namespace ptof
               (std::make_unique<Output_position_periodic>
                (_subject, _geometry,
                 directories, identifier, parameters,
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + measurement.name + ": "
@@ -1132,9 +1128,9 @@ namespace ptof
               _output_time.emplace_back
               (std::make_unique<Output_position_in_regions_periodic<Mask>>
                (_subject, _geometry,
-                 directories, identifier, parameters,
-                 masks, thresholds,
-                 precision));
+                directories, identifier, parameters,
+                masks, thresholds,
+                measurement.precision));
             else
             {
               if constexpr (!meta::has_periodicity_v<typename Subject::Particle::State>)
@@ -1154,7 +1150,7 @@ namespace ptof
               (std::make_unique<Output_position_mean_periodic>
                (_subject, _geometry,
                 directories, identifier, parameters,
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + measurement.name + ": "
@@ -1168,7 +1164,7 @@ namespace ptof
               (std::make_unique<Output_position_second_moment_periodic>
                (_subject, _geometry,
                 directories, identifier, parameters,
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + measurement.name + ": "
@@ -1182,7 +1178,7 @@ namespace ptof
               (std::make_unique<Output_position_variance_periodic>
                (_subject, _geometry,
                 directories, identifier, parameters,
-                precision));
+                measurement.precision));
             else
               throw std::runtime_error{
                 std::string("Measurement type ") + measurement.name + ": "
@@ -1195,7 +1191,7 @@ namespace ptof
             (std::make_unique<Output_absorption_time>
              (_subject, _geometry,
               directories, identifier, parameters,
-              precision));
+              measurement.precision));
             break;
           }
           default:
@@ -1811,7 +1807,7 @@ namespace ptof
     };
         
         /**
-     \struct Output_Cases::Output_scalar_field PTOF/Output.h "PTOF/Output.h"
+     \class Output_Cases::Output_scalar_field PTOF/Output.h "PTOF/Output.h"
      \brief Output time, tags, and scalar field values.
     */
     template <typename Field = InterpolatedScalarField>
@@ -2065,7 +2061,7 @@ namespace ptof
      std::string const&) ->
     Output_vector_field<typename Output_Cases::InterpolatedVectorField>;
         
-     /** \struct Output_Cases::Output_tensor_field PTOF/Output.h "PTOF/Output.h"
+     /** \class Output_Cases::Output_tensor_field PTOF/Output.h "PTOF/Output.h"
       *  \brief  Output time, tag, and tensor field values. */
     template <typename Field = Foam::volTensorField>
     struct Output_tensor_field final : OutputTime

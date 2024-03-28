@@ -1,5 +1,5 @@
 <map id="ptof::Boundary_Cases::out_of_bounds" name="ptof::Boundary_Cases::out_of_bounds">
 <area shape="rect" id="node1" title="Check if position is out of bounds." alt="" coords="5,23,168,65"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="216,5,347,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="230,56,333,83"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="230,56,333,83"/>
 </map>

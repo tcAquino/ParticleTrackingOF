@@ -5,7 +5,7 @@ var structptof_1_1_output_parameters___cases =
     [ "info", "d8/d12/structptof_1_1_output_parameters___cases.html#acc43bbe8a13869d2f9749e48d4dbca5c", null ],
     [ "read_end_criterion", "d8/d12/structptof_1_1_output_parameters___cases.html#af3c907b0efe517363333359ae1852533", null ],
     [ "read_measure_spacing", "d8/d12/structptof_1_1_output_parameters___cases.html#a32f6c24576755576540beaffb640492d", null ],
-    [ "read_output_types", "d8/d12/structptof_1_1_output_parameters___cases.html#a36fac282aaee3f4f7b831f15200061e8", null ],
+    [ "read_measurement_types", "d8/d12/structptof_1_1_output_parameters___cases.html#af2e605c2839058b03c5a1f489287585a", null ],
     [ "read_time_units", "d8/d12/structptof_1_1_output_parameters___cases.html#a291fb372ced451c0ecfca6ed4ca5503e", null ],
     [ "end_criterion", "d8/d12/structptof_1_1_output_parameters___cases.html#a57f85ee13f9a0d9364f716443d652b18", null ],
     [ "end_value", "d8/d12/structptof_1_1_output_parameters___cases.html#a6d566c23e7dfefd267a2039588295b23", null ],

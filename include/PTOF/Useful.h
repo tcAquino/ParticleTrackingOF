@@ -54,7 +54,7 @@ namespace ptof
    \brief Options for mesh searching. */
   struct SearchOptions
   {
-    /** \struct SearchOptions::NeighborPrecheck PTOF/Useful.h "PTOF/Useful.h"
+    /** \class SearchOptions::NeighborPrecheck PTOF/Useful.h "PTOF/Useful.h"
     \brief Level of neighbors to check before searching mesh for position.. */
     template <int level>
     struct NeighborPrecheck
@@ -155,10 +155,7 @@ namespace ptof
     };
   };
   
-  /** \brief Return whether cell index indicates outside mesh
-  \tparam warn_if_outside Output warning if true, do not if false
-  \param position Position to check.
-  \param cell Mesh index of cell position is in.
+  /** \brief Return whether cell is outside mesh
   \return true if outside, false otherwise.
    \note \p cell is the actual index of the cell position is in, determined elsewhere, not a hint.
   */

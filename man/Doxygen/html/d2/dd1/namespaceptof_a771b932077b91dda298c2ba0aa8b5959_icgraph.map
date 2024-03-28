@@ -1,5 +1,5 @@
 <map id="ptof::outside" name="ptof::outside">
-<area shape="rect" id="node1" title="Return whether cell index indicates outside mesh." alt="" coords="1131,217,1233,243"/>
+<area shape="rect" id="node1" title="Return whether cell is outside mesh." alt="" coords="1131,217,1233,243"/>
 <area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a6481318770b8eda6dba996c19038f39a" title=" " alt="" coords="885,5,1071,47"/>
 <area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a80a2f7ac6239f3f2c7c346dd54928212" title=" " alt="" coords="673,139,825,180"/>
 <area shape="rect" id="node8" href="$dd/dd4/structptof_1_1_output___cases_1_1_output__position__in__regions.html#adb5b068a85aed9981c2dca4d49445e8e" title="Make measurement and output, given current time time." alt="" coords="902,122,1054,178"/>

@@ -454,13 +454,11 @@ namespace ptof
        Parameters parameters,
        std::string const& identifier,
        std::vector<std::reference_wrapper<const Mask>> masks = {},
-       std::vector<double> thresholds = {},
-       int precision = 8)
+       std::vector<double> thresholds = {})
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
-          masks, thresholds,
-          precision };
+          masks, thresholds };
       }
 
       template
@@ -474,13 +472,11 @@ namespace ptof
        Parameters parameters,
        std::string const& identifier,
        std::initializer_list<std::reference_wrapper<const Mask>> masks,
-       std::initializer_list<double> thresholds = {},
-       int precision = 8)
+       std::initializer_list<double> thresholds = {})
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
-          masks, thresholds,
-          precision };
+          masks, thresholds };
       }
 
       template
@@ -494,13 +490,11 @@ namespace ptof
        Parameters parameters,
        std::string const& identifier,
        std::vector<std::reference_wrapper<const Mask>> masks,
-       std::initializer_list<double> thresholds = {},
-       int precision = 8)
+       std::initializer_list<double> thresholds = {})
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
-          masks, thresholds,
-          precision };
+          masks, thresholds };
       }
       
       template<typename Subject, typename VelocityField, typename Geometry,
@@ -513,13 +507,11 @@ namespace ptof
        Parameters parameters,
        std::string const& identifier,
        std::initializer_list<std::reference_wrapper<const Mask>> masks,
-       std::vector<double> thresholds = {},
-       int precision = 8)
+       std::vector<double> thresholds = {})
       {
         return Output_Cases{ subject, velocity_field, geometry,
           directories, parameters, identifier,
-          masks, thresholds,
-          precision };
+          masks, thresholds };
       }
     };
     

@@ -13,7 +13,7 @@
 
 namespace ptof
 {
-  /** \struct Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
+  /** \class Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
    * \brief Object to locate positions or states in mesh. */
   template <typename SearchOption = SearchOptions::FirstNeighborPrecheck>
   struct Locator_Cell

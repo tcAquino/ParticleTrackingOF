@@ -29,8 +29,7 @@ namespace meta
   template <typename X>
   using time_step_getter_result_t
   = decltype(std::declval<X>().time_step());
-  /** \brief has_size General/Useful.h "General/Useful.h"
-  \brief Check if a class has method <tt>Type time_step()</tt>, where \c Type is an arithmetic type. */
+  /** \brief Check if a class has method <tt>Type time_step()</tt>, where \c Type is an arithmetic type. */
   template <typename X>
   inline constexpr bool has_time_step_getter_v
   = std::conjunction_v<has_member<time_step_getter_result_t, X>,
@@ -40,8 +39,7 @@ namespace meta
   template <typename X>
   using time_step_t
   = decltype(std::declval<X>().time_step);
-  /** \brief has_size General/Useful.h "General/Useful.h"
-  \brief Check if a class has member <tt>Type time_step()</tt>, where \c Type is an arithmetic type. */
+  /** \brief Check if a class has member <tt>Type time_step()</tt>, where \c Type is an arithmetic type. */
   template <typename X>
   inline constexpr bool has_time_step_v
   = std::conjunction_v<has_member<time_step_t, X>,
@@ -51,8 +49,7 @@ namespace meta
   template <typename X>
   using periodicity_t
   = decltype(std::declval<X>().periodicity);
-  /** \brief has_size General/Useful.h "General/Useful.h"
-  \brief Check if a class has member <tt>std::vector<int> periodicity</tt>. */
+  /** \brief Check if a class has member <tt>std::vector<int> periodicity</tt>. */
   template <typename X>
   inline constexpr bool has_periodicity_v
   = std::conjunction_v<has_member<periodicity_t, X>,

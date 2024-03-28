@@ -18,7 +18,7 @@
 <area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="1136,5,1299,32"/>
 <area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="1373,5,1520,32"/>
 <area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="1783,208,1910,235"/>
-<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell index indicates outside mesh." alt="" coords="1166,107,1269,133"/>
+<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="1166,107,1269,133"/>
 <area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a81f643e7c3eb24468a333190aa9a83ab" title=" " alt="" coords="931,217,1057,244"/>
 <area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="1150,208,1285,235"/>
 <area shape="rect" id="node16" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="1182,309,1253,336"/>
