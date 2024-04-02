@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['_7ecriterion_1745',['~Criterion',['../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6',1,'ptof::Criterion']]],
-  ['_7enextmeasuretime_1746',['~NextMeasureTime',['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#aaf1ff2f0785409916ca2adebf04f3040',1,'ptof::Output_Cases::NextMeasureTime']]],
-  ['_7eoutput_1747',['~Output',['../d0/d91/structptof_1_1_output___cases_1_1_output.html#acd80846cf9ea88f8be1534a7fdb2418b',1,'ptof::Output_Cases::Output']]],
-  ['_7eoutputtime_1748',['~OutputTime',['../d2/d71/structptof_1_1_output___cases_1_1_output_time.html#a311f54bc1b55a9d1b5934d5f9a377daa',1,'ptof::Output_Cases::OutputTime']]]
+  ['_7ecriterion_1762',['~Criterion',['../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6',1,'ptof::Criterion']]],
+  ['_7emeasurer_1763',['~Measurer',['../db/d74/structptof_1_1_measurer.html#a86d9a13f44b5db08feaa057c4f10a5cb',1,'ptof::Measurer']]],
+  ['_7emeasurertime_1764',['~MeasurerTime',['../dc/d05/structptof_1_1_measurer_time.html#ab050e63a490167cb4819fb7a326efb70',1,'ptof::MeasurerTime']]],
+  ['_7enextmeasuretime_1765',['~NextMeasureTime',['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#aaf1ff2f0785409916ca2adebf04f3040',1,'ptof::Output_Cases::NextMeasureTime']]]
 ];

@@ -1,5 +1,5 @@
 <map id="ptof::position_second_moment" name="ptof::position_second_moment">
-<area shape="rect" id="node1" title=" " alt="" coords="269,53,429,94"/>
-<area shape="rect" id="node2" href="$dc/dc1/structptof_1_1_output___cases_1_1_output__position__second__moment.html#a4aee1455223f0ef50277a1e0a69e438c" title="Make measurement and output, given current time time." alt="" coords="20,5,207,61"/>
-<area shape="rect" id="node3" href="$da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic.html#a161ba6d78e7c5969df12490f1fa8bdb1" title="Make measurement and output, given current time time." alt="" coords="5,85,221,141"/>
+<area shape="rect" id="node1" title=" " alt="" coords="249,53,409,94"/>
+<area shape="rect" id="node2" href="$d2/d8d/structptof_1_1_measurer_time__position__second__moment.html#a28a4711a527ea33995182503d17491dd" title="Make measurement and output, given current time time." alt="" coords="5,5,201,61"/>
+<area shape="rect" id="node3" href="$d4/db6/structptof_1_1_measurer_time__position__second__moment__periodic.html#a757b94282dbed4033452615047e8a768" title="Make measurement and output, given current time time." alt="" coords="5,85,201,141"/>
 </map>

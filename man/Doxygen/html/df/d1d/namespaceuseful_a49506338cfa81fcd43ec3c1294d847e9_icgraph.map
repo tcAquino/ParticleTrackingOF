@@ -1,7 +1,7 @@
 <map id="useful::remove_carriage_return" name="useful::remove_carriage_return">
-<area shape="rect" id="node1" title=" " alt="" coords="636,64,816,105"/>
-<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="293,5,588,47"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="346,71,535,98"/>
-<area shape="rect" id="node4" href="$d8/d12/structptof_1_1_output_parameters___cases.html#af2e605c2839058b03c5a1f489287585a" title="Read measure spacing type from input stream." alt="" coords="317,123,564,164"/>
-<area shape="rect" id="node5" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907" title=" " alt="" coords="5,123,245,164"/>
+<area shape="rect" id="node1" title=" " alt="" coords="569,64,749,105"/>
+<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="227,5,521,47"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="279,71,469,98"/>
+<area shape="rect" id="node4" href="$da/dac/structptof_1_1_output_parameters.html#ab9091ecb0b1b48aa1c3639f6503f42d0" title="Read measure spacing type from input stream." alt="" coords="274,123,474,164"/>
+<area shape="rect" id="node5" href="$da/dac/structptof_1_1_output_parameters.html#a5fbbe7fd814d6ce687a4beeaa5bd1f5a" title=" " alt="" coords="5,123,179,164"/>
 </map>

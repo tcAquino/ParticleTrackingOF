@@ -1,5 +1,5 @@
 <map id="ptof::Criterion&lt; Subject &gt;" name="ptof::Criterion&lt; Subject &gt;">
-<area shape="rect" id="node1" title="Polymorphic functor to implement criteria for ending measurements." alt="" coords="5,177,195,203"/>
+<area shape="rect" id="node1" title="Polymorphic functor to implement criteria." alt="" coords="5,177,195,203"/>
 <area shape="rect" id="node2" href="$da/d25/structptof_1_1_criterion__all__absorbed.html" title="Check if all particles have been absorbed." alt="" coords="257,5,423,47"/>
 <area shape="rect" id="node3" href="$d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html" title="Check if the fraction of particles that have not been absorbed is at most a certain value." alt="" coords="243,71,437,112"/>
 <area shape="rect" id="node4" href="$d0/d36/structptof_1_1_criterion__mass__above.html" title="Check if mass is greater than or equal to value." alt="" coords="263,136,417,177"/>

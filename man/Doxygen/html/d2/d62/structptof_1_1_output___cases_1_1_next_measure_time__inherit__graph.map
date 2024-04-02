@@ -1,6 +1,6 @@
 <map id="ptof::Output_Cases&lt; Subject, Geometry &gt;::NextMeasureTime" name="ptof::Output_Cases&lt; Subject, Geometry &gt;::NextMeasureTime">
-<area shape="rect" id="node1" title=" " alt="" coords="5,85,171,141"/>
+<area shape="rect" id="node1" title="Polymorphic object to handle setting up the next measurement time." alt="" coords="5,85,171,141"/>
 <area shape="rect" id="node2" href="$dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear.html" title="NextMeasureTime object for linearly&#45;spaced times." alt="" coords="219,5,428,61"/>
 <area shape="rect" id="node3" href="$d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log.html" title=" " alt="" coords="227,85,419,141"/>
-<area shape="rect" id="node4" href="$db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step.html" title=" " alt="" coords="223,165,423,221"/>
+<area shape="rect" id="node4" href="$db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step.html" title="NextMeasureTime object for constant time step." alt="" coords="223,165,423,221"/>
 </map>

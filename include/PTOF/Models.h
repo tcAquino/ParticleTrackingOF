@@ -441,7 +441,7 @@ namespace ptof
     {
       Output() = delete;
       
-      using Parameters = OutputParameters_Cases;
+      using Parameters = OutputParameters;
       
       template
       <typename Subject, typename VelocityField, typename Geometry,

@@ -84,7 +84,8 @@ $(document).ready(function(){initNavTree('d0/d36/structptof_1_1_criterion__mass_
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#pub-attribs">Data Fields</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">ptof::Criterion_mass_above&lt; Subject &gt; Class Template Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
 </div><!--header-->
@@ -93,14 +94,14 @@ $(document).ready(function(){initNavTree('d0/d36/structptof_1_1_criterion__mass_
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if mass is greater than or equal to value.  
  <a href="../../d0/d36/structptof_1_1_criterion__mass__above.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d6/d77/_output_8h_source.html">PTOF/Output.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../df/d67/_criteria_8h_source.html">PTOF/Output.h</a>&quot;</code></p>
 <div class="dynheader">
 Inheritance diagram for ptof::Criterion_mass_above&lt; Subject &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dc/d1e/structptof_1_1_criterion__mass__above__inherit__graph.png" border="0" usemap="#aptof_1_1_criterion__mass__above_3_01_subject_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="aptof_1_1_criterion__mass__above_3_01_subject_01_4_inherit__map" id="aptof_1_1_criterion__mass__above_3_01_subject_01_4_inherit__map">
 <area shape="rect" title="Check if mass is greater than or equal to value." alt="" coords="23,80,177,121"/>
-<area shape="rect" href="../../d9/d13/structptof_1_1_criterion.html" title="Polymorphic functor to implement criteria for ending measurements." alt="" coords="5,5,195,32"/>
+<area shape="rect" href="../../d9/d13/structptof_1_1_criterion.html" title="Polymorphic functor to implement criteria." alt="" coords="5,5,195,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -109,21 +110,26 @@ Collaboration diagram for ptof::Criterion_mass_above&lt; Subject &gt;:</div>
 <div class="center"><img src="../../d0/d95/structptof_1_1_criterion__mass__above__coll__graph.png" border="0" usemap="#aptof_1_1_criterion__mass__above_3_01_subject_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aptof_1_1_criterion__mass__above_3_01_subject_01_4_coll__map" id="aptof_1_1_criterion__mass__above_3_01_subject_01_4_coll__map">
 <area shape="rect" title="Check if mass is greater than or equal to value." alt="" coords="23,80,177,121"/>
-<area shape="rect" href="../../d9/d13/structptof_1_1_criterion.html" title="Polymorphic functor to implement criteria for ending measurements." alt="" coords="5,5,195,32"/>
+<area shape="rect" href="../../d9/d13/structptof_1_1_criterion.html" title="Polymorphic functor to implement criteria." alt="" coords="5,5,195,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a69451c9b82f8d9e673c3d4b032fbb3ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a69451c9b82f8d9e673c3d4b032fbb3ee">Criterion_mass_above</a> (double <a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a08560873d5eb5dbf892396911b4e56bb">end_value</a>)</td></tr>
-<tr class="separator:a69451c9b82f8d9e673c3d4b032fbb3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fff0414bb95b874ebdd6f952a43a870"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a8fff0414bb95b874ebdd6f952a43a870">operator()</a> (Subject const &amp;subject, double time) const override</td></tr>
-<tr class="separator:a8fff0414bb95b874ebdd6f952a43a870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0d90e6074a29f6326bf855aa65a6cb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#ab0d90e6074a29f6326bf855aa65a6cb8">Criterion_mass_above</a> (Subject const &amp;subject, double <a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a08560873d5eb5dbf892396911b4e56bb">end_value</a>)</td></tr>
+<tr class="separator:ab0d90e6074a29f6326bf855aa65a6cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d147566805676b87eb472dae3d42d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a66d147566805676b87eb472dae3d42d4">operator()</a> (double time) const override</td></tr>
+<tr class="separator:a66d147566805676b87eb472dae3d42d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a08560873d5eb5dbf892396911b4e56bb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a08560873d5eb5dbf892396911b4e56bb">end_value</a></td></tr>
 <tr class="separator:a08560873d5eb5dbf892396911b4e56bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aa911d023e09b5def41d445916c9c1afa"><td class="memItemLeft" align="right" valign="top">Subject const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#aa911d023e09b5def41d445916c9c1afa">_subject</a></td></tr>
+<tr class="separator:aa911d023e09b5def41d445916c9c1afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Subject&gt;<br />
@@ -131,8 +137,8 @@ class ptof::Criterion_mass_above&lt; Subject &gt;</h3>
 
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if mass is greater than or equal to value. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a69451c9b82f8d9e673c3d4b032fbb3ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69451c9b82f8d9e673c3d4b032fbb3ee">&#9670;&nbsp;</a></span>Criterion_mass_above()</h2>
+<a id="ab0d90e6074a29f6326bf855aa65a6cb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0d90e6074a29f6326bf855aa65a6cb8">&#9670;&nbsp;</a></span>Criterion_mass_above()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,9 +151,19 @@ template&lt;typename Subject &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html">ptof::Criterion_mass_above</a>&lt; Subject &gt;::<a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html">Criterion_mass_above</a> </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>end_value</em></td><td>)</td>
+          <td class="paramtype">Subject const &amp;&#160;</td>
+          <td class="paramname"><em>subject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>end_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -160,8 +176,8 @@ template&lt;typename Subject &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8fff0414bb95b874ebdd6f952a43a870"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fff0414bb95b874ebdd6f952a43a870">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="a66d147566805676b87eb472dae3d42d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d147566805676b87eb472dae3d42d4">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,19 +190,9 @@ template&lt;typename Subject &gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html">ptof::Criterion_mass_above</a>&lt; Subject &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype">Subject const &amp;&#160;</td>
-          <td class="paramname"><em>subject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>time</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -196,12 +202,12 @@ template&lt;typename Subject &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="../../d9/d13/structptof_1_1_criterion.html#a23218a963602adeb14b3753696a78e47">ptof::Criterion&lt; Subject &gt;</a>.</p>
+<p>Implements <a class="el" href="../../d9/d13/structptof_1_1_criterion.html#ae06ec75b382ae0ac264d17154153325e">ptof::Criterion&lt; Subject &gt;</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d36/structptof_1_1_criterion__mass__above_a8fff0414bb95b874ebdd6f952a43a870_cgraph.png" border="0" usemap="#ad0/d36/structptof_1_1_criterion__mass__above_a8fff0414bb95b874ebdd6f952a43a870_cgraph" alt=""/></div>
-<map name="ad0/d36/structptof_1_1_criterion__mass__above_a8fff0414bb95b874ebdd6f952a43a870_cgraph" id="ad0/d36/structptof_1_1_criterion__mass__above_a8fff0414bb95b874ebdd6f952a43a870_cgraph">
+<div class="center"><img src="../../d0/d36/structptof_1_1_criterion__mass__above_a66d147566805676b87eb472dae3d42d4_cgraph.png" border="0" usemap="#ad0/d36/structptof_1_1_criterion__mass__above_a66d147566805676b87eb472dae3d42d4_cgraph" alt=""/></div>
+<map name="ad0/d36/structptof_1_1_criterion__mass__above_a66d147566805676b87eb472dae3d42d4_cgraph" id="ad0/d36/structptof_1_1_criterion__mass__above_a66d147566805676b87eb472dae3d42d4_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,159,47"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a5bc754535412500a84cc47c7f639cc8e" title=" " alt="" coords="207,13,297,39"/>
 </map>
@@ -210,6 +216,30 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a id="aa911d023e09b5def41d445916c9c1afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa911d023e09b5def41d445916c9c1afa">&#9670;&nbsp;</a></span>_subject</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Subject const&amp; <a class="el" href="../../d9/d13/structptof_1_1_criterion.html">ptof::Criterion</a>&lt; Subject &gt;::_subject</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a08560873d5eb5dbf892396911b4e56bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08560873d5eb5dbf892396911b4e56bb">&#9670;&nbsp;</a></span>end_value</h2>
 
@@ -227,7 +257,7 @@ template&lt;typename Subject &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../d6/d77/_output_8h_source.html">Output.h</a></li>
+<li>PTOF/<a class="el" href="../../df/d67/_criteria_8h_source.html">Criteria.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

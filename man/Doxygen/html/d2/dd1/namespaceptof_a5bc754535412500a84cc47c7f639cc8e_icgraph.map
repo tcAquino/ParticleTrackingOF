@@ -1,7 +1,7 @@
 <map id="ptof::mass" name="ptof::mass">
-<area shape="rect" id="node1" title=" " alt="" coords="244,123,335,150"/>
-<area shape="rect" id="node2" href="$d3/da0/structptof_1_1_output___cases_1_1_output__mass.html#ace06d2622976b05cf3826e68ebf7f615" title="Make measurement and output, given current time time." alt="" coords="6,5,195,47"/>
-<area shape="rect" id="node3" href="$dd/d8c/structptof_1_1_output___cases_1_1_output__mass__in__regions.html#a9260aa3f6bce460836da1257f60a0e4f" title="Make measurement and output, given current time time." alt="" coords="5,71,196,127"/>
-<area shape="rect" id="node4" href="$da/df1/structptof_1_1_criterion__mass__below.html#ade4ddf78b67d0c3036bb2e1f9864b732" title=" " alt="" coords="24,152,177,193"/>
-<area shape="rect" id="node5" href="$d0/d36/structptof_1_1_criterion__mass__above.html#a8fff0414bb95b874ebdd6f952a43a870" title=" " alt="" coords="24,217,177,259"/>
+<area shape="rect" id="node1" title=" " alt="" coords="264,111,355,138"/>
+<area shape="rect" id="node2" href="$da/df1/structptof_1_1_criterion__mass__below.html#a2c3bb1a32d6a9d97c682cc395bc50811" title=" " alt="" coords="34,5,187,47"/>
+<area shape="rect" id="node3" href="$d0/d36/structptof_1_1_criterion__mass__above.html#a66d147566805676b87eb472dae3d42d4" title=" " alt="" coords="34,71,187,112"/>
+<area shape="rect" id="node4" href="$d7/db9/structptof_1_1_measurer_time__mass.html#adec0a2df289c0c63d7936c489eaa1f1f" title="Make measurement and output, given current time time." alt="" coords="36,136,185,177"/>
+<area shape="rect" id="node5" href="$d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#ab8e351d3f04f8ad69de7c19d71d6d826" title="Make measurement and output, given current time time." alt="" coords="5,201,216,243"/>
 </map>

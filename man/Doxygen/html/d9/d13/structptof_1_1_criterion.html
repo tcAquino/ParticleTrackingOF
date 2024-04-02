@@ -84,22 +84,23 @@ $(document).ready(function(){initNavTree('d9/d13/structptof_1_1_criterion.html',
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a>  </div>
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::Criterion&lt; Subject &gt; Class Template Reference</div>  </div>
+<div class="title">ptof::Criterion&lt; Subject &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Polymorphic functor to implement criteria for ending measurements.  
+<p>Polymorphic functor to implement criteria.  
  <a href="../../d9/d13/structptof_1_1_criterion.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d6/d77/_output_8h_source.html">PTOF/Output.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../df/d67/_criteria_8h_source.html">PTOF/Output.h</a>&quot;</code></p>
 <div class="dynheader">
 Inheritance diagram for ptof::Criterion&lt; Subject &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/d77/structptof_1_1_criterion__inherit__graph.png" border="0" usemap="#aptof_1_1_criterion_3_01_subject_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="aptof_1_1_criterion_3_01_subject_01_4_inherit__map" id="aptof_1_1_criterion_3_01_subject_01_4_inherit__map">
-<area shape="rect" title="Polymorphic functor to implement criteria for ending measurements." alt="" coords="5,177,195,203"/>
+<area shape="rect" title="Polymorphic functor to implement criteria." alt="" coords="5,177,195,203"/>
 <area shape="rect" href="../../da/d25/structptof_1_1_criterion__all__absorbed.html" title="Check if all particles have been absorbed." alt="" coords="257,5,423,47"/>
 <area shape="rect" href="../../d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html" title="Check if the fraction of particles that have not been absorbed is at most a certain value." alt="" coords="243,71,437,112"/>
 <area shape="rect" href="../../d0/d36/structptof_1_1_criterion__mass__above.html" title="Check if mass is greater than or equal to value." alt="" coords="263,136,417,177"/>
@@ -111,21 +112,26 @@ Inheritance diagram for ptof::Criterion&lt; Subject &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a23218a963602adeb14b3753696a78e47"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#a23218a963602adeb14b3753696a78e47">operator()</a> (Subject const &amp;subject, double time) const</td></tr>
-<tr class="separator:a23218a963602adeb14b3753696a78e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac3b80658fb839725be3209311bf7fa6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6">~Criterion</a> ()</td></tr>
 <tr class="separator:aac3b80658fb839725be3209311bf7fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae06ec75b382ae0ac264d17154153325e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#ae06ec75b382ae0ac264d17154153325e">operator()</a> (double) const =0</td></tr>
+<tr class="separator:ae06ec75b382ae0ac264d17154153325e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a33547a6b6d68a2822eca409477186259"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#a33547a6b6d68a2822eca409477186259">Criterion</a> ()</td></tr>
-<tr class="separator:a33547a6b6d68a2822eca409477186259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b1cd881bef3c9ac4d9238462bcf7b8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#a1b1cd881bef3c9ac4d9238462bcf7b8a">Criterion</a> (Subject const &amp;subject)</td></tr>
+<tr class="separator:a1b1cd881bef3c9ac4d9238462bcf7b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aa911d023e09b5def41d445916c9c1afa"><td class="memItemLeft" align="right" valign="top">Subject const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html#aa911d023e09b5def41d445916c9c1afa">_subject</a></td></tr>
+<tr class="separator:aa911d023e09b5def41d445916c9c1afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Subject&gt;<br />
 class ptof::Criterion&lt; Subject &gt;</h3>
 
-<p>Polymorphic functor to implement criteria for ending measurements. </p>
+<p>Polymorphic functor to implement criteria. </p>
 <dl class="section note"><dt>Note</dt><dd>To be used only through derived classes. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aac3b80658fb839725be3209311bf7fa6"></a>
@@ -155,8 +161,8 @@ template&lt;typename Subject &gt; </div>
 
 </div>
 </div>
-<a id="a33547a6b6d68a2822eca409477186259"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33547a6b6d68a2822eca409477186259">&#9670;&nbsp;</a></span>Criterion()</h2>
+<a id="a1b1cd881bef3c9ac4d9238462bcf7b8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b1cd881bef3c9ac4d9238462bcf7b8a">&#9670;&nbsp;</a></span>Criterion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,7 +175,8 @@ template&lt;typename Subject &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="../../d9/d13/structptof_1_1_criterion.html">ptof::Criterion</a>&lt; Subject &gt;::<a class="el" href="../../d9/d13/structptof_1_1_criterion.html">Criterion</a> </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">Subject const &amp;&#160;</td>
+          <td class="paramname"><em>subject</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -183,8 +190,8 @@ template&lt;typename Subject &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a23218a963602adeb14b3753696a78e47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23218a963602adeb14b3753696a78e47">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="ae06ec75b382ae0ac264d17154153325e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae06ec75b382ae0ac264d17154153325e">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -197,34 +204,49 @@ template&lt;typename Subject &gt; </div>
         <tr>
           <td class="memname">virtual bool <a class="el" href="../../d9/d13/structptof_1_1_criterion.html">ptof::Criterion</a>&lt; Subject &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype">Subject const &amp;&#160;</td>
-          <td class="paramname"><em>subject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>time</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="../../d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#a881c85fe07b4acf97e4a669166eb8ebe">ptof::Criterion_fraction_not_absorbed&lt; Subject &gt;</a>, <a class="el" href="../../da/d25/structptof_1_1_criterion__all__absorbed.html#af3ed56d8c8ca96439dc475f5da1fde28">ptof::Criterion_all_absorbed&lt; Subject &gt;</a>, <a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a8fff0414bb95b874ebdd6f952a43a870">ptof::Criterion_mass_above&lt; Subject &gt;</a>, <a class="el" href="../../da/df1/structptof_1_1_criterion__mass__below.html#ade4ddf78b67d0c3036bb2e1f9864b732">ptof::Criterion_mass_below&lt; Subject &gt;</a>, <a class="el" href="../../da/d6e/structptof_1_1_criterion__time.html#addb0394261608cca159b0468606e8611">ptof::Criterion_time&lt; Subject &gt;</a>, and <a class="el" href="../../dc/df3/structptof_1_1_criterion__one__absorbed.html#a2abc1300d6cfc97a6cf83839d29eb4b4">ptof::Criterion_one_absorbed&lt; Subject &gt;</a>.</p>
+<p>Implemented in <a class="el" href="../../d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#adf13d45e9ed94c6ad2de694729f89ea2">ptof::Criterion_fraction_not_absorbed&lt; Subject &gt;</a>, <a class="el" href="../../da/d25/structptof_1_1_criterion__all__absorbed.html#ab6b4a53d7468a2030f43e58c3078e1f6">ptof::Criterion_all_absorbed&lt; Subject &gt;</a>, <a class="el" href="../../d0/d36/structptof_1_1_criterion__mass__above.html#a66d147566805676b87eb472dae3d42d4">ptof::Criterion_mass_above&lt; Subject &gt;</a>, <a class="el" href="../../da/df1/structptof_1_1_criterion__mass__below.html#a2c3bb1a32d6a9d97c682cc395bc50811">ptof::Criterion_mass_below&lt; Subject &gt;</a>, <a class="el" href="../../da/d6e/structptof_1_1_criterion__time.html#a6d5bffe819241a4a819309a4f982aa51">ptof::Criterion_time&lt; Subject &gt;</a>, and <a class="el" href="../../dc/df3/structptof_1_1_criterion__one__absorbed.html#a2f6dcdfd7e762df856ff9240604e903f">ptof::Criterion_one_absorbed&lt; Subject &gt;</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="aa911d023e09b5def41d445916c9c1afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa911d023e09b5def41d445916c9c1afa">&#9670;&nbsp;</a></span>_subject</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Subject const&amp; <a class="el" href="../../d9/d13/structptof_1_1_criterion.html">ptof::Criterion</a>&lt; Subject &gt;::_subject</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>PTOF/<a class="el" href="../../d6/d77/_output_8h_source.html">Output.h</a></li>
+<li>PTOF/<a class="el" href="../../df/d67/_criteria_8h_source.html">Criteria.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,5 +1,5 @@
 <map id="ptof::position_mean" name="ptof::position_mean">
-<area shape="rect" id="node1" title=" " alt="" coords="231,60,381,87"/>
-<area shape="rect" id="node2" href="$d1/d2d/structptof_1_1_output___cases_1_1_output__position__mean.html#aa5b640fad03a8d709b4e8a9e683f0f51" title="Make measurement and output, given current time time." alt="" coords="5,5,183,61"/>
-<area shape="rect" id="node3" href="$d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html#ad269e1037366cb5c109f9472e646999d" title="Make measurement and output, given current time time." alt="" coords="5,85,183,141"/>
+<area shape="rect" id="node1" title=" " alt="" coords="252,50,403,77"/>
+<area shape="rect" id="node2" href="$dd/d55/structptof_1_1_measurer_time__position__mean.html#a8eb78a85fddd2ef8cdc97d5a0a5c5c70" title="Make measurement and output, given current time time." alt="" coords="5,5,204,47"/>
+<area shape="rect" id="node3" href="$dd/da6/structptof_1_1_measurer_time__position__mean__periodic.html#a386efa320e4313e13be1d337cf6073ea" title="Make measurement and output, given current time time." alt="" coords="13,71,197,127"/>
 </map>

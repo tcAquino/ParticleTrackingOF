@@ -2,6 +2,16 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
 [
     [ "Advection.h", "db/d50/_advection_8h.html", "db/d50/_advection_8h" ],
     [ "Boundary.h", "dd/da3/_p_t_o_f_2_boundary_8h.html", "dd/da3/_p_t_o_f_2_boundary_8h" ],
+    [ "Criteria.h", "df/d67/_criteria_8h.html", [
+      [ "Criterion", "d9/d13/structptof_1_1_criterion.html", "d9/d13/structptof_1_1_criterion" ],
+      [ "Criterion_time", "da/d6e/structptof_1_1_criterion__time.html", "da/d6e/structptof_1_1_criterion__time" ],
+      [ "Criterion_mass_below", "da/df1/structptof_1_1_criterion__mass__below.html", "da/df1/structptof_1_1_criterion__mass__below" ],
+      [ "Criterion_mass_above", "d0/d36/structptof_1_1_criterion__mass__above.html", "d0/d36/structptof_1_1_criterion__mass__above" ],
+      [ "Criterion_all_absorbed", "da/d25/structptof_1_1_criterion__all__absorbed.html", "da/d25/structptof_1_1_criterion__all__absorbed" ],
+      [ "Criterion_one_absorbed", "dc/df3/structptof_1_1_criterion__one__absorbed.html", "dc/df3/structptof_1_1_criterion__one__absorbed" ],
+      [ "Criterion_fraction_not_absorbed", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed" ],
+      [ "EndCriterion", "dd/d0d/structptof_1_1_end_criterion.html", "dd/d0d/structptof_1_1_end_criterion" ]
+    ] ],
     [ "Directories.h", "d6/d77/_directories_8h.html", [
       [ "Directories", "df/d68/structptof_1_1_directories.html", "df/d68/structptof_1_1_directories" ],
       [ "DirectoriesOF", "d1/d82/structptof_1_1_directories_o_f.html", "d1/d82/structptof_1_1_directories_o_f" ]
@@ -25,46 +35,27 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
     [ "Locator_Parallel.h", "dd/d8c/_locator___parallel_8h.html", [
       [ "Locator_Cell_Parallel", "d5/db8/structptof_1_1_locator___cell___parallel.html", "d5/db8/structptof_1_1_locator___cell___parallel" ]
     ] ],
+    [ "Measure.h", "d3/daa/_measure_8h.html", [
+      [ "Measure", "dd/ddd/structptof_1_1_measure.html", "dd/ddd/structptof_1_1_measure" ],
+      [ "MeasureSpacing", "d4/dd7/structptof_1_1_measure_spacing.html", "d4/dd7/structptof_1_1_measure_spacing" ],
+      [ "MeasureSpacingUnits", "d2/d80/structptof_1_1_measure_spacing_units.html", "d2/d80/structptof_1_1_measure_spacing_units" ]
+    ] ],
+    [ "Measurer.h", "d4/d94/_measurer_8h.html", [
+      [ "Measurer", "db/d74/structptof_1_1_measurer.html", "db/d74/structptof_1_1_measurer" ],
+      [ "Measurer_absorption_time", "d4/d33/structptof_1_1_measurer__absorption__time.html", "d4/d33/structptof_1_1_measurer__absorption__time" ]
+    ] ],
+    [ "MeasurerTime.h", "d4/de6/_measurer_time_8h.html", "d4/de6/_measurer_time_8h" ],
     [ "Meta.h", "d6/dfd/_p_t_o_f_2_meta_8h.html", "d6/dfd/_p_t_o_f_2_meta_8h" ],
     [ "Models.h", "d3/d74/_models_8h.html", "d3/d74/_models_8h" ],
     [ "Models_Parallel.h", "d0/dee/_models___parallel_8h.html", "d0/dee/_models___parallel_8h" ],
     [ "Output.h", "d6/d77/_output_8h.html", [
-      [ "EndCriterion", "dd/d0d/structptof_1_1_end_criterion.html", "dd/d0d/structptof_1_1_end_criterion" ],
-      [ "MeasureSpacing", "d4/dd7/structptof_1_1_measure_spacing.html", "d4/dd7/structptof_1_1_measure_spacing" ],
-      [ "MeasureSpacingUnits", "d2/d80/structptof_1_1_measure_spacing_units.html", "d2/d80/structptof_1_1_measure_spacing_units" ],
-      [ "Measure", "dd/ddd/structptof_1_1_measure.html", "dd/ddd/structptof_1_1_measure" ],
-      [ "Criterion", "d9/d13/structptof_1_1_criterion.html", "d9/d13/structptof_1_1_criterion" ],
-      [ "Criterion_time", "da/d6e/structptof_1_1_criterion__time.html", "da/d6e/structptof_1_1_criterion__time" ],
-      [ "Criterion_mass_below", "da/df1/structptof_1_1_criterion__mass__below.html", "da/df1/structptof_1_1_criterion__mass__below" ],
-      [ "Criterion_mass_above", "d0/d36/structptof_1_1_criterion__mass__above.html", "d0/d36/structptof_1_1_criterion__mass__above" ],
-      [ "Criterion_all_absorbed", "da/d25/structptof_1_1_criterion__all__absorbed.html", "da/d25/structptof_1_1_criterion__all__absorbed" ],
-      [ "Criterion_one_absorbed", "dc/df3/structptof_1_1_criterion__one__absorbed.html", "dc/df3/structptof_1_1_criterion__one__absorbed" ],
-      [ "Criterion_fraction_not_absorbed", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html", "d7/db0/structptof_1_1_criterion__fraction__not__absorbed" ],
-      [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
-      [ "Measurement", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement" ],
+      [ "OutputParameters", "da/dac/structptof_1_1_output_parameters.html", "da/dac/structptof_1_1_output_parameters" ],
+      [ "Measurement", "dd/dcd/structptof_1_1_output_parameters_1_1_measurement.html", "dd/dcd/structptof_1_1_output_parameters_1_1_measurement" ],
       [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
       [ "NextMeasureTime", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time" ],
       [ "NextMeasureTime_step", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step.html", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step" ],
       [ "NextMeasureTime_linear", "dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear.html", "dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear" ],
-      [ "NextMeasureTime_log", "d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log.html", "d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log" ],
-      [ "OutputTime", "d2/d71/structptof_1_1_output___cases_1_1_output_time.html", "d2/d71/structptof_1_1_output___cases_1_1_output_time" ],
-      [ "Output", "d0/d91/structptof_1_1_output___cases_1_1_output.html", "d0/d91/structptof_1_1_output___cases_1_1_output" ],
-      [ "Output_position", "d3/ded/structptof_1_1_output___cases_1_1_output__position.html", "d3/ded/structptof_1_1_output___cases_1_1_output__position" ],
-      [ "Output_position_in_regions", "dd/dd4/structptof_1_1_output___cases_1_1_output__position__in__regions.html", "dd/dd4/structptof_1_1_output___cases_1_1_output__position__in__regions" ],
-      [ "Output_position_mean", "d1/d2d/structptof_1_1_output___cases_1_1_output__position__mean.html", "d1/d2d/structptof_1_1_output___cases_1_1_output__position__mean" ],
-      [ "Output_position_second_moment", "dc/dc1/structptof_1_1_output___cases_1_1_output__position__second__moment.html", "dc/dc1/structptof_1_1_output___cases_1_1_output__position__second__moment" ],
-      [ "Output_position_variance", "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance.html", "d5/d2b/structptof_1_1_output___cases_1_1_output__position__variance" ],
-      [ "Output_mass", "d3/da0/structptof_1_1_output___cases_1_1_output__mass.html", "d3/da0/structptof_1_1_output___cases_1_1_output__mass" ],
-      [ "Output_mass_in_regions", "dd/d8c/structptof_1_1_output___cases_1_1_output__mass__in__regions.html", "dd/d8c/structptof_1_1_output___cases_1_1_output__mass__in__regions" ],
-      [ "Output_scalar_field", "d8/d38/structptof_1_1_output___cases_1_1_output__scalar__field.html", "d8/d38/structptof_1_1_output___cases_1_1_output__scalar__field" ],
-      [ "Output_vector_field", "d3/dbb/structptof_1_1_output___cases_1_1_output__vector__field.html", "d3/dbb/structptof_1_1_output___cases_1_1_output__vector__field" ],
-      [ "Output_tensor_field", "d0/da0/structptof_1_1_output___cases_1_1_output__tensor__field.html", "d0/da0/structptof_1_1_output___cases_1_1_output__tensor__field" ],
-      [ "Output_position_periodic", "d3/d84/structptof_1_1_output___cases_1_1_output__position__periodic.html", "d3/d84/structptof_1_1_output___cases_1_1_output__position__periodic" ],
-      [ "Output_position_in_regions_periodic", "d5/d8c/structptof_1_1_output___cases_1_1_output__position__in__regions__periodic.html", "d5/d8c/structptof_1_1_output___cases_1_1_output__position__in__regions__periodic" ],
-      [ "Output_position_mean_periodic", "d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic.html", "d3/d02/structptof_1_1_output___cases_1_1_output__position__mean__periodic" ],
-      [ "Output_position_second_moment_periodic", "da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic.html", "da/d6d/structptof_1_1_output___cases_1_1_output__position__second__moment__periodic" ],
-      [ "Output_position_variance_periodic", "d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic.html", "d7/dc2/structptof_1_1_output___cases_1_1_output__position__variance__periodic" ],
-      [ "Output_absorption_time", "d8/d3c/structptof_1_1_output___cases_1_1_output__absorption__time.html", "d8/d3c/structptof_1_1_output___cases_1_1_output__absorption__time" ]
+      [ "NextMeasureTime_log", "d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log.html", "d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log" ]
     ] ],
     [ "ParticleMaker.h", "da/d16/_particle_maker_8h.html", "da/d16/_particle_maker_8h" ],
     [ "Phase.h", "d9/daa/_phase_8h.html", [

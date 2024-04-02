@@ -1,5 +1,5 @@
 <map id="ptof::Output_Cases&lt; Subject, Geometry &gt;::NextMeasureTime_linear" name="ptof::Output_Cases&lt; Subject, Geometry &gt;::NextMeasureTime_linear">
-<area shape="rect" id="node1" title="NextMeasureTime object for linearly&#45;spaced times." alt="" coords="5,215,215,271"/>
-<area shape="rect" id="node2" href="$de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html" title=" " alt="" coords="27,109,193,165"/>
-<area shape="rect" id="node3" href="$d8/d12/structptof_1_1_output_parameters___cases.html" title="Output parameters to handle the output types in Output_Cases." alt="" coords="23,5,197,47"/>
+<area shape="rect" id="node1" title="NextMeasureTime object for linearly&#45;spaced times." alt="" coords="5,200,215,256"/>
+<area shape="rect" id="node2" href="$de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html" title="Polymorphic object to handle setting up the next measurement time." alt="" coords="27,95,193,151"/>
+<area shape="rect" id="node3" href="$da/dac/structptof_1_1_output_parameters.html" title="Parameters for output." alt="" coords="23,5,197,32"/>
 </map>
