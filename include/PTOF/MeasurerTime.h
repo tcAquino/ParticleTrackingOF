@@ -114,10 +114,9 @@ namespace ptof
               << std::setw(_column_widths[1]) << "Tag";
       for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
         _output << std::setw(_column_widths[2])
-                              << "Position_" + std::to_string(dd);
-      _output << std::setw(_column_widths[3]) << "Mass";
-        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
-      _output << std::setw(_column_widths[1]) << "Tag"
+                << "Position_" + std::to_string(dd);
+      _output << std::setw(_column_widths[3]) << "Mass"
+              << std::setw(_column_widths[1]) << "Tag"
               << std::setw(_column_widths[2]) << "..."
               << "\n";
     }
@@ -133,7 +132,7 @@ namespace ptof
         {
           _output << std::setw(_column_widths[1]) << state.tag;
           useful::print(_output, state.position, _column_widths[2]);
-          _output << _column_widths[3] << state.mass;
+          _output << std::setw(_column_widths[3]) << state.mass;
         }
       }
       _output << "\n";
@@ -862,7 +861,7 @@ namespace ptof
               << std::setw(_column_widths[1]) << "Tag";
       for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
         _output << std::setw(_column_widths[2])
-                            << "Position_" + std::to_string(dd);
+                << "Position_" + std::to_string(dd);
       _output << std::setw(_column_widths[3]) << "Mass"
               << std::setw(_column_widths[1]) << "Tag"
               << std::setw(_column_widths[2]) << "..."
