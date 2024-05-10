@@ -718,7 +718,7 @@ $(document).ready(function(){initNavTree('d6/d77/_output_8h_source.html','../../
 <div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;                measurement.precision));</div>
 <div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;            <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;              <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;                <span class="stringliteral">&quot;Measurement type &quot;</span> + <a class="code" href="../../dd/ddd/structptof_1_1_measure.html#abd63239733f5f503ee48f31d72128e18">Measure::type</a>(measurement.name) + <span class="stringliteral">&quot;: &quot;</span></div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;                std::string(<span class="stringliteral">&quot;Measurement type &quot;</span>) + measurement.name + <span class="stringliteral">&quot;: &quot;</span></div>
 <div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;                + <span class="stringliteral">&quot;Velocity field not provided&quot;</span> };</div>
 <div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;          }</div>
@@ -735,7 +735,7 @@ $(document).ready(function(){initNavTree('d6/d77/_output_8h_source.html','../../
 <div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                measurement.precision));</div>
 <div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;              <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                <span class="stringliteral">&quot;Measurement type &quot;</span> + measurement.name + <span class="stringliteral">&quot;: &quot;</span></div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                std::string(<span class="stringliteral">&quot;Measurement type &quot;</span>) + measurement.name + <span class="stringliteral">&quot;: &quot;</span></div>
 <div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;                + <span class="stringliteral">&quot;Velocity field not provided&quot;</span> };</div>
 <div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;          }</div>

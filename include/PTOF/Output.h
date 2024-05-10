@@ -693,7 +693,7 @@ namespace ptof
                 measurement.precision));
             else
               throw std::runtime_error{
-                "Measurement type " + Measure::type(measurement.name) + ": "
+                std::string("Measurement type ") + measurement.name + ": "
                 + "Velocity field not provided" };
             break;
           }
@@ -710,7 +710,7 @@ namespace ptof
                 measurement.precision));
             else
               throw std::runtime_error{
-                "Measurement type " + measurement.name + ": "
+                std::string("Measurement type ") + measurement.name + ": "
                 + "Velocity field not provided" };
             break;
           }
