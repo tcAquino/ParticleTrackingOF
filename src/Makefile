@@ -8,7 +8,7 @@ PTHOFLIB = $(FOAM_LIBBIN)
 PTH = ../include
 PTHBIN = ../bin
 OPT = -DNDEBUG -O3
-WFLAGS = -Wall -Wextra -Wno-unused-parameter -Wno-undefined-var-template
+WFLAGS = -Wall -Wextra -Wno-unused-parameter
 LIB = -L$(PTHOFLIB) -L$(PTHOFLIB)/sys-openmpi 
 INC = -I/usr/local/include -I$(PTH) -I$(PTHOFINC)/finiteVolume/lnInclude -I$(PTHOFINC)/meshTools/lnInclude -I$(PTHOFINC)/OpenFOAM/lnInclude -I$(PTHOFINC)/OSspecific/POSIX/lnInclude
 
@@ -23,6 +23,7 @@ ifeq ($(CXX),g++)
 endif
 
 ifeq ($(CXX),clang++)
+	WFLAGS += -Wno-undefined-var-template
 	ifneq ($(findstring darwin,$(WM_ARCH)),)
 		PFLAGS += -Xclang -fopenmp -fopenmp-version=45
 		PLFLAGS += -lomp
