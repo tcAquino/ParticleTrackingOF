@@ -57,7 +57,7 @@ var namespaceuseful =
     [ "print", "df/d1d/namespaceuseful.html#a513ff67b7b8e5c697b37881309ab1b82", null ],
     [ "read", "df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466", null ],
     [ "read", "df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01", null ],
-    [ "read_first_from_line", "df/d1d/namespaceuseful.html#a7a9f70110ac47b2f667a199e0831c14c", null ],
+    [ "read_first_from_line", "df/d1d/namespaceuseful.html#af5694b6f3384bf45fe3d7f7ea1d982e5", null ],
     [ "read_first_from_line", "df/d1d/namespaceuseful.html#a5311197ad21c705ad8556c9798a30d0e", null ],
     [ "remove_carriage_return", "df/d1d/namespaceuseful.html#a96d026acd899b4083773513046d2e439", null ],
     [ "remove_carriage_return_in_place", "df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c", null ],

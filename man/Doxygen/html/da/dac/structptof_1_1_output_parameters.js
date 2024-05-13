@@ -7,7 +7,6 @@ var structptof_1_1_output_parameters =
     [ "read_measure_spacing", "da/dac/structptof_1_1_output_parameters.html#aedb33d453988c13505f0b79a0402fa36", null ],
     [ "read_measurement_types", "da/dac/structptof_1_1_output_parameters.html#ab9091ecb0b1b48aa1c3639f6503f42d0", null ],
     [ "read_time_units", "da/dac/structptof_1_1_output_parameters.html#abfe930c0a12e406281a9312494abea07", null ],
-    [ "comment_sequence", "da/dac/structptof_1_1_output_parameters.html#a9cdc2eec787bbe5471ac6399f4a47be3", null ],
     [ "end_criterion", "da/dac/structptof_1_1_output_parameters.html#a177373161b3ed52601d144d9feddc61c", null ],
     [ "end_value", "da/dac/structptof_1_1_output_parameters.html#a77c504542abcc5506df069d1dc2a6f68", null ],
     [ "measure_spacing", "da/dac/structptof_1_1_output_parameters.html#a506d02cf336281d3ab8d5dc797d8e76e", null ],

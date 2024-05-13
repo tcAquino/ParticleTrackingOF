@@ -86,7 +86,6 @@ $(document).ready(function(){initNavTree('d1/d82/structptof_1_1_directories_o_f.
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">ptof::DirectoriesOF Struct Reference</div>  </div>
@@ -109,6 +108,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae3e6dcf88f63c39323d24a4ee6e1e808"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#ae3e6dcf88f63c39323d24a4ee6e1e808">info_runtime</a> (OStream &amp;output) const</td></tr>
 <tr class="memdesc:ae3e6dcf88f63c39323d24a4ee6e1e808"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> information about current object.  <a href="../../d1/d82/structptof_1_1_directories_o_f.html#ae3e6dcf88f63c39323d24a4ee6e1e808">More...</a><br /></td></tr>
 <tr class="separator:ae3e6dcf88f63c39323d24a4ee6e1e808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4860cc22e836b3474ffaf6e0854900"><td class="memItemLeft" align="right" valign="top">Foam::Time&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900">makeRunTime</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
+<tr class="separator:aac4860cc22e836b3474ffaf6e0854900"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -126,17 +127,12 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a277719db28ac3f1df84a95883b96458c"><td class="memItemLeft" align="right" valign="top">Foam::Time&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#a277719db28ac3f1df84a95883b96458c">time</a></td></tr>
 <tr class="separator:a277719db28ac3f1df84a95883b96458c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:aac4860cc22e836b3474ffaf6e0854900"><td class="memItemLeft" align="right" valign="top">Foam::Time&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900">makeRunTime</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
-<tr class="separator:aac4860cc22e836b3474ffaf6e0854900"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a457ed0c7898ffdea27f206ac25ddb97e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#a457ed0c7898ffdea27f206ac25ddb97e">_time_name_input</a></td></tr>
-<tr class="separator:a457ed0c7898ffdea27f206ac25ddb97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c0185ec3b4004b68e56db8789402012"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#a2c0185ec3b4004b68e56db8789402012">comment_sequence</a> = &quot;#&quot;</td></tr>
 <tr class="separator:a2c0185ec3b4004b68e56db8789402012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a457ed0c7898ffdea27f206ac25ddb97e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html#a457ed0c7898ffdea27f206ac25ddb97e">_time_name_input</a></td></tr>
+<tr class="separator:a457ed0c7898ffdea27f206ac25ddb97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Object to handle OpenFOAM case directories. </p>
@@ -290,7 +286,7 @@ template&lt;typename OStream &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

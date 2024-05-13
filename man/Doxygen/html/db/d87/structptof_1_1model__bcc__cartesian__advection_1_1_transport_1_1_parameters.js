@@ -5,7 +5,6 @@ var structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters 
     [ "rescale", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a918ad61a73a353863fdf1bded888b801", null ],
     [ "advection_time", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a4f455c26cae3075b79060b45453a70af", null ],
     [ "cell_side", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a2f15851121c0b1f1dbab105f3ed49aac", null ],
-    [ "comment_sequence", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#aeaba065e41a3f55a1ad057be6b164541", null ],
     [ "diff_coeff", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a6503edfa9d9e2d79d727a8e4ab2d13ad", null ],
     [ "diffusion_time", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a915de4d26da547986bc54a0e3767fbc2", null ],
     [ "lengthscale", "db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a753892d9ce7a3630e13b060f084a63d6", null ],

@@ -47,7 +47,7 @@ digraph "useful::remove_carriage_return_in_place"
   Node20 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node21 [label="ptof::OutputParameters\l::OutputParameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dac/structptof_1_1_output_parameters.html#a5fbbe7fd814d6ce687a4beeaa5bd1f5a",tooltip=" "];
   Node10 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 [label="useful::read_first\l_from_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a7a9f70110ac47b2f667a199e0831c14c",tooltip="Extract first value from line, discarding escaped lines and the rest of the line."];
+  Node22 [label="useful::read_first\l_from_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#af5694b6f3384bf45fe3d7f7ea1d982e5",tooltip="Extract first value from line, discarding escaped lines and the rest of the line."];
   Node10 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 [label="ptof::OutputParameters\l::read_measure_spacing",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dac/structptof_1_1_output_parameters.html#aedb33d453988c13505f0b79a0402fa36",tooltip="Read measure spacing type from input stream."];
   Node23 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

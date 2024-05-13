@@ -1,6 +1,5 @@
 var NAVTREEINDEX6 =
 {
-"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#aa911d023e09b5def41d445916c9c1afa":[7,0,3,59,2],
 "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#adf13d45e9ed94c6ad2de694729f89ea2":[7,0,3,59,1],
 "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#ae5066fc6d959fe6670471da97603060b":[7,0,3,59,0],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html":[6,0,7,42],
@@ -70,15 +69,14 @@ var NAVTREEINDEX6 =
 "d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#aee0a401b5b4c64de1ab42b0c1ce1b62e":[7,0,0,1,35],
 "d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#afe8350bf9c9026b83c812de9105850c3":[7,0,0,1,36],
 "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html":[7,0,3,0,2,0],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4554e5925a455684c8961645bdb49fbc":[7,0,3,0,2,0,10],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4554e5925a455684c8961645bdb49fbc":[7,0,3,0,2,0,9],
 "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be":[7,0,3,0,2,0,0],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a50232ebd1b98bbcb80bc28ecad7f610a":[7,0,3,0,2,0,6],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a88cbe54fced1542fbf500a125d5e724a":[7,0,3,0,2,0,11],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a9868a7dd0b242b34d55e35c8d67dd6cf":[7,0,3,0,2,0,4],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a98a3058258f5cfecfc3bf5762b6a9183":[7,0,3,0,2,0,8],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#aa50358c64bb467c9e642db571c810b91":[7,0,3,0,2,0,5],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#aaf33ea2fabc267587e495d8a15f2acd0":[7,0,3,0,2,0,7],
-"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#abea9a9093fb5a1952caf76c892eaf1a2":[7,0,3,0,2,0,9],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a50232ebd1b98bbcb80bc28ecad7f610a":[7,0,3,0,2,0,5],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a88cbe54fced1542fbf500a125d5e724a":[7,0,3,0,2,0,10],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a98a3058258f5cfecfc3bf5762b6a9183":[7,0,3,0,2,0,7],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#aa50358c64bb467c9e642db571c810b91":[7,0,3,0,2,0,4],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#aaf33ea2fabc267587e495d8a15f2acd0":[7,0,3,0,2,0,6],
+"d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#abea9a9093fb5a1952caf76c892eaf1a2":[7,0,3,0,2,0,8],
 "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#ad0b95680522388b290786b31da693581":[7,0,3,0,2,0,1],
 "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#ae228f4c806c1cee1eb76402a79d42ffb":[7,0,3,0,2,0,2],
 "d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#af366726fbe4bacc7fa73eccf20576c4f":[7,0,3,0,2,0,3],
@@ -249,5 +247,7 @@ var NAVTREEINDEX6 =
 "d8/db6/namespacemeta.html#a6101c83d5c59bafda488129f18b0dff8":[6,0,3,55],
 "d8/db6/namespacemeta.html#a61207fc27ed172f3816674c27b26d081":[6,0,3,31],
 "d8/db6/namespacemeta.html#a64db8756b97ca1362801d454dcf8a491":[6,0,3,25],
-"d8/db6/namespacemeta.html#a690e890772152607100660d24911ce4b":[6,0,3,50]
+"d8/db6/namespacemeta.html#a690e890772152607100660d24911ce4b":[6,0,3,50],
+"d8/db6/namespacemeta.html#a700f9619f56c78c94f9ca8d1178acf40":[6,0,3,68],
+"d8/db6/namespacemeta.html#a704f5d9e045850a35691508a1b019878":[6,0,3,49]
 };
