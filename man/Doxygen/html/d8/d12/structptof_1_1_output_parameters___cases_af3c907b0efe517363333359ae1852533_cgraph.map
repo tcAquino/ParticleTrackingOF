@@ -1,6 +1,0 @@
-<map id="ptof::OutputParameters_Cases::read_end_criterion" name="ptof::OutputParameters_Cases::read_end_criterion">
-<area shape="rect" id="node1" title="Read end criterion from input stream." alt="" coords="5,27,203,69"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466" title="Read next value from file." alt="" coords="269,5,367,32"/>
-<area shape="rect" id="node3" href="$dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062" title=" " alt="" coords="251,57,385,98"/>
-<area shape="rect" id="node4" href="$dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="433,57,568,98"/>
-</map>

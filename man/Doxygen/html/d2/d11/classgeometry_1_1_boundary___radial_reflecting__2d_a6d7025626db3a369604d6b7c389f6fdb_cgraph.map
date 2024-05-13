@@ -1,7 +1,0 @@
-<map id="geometry::Boundary_RadialReflecting_2d::outOfBounds" name="geometry::Boundary_RadialReflecting_2d::outOfBounds">
-<area shape="rect" id="node1" title="Check if position is out of bounds." alt="" coords="5,5,164,61"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="212,20,303,47"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="351,20,420,47"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="468,20,539,47"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="587,20,657,47"/>
-</map>

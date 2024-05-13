@@ -1,9 +1,0 @@
-<map id="ptof::model_advection_diffusion_2d::Transport::makeVelocityInterpolator" name="ptof::model_advection_diffusion_2d::Transport::makeVelocityInterpolator">
-<area shape="rect" id="node1" title=" " alt="" coords="5,45,200,101"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="284,23,419,65"/>
-<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#a76b58a938a23e25fad266087fcfdade5" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="248,89,455,116"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="509,5,679,32"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="503,56,685,83"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="733,49,879,90"/>
-<area shape="rect" id="node6" href="$dc/dc5/namespaceoperation.html#a9debef4d2a93a63a963577836e14631b" title="Sum of elements." alt="" coords="927,56,1047,83"/>
-</map>

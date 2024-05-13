@@ -1,8 +1,0 @@
-<map id="geometry::Sphere::inside" name="geometry::Sphere::inside">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,189,57"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="237,5,328,32"/>
-<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="239,56,326,83"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="376,5,445,32"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="493,5,564,32"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="612,5,683,32"/>
-</map>

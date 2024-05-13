@@ -1,5 +1,0 @@
-<map id="geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo::outOfBounds" name="geometry::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo::outOfBounds">
-<area shape="rect" id="node1" title="Check if position is out of bounds." alt="" coords="5,5,232,61"/>
-<area shape="rect" id="node2" href="$d5/d5f/namespacegeometry.html#a3a9815f6acd3a7cee748661f747159c8" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="280,20,417,47"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3" title="Dot product." alt="" coords="465,20,532,47"/>
-</map>

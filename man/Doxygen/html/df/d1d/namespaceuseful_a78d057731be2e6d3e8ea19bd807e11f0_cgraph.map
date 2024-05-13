@@ -1,7 +1,8 @@
 <map id="useful::load_pair_1" name="useful::load_pair_1">
-<area shape="rect" id="node1" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="5,56,151,83"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="201,5,340,32"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="199,56,343,83"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="221,107,320,133"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="391,5,567,32"/>
+<area shape="rect" id="node1" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="5,85,151,112"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="219,5,358,32"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="217,56,361,83"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="199,107,379,149"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="239,173,338,200"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="427,5,603,32"/>
 </map>

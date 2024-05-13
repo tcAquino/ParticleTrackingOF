@@ -1,5 +1,0 @@
-<map id="ptof::model_advection_2d_parallel::Transport::Parameters::rescale" name="ptof::model_advection_2d_parallel::Transport::Parameters::rescale">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,175,61"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="223,13,368,54"/>
-<area shape="rect" id="node3" href="$dc/dc5/namespaceoperation.html#a9debef4d2a93a63a963577836e14631b" title="Sum of elements." alt="" coords="416,20,536,47"/>
-</map>

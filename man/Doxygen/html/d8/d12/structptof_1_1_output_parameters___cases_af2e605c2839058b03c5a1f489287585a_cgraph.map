@@ -1,5 +1,0 @@
-<map id="ptof::OutputParameters_Cases::read_measurement_types" name="ptof::OutputParameters_Cases::read_measurement_types">
-<area shape="rect" id="node1" title="Read measure spacing type from input stream." alt="" coords="5,35,252,76"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a49506338cfa81fcd43ec3c1294d847e9" title=" " alt="" coords="300,5,480,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="341,71,439,98"/>
-</map>

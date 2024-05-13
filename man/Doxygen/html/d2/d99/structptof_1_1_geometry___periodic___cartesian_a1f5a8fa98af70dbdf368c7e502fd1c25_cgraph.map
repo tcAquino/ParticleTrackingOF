@@ -1,7 +1,0 @@
-<map id="ptof::Geometry_Periodic_Cartesian::make_boundary_periodic" name="ptof::Geometry_Periodic_Cartesian::make_boundary_periodic">
-<area shape="rect" id="node1" title="Make a boundary object to enforce periodicity based on cartesian planes." alt="" coords="5,49,208,105"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="261,23,429,65"/>
-<area shape="rect" id="node5" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a0b0603572f99b2307a7194317507d1a3" title=" " alt="" coords="256,89,435,130"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="489,5,607,32"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="483,56,613,83"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="ptof::Geometry_Periodic_Cartesian::mesh" name="ptof::Geometry_Periodic_Cartesian::mesh">
-<area shape="rect" id="node1" title=" " alt="" coords="256,43,435,84"/>
-<area shape="rect" id="node2" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a2eeb34ec6cbb018b3befff410881e8ec" title="Output information about current object." alt="" coords="15,5,198,47"/>
-<area shape="rect" id="node3" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a762f83df72507ce32e45867bb047df4a" title="Make a boundary object to enforce periodicity based on cartesian planes." alt="" coords="5,71,208,127"/>
-</map>

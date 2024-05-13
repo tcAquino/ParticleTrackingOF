@@ -1,8 +1,0 @@
-<map id="Grid" name="Grid">
-<area shape="rect" id="node1" href="dir_b29de073dfc2204bac62d41e03b5d1ca.html" title="Grid" alt="" coords="5,5,77,53"/>
-<area shape="rect" id="node2" href="dir_bba024cd03edd7f9d6096b84e1006209.html" title="general" alt="" coords="5,197,77,245"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000005_000003.html" title="3" alt="" coords="35,170,44,185"/>
-<area shape="rect" id="node3" href="dir_eccc925508204c58f9de69585b548932.html" title="Geometry" alt="" coords="39,101,126,149"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000005_000004.html" title="1" alt="" coords="68,74,78,89"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000004_000003.html" title="3" alt="" coords="62,177,71,191"/>
-</map>

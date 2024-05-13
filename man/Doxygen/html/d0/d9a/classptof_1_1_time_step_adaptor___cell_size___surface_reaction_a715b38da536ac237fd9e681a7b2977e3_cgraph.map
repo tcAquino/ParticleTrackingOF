@@ -1,7 +1,0 @@
-<map id="ptof::TimeStepAdaptor_CellSize_SurfaceReaction::operator()" name="ptof::TimeStepAdaptor_CellSize_SurfaceReaction::operator()">
-<area shape="rect" id="node1" title="Update time step." alt="" coords="5,41,200,97"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="264,5,395,32"/>
-<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html#a94925072836750a7fe728159e40e51c0" title=" " alt="" coords="248,56,411,83"/>
-<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html#a167e4cee9d09e6dbdf279f688c21bdc7" title=" " alt="" coords="262,107,397,149"/>
-<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html#a9de788b006e6d41d6a831fdf817f285a" title=" " alt="" coords="459,107,593,149"/>
-</map>

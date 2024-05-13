@@ -1,4 +1,0 @@
-var namespaceptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__2d =
-[
-    [ "Model", "d7/d7f/structptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__2d_1_1_model.html", "d7/d7f/structptof_1_1model__periodic__cartesian__advection__diffusion__decay__catalytic__2d_1_1_model" ]
-];

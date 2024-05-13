@@ -1,5 +1,0 @@
-<map id="useful::isnan" name="useful::isnan">
-<area shape="rect" id="node1" title="Implemented here because some versions of gcc have trouble with std::isnan." alt="" coords="229,60,335,87"/>
-<area shape="rect" id="node2" href="$d2/d11/classgeometry_1_1_boundary___radial_reflecting__2d.html#a9f4876b7aa543e0d9930dbc53dd2a0c3" title="Enforce boundary condition." alt="" coords="14,5,173,61"/>
-<area shape="rect" id="node3" href="$d8/d86/classgeometry_1_1_boundary___open___radial_reflecting__3d.html#ace73e13a2b0d7b2863cf3d895f0ff824" title="Enforce boundary condition." alt="" coords="5,85,181,141"/>
-</map>
