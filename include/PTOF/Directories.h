@@ -114,6 +114,8 @@ namespace ptof
     }
     
   private:
+    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+    
     /**
      \param directories Current case directory information.
      \return OpenFOAM runTime instance given Directories information. */
@@ -121,10 +123,9 @@ namespace ptof
     {
       auto input = useful::open_read(directories.dir_parameters
                                      + "/of.dat");
-      std::string dir;
-      useful::read(input, dir);
-      useful::read(input, case_name);
-      useful::read(input, _time_name_input);
+      auto dir = useful::read_first_from_line<std::string>(input, comment_sequence);
+      useful::read_first_from_line(input, case_name, comment_sequence);
+      useful::read_first_from_line(input, _time_name_input, comment_sequence);
       input.close();
       
       if (useful::is_empty(dir))

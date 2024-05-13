@@ -80,7 +80,7 @@ namespace useful
         || string == "False" || string == "FALSE")
       return false;
     throw std::runtime_error{
-      "Expected true or false, got"
+      std::string("Expected true or false, got")
       + string };
   }
   
@@ -127,6 +127,23 @@ namespace useful
    std::string const& new_extension)
   {
     return remove_extension(filename) + new_extension;
+  }
+  
+  /** \brief Remove \verbatim \r \endverbatim character */
+  std::string remove_carriage_return(std::string const& str)
+  {
+    std::string str_copy;
+    if (!str_copy.empty() && str_copy.back() == '\r')
+      str_copy.pop_back();
+    return str_copy;
+  }
+  
+  /** \brief Remove \verbatim \r \endverbatim character */
+  std::string& remove_carriage_return_in_place(std::string& str)
+  {
+    if (!str.empty() && str.back() == '\r')
+      str.pop_back();
+    return str;
   }
 
   // Based on Toby Speight's answer here:
@@ -236,7 +253,7 @@ namespace useful
   (std::string const& filename, std::string const& line)
   {
     return std::runtime_error{
-      "Could not parse line\n" + line +
+      std::string("Could not parse line\n") + line +
       "\nin file " + filename };
   }
   
@@ -244,35 +261,38 @@ namespace useful
   auto parse_error_file(std::string const& filename)
   {
     return std::runtime_error{
-      "Could not parse file " + filename };
+      std::string("Could not parse file ") + filename };
   }
   
   /** \return Exception for failing to parse a line. */
   auto parse_error_line(std::string const& line)
   {
     return std::runtime_error{
-      "Could not parse line\n" + line };
+      std::string("Could not parse line\n") + line };
   }
   
   /** \return Exception for failing to open a file for reading. */
   auto open_read_error(std::string const& filename)
   {
     return std::runtime_error{
-      "Could not open file " + filename + " for reading" };
+      std::string("Could not open file ")
+      + filename + " for reading" };
   }
   
   /** \return Exception for failing to open a file for writing. */
   auto open_write_error(std::string const& filename)
   {
     return std::runtime_error{
-      "Could not open file " + filename + " for writing" };
+      std::string("Could not open file ")
+      + filename + " for writing" };
   }
   
   /** \return Exception for unexpected contents in file. */
   auto bad_file_contents(std::string const& filename)
   {
     return std::runtime_error{
-      "Innapropriate contents in file " + filename };
+      std::string("Innapropriate contents in file ")
+      + filename };
   }
   
   /** \return TException for finding the end of a file before expected string. */
@@ -280,8 +300,9 @@ namespace useful
   (std::string const& filename, std::string const& string)
   {
     return std::runtime_error{
-    "Reached end of " +
-      filename + " before " + string + " was found" };
+      std::string("Reached end of ")
+      + filename + " before "
+      + string + " was found" };
   }
   
   /** \return Exception for bad parameters. */
@@ -343,6 +364,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
+      remove_carriage_return_in_place(line);
       std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != 1)
         throw parse_error(filename, line);
@@ -371,6 +393,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
+      remove_carriage_return_in_place(line);
       std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != 2)
         throw parse_error(filename, line);
@@ -404,6 +427,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
+      remove_carriage_return_in_place(line);
       std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != 3)
         throw parse_error(filename, line);
@@ -435,6 +459,7 @@ namespace useful
     
     while (std::getline(file, line))
     {
+      remove_carriage_return_in_place(line);
       std::vector<std::string> split_line = split(line, delims);
       if (split_line.size() != nr_columns)
         throw parse_error(filename, line);
@@ -479,6 +504,15 @@ namespace useful
     return str.substr(0, str.find(escape_sequence));
   }
   
+  /** \brief Remove comments after escape sequence */
+  std::string& clear_escape_in_place(std::string& str, std::string const& escape_sequence)
+  {
+    std::size_t pos = str.find(escape_sequence);
+    if (pos != std::string::npos)
+      str.erase(pos);
+    return str;
+  }
+  
   /** \brief Read next value from file. */
   template <typename Type>
   void read(std::ifstream& input, Type& val)
@@ -490,16 +524,17 @@ namespace useful
   
   /** \brief Extract first value from line, discarding escaped lines and the rest of the line */
   template <typename Type>
-  void read_first_from_line(std::ifstream& input, Type& val, std::string const& escape_sequence)
+  void read_first_from_line
+  (std::ifstream& input, Type& val, std::string const& escape_sequence,
+   std::string const& delims = "\t,|\r ")
   {
     std::string line;
     while (std::getline(input, line))
-    {
       if (line.find(escape_sequence) != 0)
         break;
-    }
-    line = useful::clear_escape(line, "#");
-    auto split_line = split(line);
+    remove_carriage_return_in_place(line);
+    clear_escape_in_place(line, escape_sequence);
+    auto split_line = split(line, delims);
     if (split_line.empty())
       throw std::runtime_error{ "Could not read value" };
     
@@ -514,13 +549,6 @@ namespace useful
     Type val;
     read_first_from_line(input, val, escape_sequence);
     return val;
-  }
-
-  std::string& remove_carriage_return(std::string& str)
-  {
-    if (!str.empty() && str.back() == '\r')
-      str.pop_back();
-    return str;
   }
   
   /** \return Sign of \p val. */

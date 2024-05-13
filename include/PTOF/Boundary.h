@@ -134,25 +134,25 @@ namespace ptof
 
   /**
    \brief Get the boundary conditions associated with a set of patches from file.
-   \param filename Name of file holding a patch name followed by a boundary condition type in each line
-   \param header_lines Number of header lines to ignore in file
-   \param delims Possible delimiters between patch names and boundary condition types
+   \param filename Name of file holding a patch name followed by a boundary condition type in each line.
+   \param delims Possible delimiters between patch names and boundary condition types.
   */
   auto get_boundary_conditions
   (std::string const& filename,
-   std::size_t header_lines = 0,
    std::string const& delims = "\t,| ")
   {
     std::unordered_map<std::string, std::string>
       boundary_conditions;
+    std::string comment_sequence = "#";
     
     auto file = useful::open_read(filename);
     std::string line;
-    for (std::size_t ll = 0; ll < header_lines; ++ll)
-      std::getline(file, line);
-    
     while (std::getline(file, line))
     {
+      if (line.find(comment_sequence) == 0)
+        continue;
+      useful::remove_carriage_return_in_place(line);
+      useful::clear_escape_in_place(line, comment_sequence);
       auto split_line = useful::split(line, "\t,| ");
       if (split_line.size() != 2)
         throw useful::parse_error(filename, line);
@@ -166,11 +166,11 @@ namespace ptof
   /**
    \brief Get boundary conditions for dynamics type.
    \param directories Current case directory information.
+   \param delims Possible delimiters between patch names and boundary condition types.
    */
   template <Dynamics::Type dynamics>
   auto get_boundary_conditions
   (Directories const& directories,
-   std::size_t header_lines = 0,
    std::string const& delims = "\t,| ")
   {
     if constexpr (dynamics == Dynamics::Type::transport)
@@ -178,21 +178,19 @@ namespace ptof
                                      + "/boundary_conditions_"
                                      + Dynamics::name(dynamics)
                                      + ".dat",
-                                     header_lines,
                                      delims);
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return get_boundary_conditions(directories.dir_boundaryconditions
                                      + "/boundary_conditions_"
                                      + Dynamics::name(dynamics)
                                      + ".dat",
-                                     header_lines,
                                      delims);
   }
   
   /** \brief Throw if any patch name does not exist in mesh or associated boundary condition type is not implemented.
    \param boundary_conditions Container of pairs of patch names and boundary condition types.
    \param mesh OpenFOAM mesh.
-   \param implemented BoundaryCondition object holding information about implemented boundary conditions */
+   \param implemented BoundaryCondition object holding information about implemented boundary conditions. */
   template <typename BCs, typename Mesh, typename Implemented>
   void verify_boundary_conditions
   (BCs const& boundary_conditions, Mesh const& mesh,
@@ -211,9 +209,9 @@ namespace ptof
   }
   
   /**
-   \brief Add default type 'empty' to boundary conditions for unspecified patches
+   \brief Add default type 'empty' to boundary conditions for unspecified patches.
    \param boundary_conditions Associative container of pairs of patch names and boundary condition types, to add to.
-   \param patch_names Container with all patch names
+   \param patch_names Container with all patch names.
   */
   template <typename BCs, typename Container>
   void add_unspecified_patches
@@ -226,9 +224,9 @@ namespace ptof
   }
   
   /**
-   \brief Add default type 'empty' to boundary conditions for unspecified patches in mesh
+   \brief Add default type 'empty' to boundary conditions for unspecified patches in mesh.
    \param boundary_conditions Associative container of pairs of patch names and boundary condition types, to add to.
-   \param mesh OpenFOAM mesh
+   \param mesh OpenFOAM mesh.
   */
   template <typename BCs, typename Mesh>
   void add_unspecified_patches_in_mesh
@@ -255,7 +253,7 @@ namespace ptof
      \brief Apply boundary condition (do nothing).
      \param state Current particle state.
      \param state_old Previous particle state.
-     \param dummy Dummy argument (unused)
+     \param dummy Dummy argument (unused).
      \return \c false (no effect).
     */
     template <typename State, typename Dummy>
@@ -267,7 +265,7 @@ namespace ptof
     /**
      \brief Apply boundary condition (do nothing).
      \param state Current particle state.
-     \param dummy Dummy argument (unused)
+     \param dummy Dummy argument (unused).
      \return \c false (no effect).
     */
     template <typename State, typename Dummy>
@@ -291,7 +289,7 @@ namespace ptof
   };
   
   /** \class Boundary_Cases PTOF/Boundary.h "PTOF/Boundary.h"
-   *  \brief Boundary object to handle implemented boundary types */
+   *  \brief Boundary object to handle implemented boundary types. */
   template
   <typename Locator, typename Store_Info,
   typename Boundary_Periodic, typename Boundary_Custom,
@@ -333,7 +331,7 @@ namespace ptof
     
     /**
      \brief Check if position is out of bounds.
-     \param position Position to check
+     \param position Position to check.
      \return \c true if out of bounds, \c false otherwise.
     */
     template <typename Position>
@@ -558,7 +556,7 @@ namespace ptof
     { return patch_names()[patch]; }
     
     /**
-     \param face Face index
+     \param face Face index.
      \return Inward normal to face (used for reflection). */
     auto reflection_normal(Foam::label face) const
     {
@@ -764,7 +762,7 @@ namespace ptof
         std::forward<InitialCondition>(initial_condition) }
     {}
     
-    /** \brief Enforce boundary condition
+    /** \brief Enforce boundary condition.
     \param state Particle state to apply BC to.
     \param state_old Old particle state (unused).
     \param intersection Boundary intersection info (unused).

@@ -796,18 +796,23 @@ namespace ptof
    std::string const& filename_position_data,
    ParticleMaker& particle_maker)
   {
+    std::string comment_sequence = "#";
     auto input = useful::open_read(filename_position_data);
-    
     std::vector<std::vector<double>> position_data;
     position_data.reserve(nr_particles);
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
     {
       std::string line;
-      if (!std::getline(input, line))
+      while (std::getline(input, line))
+        if (line.find(comment_sequence) == 0)
+          continue;
+      useful::remove_carriage_return_in_place(line);
+      useful::clear_escape_in_place(line, comment_sequence);
+      if (line.empty())
         throw std::runtime_error{
           std::string{ "Could not parse prescribed position for " }
           + std::to_string(pp) + "th particle" };
-      auto split_line = useful::split(useful::remove_carriage_return(line));
+      auto split_line = useful::split(line);
       position_data.emplace_back();
       position_data.back().reserve(split_line.size());
       for (auto const& position_component : split_line)
@@ -827,12 +832,17 @@ namespace ptof
   (std::string const& filename_position_data,
    ParticleMaker& particle_maker)
   {
+    std::string comment_sequence = "#";
     auto input = useful::open_read(filename_position_data);
     std::vector<std::vector<double>> position_data;
     std::string line;
     while (std::getline(input, line))
     {
-      auto split_line = useful::split(useful::remove_carriage_return(line));
+      if (line.find(comment_sequence) == 0)
+        continue;
+      useful::remove_carriage_return_in_place(line);
+      useful::clear_escape_in_place(line, comment_sequence);
+      auto split_line = useful::split(line);
       position_data.emplace_back();
       position_data.back().reserve(split_line.size());
       for (auto const& position_component : split_line)
@@ -873,19 +883,22 @@ namespace ptof
       auto input = useful::open_read(directories.dir_parameters
                                      + "/parameters_initial_condition_"
                                      + name + ".dat");
-      useful::read(input, ic_name);
+      useful::read_first_from_line(input, ic_name, comment_sequence);
       verify_initial_condition(ic_name,
                                InitialConditions{});
       type = InitialConditions::type(ic_name);
       if (type == InitialConditions::Type::uniform_near_solid)
-        useful::read(input, distance_wall);
+        useful::read_first_from_line(input, distance_wall, comment_sequence);
       if (type == InitialConditions::Type::uniform_region_cartesian ||
           type == InitialConditions::Type::fluxweighted_region_cartesian)
       {
-        input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::string line;
-        std::getline(input, line);
-        auto split_line = useful::split(useful::remove_carriage_return(line));
+        while(std::getline(input, line))
+          if (line.find(comment_sequence) == 0)
+            continue;
+        useful::remove_carriage_return_in_place(line);
+        useful::clear_escape_in_place(line, comment_sequence);
+        auto split_line = useful::split(line);
         if (split_line.size()%2 != 0)
           std::runtime_error{
             "Initial condition region boundaries must come in pairs" };
@@ -896,16 +909,16 @@ namespace ptof
         }
       }
       if (type == InitialConditions::Type::prescribed_positions)
-        useful::read(input, position_data);
-      useful::read(input, initial_mass);
-      useful::read(input, time_min);
+        useful::read_first_from_line(input, position_data, comment_sequence);
+      useful::read_first_from_line(input, initial_mass, comment_sequence);
+      useful::read_first_from_line(input, time_min, comment_sequence);
       if (type == InitialConditions::Type::uniform_inlet_continuous ||
           type == InitialConditions::Type::fluxweighted_inlet_continuous)
       {
-        useful::read(input, time_max);
-        useful::read(input, time_step_accuracy_adv);
-        useful::read(input, time_step_accuracy_diff);
-        useful::read(input, time_step_accuracy_react);
+        useful::read_first_from_line(input, time_max, comment_sequence);
+        useful::read_first_from_line(input, time_step_accuracy_adv, comment_sequence);
+        useful::read_first_from_line(input, time_step_accuracy_diff, comment_sequence);
+        useful::read_first_from_line(input, time_step_accuracy_react, comment_sequence);
         time_step =
         std::min({
           time_step_accuracy_adv*params_transport.advection_time,
@@ -933,7 +946,7 @@ namespace ptof
       "\tprescribed_positions: Prescribed positions\n"
       "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
       "\tfluxweighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
-      "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
+      "- Initial distance from solid phase\n"
       "- Region boundaries (pass only for types uniform_region_cartesian or fluxweighted_region_cartesian)\n"
       "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
       "- Total injected mass in each injection step\n"
@@ -944,6 +957,9 @@ namespace ptof
       "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
       "--------------------------------------------------\n";
     }
+    
+  private:
+    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
   };
   
   /** \class InitialCondition_Cases PTOF/InitialCondition.h "PTOF/InitialCondition.h"

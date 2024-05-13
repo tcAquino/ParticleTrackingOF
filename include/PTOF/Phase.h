@@ -47,9 +47,8 @@ namespace ptof
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_phase_"
                                        + name + ".dat");
-        useful::read(input, phase_name);
-        std::string phase_transport;
-        useful::read(input, phase_transport);
+        useful::read_first_from_line(input, phase_name, comment_sequence);
+        auto phase_transport = useful::read_first_from_line<std::string>(input, comment_sequence);
         if (phase_transport == "excluded")
         {
           excluded_phase = true;
@@ -62,8 +61,7 @@ namespace ptof
           throw std::invalid_argument{
             std::string("Unknown option ") + phase_transport +
             " for phase type" };
-        std::string compute;
-        useful::read(input, compute);
+        auto compute = useful::read_first_from_line<std::string>(input, comment_sequence);
         if (compute == "compute")
         {
           compute_gradient = true;
@@ -76,10 +74,9 @@ namespace ptof
           throw std::invalid_argument{
             std::string("Unknown option ") + compute +
             " for whether to compute or read excluded phase gradient" };
-        double leakage_tolerance = 0.;
-        useful::read(input, leakage_tolerance);
+        auto leakage_tolerance = useful::read_first_from_line<double>(input, comment_sequence);
         leakage_coefficient = std::log(leakage_tolerance);
-        useful::read(input, phase_threshold);
+        useful::read_first_from_line(input, phase_threshold, comment_sequence);
         input.close();
       }
       
@@ -103,6 +100,9 @@ namespace ptof
           "- Phase field value threshold to consider phase is present\n"
           "--------------------------------------------------\n";
       }
+      
+    private:
+      std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
     };
     
     /** \return Excluded phase saturation field.

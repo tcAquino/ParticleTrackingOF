@@ -89,13 +89,13 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, nr_particles);
-          useful::read(input, local_time_step_adv);
-          useful::read(input, local_time_step_diff);
-          useful::read(input, local_time_step_react);
-          useful::read(input, global_time_step_adv);
-          useful::read(input, global_time_step_diff);
-          useful::read(input, global_time_step_react);
+          useful::read_first_from_line(input, nr_particles, comment_sequence);
+          useful::read_first_from_line(input, local_time_step_adv, comment_sequence);
+          useful::read_first_from_line(input, local_time_step_diff, comment_sequence);
+          useful::read_first_from_line(input, local_time_step_react, comment_sequence);
+          useful::read_first_from_line(input, global_time_step_adv, comment_sequence);
+          useful::read_first_from_line(input, global_time_step_diff, comment_sequence);
+          useful::read_first_from_line(input, global_time_step_react, comment_sequence);
           input.close();
         }
         
@@ -117,6 +117,9 @@ namespace ptof
           "         Initial values (e.g., of flow) are used for global quantities.)\n"
           "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template <typename OStream>
@@ -156,45 +159,45 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
-          useful::read(input, peclet_option);
-          useful::read(input, lengthscale);
+          useful::read_first_from_line(input, peclet_option, comment_sequence);
+          useful::read_first_from_line(input, lengthscale, comment_sequence);
           if (peclet_option == "rescale_velocity_to_peclet")
           {
-            useful::read(input, peclet);
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, peclet, comment_sequence);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
             advection_time = 2.*diffusion_time/peclet;
             mean_velocity = lengthscale/advection_time;
           }
           else if (peclet_option == "rescale_velocity_to_mean")
           {
-            useful::read(input, mean_velocity);
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, mean_velocity, comment_sequence);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
             peclet = lengthscale*mean_velocity/diff_coeff;
             advection_time = lengthscale/mean_velocity;
           }
           else if (peclet_option == "rescale_velocity_to_advection_time")
           {
-            useful::read(input, advection_time);
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, advection_time, comment_sequence);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
             peclet = 2.*diffusion_time/advection_time;
             mean_velocity = lengthscale/advection_time;
           }
           else if (peclet_option == "compute_from_diff_coeff")
           {
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
           }
           else if (peclet_option == "compute_from_diff_time")
           {
-            useful::read(input, diffusion_time);
+            useful::read_first_from_line(input, diffusion_time, comment_sequence);
             diff_coeff = lengthscale*lengthscale/(2.*diffusion_time);
           }
           else if (peclet_option == "set_diff_coeff")
           {
-            useful::read(input, peclet);
+            useful::read_first_from_line(input, peclet, comment_sequence);
           }
           else
             throw std::runtime_error{ "Peclet number setting option "
@@ -262,6 +265,9 @@ namespace ptof
           "- Diffusion coefficient (do not pass if Peclet option is set_diff_coeff or compute_from_diff_time)\n"
           "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -624,9 +630,9 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          nr_particles = useful::read_first_from_line<std::size_t>(input, comment_sequence);
-          local_time_step_adv = useful::read_first_from_line<double>(input, comment_sequence);
-          global_time_step_adv = useful::read_first_from_line<double>(input, comment_sequence);
+          useful::read_first_from_line(input, nr_particles, comment_sequence);
+          useful::read_first_from_line(input, local_time_step_adv, comment_sequence);
+          useful::read_first_from_line(input, global_time_step_adv, comment_sequence);
           input.close();
         }
         
@@ -646,7 +652,7 @@ namespace ptof
         }
         
       private:
-        std::string comment_sequence = "#";
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template <typename OStream>
@@ -685,16 +691,16 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
-          rescale_velocity_option = useful::read_first_from_line<std::string>(input, comment_sequence);
-          lengthscale = useful::read_first_from_line<double>(input, comment_sequence);
+          useful::read_first_from_line(input, rescale_velocity_option, comment_sequence);
+          useful::read_first_from_line(input, lengthscale, comment_sequence);
           if (rescale_velocity_option == "rescale_velocity_to_mean")
           {
-            mean_velocity = useful::read_first_from_line<double>(input, comment_sequence);
+            useful::read_first_from_line(input, mean_velocity, comment_sequence);
             advection_time = lengthscale/mean_velocity;
           }
           else if (rescale_velocity_option == "rescale_velocity_to_advection_time")
           {
-            advection_time = useful::read_first_from_line<double>(input, comment_sequence);
+            useful::read_first_from_line(input, advection_time, comment_sequence);
             mean_velocity = lengthscale/advection_time;
           }
           else if (rescale_velocity_option == "no_rescale_velocity")
@@ -750,7 +756,7 @@ namespace ptof
         }
         
       private:
-        std::string comment_sequence = "#";
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -904,9 +910,10 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_reaction_"
                                          + name + ".dat");
-          useful::read(input, damkohler);
-          useful::read(input, initial_distribution);
-          useful::read(input, surface_concentration);
+          useful::read_first_from_line(input, damkohler, comment_sequence);
+          useful::read_first_from_line(input, initial_distribution, comment_sequence);
+          useful::read_first_from_line(input, surface_concentration, comment_sequence);
+
           rate_constant = params_transport.lengthscale*damkohler/
             (surface_concentration*params_transport.diffusion_time);
           reaction_time = params_transport.diffusion_time/damkohler;
@@ -926,6 +933,9 @@ namespace ptof
           "- Initial solid reactant surface concentration\n"
           "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -1455,8 +1465,8 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
-          useful::read(input, peclet_option);
-          useful::read(input, lengthscale_option);
+          useful::read_first_from_line(input, peclet_option, comment_sequence);
+          useful::read_first_from_line(input, lengthscale_option, comment_sequence);
           double radius = geometry.radius;
           cell_side = 4./std::sqrt(3.)*radius;
           if (lengthscale_option == "radius")
@@ -1466,7 +1476,7 @@ namespace ptof
           else if (lengthscale_option == "cell_side")
             lengthscale = cell_side;
           else if (lengthscale_option == "custom")
-            useful::read(input, lengthscale);
+            useful::read_first_from_line(input, lengthscale, comment_sequence);
           else
             throw std::runtime_error{
               "Lengthscale definition option "
@@ -1474,41 +1484,41 @@ namespace ptof
               + " not supported" };
           if (peclet_option == "rescale_velocity_to_peclet")
           {
-            useful::read(input, peclet);
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, peclet, comment_sequence);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
             advection_time = 2.*diffusion_time/peclet;
             mean_velocity = lengthscale/advection_time;
           }
           else if (peclet_option == "rescale_velocity_to_mean")
           {
-            useful::read(input, mean_velocity);
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, mean_velocity, comment_sequence);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
             peclet = lengthscale*mean_velocity/diff_coeff;
             advection_time = lengthscale/mean_velocity;
           }
           else if (peclet_option == "rescale_velocity_to_advection_time")
           {
-            useful::read(input, advection_time);
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, advection_time, comment_sequence);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
             peclet = 2.*diffusion_time/advection_time;
             mean_velocity = lengthscale/advection_time;
           }
           else if (peclet_option == "compute_from_diff_coeff")
           {
-            useful::read(input, diff_coeff);
+            useful::read_first_from_line(input, diff_coeff, comment_sequence);
             diffusion_time = lengthscale*lengthscale/(2.*diff_coeff);
           }
           else if (peclet_option == "compute_from_diff_time")
           {
-            useful::read(input, diffusion_time);
+            useful::read_first_from_line(input, diffusion_time, comment_sequence);
             diff_coeff = lengthscale*lengthscale/(2.*diffusion_time);
           }
           else if (peclet_option == "set_diff_coeff")
           {
-            useful::read(input, peclet);
+            useful::read_first_from_line(input, peclet, comment_sequence);
           }
           else
             throw std::runtime_error{ "Peclet number setting option "
@@ -1581,6 +1591,9 @@ namespace ptof
           "- Diffusion coefficient (do not pass if Peclet option is set_diff_coeff or compute_from_diff_time)\n"
           "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -1737,8 +1750,8 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
-          useful::read(input, rescale_velocity_option);
-          useful::read(input, lengthscale_option);
+          useful::read_first_from_line(input, rescale_velocity_option, comment_sequence);
+          useful::read_first_from_line(input, lengthscale_option, comment_sequence);
           double radius = geometry.radius;
           cell_side = 4./std::sqrt(3.)*radius;
           if (lengthscale_option == "radius")
@@ -1748,19 +1761,19 @@ namespace ptof
           else if (lengthscale_option == "cell_side")
             lengthscale = cell_side;
           else if (lengthscale_option == "custom")
-            useful::read(input, lengthscale);
+            useful::read_first_from_line(input, lengthscale, comment_sequence);
           else
             throw std::runtime_error{ "Lengthscale definition "
               + lengthscale_option
               + " not supported" };
           if (rescale_velocity_option == "rescale_velocity_to_mean")
           {
-            useful::read(input, mean_velocity);
+            useful::read_first_from_line(input, mean_velocity, comment_sequence);
             advection_time = lengthscale/mean_velocity;
           }
           else if (rescale_velocity_option == "rescale_velocity_to_advection_time")
           {
-            useful::read(input, advection_time);
+            useful::read_first_from_line(input, advection_time, comment_sequence);
             mean_velocity = lengthscale/advection_time;
           }
           else if (rescale_velocity_option == "no_rescale_velocity")
@@ -1820,6 +1833,9 @@ namespace ptof
           "- Advection time (pass only if rescaling with rescale_velocity_to_advection_time)\n"
           "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template

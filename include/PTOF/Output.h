@@ -89,7 +89,6 @@ namespace ptof
       read_end_criterion(input);
       read_measure_spacing(input,
                            params_transport, params_reaction);
-      input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       read_measurement_types(input);
       input.close();
     }
@@ -126,7 +125,8 @@ namespace ptof
         "- Number of measurements, if required by measure spacing\n"
         "- Measurement types (any number, can pass precision [8] at the end of line):\n"
         "\tposition: Time, particle tags, particle positions, and particle masses\n"
-        "\tposition: Time, particle tags, particle positions, and particle masses within regions specified by masks\n"
+        "\tposition: Time, particle tags, particle positions, and particle masses\n"
+        "             within regions specified by masks\n"
         "\tposition_mean: Time and mean position\n"
         "\tposition_second_moment: Time and position second moment\n"
         "\tposition_variance: Time and position variance\n"
@@ -134,29 +134,40 @@ namespace ptof
         "\tmass_in_regions: Time and total mass within regions specified by masks\n"
         "\tvelocity: Time, particle tags, and local velocities\n"
         "\tvelocity_gradient: Time, particle tags, and local velocity gradients\n"
-        "\tscalar_field: Time, particle tags, and local scalar field values (Specify field name on same line, to be read from OF file)\n"
-        "\tvector_field: Time, particle tags, and local vector field values (Specify field name on same line, to be read from OF file)\n"
-        "\ttensor_field: Time, particle tags, and local tensor field values (Specify field name on same line, to be read from OF file)\n"
-        "\tposition_periodic: Time, particle tags, true positions accounting for periodicity, and masses\n"
-        "\tposition_in_regions_periodic: Time, particle tags, true positions accounting for periodicity, and masses in regions speciefied by masks\n"
+        "\tscalar_field: Time, particle tags, and local scalar field values\n"
+        "                (Specify field name on same line. Field to be read from OF file)\n"
+        "\tvector_field: Time, particle tags, and local vector field values\n"
+        "                (Specify field name on same line. Field to be read from OF file.)\n"
+        "\ttensor_field: Time, particle tags, and local tensor field values\n"
+        "                (Specify field name on same line. Field to be read from OF file)\n"
+        "\tposition_periodic: Time, particle tags, true positions accounting for periodicity,\n"
+        "                     and masses\n"
+        "\tposition_in_regions_periodic: Time, particle tags, true positions accounting\n"
+        "                                for periodicity, and masses in regions specified\n"
+        "                                by masks\n"
         "\tposition_mean_periodic: Time and true mean position accounting for periodicity\n"
-        "\tposition_second_moment_periodic: Time and true position second moment accounting for periodicity\n"
-        "\tposition_variance_periodic: Time and true position variance accounting for periodicity\n"
-        "\tabsorption_time: Particle absorption times, particle tags, and particle masses at end of dynamics\n"
+        "\tposition_second_moment_periodic: Time and true position second moment accounting\n"
+        "                                   for periodicity\n"
+        "\tposition_variance_periodic: Time and true position variance accounting for\n"
+        "                              periodicity\n"
+        "\tabsorption_time: Particle absorption times, particle tags, and particle masses\n"
+        "                   at end of dynamics\n"
         "--------------------------------------------------\n";
     }
     
   private:
+    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+    
     /** \brief Read end criterion from input stream. */
     template <typename IStream>
     void read_end_criterion(IStream& input)
     {
-      useful::read(input, end_criterion);
+      useful::read_first_from_line(input, end_criterion, comment_sequence);
       switch (EndCriterion::type(end_criterion))
       {
         case EndCriterion::Type::time:
         {
-          useful::read(input, end_value);
+          useful::read_first_from_line(input, end_value, comment_sequence);
           end_value *= time_unit_factor;
           break;
         }
@@ -164,12 +175,12 @@ namespace ptof
           break;
         case EndCriterion::Type::mass_below:
         {
-          useful::read(input, end_value);
+          useful::read_first_from_line(input, end_value, comment_sequence);
           break;
         }
         case EndCriterion::Type::mass_above:
         {
-          useful::read(input, end_value);
+          useful::read_first_from_line(input, end_value, comment_sequence);
           break;
         }
         case EndCriterion::Type::all_absorbed:
@@ -178,7 +189,7 @@ namespace ptof
           break;
         case EndCriterion::Type::fraction_not_absorbed:
         {
-          useful::read(input, end_value);
+          useful::read_first_from_line(input, end_value, comment_sequence);
           break;
         }
         default:
@@ -198,7 +209,7 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction)
     {
-      useful::read(input, time_units);
+      useful::read_first_from_line(input, time_units, comment_sequence);
       switch (MeasureSpacingUnits::type(time_units))
       {
         case MeasureSpacingUnits::Type::diffusion:
@@ -238,33 +249,33 @@ namespace ptof
      TransportParameters const& params_transport,
      ReactionParameters const& params_reaction)
     {
-      useful::read(input, measure_spacing);
-      useful::read(input, time_min);
+      useful::read_first_from_line(input, measure_spacing, comment_sequence);
+      useful::read_first_from_line(input, time_min, comment_sequence);
       time_min *= time_unit_factor;
       switch (MeasureSpacing::type(measure_spacing))
       {
         case MeasureSpacing::Type::step:
         {
-          useful::read(input, time_increment);
+          useful::read_first_from_line(input, time_increment, comment_sequence);
           time_increment *= time_unit_factor;
           time_max = std::numeric_limits<double>::infinity();
           break;
         }
         case MeasureSpacing::Type::linear:
         {
-          useful::read(input, time_max);
+          useful::read_first_from_line(input, time_max, comment_sequence);
           time_max *= time_unit_factor;
           std::size_t nr_measures;
-          useful::read(input, nr_measures);
+          useful::read_first_from_line(input, nr_measures, comment_sequence);
           time_increment = (time_max - time_min)/(nr_measures - 1);
           break;
         }
         case MeasureSpacing::Type::log:
         {
-          useful::read(input, time_max);
+          useful::read_first_from_line(input, time_max, comment_sequence);
           time_max *= time_unit_factor;
           std::size_t nr_measures;
-          useful::read(input, nr_measures);
+          useful::read_first_from_line(input, nr_measures, comment_sequence);
           time_increment = std::pow(time_max/time_min, 1./(nr_measures - 1));
           break;
         }
@@ -284,8 +295,11 @@ namespace ptof
       std::string line;
       while (std::getline(input, line))
       {
-        std::cout << line << std::endl;
-        auto split_line = useful::split(useful::remove_carriage_return(line));
+        if (line.find(comment_sequence) == 0)
+          continue;
+        useful::remove_carriage_return_in_place(line);
+        useful::clear_escape_in_place(line, comment_sequence);
+        auto split_line = useful::split(line);
         std::size_t required_size = 1;
         if (split_line.size() < required_size)
           throw std::runtime_error{
