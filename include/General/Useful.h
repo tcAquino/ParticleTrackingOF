@@ -544,10 +544,12 @@ namespace useful
   /** \brief Extract first value from line, discarding escaped lines and the rest of the line
    \note Type must be default-constructible. */
   template <typename Type>
-  Type read_first_from_line(std::ifstream& input, std::string const& escape_sequence)
+  Type read_first_from_line
+  (std::ifstream& input, std::string const& escape_sequence,
+   std::string const& delims = "\t,|\r ")
   {
     Type val;
-    read_first_from_line(input, val, escape_sequence);
+    read_first_from_line(input, val, escape_sequence, delims);
     return val;
   }
   

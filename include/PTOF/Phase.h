@@ -44,6 +44,10 @@ namespace ptof
       (Directories const& directories, std::string const& name,
        Geometry const& geometry)
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_phase_"
                                        + name + ".dat");
@@ -100,9 +104,6 @@ namespace ptof
           "- Phase field value threshold to consider phase is present\n"
           "--------------------------------------------------\n";
       }
-      
-    private:
-      std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
     };
     
     /** \return Excluded phase saturation field.

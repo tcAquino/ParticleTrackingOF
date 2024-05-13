@@ -67,6 +67,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         std::size_t nr_particles;
         double local_time_step_adv;
         double local_time_step_diff;
@@ -117,9 +121,6 @@ namespace ptof
           "         Initial values (e.g., of flow) are used for global quantities.)\n"
           "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template <typename OStream>
@@ -141,6 +142,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         std::string peclet_option;
         double lengthscale;
         double diff_coeff;
@@ -265,9 +270,6 @@ namespace ptof
           "- Diffusion coefficient (do not pass if Peclet option is set_diff_coeff or compute_from_diff_time)\n"
           "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -608,6 +610,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         std::size_t nr_particles;
         double local_time_step_adv;
         double local_time_step_diff = std::numeric_limits<double>::infinity();
@@ -650,9 +656,6 @@ namespace ptof
           "         Initial values (e.g., of flow) are used for global quantities.)\n"
           "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template <typename OStream>
@@ -688,6 +691,10 @@ namespace ptof
          std::string const& name,
          Geometry const& geometry)
         {
+        private:
+          std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+          
+        public:
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
@@ -754,9 +761,6 @@ namespace ptof
             "- Advection time (pass only if rescaling with rescale_velocity_to_advection_time)\n"
             "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -894,6 +898,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         double damkohler;
         std::string initial_distribution;
         double surface_concentration;
@@ -933,9 +941,6 @@ namespace ptof
           "- Initial solid reactant surface concentration\n"
           "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -1462,6 +1467,10 @@ namespace ptof
          std::string const& name,
          Geometry const& geometry)
         {
+        private:
+          std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+          
+        public:
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
@@ -1591,9 +1600,6 @@ namespace ptof
           "- Diffusion coefficient (do not pass if Peclet option is set_diff_coeff or compute_from_diff_time)\n"
           "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template
@@ -1747,6 +1753,10 @@ namespace ptof
          std::string const& name,
          Geometry const& geometry)
         {
+        private:
+          std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+          
+        public:
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
@@ -1833,9 +1843,6 @@ namespace ptof
           "- Advection time (pass only if rescaling with rescale_velocity_to_advection_time)\n"
           "--------------------------------------------------\n";
         }
-        
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
       };
       
       template

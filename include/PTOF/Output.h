@@ -82,6 +82,10 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers)
     {
+    private:
+      std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+    public:
       auto input = useful::open_read(directories.dir_parameters
                                      + "/parameters_output_"
                                      + name + ".dat");
@@ -154,9 +158,6 @@ namespace ptof
         "                   at end of dynamics\n"
         "--------------------------------------------------\n";
     }
-    
-  private:
-    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
     
     /** \brief Read end criterion from input stream. */
     template <typename IStream>

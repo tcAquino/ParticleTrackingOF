@@ -857,6 +857,10 @@ namespace ptof
   *  \brief Initial condition condition parameters to handle all initial condition types in \c InitialCondition_Cases. */
   struct InitialConditionParameters_Cases
   {
+  private:
+      std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+    
+  public:
     InitialConditions::Type type;
     double distance_wall;
     std::vector<std::pair<double, double>> region_boundaries;
@@ -946,7 +950,7 @@ namespace ptof
       "\tprescribed_positions: Prescribed positions\n"
       "\tuniform_inlet_continuous: Continuous injection homogeneous at the inlet\n"
       "\tfluxweighted_inlet_continuous: Continuous injection flux-weighted at the inlet\n"
-      "- Initial distance from solid phase\n"
+      "- Initial distance from solid phase (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
       "- Region boundaries (pass only for types uniform_region_cartesian or fluxweighted_region_cartesian)\n"
       "- Filename (with full path) for prescribed positions (pass only for type prescribed_positions)\n"
       "- Total injected mass in each injection step\n"
@@ -957,9 +961,6 @@ namespace ptof
       "- Maximum timestep for continuous injection discretization in units of reaction time (pass only for types uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
       "--------------------------------------------------\n";
     }
-    
-  private:
-    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
   };
   
   /** \class InitialCondition_Cases PTOF/InitialCondition.h "PTOF/InitialCondition.h"

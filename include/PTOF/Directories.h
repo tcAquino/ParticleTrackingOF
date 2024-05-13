@@ -65,6 +65,7 @@ namespace ptof
   struct DirectoriesOF
   {
   private:
+    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
     std::string _time_name_input;  /**< Information about time directory. */
     
   public:
@@ -112,9 +113,6 @@ namespace ptof
         "Time directory: " + time.timeName() + "\n"
         "--------------------------------------------------\n";
     }
-    
-  private:
-    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
     
     /**
      \param directories Current case directory information.
