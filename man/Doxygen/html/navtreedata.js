@@ -62,17 +62,17 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "d0/df6/_p_t_o_f_2_useful_8h.html#aa7f85fb4058ae942dc9b482221cfed96",
-"d2/dcd/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d__parallel_1_1_model.html#a1396dae6172536a9ff6f55224b35044c",
-"d3/d74/_models_8h.html#a0b844b8930d08de6a3bc7271649804b9",
-"d4/de6/_measurer_time_8h.html",
-"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a9de56c8d3320119b13316f59ced2dced",
-"d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html",
-"d8/db6/namespacemeta.html#a7c406fbbc5f9337e7a633b1560a6a617",
-"da/d6a/structptof_1_1_state3_d___periodic.html#aca7da1a2f2043a57073746d935b1a19e",
-"db/dc2/structptof_1_1model__advection__2d_1_1_transport.html#a7f287b19f173b5115e79b7f33b6f079e",
-"dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html",
-"dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee",
-"df/d8b/structptof_1_1model__advection__2d_1_1_solvers.html#a4cd6436248f702d2ea91603558c90652"
+"d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#ab10b8b6faa94ee10c745f410311d1455",
+"d3/d54/structmeta_1_1_parameters__or__empty_3_01true_00_01_t_01_4.html#ac825a1f2d6459fa339b0d24985f413c2",
+"d4/de0/structuseful_1_1hash__container.html#a5a7332f8b12aa707bd6e7e52acf36d74",
+"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a1a2e1fea4ee29fd4cba78fdad02a43de",
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#aa911d023e09b5def41d445916c9c1afa",
+"d8/db6/namespacemeta.html#a700f9619f56c78c94f9ca8d1178acf40",
+"da/d6a/structptof_1_1_state3_d___periodic.html#a72e51e56263da56a5f917f1842fa4ba9",
+"db/dbd/classctrw_1_1_transitions___c_t_r_w___transport___reaction.html#a965257b3bff59a0a71b301aee2f06a7e",
+"dc/d8a/structuseful_1_1_maker.html#adb2041449f4f5a6bbc3f47139ce00a09",
+"dd/ddd/_state_getter_8h.html#aec427b9f737bcfdffef3dc35f5f84b5a",
+"df/d68/structptof_1_1_directories.html#a824c9bb079fd7b6a1666b02e7b34d832"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

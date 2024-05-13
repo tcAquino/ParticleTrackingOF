@@ -2,6 +2,7 @@ var structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1
 [
     [ "Parameters", "d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66", null ],
     [ "info", "d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#abb968f6aaf38b3cf0efd98925c98074d", null ],
+    [ "comment_sequence", "d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a0d1925b39bbc46a3fc6b34cfe47f2bcc", null ],
     [ "damkohler", "d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a2bfa142220fb66d1faacd97a9d8dc0d7", null ],
     [ "initial_distribution", "d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a4795f2c59d670c09878955492c8e6fbd", null ],
     [ "rate_constant", "d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a5e51b4d9102de4e06d1d7819386df2d6", null ],

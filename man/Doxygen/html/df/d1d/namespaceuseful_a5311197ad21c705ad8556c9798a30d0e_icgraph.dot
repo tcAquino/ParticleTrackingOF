@@ -1,0 +1,40 @@
+digraph "useful::read_first_from_line"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="useful::read_first\l_from_line",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Extract first value from line, discarding escaped lines and the rest of the line."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ptof::InitialConditionParameters\l_Cases::InitialConditionParameters_Cases",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ptof::DirectoriesOF\l::makeRunTime",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ptof::model_advection\l_diffusion_2d::Transport\l::Parameters::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aca26a897eefb30acfe73c3197b36fb1c",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ptof::model_advection\l_2d::Transport::Parameters\l::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ptof::model_bcc_cartesian\l_advection_diffusion::Transport\l::Parameters::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ptof::model_bcc_cartesian\l_advection::Transport::\lParameters::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#acf64472def0b1b10dcb50a21bc49f0fc",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ptof::Phase::Parameters\l::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847",tooltip=" "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ptof::model_advection\l_diffusion_surface_decay\l_2d::Reaction::Parameters\l::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66",tooltip=" "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ptof::model_advection\l_diffusion_2d::Solvers\l::Parameters::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79",tooltip=" "];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="ptof::model_advection\l_2d::Solvers::Parameters\l::Parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc",tooltip=" "];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="ptof::OutputParameters\l::read_end_criterion",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dac/structptof_1_1_output_parameters.html#af47778bfc239d2dcb789dae461cdd841",tooltip="Read end criterion from input stream."];
+  Node12 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="ptof::OutputParameters\l::OutputParameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dac/structptof_1_1_output_parameters.html#a5fbbe7fd814d6ce687a4beeaa5bd1f5a",tooltip=" "];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="useful::read_first\l_from_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a7a9f70110ac47b2f667a199e0831c14c",tooltip="Extract first value from line, discarding escaped lines and the rest of the line."];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="ptof::OutputParameters\l::read_measure_spacing",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dac/structptof_1_1_output_parameters.html#aedb33d453988c13505f0b79a0402fa36",tooltip="Read measure spacing type from input stream."];
+  Node15 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="ptof::OutputParameters\l::read_time_units",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dac/structptof_1_1_output_parameters.html#abfe930c0a12e406281a9312494abea07",tooltip="Read measure spacing time units from input stream."];
+  Node16 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

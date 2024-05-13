@@ -2,6 +2,7 @@ var structptof_1_1_initial_condition_parameters___cases =
 [
     [ "InitialConditionParameters_Cases", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d", null ],
     [ "info", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a0dd4f7cf6073fe3343b26654b82cd163", null ],
+    [ "comment_sequence", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ab9ad254b6804f87b4494257891c6b0e2", null ],
     [ "distance_wall", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aaa02333e1760b2753972822a80a2e76a", null ],
     [ "initial_mass", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a221b49e8b3ee86bf50b827f9f46db128", null ],
     [ "position_data", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aa71fa6469026569f64c610bb5f34baa0", null ],

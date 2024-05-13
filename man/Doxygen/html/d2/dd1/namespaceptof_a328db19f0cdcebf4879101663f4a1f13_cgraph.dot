@@ -1,0 +1,22 @@
+digraph "ptof::prescribed_positions"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ptof::prescribed_positions",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="useful::clear_escape\l_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12",tooltip="Remove comments after escape sequence."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="useful::open_read",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1",tooltip="Open file for reading."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="useful::open_read_error",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ptof::prescribed_positions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/namespaceptof.html#aedc246759e2a830f7ce2c15a17868c8e",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ptof::make_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc",tooltip="Make 3D point from 2D point."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="useful::remove_carriage\l_return_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c",tooltip="Remove."];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="useful::split",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363",tooltip="Split string into vector of strings at instances of delimeter."];
+}

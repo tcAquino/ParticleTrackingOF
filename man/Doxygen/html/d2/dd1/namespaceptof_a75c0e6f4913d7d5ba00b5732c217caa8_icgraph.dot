@@ -1,0 +1,10 @@
+digraph "ptof::get_boundary_conditions"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="ptof::get_boundary\l_conditions",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Get the boundary conditions associated with a set of patches from file."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ptof::get_boundary\l_conditions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6",tooltip="Get boundary conditions for dynamics type."];
+}

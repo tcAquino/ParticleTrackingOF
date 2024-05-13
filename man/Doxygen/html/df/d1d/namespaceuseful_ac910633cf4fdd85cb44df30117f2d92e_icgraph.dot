@@ -1,0 +1,20 @@
+digraph "useful::parse_error"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="useful::parse_error",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ptof::get_boundary\l_conditions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8",tooltip="Get the boundary conditions associated with a set of patches from file."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ptof::get_boundary\l_conditions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6",tooltip="Get boundary conditions for dynamics type."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="useful::load",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd",tooltip="Load file into vector of vectors of doubles."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="useful::load_1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a98cb712af3c27b2f8650b4c78d181e3c",tooltip="Load 1-column file into vector of doubles."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="useful::load_2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a0363b363a89bc9844a8a29f1908ae11e",tooltip="Load 2-column file into pair of vectors of doubles."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="useful::load_pair_1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d1d/namespaceuseful.html#a78d057731be2e6d3e8ea19bd807e11f0",tooltip="Load 3-column file, first two columns into vector of pairs, last column into vector of doubles."];
+}

@@ -1,5 +1,8 @@
 var NAVTREEINDEX6 =
 {
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#aa911d023e09b5def41d445916c9c1afa":[7,0,3,59,2],
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#adf13d45e9ed94c6ad2de694729f89ea2":[7,0,3,59,1],
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#ae5066fc6d959fe6670471da97603060b":[7,0,3,59,0],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html":[6,0,7,42],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html#a70cfcc46bbb4e5b7b7cf79978656e1e0":[6,0,7,42,3],
 "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html#a7681aad81b66c91dbba3d2f932df2cf2":[6,0,7,42,1],
@@ -246,8 +249,5 @@ var NAVTREEINDEX6 =
 "d8/db6/namespacemeta.html#a6101c83d5c59bafda488129f18b0dff8":[6,0,3,55],
 "d8/db6/namespacemeta.html#a61207fc27ed172f3816674c27b26d081":[6,0,3,31],
 "d8/db6/namespacemeta.html#a64db8756b97ca1362801d454dcf8a491":[6,0,3,25],
-"d8/db6/namespacemeta.html#a690e890772152607100660d24911ce4b":[6,0,3,50],
-"d8/db6/namespacemeta.html#a700f9619f56c78c94f9ca8d1178acf40":[6,0,3,68],
-"d8/db6/namespacemeta.html#a704f5d9e045850a35691508a1b019878":[6,0,3,49],
-"d8/db6/namespacemeta.html#a74b113e97f1185c425af3af9edaf65f9":[6,0,3,71]
+"d8/db6/namespacemeta.html#a690e890772152607100660d24911ce4b":[6,0,3,50]
 };
