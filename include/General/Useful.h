@@ -462,6 +462,23 @@ namespace useful
     return nr_numbers;
   }
   
+  /** \brief Convert string to type.
+   \note \c Type must be default-constructible. */
+  template <typename Type>
+  Type convert_to(std::string const& str)
+  {
+      std::istringstream ss(str);
+      Type val;
+      ss >> val;
+      return val;
+  }
+  
+  /** \brief Remove comments after escape sequence */
+  std::string clear_escape(std::string const& str, std::string const& escape_sequence)
+  {
+    return str.substr(0, str.find(escape_sequence));
+  }
+  
   /** \brief Read next value from file. */
   template <typename Type>
   void read(std::ifstream& input, Type& val)
@@ -469,6 +486,34 @@ namespace useful
     input >> val;
     if (input.fail())
       throw std::runtime_error{ "Could not read value" };
+  }
+  
+  /** \brief Extract first value from line, discarding escaped lines and the rest of the line */
+  template <typename Type>
+  void read_first_from_line(std::ifstream& input, Type& val, std::string const& escape_sequence)
+  {
+    std::string line;
+    while (std::getline(input, line))
+    {
+      if (line.find(escape_sequence) != 0)
+        break;
+    }
+    line = useful::clear_escape(line, "#");
+    auto split_line = split(line);
+    if (split_line.empty())
+      throw std::runtime_error{ "Could not read value" };
+    
+    val = convert_to<Type>(split_line[0]);
+  }
+  
+  /** \brief Extract first value from line, discarding escaped lines and the rest of the line
+   \note Type must be default-constructible. */
+  template <typename Type>
+  Type read_first_from_line(std::ifstream& input, std::string const& escape_sequence)
+  {
+    Type val;
+    read_first_from_line(input, val, escape_sequence);
+    return val;
   }
 
   std::string& remove_carriage_return(std::string& str)

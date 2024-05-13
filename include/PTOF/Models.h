@@ -624,9 +624,9 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_solvers_"
                                          + name + ".dat");
-          useful::read(input, nr_particles);
-          useful::read(input, local_time_step_adv);
-          useful::read(input, global_time_step_adv);
+          nr_particles = useful::read_first_from_line<std::size_t>(input, comment_sequence);
+          local_time_step_adv = useful::read_first_from_line<double>(input, comment_sequence);
+          global_time_step_adv = useful::read_first_from_line<double>(input, comment_sequence);
           input.close();
         }
         
@@ -644,6 +644,9 @@ namespace ptof
           "         Initial values (e.g., of flow) are used for global quantities.)\n"
           "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#";
       };
       
       template <typename OStream>
@@ -682,16 +685,16 @@ namespace ptof
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
-          useful::read(input, rescale_velocity_option);
-          useful::read(input, lengthscale);
+          rescale_velocity_option = useful::read_first_from_line<std::string>(input, comment_sequence);
+          lengthscale = useful::read_first_from_line<double>(input, comment_sequence);
           if (rescale_velocity_option == "rescale_velocity_to_mean")
           {
-            useful::read(input, mean_velocity);
+            mean_velocity = useful::read_first_from_line<double>(input, comment_sequence);
             advection_time = lengthscale/mean_velocity;
           }
           else if (rescale_velocity_option == "rescale_velocity_to_advection_time")
           {
-            useful::read(input, advection_time);
+            advection_time = useful::read_first_from_line<double>(input, comment_sequence);
             mean_velocity = lengthscale/advection_time;
           }
           else if (rescale_velocity_option == "no_rescale_velocity")
@@ -745,6 +748,9 @@ namespace ptof
             "- Advection time (pass only if rescaling with rescale_velocity_to_advection_time)\n"
             "--------------------------------------------------\n";
         }
+        
+      private:
+        std::string comment_sequence = "#";
       };
       
       template

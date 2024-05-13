@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a9de56c8d3320119b13316f59ced2dced":[7,0,0,60,0],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#aa6d2c63dcbb69264f61a513d9bd2825d":[7,0,0,60,6],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#acedd194e315f55d14edce9daefeaa3f1":[7,0,0,60,9],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#aebe9d7787427f8ed47892acd4622154e":[7,0,0,60,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#a507eafb2d8ca96d747e3ac296abf2954":[7,0,3,59,3],
 "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#aa911d023e09b5def41d445916c9c1afa":[7,0,3,59,2],
 "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#adf13d45e9ed94c6ad2de694729f89ea2":[7,0,3,59,1],
-"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#ae5066fc6d959fe6670471da97603060b":[7,0,3,59,0],
-"d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html":[6,0,7,42]
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#ae5066fc6d959fe6670471da97603060b":[7,0,3,59,0]
 };
