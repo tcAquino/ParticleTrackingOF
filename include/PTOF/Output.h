@@ -35,6 +35,10 @@ namespace ptof
    *  \brief Parameters for output. */
   struct OutputParameters
   {
+  private:
+    std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+  public:
     std::string time_units;
     double time_unit_factor;
     std::string end_criterion;
@@ -82,10 +86,6 @@ namespace ptof
      ReactionParameters const& params_reaction,
      SolverParameters const& params_solvers)
     {
-    private:
-      std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
-        
-    public:
       auto input = useful::open_read(directories.dir_parameters
                                      + "/parameters_output_"
                                      + name + ".dat");

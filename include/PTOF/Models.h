@@ -676,6 +676,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         std::string rescale_velocity_option;
         double lengthscale;
         const double diff_coeff{ 0. };
@@ -691,10 +695,6 @@ namespace ptof
          std::string const& name,
          Geometry const& geometry)
         {
-        private:
-          std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
-          
-        public:
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
@@ -1447,6 +1447,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+        
+      public:
         std::string peclet_option;
         std::string lengthscale_option;
         std::string primitive_cell_location_option;
@@ -1467,10 +1471,6 @@ namespace ptof
          std::string const& name,
          Geometry const& geometry)
         {
-        private:
-          std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
-          
-        public:
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");
@@ -1733,6 +1733,10 @@ namespace ptof
       
       struct Parameters
       {
+      private:
+        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+       
+      public:
         std::string rescale_velocity_option;
         std::string lengthscale_option;
         std::string primitive_cell_location_option;
@@ -1753,10 +1757,6 @@ namespace ptof
          std::string const& name,
          Geometry const& geometry)
         {
-        private:
-          std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
-          
-        public:
           auto input = useful::open_read(directories.dir_parameters
                                          + "/parameters_transport_"
                                          + name + ".dat");

@@ -696,8 +696,8 @@ $(document).ready(function(){initNavTree('d6/d44/_initial_condition_8h_source.ht
 <div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;    {</div>
 <div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;      std::string line;</div>
 <div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;      <span class="keywordflow">while</span> (std::getline(input, line))</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;        <span class="keywordflow">if</span> (line.find(comment_sequence) == 0)</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;          <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;        <span class="keywordflow">if</span> (line.find(comment_sequence) != 0)</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;          <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;      <a class="code" href="../../df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c">useful::remove_carriage_return_in_place</a>(line);</div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;      <a class="code" href="../../df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12">useful::clear_escape_in_place</a>(line, comment_sequence);</div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;      <span class="keywordflow">if</span> (line.empty())</div>
@@ -783,8 +783,8 @@ $(document).ready(function(){initNavTree('d6/d44/_initial_condition_8h_source.ht
 <div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;      {</div>
 <div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;        std::string line;</div>
 <div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;        <span class="keywordflow">while</span>(std::getline(input, line))</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;          <span class="keywordflow">if</span> (line.find(<a class="code" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ab9ad254b6804f87b4494257891c6b0e2">comment_sequence</a>) == 0)</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;          <span class="keywordflow">if</span> (line.find(<a class="code" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ab9ad254b6804f87b4494257891c6b0e2">comment_sequence</a>) != 0)</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;        <a class="code" href="../../df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c">useful::remove_carriage_return_in_place</a>(line);</div>
 <div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;        <a class="code" href="../../df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12">useful::clear_escape_in_place</a>(line, <a class="code" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ab9ad254b6804f87b4494257891c6b0e2">comment_sequence</a>);</div>
 <div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;        <span class="keyword">auto</span> split_line = <a class="code" href="../../df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363">useful::split</a>(line);</div>

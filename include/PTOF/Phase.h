@@ -29,6 +29,10 @@ namespace ptof
      \brief Parameters for phase-related quantities. */
     struct Parameters
     {
+    private:
+      std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
+      
+    public:
       std::string phase_name;             /**< Name of phase saturation field to be read from file. */
       bool excluded_phase;                /**< Weather named phase is excluded phase or carrier phase from file. */
       bool compute_gradient;              /**< Weather to compute or read from file gradient of excluded phase. */
@@ -44,10 +48,6 @@ namespace ptof
       (Directories const& directories, std::string const& name,
        Geometry const& geometry)
       {
-      private:
-        std::string comment_sequence = "#"; /**< Sequence of characters marking comment for file parsing. */
-        
-      public:
         auto input = useful::open_read(directories.dir_parameters
                                        + "/parameters_phase_"
                                        + name + ".dat");

@@ -1,5 +1,9 @@
 var NAVTREEINDEX11 =
 {
+"dd/ddd/_state_getter_8h.html#aec427b9f737bcfdffef3dc35f5f84b5a":[8,0,0,6,26],
+"dd/ddd/_state_getter_8h.html#af98b15d69c2ab06dec3aabdb6a7c4f11":[8,0,0,6,33],
+"dd/ddd/_state_getter_8h_source.html":[8,0,0,6],
+"dd/ddd/structptof_1_1_measure.html":[7,0,3,79],
 "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8":[7,0,3,79,0],
 "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a221babae9f54bb1a44bb0b7768b6088b":[7,0,3,79,0,2],
 "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa":[7,0,3,79,0,15],
@@ -71,13 +75,14 @@ var NAVTREEINDEX11 =
 "de/d70/structptof_1_1model__advection__diffusion__2d_1_1_reaction_1_1_parameters.html#af556ceb8115474340a45c86541de2aa0":[7,0,3,4,3,0,3],
 "de/d81/struct_output___cases_1_1_next_measure_time__log.html":[7,0,10],
 "de/d93/structptof_1_1_phase_1_1_parameters.html":[7,0,3,104,0],
-"de/d93/structptof_1_1_phase_1_1_parameters.html#a0786ef6a202823f00900e4b14d2af0c5":[7,0,3,104,0,4],
+"de/d93/structptof_1_1_phase_1_1_parameters.html#a0786ef6a202823f00900e4b14d2af0c5":[7,0,3,104,0,5],
 "de/d93/structptof_1_1_phase_1_1_parameters.html#a0ffd266845a158d0a8a4d832b74adabf":[7,0,3,104,0,1],
-"de/d93/structptof_1_1_phase_1_1_parameters.html#a3e9d874c6a28052e5d09f3d86133d8f8":[7,0,3,104,0,3],
+"de/d93/structptof_1_1_phase_1_1_parameters.html#a3e19c33f37c6947b99a4dbc2360c6d12":[7,0,3,104,0,2],
+"de/d93/structptof_1_1_phase_1_1_parameters.html#a3e9d874c6a28052e5d09f3d86133d8f8":[7,0,3,104,0,4],
 "de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847":[7,0,3,104,0,0],
-"de/d93/structptof_1_1_phase_1_1_parameters.html#ad1b1a6734759b7c9bb62126ce5914aa8":[7,0,3,104,0,6],
-"de/d93/structptof_1_1_phase_1_1_parameters.html#ad7cc17e30c708ecc68d2e73da46bf4f4":[7,0,3,104,0,2],
-"de/d93/structptof_1_1_phase_1_1_parameters.html#aff8e274a267ba3d88439fe08fc40cd6d":[7,0,3,104,0,5],
+"de/d93/structptof_1_1_phase_1_1_parameters.html#ad1b1a6734759b7c9bb62126ce5914aa8":[7,0,3,104,0,7],
+"de/d93/structptof_1_1_phase_1_1_parameters.html#ad7cc17e30c708ecc68d2e73da46bf4f4":[7,0,3,104,0,3],
+"de/d93/structptof_1_1_phase_1_1_parameters.html#aff8e274a267ba3d88439fe08fc40cd6d":[7,0,3,104,0,6],
 "de/d9e/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel.html":[6,0,7,19],
 "de/d9e/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel.html#aa215f4b742ccc7dd1c9ab13ca9d99fc6":[6,0,7,19,1],
 "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html":[7,0,3,101,0],
@@ -244,10 +249,5 @@ var NAVTREEINDEX11 =
 "df/d67/_criteria_8h.html":[8,0,3,2],
 "df/d67/_criteria_8h_source.html":[8,0,3,2],
 "df/d68/structptof_1_1_directories.html":[7,0,3,61],
-"df/d68/structptof_1_1_directories.html#a2430dbc7e0443afcfd6e0d0cc84e7888":[7,0,3,61,3],
-"df/d68/structptof_1_1_directories.html#a824c9bb079fd7b6a1666b02e7b34d832":[7,0,3,61,5],
-"df/d68/structptof_1_1_directories.html#a86629782240373bafa0f421ff064c887":[7,0,3,61,1],
-"df/d68/structptof_1_1_directories.html#ab01609a754c43acca84294b73047dac3":[7,0,3,61,4],
-"df/d68/structptof_1_1_directories.html#ad4f2a046b5ff987db8f0eb773bd8b8e4":[7,0,3,61,0],
-"df/d68/structptof_1_1_directories.html#aef46a360c97cf2ffbf6af4f2bb36f0f0":[7,0,3,61,2]
+"df/d68/structptof_1_1_directories.html#a2430dbc7e0443afcfd6e0d0cc84e7888":[7,0,3,61,3]
 };

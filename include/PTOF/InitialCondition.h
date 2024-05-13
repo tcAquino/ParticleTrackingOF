@@ -804,8 +804,8 @@ namespace ptof
     {
       std::string line;
       while (std::getline(input, line))
-        if (line.find(comment_sequence) == 0)
-          continue;
+        if (line.find(comment_sequence) != 0)
+          break;
       useful::remove_carriage_return_in_place(line);
       useful::clear_escape_in_place(line, comment_sequence);
       if (line.empty())
@@ -898,8 +898,8 @@ namespace ptof
       {
         std::string line;
         while(std::getline(input, line))
-          if (line.find(comment_sequence) == 0)
-            continue;
+          if (line.find(comment_sequence) != 0)
+            break;
         useful::remove_carriage_return_in_place(line);
         useful::clear_escape_in_place(line, comment_sequence);
         auto split_line = useful::split(line);

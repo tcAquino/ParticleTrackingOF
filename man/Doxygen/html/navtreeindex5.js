@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a1a2e1fea4ee29fd4cba78fdad02a43de":[7,0,0,60,4],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a2ebfb7d0887aa483649673f6face5495":[7,0,0,60,7],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a3d2f63f73b02cdcc80b9582c909632f6":[7,0,0,60,1],
 "d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a9de56c8d3320119b13316f59ced2dced":[7,0,0,60,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html":[6,0,7,20],
 "d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html#a114c4fea1d5c1dd273c83244333baee7":[6,0,7,20,1],
 "d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html":[7,0,3,59],
-"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#a507eafb2d8ca96d747e3ac296abf2954":[7,0,3,59,3],
-"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#aa911d023e09b5def41d445916c9c1afa":[7,0,3,59,2]
+"d7/db0/structptof_1_1_criterion__fraction__not__absorbed.html#a507eafb2d8ca96d747e3ac296abf2954":[7,0,3,59,3]
 };
