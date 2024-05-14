@@ -8,10 +8,9 @@
 #define PTOF_MODELS_PARALLEL_H
 
 #include "CTRW/CTRW_Parallel.h"
-#include "PTOF/Geometry_Parallel.h"
+#include "General/Parallel.h"
 #include "PTOF/Models.h"
-#include "PTOF/Reaction_Parallel.h"
-
+  
 namespace ptof
 {
   /** \namespace ptof::model_advection_diffusion_2d_parallel
@@ -34,7 +33,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<2>;
+    using Geometry = Geometry<2, meta::ParallelOptions::Parallel>;
     using model_advection_diffusion_2d::Info;
     using model_advection_diffusion_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -58,8 +57,7 @@ namespace ptof
      typename Transport::Parameters const& params_transport,
      ReactionParameters const& params_reaction,
      typename Solvers::Parameters const& params_solvers,
-     BulkReaction const& bulk_reaction,
-     std::size_t num_threads)
+     BulkReaction const& bulk_reaction)
     {
       using Transitions = decltype(ctrw::Transitions_CTRW_Transport_Reaction{
         Transport::template makeTransitions<Solvers>(velocity_field,
@@ -67,7 +65,9 @@ namespace ptof
                                                      params_transport, params_reaction, params_solvers),
         bulk_reaction });
       std::vector<Transitions> transitions;
-      for (std::size_t thread = 0; thread < num_threads; ++thread)
+      for (std::size_t thread = 0;
+           thread < useful::get_num_threads(meta::ParallelOptions::Parallel{});
+           ++thread)
         transitions.emplace_back(Transport::template makeTransitions<Solvers>(velocity_field,
                                                                               geometry,
                                                                               boundary,
@@ -133,7 +133,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<2, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry<2, meta::ParallelOptions::Parallel, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d::Info;
     using model_advection_diffusion_fpt_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -199,7 +200,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<2>;
+    using Geometry = Geometry_Periodic_Cartesian<2, meta::ParallelOptions::Parallel>;
     using model_periodic_cartesian_advection_diffusion_2d::Info;
     using model_periodic_cartesian_advection_diffusion_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -265,7 +266,9 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<2, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Periodic_Cartesian<2, meta::ParallelOptions::Parallel,
+        Dynamics::Type::firstpassage>;
     using model_periodic_cartesian_advection_diffusion_fpt_2d::Info;
     using model_periodic_cartesian_advection_diffusion_fpt_2d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -330,7 +333,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<3>;
+    using Geometry = Geometry<3, meta::ParallelOptions::Parallel>;
     using model_advection_diffusion_3d::Info;
     using model_advection_diffusion_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -395,7 +398,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Parallel<3, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry<3, meta::ParallelOptions::Parallel, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d::Info;
     using model_advection_diffusion_fpt_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -461,7 +465,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<3>;
+    using Geometry = Geometry_Periodic_Cartesian<3, meta::ParallelOptions::Parallel>;
     using model_periodic_cartesian_advection_diffusion_3d::Info;
     using model_periodic_cartesian_advection_diffusion_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -527,7 +531,9 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian_Parallel<3, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Periodic_Cartesian<3, meta::ParallelOptions::Parallel,
+        Dynamics::Type::firstpassage>;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::Info;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::State;
     using CTRW = ctrw::CTRW_Parallel<State>;
@@ -593,7 +599,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<>;
+    using Geometry = Geometry_Bcc<meta::ParallelOptions::Parallel>;
     using model_bcc_cartesian_advection_diffusion::Info;
     using model_bcc_cartesian_advection_diffusion::State;
     using model_periodic_cartesian_advection_diffusion_3d_parallel::CTRW;
@@ -626,7 +632,9 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<Periodicity::Type::cartesian, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Bcc<meta::ParallelOptions::Parallel, Periodicity::Type::cartesian,
+        Dynamics::Type::firstpassage>;
     using model_bcc_cartesian_advection_diffusion_fpt::Info;
     using model_bcc_cartesian_advection_diffusion_fpt::State;
     using model_periodic_cartesian_advection_diffusion_fpt_3d_parallel::CTRW;
@@ -725,7 +733,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<Periodicity::Type::symmetryplanes>;
+    using Geometry
+      = Geometry_Bcc<meta::ParallelOptions::Parallel, Periodicity::Type::symmetryplanes>;
     using model_bcc_symmetryplanes_advection_diffusion::Info;
     using model_bcc_symmetryplanes_advection_diffusion::State;
     using model_bcc_cartesian_advection_diffusion_parallel::CTRW;
@@ -758,7 +767,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc_Parallel<Periodicity::Type::symmetryplanes,
+    using Geometry =
+      Geometry_Bcc<meta::ParallelOptions::Parallel, Periodicity::Type::symmetryplanes,
       Dynamics::Type::firstpassage>;
     using model_bcc_symmetryplanes_advection_diffusion_fpt::Info;
     using model_bcc_symmetryplanes_advection_diffusion_fpt::State;

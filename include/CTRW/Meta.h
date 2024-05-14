@@ -55,7 +55,7 @@ namespace meta
   = std::conjunction_v<has_member<periodicity_t, X>,
       is_same<periodicity_t, X, std::vector<int>>>;
   
-  /** \class Parameters_or_empty General/Useful.h "General/Useful.h"
+  /** \class Parameters_or_empty General/Meta.h "General/Meta.h"
    \brief  Get Parameters type for true or Empty type for false. */
   template <bool, typename>
   struct Parameters_or_empty{ using type = useful::Empty; };

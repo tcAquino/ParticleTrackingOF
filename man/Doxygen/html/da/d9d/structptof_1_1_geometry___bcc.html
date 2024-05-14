@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('da/d9d/structptof_1_1_geometry___bcc.h
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt; Class Template Reference</div>  </div>
+<div class="title">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -100,98 +100,106 @@ $(document).ready(function(){initNavTree('da/d9d/structptof_1_1_geometry___bcc.h
 
 <p><code>#include &quot;<a class="el" href="../../d1/d4e/_geometry_8h_source.html">PTOF/Geometry.h</a>&quot;</code></p>
 <div class="dynheader">
-Collaboration diagram for ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt;:</div>
+Collaboration diagram for ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/db7/structptof_1_1_geometry___bcc__coll__graph.png" border="0" usemap="#aptof_1_1_geometry___bcc_3_01periodicity_00_01dynamics_00_01_search_option_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aptof_1_1_geometry___bcc_3_01periodicity_00_01dynamics_00_01_search_option_01_4_coll__map" id="aptof_1_1_geometry___bcc_3_01periodicity_00_01dynamics_00_01_search_option_01_4_coll__map">
-<area shape="rect" title="Geometry class for periodic representation of a body centered cubic beadpack." alt="" coords="37,124,219,180"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,251,61"/>
+<div class="center"><img src="../../db/db7/structptof_1_1_geometry___bcc__coll__graph.png" border="0" usemap="#aptof_1_1_geometry___bcc_3_01_parallel_option__t_00_01periodicity_00_01dynamics_00_01_search_option_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aptof_1_1_geometry___bcc_3_01_parallel_option__t_00_01periodicity_00_01dynamics_00_01_search_option_01_4_coll__map" id="aptof_1_1_geometry___bcc_3_01_parallel_option__t_00_01periodicity_00_01dynamics_00_01_search_option_01_4_coll__map">
+<area shape="rect" title="Geometry class for periodic representation of a body centered cubic beadpack." alt="" coords="37,124,208,195"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,240,61"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ad92ca7bbe7f242c70e34fb14acef15ca"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ad92ca7bbe7f242c70e34fb14acef15ca">Mesh</a> = Foam::fvMesh</td></tr>
-<tr class="separator:ad92ca7bbe7f242c70e34fb14acef15ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7962513aef965dafbd9baac49a55b2c9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a7962513aef965dafbd9baac49a55b2c9">MeshSearch</a> = Foam::meshSearch</td></tr>
-<tr class="separator:a7962513aef965dafbd9baac49a55b2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36e6b114f4872e9f4eafb94f4c3cdfba"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a36e6b114f4872e9f4eafb94f4c3cdfba">Locator</a> = <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt; SearchOption &gt;</td></tr>
-<tr class="separator:a36e6b114f4872e9f4eafb94f4c3cdfba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af89350f39f457c8f278728a0a9d316c5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a> = std::conditional_t&lt; periodicity==<a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a>, <a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html">geom::Boundary_Periodic_WithOutsideInfo</a>, <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html">geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a>&lt; <a class="el" href="../../d3/dac/structgeom_1_1_symmetry_planes___bcc.html">geom::SymmetryPlanes_Bcc</a> &gt; &gt;</td></tr>
-<tr class="separator:af89350f39f457c8f278728a0a9d316c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3e09cf4e6b112ed6e78d37db7cc7a84"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ab3e09cf4e6b112ed6e78d37db7cc7a84">BoundaryInfo</a> = <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a></td></tr>
-<tr class="separator:ab3e09cf4e6b112ed6e78d37db7cc7a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae61b36d921b284b8a06ba3a87a6a1d52"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ae61b36d921b284b8a06ba3a87a6a1d52">ParallelOption</a> = ParallelOption_t</td></tr>
+<tr class="separator:ae61b36d921b284b8a06ba3a87a6a1d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af589a86bca3dc7d829ceff7b549ab4c3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af589a86bca3dc7d829ceff7b549ab4c3">Mesh</a> = Foam::fvMesh</td></tr>
+<tr class="separator:af589a86bca3dc7d829ceff7b549ab4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8297e796835a38b2ed7e85596a6f7e36"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8297e796835a38b2ed7e85596a6f7e36">MeshSearch</a> = Foam::meshSearch</td></tr>
+<tr class="separator:a8297e796835a38b2ed7e85596a6f7e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4db3453cabf9d39193a0de04659c92"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aac4db3453cabf9d39193a0de04659c92">Locator</a> = <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">Geometry_Bcc</a>, SearchOption &gt;</td></tr>
+<tr class="separator:aac4db3453cabf9d39193a0de04659c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14314189e058ecb47416dd81a16df1f7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a> = std::conditional_t&lt; periodicity==<a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a>, <a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html">geom::Boundary_Periodic_WithOutsideInfo</a>, <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html">geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a>&lt; <a class="el" href="../../d3/dac/structgeom_1_1_symmetry_planes___bcc.html">geom::SymmetryPlanes_Bcc</a> &gt; &gt;</td></tr>
+<tr class="separator:a14314189e058ecb47416dd81a16df1f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12077697b4cc1a1c93c7c8910c3cf5e5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a12077697b4cc1a1c93c7c8910c3cf5e5">BoundaryInfo</a> = <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a></td></tr>
+<tr class="separator:a12077697b4cc1a1c93c7c8910c3cf5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a11cc9b78d64a5cb83efd628b70de9ae4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a11cc9b78d64a5cb83efd628b70de9ae4">Geometry_Bcc</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
-<tr class="memdesc:a11cc9b78d64a5cb83efd628b70de9ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a11cc9b78d64a5cb83efd628b70de9ae4">More...</a><br /></td></tr>
-<tr class="separator:a11cc9b78d64a5cb83efd628b70de9ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a886b780e8662f9be551505f0d1b54b9b"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a886b780e8662f9be551505f0d1b54b9b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a886b780e8662f9be551505f0d1b54b9b">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, InitialCondition &amp;&amp;initial_condition={}) const</td></tr>
-<tr class="memdesc:a886b780e8662f9be551505f0d1b54b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics and periodicity.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a886b780e8662f9be551505f0d1b54b9b">More...</a><br /></td></tr>
-<tr class="separator:a886b780e8662f9be551505f0d1b54b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acba9af63e3cec17c37499f0deb6102cd"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:acba9af63e3cec17c37499f0deb6102cd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#acba9af63e3cec17c37499f0deb6102cd">info_runtime</a> (OStream &amp;output) const</td></tr>
-<tr class="memdesc:acba9af63e3cec17c37499f0deb6102cd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> information about current object.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#acba9af63e3cec17c37499f0deb6102cd">More...</a><br /></td></tr>
-<tr class="separator:acba9af63e3cec17c37499f0deb6102cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e201b3beb6122f6ce7532b29abd7ad8"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a4e201b3beb6122f6ce7532b29abd7ad8">mesh</a> () const</td></tr>
-<tr class="separator:a4e201b3beb6122f6ce7532b29abd7ad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a9382f4ffa2bce52e6e09943e65fc5e90">Geometry_Bcc</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
+<tr class="memdesc:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a9382f4ffa2bce52e6e09943e65fc5e90">More...</a><br /></td></tr>
+<tr class="separator:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
+<tr class="memitem:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, InitialCondition &amp;&amp;initial_condition={}) const</td></tr>
+<tr class="memdesc:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics and periodicity.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">More...</a><br /></td></tr>
+<tr class="separator:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a799701ed7db1f7f22f6046875755c49d"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
+<tr class="memitem:a799701ed7db1f7f22f6046875755c49d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a799701ed7db1f7f22f6046875755c49d">info_runtime</a> (OStream &amp;output) const</td></tr>
+<tr class="memdesc:a799701ed7db1f7f22f6046875755c49d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> information about current object.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a799701ed7db1f7f22f6046875755c49d">More...</a><br /></td></tr>
+<tr class="separator:a799701ed7db1f7f22f6046875755c49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14399f9a69fb99b5d5159cb7dc386121"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14399f9a69fb99b5d5159cb7dc386121">mesh</a> () const</td></tr>
+<tr class="separator:a14399f9a69fb99b5d5159cb7dc386121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15ff3b9fa35cb26dbe3129d084242d8"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ad15ff3b9fa35cb26dbe3129d084242d8">mesh_search</a> () const</td></tr>
+<tr class="separator:ad15ff3b9fa35cb26dbe3129d084242d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a61210504d01571db23029024d15cca85"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:a61210504d01571db23029024d15cca85"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a61210504d01571db23029024d15cca85">info</a> (OStream &amp;output)</td></tr>
-<tr class="memdesc:a61210504d01571db23029024d15cca85"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> generic information about object.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a61210504d01571db23029024d15cca85">More...</a><br /></td></tr>
-<tr class="separator:a61210504d01571db23029024d15cca85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a071dd6fd14d6cd7cb10c2dc0ecdd2f"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
+<tr class="memitem:a8a071dd6fd14d6cd7cb10c2dc0ecdd2f"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8a071dd6fd14d6cd7cb10c2dc0ecdd2f">info</a> (OStream &amp;output)</td></tr>
+<tr class="memdesc:a8a071dd6fd14d6cd7cb10c2dc0ecdd2f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> generic information about object.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8a071dd6fd14d6cd7cb10c2dc0ecdd2f">More...</a><br /></td></tr>
+<tr class="separator:a8a071dd6fd14d6cd7cb10c2dc0ecdd2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1c36ac7b6cf1155fe0f756285f26300e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a36e6b114f4872e9f4eafb94f4c3cdfba">Locator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a1c36ac7b6cf1155fe0f756285f26300e">locator</a> { <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a34d63624583baca4e6332400664f1312">_mesh_search</a> }</td></tr>
-<tr class="separator:a1c36ac7b6cf1155fe0f756285f26300e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c1d14375f5aea00cf2f8d8775b1fb75"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a0c1d14375f5aea00cf2f8d8775b1fb75">radius</a></td></tr>
-<tr class="separator:a0c1d14375f5aea00cf2f8d8775b1fb75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc5c9f867a5d015c6732fe4ff90a444a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#abc5c9f867a5d015c6732fe4ff90a444a">boundary_periodic</a></td></tr>
-<tr class="separator:abc5c9f867a5d015c6732fe4ff90a444a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee876cd0cc58f6f8b56a4ee0d9b90d63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aac4db3453cabf9d39193a0de04659c92">Locator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aee876cd0cc58f6f8b56a4ee0d9b90d63">locator</a> { *this }</td></tr>
+<tr class="separator:aee876cd0cc58f6f8b56a4ee0d9b90d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073dfee0638a5076fccfa0a2a46fdb40"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a073dfee0638a5076fccfa0a2a46fdb40">radius</a></td></tr>
+<tr class="separator:a073dfee0638a5076fccfa0a2a46fdb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa110edc9bed04848d19ccd39c445e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#adaa110edc9bed04848d19ccd39c445e1">boundary_periodic</a></td></tr>
+<tr class="separator:adaa110edc9bed04848d19ccd39c445e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a90eaf4bb376139366cc64b0b1a77ac4b"><td class="memItemLeft" align="right" valign="top">static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a90eaf4bb376139366cc64b0b1a77ac4b">dim</a> { 3 }</td></tr>
-<tr class="separator:a90eaf4bb376139366cc64b0b1a77ac4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7cd6461c7075063ab3f4d7327d7a1eb"><td class="memItemLeft" align="right" valign="top">static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aa7cd6461c7075063ab3f4d7327d7a1eb">dim</a> { 3 }</td></tr>
+<tr class="separator:aa7cd6461c7075063ab3f4d7327d7a1eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:af9fc9276a6c0e5691f7eda8923f583d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af9fc9276a6c0e5691f7eda8923f583d4">make_boundary_periodic</a> (<a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a> &gt;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
-<tr class="memdesc:af9fc9276a6c0e5691f7eda8923f583d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a boundary object to enforce cartesian periodicity.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#af9fc9276a6c0e5691f7eda8923f583d4">More...</a><br /></td></tr>
-<tr class="separator:af9fc9276a6c0e5691f7eda8923f583d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acccd4595a41d068d2967c691e8b58bba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#acccd4595a41d068d2967c691e8b58bba">make_boundary_periodic</a> (<a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa5c4d0685bd3d8242f4629c312fcc7538">Periodicity::Type::symmetryplanes</a> &gt;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
-<tr class="memdesc:acccd4595a41d068d2967c691e8b58bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a boundary object to enforce periodicity based on symmetry planes.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#acccd4595a41d068d2967c691e8b58bba">More...</a><br /></td></tr>
-<tr class="separator:acccd4595a41d068d2967c691e8b58bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaafcdabdc6cecd422e448ae69e2c01da"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af589a86bca3dc7d829ceff7b549ab4c3">Mesh</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aaafcdabdc6cecd422e448ae69e2c01da">make_meshes</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of)</td></tr>
+<tr class="separator:aaafcdabdc6cecd422e448ae69e2c01da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f2cc907cf130a3861ad794ba456d0c5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8297e796835a38b2ed7e85596a6f7e36">MeshSearch</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a4f2cc907cf130a3861ad794ba456d0c5">make_mesh_searches</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of)</td></tr>
+<tr class="separator:a4f2cc907cf130a3861ad794ba456d0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a114789a7bea9fe572603e0beea5f4fbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a114789a7bea9fe572603e0beea5f4fbf">make_boundary_periodic</a> (<a class="el" href="../../da/d34/structmeta_1_1_selector.html">meta::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a> &gt;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
+<tr class="memdesc:a114789a7bea9fe572603e0beea5f4fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a boundary object to enforce cartesian periodicity.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a114789a7bea9fe572603e0beea5f4fbf">More...</a><br /></td></tr>
+<tr class="separator:a114789a7bea9fe572603e0beea5f4fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1487664135e43b83e38fff42c3b97e3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a1487664135e43b83e38fff42c3b97e3c">make_boundary_periodic</a> (<a class="el" href="../../da/d34/structmeta_1_1_selector.html">meta::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa5c4d0685bd3d8242f4629c312fcc7538">Periodicity::Type::symmetryplanes</a> &gt;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
+<tr class="memdesc:a1487664135e43b83e38fff42c3b97e3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a boundary object to enforce periodicity based on symmetry planes.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a1487664135e43b83e38fff42c3b97e3c">More...</a><br /></td></tr>
+<tr class="separator:a1487664135e43b83e38fff42c3b97e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:acf02f212c740bb803773fb9ff3d6c97b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ad92ca7bbe7f242c70e34fb14acef15ca">Mesh</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#acf02f212c740bb803773fb9ff3d6c97b">_mesh</a></td></tr>
-<tr class="separator:acf02f212c740bb803773fb9ff3d6c97b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34d63624583baca4e6332400664f1312"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a7962513aef965dafbd9baac49a55b2c9">MeshSearch</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a34d63624583baca4e6332400664f1312">_mesh_search</a> { <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#acf02f212c740bb803773fb9ff3d6c97b">_mesh</a> }</td></tr>
-<tr class="separator:a34d63624583baca4e6332400664f1312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35b19c12c73a76531728d7a8fd0c9a4f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af589a86bca3dc7d829ceff7b549ab4c3">Mesh</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a35b19c12c73a76531728d7a8fd0c9a4f">_meshes</a></td></tr>
+<tr class="separator:a35b19c12c73a76531728d7a8fd0c9a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac89c922c0a5f7c844e313f09cea49772"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8297e796835a38b2ed7e85596a6f7e36">MeshSearch</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ac89c922c0a5f7c844e313f09cea49772">_mesh_searches</a></td></tr>
+<tr class="separator:ac89c922c0a5f7c844e313f09cea49772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
-class ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt;</h3>
+<div class="textblock"><h3>template&lt;typename ParallelOption_t, Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
+class ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</h3>
 
 <p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for periodic representation of a body centered cubic beadpack. </p>
 <p>Holds spatial dimension info, mesh, mesh search objects, and periodic boundary to enforce periodicity. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="af89350f39f457c8f278728a0a9d316c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af89350f39f457c8f278728a0a9d316c5">&#9670;&nbsp;</a></span>Boundary_Periodic</h2>
+<a id="a14314189e058ecb47416dd81a16df1f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14314189e058ecb47416dd81a16df1f7">&#9670;&nbsp;</a></span>Boundary_Periodic</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a> =  std::conditional_t&lt; periodicity == <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a>, <a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html">geom::Boundary_Periodic_WithOutsideInfo</a>, <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html">geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a>&lt; <a class="el" href="../../d3/dac/structgeom_1_1_symmetry_planes___bcc.html">geom::SymmetryPlanes_Bcc</a>&gt; &gt;</td>
+          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a> =  std::conditional_t&lt; periodicity == <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a>, <a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html">geom::Boundary_Periodic_WithOutsideInfo</a>, <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html">geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a>&lt; <a class="el" href="../../d3/dac/structgeom_1_1_symmetry_planes___bcc.html">geom::SymmetryPlanes_Bcc</a>&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -199,16 +207,16 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="ab3e09cf4e6b112ed6e78d37db7cc7a84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3e09cf4e6b112ed6e78d37db7cc7a84">&#9670;&nbsp;</a></span>BoundaryInfo</h2>
+<a id="a12077697b4cc1a1c93c7c8910c3cf5e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12077697b4cc1a1c93c7c8910c3cf5e5">&#9670;&nbsp;</a></span>BoundaryInfo</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ab3e09cf4e6b112ed6e78d37db7cc7a84">BoundaryInfo</a> =  <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a></td>
+          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a12077697b4cc1a1c93c7c8910c3cf5e5">BoundaryInfo</a> =  <a class="el" href="../../d6/dee/structptof_1_1_store___absorbed.html">Store_Absorbed</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -216,16 +224,16 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="a36e6b114f4872e9f4eafb94f4c3cdfba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36e6b114f4872e9f4eafb94f4c3cdfba">&#9670;&nbsp;</a></span>Locator</h2>
+<a id="aac4db3453cabf9d39193a0de04659c92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac4db3453cabf9d39193a0de04659c92">&#9670;&nbsp;</a></span>Locator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a36e6b114f4872e9f4eafb94f4c3cdfba">Locator</a> =  <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt;SearchOption&gt;</td>
+          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aac4db3453cabf9d39193a0de04659c92">Locator</a> =  <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a>&lt;<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">Geometry_Bcc</a>, SearchOption&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -233,16 +241,16 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="ad92ca7bbe7f242c70e34fb14acef15ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad92ca7bbe7f242c70e34fb14acef15ca">&#9670;&nbsp;</a></span>Mesh</h2>
+<a id="af589a86bca3dc7d829ceff7b549ab4c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af589a86bca3dc7d829ceff7b549ab4c3">&#9670;&nbsp;</a></span>Mesh</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ad92ca7bbe7f242c70e34fb14acef15ca">Mesh</a> =  Foam::fvMesh</td>
+          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af589a86bca3dc7d829ceff7b549ab4c3">Mesh</a> =  Foam::fvMesh</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -250,16 +258,16 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="a7962513aef965dafbd9baac49a55b2c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7962513aef965dafbd9baac49a55b2c9">&#9670;&nbsp;</a></span>MeshSearch</h2>
+<a id="a8297e796835a38b2ed7e85596a6f7e36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8297e796835a38b2ed7e85596a6f7e36">&#9670;&nbsp;</a></span>MeshSearch</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a7962513aef965dafbd9baac49a55b2c9">MeshSearch</a> =  Foam::meshSearch</td>
+          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8297e796835a38b2ed7e85596a6f7e36">MeshSearch</a> =  Foam::meshSearch</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -267,20 +275,37 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a11cc9b78d64a5cb83efd628b70de9ae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11cc9b78d64a5cb83efd628b70de9ae4">&#9670;&nbsp;</a></span>Geometry_Bcc()</h2>
+<a id="ae61b36d921b284b8a06ba3a87a6a1d52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae61b36d921b284b8a06ba3a87a6a1d52">&#9670;&nbsp;</a></span>ParallelOption</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ae61b36d921b284b8a06ba3a87a6a1d52">ParallelOption</a> =  ParallelOption_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Choose serial or parallel implementations. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9382f4ffa2bce52e6e09943e65fc5e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9382f4ffa2bce52e6e09943e65fc5e90">&#9670;&nbsp;</a></span>Geometry_Bcc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">Geometry_Bcc</a> </td>
+          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">Geometry_Bcc</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;&#160;</td>
           <td class="paramname"><em>directories_of</em>, </td>
@@ -316,13 +341,13 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a61210504d01571db23029024d15cca85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61210504d01571db23029024d15cca85">&#9670;&nbsp;</a></span>info()</h2>
+<a id="a8a071dd6fd14d6cd7cb10c2dc0ecdd2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a071dd6fd14d6cd7cb10c2dc0ecdd2f">&#9670;&nbsp;</a></span>info()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -330,7 +355,7 @@ template&lt;typename OStream &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::info </td>
+          <td class="memname">static void <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::info </td>
           <td>(</td>
           <td class="paramtype">OStream &amp;&#160;</td>
           <td class="paramname"><em>output</em></td><td>)</td>
@@ -348,8 +373,8 @@ template&lt;typename OStream &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a61210504d01571db23029024d15cca85_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a61210504d01571db23029024d15cca85_cgraph" alt=""/></div>
-<map name="ada/d9d/structptof_1_1_geometry___bcc_a61210504d01571db23029024d15cca85_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a61210504d01571db23029024d15cca85_cgraph">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a8a071dd6fd14d6cd7cb10c2dc0ecdd2f_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a8a071dd6fd14d6cd7cb10c2dc0ecdd2f_cgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_a8a071dd6fd14d6cd7cb10c2dc0ecdd2f_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a8a071dd6fd14d6cd7cb10c2dc0ecdd2f_cgraph">
 <area shape="rect" title="Output generic information about object." alt="" coords="5,23,156,65"/>
 <area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="205,5,371,32"/>
 <area shape="rect" href="../../d3/dc2/structptof_1_1_periodicity.html#aa7015329b0a122aa4dc5f40a75492db0" title="Get name from type." alt="" coords="204,56,372,83"/>
@@ -360,13 +385,13 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="acba9af63e3cec17c37499f0deb6102cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acba9af63e3cec17c37499f0deb6102cd">&#9670;&nbsp;</a></span>info_runtime()</h2>
+<a id="a799701ed7db1f7f22f6046875755c49d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a799701ed7db1f7f22f6046875755c49d">&#9670;&nbsp;</a></span>info_runtime()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -374,7 +399,7 @@ template&lt;typename OStream &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::info_runtime </td>
+          <td class="memname">void <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::info_runtime </td>
           <td>(</td>
           <td class="paramtype">OStream &amp;&#160;</td>
           <td class="paramname"><em>output</em></td><td>)</td>
@@ -392,21 +417,21 @@ template&lt;typename OStream &gt; </div>
 
 </div>
 </div>
-<a id="af9fc9276a6c0e5691f7eda8923f583d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9fc9276a6c0e5691f7eda8923f583d4">&#9670;&nbsp;</a></span>make_boundary_periodic() <span class="overload">[1/2]</span></h2>
+<a id="a114789a7bea9fe572603e0beea5f4fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a114789a7bea9fe572603e0beea5f4fbf">&#9670;&nbsp;</a></span>make_boundary_periodic() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::make_boundary_periodic </td>
+          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::make_boundary_periodic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../da/d34/structmeta_1_1_selector.html">meta::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa7949e6c02de2124dcdddd71b5430b8f0">Periodicity::Type::cartesian</a> &gt;&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
@@ -433,8 +458,8 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_af9fc9276a6c0e5691f7eda8923f583d4_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_af9fc9276a6c0e5691f7eda8923f583d4_cgraph" alt=""/></div>
-<map name="ada/d9d/structptof_1_1_geometry___bcc_af9fc9276a6c0e5691f7eda8923f583d4_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_af9fc9276a6c0e5691f7eda8923f583d4_cgraph">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a114789a7bea9fe572603e0beea5f4fbf_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a114789a7bea9fe572603e0beea5f4fbf_cgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_a114789a7bea9fe572603e0beea5f4fbf_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a114789a7bea9fe572603e0beea5f4fbf_cgraph">
 <area shape="rect" title="Make a boundary object to enforce cartesian periodicity." alt="" coords="5,23,199,65"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="247,23,415,65"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="469,5,587,32"/>
@@ -444,21 +469,21 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="acccd4595a41d068d2967c691e8b58bba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acccd4595a41d068d2967c691e8b58bba">&#9670;&nbsp;</a></span>make_boundary_periodic() <span class="overload">[2/2]</span></h2>
+<a id="a1487664135e43b83e38fff42c3b97e3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1487664135e43b83e38fff42c3b97e3c">&#9670;&nbsp;</a></span>make_boundary_periodic() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::make_boundary_periodic </td>
+          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::make_boundary_periodic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dd2/structuseful_1_1_selector.html">useful::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa5c4d0685bd3d8242f4629c312fcc7538">Periodicity::Type::symmetryplanes</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../da/d34/structmeta_1_1_selector.html">meta::Selector</a>&lt; <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f">Periodicity::Type</a>, <a class="el" href="../../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4fa5c4d0685bd3d8242f4629c312fcc7538">Periodicity::Type::symmetryplanes</a> &gt;&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
@@ -485,13 +510,101 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="a886b780e8662f9be551505f0d1b54b9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a886b780e8662f9be551505f0d1b54b9b">&#9670;&nbsp;</a></span>makeBoundary()</h2>
+<a id="a4f2cc907cf130a3861ad794ba456d0c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f2cc907cf130a3861ad794ba456d0c5">&#9670;&nbsp;</a></span>make_mesh_searches()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8297e796835a38b2ed7e85596a6f7e36">MeshSearch</a>&gt; &gt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::make_mesh_searches </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;&#160;</td>
+          <td class="paramname"><em>directories_of</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">directories_of</td><td>OpenFOAM case directory information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mesh search tools for parallel searches </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,180,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7" title=" " alt="" coords="228,13,411,39"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aaafcdabdc6cecd422e448ae69e2c01da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaafcdabdc6cecd422e448ae69e2c01da">&#9670;&nbsp;</a></span>make_meshes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af589a86bca3dc7d829ceff7b549ab4c3">Mesh</a>&gt; &gt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::make_meshes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;&#160;</td>
+          <td class="paramname"><em>directories_of</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">directories_of</td><td>OpenFOAM case directory information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mesh copies for parallel searches </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7" title=" " alt="" coords="204,13,387,39"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0d8442b4a277f4cd8651a78d0055d9b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d8442b4a277f4cd8651a78d0055d9b2">&#9670;&nbsp;</a></span>makeBoundary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
@@ -499,7 +612,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::makeBoundary </td>
+          <td class="memname">auto <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::makeBoundary </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
           <td class="paramname"><em>directories</em>, </td>
@@ -566,19 +679,19 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
 
 </div>
 </div>
-<a id="a4e201b3beb6122f6ce7532b29abd7ad8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e201b3beb6122f6ce7532b29abd7ad8">&#9670;&nbsp;</a></span>mesh()</h2>
+<a id="a14399f9a69fb99b5d5159cb7dc386121"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14399f9a69fb99b5d5159cb7dc386121">&#9670;&nbsp;</a></span>mesh()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::mesh </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::mesh </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -592,10 +705,19 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Mesh. </dd></dl>
 <div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="204,13,380,39"/>
+</map>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a4e201b3beb6122f6ce7532b29abd7ad8_icgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a4e201b3beb6122f6ce7532b29abd7ad8_icgraph" alt=""/></div>
-<map name="ada/d9d/structptof_1_1_geometry___bcc_a4e201b3beb6122f6ce7532b29abd7ad8_icgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a4e201b3beb6122f6ce7532b29abd7ad8_icgraph">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph">
 <area shape="rect" title=" " alt="" coords="277,13,428,54"/>
 <area shape="rect" href="../../d2/da7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport.html#ab1cf7c7c22b6c0ac25b0aae66d84db70" title=" " alt="" coords="5,5,229,61"/>
 </map>
@@ -603,45 +725,57 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="acf02f212c740bb803773fb9ff3d6c97b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf02f212c740bb803773fb9ff3d6c97b">&#9670;&nbsp;</a></span>_mesh</h2>
+<a id="ad15ff3b9fa35cb26dbe3129d084242d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad15ff3b9fa35cb26dbe3129d084242d8">&#9670;&nbsp;</a></span>mesh_search()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#ad92ca7bbe7f242c70e34fb14acef15ca">Mesh</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::_mesh</td>
+          <td class="memname">auto const&amp; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::mesh_search </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Mesh for fields and boundaries. </p>
+<dl class="section return"><dt>Returns</dt><dd>Mesh search tools. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph" alt=""/></div>
+<map name="ada/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="204,13,380,39"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a34d63624583baca4e6332400664f1312"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34d63624583baca4e6332400664f1312">&#9670;&nbsp;</a></span>_mesh_search</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="ac89c922c0a5f7c844e313f09cea49772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac89c922c0a5f7c844e313f09cea49772">&#9670;&nbsp;</a></span>_mesh_searches</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a7962513aef965dafbd9baac49a55b2c9">MeshSearch</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::_mesh_search { <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#acf02f212c740bb803773fb9ff3d6c97b">_mesh</a> }</td>
+          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a8297e796835a38b2ed7e85596a6f7e36">MeshSearch</a>&gt; &gt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::_mesh_searches</td>
         </tr>
       </table>
   </td>
@@ -654,16 +788,41 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="abc5c9f867a5d015c6732fe4ff90a444a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc5c9f867a5d015c6732fe4ff90a444a">&#9670;&nbsp;</a></span>boundary_periodic</h2>
+<a id="a35b19c12c73a76531728d7a8fd0c9a4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35b19c12c73a76531728d7a8fd0c9a4f">&#9670;&nbsp;</a></span>_meshes</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af89350f39f457c8f278728a0a9d316c5">Boundary_Periodic</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::boundary_periodic</td>
+          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#af589a86bca3dc7d829ceff7b549ab4c3">Mesh</a>&gt; &gt; <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::_meshes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Mesh or mesh copies needed for parallel searches. </p>
+
+</div>
+</div>
+<a id="adaa110edc9bed04848d19ccd39c445e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaa110edc9bed04848d19ccd39c445e1">&#9670;&nbsp;</a></span>boundary_periodic</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a14314189e058ecb47416dd81a16df1f7">Boundary_Periodic</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::boundary_periodic</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -671,19 +830,19 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="a90eaf4bb376139366cc64b0b1a77ac4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90eaf4bb376139366cc64b0b1a77ac4b">&#9670;&nbsp;</a></span>dim</h2>
+<a id="aa7cd6461c7075063ab3f4d7327d7a1eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7cd6461c7075063ab3f4d7327d7a1eb">&#9670;&nbsp;</a></span>dim</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr std::size_t <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::dim { 3 }</td>
+          <td class="memname">constexpr std::size_t <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::dim { 3 }</td>
         </tr>
       </table>
   </td>
@@ -696,16 +855,16 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="a1c36ac7b6cf1155fe0f756285f26300e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c36ac7b6cf1155fe0f756285f26300e">&#9670;&nbsp;</a></span>locator</h2>
+<a id="aee876cd0cc58f6f8b56a4ee0d9b90d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee876cd0cc58f6f8b56a4ee0d9b90d63">&#9670;&nbsp;</a></span>locator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a36e6b114f4872e9f4eafb94f4c3cdfba">Locator</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::locator { <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a34d63624583baca4e6332400664f1312">_mesh_search</a> }</td>
+          <td class="memname"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#aac4db3453cabf9d39193a0de04659c92">Locator</a> <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::locator { *this }</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -713,16 +872,16 @@ template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynami
 
 </div>
 </div>
-<a id="a0c1d14375f5aea00cf2f8d8775b1fb75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c1d14375f5aea00cf2f8d8775b1fb75">&#9670;&nbsp;</a></span>radius</h2>
+<a id="a073dfee0638a5076fccfa0a2a46fdb40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a073dfee0638a5076fccfa0a2a46fdb40">&#9670;&nbsp;</a></span>radius</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
+template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const double <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; periodicity, dynamics, SearchOption &gt;::radius</td>
+          <td class="memname">const double <a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html">ptof::Geometry_Bcc</a>&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;::radius</td>
         </tr>
       </table>
 </div><div class="memdoc">

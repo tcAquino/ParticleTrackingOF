@@ -15,26 +15,33 @@ namespace ptof
 {
   /** \class Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
    * \brief Object to locate positions or states in mesh. */
-  template <typename SearchOption = SearchOptions::FirstNeighborPrecheck>
+  template
+  <typename Geometry,
+  typename SearchOption = SearchOptions::FirstNeighborPrecheck>
   struct Locator_Cell
   {
-    using Point = Foam::point;                      /**> 3D point. */
-    using Point2D = Foam::Vector2D<Foam::scalar>;   /**> 2D point. */
-    using Vector = Foam::vector;                    /**> 3D vector. */
-    using Vector2D = Foam::Vector2D<Foam::scalar>;  /**> 2D vector. */
-    using Scalar = Foam::scalar;                    /**> Scalar (also 1D point). */
-    using Index = Foam::label;                      /**> Cell index.*/
-    using MeshSearch = Foam::meshSearch;            /**< Type of mesh searching object. */
+    using Point = Foam::point;                        /**> 3D point. */
+    using Point2D = Foam::Vector2D<Foam::scalar>;     /**> 2D point. */
+    using Vector = Foam::vector;                      /**> 3D vector. */
+    using Vector2D = Foam::Vector2D<Foam::scalar>;    /**> 2D vector. */
+    using Scalar = Foam::scalar;                      /**> Scalar (also 1D point). */
+    using Index = Foam::label;                        /**> Cell index.*/
+    using Mesh = typename Geometry::Mesh;             /**< Mesh. */
+    using MeshSearch = typename Geometry::MeshSearch; /**< Mesh searching tools. */
     
     /** Constructor.
      \param mesh_search Mesh searching object. */
-    Locator_Cell(MeshSearch const& mesh_search)
-    : _mesh_search{ mesh_search }
+    Locator_Cell(Geometry const& geometry)
+    : _geometry{ geometry }
     {}
     
     /** \return Mesh search object. */
     MeshSearch const& mesh_search() const
-    { return _mesh_search; }
+    { return _geometry.mesh_search(); }
+    
+    /** \return Mesh object. */
+    Mesh const& mesh() const
+    { return _geometry.mesh(); }
     
     /**
     \param position Position to locate.
@@ -46,18 +53,18 @@ namespace ptof
       if (hint != -1)
       {
         if constexpr (SearchOption::neighbor_check_level >= 0)
-          if (mesh_search().mesh().pointInCell(position, hint))
+          if (mesh().pointInCell(position, hint))
             return hint;
 
         if constexpr (SearchOption::neighbor_check_level >= 1)
-          for (auto const& cell_index : mesh_search().mesh().cellCells()[hint])
-            if (mesh_search().mesh().pointInCell(position, cell_index))
+          for (auto const& cell_index : mesh().cellCells()[hint])
+            if (mesh().pointInCell(position, cell_index))
               return cell_index;
         
         if constexpr (SearchOption::neighbor_check_level >= 2)
-          for (auto const& cell_index_1 : mesh_search().mesh().cellCells()[hint])
-            for (auto const& cell_index : mesh_search().mesh().cellCells()[cell_index_1])
-              if (mesh_search().mesh().pointInCell(position, cell_index))
+          for (auto const& cell_index_1 : mesh().cellCells()[hint])
+            for (auto const& cell_index : mesh().cellCells()[cell_index_1])
+              if (mesh().pointInCell(position, cell_index))
                 return cell_index;
       }
 
@@ -141,7 +148,7 @@ namespace ptof
     }
     
   private:
-    MeshSearch const& _mesh_search;  /**< Mesh searching tools. */
+    Geometry const& _geometry;  /**< Domain geometry info and utilities. */
   };
 }
 

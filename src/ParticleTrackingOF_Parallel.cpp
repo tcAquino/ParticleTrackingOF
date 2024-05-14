@@ -107,7 +107,7 @@ int main(int argc, char * argv[])
   
   std::cout << "\n" << "Setting up geometry...\n";
   auto execution_begin = std::chrono::high_resolution_clock::now();
-  Geometry geometry{ directories_of, directories, num_threads };
+  Geometry geometry{ directories_of, directories };
   geometry.info_runtime(std::cout);
   auto execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -224,8 +224,7 @@ int main(int argc, char * argv[])
                                                          params_transport,
                                                          params_reaction,
                                                          params_solvers,
-                                                         bulk_reaction,
-                                                         num_threads);
+                                                         bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

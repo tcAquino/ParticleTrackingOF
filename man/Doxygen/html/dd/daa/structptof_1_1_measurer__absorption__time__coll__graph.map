@@ -1,7 +1,7 @@
 <map id="ptof::Measurer_absorption_time&lt; Subject, Geometry &gt;" name="ptof::Measurer_absorption_time&lt; Subject, Geometry &gt;">
-<area shape="rect" id="node1" title="Output absorption times, tags, masses of absorbed particles." alt="" coords="933,55,1144,97"/>
-<area shape="rect" id="node2" href="$db/d74/structptof_1_1_measurer.html" title=" " alt="" coords="701,55,884,97"/>
-<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="348,13,579,54"/>
-<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,251,61"/>
-<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="394,78,533,119"/>
+<area shape="rect" id="node1" title="Output absorption times, tags, masses of absorbed particles." alt="" coords="1200,13,1411,54"/>
+<area shape="rect" id="node2" href="$db/d74/structptof_1_1_measurer.html" title=" " alt="" coords="968,13,1151,54"/>
+<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="313,5,528,61"/>
+<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="651,47,863,89"/>
+<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,216,61"/>
 </map>

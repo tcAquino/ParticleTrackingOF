@@ -13,7 +13,6 @@ var classptof_1_1_initial_condition___cases =
     [ "operator()", "db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f", null ],
     [ "_locator", "db/dfb/classptof_1_1_initial_condition___cases.html#a7076d52e07de85ad9b7a40e39ec5d020", null ],
     [ "_mask", "db/dfb/classptof_1_1_initial_condition___cases.html#ad95b3a1ae5e8c41d1085dfdfd90b6627", null ],
-    [ "_mesh", "db/dfb/classptof_1_1_initial_condition___cases.html#a06c8b2eb4182f82175dbef3e2b9a1a00", null ],
     [ "_nr_particles", "db/dfb/classptof_1_1_initial_condition___cases.html#a65323f5b200f0986bf33ba76f8b07de6", null ],
     [ "_particle_maker", "db/dfb/classptof_1_1_initial_condition___cases.html#a3cf16886a8853328e8af9e467651f2da", null ],
     [ "_position_maker", "db/dfb/classptof_1_1_initial_condition___cases.html#a3934c904771ba378ae0985c90c3855aa", null ],

@@ -16,6 +16,8 @@
 #include <meshSearch.H>
 #include "CTRW/CTRW.h"
 #include "CTRW/Meta.h"
+#include "General/Meta.h"
+#include "General/Serial.h"
 #include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Geometry.h"
@@ -28,6 +30,7 @@
 #include "PTOF/ParticleMaker.h"
 #include "PTOF/Steppers.h"
 #include "PTOF/Transitions.h"
+#include "PTOF/Useful.h"
 
 /** \namespace ptof Objects and methods for ParticleTrackingOF. */
 namespace ptof
@@ -54,7 +57,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<2>;
+    using Geometry = Geometry<2, meta::ParallelOptions::Serial>;
     using Info = ptof::Info_Absorbed;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -423,7 +426,7 @@ namespace ptof
           return InitialCondition_Cases{
             geometry, velocity_field,
             ParticleMaker_Periodic{
-              useful::Selector_t<typename CTRW::Particle>{},
+              meta::Selector_t<typename CTRW::Particle>{},
               geometry.locator,
               geometry.boundary_periodic,
               parameters.time_min,
@@ -435,7 +438,7 @@ namespace ptof
           return InitialCondition_Cases{
             geometry, velocity_field,
             ParticleMaker{
-              useful::Selector_t<typename CTRW::Particle>{},
+              meta::Selector_t<typename CTRW::Particle>{},
               geometry.locator,
               parameters.time_min,
               parameters.initial_mass/params_solvers.nr_particles },
@@ -528,7 +531,9 @@ namespace ptof
     typename Reaction,
     typename VelocityField,
     typename Geometry,
-    typename Boundary>
+    typename Boundary,
+    std::enable_if_t<std::is_same_v<typename Geometry::ParallelOption,
+      meta::ParallelOptions::Serial>, std::nullptr_t> = nullptr>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -540,7 +545,9 @@ namespace ptof
       return ctrw::Transitions_CTRW_Transport_Reaction{
         Transport::template makeTransitions<Solvers>(velocity_field,
                                                      geometry, boundary,
-                                                     params_transport, params_reaction, params_solvers),
+                                                     params_transport,
+                                                     params_reaction,
+                                                     params_solvers),
         Reaction::makeBulkReaction(geometry,
                                    params_reaction,
                                    params_transport,
@@ -553,7 +560,9 @@ namespace ptof
     typename Geometry,
     typename Boundary,
     typename ReactionParameters,
-    typename BulkReaction>
+    typename BulkReaction,
+    std::enable_if_t<std::is_same_v<typename Geometry::ParallelOption,
+      meta::ParallelOptions::Serial>, std::nullptr_t> = nullptr>
     auto makeTransitions
     (VelocityField const& velocity_field,
      Geometry const& geometry,
@@ -566,7 +575,9 @@ namespace ptof
       return ctrw::Transitions_CTRW_Transport_Reaction{
         Transport::template makeTransitions<Solvers>(velocity_field,
                                                      geometry, boundary,
-                                                     params_transport, params_reaction, params_solvers ),
+                                                     params_transport,
+                                                     params_reaction,
+                                                     params_solvers),
         bulk_reaction };
     }
   }
@@ -844,7 +855,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<2, Dynamics::Type::firstpassage>;
+    using Geometry = Geometry<2, meta::ParallelOptions::Serial, Dynamics::Type::firstpassage>;
     using Info = ptof::Info_Absorbed_Reinjections;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1013,7 +1024,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<2>;
+    using Geometry = Geometry_Periodic_Cartesian<2, meta::ParallelOptions::Serial>;
     using model_advection_diffusion_2d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1083,7 +1094,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<2, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Periodic_Cartesian<2, meta::ParallelOptions::Serial, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1152,7 +1164,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<3>;
+    using Geometry = Geometry<3, meta::ParallelOptions::Serial>;
     using Info = ptof::Info_Absorbed;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1221,7 +1233,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry<3, Dynamics::Type::firstpassage>;
+    using Geometry = Geometry<3, meta::ParallelOptions::Serial, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_2d::Info;
     using State = State<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1291,7 +1303,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<3>;
+    using Geometry = Geometry_Periodic_Cartesian<3, meta::ParallelOptions::Serial>;
     using model_advection_diffusion_3d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1361,7 +1373,8 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Periodic_Cartesian<3, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Periodic_Cartesian<3, meta::ParallelOptions::Serial, Dynamics::Type::firstpassage>;
     using model_advection_diffusion_fpt_3d::Info;
     using State = State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
     using CTRW = ctrw::CTRW<State>;
@@ -1431,7 +1444,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<>;
+    using Geometry = Geometry_Bcc<meta::ParallelOptions::Serial>;
     using model_periodic_cartesian_advection_diffusion_3d::Info;
     using model_periodic_cartesian_advection_diffusion_3d::State;
     using model_periodic_cartesian_advection_diffusion_3d::CTRW;
@@ -1682,7 +1695,9 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<Periodicity::Type::cartesian, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Bcc<meta::ParallelOptions::Serial, Periodicity::Type::cartesian,
+        Dynamics::Type::firstpassage>;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::Info;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::State;
     using model_periodic_cartesian_advection_diffusion_fpt_3d::CTRW;
@@ -1961,7 +1976,7 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<Periodicity::Type::symmetryplanes>;
+    using Geometry = Geometry_Bcc<meta::ParallelOptions::Serial, Periodicity::Type::symmetryplanes>;
     using model_bcc_cartesian_advection_diffusion::Info;
     using model_bcc_cartesian_advection_diffusion::State;
     using model_bcc_cartesian_advection_diffusion::CTRW;
@@ -1996,7 +2011,9 @@ namespace ptof
       }
     };
     
-    using Geometry = Geometry_Bcc<Periodicity::Type::symmetryplanes, Dynamics::Type::firstpassage>;
+    using Geometry
+      = Geometry_Bcc<meta::ParallelOptions::Serial, Periodicity::Type::symmetryplanes,
+        Dynamics::Type::firstpassage>;
     using model_bcc_cartesian_advection_diffusion_fpt::Info;
     using model_bcc_cartesian_advection_diffusion_fpt::State;
     using model_bcc_cartesian_advection_diffusion_fpt::CTRW;

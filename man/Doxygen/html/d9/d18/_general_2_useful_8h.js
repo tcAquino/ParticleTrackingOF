@@ -10,8 +10,6 @@ var _general_2_useful_8h =
     [ "Creator", "d5/d03/structuseful_1_1_creator.html", "d5/d03/structuseful_1_1_creator" ],
     [ "Forward", "df/d34/structuseful_1_1_forward.html", "df/d34/structuseful_1_1_forward" ],
     [ "Forward_ref", "d6/d37/structuseful_1_1_forward__ref.html", "d6/d37/structuseful_1_1_forward__ref" ],
-    [ "Selector_t", "d3/d42/structuseful_1_1_selector__t.html", null ],
-    [ "Selector", "d7/dd2/structuseful_1_1_selector.html", null ],
     [ "hash_container", "d4/de0/structuseful_1_1hash__container.html", "d4/de0/structuseful_1_1hash__container" ],
     [ "hash_pair", "dc/d50/structuseful_1_1hash__pair.html", "dc/d50/structuseful_1_1hash__pair" ],
     [ "bad_eof", "d9/d18/_general_2_useful_8h.html#a842aaf1a66b4a5bc371a7d96cd8fd9b6", null ],

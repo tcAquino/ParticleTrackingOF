@@ -126,9 +126,9 @@ $(document).ready(function(){initNavTree('db/d50/_advection_8h_source.html','../
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  {</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">auto</span> velocity_field = <a class="code" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>{</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      std::forward&lt;Field&gt;(field),</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#a8c60456a066107da2808dd8ad0e3c424">locator</a>,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#a31842cbb84647b56dc9fca0ce9db9da9">locator</a>,</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <a class="code" href="../../d0/dd6/structptof_1_1_check_options_1_1_warn.html">CheckOptions::Warn</a>{} };</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    params_transport.rescale(velocity_field, geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#ae00c093c2566606ec384c605eba825b9">mesh</a>());</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    params_transport.rescale(velocity_field, geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0">mesh</a>());</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> velocity_field;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  };</div>
@@ -141,10 +141,10 @@ $(document).ready(function(){initNavTree('db/d50/_advection_8h_source.html','../
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  {</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">auto</span> velocity_field =  <a class="code" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html">ptof::VectorField_LinearInterpolation_OF</a>{</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      std::forward&lt;Field&gt;(field),</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#a8c60456a066107da2808dd8ad0e3c424">locator</a>,</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#a31842cbb84647b56dc9fca0ce9db9da9">locator</a>,</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      std::forward&lt;Uninterpolated&gt;(uninterpolated),</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <a class="code" href="../../d0/dd6/structptof_1_1_check_options_1_1_warn.html">CheckOptions::Warn</a>{} };</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    params_transport.rescale(velocity_field, geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#ae00c093c2566606ec384c605eba825b9">mesh</a>());</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    params_transport.rescale(velocity_field, geometry.<a class="code" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0">mesh</a>());</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> velocity_field;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  };</div>
@@ -159,9 +159,9 @@ $(document).ready(function(){initNavTree('db/d50/_advection_8h_source.html','../
 <div class="ttc" id="anamespaceptof_html_abb1ff965576a54cbd3d9f56e0f0cc381"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#abb1ff965576a54cbd3d9f56e0f0cc381">ptof::makeLinearVelocityInterpolator</a></div><div class="ttdeci">auto makeLinearVelocityInterpolator(Geometry const &amp;geometry, Field &amp;&amp;field, TransportParameters &amp;params_transport)</div><div class="ttdoc">Make a linear interpolator for a field using OpenFOAM interpolation.</div><div class="ttdef"><b>Definition:</b> Advection.h:58</div></div>
 <div class="ttc" id="anamespaceptof_html_aed570c766b2821d3cdfdf98b9a5f9a24"><div class="ttname"><a href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24">ptof::get_velocity_data_rescaled</a></div><div class="ttdeci">auto get_velocity_data_rescaled(Mesh const &amp;mesh, double average)</div><div class="ttdoc">Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given...</div><div class="ttdef"><b>Definition:</b> Advection.h:43</div></div>
 <div class="ttc" id="astructptof_1_1_check_options_1_1_warn_html"><div class="ttname"><a href="../../d0/dd6/structptof_1_1_check_options_1_1_warn.html">ptof::CheckOptions::Warn</a></div><div class="ttdef"><b>Definition:</b> Useful.h:37</div></div>
-<div class="ttc" id="astructptof_1_1_geometry_html"><div class="ttname"><a href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a></div><div class="ttdoc">Basic geometry class.</div><div class="ttdef"><b>Definition:</b> Geometry.h:37</div></div>
-<div class="ttc" id="astructptof_1_1_geometry_html_a8c60456a066107da2808dd8ad0e3c424"><div class="ttname"><a href="../../dc/d30/structptof_1_1_geometry.html#a8c60456a066107da2808dd8ad0e3c424">ptof::Geometry::locator</a></div><div class="ttdeci">Locator locator</div><div class="ttdef"><b>Definition:</b> Geometry.h:178</div></div>
-<div class="ttc" id="astructptof_1_1_geometry_html_ae00c093c2566606ec384c605eba825b9"><div class="ttname"><a href="../../dc/d30/structptof_1_1_geometry.html#ae00c093c2566606ec384c605eba825b9">ptof::Geometry::mesh</a></div><div class="ttdeci">auto const  &amp; mesh() const</div><div class="ttdef"><b>Definition:</b> Geometry.h:170</div></div>
+<div class="ttc" id="astructptof_1_1_geometry_html"><div class="ttname"><a href="../../dc/d30/structptof_1_1_geometry.html">ptof::Geometry</a></div><div class="ttdoc">Basic geometry class.</div><div class="ttdef"><b>Definition:</b> Geometry.h:41</div></div>
+<div class="ttc" id="astructptof_1_1_geometry_html_a31842cbb84647b56dc9fca0ce9db9da9"><div class="ttname"><a href="../../dc/d30/structptof_1_1_geometry.html#a31842cbb84647b56dc9fca0ce9db9da9">ptof::Geometry::locator</a></div><div class="ttdeci">Locator locator</div><div class="ttdef"><b>Definition:</b> Geometry.h:218</div></div>
+<div class="ttc" id="astructptof_1_1_geometry_html_a4ea5f7080fef183d2b7da599ebc431b0"><div class="ttname"><a href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0">ptof::Geometry::mesh</a></div><div class="ttdeci">auto const  &amp; mesh() const</div><div class="ttdef"><b>Definition:</b> Geometry.h:171</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -22,18 +22,10 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Geometry_Periodic_Cartesian", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html", "d2/d99/structptof_1_1_geometry___periodic___cartesian" ],
       [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ]
     ] ],
-    [ "Geometry_Parallel.h", "d5/d99/_geometry___parallel_8h.html", [
-      [ "Geometry_Parallel", "df/dfc/structptof_1_1_geometry___parallel.html", "df/dfc/structptof_1_1_geometry___parallel" ],
-      [ "Geometry_Periodic_Cartesian_Parallel", "df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html", "df/dae/structptof_1_1_geometry___periodic___cartesian___parallel" ],
-      [ "Geometry_Bcc_Parallel", "d1/d3e/structptof_1_1_geometry___bcc___parallel.html", "d1/d3e/structptof_1_1_geometry___bcc___parallel" ]
-    ] ],
     [ "Info.h", "d2/d32/_info_8h.html", "d2/d32/_info_8h" ],
     [ "InitialCondition.h", "d6/d44/_initial_condition_8h.html", "d6/d44/_initial_condition_8h" ],
     [ "Locator.h", "db/dcf/_locator_8h.html", [
       [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html", "d0/d4f/structptof_1_1_locator___cell" ]
-    ] ],
-    [ "Locator_Parallel.h", "dd/d8c/_locator___parallel_8h.html", [
-      [ "Locator_Cell_Parallel", "d5/db8/structptof_1_1_locator___cell___parallel.html", "d5/db8/structptof_1_1_locator___cell___parallel" ]
     ] ],
     [ "Measure.h", "d3/daa/_measure_8h.html", [
       [ "Measure", "dd/ddd/structptof_1_1_measure.html", "dd/ddd/structptof_1_1_measure" ],
@@ -63,7 +55,6 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Parameters", "de/d93/structptof_1_1_phase_1_1_parameters.html", "de/d93/structptof_1_1_phase_1_1_parameters" ]
     ] ],
     [ "Reaction.h", "de/ddd/_reaction_8h.html", "de/ddd/_reaction_8h" ],
-    [ "Reaction_Parallel.h", "d6/d3b/_reaction___parallel_8h.html", null ],
     [ "State.h", "d5/d03/_p_t_o_f_2_state_8h.html", "d5/d03/_p_t_o_f_2_state_8h" ],
     [ "Steppers.h", "d0/dd9/_steppers_8h.html", [
       [ "Steppers_Advection_RK4_Diffusion_Euler", "d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html", "d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler" ],

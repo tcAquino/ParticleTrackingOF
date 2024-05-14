@@ -17,19 +17,19 @@ namespace meta
 {
   // The following has_ methods and associated machinery are based on:
   // https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat
-  /** \class types General/Useful.h "General/Useful.h"
+  /** \class types General/Meta.h "General/Meta.h"
    \brief Bundle of types. */
   template <typename...> struct types{ using type = types; };
   template <template <typename...> typename Z, typename types, typename = void>
   struct has_member_impl : std::false_type {};
-  /** \class has_member_impl General/Useful.h "General/Useful.h"
+  /** \class has_member_impl General/Meta.h "General/Meta.h"
    \brief Implementation details for \c has_member. */
   template <template <typename...> typename Z, typename...Ts>
   struct has_member_impl<Z, types<Ts...>, std::void_t<Z<Ts...>>> : std::true_type {};
   /** \brief Check if a class has a member. */
   template <template <typename...> typename Z, typename...Ts>
   using has_member = has_member_impl<Z, types<Ts...>>;
-  /** \class is_same General/Useful.h "General/Useful.h"
+  /** \class is_same General/Meta.h "General/Meta.h"
    
    \class Check if X<Y> is the same type as Z. */
   template <template <typename> typename X, typename Y, typename Z>
@@ -38,7 +38,7 @@ namespace meta
   /** \brief Check if X<Y> is of void type. */
   template <template <typename> typename X, typename Y>
   using is_void = is_same<X, Y, void>;
-  /** \class is_arithmetic General/Useful.h "General/Useful.h"
+  /** \class is_arithmetic General/Meta.h "General/Meta.h"
    \brief Check if X<Y> is of arithmetic type. */
   template <template <typename> typename X, typename Y>
   struct is_arithmetic
@@ -89,7 +89,7 @@ namespace meta
   template <typename = void, typename... Args>
   struct can_call_sqrt : std::false_type {};
   template <typename... Args>
-  /** \class can_call_sqrt General/Useful.h "General/Useful.h"
+  /** \class can_call_sqrt General/Meta.h "General/Meta.h"
    \brief Check whether class can call abs. */
   struct can_call_sqrt<
   std::void_t<decltype(std::sqrt(std::declval<Args>()...))>, Args...>
@@ -100,7 +100,7 @@ namespace meta
   
   template <typename = void, typename... Args>
   struct can_call_abs : std::false_type {};
-  /** \class is_arithmetic General/Useful.h "General/Useful.h"
+  /** \class is_arithmetic General/Meta.h "General/Meta.h"
    \brief Check whether class can call abs. */
   template <typename... Args>
   struct can_call_abs<
@@ -135,7 +135,7 @@ namespace meta
   /** \namespace notstd Operators not in std. */
   namespace notstd {
 
-      /** \struct left_shift General/Useful.h "General/Useful.h"
+      /** \struct left_shift General/Meta.h "General/Meta.h"
        \brief Left shift operator. */
       struct left_shift {
 
@@ -148,7 +148,7 @@ namespace meta
           }
       };
 
-      /** \struct right_shift General/Useful.h "General/Useful.h"
+      /** \struct right_shift General/Meta.h "General/Meta.h"
       \brief Right shift operator. */
       struct right_shift {
 
@@ -161,7 +161,7 @@ namespace meta
           }
       };
     
-      /** \struct operator_and General/Useful.h "General/Useful.h"
+      /** \struct operator_and General/Meta.h "General/Meta.h"
       \brief And operator. */
       struct operator_and {
 
@@ -266,7 +266,7 @@ namespace meta
   template <typename X, typename Y>
   inline constexpr bool has_and_v = has_and<X, Y>::value;
   
-  /** \class is_constructible_from_size_impl General/Useful.h "General/Useful.h"
+  /** \class is_constructible_from_size_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X<Y>(size()) is viable. */
   template <typename X>
   struct is_constructible_from_size_impl
@@ -278,7 +278,7 @@ namespace meta
   = std::conjunction_v<has_size<X>,
     is_constructible_from_size_impl<X>>;
   
-  /** \class is_convertible_from_times_impl General/Useful.h "General/Useful.h"
+  /** \class is_convertible_from_times_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X=Y*Z is viable. */
   template <typename X, typename Y, typename Z>
   struct is_convertible_from_multiplies_impl
@@ -290,7 +290,7 @@ namespace meta
   = std::conjunction_v<has_multiplies<Y, Z>,
     is_convertible_from_multiplies_impl<X, Y, Z>>;
   
-  /** \class is_convertible_from_plus_impl General/Useful.h "General/Useful.h"
+  /** \class is_convertible_from_plus_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X=Y+Z is viable. */
   template <typename X, typename Y, typename Z>
   struct is_convertible_from_plus_impl
@@ -302,7 +302,7 @@ namespace meta
   = std::conjunction_v<has_plus<Y, Z>,
     is_convertible_from_plus_impl<X, Y, Z>>;
   
-  /** \class is_convertible_from_minus_impl General/Useful.h "General/Useful.h"
+  /** \class is_convertible_from_minus_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X=Y-Z is viable. */
   template <typename X, typename Y, typename Z>
   struct is_convertible_from_minus_impl
@@ -314,7 +314,7 @@ namespace meta
   = std::conjunction_v<has_minus<Y, Z>,
     is_convertible_from_minus_impl<X, Y, Z>>;
   
-  /** \class is_convertible_from_divides_impl General/Useful.h "General/Useful.h"
+  /** \class is_convertible_from_divides_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X=Y/Z is viable. */
   template <typename X, typename Y, typename Z>
   struct is_convertible_from_divides_impl
@@ -326,7 +326,7 @@ namespace meta
   = std::conjunction_v<has_divides<Y, Z>,
     is_convertible_from_divides_impl<X, Y, Z>>;
   
-  /** \class is_convertible_from_abs_impl General/Useful.h "General/Useful.h"
+  /** \class is_convertible_from_abs_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X=std::abs(Y) iis viable. */
   template <typename X, typename Y>
   struct is_convertible_from_abs_impl
@@ -338,7 +338,7 @@ namespace meta
   = std::conjunction_v<can_call_abs<Y>,
     is_convertible_from_abs_impl<X, Y>>;
   
-  /** \class is_convertible_from_sqrt_impl General/Useful.h "General/Useful.h"
+  /** \class is_convertible_from_sqrt_impl General/Meta.h "General/Meta.h"
    \brief Check if \c X=std::sqrt(Y) is viable. */
   template <typename X, typename Y>
   struct is_convertible_from_sqrt_impl
@@ -350,11 +350,32 @@ namespace meta
   = std::conjunction_v<can_call_sqrt<Y>,
     is_convertible_from_sqrt_impl<X, Y>>;
   
-  /** \class indices General/Useful.h "General/Useful.h"
+  /** \class indices General/Meta.h "General/Meta.h"
    \brief Indices for template metamagic. */
   template <std::size_t... Indices>
   struct indices
   { using next = indices<Indices..., sizeof...(Indices)>; };
+  
+  /** \class Selector_t General/Meta.h "General/Meta.h"
+   \brief Type for selecting function implementations at compile time. */
+  template <typename TT> struct Selector_t{};
+  
+  /** \class Selector General/Meta.h "General/Meta.h"
+   \brief Type for selecting function implementations at compile time. */
+  template <typename TT, TT val> struct Selector{};
+  
+  /** \struct ParallelOptions General/Meta.h "General/Meta.h"
+   \brief Options to choose between serial and parallel implementations. */
+  struct ParallelOptions
+  {
+    /** \struct ParallelOptions::Serial General/Meta.h "General/Meta.h"
+    \brief Serial implementations. */
+    struct Serial{};
+    
+    /** \struct ParallelOptions::Parallel General/Meta.h "General/Meta.h"
+    \brief Parallel implementations. */
+    struct Parallel{};
+  };
 }
 
 #endif /* GENERAL_META_H */

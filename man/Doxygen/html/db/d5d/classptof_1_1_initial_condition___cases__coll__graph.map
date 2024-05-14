@@ -1,8 +1,10 @@
 <map id="ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;" name="ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;">
-<area shape="rect" id="node1" title="InitialCondition object to handle implemented initial condition types." alt="" coords="437,115,680,171"/>
-<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html" title="Initial condition condition parameters to handle all initial condition types in InitialCondition_Case..." alt="" coords="27,5,255,47"/>
-<area shape="rect" id="node3" href="$da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="85,71,197,98"/>
-<area shape="rect" id="node4" href="$da/dae/structptof_1_1_particle_maker.html" title="Functor to make particles given position." alt="" coords="63,123,219,164"/>
-<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="72,188,211,229"/>
-<area shape="rect" id="node6" href="$dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html" title=" " alt="" coords="5,254,277,310"/>
+<area shape="rect" id="node1" title="InitialCondition object to handle implemented initial condition types." alt="" coords="1083,115,1325,171"/>
+<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html" title="Initial condition condition parameters to handle all initial condition types in InitialCondition_Case..." alt="" coords="673,5,901,47"/>
+<area shape="rect" id="node3" href="$da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="731,71,843,98"/>
+<area shape="rect" id="node4" href="$da/dae/structptof_1_1_particle_maker.html" title="Functor to make particles given position." alt="" coords="709,123,865,164"/>
+<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="681,188,893,229"/>
+<area shape="rect" id="node6" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="313,181,528,237"/>
+<area shape="rect" id="node7" href="$d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,181,216,237"/>
+<area shape="rect" id="node8" href="$dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html" title=" " alt="" coords="651,254,923,310"/>
 </map>

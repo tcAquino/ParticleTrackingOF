@@ -18,11 +18,14 @@
 #include <IOobject.H>
 #include <meshSearch.H>
 #include "General/Constants.h"
+#include "General/Meta.h"
+#include "General/Useful.h"
 #include "Geometry/Boundary.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Locator.h"
 #include "PTOF/Store.h"
+#include "PTOF/Useful.h"
 
 namespace ptof
 {
@@ -31,14 +34,16 @@ namespace ptof
    \note Does not handle periodic boundaries. */
   template
   <std::size_t dim_val,
+  typename ParallelOption_t,
   Dynamics::Type dynamics = Dynamics::Type::transport,
   typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry
   {
-    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
-    using Mesh = Foam::fvMesh;                      /**< Mesh. */
-    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
-    using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
+    static constexpr std::size_t dim{ dim_val };          /**< Spatial dimension. */
+    using ParallelOption = ParallelOption_t;              /**< Choose serial or parallel implementations. */
+    using Mesh = Foam::fvMesh;                            /**< Mesh. */
+    using MeshSearch = Foam::meshSearch;                  /**< Mesh searching tools. */
+    using Locator = Locator_Cell<Geometry, SearchOption>; /**< Locate positions in mesh.*/
     using BoundaryInfo
       = std::conditional_t<dynamics == Dynamics::Type::transport,
           Store_Absorbed,
@@ -52,12 +57,8 @@ namespace ptof
     Geometry
     (DirectoriesOF const& directories_of,
      Directories const& directories)
-    : _mesh{
-        Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ } }
+    : _meshes(make_meshes(directories_of))
+    , _mesh_searches(make_mesh_searches(directories_of))
     {}
     
     /**
@@ -168,31 +169,73 @@ namespace ptof
     
     /** \return Mesh. */
     auto const& mesh() const
-    { return _mesh; }
+    { return *_meshes[useful::get_thread_num(ParallelOption{})]; }
+    
+    /** \return Mesh search tools. */
+    auto const& mesh_search() const
+    { return *_mesh_searches[useful::get_thread_num(ParallelOption{})]; }
     
   private:
-    Mesh _mesh;                          /**< Mesh for fields and boundaries. */
-    MeshSearch _mesh_search{ _mesh };    /**< Mesh searching tools.*/
+    std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh or mesh copies needed for parallel searches. */
+    std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
+    
+  /**
+     \param directories_of OpenFOAM case directory information.
+     \return Mesh copies for parallel searches
+    */
+    std::vector<std::unique_ptr<Mesh>> make_meshes
+    (DirectoriesOF const& directories_of)
+    {
+      std::size_t num_threads = useful::get_num_threads(ParallelOption{});
+      std::vector<std::unique_ptr<Mesh>> meshes;
+      meshes.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion,
+          directories_of.time.timeName(),
+          directories_of.time,
+          Foam::IOobject::MUST_READ }));
+      return meshes;
+    }
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \return Mesh search tools for parallel searches
+    */
+    std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
+    (DirectoriesOF const& directories_of)
+    {
+      std::size_t num_threads = useful::get_num_threads(ParallelOption{});
+      std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
+      mesh_searches.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
+
+      return mesh_searches;
+    }
     
   public:
-    Locator locator{ _mesh_search };    /**< To locate positions in mesh.*/
+    Locator locator{ *this };            /**< To locate positions in mesh.*/
   };
   
   /** \class Geometry_Periodic_Cartesian PTOF/Geometry.h "PTOF/Geometry.h"
    *  \brief Geometry class for geometry to handle periodic BCs along any number of Cartesian dimensions.*/
   template
   <std::size_t dim_val,
+  typename ParallelOption_t,
   Dynamics::Type dynamics = Dynamics::Type::transport,
   typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry_Periodic_Cartesian
   {
-    static constexpr std::size_t dim{ dim_val };    /**< Spatial dimension. */
-    using Mesh = Foam::fvMesh;                      /**< Mesh. */
-    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
-    using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
+    static constexpr std::size_t dim{ dim_val };                 /**< Spatial dimension. */
+    using ParallelOption = ParallelOption_t;                     /**< Choose serial or parallel implementations. */
+    using Mesh = Foam::fvMesh;                                   /**< Mesh. */
+    using MeshSearch = Foam::meshSearch;                         /**< Mesh searching tools. */
+    using Locator
+      = Locator_Cell<Geometry_Periodic_Cartesian, SearchOption>; /**< Locate positions in mesh.*/
     using Boundary_Periodic =
-      geom::Boundary_Periodic_WithOutsideInfo;      /**< Periodic boundary. */
-    using BoundaryInfo = Store_Absorbed;            /**< What to store upon hitting a boundary. */
+      geom::Boundary_Periodic_WithOutsideInfo;                    /**< Periodic boundary. */
+    using BoundaryInfo = Store_Absorbed;                          /**< What to store upon hitting a boundary. */
     
     /** Constructor.
      \brief Use mesh from specified OpenFOAM case time.
@@ -202,12 +245,8 @@ namespace ptof
     Geometry_Periodic_Cartesian
     (DirectoriesOF const& directories_of,
      Directories const& directories)
-    : _mesh{
-        Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ } }
+    : _meshes(make_meshes(directories_of))
+    , _mesh_searches(make_mesh_searches(directories_of))
     , boundary_periodic{
         extract_cartesian_periodic_boundaries(get_boundary_conditions<dynamics>(directories),
                                               mesh(),
@@ -329,44 +368,78 @@ namespace ptof
     }
     
     /** \return Mesh. */
-    auto const& mesh() const
-    { return _mesh; }
-    
+      auto const& mesh() const
+      { return *_meshes[useful::get_thread_num(ParallelOption{})]; }
+      
+      /** \return Mesh search tools. */
+      auto const& mesh_search() const
+      { return *_mesh_searches[useful::get_thread_num(ParallelOption{})]; }
+      
   private:
-    Mesh _mesh;                            /**< Mesh for fields and boundaries.        */
-    MeshSearch _mesh_search{ _mesh };       /**< Mesh searching tools. */
+    std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh or mesh copies needed for parallel searches. */
+    std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \return Mesh copies for parallel searches
+    */
+    std::vector<std::unique_ptr<Mesh>> make_meshes
+    (DirectoriesOF const& directories_of)
+    {
+      std::size_t num_threads = useful::get_num_threads(ParallelOption{});
+      std::vector<std::unique_ptr<Mesh>> meshes;
+      meshes.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion,
+          directories_of.time.timeName(),
+          directories_of.time,
+          Foam::IOobject::MUST_READ }));
+      return meshes;
+    }
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \return Mesh search tools for parallel searches
+    */
+    std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
+    (DirectoriesOF const& directories_of)
+    {
+      std::size_t num_threads = useful::get_num_threads(ParallelOption{});
+      std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
+      mesh_searches.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
+
+      return mesh_searches;
+    }
     
   public:
-    Locator locator{ _mesh_search };       /**< To locate positions in mesh.*/
+    Locator locator{ *this };             /**< To locate positions in mesh.*/
     Boundary_Periodic boundary_periodic;  /**< Boundary object to enforce periodicity.*/
-    
-  private:
-    /**
-    \brief Make a boundary object to enforce periodicity based on cartesian planes.
-    \param directories Current case directory information.
-    \return Periodic boundary object.
-    */
   };
   
   /** \class Geometry_Bcc PTOF/Geometry.h "PTOF/Geometry.h"
    \brief Geometry class for periodic representation of a body centered cubic beadpack.
    \details Holds spatial dimension info, mesh, mesh search objects, and periodic boundary to enforce periodicity. */
   template
-  <Periodicity::Type periodicity = Periodicity::Type::cartesian,
+  <typename ParallelOption_t,
+  Periodicity::Type periodicity = Periodicity::Type::cartesian,
   Dynamics::Type dynamics = Dynamics::Type::transport,
   typename SearchOption = SearchOptions::SecondNeighborPrecheck>
   struct Geometry_Bcc
   {
-    static constexpr std::size_t dim{ 3 };          /**< Spatial dimension. */
-    using Mesh = Foam::fvMesh;                      /**< Mesh. */
-    using MeshSearch = Foam::meshSearch;            /**< Mesh searching tools. */
-    using Locator = Locator_Cell<SearchOption>;     /**< Locate positions in mesh.*/
+    static constexpr std::size_t dim{ 3 };                      /**< Spatial dimension. */
+    using ParallelOption = ParallelOption_t;                    /**< Choose serial or parallel implementations. */
+    using Mesh = Foam::fvMesh;                                  /**< Mesh. */
+    using MeshSearch = Foam::meshSearch;                        /**< Mesh searching tools. */
+    using Locator = Locator_Cell<Geometry_Bcc, SearchOption>;   /**< Locate positions in mesh.*/
     using Boundary_Periodic = std::conditional_t<
       periodicity == Periodicity::Type::cartesian,
       geom::Boundary_Periodic_WithOutsideInfo,
       geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
-      geom::SymmetryPlanes_Bcc>>;              /**< Periodic boundary type. */
-    using BoundaryInfo = Store_Absorbed;           /**< What to store upon hitting a boundary. */
+      geom::SymmetryPlanes_Bcc>>;                               /**< Periodic boundary type. */
+    using BoundaryInfo = Store_Absorbed;                        /**< What to store upon hitting a boundary. */
     
     /** Constructor.
     \brief Use mesh from specified OpenFOAM case time.
@@ -376,12 +449,8 @@ namespace ptof
     Geometry_Bcc
     (DirectoriesOF const& directories_of,
      Directories const& directories)
-    : _mesh{
-        Foam::IOobject{
-          Foam::fvMesh::defaultRegion,
-          directories_of.time.timeName(),
-          directories_of.time,
-          Foam::IOobject::MUST_READ } }
+    : _meshes(make_meshes(directories_of))
+    , _mesh_searches(make_mesh_searches(directories_of))
     , radius{
       periodicity == Periodicity::Type::cartesian
       ? std::pow(sum(mesh().cellVolumes())
@@ -389,7 +458,7 @@ namespace ptof
                  1./3.) * std::sqrt(3.)/4.
       : 1. }
     , boundary_periodic{
-        make_boundary_periodic(useful::Selector<Periodicity::Type, periodicity>{},
+        make_boundary_periodic(meta::Selector<Periodicity::Type, periodicity>{},
                                directories) }
     {}
     
@@ -501,15 +570,54 @@ namespace ptof
     }
     
     /** \return Mesh. */
-    auto const& mesh() const
-    { return _mesh; }
-    
+      auto const& mesh() const
+      { return *_meshes[useful::get_thread_num(ParallelOption{})]; }
+      
+      /** \return Mesh search tools. */
+      auto const& mesh_search() const
+      { return *_mesh_searches[useful::get_thread_num(ParallelOption{})]; }
+      
   private:
-    Mesh _mesh;                             /**< Mesh for fields and boundaries. */
-    MeshSearch _mesh_search{ _mesh };       /**< Mesh searching tools. */
+    std::vector<std::unique_ptr<Mesh>> _meshes;               /**< Mesh or mesh copies needed for parallel searches. */
+    std::vector<std::unique_ptr<MeshSearch>> _mesh_searches;  /**< Mesh searching tools. */
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \return Mesh copies for parallel searches
+    */
+    std::vector<std::unique_ptr<Mesh>> make_meshes
+    (DirectoriesOF const& directories_of)
+    {
+      std::size_t num_threads = useful::get_num_threads(ParallelOption{});
+      std::vector<std::unique_ptr<Mesh>> meshes;
+      meshes.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion,
+          directories_of.time.timeName(),
+          directories_of.time,
+          Foam::IOobject::MUST_READ }));
+      return meshes;
+    }
+    
+    /**
+     \param directories_of OpenFOAM case directory information.
+     \return Mesh search tools for parallel searches
+    */
+    std::vector<std::unique_ptr<MeshSearch>> make_mesh_searches
+    (DirectoriesOF const& directories_of)
+    {
+      std::size_t num_threads = useful::get_num_threads(ParallelOption{});
+      std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
+      mesh_searches.reserve(num_threads);
+      for (std::size_t thread = 0; thread < num_threads; ++thread)
+        mesh_searches.emplace_back(std::make_unique<MeshSearch>(*_meshes[thread]));
+
+      return mesh_searches;
+    }
     
   public:
-    Locator locator{ _mesh_search };        /**< To locate positions in mesh.*/
+    Locator locator{ *this };               /**< To locate positions in mesh.*/
     const double radius;                    /**< Bead radius. */
     Boundary_Periodic boundary_periodic;    /**< Boundary object to enforce periodicity. */
   
@@ -519,7 +627,7 @@ namespace ptof
     \return Periodic boundary object.
     */
     Boundary_Periodic make_boundary_periodic
-    (useful::Selector<Periodicity::Type, Periodicity::Type::cartesian>,
+    (meta::Selector<Periodicity::Type, Periodicity::Type::cartesian>,
      Directories const& directories)
     {
       return {
@@ -533,7 +641,7 @@ namespace ptof
     \return Periodic boundary object.
     */
     Boundary_Periodic make_boundary_periodic
-    (useful::Selector<Periodicity::Type, Periodicity::Type::symmetryplanes>,
+    (meta::Selector<Periodicity::Type, Periodicity::Type::symmetryplanes>,
      Directories const& directories)
     { return { radius }; }
   };

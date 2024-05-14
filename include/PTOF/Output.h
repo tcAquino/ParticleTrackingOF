@@ -260,6 +260,10 @@ namespace ptof
           useful::read_first_from_line(input, time_increment, comment_sequence);
           time_increment *= time_unit_factor;
           time_max = std::numeric_limits<double>::infinity();
+          if (!(time_increment > 0.))
+            throw std::runtime_error{
+              std::string("Non-positive time increment for ")
+              + measure_spacing + " measurement spacing" };
           break;
         }
         case MeasureSpacing::Type::linear:
@@ -268,16 +272,36 @@ namespace ptof
           time_max *= time_unit_factor;
           std::size_t nr_measures;
           useful::read_first_from_line(input, nr_measures, comment_sequence);
+          if (nr_measures < 2)
+            throw std::runtime_error{
+              std::string("Minimum of two measurements required for ")
+              + measure_spacing + " measurement spacing" };
           time_increment = (time_max - time_min)/(nr_measures - 1);
+          if (!(time_increment > 0.))
+            throw std::runtime_error{
+              std::string("Non-positive time increment for ")
+              + measure_spacing + " measurement spacing" };
           break;
         }
         case MeasureSpacing::Type::log:
         {
+          if (!(time_min > 0.))
+            throw std::runtime_error{
+              std::string("Non-positive minimum measurement time for ")
+              + measure_spacing + " measurement spacing" };
           useful::read_first_from_line(input, time_max, comment_sequence);
           time_max *= time_unit_factor;
           std::size_t nr_measures;
           useful::read_first_from_line(input, nr_measures, comment_sequence);
+          if (nr_measures < 2)
+            throw std::runtime_error{
+              std::string("Minimum of two measurements required for ")
+              + measure_spacing + " measurement spacing" };
           time_increment = std::pow(time_max/time_min, 1./(nr_measures - 1));
+          if (!(time_increment > 1.))
+            throw std::runtime_error{
+              std::string("Non-positive time increment for ")
+              + measure_spacing + " measurement spacing" };
           break;
         }
         default:
@@ -867,6 +891,12 @@ namespace ptof
         }
         case EndCriterion::Type::time_max:
         {
+          if (parameters.time_max == std::numeric_limits<double>::infinity())
+          {
+            throw std::runtime_error{
+              std::string("Infinite maximum time with end criterion ")
+              + parameters.end_criterion };
+          }
           _end_criterion = std::make_unique<
             Criterion_time<Subject>>(subject, parameters.time_max);
           break;
@@ -973,12 +1003,12 @@ namespace ptof
       
       void set_next_time() override
       {
-        double time = NextMeasureTime::_parameters.time_min
-          + NextMeasureTime::_next_measure
-          * NextMeasureTime::_parameters.time_increment;
-        NextMeasureTime::_next_time > NextMeasureTime::_parameters.time_max
+        NextMeasureTime::_next_time =
+          NextMeasureTime::_next_time > NextMeasureTime::_parameters.time_max
           ? std::numeric_limits<double>::infinity()
-          : time;
+          : NextMeasureTime::_parameters.time_min
+            + NextMeasureTime::_next_measure
+            * NextMeasureTime::_parameters.time_increment;;
       }
     };
     
@@ -993,12 +1023,12 @@ namespace ptof
       
       void set_next_time() override
       {
-         double time = NextMeasureTime::_parameters.time_min
-           * std::pow(NextMeasureTime::_parameters.time_increment,
-                      NextMeasureTime::_next_measure);
-         NextMeasureTime::_next_time > NextMeasureTime::_parameters.time_max
-           ? std::numeric_limits<double>::infinity()
-           : time;
+        NextMeasureTime::_next_time =
+          NextMeasureTime::_next_time > NextMeasureTime::_parameters.time_max
+          ? std::numeric_limits<double>::infinity()
+          : NextMeasureTime::_parameters.time_min
+            * std::pow(NextMeasureTime::_parameters.time_increment,
+                       NextMeasureTime::_next_measure);
       }
     };
     

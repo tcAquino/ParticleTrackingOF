@@ -24,7 +24,7 @@ namespace ptof
     using Info = typename State::Info;
     
     ParticleMaker
-    (useful::Selector_t<Particle>,
+    (meta::Selector_t<Particle>,
      Locator&& locator,
      Time time = {},
      Mass mass = {},
@@ -52,7 +52,7 @@ namespace ptof
   };
   template <typename Particle, typename Locator>
   ParticleMaker
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    typename Particle::State::Time,
    typename Particle::State::Mass,
@@ -60,20 +60,20 @@ namespace ptof
   ParticleMaker<Particle, Locator>;
   template <typename Particle, typename Locator>
   ParticleMaker
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    typename Particle::State::Time,
    typename Particle::State::Mass) ->
   ParticleMaker<Particle, Locator>;
   template <typename Particle, typename Locator>
   ParticleMaker
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    typename Particle::State::Time) ->
   ParticleMaker<Particle, Locator>;
   template <typename Particle, typename Locator>
   ParticleMaker
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator) ->
   ParticleMaker<Particle, Locator>;
   
@@ -90,7 +90,7 @@ namespace ptof
     using Info = typename State::Info;
     
     ParticleMaker_Periodic
-    (useful::Selector_t<Particle>,
+    (meta::Selector_t<Particle>,
      Locator&& locator,
      Boundary&& boundary,
      Time time = {},
@@ -129,7 +129,7 @@ namespace ptof
   template
   <typename Particle, typename Locator, typename Boundary>
   ParticleMaker_Periodic
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    Boundary&& boundary,
    typename Particle::State::Time,
@@ -139,7 +139,7 @@ namespace ptof
   template
   <typename Particle, typename Locator, typename Boundary>
   ParticleMaker_Periodic
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    Boundary&& boundary,
    typename Particle::State::Time,
@@ -148,7 +148,7 @@ namespace ptof
   template
   <typename Particle, typename Locator, typename Boundary>
   ParticleMaker_Periodic
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    Boundary&& boundary,
    typename Particle::State::Time) ->
@@ -156,7 +156,7 @@ namespace ptof
   template
   <typename Particle, typename Locator, typename Boundary>
   ParticleMaker_Periodic
-  (useful::Selector_t<Particle>,
+  (meta::Selector_t<Particle>,
    Locator&& locator,
    Boundary&& boundary) ->
   ParticleMaker_Periodic<Particle, Locator, Boundary>;

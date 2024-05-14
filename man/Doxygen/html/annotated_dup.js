@@ -109,7 +109,13 @@ var annotated_dup =
       [ "is_convertible_from_divides_impl", "d7/d2c/structmeta_1_1is__convertible__from__divides__impl.html", "d7/d2c/structmeta_1_1is__convertible__from__divides__impl" ],
       [ "is_convertible_from_abs_impl", "df/d22/structmeta_1_1is__convertible__from__abs__impl.html", "df/d22/structmeta_1_1is__convertible__from__abs__impl" ],
       [ "is_convertible_from_sqrt_impl", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl.html", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl" ],
-      [ "indices", "d5/d37/structmeta_1_1indices.html", "d5/d37/structmeta_1_1indices" ]
+      [ "indices", "d5/d37/structmeta_1_1indices.html", "d5/d37/structmeta_1_1indices" ],
+      [ "Selector_t", "da/d51/structmeta_1_1_selector__t.html", null ],
+      [ "Selector", "da/d34/structmeta_1_1_selector.html", null ],
+      [ "ParallelOptions", "dc/d3e/structmeta_1_1_parallel_options.html", [
+        [ "Parallel", "df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html", null ],
+        [ "Serial", "de/dc2/structmeta_1_1_parallel_options_1_1_serial.html", null ]
+      ] ]
     ] ],
     [ "ptof", "d2/dd1/namespaceptof.html", [
       [ "model_advection_2d", "d6/d86/namespaceptof_1_1model__advection__2d.html", [
@@ -286,9 +292,6 @@ var annotated_dup =
       [ "Geometry", "dc/d30/structptof_1_1_geometry.html", "dc/d30/structptof_1_1_geometry" ],
       [ "Geometry_Periodic_Cartesian", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html", "d2/d99/structptof_1_1_geometry___periodic___cartesian" ],
       [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ],
-      [ "Geometry_Parallel", "df/dfc/structptof_1_1_geometry___parallel.html", "df/dfc/structptof_1_1_geometry___parallel" ],
-      [ "Geometry_Periodic_Cartesian_Parallel", "df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html", "df/dae/structptof_1_1_geometry___periodic___cartesian___parallel" ],
-      [ "Geometry_Bcc_Parallel", "d1/d3e/structptof_1_1_geometry___bcc___parallel.html", "d1/d3e/structptof_1_1_geometry___bcc___parallel" ],
       [ "Info_Type", "d8/d13/structptof_1_1_info___type.html", "d8/d13/structptof_1_1_info___type" ],
       [ "Info_Absorbed", "d6/df0/structptof_1_1_info___absorbed.html", "d6/df0/structptof_1_1_info___absorbed" ],
       [ "Info_Absorbed_Reinjections", "dc/d06/structptof_1_1_info___absorbed___reinjections.html", "dc/d06/structptof_1_1_info___absorbed___reinjections" ],
@@ -296,7 +299,6 @@ var annotated_dup =
       [ "InitialConditionParameters_Cases", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html", "dd/d20/structptof_1_1_initial_condition_parameters___cases" ],
       [ "InitialCondition_Cases", "db/dfb/classptof_1_1_initial_condition___cases.html", "db/dfb/classptof_1_1_initial_condition___cases" ],
       [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html", "d0/d4f/structptof_1_1_locator___cell" ],
-      [ "Locator_Cell_Parallel", "d5/db8/structptof_1_1_locator___cell___parallel.html", "d5/db8/structptof_1_1_locator___cell___parallel" ],
       [ "Measure", "dd/ddd/structptof_1_1_measure.html", "dd/ddd/structptof_1_1_measure" ],
       [ "MeasureSpacing", "d4/dd7/structptof_1_1_measure_spacing.html", "d4/dd7/structptof_1_1_measure_spacing" ],
       [ "MeasureSpacingUnits", "d2/d80/structptof_1_1_measure_spacing_units.html", "d2/d80/structptof_1_1_measure_spacing_units" ],
@@ -345,10 +347,6 @@ var annotated_dup =
         [ "NoCheck", "de/de1/structptof_1_1_check_options_1_1_no_check.html", null ],
         [ "Warn", "d0/dd6/structptof_1_1_check_options_1_1_warn.html", null ]
       ] ],
-      [ "ParallelOptions", "d9/dbc/structptof_1_1_parallel_options.html", [
-        [ "Parallel", "dc/da6/structptof_1_1_parallel_options_1_1_parallel.html", null ],
-        [ "Serial", "d3/d09/structptof_1_1_parallel_options_1_1_serial.html", null ]
-      ] ],
       [ "SearchOptions", "d7/d21/structptof_1_1_search_options.html", "d7/d21/structptof_1_1_search_options" ],
       [ "Dynamics", "d9/d9c/structptof_1_1_dynamics.html", "d9/d9c/structptof_1_1_dynamics" ],
       [ "Periodicity", "d3/dc2/structptof_1_1_periodicity.html", "d3/dc2/structptof_1_1_periodicity" ]
@@ -365,8 +363,6 @@ var annotated_dup =
       [ "Creator", "d5/d03/structuseful_1_1_creator.html", "d5/d03/structuseful_1_1_creator" ],
       [ "Forward", "df/d34/structuseful_1_1_forward.html", "df/d34/structuseful_1_1_forward" ],
       [ "Forward_ref", "d6/d37/structuseful_1_1_forward__ref.html", "d6/d37/structuseful_1_1_forward__ref" ],
-      [ "Selector_t", "d3/d42/structuseful_1_1_selector__t.html", null ],
-      [ "Selector", "d7/dd2/structuseful_1_1_selector.html", null ],
       [ "hash_container", "d4/de0/structuseful_1_1hash__container.html", "d4/de0/structuseful_1_1hash__container" ],
       [ "hash_pair", "dc/d50/structuseful_1_1hash__pair.html", "dc/d50/structuseful_1_1hash__pair" ]
     ] ],

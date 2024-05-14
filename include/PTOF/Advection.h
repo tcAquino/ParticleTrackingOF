@@ -17,7 +17,7 @@ namespace ptof
 { 
   /**
    \brief Get the velocity field U from the OpenFOAM case time associated with a mesh.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \return OpenFOAM velocity field data.
    */
   template <typename Mesh>
@@ -35,7 +35,7 @@ namespace ptof
   
   /**
    \brief Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given average.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \param average Absolute value of velocity field average.
    \return OpenFOAM velocity field data.
   */

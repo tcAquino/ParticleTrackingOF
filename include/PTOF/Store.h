@@ -7,6 +7,7 @@
 #ifndef PTOF_STORE_H
 #define PTOF_STORE_H
 
+#include "General/Meta.h"
 #include "General/Useful.h"
 #include "PTOF/Boundary.h"
 
@@ -18,7 +19,7 @@ namespace ptof
   {
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -33,7 +34,7 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
      BoundaryCondition::Type,
      type>) const
     {
@@ -47,7 +48,7 @@ namespace ptof
   {
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -62,7 +63,7 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       type>) const
     {}
@@ -74,7 +75,7 @@ namespace ptof
   {
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -89,14 +90,14 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       type>) const
     {}
     
     /**
      \brief Store info
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -110,7 +111,7 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       BoundaryCondition::Type::absorbing>) const
     {
@@ -124,7 +125,7 @@ namespace ptof
   {
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -139,14 +140,14 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       type>) const
     {}
     
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -160,7 +161,7 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       BoundaryCondition::Type::absorbing>) const
     {
@@ -169,7 +170,7 @@ namespace ptof
 
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -183,7 +184,7 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       BoundaryCondition::Type::custom>) const
     {
@@ -197,7 +198,7 @@ namespace ptof
   {
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -212,14 +213,14 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       type>) const
     {}
     
     /**
      \brief Store info.
-     \note The boundary condition type is selected at compile time through the type \c useful::Selector<BoundaryCondition::Type,type>.
+     \note The boundary condition type is selected at compile time through the type \c meta::Selector<BoundaryCondition::Type,type>.
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
@@ -233,7 +234,7 @@ namespace ptof
      State const& state_old,
      Intersection const& intersection,
      BoundaryCondition const& implemented,
-     useful::Selector<
+     meta::Selector<
       BoundaryCondition::Type,
       BoundaryCondition::Type::info>) const
     {

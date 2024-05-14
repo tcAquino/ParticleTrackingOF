@@ -21,6 +21,14 @@ var _general_2_meta_8h =
     [ "is_convertible_from_abs_impl", "df/d22/structmeta_1_1is__convertible__from__abs__impl.html", "df/d22/structmeta_1_1is__convertible__from__abs__impl" ],
     [ "is_convertible_from_sqrt_impl", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl.html", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl" ],
     [ "indices", "d5/d37/structmeta_1_1indices.html", "d5/d37/structmeta_1_1indices" ],
+    [ "Selector_t", "da/d51/structmeta_1_1_selector__t.html", null ],
+    [ "Selector", "da/d34/structmeta_1_1_selector.html", null ],
+    [ "ParallelOptions", "dc/d3e/structmeta_1_1_parallel_options.html", [
+      [ "Parallel", "df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html", null ],
+      [ "Serial", "de/dc2/structmeta_1_1_parallel_options_1_1_serial.html", null ]
+    ] ],
+    [ "Serial", "de/dc2/structmeta_1_1_parallel_options_1_1_serial.html", null ],
+    [ "Parallel", "df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html", null ],
     [ "begin_result_t", "dd/d1b/_general_2_meta_8h.html#aa21125603a13f72750e1bae718a5fbfc", null ],
     [ "has_and", "dd/d1b/_general_2_meta_8h.html#ae93b23ee4119fbdb6c6d2fedbab69590", null ],
     [ "has_begin", "dd/d1b/_general_2_meta_8h.html#ac2c3d33e82b86f70cc5ba4648bc53571", null ],

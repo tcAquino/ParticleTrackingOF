@@ -1,0 +1,7 @@
+<map id="ptof::adjusted_face_center" name="ptof::adjusted_face_center">
+<area shape="rect" id="node1" title="Compute face center&#39;s position if face center is in mesh, owner cell center otherwise." alt="" coords="5,49,152,90"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="211,5,338,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="397,60,528,87"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a234f247f1d1cde838683af176475e78f" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="200,107,349,149"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="411,115,514,141"/>
+</map>

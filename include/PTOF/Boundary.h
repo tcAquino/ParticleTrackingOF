@@ -18,6 +18,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include "General/Meta.h"
 #include "General/Useful.h"
 #include "General/Operations.h"
 #include "PTOF/Reaction.h"
@@ -189,7 +190,7 @@ namespace ptof
   
   /** \brief Throw if any patch name does not exist in mesh or associated boundary condition type is not implemented.
    \param boundary_conditions Container of pairs of patch names and boundary condition types.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \param implemented BoundaryCondition object holding information about implemented boundary conditions. */
   template <typename BCs, typename Mesh, typename Implemented>
   void verify_boundary_conditions
@@ -226,7 +227,7 @@ namespace ptof
   /**
    \brief Add default type 'empty' to boundary conditions for unspecified patches in mesh.
    \param boundary_conditions Associative container of pairs of patch names and boundary condition types, to add to.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
   */
   template <typename BCs, typename Mesh>
   void add_unspecified_patches_in_mesh
@@ -325,7 +326,7 @@ namespace ptof
       add_unspecified_patches(_boundary_conditions,
                               patch_names());
       verify_boundary_conditions(_boundary_conditions,
-                                 _locator.mesh_search().mesh(),
+                                 _locator.mesh(),
                                  _boundary_condition_types);
     }
     
@@ -388,7 +389,7 @@ namespace ptof
       while (intersection.hit())
       {
         /** Find patch in mesh and associated boundary type name. */
-        auto patch_id = _locator.mesh_search().mesh().boundaryMesh().
+        auto patch_id = _locator.mesh().boundaryMesh().
           whichPatch(intersection.index());
         auto patch = patch_name(patch_id);
         auto type_name = _boundary_conditions.at(patch);
@@ -400,7 +401,7 @@ namespace ptof
           {
            _store_info(state, state_old, intersection,
                        _boundary_condition_types,
-                       useful::Selector<
+                       meta::Selector<
                          BoundaryCondition::Type,
                          BoundaryCondition::Type::reflecting>{});
             boundary_reflecting(state,
@@ -413,7 +414,7 @@ namespace ptof
           {
             _store_info(state, state_old, intersection,
                         _boundary_condition_types,
-                        useful::Selector<
+                        meta::Selector<
                           BoundaryCondition::Type,
                           BoundaryCondition::Type::reflecting>{});
             surface_reaction(state, state_old, intersection.index());
@@ -427,7 +428,7 @@ namespace ptof
           {
             _store_info(state, state_old, intersection,
                         _boundary_condition_types,
-                        useful::Selector<
+                        meta::Selector<
                           BoundaryCondition::Type,
                           BoundaryCondition::Type::periodic>{});
             had_effect += _boundary_periodic(state, intersection);
@@ -437,7 +438,7 @@ namespace ptof
           {
             _store_info(state, state_old, intersection,
                         _boundary_condition_types,
-                        useful::Selector<
+                        meta::Selector<
                           BoundaryCondition::Type,
                           BoundaryCondition::Type::absorbing>{});
             boundary_absorbing(state, intersection.point());
@@ -448,7 +449,7 @@ namespace ptof
           {
             _store_info(state, state_old, intersection,
                         _boundary_condition_types,
-                        useful::Selector<
+                        meta::Selector<
                           BoundaryCondition::Type,
                           BoundaryCondition::Type::custom>{});
             had_effect += _boundary_custom(state, state_old, intersection);
@@ -458,7 +459,7 @@ namespace ptof
           {
             _store_info(state, state_old, intersection,
                         _boundary_condition_types,
-                        useful::Selector<
+                        meta::Selector<
                           BoundaryCondition::Type,
                           BoundaryCondition::Type::info>{});
             break;
@@ -547,7 +548,7 @@ namespace ptof
     
     /** \return Names of patches in mesh. */
     auto patch_names() const
-    { return _locator.mesh_search().mesh().boundaryMesh().names(); }
+    { return _locator.mesh().boundaryMesh().names(); }
     
     /**
      \param patch Index of patch in mesh.
@@ -560,7 +561,7 @@ namespace ptof
      \return Inward normal to face (used for reflection). */
     auto reflection_normal(Foam::label face) const
     {
-      return unit_normal_inward(face, _locator.mesh_search().mesh());
+      return unit_normal_inward(face, _locator.mesh());
     }
     
     /** \brief Find next intersection with a boundary.
@@ -789,7 +790,7 @@ namespace ptof
   
   /** \brief For boundaries conditions indicated as type \c periodic, extract the corresponding boundary positions.
    \param boundary_conditions Associative container of patch names and associated boundary condition types.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \param dim Spatial dimensionality.
    \return Container of pairs of periodic boundary positions along each periodic dimension.
    \note

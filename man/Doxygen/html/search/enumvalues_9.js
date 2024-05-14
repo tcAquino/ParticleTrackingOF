@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['periodic_2106',['periodic',['../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66fae6ffdec5e14fce371eb7ae99edebbbee',1,'ptof::BoundaryCondition']]],
-  ['position_2107',['position',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a4757fe07fd492a8be0ea6a760d683d6e',1,'ptof::Measure']]],
-  ['position_5fin_5fregions_2108',['position_in_regions',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a477a36181bf2cb1f2e72a43a5372889b',1,'ptof::Measure']]],
-  ['position_5fin_5fregions_5fperiodic_2109',['position_in_regions_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16',1,'ptof::Measure']]],
-  ['position_5fmean_2110',['position_mean',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a221babae9f54bb1a44bb0b7768b6088b',1,'ptof::Measure']]],
-  ['position_5fmean_5fperiodic_2111',['position_mean_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee',1,'ptof::Measure']]],
-  ['position_5fperiodic_2112',['position_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90',1,'ptof::Measure']]],
-  ['position_5fsecond_5fmoment_2113',['position_second_moment',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617',1,'ptof::Measure']]],
-  ['position_5fsecond_5fmoment_5fperiodic_2114',['position_second_moment_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa',1,'ptof::Measure']]],
-  ['position_5fvariance_2115',['position_variance',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58',1,'ptof::Measure']]],
-  ['position_5fvariance_5fperiodic_2116',['position_variance_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d',1,'ptof::Measure']]],
-  ['prescribed_5fpositions_2117',['prescribed_positions',['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca3e1d33bf8a15571103e03fbf87016a28',1,'ptof::InitialConditions']]]
+  ['periodic_2095',['periodic',['../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66fae6ffdec5e14fce371eb7ae99edebbbee',1,'ptof::BoundaryCondition']]],
+  ['position_2096',['position',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a4757fe07fd492a8be0ea6a760d683d6e',1,'ptof::Measure']]],
+  ['position_5fin_5fregions_2097',['position_in_regions',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a477a36181bf2cb1f2e72a43a5372889b',1,'ptof::Measure']]],
+  ['position_5fin_5fregions_5fperiodic_2098',['position_in_regions_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16',1,'ptof::Measure']]],
+  ['position_5fmean_2099',['position_mean',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a221babae9f54bb1a44bb0b7768b6088b',1,'ptof::Measure']]],
+  ['position_5fmean_5fperiodic_2100',['position_mean_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee',1,'ptof::Measure']]],
+  ['position_5fperiodic_2101',['position_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8aa749b5d58d529a66f2a2235d35f97f90',1,'ptof::Measure']]],
+  ['position_5fsecond_5fmoment_2102',['position_second_moment',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617',1,'ptof::Measure']]],
+  ['position_5fsecond_5fmoment_5fperiodic_2103',['position_second_moment_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa',1,'ptof::Measure']]],
+  ['position_5fvariance_2104',['position_variance',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58',1,'ptof::Measure']]],
+  ['position_5fvariance_5fperiodic_2105',['position_variance_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d',1,'ptof::Measure']]],
+  ['prescribed_5fpositions_2106',['prescribed_positions',['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca3e1d33bf8a15571103e03fbf87016a28',1,'ptof::InitialConditions']]]
 ];

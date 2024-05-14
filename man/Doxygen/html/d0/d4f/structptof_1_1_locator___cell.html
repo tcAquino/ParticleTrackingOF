@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ptof::Locator_Cell&lt; SearchOption &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ptof::Locator_Cell&lt; Geometry, SearchOption &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('d0/d4f/structptof_1_1_locator___cell.h
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::Locator_Cell&lt; SearchOption &gt; Class Template Reference</div>  </div>
+<div class="title">ptof::Locator_Cell&lt; Geometry, SearchOption &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -95,70 +95,84 @@ $(document).ready(function(){initNavTree('d0/d4f/structptof_1_1_locator___cell.h
  <a href="../../d0/d4f/structptof_1_1_locator___cell.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../db/dcf/_locator_8h_source.html">PTOF/Locator.h</a>&quot;</code></p>
+<div class="dynheader">
+Collaboration diagram for ptof::Locator_Cell&lt; Geometry, SearchOption &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../db/dd2/structptof_1_1_locator___cell__coll__graph.png" border="0" usemap="#aptof_1_1_locator___cell_3_01_geometry_00_01_search_option_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aptof_1_1_locator___cell_3_01_geometry_00_01_search_option_01_4_coll__map" id="aptof_1_1_locator___cell_3_01_geometry_00_01_search_option_01_4_coll__map">
+<area shape="rect" title="Object to locate positions or states in mesh." alt="" coords="7,243,219,284"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="5,124,220,180"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="7,5,218,61"/>
+</map>
+<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aaeeb7440db7170d88bf86c75d4260630"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaeeb7440db7170d88bf86c75d4260630">Point</a> = Foam::point</td></tr>
-<tr class="separator:aaeeb7440db7170d88bf86c75d4260630"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a959c6713946dc169b78ad2bed2ac414b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a959c6713946dc169b78ad2bed2ac414b">Point2D</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
-<tr class="separator:a959c6713946dc169b78ad2bed2ac414b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6d74a195d31633a3cd8618bdbbc6e3d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#ab6d74a195d31633a3cd8618bdbbc6e3d">Vector</a> = Foam::vector</td></tr>
-<tr class="separator:ab6d74a195d31633a3cd8618bdbbc6e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1888f7b479b012247977644586e7c16d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a1888f7b479b012247977644586e7c16d">Vector2D</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
-<tr class="separator:a1888f7b479b012247977644586e7c16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23ef77f6deaa8c13219657f34a51fbcd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">Scalar</a> = Foam::scalar</td></tr>
-<tr class="separator:a23ef77f6deaa8c13219657f34a51fbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6794f2bf167e7a9bf7d5fbba344e5597"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a> = Foam::label</td></tr>
-<tr class="separator:a6794f2bf167e7a9bf7d5fbba344e5597"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4120ee7dd378445af762a3d67006e1cb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> = Foam::meshSearch</td></tr>
-<tr class="separator:a4120ee7dd378445af762a3d67006e1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13c4e745e8e1661315cde8c931934812"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812">Point</a> = Foam::point</td></tr>
+<tr class="separator:a13c4e745e8e1661315cde8c931934812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f18e69f252436d431b59a8e75785552"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552">Point2D</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
+<tr class="separator:a4f18e69f252436d431b59a8e75785552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21e4df8118e7124bee903d346823a24a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a21e4df8118e7124bee903d346823a24a">Vector</a> = Foam::vector</td></tr>
+<tr class="separator:a21e4df8118e7124bee903d346823a24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2af0f8fa7c847f84a50c8aac9436e919"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a2af0f8fa7c847f84a50c8aac9436e919">Vector2D</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
+<tr class="separator:a2af0f8fa7c847f84a50c8aac9436e919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af84ebb7c42679011b560bf177241e5f7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7">Scalar</a> = Foam::scalar</td></tr>
+<tr class="separator:af84ebb7c42679011b560bf177241e5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a711e38d81ffe262a45df79bbac1bd35b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a> = Foam::label</td></tr>
+<tr class="separator:a711e38d81ffe262a45df79bbac1bd35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a635e0760c1aca09ddd8126aa6363a204"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a635e0760c1aca09ddd8126aa6363a204">Mesh</a> = typename <a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a36cd72aa81ad311a34a522a379cfee62">Geometry::Mesh</a></td></tr>
+<tr class="separator:a635e0760c1aca09ddd8126aa6363a204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80a224f952992d32e9f0d972453f3351"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a80a224f952992d32e9f0d972453f3351">MeshSearch</a> = typename <a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a743b0feb4a4e75c6c9ec85376fbaa27b">Geometry::MeshSearch</a></td></tr>
+<tr class="separator:a80a224f952992d32e9f0d972453f3351"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae63f82a1efe5b48ec45ebd0c747da01c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#ae63f82a1efe5b48ec45ebd0c747da01c">Locator_Cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> const &amp;<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130">mesh_search</a>)</td></tr>
-<tr class="separator:ae63f82a1efe5b48ec45ebd0c747da01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd9720bcd721a038d2737a35f3af8130"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130">mesh_search</a> () const</td></tr>
-<tr class="separator:acd9720bcd721a038d2737a35f3af8130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae5c3a2ee6a78b6960f628a8637569dd"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aae5c3a2ee6a78b6960f628a8637569dd">operator()</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaeeb7440db7170d88bf86c75d4260630">Point</a> const &amp;position, <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a> hint=-1) const</td></tr>
-<tr class="separator:aae5c3a2ee6a78b6960f628a8637569dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ff7aebfae84002605691fde07cf18a0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a8ff7aebfae84002605691fde07cf18a0">operator()</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a959c6713946dc169b78ad2bed2ac414b">Point2D</a> const &amp;position, <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a> hint=-1) const</td></tr>
-<tr class="separator:a8ff7aebfae84002605691fde07cf18a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61d5f0fa6717429457f4f5a9d51ea85f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a61d5f0fa6717429457f4f5a9d51ea85f">operator()</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">Scalar</a> position, <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a> hint=-1) const</td></tr>
-<tr class="separator:a61d5f0fa6717429457f4f5a9d51ea85f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc937413bb179454614a186916c77108"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:adc937413bb179454614a186916c77108"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#adc937413bb179454614a186916c77108">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state) const</td></tr>
-<tr class="separator:adc937413bb179454614a186916c77108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a544d7164dd8a6c14ce98d38ed64cec97"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a544d7164dd8a6c14ce98d38ed64cec97">nearest_cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaeeb7440db7170d88bf86c75d4260630">Point</a> const &amp;position) const</td></tr>
-<tr class="separator:a544d7164dd8a6c14ce98d38ed64cec97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf6a2ea36e64ee6b8f8c9b1dfa210cd9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaf6a2ea36e64ee6b8f8c9b1dfa210cd9">nearest_cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a959c6713946dc169b78ad2bed2ac414b">Point2D</a> const &amp;position) const</td></tr>
-<tr class="separator:aaf6a2ea36e64ee6b8f8c9b1dfa210cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a040672f37328e33a5afaed2e44e95dcc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a040672f37328e33a5afaed2e44e95dcc">nearest_cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">Scalar</a> position) const</td></tr>
-<tr class="separator:a040672f37328e33a5afaed2e44e95dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3922a8196ac0024f38b2d658ca80262b"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a3922a8196ac0024f38b2d658ca80262b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a3922a8196ac0024f38b2d658ca80262b">nearest_cell</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state) const</td></tr>
-<tr class="separator:a3922a8196ac0024f38b2d658ca80262b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e4aea8a3d96ba660f71aca76e8728b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a3e4aea8a3d96ba660f71aca76e8728b1">Locator_Cell</a> (<a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry)</td></tr>
+<tr class="separator:a3e4aea8a3d96ba660f71aca76e8728b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03fff3efc1d491aa1c22b83002675f9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a80a224f952992d32e9f0d972453f3351">MeshSearch</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b">mesh_search</a> () const</td></tr>
+<tr class="separator:a03fff3efc1d491aa1c22b83002675f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a019fcb55e2bfa45e1c708c108b274871"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a635e0760c1aca09ddd8126aa6363a204">Mesh</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871">mesh</a> () const</td></tr>
+<tr class="separator:a019fcb55e2bfa45e1c708c108b274871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac937bda5d9d28b8cd3bd348e748625b2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2">operator()</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812">Point</a> const &amp;position, <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a> hint=-1) const</td></tr>
+<tr class="separator:ac937bda5d9d28b8cd3bd348e748625b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af928498223c8a67410d020a00aa570f5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af928498223c8a67410d020a00aa570f5">operator()</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552">Point2D</a> const &amp;position, <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a> hint=-1) const</td></tr>
+<tr class="separator:af928498223c8a67410d020a00aa570f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57cdb7431b06468623564e724c1f7409"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a57cdb7431b06468623564e724c1f7409">operator()</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7">Scalar</a> position, <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a> hint=-1) const</td></tr>
+<tr class="separator:a57cdb7431b06468623564e724c1f7409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d07458913ddd921df1ae57a7cc24cc"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:a17d07458913ddd921df1ae57a7cc24cc"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a17d07458913ddd921df1ae57a7cc24cc">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state) const</td></tr>
+<tr class="separator:a17d07458913ddd921df1ae57a7cc24cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad31aff171519d156b75dfbf7cb5dd50"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aad31aff171519d156b75dfbf7cb5dd50">nearest_cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812">Point</a> const &amp;position) const</td></tr>
+<tr class="separator:aad31aff171519d156b75dfbf7cb5dd50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16267dd9a57b2a950a427b9cfdab96a0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a16267dd9a57b2a950a427b9cfdab96a0">nearest_cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552">Point2D</a> const &amp;position) const</td></tr>
+<tr class="separator:a16267dd9a57b2a950a427b9cfdab96a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a023c923f0b774ca3a608474e07f992c9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a023c923f0b774ca3a608474e07f992c9">nearest_cell</a> (<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7">Scalar</a> position) const</td></tr>
+<tr class="separator:a023c923f0b774ca3a608474e07f992c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7db4e40375c18cf492600686657992f0"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:a7db4e40375c18cf492600686657992f0"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a7db4e40375c18cf492600686657992f0">nearest_cell</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state) const</td></tr>
+<tr class="separator:a7db4e40375c18cf492600686657992f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a624b4244aa1606174f6073938a03ece6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a624b4244aa1606174f6073938a03ece6">_mesh_search</a></td></tr>
-<tr class="separator:a624b4244aa1606174f6073938a03ece6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bc3006cf5f0d9d4defab6a4e2d8ecfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4bc3006cf5f0d9d4defab6a4e2d8ecfb">_geometry</a></td></tr>
+<tr class="separator:a4bc3006cf5f0d9d4defab6a4e2d8ecfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename SearchOption = SearchOptions::FirstNeighborPrecheck&gt;<br />
-class ptof::Locator_Cell&lt; SearchOption &gt;</h3>
+<div class="textblock"><h3>template&lt;typename Geometry, typename SearchOption = SearchOptions::FirstNeighborPrecheck&gt;<br />
+class ptof::Locator_Cell&lt; Geometry, SearchOption &gt;</h3>
 
 <p>Object to locate positions or states in mesh. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a6794f2bf167e7a9bf7d5fbba344e5597"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6794f2bf167e7a9bf7d5fbba344e5597">&#9670;&nbsp;</a></span>Index</h2>
+<a id="a711e38d81ffe262a45df79bbac1bd35b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a711e38d81ffe262a45df79bbac1bd35b">&#9670;&nbsp;</a></span>Index</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a> =  Foam::label</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a> =  Foam::label</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -168,49 +182,66 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 
 </div>
 </div>
-<a id="a4120ee7dd378445af762a3d67006e1cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4120ee7dd378445af762a3d67006e1cb">&#9670;&nbsp;</a></span>MeshSearch</h2>
+<a id="a635e0760c1aca09ddd8126aa6363a204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a635e0760c1aca09ddd8126aa6363a204">&#9670;&nbsp;</a></span>Mesh</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> =  Foam::meshSearch</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a635e0760c1aca09ddd8126aa6363a204">Mesh</a> =  typename <a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a36cd72aa81ad311a34a522a379cfee62">Geometry::Mesh</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of mesh searching object. </p>
+<p>Mesh. </p>
 
 </div>
 </div>
-<a id="aaeeb7440db7170d88bf86c75d4260630"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaeeb7440db7170d88bf86c75d4260630">&#9670;&nbsp;</a></span>Point</h2>
+<a id="a80a224f952992d32e9f0d972453f3351"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80a224f952992d32e9f0d972453f3351">&#9670;&nbsp;</a></span>MeshSearch</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaeeb7440db7170d88bf86c75d4260630">Point</a> =  Foam::point</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a80a224f952992d32e9f0d972453f3351">MeshSearch</a> =  typename <a class="el" href="../../dc/d30/structptof_1_1_geometry.html#a743b0feb4a4e75c6c9ec85376fbaa27b">Geometry::MeshSearch</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mesh searching tools. </p>
+
+</div>
+</div>
+<a id="a13c4e745e8e1661315cde8c931934812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13c4e745e8e1661315cde8c931934812">&#9670;&nbsp;</a></span>Point</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812">Point</a> =  Foam::point</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a959c6713946dc169b78ad2bed2ac414b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a959c6713946dc169b78ad2bed2ac414b">&#9670;&nbsp;</a></span>Point2D</h2>
+<a id="a4f18e69f252436d431b59a8e75785552"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f18e69f252436d431b59a8e75785552">&#9670;&nbsp;</a></span>Point2D</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a959c6713946dc169b78ad2bed2ac414b">Point2D</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552">Point2D</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -220,16 +251,16 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 
 </div>
 </div>
-<a id="a23ef77f6deaa8c13219657f34a51fbcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23ef77f6deaa8c13219657f34a51fbcd">&#9670;&nbsp;</a></span>Scalar</h2>
+<a id="af84ebb7c42679011b560bf177241e5f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af84ebb7c42679011b560bf177241e5f7">&#9670;&nbsp;</a></span>Scalar</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">Scalar</a> =  Foam::scalar</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7">Scalar</a> =  Foam::scalar</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -239,16 +270,16 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 
 </div>
 </div>
-<a id="ab6d74a195d31633a3cd8618bdbbc6e3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6d74a195d31633a3cd8618bdbbc6e3d">&#9670;&nbsp;</a></span>Vector</h2>
+<a id="a21e4df8118e7124bee903d346823a24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21e4df8118e7124bee903d346823a24a">&#9670;&nbsp;</a></span>Vector</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#ab6d74a195d31633a3cd8618bdbbc6e3d">Vector</a> =  Foam::vector</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a21e4df8118e7124bee903d346823a24a">Vector</a> =  Foam::vector</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -258,16 +289,16 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 
 </div>
 </div>
-<a id="a1888f7b479b012247977644586e7c16d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1888f7b479b012247977644586e7c16d">&#9670;&nbsp;</a></span>Vector2D</h2>
+<a id="a2af0f8fa7c847f84a50c8aac9436e919"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2af0f8fa7c847f84a50c8aac9436e919">&#9670;&nbsp;</a></span>Vector2D</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a1888f7b479b012247977644586e7c16d">Vector2D</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
+          <td class="memname">using <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a2af0f8fa7c847f84a50c8aac9436e919">Vector2D</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -278,22 +309,22 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae63f82a1efe5b48ec45ebd0c747da01c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae63f82a1efe5b48ec45ebd0c747da01c">&#9670;&nbsp;</a></span>Locator_Cell()</h2>
+<a id="a3e4aea8a3d96ba660f71aca76e8728b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e4aea8a3d96ba660f71aca76e8728b1">&#9670;&nbsp;</a></span>Locator_Cell()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a> </td>
+          <td class="memname"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::<a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">Locator_Cell</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> const &amp;&#160;</td>
-          <td class="paramname"><em>mesh_search</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramname"><em>geometry</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -313,19 +344,71 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="acd9720bcd721a038d2737a35f3af8130"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd9720bcd721a038d2737a35f3af8130">&#9670;&nbsp;</a></span>mesh_search()</h2>
+<a id="a019fcb55e2bfa45e1c708c108b274871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a019fcb55e2bfa45e1c708c108b274871">&#9670;&nbsp;</a></span>mesh()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> const&amp; <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::mesh_search </td>
+          <td class="memname"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a635e0760c1aca09ddd8126aa6363a204">Mesh</a> const&amp; <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::mesh </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Mesh object. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,140,47"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0" title=" " alt="" coords="188,13,351,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="399,13,575,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_icgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_a019fcb55e2bfa45e1c708c108b274871_icgraph">
+<area shape="rect" title=" " alt="" coords="673,104,808,145"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="451,71,625,112"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2" title=" " alt="" coords="471,136,605,177"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,5,403,47"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,71,391,112"/>
+<area shape="rect" href="../../db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,176,47"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#af928498223c8a67410d020a00aa570f5" title=" " alt="" coords="246,136,381,177"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a03fff3efc1d491aa1c22b83002675f9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03fff3efc1d491aa1c22b83002675f9b">&#9670;&nbsp;</a></span>mesh_search()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a80a224f952992d32e9f0d972453f3351">MeshSearch</a> const&amp; <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::mesh_search </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -339,91 +422,103 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Mesh search object. </dd></dl>
 <div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_acd9720bcd721a038d2737a35f3af8130_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_acd9720bcd721a038d2737a35f3af8130_icgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_acd9720bcd721a038d2737a35f3af8130_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_acd9720bcd721a038d2737a35f3af8130_icgraph">
-<area shape="rect" title=" " alt="" coords="431,116,565,157"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a544d7164dd8a6c14ce98d38ed64cec97" title=" " alt="" coords="248,79,383,120"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aae5c3a2ee6a78b6960f628a8637569dd" title=" " alt="" coords="248,148,383,189"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaf6a2ea36e64ee6b8f8c9b1dfa210cd9" title=" " alt="" coords="35,5,170,47"/>
-<area shape="rect" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f" title="Update time step." alt="" coords="5,71,200,127"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a8ff7aebfae84002605691fde07cf18a0" title=" " alt="" coords="35,152,170,193"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a544d7164dd8a6c14ce98d38ed64cec97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a544d7164dd8a6c14ce98d38ed64cec97">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::nearest_cell </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaeeb7440db7170d88bf86c75d4260630">Point</a> const &amp;&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">position</td><td>Position to locate. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Nearest mesh cell index.</dd></dl>
-<p>Does not use hint because holes are not handled correctly. </p>
-<div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,140,47"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="188,5,323,47"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="188,5,351,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="399,13,575,39"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_icgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_a544d7164dd8a6c14ce98d38ed64cec97_icgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_icgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_a03fff3efc1d491aa1c22b83002675f9b_icgraph">
+<area shape="rect" title=" " alt="" coords="431,116,565,157"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aad31aff171519d156b75dfbf7cb5dd50" title=" " alt="" coords="248,79,383,120"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2" title=" " alt="" coords="248,148,383,189"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a16267dd9a57b2a950a427b9cfdab96a0" title=" " alt="" coords="35,5,170,47"/>
+<area shape="rect" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f" title="Update time step." alt="" coords="5,71,200,127"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#af928498223c8a67410d020a00aa570f5" title=" " alt="" coords="35,152,170,193"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aad31aff171519d156b75dfbf7cb5dd50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad31aff171519d156b75dfbf7cb5dd50">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::nearest_cell </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812">Point</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Position to locate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nearest mesh cell index.</dd></dl>
+<p>Does not use hint because holes are not handled correctly. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,140,47"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="188,5,323,47"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="371,5,533,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="581,13,757,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_icgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_aad31aff171519d156b75dfbf7cb5dd50_icgraph">
 <area shape="rect" title=" " alt="" coords="248,43,383,84"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaf6a2ea36e64ee6b8f8c9b1dfa210cd9" title=" " alt="" coords="35,5,170,47"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a16267dd9a57b2a950a427b9cfdab96a0" title=" " alt="" coords="35,5,170,47"/>
 <area shape="rect" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f" title="Update time step." alt="" coords="5,71,200,127"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aaf6a2ea36e64ee6b8f8c9b1dfa210cd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf6a2ea36e64ee6b8f8c9b1dfa210cd9">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[2/4]</span></h2>
+<a id="a16267dd9a57b2a950a427b9cfdab96a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16267dd9a57b2a950a427b9cfdab96a0">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::nearest_cell </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::nearest_cell </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a959c6713946dc169b78ad2bed2ac414b">Point2D</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552">Point2D</a> const &amp;&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -445,32 +540,34 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_aaf6a2ea36e64ee6b8f8c9b1dfa210cd9_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_aaf6a2ea36e64ee6b8f8c9b1dfa210cd9_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_aaf6a2ea36e64ee6b8f8c9b1dfa210cd9_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_aaf6a2ea36e64ee6b8f8c9b1dfa210cd9_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a16267dd9a57b2a950a427b9cfdab96a0_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a16267dd9a57b2a950a427b9cfdab96a0_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a16267dd9a57b2a950a427b9cfdab96a0_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a16267dd9a57b2a950a427b9cfdab96a0_cgraph">
 <area shape="rect" title=" " alt="" coords="5,27,140,69"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="190,5,321,32"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a544d7164dd8a6c14ce98d38ed64cec97" title=" " alt="" coords="188,57,323,98"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aad31aff171519d156b75dfbf7cb5dd50" title=" " alt="" coords="188,57,323,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="553,57,716,98"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="764,64,940,91"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a040672f37328e33a5afaed2e44e95dcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a040672f37328e33a5afaed2e44e95dcc">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[3/4]</span></h2>
+<a id="a023c923f0b774ca3a608474e07f992c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a023c923f0b774ca3a608474e07f992c9">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::nearest_cell </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::nearest_cell </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">Scalar</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7">Scalar</a>&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -492,24 +589,26 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a040672f37328e33a5afaed2e44e95dcc_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a040672f37328e33a5afaed2e44e95dcc_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_a040672f37328e33a5afaed2e44e95dcc_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a040672f37328e33a5afaed2e44e95dcc_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a023c923f0b774ca3a608474e07f992c9_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a023c923f0b774ca3a608474e07f992c9_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a023c923f0b774ca3a608474e07f992c9_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a023c923f0b774ca3a608474e07f992c9_cgraph">
 <area shape="rect" title=" " alt="" coords="5,27,140,69"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="190,5,321,32"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a544d7164dd8a6c14ce98d38ed64cec97" title=" " alt="" coords="188,57,323,98"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aad31aff171519d156b75dfbf7cb5dd50" title=" " alt="" coords="188,57,323,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="553,57,716,98"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="764,64,940,91"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a3922a8196ac0024f38b2d658ca80262b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3922a8196ac0024f38b2d658ca80262b">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[4/4]</span></h2>
+<a id="a7db4e40375c18cf492600686657992f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7db4e40375c18cf492600686657992f0">&#9670;&nbsp;</a></span>nearest_cell() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename State &gt; </div>
 <table class="mlabels">
@@ -517,7 +616,7 @@ template&lt;typename State &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::nearest_cell </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::nearest_cell </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
@@ -544,38 +643,40 @@ template&lt;typename State &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a3922a8196ac0024f38b2d658ca80262b_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a3922a8196ac0024f38b2d658ca80262b_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_a3922a8196ac0024f38b2d658ca80262b_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a3922a8196ac0024f38b2d658ca80262b_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a7db4e40375c18cf492600686657992f0_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a7db4e40375c18cf492600686657992f0_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a7db4e40375c18cf492600686657992f0_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a7db4e40375c18cf492600686657992f0_cgraph">
 <area shape="rect" title=" " alt="" coords="5,27,140,69"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="190,5,321,32"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a544d7164dd8a6c14ce98d38ed64cec97" title=" " alt="" coords="188,57,323,98"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aad31aff171519d156b75dfbf7cb5dd50" title=" " alt="" coords="188,57,323,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="553,57,716,98"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="764,64,940,91"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aae5c3a2ee6a78b6960f628a8637569dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae5c3a2ee6a78b6960f628a8637569dd">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/4]</span></h2>
+<a id="ac937bda5d9d28b8cd3bd348e748625b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac937bda5d9d28b8cd3bd348e748625b2">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#aaeeb7440db7170d88bf86c75d4260630">Point</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812">Point</a> const &amp;&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a>&#160;</td>
           <td class="paramname"><em>hint</em> = <code>-1</code>&#160;</td>
         </tr>
         <tr>
@@ -601,45 +702,49 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,140,47"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="188,5,323,47"/>
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,39,140,80"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871" title=" " alt="" coords="188,5,323,47"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="188,71,323,112"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0" title=" " alt="" coords="371,15,533,42"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="581,46,757,73"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="371,68,533,109"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_icgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_aae5c3a2ee6a78b6960f628a8637569dd_icgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_icgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_icgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_icgraph" id="ad0/d4f/structptof_1_1_locator___cell_ac937bda5d9d28b8cd3bd348e748625b2_icgraph">
 <area shape="rect" title=" " alt="" coords="188,5,323,47"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a8ff7aebfae84002605691fde07cf18a0" title=" " alt="" coords="5,5,140,47"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#af928498223c8a67410d020a00aa570f5" title=" " alt="" coords="5,5,140,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a8ff7aebfae84002605691fde07cf18a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ff7aebfae84002605691fde07cf18a0">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/4]</span></h2>
+<a id="af928498223c8a67410d020a00aa570f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af928498223c8a67410d020a00aa570f5">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a959c6713946dc169b78ad2bed2ac414b">Point2D</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552">Point2D</a> const &amp;&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a>&#160;</td>
           <td class="paramname"><em>hint</em> = <code>-1</code>&#160;</td>
         </tr>
         <tr>
@@ -665,38 +770,42 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a8ff7aebfae84002605691fde07cf18a0_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a8ff7aebfae84002605691fde07cf18a0_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_a8ff7aebfae84002605691fde07cf18a0_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a8ff7aebfae84002605691fde07cf18a0_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_af928498223c8a67410d020a00aa570f5_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_af928498223c8a67410d020a00aa570f5_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_af928498223c8a67410d020a00aa570f5_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_af928498223c8a67410d020a00aa570f5_cgraph">
 <area shape="rect" title=" " alt="" coords="5,27,140,69"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="190,5,321,32"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aae5c3a2ee6a78b6960f628a8637569dd" title=" " alt="" coords="188,57,323,98"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2" title=" " alt="" coords="188,57,323,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871" title=" " alt="" coords="371,23,505,65"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="371,89,505,130"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0" title=" " alt="" coords="553,33,716,60"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="764,64,940,91"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="553,86,716,127"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a61d5f0fa6717429457f4f5a9d51ea85f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61d5f0fa6717429457f4f5a9d51ea85f">&#9670;&nbsp;</a></span>operator()() <span class="overload">[3/4]</span></h2>
+<a id="a57cdb7431b06468623564e724c1f7409"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57cdb7431b06468623564e724c1f7409">&#9670;&nbsp;</a></span>operator()() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a23ef77f6deaa8c13219657f34a51fbcd">Scalar</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7">Scalar</a>&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a6794f2bf167e7a9bf7d5fbba344e5597">Index</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a711e38d81ffe262a45df79bbac1bd35b">Index</a>&#160;</td>
           <td class="paramname"><em>hint</em> = <code>-1</code>&#160;</td>
         </tr>
         <tr>
@@ -722,24 +831,28 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a61d5f0fa6717429457f4f5a9d51ea85f_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a61d5f0fa6717429457f4f5a9d51ea85f_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_a61d5f0fa6717429457f4f5a9d51ea85f_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a61d5f0fa6717429457f4f5a9d51ea85f_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a57cdb7431b06468623564e724c1f7409_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a57cdb7431b06468623564e724c1f7409_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a57cdb7431b06468623564e724c1f7409_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a57cdb7431b06468623564e724c1f7409_cgraph">
 <area shape="rect" title=" " alt="" coords="5,27,140,69"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="190,5,321,32"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aae5c3a2ee6a78b6960f628a8637569dd" title=" " alt="" coords="188,57,323,98"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2" title=" " alt="" coords="188,57,323,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871" title=" " alt="" coords="371,23,505,65"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="371,89,505,130"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0" title=" " alt="" coords="553,33,716,60"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="764,64,940,91"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="553,86,716,127"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="adc937413bb179454614a186916c77108"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc937413bb179454614a186916c77108">&#9670;&nbsp;</a></span>operator()() <span class="overload">[4/4]</span></h2>
+<a id="a17d07458913ddd921df1ae57a7cc24cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17d07458913ddd921df1ae57a7cc24cc">&#9670;&nbsp;</a></span>operator()() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <div class="memtemplate">
 template&lt;typename State &gt; </div>
 <table class="mlabels">
@@ -747,7 +860,7 @@ template&lt;typename State &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
@@ -775,31 +888,35 @@ template&lt;typename State &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_adc937413bb179454614a186916c77108_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_adc937413bb179454614a186916c77108_cgraph" alt=""/></div>
-<map name="ad0/d4f/structptof_1_1_locator___cell_adc937413bb179454614a186916c77108_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_adc937413bb179454614a186916c77108_cgraph">
+<div class="center"><img src="../../d0/d4f/structptof_1_1_locator___cell_a17d07458913ddd921df1ae57a7cc24cc_cgraph.png" border="0" usemap="#ad0/d4f/structptof_1_1_locator___cell_a17d07458913ddd921df1ae57a7cc24cc_cgraph" alt=""/></div>
+<map name="ad0/d4f/structptof_1_1_locator___cell_a17d07458913ddd921df1ae57a7cc24cc_cgraph" id="ad0/d4f/structptof_1_1_locator___cell_a17d07458913ddd921df1ae57a7cc24cc_cgraph">
 <area shape="rect" title=" " alt="" coords="5,27,140,69"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="190,5,321,32"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#aae5c3a2ee6a78b6960f628a8637569dd" title=" " alt="" coords="188,57,323,98"/>
-<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#acd9720bcd721a038d2737a35f3af8130" title=" " alt="" coords="371,57,505,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2" title=" " alt="" coords="188,57,323,98"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871" title=" " alt="" coords="371,23,505,65"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b" title=" " alt="" coords="371,89,505,130"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0" title=" " alt="" coords="553,33,716,60"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="764,64,940,91"/>
+<area shape="rect" href="../../dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb" title=" " alt="" coords="553,86,716,127"/>
 </map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a624b4244aa1606174f6073938a03ece6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a624b4244aa1606174f6073938a03ece6">&#9670;&nbsp;</a></span>_mesh_search</h2>
+<a id="a4bc3006cf5f0d9d4defab6a4e2d8ecfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bc3006cf5f0d9d4defab6a4e2d8ecfb">&#9670;&nbsp;</a></span>_geometry</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
+template&lt;typename Geometry , typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html#a4120ee7dd378445af762a3d67006e1cb">MeshSearch</a> const&amp; <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; SearchOption &gt;::_mesh_search</td>
+          <td class="memname"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const&amp; <a class="el" href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, SearchOption &gt;::_geometry</td>
         </tr>
       </table>
   </td>
@@ -808,7 +925,7 @@ template&lt;typename SearchOption  = SearchOptions::FirstNeighborPrecheck&gt; </
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Mesh searching tools. </p>
+<p>Domain geometry info and utilities. </p>
 
 </div>
 </div>

@@ -723,14 +723,6 @@ namespace useful
     { return object; }
   };
 
-  /** \class Selector_t General/Useful.h "General/Useful.h"
-   \brief Type for selecting function implementations at compile time. */
-  template <typename TT> struct Selector_t{};
-  
-  /** \class Selector General/Useful.h "General/Useful.h"
-   \brief Type for selecting function implementations at compile time. */
-  template <typename TT, TT val> struct Selector{};
-
   /** \class hash_container General/Useful.h "General/Useful.h"
    \brief Simple hash for a container by combining element hashes. */
   template <typename Container>

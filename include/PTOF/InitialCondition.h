@@ -129,7 +129,7 @@ namespace ptof
    \details Place particles at cell centers.
    \param nr_particles Number of particles to make.
    \param cell_ids Mesh cell indices.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \param rng Random number generator.
    \param particle_maker Functor to make a particle given a position.
    \return Container with particles. */
@@ -161,8 +161,7 @@ namespace ptof
     std::vector<Particle> particles;
     particles.reserve(nr_particles);
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
-      particles.push_back(particle_maker(cell_center(cell_ids[dist(rng)],
-                                                     mesh)));
+      particles.push_back(particle_maker(cell_center(cell_ids[dist(rng)], mesh)));
     return particles;
   }
   
@@ -171,7 +170,7 @@ namespace ptof
   \param nr_particles Number of particles to make.
   \param cell_ids Mesh cell indices.
   \param velocity_field Velocity field as a function of state.
-  \param mesh OpenFOAM mesh.
+  \param mesh Mesh object.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
@@ -211,53 +210,6 @@ namespace ptof
       particles.push_back(particle_maker(cell_center(cell_ids[dist(rng)], mesh)));
     return particles;
   }
-  
-  /** \brief Make particle at given mesh face's center.
-  \param face Mesh face index.
-  \param mesh OpenFOAM mesh.
-  \param locator Object to locate positions in mesh.
-  \param particle_maker Functor to make a particle given a position.
-  \return Container with particles. */
-  template
-  <
-  typename Mesh,
-  typename Locator,
-  typename ParticleMaker>
-  auto make_particle_at_face_center
-  (Foam::label face,
-   Mesh const& mesh,
-   Locator const& locator,
-   ParticleMaker& particle_maker)
-  {
-    if (face_center_is_in_cell(face, mesh, locator))
-      return particle_maker(face_center(face, mesh));
-    else
-    {
-      auto center = face_center(face, mesh);
-      auto owner_cell = mesh.owner()[face];
-      std::cerr << "Warning: Face center of cell "
-                << face << " at "
-                << "("
-                << center[0] << ", "
-                << center[1] << ", "
-                << center[2] << ")"
-                << " is not within owner cell "
-                << owner_cell << ". "
-                << "Trying small displacement toward cell center... ";
-      auto offset_face_center = offset_inward_face(face, locator);
-      if (locator.mesh_search().findCell(offset_face_center) == owner_cell)
-      {
-        std::cerr << "Success\n";
-        return particle_maker(offset_face_center);
-      }
-      else
-      {
-        std::cerr << "Failed. "
-                  << "Placing particle at center of owner face\n";
-        return particle_maker(cell_center(owner_cell, mesh));
-      }
-    }
-  }
 
   /** Make particles randomly uniformly
    *  over given mesh cell faces.
@@ -266,21 +218,18 @@ namespace ptof
   \details Place particles at cell centers.
   \param nr_particles Number of particles to make.
   \param face_ids Mesh face indices.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
   template
   <typename Container,
-  typename Mesh,
   typename Locator,
   typename RNG,
   typename ParticleMaker>
   auto uniform_faces
   (std::size_t nr_particles,
    Container const& face_ids,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker)
@@ -288,6 +237,8 @@ namespace ptof
     if (face_ids.size() == 0 && nr_particles != 0)
       throw std::runtime_error{
         "No available faces to place particles" };
+    
+    auto const& mesh = locator.mesh();
     
     std::vector<double> weights;
     weights.reserve(face_ids.size());
@@ -300,9 +251,12 @@ namespace ptof
     std::vector<Particle> particles;
     particles.reserve(nr_particles);
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
-      particles.push_back(make_particle_at_face_center(face_ids[dist(rng)],
-                                                       mesh, locator,
-                                                       particle_maker));
+    {
+      auto face = face_ids[dist(rng)];
+      particles.push_back(particle_maker(adjusted_face_center(face,
+                                                              locator,
+                                                              mesh.faceOwner()[face])));
+    }
     return particles;
   }
   
@@ -311,7 +265,6 @@ namespace ptof
   \param nr_particles Number of particles to make.
   \param face_ids Mesh face indices.
   \param velocity_field Velocity field as a function of state.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
@@ -319,7 +272,6 @@ namespace ptof
   template
   <typename Container,
   typename VelocityField,
-  typename Mesh,
   typename Locator,
   typename RNG,
   typename ParticleMaker>
@@ -327,7 +279,6 @@ namespace ptof
   (std::size_t nr_particles,
    Container const& face_ids,
    VelocityField const& velocity_field,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker)
@@ -336,12 +287,14 @@ namespace ptof
       throw std::runtime_error{
         "No available faces to place particles" };
     
+    auto const& mesh = locator.mesh();
+    
     std::vector<double> weights;
     weights.reserve(face_ids.size());
     for (auto face : face_ids)
       weights.push_back(face_area(face, mesh)*
-                        Foam::mag(velocity_field(face_center(face, mesh),
-                                                  mesh.owner()[face])));
+                        Foam::mag(velocity_field(adjusted_face_center(face, locator,
+                                                                      mesh.faceOwner()[face]))));
     std::discrete_distribution<Foam::label> dist{
       weights.begin(), weights.end() };
     
@@ -349,9 +302,11 @@ namespace ptof
     std::vector<Particle> particles;
     particles.reserve(nr_particles);
     for (std::size_t pp = 0; pp < nr_particles; ++pp)
-      particles.push_back(make_particle_at_face_center(face_ids[dist(rng)],
-                                                       mesh, locator,
-                                                       particle_maker));
+    {
+      auto face = face_ids[dist(rng)];
+      particles.push_back(particle_maker(adjusted_face_center(face, locator,
+                                                              mesh.faceOwner()[face])));
+    }
     return particles;
   }
   
@@ -361,14 +316,12 @@ namespace ptof
   \param nr_particles Number of particles to make.
   \param face_ids Mesh face indices.
   \param distance Distance from face centers.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
   template
   <typename Container,
-  typename Mesh,
   typename Locator,
   typename RNG,
   typename ParticleMaker>
@@ -376,7 +329,6 @@ namespace ptof
   (std::size_t nr_particles,
    Container const& face_ids,
    double distance,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker)
@@ -384,6 +336,8 @@ namespace ptof
     if (face_ids.size() == 0 && nr_particles != 0)
       throw std::runtime_error{
         "No available faces to place particles" };
+    
+    auto const& mesh = locator.mesh();
     
     std::vector<double> weights;
     weights.reserve(face_ids.size());
@@ -413,7 +367,7 @@ namespace ptof
   /** \brief Make particles distributed randomly uniformly over all mesh cells.
   \details Place particles at cell centers.
   \param nr_particles Number of particles to make.
-  \param mesh OpenFOAM mesh.
+  \param mesh Mesh object.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
@@ -435,7 +389,7 @@ namespace ptof
   /** \brief Make particles distributed randomly uniformly over mesh cells where mask is above threshold.
    \details Place particles at cell centers.
    \param nr_particles Number of particles to make.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \param rng Random number generator.
    \param particle_maker Functor to make a particle given a position.
    \param mask Scalar field assigning values to mesh cell indices through operator[].
@@ -464,7 +418,7 @@ namespace ptof
   \details Place particles at cell centers.
   \param nr_particles Number of particles to make.
   \param velocity_field Velocity field as a function of state.
-  \param mesh OpenFOAM mesh.
+  \param mesh Mesh object.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
@@ -481,16 +435,16 @@ namespace ptof
    ParticleMaker& particle_maker)
   {
     return fluxweighted_cells(nr_particles,
-                               all_cell_ids(mesh),
-                               velocity_field,
-                               mesh, rng, particle_maker);
+                              all_cell_ids(mesh),
+                              velocity_field,
+                              mesh, rng, particle_maker);
   }
   
   /** \brief Make particles distributed with probability proportional to local velocity magnitude over mesh cells where mask is above threshold.
   \details Place particles at cell centers.
   \param nr_particles Number of particles to make.
   \param velocity_field Velocity field as a function of state.
-  \param mesh OpenFOAM mesh.
+  \param mesh Mesh object.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \param mask Scalar field assigning values to mesh cell indices through operator[].
@@ -522,35 +476,30 @@ namespace ptof
   \details Place particles at face centers.
   \param nr_particles Number of particles to make.
   \param patch_names Names of patches.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
   template
-  <typename Mesh,
-  typename Locator,
+  <typename Locator,
   typename RNG,
   typename ParticleMaker>
   auto uniform_patches
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker)
   {
     return uniform_faces(nr_particles,
-                         patches_face_ids(mesh, patch_names),
-                         mesh, locator,
-                         rng, particle_maker);
+                         patches_face_ids(locator.mesh(), patch_names),
+                         locator, rng, particle_maker);
   }
   
   /** \brief Make particles distributed randomly uniformly over cell faces in given patches where mask is above threshold.
   \details Place particles at face centers.
   \param nr_particles Number of particles to make.
   \param patch_names Names of patches.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
@@ -558,15 +507,13 @@ namespace ptof
   \param threshold Threshold for the mask, such that cells where the mask is above the threshold are considered.
   \return Container with particles. */
   template
-  <typename Mesh,
-  typename Locator,
+  <typename Locator,
   typename RNG,
   typename ParticleMaker,
   typename Mask>
   auto uniform_patches
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker,
@@ -574,10 +521,9 @@ namespace ptof
    double threshold = 0.)
   {
     return uniform_faces(nr_particles,
-                         apply_mask(patches_face_ids(mesh, patch_names),
+                         apply_mask(patches_face_ids(locator.mesh(), patch_names),
                                     mask, threshold),
-                         mesh, locator,
-                         rng, particle_maker);
+                         locator, rng, particle_maker);
   }
   
   /** \brief Make particles distributed with probability proportional to local velocity magnitude over cell faces in given patches.
@@ -585,14 +531,12 @@ namespace ptof
   \param nr_particles Number of particles to make.
   \param patch_names Names of patches.
   \param velocity_field Velocity field as a function of state.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
   template
   <typename VelocityField,
-  typename Mesh,
   typename Locator,
   typename RNG,
   typename ParticleMaker>
@@ -600,16 +544,14 @@ namespace ptof
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    VelocityField const& velocity_field,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker)
   {
     return fluxweighted_faces(nr_particles,
-                               patches_face_ids(mesh, patch_names),
-                               velocity_field,
-                               mesh, locator,
-                               rng, particle_maker);
+                              patches_face_ids(locator.mesh(), patch_names),
+                              velocity_field,
+                              locator, rng, particle_maker);
   }
   
   /** \brief Make particles distributed with probability proportional to local velocity magnitude over cell faces in given patches where mask is above threshold.
@@ -617,7 +559,6 @@ namespace ptof
   \param nr_particles Number of particles to make.
   \param patch_names Names of patches.
   \param velocity_field Velocity field as a function of state.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
@@ -626,7 +567,6 @@ namespace ptof
   \return Container with particles. */
   template
   <typename VelocityField,
-  typename Mesh,
   typename Locator,
   typename RNG,
   typename ParticleMaker,
@@ -635,7 +575,6 @@ namespace ptof
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    VelocityField const& velocity_field,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker& particle_maker,
@@ -643,48 +582,42 @@ namespace ptof
    double threshold = 0.)
   {
     return fluxweighted_faces(nr_particles,
-                               apply_mask(patches_face_ids(mesh, patch_names),
-                                          mask, threshold),
-                               velocity_field,
-                               mesh, locator,
-                               rng, particle_maker);
+                              apply_mask(patches_face_ids(locator.mesh(), patch_names),
+                                         mask, threshold),
+                              velocity_field,
+                              locator, rng, particle_maker);
   }
   
   /** \brief Make particles distributed randomly uniformly near cell faces in given patches.
   \param nr_particles Number of particles to make.
   \param patch_names Names of patches.
   \param distance Distance from face centers.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
   \return Container with particles. */
   template
-  <typename Mesh,
-  typename Locator,
+  <typename Locator,
   typename RNG,
   typename ParticleMaker>
   auto uniform_near_boundary_patches
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    double distance,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker particle_maker)
   {
     return uniform_near_boundary_faces(nr_particles,
-                                       patches_face_ids(mesh, patch_names),
+                                       patches_face_ids(locator.mesh(), patch_names),
                                        distance,
-                                       mesh, locator,
-                                       rng, particle_maker);
+                                       locator, rng, particle_maker);
   }
   
   /** \brief Make particles distributed randomly uniformly near cell faces in given patches where mask is above threshold.
   \param nr_particles Number of particles to make.
   \param patch_names Names of patches.
   \param distance Distance from face centers.
-  \param mesh OpenFOAM mesh.
   \param locator Object to locate positions in mesh.
   \param rng Random number generator.
   \param particle_maker Functor to make a particle given a position.
@@ -692,8 +625,7 @@ namespace ptof
   \param threshold Threshold for the mask, such that cells where the mask is above the threshold are considered.
   \return Container with particles. */
   template
-  <typename Mesh,
-  typename Locator,
+  <typename Locator,
   typename RNG,
   typename ParticleMaker,
   typename Mask>
@@ -701,7 +633,6 @@ namespace ptof
   (std::size_t nr_particles,
    std::vector<std::string> const& patch_names,
    double distance,
-   Mesh const& mesh,
    Locator const& locator,
    RNG& rng,
    ParticleMaker particle_maker,
@@ -709,11 +640,11 @@ namespace ptof
    double threshold = 0.)
   {
     return uniform_near_boundary_faces(nr_particles,
-                                       apply_mask(patches_face_ids(mesh, patch_names),
+                                       apply_mask(patches_face_ids(locator.mesh(),
+                                                                   patch_names),
                                                   mask, threshold),
                                        distance,
-                                       mesh, locator,
-                                       rng, particle_maker);
+                                       locator, rng, particle_maker);
   }
   
   /** \brief Maker particles over a time window according to given pulse properties.
@@ -984,7 +915,6 @@ namespace ptof
     const Parameters parameters;                         /**< Initial condition parameters. */
     
   private:
-    typename Geometry::Mesh const& _mesh;                /**< Underlying mesh.                  */
     typename Geometry::Locator const& _locator;          /**< Object to search mesh.            */
     VelocityField const& _velocity_field;                /**< Underlying flow field.            */
     ParticleMaker _particle_maker;                       /**< Makes a particle given a position.*/
@@ -1014,7 +944,6 @@ namespace ptof
      std::size_t nr_particles,
      Parameters const& parameters)
     : parameters{ parameters }
-    , _mesh{ geometry.mesh() }
     , _locator{ geometry.locator }
     , _velocity_field{ velocity_field }
     , _particle_maker{ particle_maker }
@@ -1038,7 +967,6 @@ namespace ptof
      Mask&& mask,
      double threshold = 0.)
     : parameters{ parameters }
-    , _mesh{ geometry.mesh() }
     , _locator{ geometry.locator }
     , _velocity_field{ velocity_field }
     , _particle_maker{ particle_maker }
@@ -1105,100 +1033,90 @@ namespace ptof
       {
         case InitialConditions::Type::uniform:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
-            return uniform(nr_particles, _mesh, _rng, particle_maker);
+            return uniform(nr_particles, _locator.mesh(), _rng, particle_maker);
           else
-            return uniform(nr_particles, _mesh, _rng, particle_maker,
+            return uniform(nr_particles, _locator.mesh(), _rng, particle_maker,
                            _mask, _threshold);
         case InitialConditions::Type::fluxweighted:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return fluxweighted(nr_particles,
                                 _velocity_field,
-                                _mesh, _rng, particle_maker);
+                                _locator.mesh(), _rng, particle_maker);
           else
             return fluxweighted(nr_particles,
                                 _velocity_field,
-                                _mesh, _rng, particle_maker,
+                                _locator.mesh(), _rng, particle_maker,
                                 _mask, _threshold);
         case InitialConditions::Type::uniform_inlet:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform_patches(nr_particles,
                                    { "inlet" },
-                                   _mesh, _locator,
-                                   _rng, particle_maker);
+                                   _locator, _rng, particle_maker);
           else
             return uniform_patches(nr_particles,
                                    { "inlet" },
-                                   _mesh, _locator,
-                                   _rng, particle_maker,
+                                   _locator, _rng, particle_maker,
                                    _mask, _threshold);
         case InitialConditions::Type::fluxweighted_inlet:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return fluxweighted_patches(nr_particles,
                                         { "inlet" },
                                         _velocity_field,
-                                        _mesh, _locator,
-                                        _rng, particle_maker);
+                                        _locator, _rng, particle_maker);
           else
             return fluxweighted_patches(nr_particles,
                                         { "inlet" },
                                         _velocity_field,
-                                        _mesh, _locator,
-                                        _rng, particle_maker,
+                                        _locator, _rng, particle_maker,
                                         _mask, _threshold);
         case InitialConditions::Type::uniform_solid:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform_patches(nr_particles,
                                    { "wallFluidSolid" },
-                                   _mesh, _locator,
-                                   _rng, particle_maker);
+                                   _locator, _rng, particle_maker);
           else
             return uniform_patches(nr_particles,
                                    { "wallFluidSolid" },
-                                   _mesh, _locator,
-                                   _rng, particle_maker,
+                                   _locator, _rng, particle_maker,
                                    _mask, _threshold);
         case InitialConditions::Type::uniform_near_solid:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform_near_boundary_patches(nr_particles,
                                                  { "wallFluidSolid" },
                                                  parameters.distance_wall,
-                                                 _mesh, _locator,
-                                                 _rng, particle_maker);
+                                                 _locator, _rng, particle_maker);
           else
             return uniform_near_boundary_patches(nr_particles,
                                                  { "wallFluidSolid" },
                                                  parameters.distance_wall,
-                                                 _mesh, _locator,
-                                                 _rng, particle_maker,
+                                                 _locator, _rng, particle_maker,
                                                  _mask, _threshold);
         case InitialConditions::Type::uniform_region_cartesian:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return uniform_cells(nr_particles,
                                  cell_ids_region_cartesian(parameters.region_boundaries,
-                                                           _mesh, _locator),
-                                 _mesh, _rng, particle_maker);
+                                                           _locator),
+                                 _locator.mesh(), _rng, particle_maker);
           else
             return uniform_cells(nr_particles,
                                  apply_mask(cell_ids_region_cartesian(parameters.region_boundaries,
-                                                                      _mesh, _locator),
+                                                                      _locator),
                                             _mask, _threshold),
-                                 _mesh, _rng, particle_maker);
+                                 _locator.mesh(), _rng, particle_maker);
         case InitialConditions::Type::fluxweighted_region_cartesian:
           if constexpr (std::is_same_v<Mask, useful::Empty>)
             return fluxweighted_cells(nr_particles,
                                       cell_ids_region_cartesian(parameters.region_boundaries,
-                                                                _mesh, _locator),
+                                                                _locator),
                                       _velocity_field,
-                                      _mesh,
-                                      _rng, particle_maker);
+                                      _locator.mesh(), _rng, particle_maker);
           else
             return fluxweighted_cells(nr_particles,
                                       apply_mask(cell_ids_region_cartesian(parameters.region_boundaries,
-                                                                           _mesh, _locator),
+                                                                            _locator),
                                                  _mask, _threshold),
                                        _velocity_field,
-                                       _mesh,
-                                       _rng, particle_maker);
+                                       _locator.mesh(), _rng, particle_maker);
         case InitialConditions::Type::prescribed_positions:
           return prescribed_positions(nr_particles,
                                       parameters.position_data,
@@ -1210,9 +1128,8 @@ namespace ptof
                                          ParticleMakerOther& particle_maker)
                                         { return uniform_patches(nr_particles,
                                                                  { "inlet" },
-                                                                 _mesh, _locator,
-                                                                 _rng,
-                                                                 particle_maker); },
+                                                                 _locator,
+                                                                 _rng, particle_maker); },
                                         nr_particles,
                                         parameters.time_min,
                                         parameters.time_max,
@@ -1224,9 +1141,7 @@ namespace ptof
                                          ParticleMakerOther& particle_maker)
                                         { return uniform_patches(nr_particles,
                                                                  { "inlet" },
-                                                                 _mesh, _locator,
-                                                                 _rng,
-                                                                 particle_maker,
+                                                                 _locator, _rng, particle_maker,
                                                                  _mask, _threshold); },
                                         nr_particles,
                                         parameters.time_min,
@@ -1241,8 +1156,7 @@ namespace ptof
                                         { return fluxweighted_patches(nr_particles,
                                                                       { "inlet" },
                                                                       _velocity_field,
-                                                                      _mesh, _locator,
-                                                                      _rng,
+                                                                      _locator, _rng,
                                                                       particle_maker); },
                                         nr_particles,
                                         parameters.time_min,
@@ -1256,8 +1170,7 @@ namespace ptof
                                         { return fluxweighted_patches(nr_particles,
                                                                       { "inlet" },
                                                                       _velocity_field,
-                                                                      _mesh, _locator,
-                                                                      _rng,
+                                                                      _locator, _rng,
                                                                       particle_maker,
                                                                       _mask, _threshold); },
                                         nr_particles,

@@ -175,7 +175,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#ac1378772532f88a2b34057cca1012e9e">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
 </li>
 <li>_geometry
-: <a class="el" href="db/d74/structptof_1_1_measurer.html#ae3840c1b3cab5171fe2160ebcd00f711">ptof::Measurer&lt; Subject, Geometry &gt;</a>
+: <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a4bc3006cf5f0d9d4defab6a4e2d8ecfb">ptof::Locator_Cell&lt; Geometry, SearchOption &gt;</a>
+, <a class="el" href="db/d74/structptof_1_1_measurer.html#ae3840c1b3cab5171fe2160ebcd00f711">ptof::Measurer&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="dc/d05/structptof_1_1_measurer_time.html#ab3cd07a64c20a701d8ced561cb3d8f3a">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a7ace6578f2b5806891f64fd43dd49522">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
 </li>
@@ -234,28 +235,15 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="da/de0/structptof_1_1_measurer_time__position__in__regions.html#ae0084a1820c237a71b60d9687854c203">ptof::MeasurerTime_position_in_regions&lt; Subject, Geometry, Mask &gt;</a>
 , <a class="el" href="dd/d75/structptof_1_1_measurer_time__position__in__regions__periodic.html#a911fc32365705a71b1b824e848988ec6">ptof::MeasurerTime_position_in_regions_periodic&lt; Subject, Geometry, Mask &gt;</a>
 </li>
-<li>_mesh
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#ae09e7eb0a0f7b0a2f7aab9bed0e7c5a8">ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#acf02f212c740bb803773fb9ff3d6c97b">ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt;</a>
-, <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#aba3a01a7725e6000759d152071e6dcbd">ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a06c8b2eb4182f82175dbef3e2b9a1a00">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
-</li>
-<li>_mesh_search
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a9a14bf698e69de6ee8902e60ff5117ad">ptof::Geometry&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a34d63624583baca4e6332400664f1312">ptof::Geometry_Bcc&lt; periodicity, dynamics, SearchOption &gt;</a>
-, <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a69b2b241aec7ff4858bf4d9f1801a8b7">ptof::Geometry_Periodic_Cartesian&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a624b4244aa1606174f6073938a03ece6">ptof::Locator_Cell&lt; SearchOption &gt;</a>
-</li>
 <li>_mesh_searches
-: <a class="el" href="d1/d3e/structptof_1_1_geometry___bcc___parallel.html#ada7916b66ab139b9e8f4344975d29789">ptof::Geometry_Bcc_Parallel&lt; periodicity, dynamics, SearchOption &gt;</a>
-, <a class="el" href="df/dfc/structptof_1_1_geometry___parallel.html#a9a689d92ffa8526d60391a4b75ff09ac">ptof::Geometry_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#acf73d541247b2887c64f3943158c69c7">ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="d5/db8/structptof_1_1_locator___cell___parallel.html#a37c6a31a7c587bf3a809165441a1a1de">ptof::Locator_Cell_Parallel&lt; SearchOption &gt;</a>
+: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a088802d1fc8687b5189e40caef42a796">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ac89c922c0a5f7c844e313f09cea49772">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a4691e700220e602530ab6a6b146d7581">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>_meshes
-: <a class="el" href="d1/d3e/structptof_1_1_geometry___bcc___parallel.html#a1b77bf97f1adb4aa5b4a076ca2d31488">ptof::Geometry_Bcc_Parallel&lt; periodicity, dynamics, SearchOption &gt;</a>
-, <a class="el" href="df/dfc/structptof_1_1_geometry___parallel.html#aaadc051aba5fcb98fbc0f96357ed02a2">ptof::Geometry_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
-, <a class="el" href="df/dae/structptof_1_1_geometry___periodic___cartesian___parallel.html#a6287e061f5008ec2a79b90f8e42fb2ee">ptof::Geometry_Periodic_Cartesian_Parallel&lt; dim_val, dynamics, SearchOption &gt;</a>
+: <a class="el" href="dc/d30/structptof_1_1_geometry.html#ad2e7bf671185369a193d2bfe56836ba8">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a35b19c12c73a76531728d7a8fd0c9a4f">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a0cedf4f26f5af7e0dbd0366b887952d5">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>_next_measure
 : <a class="el" href="d5/de8/classptof_1_1_output___cases.html#ab60f58ea1c4326e7f2fe53db5c255ba2">ptof::Output_Cases&lt; Subject, Geometry &gt;</a>

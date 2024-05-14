@@ -37,19 +37,6 @@ namespace ptof
     struct Warn{};
   };
   
-  /** \struct ParallelOptions PTOF/Useful.h "PTOF/Useful.h"
-   \brief Options to choose between serial and parallel implementations. */
-  struct ParallelOptions
-  {
-    /** \struct ParallelOptions::Serial PTOF/Useful.h "PTOF/Useful.h"
-    \brief Serial implementations. */
-    struct Serial{};
-    
-    /** \struct ParallelOptions::Parallel PTOF/Useful.h "PTOF/Useful.h"
-    \brief Parallel implementations. */
-    struct Parallel{};
-  };
-  
   /** \struct SearchOptions PTOF/Useful.h "PTOF/Useful.h"
    \brief Options for mesh searching. */
   struct SearchOptions
@@ -183,7 +170,7 @@ namespace ptof
     {
       if constexpr (warn_if_outside)
       {
-        std::cerr << "Warning: Requested cell side at position "
+        std::cerr << "Warning: Requested cell at position "
                   << "("
                   << position[0] << ", "
                   << position[1] << ", "
@@ -274,13 +261,61 @@ namespace ptof
     return mesh.cellCentres()[cell];
   }
   
-  /** Sometimes the face center associated with a mesh face is not considered within the cell. Verify this */
-  template <typename Mesh, typename Locator>
-  bool face_center_is_in_cell
-  (Foam::label face, Mesh const& mesh, Locator const& locator)
+  /** \brief Sometimes the face center associated with a mesh face is not considered
+   within the cell and may be outside the mesh. Verify this.
+  \param face Mesh face index.
+  \param locator Object to locate positions in mesh.
+  \param cell_hint Hint of face's owner cell
+  \return \c true if face center is in mesh, \c false otherwise. */
+  template <typename Locator>
+  bool face_center_is_in_mesh
+  (Foam::label face, Locator const& locator, Foam::label cell_hint = -1)
   {
-    return locator.mesh_search().findCell(face_center(face, locator.mesh_search().mesh()))
-      == mesh.owner()[face];
+    return !outside(locator(face_center(face, locator.mesh()),
+                            cell_hint));
+  }
+  
+  /** \brief Sometimes the face center associated with a mesh face is not considered
+   within the owner cell. Verify this.
+  \param locator Object to locate positions in mesh.
+  \param cell_hint Hint of face's owner cell
+  \return \c true if face center is in owner cell, \c false otherwise. */
+  template <typename Locator>
+  bool face_center_is_in_cell
+  (Foam::label face, Locator const& locator, Foam::label cell_hint = - 1)
+  {
+    auto const& mesh = locator.mesh();
+    auto cell = locator(face_center(face, mesh), cell_hint);
+    return !outside(cell) && cell == mesh.faceOwner()[face];
+  }
+  
+  /** \brief Compute face center's position if face center is in mesh, owner cell center otherwise
+  \param face Mesh face index.
+  \param locator Object to locate positions in mesh.
+  \param cell_hint Hint of face's owner cell.
+  \return Position. */
+  template <typename Locator>
+  auto adjusted_face_center
+  (Foam::label face,
+   Locator const& locator,
+   Foam::label cell_hint = -1)
+  {
+    auto const& mesh = locator.mesh();
+    if (face_center_is_in_mesh(face, locator, cell_hint))
+      return face_center(face, mesh);
+    else
+    {
+      auto center = face_center(face, mesh);
+      std::cerr << "Warning: Face center of face "
+                << face << " at "
+                << "("
+                << center[0] << ", "
+                << center[1] << ", "
+                << center[2] << ")"
+                << " is not within owner cell. "
+                << "Replacing face center by owner cell center\n";
+      return cell_center(mesh.faceOwner()[face], mesh);
+    }
   }
   
   /** \brief Small offset forward given current face and direction.*/
@@ -291,12 +326,11 @@ namespace ptof
   Foam::vector const& direction,
   Locator const& locator)
   {
-    Foam::label owner_cell = locator.mesh_search().mesh().faceOwner()[face];
-    Foam::point const& cell_center = locator.mesh_search().mesh().
-      cellCentres()[owner_cell];
+    auto const& mesh = locator.mesh();
+    Foam::label owner_cell = mesh.faceOwner()[face];
+    Foam::point const& cell_center = mesh.cellCentres()[owner_cell];
     Foam::scalar typ_dim = Foam::mag(cell_center
-                                     - face_center(face,
-                                                   locator.mesh_search().mesh()));
+                                     - face_center(face, mesh));
    
     return locator.mesh_search().tol_*typ_dim*
       direction/Foam::mag(direction);
@@ -313,9 +347,10 @@ namespace ptof
   (Foam::label face,
    Locator const& locator)
   {
-    return offset_face(face_center(face, locator.mesh_search().mesh()),
+    auto const& mesh = locator.mesh();
+    return offset_face(face_center(face, mesh),
                        face,
-                       unit_normal_outward(face, locator.mesh_search().mesh()),
+                       unit_normal_outward(face, mesh),
                        locator);
   }
   
@@ -355,7 +390,7 @@ namespace ptof
   {
     auto offset = offset_face(begin, face, direction, locator);
     auto point = begin + offset;
-    Foam::label owner_cell = locator.mesh_search().mesh().faceOwner()[face];
+    Foam::label owner_cell = locator.mesh().faceOwner()[face];
     if (locator(begin, owner_cell) < 0)
       return point;
     while (locator(point, owner_cell) < 0)
@@ -402,7 +437,7 @@ namespace ptof
   {
     auto offset = offset_face(begin, face, direction, locator);
     auto point = begin - offset;
-    Foam::label owner_cell = locator.mesh_search().mesh().faceOwner()[face];
+    Foam::label owner_cell = locator.mesh().faceOwner()[face];
     if (locator(begin, owner_cell) < 0)
       return point;
     while (locator(point, owner_cell) < 0)
@@ -425,7 +460,7 @@ namespace ptof
   (Foam::label face,
    Locator const& locator)
   {
-    return face_center(face, locator.mesh_search().mesh())
+    return face_center(face, locator.mesh())
       + offset_face(face, locator);
   }
   
@@ -441,7 +476,7 @@ namespace ptof
    (Foam::label face,
     Locator const& locator)
    {
-     return face_center(face, locator.mesh_search().mesh())
+     return face_center(face, locator.mesh())
       - offset_face(face, locator);
    }
   
@@ -461,7 +496,7 @@ namespace ptof
    Foam::vector const& direction,
    Locator const& locator)
   {
-    Foam::point const& center = locator.mesh_search().mesh().cellCentres()[cell];
+    Foam::point const& center = locator.mesh().cellCentres()[cell];
     Foam::scalar typ_dim = Foam::mag(center - begin);
     
     return locator.mesh_search().tol_*typ_dim*
@@ -563,7 +598,7 @@ namespace ptof
   }
   
   /**
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \return All mesh cell indices. */
   template <typename Mesh>
   auto all_cell_ids(Mesh const& mesh)
@@ -572,7 +607,7 @@ namespace ptof
   }
   
   /**
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \param patch_names Names of patches.
    \return Mesh face indices of faces given patches. */
   template <typename Mesh>
@@ -594,13 +629,11 @@ namespace ptof
   
   /**
    \param boundaries Container of pairs of lower and upper boundary locations along each dimension.
-   \param mesh OpenFOAM mesh.
    \param locator Object to locate positions in mesh.
    \return Mesh cell indices within boundaries. */
-  template <typename Mesh, typename Locator>
+  template <typename Locator>
   auto cell_ids_region_cartesian
   (std::vector<std::pair<double, double>> boundaries,
-   Mesh const& mesh,
    Locator const& locator)
   {
     // Identify degenerate dimensions
@@ -613,6 +646,8 @@ namespace ptof
         degenerate_dimensions.push_back(dd);
       else
         non_degenerate_dimensions.push_back(dd);
+    
+    auto const& mesh = locator.mesh();
     
     std::set<Foam::label> cell_ids;
     for (Foam::label cc = 0; cc < mesh.nCells(); ++cc)
@@ -640,7 +675,7 @@ namespace ptof
       // mesh, include it in the region
       for (auto dd : degenerate_dimensions)
         center[dd] = degenerate_dimensions[dd];
-      auto cell_id = locator.mesh_search().findCell(center);
+      auto cell_id = mesh.findCell(center);
       if (!outside(cell_id))
         cell_ids.insert(cell_id);
     }

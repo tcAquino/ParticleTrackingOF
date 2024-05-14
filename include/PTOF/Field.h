@@ -177,7 +177,7 @@ namespace ptof
     {
       cell = _locator(position, cell);
       if constexpr (check_if_outside)
-        if (outside<warn_if_outside>(cell, position, "Assigning zero."))
+        if (outside<warn_if_outside>(cell, position, "Assigning vector field value zero"))
           return Vector::zero;
       
       if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
@@ -491,7 +491,7 @@ namespace ptof
     {
       cell = _locator(position, cell);
       if constexpr (check_if_outside)
-        if (outside<warn_if_outside>(cell, position, "Assigning zero."))
+        if (outside<warn_if_outside>(cell, position, "Assigning scalar field value zero"))
           return 0.;
       
       if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)

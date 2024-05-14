@@ -21,7 +21,7 @@ namespace ptof
   /**
    \param surface_concentration Homogeneous surface concentration value.
    \param face_ids Mesh face indices where to assign concentration.
-   \param mesh OpenFOAM mesh.
+   \param mesh Mesh object.
    \return Map of homogeneous surface concentrations over given face indices. */
   template
   <typename Container,
@@ -40,7 +40,7 @@ namespace ptof
   /**
   \param surface_concentration Mean surface concentration value.
   \param patch_names Mesh patch names where to assign concentration.
-  \param mesh OpenFOAM mesh.
+  \param mesh Mesh object.
   \return Map of homogeneous surface concentrations over given face indices. */
   template <typename Mesh>
   auto uniform_solid_reactant_patches
@@ -61,7 +61,7 @@ namespace ptof
   std::pair<Foam::label, double> nearest_boundary_face_dist
   (Foam::vector const& position, Locator const& locator)
   {
-    auto const& mesh = locator.mesh_search().mesh();
+    auto const& mesh = locator.mesh();
     // Do not use hint because this can get stuck in local minima
     auto face_id = locator.mesh_search().findNearestBoundaryFace(position);
     auto dist = Foam::mag(position - mesh.faces()[face_id].centre(mesh.points()));
