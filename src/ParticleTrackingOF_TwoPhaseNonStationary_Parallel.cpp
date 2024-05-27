@@ -22,7 +22,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_diffusion_fpt_2d_parallel;
+  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt_parallel;
   using Phase = ptof::Phase;
 
   std::string banner = "--------------------------------------------------\n"

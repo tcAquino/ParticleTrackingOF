@@ -1,7 +1,7 @@
 /**
- \file PTOF/Boundary.h
- \author Tomás Aquino
- \date 17/02/2022
+\file PTOF/Boundary.h
+\author Tomás Aquino
+\date 17/02/2022
 */
 
 #ifndef PTOF_BOUNDARY_H
@@ -32,11 +32,11 @@ struct BoundaryCondition {
   /** \enum Type
    *  \brief Implemented types. */
   enum class Type {
-    reflecting, /**< Reflecting                                          */
-    reacting_reflecting, /**< Reacting and reflecting                     */
+    reflecting, /**< Reflecting                                         */
+    reacting_reflecting, /**< Reacting and reflecting                   */
     periodic,  /**< Periodic                                            */
     absorbing, /**< Absorbing                                           */
-    info,      /**< Information upon hitting                      */
+    info,      /**< Information upon hitting                            */
     custom,    /**< Enforced by custom Boundary object                  */
     empty      /**< No effect (default for unspecified patches in mesh) */
   };
@@ -120,7 +120,8 @@ void boundary_absorbing(State &state, Foam::point const &contact_point) {
 /**
  \brief Get the boundary conditions associated with a set of patches from file.
  \param filename Name of file holding a patch name followed by a boundary
- condition type in each line. \param delims Possible delimiters between patch
+ condition type in each line.
+ \param delims Possible delimiters between patch
  names and boundary condition types.
 */
 inline auto get_boundary_conditions(std::string const &filename,
@@ -167,8 +168,10 @@ auto get_boundary_conditions(Directories const &directories,
 }
 
 /** \brief Throw if any patch name does not exist in mesh or associated boundary
- condition type is not implemented. \param boundary_conditions Container of
- pairs of patch names and boundary condition types. \param mesh Mesh object.
+ condition type is not implemented.
+ \param boundary_conditions Container of
+ pairs of patch names and boundary condition types.
+ \param mesh Mesh object.
  \param implemented BoundaryCondition object holding information about
  implemented boundary conditions. */
 template <typename BCs, typename Mesh, typename Implemented>
@@ -187,7 +190,8 @@ void verify_boundary_conditions(BCs const &boundary_conditions,
 /**
  \brief Add default type 'empty' to boundary conditions for unspecified patches.
  \param boundary_conditions Associative container of pairs of patch names and
- boundary condition types, to add to. \param patch_names Container with all
+ boundary condition types, to add to.
+ \param patch_names Container with all
  patch names.
 */
 template <typename BCs, typename Container>
@@ -200,8 +204,10 @@ void add_unspecified_patches(BCs &boundary_conditions,
 
 /**
  \brief Add default type 'empty' to boundary conditions for unspecified patches
- in mesh. \param boundary_conditions Associative container of pairs of patch
- names and boundary condition types, to add to. \param mesh Mesh object.
+ in mesh.
+ \param boundary_conditions Associative container of pairs of patch
+ names and boundary condition types, to add to.
+ \param mesh Mesh object.
 */
 template <typename BCs, typename Mesh>
 void add_unspecified_patches_in_mesh(BCs &boundary_conditions,
@@ -270,10 +276,12 @@ public:
 
   /** Constructor
    \param boundary_conditions Patch names and associated  boundary condition
-   types. \param locator Object to locate positions in mesh. \param store_info
-   Object to handle storing of information upon boundary hitting. \param
-   boundary_periodic Periodic boundary condition enforcer. \param
-   boundary_custom Custom boundary condition enforcer. \param surface_reaction
+   types.
+   \param locator Object to locate positions in mesh.
+   \param store_info Object to handle storing of information upon boundary
+   hitting. \param boundary_periodic Periodic boundary condition enforcer.
+   \param boundary_custom Custom boundary condition enforcer.
+   \param surface_reaction
    Surface Reaction.
   */
   Boundary_Cases(
@@ -305,9 +313,12 @@ public:
 
   /**
    \brief Enforce boundary conditions if necessary by choosing appropriate
-   types. \param state Current particle state to apply BCs if needed (possibly
-   out of bounds). \param state_old Previous particle state (should be in
-   bounds). \return \c true if some boundary had an effect, \c false otherwise.
+   types.
+   \param state Current particle state to apply BCs if needed (possibly
+   out of bounds).
+   \param state_old Previous particle state (should be in
+   bounds).
+   \return \c true if some boundary had an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) {
@@ -494,7 +505,8 @@ private:
 
   /** \brief Find next intersection with a boundary.
    \details Find the next intersection, if any, along straight line from
-   previous intersection to endpoint. \param intersection previous_intersection.
+   previous intersection to endpoint.
+   \param intersection previous_intersection.
    \param end Endpoint.
    \param cell Cell index for previous intersection.
    \return Next intersection. */
@@ -666,10 +678,14 @@ template <typename InitialCondition>
 Boundary_Reinject(InitialCondition &&) -> Boundary_Reinject<InitialCondition>;
 
 /** \brief For boundaries conditions indicated as type \c periodic, extract the
- corresponding boundary positions. \param boundary_conditions Associative
- container of patch names and associated boundary condition types. \param mesh
- Mesh object. \param dim Spatial dimensionality. \return Container of pairs of
- periodic boundary positions along each periodic dimension. \note
+ corresponding boundary positions.
+ \param boundary_conditions Associative
+ container of patch names and associated boundary condition types.
+ \param mesh
+ Mesh object. \param dim Spatial dimensionality.
+ \return Container of pairs of periodic boundary positions along
+ each periodic dimension.
+ \note
  - Periodic boundaries are assumed to be perpendicular to the cartesian axes.
  There must be an even number.
  - Periodic conditions are checked in order across Cartesian dimensions. If
