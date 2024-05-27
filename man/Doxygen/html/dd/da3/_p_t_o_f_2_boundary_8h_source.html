@@ -604,37 +604,37 @@ $(document).ready(function(){initNavTree('dd/da3/_p_t_o_f_2_boundary_8h_source.h
 <div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;      Foam::scalar total_area = 0.;</div>
 <div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">auto</span> face = face_start; face &lt; face_start + patch.size(); ++face) {</div>
 <div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;        <span class="keyword">auto</span> area = <a class="code" href="../../d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe">face_area</a>(face, mesh);</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        <span class="keyword">auto</span> weighted_center = area * <a class="code" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e">face_center</a>(face, mesh);</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;        total_area += area;</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        average_face_center += weighted_center;</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;        <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; variance_face_center.size(); ++dd)</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;          variance_face_center[dd] += weighted_center[dd] * weighted_center[dd];</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;      }</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;      average_face_center /= total_area;</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;      variance_face_center /= total_area * total_area;</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;      <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; variance_face_center.size(); ++dd)</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;        variance_face_center[dd] -=</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;            average_face_center[dd] * average_face_center[dd];</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;      <span class="comment">// Choose dimension with least variance.</span></div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;      <span class="keyword">auto</span> it_min = std::min_element(variance_face_center.begin(),</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;                                     variance_face_center.end());</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;      std::size_t dd = std::distance(variance_face_center.begin(), it_min);</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;      boundaries_dim[dd].push_back(average_face_center[dd]);</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    }</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;  <span class="comment">// Check which dimensions have periodic BCs.</span></div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;  <span class="comment">// If a dimension has periodic BCs they must be exactly two.</span></div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;  std::vector&lt;bool&gt; dim_has_periodic_bcs(dim, 0);</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;  <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; dim; ++dd)</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;    <span class="keywordflow">if</span> (boundaries_dim[dd].size() != 0) {</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;      <span class="keywordflow">if</span> (boundaries_dim[dd].size() != 2)</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;        <span class="keywordflow">throw</span> std::runtime_error{<span class="stringliteral">&quot;Extracted &quot;</span> +</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;                                 std::to_string(boundaries_dim[dd].size()) +</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;                                 <span class="stringliteral">&quot; periodic boundaries &quot;</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;                                 <span class="stringliteral">&quot;along cartesian dimension &quot;</span> +</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;                                 std::to_string(dd)};</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160; </div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        <span class="keyword">auto</span> center = <a class="code" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e">face_center</a>(face, mesh);</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;        <span class="keyword">auto</span> weighted_center = area * center;</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        total_area += area;</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;        average_face_center += weighted_center;</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;        <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; variance_face_center.size(); ++dd)</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;          variance_face_center[dd] += weighted_center[dd] * center[dd];</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;      }</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;      average_face_center /= total_area;</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;      variance_face_center /= total_area;</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;      <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; variance_face_center.size(); ++dd)</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        variance_face_center[dd] -=</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;            average_face_center[dd] * average_face_center[dd];</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;      <span class="comment">// Choose dimension with least variance.</span></div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;      <span class="keyword">auto</span> it_min = std::min_element(variance_face_center.begin(),</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;                                     variance_face_center.end());</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;      std::size_t dd = std::distance(variance_face_center.begin(), it_min);</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;      boundaries_dim[dd].push_back(average_face_center[dd]);</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;    }</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;  <span class="comment">// Check which dimensions have periodic BCs.</span></div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;  <span class="comment">// If a dimension has periodic BCs they must be exactly two.</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;  std::vector&lt;bool&gt; dim_has_periodic_bcs(dim, 0);</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;  <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; dim; ++dd)</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;    <span class="keywordflow">if</span> (boundaries_dim[dd].size() != 0) {</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;      <span class="keywordflow">if</span> (boundaries_dim[dd].size() != 2)</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;        <span class="keywordflow">throw</span> std::runtime_error{<span class="stringliteral">&quot;Extracted &quot;</span> +</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;                                 std::to_string(boundaries_dim[dd].size()) +</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;                                 <span class="stringliteral">&quot; periodic boundaries &quot;</span></div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;                                 <span class="stringliteral">&quot;along cartesian dimension &quot;</span> +</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;                                 std::to_string(dd)};</div>
 <div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;      dim_has_periodic_bcs[dd] = 1;</div>
 <div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;    }</div>
 <div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
@@ -655,22 +655,23 @@ $(document).ready(function(){initNavTree('dd/da3/_p_t_o_f_2_boundary_8h_source.h
 <div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;      found_nonperiodic = 1;</div>
 <div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;  }</div>
 <div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;  std::vector&lt;std::pair&lt;double, double&gt;&gt; boundaries;</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;  <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; dim; ++dd) {</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    <span class="keywordflow">if</span> (dim_has_periodic_bcs[dd]) {</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;      boundaries.push_back(</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;          {std::min(boundaries_dim[dd][0], boundaries_dim[dd][1]),</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;           std::max(boundaries_dim[dd][0], boundaries_dim[dd][1])});</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nonconsecutive_dims) {</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;      boundaries.push_back({-std::numeric_limits&lt;double&gt;::infinity(),</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;                            std::numeric_limits&lt;double&gt;::infinity()});</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;    }</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;  }</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160; </div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;  <span class="keywordflow">return</span> boundaries;</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;}</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;} <span class="comment">// namespace ptof</span></div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160; </div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PTOF_BOUNDARY_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;  boundaries.reserve(boundaries_dim.size());</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;  <span class="keywordflow">for</span> (std::size_t dd = 0; dd &lt; boundaries_dim.size(); ++dd) {</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;    <span class="keywordflow">if</span> (dim_has_periodic_bcs[dd]) {</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;      boundaries.push_back(</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;          {std::min(boundaries_dim[dd][0], boundaries_dim[dd][1]),</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;           std::max(boundaries_dim[dd][0], boundaries_dim[dd][1])});</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nonconsecutive_dims) {</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      boundaries.push_back({-std::numeric_limits&lt;double&gt;::infinity(),</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;                            std::numeric_limits&lt;double&gt;::infinity()});</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;    }</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;  }</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160; </div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;  <span class="keywordflow">return</span> boundaries;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;}</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;} <span class="comment">// namespace ptof</span></div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160; </div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PTOF_BOUNDARY_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="a_directories_8h_html"><div class="ttname"><a href="../../d6/d77/_directories_8h.html">Directories.h</a></div></div>
 <div class="ttc" id="a_general_2_meta_8h_html"><div class="ttname"><a href="../../dd/d1b/_general_2_meta_8h.html">Meta.h</a></div><div class="ttdoc">Template metamagic utilities.</div></div>
 <div class="ttc" id="a_general_2_useful_8h_html"><div class="ttname"><a href="../../d9/d18/_general_2_useful_8h.html">Useful.h</a></div><div class="ttdoc">Miscelaneous collection of useful objects and algorithms.</div></div>
