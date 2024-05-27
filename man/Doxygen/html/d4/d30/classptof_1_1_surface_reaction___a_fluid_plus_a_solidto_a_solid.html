@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('d4/d30/classptof_1_1_surface_reaction_
 <p>A_F + A_S -&gt; A_S surface reaction.  
  <a href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../de/ddd/_reaction_8h_source.html">PTOF/Reaction.h</a>&quot;</code></p>
+<p><code>#include &lt;<a class="el" href="../../de/ddd/_reaction_8h_source.html">Reaction.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -107,7 +107,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2aa77dd96ad6d48ade654a1228eae4d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a2aa77dd96ad6d48ade654a1228eae4d5">SurfaceReaction_AFluidPlusASolidtoASolid</a> (double <a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#ae9dd5c74eef76359b5f467f8c4fbce68">rate_constant</a>, double <a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a94890f2d1fd13b22a4a170f77efd943b">diff_coeff</a>, <a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a525988f13b4a192d5582fdfc9e8864df">SurfaceConcentrations</a> <a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a4fbb18a45d97d272e44bd112c3bd722b">surface_concentrations</a>)</td></tr>
 <tr class="separator:a2aa77dd96ad6d48ade654a1228eae4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ae405526342918d6a846f014d47a4a8"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a1ae405526342918d6a846f014d47a4a8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a1ae405526342918d6a846f014d47a4a8">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state_old, Foam::label face)</td></tr>
+<tr class="memitem:a1ae405526342918d6a846f014d47a4a8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a1ae405526342918d6a846f014d47a4a8">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;state_old, Foam::label face)</td></tr>
 <tr class="memdesc:a1ae405526342918d6a846f014d47a4a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">React over exposure time.  <a href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a1ae405526342918d6a846f014d47a4a8">More...</a><br /></td></tr>
 <tr class="separator:a1ae405526342918d6a846f014d47a4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade3d819a11dcc1d5c2bc5a4e8cd97a10"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#ade3d819a11dcc1d5c2bc5a4e8cd97a10">rate</a> (Foam::label face) const</td></tr>
@@ -131,6 +131,7 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A_F + A_S -&gt; A_S surface reaction. </p>
+<p>"PTOF/Reaction.h" </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a525988f13b4a192d5582fdfc9e8864df"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a525988f13b4a192d5582fdfc9e8864df">&#9670;&nbsp;</a></span>SurfaceConcentrations</h2>
@@ -252,13 +253,13 @@ template&lt;typename State &gt; </div>
         <tr>
           <td class="memname">void ptof::SurfaceReaction_AFluidPlusASolidtoASolid::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;&#160;</td>
           <td class="paramname"><em>state_old</em>, </td>
         </tr>
         <tr>

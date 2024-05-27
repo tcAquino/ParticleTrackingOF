@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('dd/d20/structptof_1_1_initial_conditio
 <p>Initial condition condition parameters to handle all initial condition types in <code><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html" title="InitialCondition object to handle implemented initial condition types.">InitialCondition_Cases</a></code>.  
  <a href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d6/d44/_initial_condition_8h_source.html">PTOF/InitialCondition.h</a>&quot;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d6/d44/_initial_condition_8h_source.html">InitialCondition.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -136,11 +136,12 @@ Data Fields</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ab9ad254b6804f87b4494257891c6b0e2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ab9ad254b6804f87b4494257891c6b0e2">comment_sequence</a> = &quot;#&quot;</td></tr>
+<tr class="memitem:ab9ad254b6804f87b4494257891c6b0e2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ab9ad254b6804f87b4494257891c6b0e2">comment_sequence</a></td></tr>
 <tr class="separator:ab9ad254b6804f87b4494257891c6b0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Initial condition condition parameters to handle all initial condition types in <code><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html" title="InitialCondition object to handle implemented initial condition types.">InitialCondition_Cases</a></code>. </p>
+<p>"PTOF/InitialCondition.h" </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae480cbfa1ec2b8a2dbd6f108b7124d3d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae480cbfa1ec2b8a2dbd6f108b7124d3d">&#9670;&nbsp;</a></span>InitialConditionParameters_Cases()</h2>
@@ -255,7 +256,7 @@ template&lt;typename OStream &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string ptof::InitialConditionParameters_Cases::comment_sequence = &quot;#&quot;</td>
+          <td class="memname">std::string ptof::InitialConditionParameters_Cases::comment_sequence</td>
         </tr>
       </table>
   </td>
@@ -264,7 +265,9 @@ template&lt;typename OStream &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Sequence of characters marking comment for file parsing. </p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      <span class="stringliteral">&quot;#&quot;</span></div>
+</div><!-- fragment --><p>Sequence of characters marking comment for file parsing. </p>
 
 </div>
 </div>

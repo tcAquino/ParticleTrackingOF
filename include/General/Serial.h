@@ -10,13 +10,10 @@
 
 #include "General/Meta.h"
 
-namespace useful
-{
-  std::size_t get_thread_num(meta::ParallelOptions::Serial)
-  { return 0; }
-  
-  std::size_t get_num_threads(meta::ParallelOptions::Serial)
-  { return 1; }
-}
+namespace useful {
+inline std::size_t get_thread_num(meta::ParallelOptions::Serial) { return 0; }
+
+inline std::size_t get_num_threads(meta::ParallelOptions::Serial) { return 1; }
+} // namespace useful
 
 #endif /* GENERAL_SERIAL_H */

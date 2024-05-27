@@ -67,6 +67,7 @@ ParticleTrackingOF_TwoPhaseNonStationary_Parallel : ParticleTrackingOF_TwoPhaseN
 ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o : ParticleTrackingOF_TwoPhaseNonStationary_Parallel.cpp
 	$(CXX) $(CXXFLAGS) $(PFLAGS) $(INC) $(PINC) -c $< $(PFLAGS) 
 
+all : ParticleTrackingOF ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel
 
 
 clean :

@@ -1,9 +1,10 @@
 <map id="General/Operations.h" name="General/Operations.h">
-<area shape="rect" id="node1" title="Miscelaneous operations on containers." alt="" coords="125,5,285,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,68,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="64,155,151,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="301,155,393,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="291,80,353,107"/>
-<area shape="rect" id="node6" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="143,80,266,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="175,155,235,181"/>
+<area shape="rect" id="node1" title="Miscelaneous operations on containers." alt="" coords="202,5,362,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,155,68,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="369,80,456,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="92,155,179,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="287,155,379,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="480,80,543,107"/>
+<area shape="rect" id="node7" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="171,80,294,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="203,155,263,181"/>
 </map>

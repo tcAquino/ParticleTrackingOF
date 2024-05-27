@@ -11,20 +11,17 @@
 #include <omp.h>
 #include "General/Meta.h"
 
-namespace useful
-{
-  std::size_t get_thread_num(meta::ParallelOptions::Parallel)
-  { return omp_get_thread_num(); }
-  
-  std::size_t get_num_threads(meta::ParallelOptions::Parallel)
-  {
-    std::size_t num_threads = 1;
-    #pragma omp parallel
-    {
-      num_threads = omp_get_num_threads();
-    }
-    return num_threads;
-  }
+namespace useful {
+inline std::size_t get_thread_num(meta::ParallelOptions::Parallel) {
+  return omp_get_thread_num();
 }
+
+inline std::size_t get_num_threads(meta::ParallelOptions::Parallel) {
+  std::size_t num_threads = 1;
+#pragma omp parallel
+  { num_threads = omp_get_num_threads(); }
+  return num_threads;
+}
+} // namespace useful
 
 #endif /* GENERAL_PARALLEL_H */

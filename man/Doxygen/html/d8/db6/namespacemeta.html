@@ -417,16 +417,18 @@ Variables</h2></td></tr>
 <tr class="memitem:aac4e2e3b576a68388f86cf20b47aa734"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#aac4e2e3b576a68388f86cf20b47aa734">is_convertible_from_abs_v</a></td></tr>
 <tr class="memdesc:aac4e2e3b576a68388f86cf20b47aa734"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::abs(Y)</code> iis viable.  <a href="../../d8/db6/namespacemeta.html#aac4e2e3b576a68388f86cf20b47aa734">More...</a><br /></td></tr>
 <tr class="separator:aac4e2e3b576a68388f86cf20b47aa734"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cfa1b6c329032f97e2676dd23f81392"><td class="memTemplParams" colspan="2">template&lt;typename X , typename Y , typename Z &gt; </td></tr>
-<tr class="memitem:a8cfa1b6c329032f97e2676dd23f81392"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a8cfa1b6c329032f97e2676dd23f81392">is_convertible_from_sqrt_v</a></td></tr>
-<tr class="memdesc:a8cfa1b6c329032f97e2676dd23f81392"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::sqrt(Y)</code> is viable.  <a href="../../d8/db6/namespacemeta.html#a8cfa1b6c329032f97e2676dd23f81392">More...</a><br /></td></tr>
-<tr class="separator:a8cfa1b6c329032f97e2676dd23f81392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47e2052b2465410fb5782d688d49bfe5"><td class="memTemplParams" colspan="2">template&lt;typename X , typename Y &gt; </td></tr>
+<tr class="memitem:a47e2052b2465410fb5782d688d49bfe5"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a47e2052b2465410fb5782d688d49bfe5">is_convertible_from_sqrt_v</a></td></tr>
+<tr class="memdesc:a47e2052b2465410fb5782d688d49bfe5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::sqrt(Y)</code> is viable.  <a href="../../d8/db6/namespacemeta.html#a47e2052b2465410fb5782d688d49bfe5">More...</a><br /></td></tr>
+<tr class="separator:a47e2052b2465410fb5782d688d49bfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
 <tr class="memitem:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#acc97ff166f6593ccfc89ef43cfaae2a7">has_velocity_rescaling_factor_v</a></td></tr>
 <tr class="memdesc:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>double velocity_rescaling_factor</code>.  <a href="../../d8/db6/namespacemeta.html#acc97ff166f6593ccfc89ef43cfaae2a7">More...</a><br /></td></tr>
 <tr class="separator:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Template metamagic utilities. </p>
+</div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="aa21125603a13f72750e1bae718a5fbfc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa21125603a13f72750e1bae718a5fbfc">&#9670;&nbsp;</a></span>begin_result_t</h2>
 
@@ -1439,8 +1441,9 @@ template&lt;typename X &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_member&lt;periodicity_t, X&gt;,</div>
-<div class="line">      is_same&lt;periodicity_t, X, std::vector&lt;int&gt;&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_member&lt;periodicity_t, X&gt;,</div>
+<div class="line">                       is_same&lt;periodicity_t, X, std::vector&lt;int&gt;&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>std::vector&lt;int&gt; periodicity</code>. </p>
 
@@ -1597,8 +1600,9 @@ template&lt;typename X &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_member&lt;time_step_getter_result_t, X&gt;,</div>
-<div class="line">      is_arithmetic&lt;time_step_getter_result_t, X&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_member&lt;time_step_getter_result_t, X&gt;,</div>
+<div class="line">                       is_arithmetic&lt;time_step_getter_result_t, X&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has method <code>Type time_step()</code>, where <code>Type</code> is an arithmetic type. </p>
 
@@ -1625,8 +1629,9 @@ template&lt;typename X &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_member&lt;time_step_setter_result_t, X&gt;,</div>
-<div class="line">      is_void&lt;time_step_setter_result_t, X&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_member&lt;time_step_setter_result_t, X&gt;,</div>
+<div class="line">                       is_void&lt;time_step_setter_result_t, X&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has method <code>void time_step(double)</code>. </p>
 
@@ -1653,8 +1658,9 @@ template&lt;typename X &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_member&lt;time_step_t, X&gt;,</div>
-<div class="line">      is_arithmetic&lt;time_step_t, X&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_member&lt;time_step_t, X&gt;,</div>
+<div class="line">                       is_arithmetic&lt;time_step_t, X&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>Type time_step()</code>, where <code>Type</code> is an arithmetic type. </p>
 
@@ -1681,8 +1687,9 @@ template&lt;typename X &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= has_member&lt;velocity_rescaling_factor_t, X&gt;::value</div>
-<div class="line">    &amp;&amp; std::is_same_v&lt;velocity_rescaling_factor_t&lt;X&gt;, <span class="keywordtype">double</span>&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    has_member&lt;velocity_rescaling_factor_t, X&gt;::value</div>
+<div class="line">        &amp;&amp;std::is_same_v&lt;velocity_rescaling_factor_t&lt;X&gt;, <span class="keywordtype">double</span>&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>double velocity_rescaling_factor</code>. </p>
 
@@ -1709,8 +1716,8 @@ template&lt;typename X &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_size&lt;X&gt;,</div>
-<div class="line">    is_constructible_from_size_impl&lt;X&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_size&lt;X&gt;, is_constructible_from_size_impl&lt;X&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X&lt;Y&gt;(size())</code> is viable. </p>
 
@@ -1737,8 +1744,8 @@ template&lt;typename X , typename Y &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;can_call_abs&lt;Y&gt;,</div>
-<div class="line">    is_convertible_from_abs_impl&lt;X, Y&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;can_call_abs&lt;Y&gt;, is_convertible_from_abs_impl&lt;X, Y&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::abs(Y)</code> iis viable. </p>
 
@@ -1765,8 +1772,9 @@ template&lt;typename X , typename Y , typename Z &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_divides&lt;Y, Z&gt;,</div>
-<div class="line">    is_convertible_from_divides_impl&lt;X, Y, Z&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_divides&lt;Y, Z&gt;,</div>
+<div class="line">                       is_convertible_from_divides_impl&lt;X, Y, Z&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=Y/Z</code> is viable. </p>
 
@@ -1793,8 +1801,9 @@ template&lt;typename X , typename Y , typename Z &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_minus&lt;Y, Z&gt;,</div>
-<div class="line">    is_convertible_from_minus_impl&lt;X, Y, Z&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_minus&lt;Y, Z&gt;,</div>
+<div class="line">                       is_convertible_from_minus_impl&lt;X, Y, Z&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=Y-Z</code> is viable. </p>
 
@@ -1821,8 +1830,9 @@ template&lt;typename X , typename Y , typename Z &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_multiplies&lt;Y, Z&gt;,</div>
-<div class="line">    is_convertible_from_multiplies_impl&lt;X, Y, Z&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_multiplies&lt;Y, Z&gt;,</div>
+<div class="line">                       is_convertible_from_multiplies_impl&lt;X, Y, Z&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if X = Y*Z is viable. </p>
 
@@ -1849,20 +1859,20 @@ template&lt;typename X , typename Y , typename Z &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;has_plus&lt;Y, Z&gt;,</div>
-<div class="line">    is_convertible_from_plus_impl&lt;X, Y, Z&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_plus&lt;Y, Z&gt;, is_convertible_from_plus_impl&lt;X, Y, Z&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=Y+Z</code> is viable. </p>
 
 </div>
 </div>
-<a id="a8cfa1b6c329032f97e2676dd23f81392"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cfa1b6c329032f97e2676dd23f81392">&#9670;&nbsp;</a></span>is_convertible_from_sqrt_v</h2>
+<a id="a47e2052b2465410fb5782d688d49bfe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47e2052b2465410fb5782d688d49bfe5">&#9670;&nbsp;</a></span>is_convertible_from_sqrt_v</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename X , typename Y , typename Z &gt; </div>
+template&lt;typename X , typename Y &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1877,8 +1887,8 @@ template&lt;typename X , typename Y , typename Z &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::conjunction_v&lt;can_call_sqrt&lt;Y&gt;,</div>
-<div class="line">    is_convertible_from_sqrt_impl&lt;X, Y&gt;&gt;</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;can_call_sqrt&lt;Y&gt;, is_convertible_from_sqrt_impl&lt;X, Y&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::sqrt(Y)</code> is viable. </p>
 

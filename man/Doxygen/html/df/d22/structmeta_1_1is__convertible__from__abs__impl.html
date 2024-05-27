@@ -126,9 +126,8 @@ template&lt;typename X , typename Y &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::is_convertible_v&lt;X,</div>
-<div class="line">    decltype(<a class="code" href="../../db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de">std::abs</a>(std::declval&lt;Y&gt;()))&gt;</div>
-<div class="ttc" id="anamespaceop_html_a4244ccb7fff2fa6190c7ec29a040c4de"><div class="ttname"><a href="../../db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de">op::abs</a></div><div class="ttdeci">auto abs(Container const &amp;input)</div><div class="ttdoc">Euclidean norm.</div><div class="ttdef"><b>Definition:</b> Operations.h:685</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      std::is_convertible_v&lt;X, decltype(std::abs(std::declval&lt;Y&gt;()))&gt;</div>
 </div><!-- fragment -->
 </div>
 </div>

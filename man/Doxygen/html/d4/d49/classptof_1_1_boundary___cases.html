@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if position is out of bounds.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3">More...</a><br /></td></tr>
 <tr class="separator:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;state_old={})</td></tr>
+<tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;state_old={})</td></tr>
 <tr class="memdesc:a0bb5e2c18e236af74c037be619467fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary conditions if necessary by choosing appropriate types.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">More...</a><br /></td></tr>
 <tr class="separator:a0bb5e2c18e236af74c037be619467fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fe929a550b4e045bf95eb30961b2aa2"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
@@ -249,11 +249,11 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
 </div><div class="memdoc">
 <p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">boundary_conditions</td><td>Patch names and associated boundary condition types. </td></tr>
-    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
-    <tr><td class="paramname">store_info</td><td>Object to handle storing of information upon boundary hitting. </td></tr>
-    <tr><td class="paramname">boundary_periodic</td><td>Periodic boundary condition enforcer. </td></tr>
-    <tr><td class="paramname">boundary_custom</td><td>Custom boundary condition enforcer. </td></tr>
+    <tr><td class="paramname">boundary_conditions</td><td>Patch names and associated boundary condition types.</td></tr>
+    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh.</td></tr>
+    <tr><td class="paramname">store_info</td><td>Object to handle storing of information upon boundary hitting.</td></tr>
+    <tr><td class="paramname">boundary_periodic</td><td>Periodic boundary condition enforcer.</td></tr>
+    <tr><td class="paramname">boundary_custom</td><td>Custom boundary condition enforcer.</td></tr>
     <tr><td class="paramname">surface_reaction</td><td>Surface Reaction. </td></tr>
   </table>
   </dd>
@@ -339,7 +339,7 @@ template&lt;typename Intersection &gt; </div>
 </div><div class="memdoc">
 
 <p>Find next intersection with a boundary. </p>
-<p>Find the next intersection, if any, along straight line from previous intersection to endpoint. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Find the next intersection, if any, along straight line from previous intersection to endpoint.</p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">intersection</td><td>previous_intersection. </td></tr>
     <tr><td class="paramname">end</td><td>Endpoint. </td></tr>
@@ -379,13 +379,13 @@ template&lt;typename State &gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;&#160;</td>
           <td class="paramname"><em>state_old</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -404,7 +404,7 @@ template&lt;typename State &gt; </div>
 <p>Enforce boundary conditions if necessary by choosing appropriate types. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">state</td><td>Current particle state to apply BCs if needed (possibly out of bounds). </td></tr>
+    <tr><td class="paramname">state</td><td>Current particle state to apply BCs if needed (possibly out of bounds).</td></tr>
     <tr><td class="paramname">state_old</td><td>Previous particle state (should be in bounds). </td></tr>
   </table>
   </dd>
@@ -636,8 +636,7 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Patch names and associated bc type names. <br  />
- </p>
+<p>Patch names and associated bc type names. </p>
 
 </div>
 </div>
@@ -662,8 +661,7 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Boundary object to handle 'custom' bc type. <br  />
- </p>
+<p>Boundary object to handle 'custom' bc type. </p>
 
 </div>
 </div>
@@ -688,8 +686,7 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Boundary object to handle 'periodic' bc type. <br  />
- </p>
+<p>Boundary object to handle 'periodic' bc type. </p>
 
 </div>
 </div>

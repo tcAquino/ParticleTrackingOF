@@ -2,7 +2,7 @@
 <area shape="rect" id="node1" title="Center of a face." alt="" coords="1597,229,1728,255"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a8e064c86d019dd8fe7d33b911e256983" title="Compute face center&#39;s position if face center is in mesh, owner cell center otherwise." alt="" coords="1161,67,1308,108"/>
 <area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="1381,188,1549,229"/>
-<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#af047862935e8dd0f3dc7228127dd161e" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="1391,253,1540,295"/>
+<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a8e442ed07acb23678f6f2cea03381682" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="1391,253,1540,295"/>
 <area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a234f247f1d1cde838683af176475e78f" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="1391,71,1540,112"/>
 <area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="1402,343,1529,370"/>
 <area shape="rect" id="node24" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="1145,483,1324,510"/>

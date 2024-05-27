@@ -117,15 +117,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa3b372b919ff4eb9e4419a9b76a4a1c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#aa3b372b919ff4eb9e4419a9b76a4a1c9">TimeStepAdaptor_CellSize_SurfaceReaction</a> (<a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, VelocityField const &amp;velocity_field, SurfaceReaction &amp;surface_reaction, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers)</td></tr>
 <tr class="separator:aa3b372b919ff4eb9e4419a9b76a4a1c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a383a16feefcff61cd31bcdb18b82894f"><td class="memTemplParams" colspan="2">template&lt;typename State , typename TimeGenerator , typename JumpGenerator &gt; </td></tr>
-<tr class="memitem:a383a16feefcff61cd31bcdb18b82894f"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;state, TimeGenerator &amp;time_generator, JumpGenerator &amp;jump_generator) const</td></tr>
+<tr class="memitem:a383a16feefcff61cd31bcdb18b82894f"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;state, TimeGenerator &amp;time_generator, JumpGenerator &amp;jump_generator) const</td></tr>
 <tr class="memdesc:a383a16feefcff61cd31bcdb18b82894f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update time step.  <a href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f">More...</a><br /></td></tr>
 <tr class="separator:a383a16feefcff61cd31bcdb18b82894f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ada385fb4722b9cd3613dca6a1f03c613"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#ada385fb4722b9cd3613dca6a1f03c613">check_if_outside</a> = !std::is_same_v&lt;CheckOption, <a class="el" href="../../de/de1/structptof_1_1_check_options_1_1_no_check.html">CheckOptions::NoCheck</a>&gt;</td></tr>
+<tr class="memitem:ada385fb4722b9cd3613dca6a1f03c613"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#ada385fb4722b9cd3613dca6a1f03c613">check_if_outside</a></td></tr>
 <tr class="separator:ada385fb4722b9cd3613dca6a1f03c613"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cee367354bcdfbd68c042efbb14bce2"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a1cee367354bcdfbd68c042efbb14bce2">warn_if_outside</a> = std::is_same_v&lt;CheckOption, <a class="el" href="../../d0/dd6/structptof_1_1_check_options_1_1_warn.html">CheckOptions::Warn</a>&gt;</td></tr>
+<tr class="memitem:a1cee367354bcdfbd68c042efbb14bce2"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a1cee367354bcdfbd68c042efbb14bce2">warn_if_outside</a></td></tr>
 <tr class="separator:a1cee367354bcdfbd68c042efbb14bce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -489,7 +489,7 @@ template&lt;typename State , typename TimeGenerator , typename JumpGenerator &gt
         <tr>
           <td class="memname">double <a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html">ptof::TimeStepAdaptor_CellSize_SurfaceReaction</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#af3440fd4f09a18a2cc18a27b9ae4abb6">State</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
@@ -732,7 +732,7 @@ template&lt;typename Geometry , typename VelocityField , typename SurfaceReactio
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool <a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html">ptof::TimeStepAdaptor_CellSize_SurfaceReaction</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;::check_if_outside = !std::is_same_v&lt;CheckOption, <a class="el" href="../../de/de1/structptof_1_1_check_options_1_1_no_check.html">CheckOptions::NoCheck</a>&gt;</td>
+          <td class="memname">constexpr bool <a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html">ptof::TimeStepAdaptor_CellSize_SurfaceReaction</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;::check_if_outside</td>
         </tr>
       </table>
   </td>
@@ -741,7 +741,9 @@ template&lt;typename Geometry , typename VelocityField , typename SurfaceReactio
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Whether to check if requested positions are outside of mesh. </p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      !std::is_same_v&lt;CheckOption, CheckOptions::NoCheck&gt;</div>
+</div><!-- fragment --><p>Whether to check if requested positions are outside of mesh. </p>
 
 </div>
 </div>
@@ -757,7 +759,7 @@ template&lt;typename Geometry , typename VelocityField , typename SurfaceReactio
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool <a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html">ptof::TimeStepAdaptor_CellSize_SurfaceReaction</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;::warn_if_outside = std::is_same_v&lt;CheckOption, <a class="el" href="../../d0/dd6/structptof_1_1_check_options_1_1_warn.html">CheckOptions::Warn</a>&gt;</td>
+          <td class="memname">constexpr bool <a class="el" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html">ptof::TimeStepAdaptor_CellSize_SurfaceReaction</a>&lt; <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;::warn_if_outside</td>
         </tr>
       </table>
   </td>
@@ -766,7 +768,9 @@ template&lt;typename Geometry , typename VelocityField , typename SurfaceReactio
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Whether to warn when requested positions are outside of mesh. </p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      std::is_same_v&lt;CheckOption, CheckOptions::Warn&gt;</div>
+</div><!-- fragment --><p>Whether to warn when requested positions are outside of mesh. </p>
 
 </div>
 </div>
