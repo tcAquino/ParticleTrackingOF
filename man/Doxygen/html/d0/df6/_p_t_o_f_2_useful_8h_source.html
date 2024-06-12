@@ -307,9 +307,9 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  <span class="keyword">auto</span> offset = <a class="code" href="../../d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164">offset_face</a>(begin, face, direction, locator);</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keyword">auto</span> point = begin + offset;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  Foam::label owner_cell = locator.mesh().faceOwner()[face];</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="keywordflow">if</span> (locator(begin, owner_cell) &lt; 0)</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959">outside</a>(locator(begin, owner_cell)))</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordflow">return</span> point;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordflow">while</span> (locator(point, owner_cell) &lt; 0) {</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordflow">while</span> (<a class="code" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959">outside</a>(locator(point, owner_cell))){</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    offset /= 2.;</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    point = begin + offset;</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  }</div>

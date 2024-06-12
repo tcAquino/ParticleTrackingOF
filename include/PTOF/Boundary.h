@@ -322,33 +322,44 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) {
-    /** Find first intersection with boundary patch. */
+    // Find first intersection with boundary patch.
     auto intersection = _locator.mesh_search().intersection(
         make_point(state_old.position), make_point(state.position));
 
     // When the start point is on a cell face,
-    // sometimes the intersection with it is not found
-    // Avoid breaking by checking for intersections with a small
-    // backwards offset when the final state is out of bounds
-    if (!intersection.hit()) {
-      state.cell = _locator(state);
-      if (outside(state.cell)) {
+    // sometimes the intersection with it is not found, and sometimes it is
+    state.cell = _locator(state);
+    if (outside(state.cell)) {
+      if (!intersection.hit()) {
+        // If the final state is outside, avoid breaking by checking for
+        // intersections with a small backwards offset
         intersection = _locator.mesh_search().intersection(
-            offset_backward_cell(make_point(state_old.position), state_old.cell,
-                                 make_point(state.position) -
-                                     make_point(state_old.position),
-                                 _locator),
+            offset_backward_cell_keep_inside(
+                make_point(state_old.position), state_old.cell,
+                make_point(state.position) - make_point(state_old.position),
+                _locator),
             make_point(state.position));
       }
-    } else {
+    } else if (op::abs_sq(make_point(state_old.position) -
+                          intersection.point()) <
+                   std::numeric_limits<double>::epsilon() *
+                       std::numeric_limits<double>::epsilon() &&
+               intersection.hit()) {
+      // If the final state is inside, ignore intersection if at the start
+      // point and find the next intersection with a boundary patch
+      auto old_intersection_point = intersection.point();
+      intersection = next_intersection(intersection, make_point(state.position),
+                                       state.cell);
+
       // Ignore new intersection if offset went beyond final point
-      if (((intersection.point() - make_point(state_old.position)) &
-           (make_point(state.position) - make_point(state_old.position))) < 0.)
+      if (intersection.hit() &&
+          ((intersection.point() - old_intersection_point) &
+           (make_point(state.position) - old_intersection_point)) < 0.)
         intersection.setMiss();
     }
 
     bool had_effect = 0;
-
+    
     // While some patch is intersected
     while (intersection.hit()) {
       /** Find patch in mesh and associated boundary type name. */

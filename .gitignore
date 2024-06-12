@@ -3,5 +3,6 @@
 **/.DS_Store
 **/._.DS_Store
 **/*#*
+**/*~
 update.sh
 compile_commands.json

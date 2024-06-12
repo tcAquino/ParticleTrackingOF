@@ -322,9 +322,9 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
   auto offset = offset_face(begin, face, direction, locator);
   auto point = begin + offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
-  if (locator(begin, owner_cell) < 0)
+  if (outside(locator(begin, owner_cell)))
     return point;
-  while (locator(point, owner_cell) < 0) {
+  while (outside(locator(point, owner_cell))){
     offset /= 2.;
     point = begin + offset;
   }
