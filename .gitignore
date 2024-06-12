@@ -4,5 +4,6 @@
 **/._.DS_Store
 **/*#*
 **/*~
+.cache/
 update.sh
 compile_commands.json

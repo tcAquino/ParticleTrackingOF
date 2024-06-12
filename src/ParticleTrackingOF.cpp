@@ -15,7 +15,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_periodic_cartesian_advection_diffusion_3d;
+  using namespace ptof::model_bcc_cartesian_advection_diffusion;
 
   std::string banner = "--------------------------------------------------\n"
                        "ParticleTrackingOF\n"

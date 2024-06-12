@@ -22,7 +22,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_3d_parallel;
+  using namespace ptof::model_bcc_cartesian_advection_diffusion_parallel;
   using Phase = ptof::Phase;
 
   std::string banner = "--------------------------------------------------\n"
