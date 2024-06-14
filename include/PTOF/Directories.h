@@ -41,22 +41,22 @@ struct Directories {
 
   /** \brief Output information about current object. */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
-              "Directories\n"
-              "--------------------------------------------------\n"
-              "Case directory                : " +
-                  dir_case +
-                  "\n"
-                  "Parameters directory          : " +
-                  dir_parameters +
-                  "\n"
-                  "Boundary conditions directory : " +
-                  dir_boundaryconditions +
-                  "\n"
-                  "Output directory              : " +
-                  dir_output +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Directories\n"
+           "--------------------------------------------------------------\n"
+           "Case directory                : " +
+               dir_case +
+               "\n"
+               "Parameters directory          : " +
+               dir_parameters +
+               "\n"
+               "Boundary conditions directory : " +
+               dir_boundaryconditions +
+               "\n"
+               "Output directory              : " +
+               dir_output + "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -88,27 +88,28 @@ public:
 
   /** \brief Construct given Directories information. */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "OpenFOAM directories (pass '' for default in [])\n"
-              "--------------------------------------------------\n"
-              "OpenFOAM cases directory [$FOAM_RUN]\n"
-              "OpenFOAM case name\n"
-              "OpenFOAM case time [last OpenFOAM case time]\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "OpenFOAM directories (pass '' for default in [])\n"
+           "--------------------------------------------------------------\n"
+           "OpenFOAM cases directory [$FOAM_RUN]\n"
+           "OpenFOAM case name\n"
+           "OpenFOAM case time [last OpenFOAM case time]\n"
+           "--------------------------------------------------------------\n";
   }
 
   /** \brief Output information about current object. */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
-              "OpenFOAM directories\n"
-              "--------------------------------------------------\n"
-              "Case directory: " +
-                  dir_case +
-                  "\n"
-                  "Time directory: " +
-                  time.timeName() +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "OpenFOAM directories\n"
+           "--------------------------------------------------------------\n"
+           "Case directory: " +
+               dir_case +
+               "\n"
+               "Time directory: " +
+               time.timeName() + "\n"
+        << "--------------------------------------------------------------\n";
   }
 
   /**

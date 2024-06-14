@@ -128,10 +128,11 @@ struct Periodicity {
       {Type::cartesian, "cartesian"}, {Type::symmetryplanes, "symmetryplanes"}};
 };
 
-/** \brief Return whether cell is outside mesh
-\return true if outside, false otherwise.
- \note \p cell is the actual index of the cell position is in, determined
-elsewhere, not a hint.
+/**
+   \brief Return whether cell is outside mesh.
+   \return true if outside, false otherwise.
+   \note \p cell is the actual index of the cell position is in, determined
+   elsewhere, not a hint.
 */
 bool outside(Foam::label cell) {
   if (cell < 0)
@@ -139,12 +140,15 @@ bool outside(Foam::label cell) {
   return 0;
 }
 
-/** \brief Return whether cell index indicates outside mesh, and warn and print
-position if warning is enabled \tparam warn_if_outside Output warning if true,
-do not if false \param position Position to check. \param cell Mesh index of
-cell position is in. \param extra_warning_info Additional information to output
-if warning is issued. \return true if outside, false otherwise. \note \p cell is
-the actual index of the cell position is in, determined elsewhere, not a hint.
+/**
+   \brief Check whether cell index is outside mesh.
+   \tparam warn_if_outside Output warning if true, do not if false.
+   \param position Position to check.
+   \param cell Mesh index of cell position is in.
+   \param extra_warning_info Additional info if warning is issued.
+   \return true if outside, false otherwise.
+   \note \p cell is the actual index of the cell position is in, determined
+   elsewhere, not a hint.
 */
 template <bool warn_if_outside>
 bool outside(Foam::label cell, Foam::point const &position,
@@ -218,21 +222,26 @@ template <typename Mesh> auto cell_center(Foam::label cell, Mesh const &mesh) {
   return mesh.cellCentres()[cell];
 }
 
-/** \brief Sometimes the face center associated with a mesh face is not
-considered within the cell and may be outside the mesh. Verify this. \param face
-Mesh face index. \param locator Object to locate positions in mesh. \param
-cell_hint Hint of face's owner cell \return \c true if face center is in mesh,
-\c false otherwise. */
+/**
+   \brief Sometimes the face center associated with a mesh face is not
+considered within the cell and may be outside the mesh. Verify this.
+\param face Mesh face index.
+\param locator Object to locate positions in mesh.
+\param cell_hint Hint of face's owner cell
+\return \c true if face center is in mesh, \c false otherwise. */
 template <typename Locator>
 bool face_center_is_in_mesh(Foam::label face, Locator const &locator,
                             Foam::label cell_hint = -1) {
   return !outside(locator(face_center(face, locator.mesh()), cell_hint));
 }
 
-/** \brief Sometimes the face center associated with a mesh face is not
-considered within the owner cell. Verify this. \param locator Object to locate
-positions in mesh. \param cell_hint Hint of face's owner cell \return \c true if
-face center is in owner cell, \c false otherwise. */
+/**
+   \brief Sometimes the face center associated with a mesh face is not
+considered within the owner cell. Verify this.
+\param locator Object to locate positions in mesh.
+\param cell_hint Hint of face's owner cell
+\return \c true if face center is in owner cell, \c false otherwise.
+*/
 template <typename Locator>
 bool face_center_is_in_cell(Foam::label face, Locator const &locator,
                             Foam::label cell_hint = -1) {
@@ -241,9 +250,12 @@ bool face_center_is_in_cell(Foam::label face, Locator const &locator,
   return !outside(cell) && cell == mesh.faceOwner()[face];
 }
 
-/** \brief Compute face center's position if face center is in mesh, owner cell
-center otherwise \param face Mesh face index. \param locator Object to locate
-positions in mesh. \param cell_hint Hint of face's owner cell. \return Position.
+/**
+   \brief Compute face center's position if face center is in mesh, owner cell
+center otherwise \param face Mesh face index.
+\param locator Object to locate positions in mesh.
+\param cell_hint Hint of face's owner cell.
+\return Position.
 */
 template <typename Locator>
 auto adjusted_face_center(Foam::label face, Locator const &locator,
@@ -524,8 +536,10 @@ auto patches_face_ids(Mesh const &mesh,
 
 /**
  \param boundaries Container of pairs of lower and upper boundary locations
- along each dimension. \param locator Object to locate positions in mesh.
- \return Mesh cell indices within boundaries. */
+ along each dimension.
+ \param locator Object to locate positions in mesh.
+ \return Mesh cell indices within boundaries.
+*/
 template <typename Locator>
 auto cell_ids_region_cartesian(
     std::vector<std::pair<double, double>> boundaries, Locator const &locator) {
@@ -613,15 +627,18 @@ template <typename Subject> auto mass(Subject const &subject, double time) {
  \param time Current time.
  \param locator Object to locate positions in mesh.
  \param masks Container of mask reference wrappers. Masks are scalar fields
- assigned values to mesh cells through operator[]. \param tolerances Vector of
+ assigning values to mesh cells through operator[].
+ \param tolerances Vector of
  tolerances for each mask, such that cells where a mask is above the tolerance
- are considered. \return Total masses in regions specified by masks. \note
+ are considered.
+ \return Total masses in regions specified by masks.
+ \note
  -Particle states must implement:
  -# mass [double]
  -# info.asorbed [std::size_t]
  -# time
-
- = \c tolerances must have at least the same size as \c masks  */
+ - \c tolerances must have at least the same size as \c masks
+*/
 template <typename Subject, typename Locator, typename Mask>
 auto mass(Subject const &subject, double time, Locator const &locator,
           std::vector<std::reference_wrapper<const Mask>> masks,
@@ -643,12 +660,14 @@ auto mass(Subject const &subject, double time, Locator const &locator,
   \param subject CTRW object.
   \param time Current time.
   \param getter_position Get position from state, gets position directly by
-  default. \return Mean position (weighted by mass). \note Particle states must
-  implement:
+  default.
+  \return Mean position (weighted by mass).
+  \note Particle states must implement:
   - position [for default positition getter]
   - info.asorbed [std::size_t]
   - mass
-  - time*/
+  - time
+*/
 template <typename Subject, typename GetterPosition = ctrw::Get_position>
 auto position_mean(Subject const &subject, double time,
                    GetterPosition getter_position = {}) {
@@ -667,11 +686,13 @@ auto position_mean(Subject const &subject, double time,
  \param subject CTRW object.
  \param time Current time.
  \param getter_position Get position from state, gets position directly by
- default. \return Second moment of position (weighted by mass). \note Particle
- states must implement:
+ default.
+ \return Second moment of position (weighted by mass).
+ \note Particle states must implement:
  - position [for default positition getter]
  - info.asorbed [std::size_t]
- - mass */
+ - mass
+*/
 template <typename Subject, typename GetterPosition = ctrw::Get_position>
 auto position_second_moment(Subject const &subject, double time,
                             GetterPosition getter_position = {}) {
@@ -691,11 +712,13 @@ auto position_second_moment(Subject const &subject, double time,
 \param subject CTRW object.
 \param time Current time.
 \param getter_position Get position from state, gets position directly by
-default. \return Position variance (weighted by mass). \note Particle states
-must implement:
+default.
+\return Position variance (weighted by mass).
+\note Particle states must implement:
 - position [for default positition getter]
 - info.asorbed [std::size_t]
-- mass */
+- mass
+*/
 template <typename Subject, typename GetterPosition = ctrw::Get_position>
 auto position_variance(Subject const &subject, double time,
                        GetterPosition getter_position = {}) {
@@ -716,8 +739,10 @@ void info_time(OStream &output, ParametersOutput const &params, double time) {
 }
 
 /** \brief Output information about fraction of particles that have not been
- absorbed. \param output Output stream. \param subject CTRW object. \param time
- Current time. \note Particle states must implement:
+ absorbed.
+ \param output Output stream. \param subject CTRW object.
+ \param time Current time.
+ \note Particle states must implement:
  - info.asorbed [std::size_t]
 */
 template <typename OStream, typename Subject>

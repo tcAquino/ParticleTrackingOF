@@ -43,12 +43,12 @@ struct Model {
   inline static const std::string name{"advection_diffusion_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+              "--------------------------------------------------------------\n"
+           << name << "\n"
+           << "--------------------------------------------------------------\n"
+              "\n";
   }
 };
 
@@ -102,9 +102,9 @@ struct Solvers {
 
     template <typename OStream> static void info(OStream &output) {
       output
-          << "--------------------------------------------------\n"
+          << "--------------------------------------------------------------\n"
              "Solver parameters\n"
-             "--------------------------------------------------\n"
+             "--------------------------------------------------------------\n"
              "- Number of Lagrangian particles in each injection step\n"
              "- Local time step in terms of cell-based advection time\n"
              "- Local time step in terms of cell-based diffusion time\n"
@@ -112,11 +112,11 @@ struct Solvers {
              "- Global time step in terms of characteristic advection time\n"
              "- Global time step in terms of characteristic diffusion time\n"
              "- Global time step in terms of surface reaction time\n"
-             "  (Note: Minimum between processes and maximum between local and "
-             "global is used.\n"
-             "         Initial values (e.g., of flow) are used for global "
-             "quantities.)\n"
-             "--------------------------------------------------\n";
+             "  (Note: Minimum between processes and maximum between local\n"
+             "         and global is used.\n"
+             "         Initial values (e.g., of flow) are used for global\n"
+             "         quantities.)\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -214,39 +214,41 @@ struct Transport {
     }
 
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Transport parameters\n"
-                "--------------------------------------------------\n"
-                "- How to set the Peclet number:\n"
-                "  (Note: Rescaling of the velocity field is not handled when "
-                "transport parameters are set.\n"
-                "         Rescale method must always be called, both to "
-                "rescale and to compute\n"
-                "         velocity-dependent quantities when not rescaling)\n"
-                "\tcompute_from_diff_coeff: Compute from given diffusion "
-                "coefficient (do not rescale velocity field)\n"
-                "\tset_diff_coeff: Compute diffusion coefficient to set given "
-                "Peclet number (do not rescale velocity field) \n"
-                "\tcompute_from_diff_time: Compute from given diffusion time "
-                "(do not rescale velocity field)\n"
-                "\trescale_velocity_to_peclet: Rescale velocity field "
-                "according to imposed peclet number\n"
-                "\trescale_velocity_to_mean: Rescale according to imposed mean "
-                "flow velocity\n"
-                "\trescale_velocity_to_advection_time: Rescale according to "
-                "imposed advection time\n"
-                "- Reference lengthscale\n"
-                "- Peclet number (do not pass if Peclet option is "
-                "compute_from_diff_coeff or compute_from_diff_time)\n"
-                "- Mean flow velocity (pass only if Peclet option is "
-                "rescale_velocity_to_mean)\n"
-                "- Advection time (pass only if Peclet option is "
-                "rescale_velocity_to_advection_time)\n"
-                "- Diffusion time (pass only if Peclet option is "
-                "compute_from_diff_time)\n"
-                "- Diffusion coefficient (do not pass if Peclet option is "
-                "set_diff_coeff or compute_from_diff_time)\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Transport parameters\n"
+             "--------------------------------------------------------------\n"
+             "- How to set the Peclet number:\n"
+             "  (Note: Rescaling of the velocity field is not handled when\n"
+             "         transport parameters are set.\n"
+             "         Rescale method must always be called, both to\n"
+             "         rescale and to compute\n"
+             "         velocity-dependent quantities when not rescaling)\n"
+             "\tcompute_from_diff_coeff: Compute from given diffusion\n"
+             "\t                         coefficient (do not rescale velocity\n"
+             "\t                         field)\n"
+             "\tset_diff_coeff: Compute diffusion coefficient to set given\n"
+             "\t                Peclet number (do not rescale velocity field)\n"
+             "\tcompute_from_diff_time: Compute from given diffusion time (do\n"
+             "\t                        not rescale velocity field)\n"
+             "\trescale_velocity_to_peclet: Rescale velocity field according\n"
+             "\t                            to imposed peclet number\n"
+             "\trescale_velocity_to_mean: Rescale according to imposed mean\n"
+             "\t                          flow velocity\n"
+             "\trescale_velocity_to_advection_time: Rescale according to\n"
+             "\t                                    imposed advection time\n"
+             "- Reference lengthscale\n"
+             "- Peclet number (do not pass if Peclet option is\n"
+             "  compute_from_diff_coeff or compute_from_diff_time)\n"
+             "- Mean flow velocity (pass only if Peclet option is\n"
+             "  rescale_velocity_to_mean)\n"
+             "- Advection time (pass only if Peclet option is\n"
+             "  rescale_velocity_to_advection_time)\n"
+             "- Diffusion time (pass only if Peclet option is\n"
+             "  compute_from_diff_time)\n"
+             "- Diffusion coefficient (do not pass if Peclet option is\n"
+             "  set_diff_coeff or compute_from_diff_time)\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -280,12 +282,13 @@ struct Transport {
   }
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Transport\n"
-              "--------------------------------------------------\n"
-              "Processes: Advection-diffusion\n"
-              "Interpolation: Linear\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Transport\n"
+           "--------------------------------------------------------------\n"
+           "Processes: Advection-diffusion\n"
+           "Interpolation: Linear\n"
+           "--------------------------------------------------------------\n";
   }
 };
 
@@ -308,11 +311,12 @@ struct Reaction {
                TransportParameters const &params_transport) {}
 
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Reaction parameters\n"
-                "--------------------------------------------------\n"
-                "None\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Reaction parameters\n"
+             "--------------------------------------------------------------\n"
+             "None\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -480,12 +484,12 @@ struct Model {
   inline static const std::string name{"advection_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -535,27 +539,28 @@ struct Solvers {
 
     template <typename OStream> static void info(OStream &output) {
       output
-          << "--------------------------------------------------\n"
+          << "--------------------------------------------------------------\n"
              "Solver parameters\n"
-             "--------------------------------------------------\n"
+             "--------------------------------------------------------------\n"
              "- Number of Lagrangian particles in each injection step\n"
              "- Local timestep accuracy in terms of cell-based advection time\n"
-             "- Global timestep accuracy in terms of characteristic advection "
-             "time\n"
-             "  (Note: Minimum between processes and maximum between local and "
-             "global is used.\n"
-             "         Initial values (e.g., of flow) are used for global "
-             "quantities.)\n"
-             "--------------------------------------------------\n";
+             "- Global timestep accuracy in terms of characteristic advection\n"
+             "  time\n"
+             "  (Note: Minimum between processes and maximum between local\n"
+             "         and global is used.\n"
+             "         Initial values (e.g., of flow) are used for global\n"
+             "         quantities.)\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Solvers\n"
-              "--------------------------------------------------\n"
-              "Advection: Euler\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Solvers\n"
+           "--------------------------------------------------------------\n"
+           "Advection: Euler\n"
+           "--------------------------------------------------------------\n";
   }
 };
 
@@ -617,26 +622,27 @@ struct Transport {
     }
 
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Transport parameters\n"
-                "--------------------------------------------------\n"
-                "- Whether and how to rescale velocity field:\n"
-                "  (Note: Rescaling of the velocity field is not handled when "
-                "transport parameters are set.\n"
-                "         Rescale method must always be called, either to "
-                "rescale or to compute\n"
-                "         velocity-dependent quantities when not rescaling)\n"
-                "\trescale_velocity_to_mean: Rescale according to imposed mean "
-                "flow velocity\n"
-                "\trescale_velocity_to_advection_time: Rescale according to "
-                "imposed advection time\n"
-                "\tno_rescale_velocity: Do not rescale\n"
-                "- Reference lengthscale\n"
-                "- Mean flow velocity (pass only if rescaling with "
-                "rescale_velocity_to_mean)\n"
-                "- Advection time (pass only if rescaling with "
-                "rescale_velocity_to_advection_time)\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Transport parameters\n"
+             "--------------------------------------------------------------\n"
+             "- Whether and how to rescale velocity field:\n"
+             "  (Note: Rescaling of the velocity field is not handled when\n"
+             "         transport parameters are set.\n"
+             "         Rescale method must always be called, either to\n"
+             "         rescale or to compute velocity-dependent quantities\n"
+             "         when not rescaling)\n"
+             "\trescale_velocity_to_mean: Rescale according to imposed mean\n"
+             "\t                          flow velocity\n"
+             "\trescale_velocity_to_advection_time: Rescale according to\n"
+             "\t                                    imposed advection time\n"
+             "\tno_rescale_velocity: Do not rescale\n"
+             "- Reference lengthscale\n"
+             "- Mean flow velocity (pass only if rescaling with\n"
+             "  rescale_velocity_to_mean)\n"
+             "- Advection time (pass only if rescaling with\n"
+             "  rescale_velocity_to_advection_time)\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -670,12 +676,13 @@ struct Transport {
   }
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Transport\n"
-              "--------------------------------------------------\n"
-              "Process: Advection\n"
-              "Interpolation: Linear\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Transport\n"
+           "--------------------------------------------------------------\n"
+           "Process: Advection\n"
+           "Interpolation: Linear\n"
+           "--------------------------------------------------------------\n";
   }
 };
 }; // namespace model_advection_2d
@@ -689,12 +696,12 @@ struct Model {
   inline static const std::string name{"advection_diffusion_fpt_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -721,12 +728,12 @@ struct Model {
   inline static const std::string name{"advection_diffusion_surface_decay_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -777,14 +784,15 @@ struct Reaction {
     }
 
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Reaction parameters:\n"
-                "--------------------------------------------------\n"
-                "- Damkohler number\n"
-                "- Solid reactant initial distribution type:\n"
-                "\tuniform: Homogeneous throughout the domain\n"
-                "- Initial solid reactant surface concentration\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Reaction parameters:\n"
+             "--------------------------------------------------------------\n"
+             "- Damkohler number\n"
+             "- Solid reactant initial distribution type:\n"
+             "\tuniform: Homogeneous throughout the domain\n"
+             "- Initial solid reactant surface concentration\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -832,12 +840,12 @@ struct Model {
       "periodic_cartesian_advection_diffusion_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -863,12 +871,12 @@ struct Model {
   inline static const std::string name{"periodic_cartesian_advection_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -895,12 +903,12 @@ struct Model {
       "periodic_cartesian_advection_diffusion_fpt_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -930,12 +938,12 @@ struct Model {
       "periodic_cartesian_advection_diffusion_surface_decay_2d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -960,12 +968,12 @@ struct Model {
   inline static const std::string name{"advection_diffusion_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -990,12 +998,11 @@ struct Model {
   inline static const std::string name{"advection_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+              "--------------------------------------------------------------\n"
+           << name << "\n"
+           << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1020,12 +1027,12 @@ struct Model {
   inline static const std::string name{"advection_diffusion_fpt_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1052,12 +1059,12 @@ struct Model {
   inline static const std::string name{"advection_diffusion_surface_decay_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1084,12 +1091,12 @@ struct Model {
       "periodic_cartesian_advection_diffusion_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1115,12 +1122,12 @@ struct Model {
   inline static const std::string name{"periodic_cartesian_advection_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1147,12 +1154,12 @@ struct Model {
       "periodic_cartesian_advection_diffusion_fpt_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1181,12 +1188,12 @@ struct Model {
       "periodic_cartesian_advection_diffusion_surface_decay_3d"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1212,12 +1219,12 @@ struct Model {
   inline static const std::string name{"bcc_cartesian_advection_diffusion"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1333,45 +1340,48 @@ struct Transport {
     }
 
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Transport parameters\n"
-                "--------------------------------------------------\n"
-                "- How to set the Peclet number:\n"
-                "  (Note: Rescaling of the velocity field is not handled when "
-                "transport parameters are set.\n"
-                "         Rescale method must always be called, either to "
-                "rescale or to compute\n"
-                "         velocity-dependent quantities when not rescaling)\n"
-                "\tcompute_from_diff_coeff: Compute from given diffusion "
-                "coefficient (do not rescale velocity field)\n"
-                "\tset_diff_coeff: Compute diffusion coefficient to set given "
-                "Peclet number (do not rescale velocity field) \n"
-                "\tcompute_from_diff_time: Compute from given diffusion time "
-                "(do not rescale velocity field)\n"
-                "\trescale_velocity_to_peclet: Rescale velocity field "
-                "according to imposed peclet number\n"
-                "\trescale_velocity_to_mean: Rescale according to imposed mean "
-                "flow velocity\n"
-                "\trescale_velocity_to_advection_time: Rescale according to "
-                "imposed advection time\n"
-                "- Reference length scale definition:\n"
-                "\tradius: bead radius\n"
-                "\tdiameter: bead diameter\n"
-                "\tcell_side: primitive cubic cell side\n"
-                "\tcustom: custom value\n"
-                "- Reference length scale value (pass only if reference "
-                "lengthscale is custom)\n"
-                "- Peclet number (do not pass if Peclet option is "
-                "compute_from_diff_coeff or compute_from_diff_time)\n"
-                "- Mean flow velocity (pass only if Peclet option is "
-                "rescale_velocity_to_mean)\n"
-                "- Advection time (pass only if Peclet option is "
-                "rescale_velocity_to_advection_time)\n"
-                "- Diffusion time (pass only if Peclet option is "
-                "compute_from_diff_time)\n"
-                "- Diffusion coefficient (do not pass if Peclet option is "
-                "set_diff_coeff or compute_from_diff_time)\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Transport parameters\n"
+             "--------------------------------------------------------------\n"
+             "- How to set the Peclet number:\n"
+             "  (Note: Rescaling of the velocity field is not handled when\n"
+             "         transport parameters are set.\n"
+             "         Rescale method must always be called, either to\n"
+             "         rescale or to compute velocity-dependent quantities\n"
+             "         when not rescaling)\n"
+             "\tcompute_from_diff_coeff: Compute from given diffusion\n"
+             "                           coefficient (do not rescale velocity\n"
+             "                           field)\n"
+             "\tset_diff_coeff: Compute diffusion coefficient to set given\n"
+             "\t                Peclet number (do not rescale velocity field)\n"
+             "\tcompute_from_diff_time: Compute from given diffusion time\n"
+             "\t                        (do not rescale velocity field)\n"
+             "\trescale_velocity_to_peclet: Rescale velocity field\n"
+             "\t                            according to imposed Peclet\n"
+             "\t                            number\n"
+             "\trescale_velocity_to_mean: Rescale according to imposed mean\n"
+             "\t                          flow velocity\n"
+             "\trescale_velocity_to_advection_time: Rescale according to\n"
+             "\t                                    imposed advection time\n"
+             "- Reference length scale definition:\n"
+             "\tradius: bead radius\n"
+             "\tdiameter: bead diameter\n"
+             "\tcell_side: primitive cubic cell side\n"
+             "\tcustom: custom value\n"
+             "- Reference length scale value (pass only if reference\n"
+             "  lengthscale is custom)\n"
+             "- Peclet number (do not pass if Peclet option is\n"
+             "  compute_from_diff_coeff or compute_from_diff_time)\n"
+             "- Mean flow velocity (pass only if Peclet option is\n"
+             "  rescale_velocity_to_mean)\n"
+             "- Advection time (pass only if Peclet option is\n"
+             "  rescale_velocity_to_advection_time)\n"
+             "- Diffusion time (pass only if Peclet option is\n"
+             "  compute_from_diff_time)\n"
+             "- Diffusion coefficient (do not pass if Peclet option is\n"
+             "  set_diff_coeff or compute_from_diff_time)\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -1405,12 +1415,13 @@ struct Transport {
   }
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Transport\n"
-              "--------------------------------------------------\n"
-              "Process: Advection-diffusion\n"
-              "Interpolation: Linear\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Transport\n"
+           "--------------------------------------------------------------\n"
+           "Process: Advection-diffusion\n"
+           "Interpolation: Linear\n"
+           "--------------------------------------------------------------\n";
   }
 };
 } // namespace model_bcc_cartesian_advection_diffusion
@@ -1553,34 +1564,35 @@ struct Transport {
     }
 
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Transport parameters\n"
-                "--------------------------------------------------\n"
-                "- Whether and how to rescale velocity field:\n"
-                "  (Note: Rescaling of the velocity field is not handled when "
-                "transport parameters are set.\n"
-                "         Rescale method must always be called, both to "
-                "rescale and to compute\n"
-                "         velocity-dependent quantities when not rescaling)\n"
-                "\trescale_velocity_to_mean: Rescale according to imposed mean "
-                "flow velocity\n"
-                "\trescale_velocity_to_advection_time: Rescale according to "
-                "imposed advection time\n"
-                "\tno_rescale_velocity: Do not rescale\n"
-                "- Reference length scale definition:\n"
-                "\tradius: bead radius\n"
-                "\tdiameter: bead diameter\n"
-                "\tcell_side: primitive cubic cell side\n"
-                "\tcustom: custom value\n"
-                "- Reference length scale value (pass only if reference "
-                "lengthscale is custom)\n"
-                "- Peclet number (do not pass if Peclet option is "
-                "compute_from_diff_coeff or compute_from_diff_time)\n"
-                "- Mean flow velocity (pass only if rescaling with "
-                "rescale_velocity_to_mean)\n"
-                "- Advection time (pass only if rescaling with "
-                "rescale_velocity_to_advection_time)\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Transport parameters\n"
+             "--------------------------------------------------------------\n"
+             "- Whether and how to rescale velocity field:\n"
+             "  (Note: Rescaling of the velocity field is not handled when\n"
+             "         transport parameters are set.\n"
+             "         Rescale method must always be called, both to\n"
+             "         rescale and to compute\n velocity-dependent quantities\n"
+             "         when not rescaling)\n"
+             "\trescale_velocity_to_mean: Rescale according to imposed mean\n"
+             "\t                          flow velocity\n"
+             "\trescale_velocity_to_advection_time: Rescale according to\n"
+             "                                      imposed advection time\n"
+             "\tno_rescale_velocity: Do not rescale\n"
+             "- Reference length scale definition:\n"
+             "\tradius: bead radius\n"
+             "\tdiameter: bead diameter\n"
+             "\tcell_side: primitive cubic cell side\n"
+             "\tcustom: custom value\n"
+             "- Reference length scale value (pass only if reference\n"
+             "  lengthscale is custom)\n"
+             "- Peclet number (do not pass if Peclet option is\n"
+             "  compute_from_diff_coeff or compute_from_diff_time)\n"
+             "- Mean flow velocity (pass only if rescaling with\n"
+             "  rescale_velocity_to_mean)\n"
+             "- Advection time (pass only if rescaling with\n"
+             "  rescale_velocity_to_advection_time)\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
@@ -1614,12 +1626,13 @@ struct Transport {
   }
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Transport\n"
-              "--------------------------------------------------\n"
-              "Process: Advection"
-              "Interpolation: Linear\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Transport\n"
+           "--------------------------------------------------------------\n"
+           "Process: Advection\n"
+           "Interpolation: Linear\n"
+           "--------------------------------------------------------------\n";
   }
 };
 } // namespace model_bcc_cartesian_advection
@@ -1636,12 +1649,12 @@ struct Model {
       "bcc_cartesian_advection_diffusion_surface_decay"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1668,12 +1681,12 @@ struct Model {
       "bcc_symmetryplanes_advection_diffusion"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1700,12 +1713,12 @@ struct Model {
   inline static const std::string name{"bcc_cartesian_advection_diffusion_fpt"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1733,12 +1746,12 @@ struct Model {
   inline static const std::string name{"bcc_symmetryplanes_advection"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 
@@ -1766,12 +1779,12 @@ struct Model {
       "bcc_symmetryplanes_advection_diffusion_surface_decay"};
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Model\n"
-              "--------------------------------------------------\n" +
-                  name +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Model\n"
+           "--------------------------------------------------------------\n"
+        << name << "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 

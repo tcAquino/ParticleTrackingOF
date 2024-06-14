@@ -21,29 +21,31 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_surface_decay;
+  using namespace ptof::model_advection_diffusion_fpt_2d;
   using Phase = ptof::Phase;
 
-  std::string banner = "--------------------------------------------------\n"
-                       "ParticleTrackingOF_TwoPhaseNonStationary\n"
-                       "--------------------------------------------------\n";
+  std::string banner =
+      "--------------------------------------------------------------\n"
+      "ParticleTrackingOF_TwoPhaseNonStationary\n"
+      "--------------------------------------------------------------\n";
 
   if (useful::check_options_help(argc, argv)) {
-    std::cout << banner << std::endl;
-    std::cout << "--------------------------------------------------\n"
-                 "Executable parameters (pass '' for default in []):\n"
-                 "--------------------------------------------------\n"
-                 "- Cases directory [../cases]\n"
-                 "- Name of case\n"
-                 "- Name of transport parameter set\n"
-                 "- Name of phase parameter set\n"
-                 "- Name of reaction parameter set\n"
-                 "- Name of solver parameter set\n"
-                 "- Name of initial condition parameter set\n"
-                 "- Name of output parameter set\n"
-                 "- Output directory [<Case directory>/output]\n"
-                 "- Run number (nonnegative integer to index output) [none]\n"
-                 "--------------------------------------------------\n";
+    std::cout
+        << banner << std::endl
+        << "--------------------------------------------------------------\n"
+           "Executable parameters (pass '' for default in []):\n"
+           "--------------------------------------------------------------\n"
+           "- Cases directory [../cases]\n"
+           "- Name of case\n"
+           "- Name of transport parameter set\n"
+           "- Name of phase parameter set\n"
+           "- Name of reaction parameter set\n"
+           "- Name of solver parameter set\n"
+           "- Name of initial condition parameter set\n"
+           "- Name of output parameter set\n"
+           "- Output directory [<Case directory>/output]\n"
+           "- Run number (nonnegative integer to index output) [none]\n"
+           "--------------------------------------------------------------\n";
     std::cout << std::endl;
     Model::info(std::cout);
     std::cout << std::endl;

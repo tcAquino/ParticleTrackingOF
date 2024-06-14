@@ -114,9 +114,9 @@ struct Geometry {
   \param output Output stream
   */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Geometry\n"
-              "--------------------------------------------------\n"
+              "--------------------------------------------------------------\n"
               "Spatial dimension: " +
                   std::to_string(dim) +
                   "\n"
@@ -131,21 +131,24 @@ struct Geometry {
                   "\tcustom: ";
     if constexpr (dynamics != Dynamics::Type::firstpassage)
       output << "\tcustom: Reinject according to initial condition\n";
-    output << "\tempty: No effect (default for unspecified patches in mesh)\n"
-              "--------------------------------------------------\n";
+    output
+        << "\tempty: No effect (default for unspecified patches in mesh)\n"
+           "--------------------------------------------------------------\n";
   }
 
   /**
      \brief Output information about current object.
    */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
-              "Mesh\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Mesh\n"
+           "--------------------------------------------------------------\n";
     output << "cells: " << mesh().nCells() << "\n"
            << "faces: " << mesh().nFaces() << "\n"
            << "edges: " << mesh().nEdges() << "\n";
-    output << "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n";
   }
 
   /** \return Mesh. */
@@ -278,9 +281,9 @@ struct Geometry_Periodic_Cartesian {
 
   /** \brief Output generic information about object. */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Geometry\n"
-              "--------------------------------------------------\n"
+              "--------------------------------------------------------------\n"
               "Spatial dimension: " +
                   std::to_string(dim) +
                   "\n"
@@ -296,24 +299,25 @@ struct Geometry_Periodic_Cartesian {
               "\tinfo: Information upon crossing\n";
     if constexpr (dynamics != Dynamics::Type::firstpassage)
       output << "\tcustom: Reinject according to initial condition\n";
-    output << "\tempty: No effect (default for unspecified patches in mesh)\n"
-              "--------------------------------------------------\n";
+    output
+        << "\tempty: No effect (default for unspecified patches in mesh)\n"
+           "--------------------------------------------------------------\n";
   }
 
   /** \brief Output information about current object. */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Mesh\n"
-              "--------------------------------------------------\n";
-    output << "cells: " << mesh().nCells() << "\n"
+              "--------------------------------------------------------------\n"
+           << "cells: " << mesh().nCells() << "\n"
            << "faces: " << mesh().nFaces() << "\n"
            << "edges: " << mesh().nEdges()
            << "\n"
-              "--------------------------------------------------\n";
-    output << "--------------------------------------------------\n"
+              "--------------------------------------------------------------\n"
+           << "--------------------------------------------------------------\n"
               "Periodic boundaries\n"
-              "--------------------------------------------------\n";
-    output << "Automatically extracted Cartesian periodic boundaries:\n";
+              "--------------------------------------------------------------\n"
+           << "Automatically extracted Cartesian periodic boundaries:\n";
     if (boundary_periodic.boundaries.size() == 0)
       output << "None";
     for (std::size_t dd = 0; dd < boundary_periodic.boundaries.size(); ++dd)
@@ -322,7 +326,8 @@ struct Geometry_Periodic_Cartesian {
         output << "Dimension " << dd << " at "
                << boundary_periodic.boundaries[dd].first << " and "
                << boundary_periodic.boundaries[dd].second << "\n";
-    output << "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n";
   }
 
   /** \return Mesh. */
@@ -473,9 +478,9 @@ struct Geometry_Bcc {
   \brief Output generic information about object.
   */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Geometry\n"
-              "--------------------------------------------------\n"
+              "--------------------------------------------------------------\n"
               "Spatial dimension: " +
                   std::to_string(dim) +
                   "\n"
@@ -485,29 +490,31 @@ struct Geometry_Bcc {
                   "Boundary condition types:\n"
                   "\treflecting: Reflecting\n"
                   "\treacting_reflecting: Reflection and surface reaction\n"
-                  "\tperiodic: ";
-    output << (Periodicity::name(periodicity) == "cartesian"
+                  "\tperiodic: "
+           << (Periodicity::name(periodicity) == "cartesian"
                    ? "Periodic in the primitive unit cell\n"
-                   : "Periodic in the minimal unit cell\n");
-    output << "\tabsorbing: Absorbing\n"
+                   : "Periodic in the minimal unit cell\n")
+           << "\tabsorbing: Absorbing\n"
               "\tinfo: Information upon crossing\n";
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       output << "\tcustom: Reinject according to initial condition\n";
-    output << "\tempty: No effect (default for unspecified patches in mesh)\n"
-              "--------------------------------------------------\n";
+    output
+        << "\tempty: No effect (default for unspecified patches in mesh)\n"
+           "--------------------------------------------------------------\n";
   }
 
   /**
   \brief Output information about current object.
   */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
-              "Mesh\n"
-              "--------------------------------------------------\n";
-    output << "cells: " << mesh().nCells() << "\n"
-           << "faces: " << mesh().nFaces() << "\n"
-           << "edges: " << mesh().nEdges() << "\n";
-    output << "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Mesh\n"
+           "--------------------------------------------------------------\n"
+        << "cells: " << mesh().nCells() << "\n"
+        << "faces: " << mesh().nFaces() << "\n"
+        << "edges: " << mesh().nEdges() << "\n"
+        << "--------------------------------------------------------------\n";
   }
 
   /** \return Mesh. */

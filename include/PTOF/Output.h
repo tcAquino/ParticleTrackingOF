@@ -84,82 +84,76 @@ public:
 
   /** \brief Output generic information about object. */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Output parameters\n"
-              "--------------------------------------------------\n"
-              "- Time units to rescale measurement times:\n"
-              "\tdiffusion: Rescale by diffusion time\n"
-              "\tadvection: Rescale by reaction time\n"
-              "\treaction: Rescale by reaction time\n"
-              "\tarbitrary: Do not rescale\n"
-              "- End criterion to finish dynamics:\n"
-              "\ttime: Specified time\n"
-              "\ttime_max: Maximum output time\n"
-              "\tmass_below: Total mass below value\n"
-              "\tmass_above: Total mass above value\n"
-              "\tall_absorbed: All particles absorbed\n"
-              "\tone_absorbed: One particle absorbed\n"
-              "\tfraction_not_absorbed: Fraction of particles not absorbed "
-              "below value\n"
-              "- End value, if required by end criterion\n"
-              "- Measure spacing:\n"
-              "\tstep: Linear spacing, specified time step (no maximum time)\n"
-              "\tlinear: Linear spacing, specified maximum time and number of "
-              "measurements\n"
-              "\tlog: Log spacing, specified maximum time and number of "
-              "measurements\n"
-              "- Minimum measurement time\n"
-              "- Measurement time increment, if required by measure spacing\n"
-              "- Maximum measurement time, if required by measure spacing\n"
-              "- Number of measurements, if required by measure spacing\n"
-              "- Measurement types (any number, can pass precision [8] at the "
-              "end of line):\n"
-              "\tposition: Time, particle tags, particle positions, and "
-              "particle masses\n"
-              "\tposition_in_regions: Time, particle tags, particle positions, and "
-              "particle masses\n"
-              "\t                     within regions specified by masks\n"
-              "\tposition_mean: Time and mean position\n"
-              "\tposition_second_moment: Time and position second moment\n"
-              "\tposition_variance: Time and position variance\n"
-              "\tmass: Time and total mass\n"
-              "\tmass_in_regions: Time and total mass within regions specified "
-              "by masks\n"
-              "\tvelocity: Time, particle tags, and local velocities\n"
-              "\tvelocity_gradient: Time, particle tags, and local velocity "
-              "gradients\n"
-              "\tscalar_field: Time, particle tags, and local scalar field "
-              "values\n"
-              "\t              (Specify field name on same line. Field to be "
-              "read from OF file)\n"
-              "\tvector_field: Time, particle tags, and local vector field "
-              "values\n"
-              "\t              (Specify field name on same line. Field to be "
-              "read from OF file.)\n"
-              "\ttensor_field: Time, particle tags, and local tensor field "
-              "values\n"
-              "\t              (Specify field name on same line. Field to be "
-              "read from OF file)\n"
-              "\tposition_periodic: Time, particle tags, true positions "
-              "accounting for periodicity,\n"
-              "\t                   and masses\n"
-              "\tposition_in_regions_periodic: Time, particle tags, true "
-              "positions accounting\n"
-              "\t                              for periodicity, and masses in "
-              "regions specified\n"
-              "\t                              by masks\n"
-              "\tposition_mean_periodic: Time and true mean position "
-              "accounting for periodicity\n"
-              "\tposition_second_moment_periodic: Time and true position "
-              "second moment accounting\n"
-              "\t                                 for periodicity\n"
-              "\tposition_variance_periodic: Time and true position variance "
-              "accounting for\n"
-              "\t                            periodicity\n"
-              "\tabsorption_time: Particle absorption times, particle tags, "
-              "and particle masses\n"
-              "\t                 at end of dynamics\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Output parameters\n"
+           "--------------------------------------------------------------\n"
+           "- Time units to rescale measurement times:\n"
+           "\tdiffusion: Rescale by diffusion time\n"
+           "\tadvection: Rescale by reaction time\n"
+           "\treaction: Rescale by reaction time\n"
+           "\tarbitrary: Do not rescale\n"
+           "- End criterion to finish dynamics:\n"
+           "\ttime: Specified time\n"
+           "\ttime_max: Maximum output time\n"
+           "\tmass_below: Total mass below value\n"
+           "\tmass_above: Total mass above value\n"
+           "\tall_absorbed: All particles absorbed\n"
+           "\tone_absorbed: One particle absorbed\n"
+           "\tfraction_not_absorbed: Fraction of particles not absorbed\n"
+           "\t                       below value\n"
+           "- End value, if required by end criterion\n"
+           "- Measure spacing:\n"
+           "\tstep: Linear spacing, specified time step (no maximum time)\n"
+           "\tlinear: Linear spacing, specified maximum time and number of\n"
+           "\t        measurements\n"
+           "\tlog: Log spacing, specified maximum time and number of\n"
+           "\t     measurements\n"
+           "- Minimum measurement time\n"
+           "- Measurement time increment, if required by measure spacing\n"
+           "- Maximum measurement time, if required by measure spacing\n"
+           "- Number of measurements, if required by measure spacing\n"
+           "- Measurement types (any number, can pass precision [8] at the\n"
+           "  end of line):\n"
+           "\tposition: Time, particle tags, particle positions, and\n"
+           "\t          particle masses\n"
+           "\tposition_in_regions: Time, particle tags, particle positions,\n"
+           "\t                     and particle masses within regions\n"
+           "\t                     specified by masks\n"
+           "\tposition_mean: Time and mean position\n"
+           "\tposition_second_moment: Time and position second moment\n"
+           "\tposition_variance: Time and position variance\n"
+           "\tmass: Time and total mass\n"
+           "\tmass_in_regions: Time and total mass within regions specified\n"
+           "\t                 by masks\n"
+           "\tvelocity: Time, particle tags, and local velocities\n"
+           "\tvelocity_gradient: Time, particle tags, and local velocity\n"
+           "\t                   gradients\n"
+           "\tscalar_field: Time, particle tags, and local scalar field\n"
+           "\t              values (specify field name on same line; field\n"
+           "\t              to be read from OF file)\n"
+           "\tvector_field: Time, particle tags, and local vector field\n"
+           "\t              values (specify field name on same line; field\n"
+           "\t              to be read from OF file)\n"
+           "\ttensor_field: Time, particle tags, and local tensor field\n"
+           "\t              values (specify field name on same line; field\n"
+           "\t              to be read from OF file)\n"
+           "\tposition_periodic: Time, particle tags, true positions\n"
+           "\t                   accounting for periodicity, and masses\n"
+           "\tposition_in_regions_periodic: Time, particle tags, true\n"
+           "\t                              positions accounting for\n"
+           "\t                              periodicity, and masses in\n"
+           "\t                              regions specified by masks\n"
+           "\tposition_mean_periodic: Time and true mean position accounting\n"
+           "\t                        for periodicity\n"
+           "\tposition_second_moment_periodic: Time and true position second\n"
+           "\t                                 moment accounting for\n"
+           "\t                                 periodicity\n"
+           "\tposition_variance_periodic: Time and true position variance\n"
+           "\t                            accounting for periodicity\n"
+           "\tabsorption_time: Particle absorption times, particle tags, and\n"
+           "\t                 particle masses at end of dynamics\n"
+           "--------------------------------------------------------------\n";
   }
 
   /** \brief Read end criterion from input stream. */
@@ -480,9 +474,9 @@ public:
 
   /** \brief Output information about current object. */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
+    output << "--------------------------------------------------------------\n"
               "Output\n"
-              "--------------------------------------------------\n"
+              "--------------------------------------------------------------\n"
               "- End criterion: "
            << parameters.end_criterion << "\n";
     if (EndCriterion::type(parameters.end_criterion) ==
@@ -493,16 +487,16 @@ public:
             EndCriterion::Type::mass_above ||
         EndCriterion::type(parameters.end_criterion) ==
             EndCriterion::Type::fraction_not_absorbed)
-      output << "- End value: " << parameters.end_value << "\n";
-    output << "- Time units: " << parameters.time_units
-           << "\n"
-              "- Measure spacing: "
-           << parameters.measure_spacing
-           << "\n"
-              "- Minimum measurement time: "
-           << parameters.time_min
-           << "\n"
-              "- Maximum measurement time: ";
+      output << "- End value: " << parameters.end_value << "\n"
+             << "- Time units: " << parameters.time_units
+             << "\n"
+                "- Measure spacing: "
+             << parameters.measure_spacing
+             << "\n"
+                "- Minimum measurement time: "
+             << parameters.time_min
+             << "\n"
+                "- Maximum measurement time: ";
     if (EndCriterion::type(parameters.end_criterion) ==
             EndCriterion::Type::time &&
         MeasureSpacing::type(parameters.measure_spacing) ==
@@ -512,7 +506,8 @@ public:
       output << parameters.time_max << "\n";
     output << "- Measurement types:\n";
     info_runtime_measurements(output, "\t");
-    output << "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n";
   }
 
 private:

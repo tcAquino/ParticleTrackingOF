@@ -670,52 +670,49 @@ public:
   }
 
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Initial condition parameters\n"
-              "--------------------------------------------------\n"
-              "- Initial condition type:\n"
-              "\tuniform: Homogeneous throughout the domain\n"
-              "\tfluxweighted: Flux-weighted throughout the domain\n"
-              "\tuniform_inlet: Homogeneous at the inlet\n"
-              "\tfluxweighted_inlet: Flux-weighted at the inlet\n"
-              "\tuniform_solid: Homogeneous at the solid surface\n"
-              "\tuniform_near_solid: Homogeneous at a fixed distance to the "
-              "solid interface\n"
-              "\tuniform_region_cartesian: Homogeneous in a prescribed "
-              "cartesian region\n"
-              "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed "
-              "cartesian region\n"
-              "\tprescribed_positions: Prescribed positions\n"
-              "\tuniform_inlet_continuous: Continuous injection homogeneous at "
-              "the inlet\n"
-              "\tfluxweighted_inlet_continuous: Continuous injection "
-              "flux-weighted at the inlet\n"
-              "- Initial distance from solid phase (with full path) for "
-              "prescribed positions\n"
-              "  (pass only for type prescribed_positions)\n"
-              "- Region boundaries (pass only for types "
-              "uniform_region_cartesian or\n"
-              "  fluxweighted_region_cartesian)\n"
-              "- Filename (with full path) for prescribed positions\n"
-              "  (pass only for type prescribed_positions)\n"
-              "- Total injected mass in each injection step\n"
-              "- Initial injection time\n"
-              "- Final injection time (pass only for types "
-              "uniform_inlet_continuous or\n"
-              "  fluxweighted_inlet_continuous)\n"
-              "- Maximum timestep for continuous injection discretization in "
-              "units of advection time\n"
-              "  (pass only for types uniform_inlet_continuous or "
-              "fluxweighted_inlet_continuous)\n"
-              "- Maximum timestep for continuous injection discretization in "
-              "units of diffusion time\n"
-              "  (pass only for types uniform_inlet_continuous or "
-              "fluxweighted_inlet_continuous)\n"
-              "- Maximum timestep for continuous injection discretization in "
-              "units of reaction time\n"
-              "  (pass only for types uniform_inlet_continuous or "
-              "fluxweighted_inlet_continuous)\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Initial condition parameters\n"
+           "--------------------------------------------------------------\n"
+           "- Initial condition type:\n"
+           "\tuniform: Homogeneous throughout the domain\n"
+           "\tfluxweighted: Flux-weighted throughout the domain\n"
+           "\tuniform_inlet: Homogeneous at the inlet\n"
+           "\tfluxweighted_inlet: Flux-weighted at the inlet\n"
+           "\tuniform_solid: Homogeneous at the solid surface\n"
+           "\tuniform_near_solid: Homogeneous at a fixed distance to the\n"
+           "\t                    solid interface\n"
+           "\tuniform_region_cartesian: Homogeneous in a prescribed\n"
+           "\t                          cartesian region\n"
+           "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed\n"
+           "\t                               cartesian region\n"
+           "\tprescribed_positions: Prescribed positions\n"
+           "\tuniform_inlet_continuous: Continuous injection homogeneous at\n"
+           "\t                          the inlet\n"
+           "\tfluxweighted_inlet_continuous: Continuous injection\n"
+           "\t                               flux-weighted at the inlet\n"
+           "- Initial distance from solid phase (with full path) for\n"
+           "  prescribed positions (pass only for type\n"
+           "  prescribed_positions)\n"
+           "- Region boundaries (pass only for types\n"
+           "  uniform_region_cartesian or\n"
+           "  fluxweighted_region_cartesian)\n"
+           "- Filename (with full path) for prescribed positions (pass only\n"
+           "  for type prescribed_positions)\n"
+           "- Total injected mass in each injection step\n"
+           "- Initial injection time\n"
+           "- Final injection time (pass only for types\n"
+           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+           "- Maximum timestep for continuous injection discretization in\n"
+           "  units of advection time (pass only for types\n"
+           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+           "- Maximum timestep for continuous injection discretization in\n"
+           "  units of diffusion time (pass only for types\n"
+           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+           "- Maximum timestep for continuous injection discretization in\n"
+           "  units of reaction times (pass only for types\n"
+           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+           "--------------------------------------------------------------\n";
   }
 };
 
@@ -943,13 +940,13 @@ private:
 public:
   /** \brief Output information about current object. */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
-              "Initial condition\n"
-              "--------------------------------------------------\n"
-              "Type: " +
-                  InitialConditions::name(parameters.type) +
-                  "\n"
-                  "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Initial condition\n"
+           "--------------------------------------------------------------\n"
+           "Type: " +
+               InitialConditions::name(parameters.type) + "\n"
+        << "--------------------------------------------------------------\n";
   }
 };
 template <typename Geometry, typename VelocityField, typename ParticleMaker,

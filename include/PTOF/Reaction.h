@@ -103,11 +103,12 @@ public:
 
   /** \brief Output generic information about object. */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Surface reaction\n"
-              "--------------------------------------------------\n"
-              "A_Fluid + A_Solid -> A_Solid\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Surface reaction\n"
+           "--------------------------------------------------------------\n"
+           "A_Fluid + A_Solid -> A_Solid\n"
+           "--------------------------------------------------------------\n";
   }
 
   double rate_constant; /**< Surface reaction rate per solid concentration. */
@@ -134,11 +135,12 @@ public:
 
   /** \brief Output generic information about object. */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Surface reaction\n"
-              "--------------------------------------------------\n"
-              "None\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Surface reaction\n"
+           "--------------------------------------------------------------\n"
+           "None\n"
+           "--------------------------------------------------------------\n";
   }
 };
 
@@ -154,11 +156,12 @@ public:
 
   /** \brief Output generic information about object. */
   template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------\n"
-              "Bulk reaction\n"
-              "--------------------------------------------------\n"
-              "None\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Bulk reaction\n"
+           "--------------------------------------------------------------\n"
+           "None\n"
+           "--------------------------------------------------------------\n";
   }
 };
 } // namespace ptof

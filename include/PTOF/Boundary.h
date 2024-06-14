@@ -316,8 +316,7 @@ public:
    types.
    \param state Current particle state to apply BCs if needed (possibly
    out of bounds).
-   \param state_old Previous particle state (should be in
-   bounds).
+   \param state_old Previous particle state (should be in bounds).
    \return \c true if some boundary had an effect, \c false otherwise.
   */
   template <typename State>
@@ -359,7 +358,7 @@ public:
     }
 
     bool had_effect = 0;
-    
+        
     // While some patch is intersected
     while (intersection.hit()) {
       /** Find patch in mesh and associated boundary type name. */
@@ -377,7 +376,7 @@ public:
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
         had_effect = 1;
-        break;
+        break;        
       }
       case BoundaryCondition::Type::reacting_reflecting: {
         _store_info(state, state_old, intersection, _boundary_condition_types,
@@ -445,12 +444,14 @@ public:
 
   /** \brief Output information about current object. */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output << "--------------------------------------------------\n"
-              "Boundary conditions\n"
-              "--------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n"
+           "Boundary conditions\n"
+           "--------------------------------------------------------------\n";
     if (_boundary_conditions.empty()) {
-      output << "None\n"
-             << "--------------------------------------------------\n";
+      output
+          << "None\n"
+          << "--------------------------------------------------------------\n";
       return;
     }
     int width_patch =
@@ -478,7 +479,7 @@ public:
         output << std::left << std::setw(width_bc) << bc.second;
       output << "\n";
     }
-    output << "--------------------------------------------------\n";
+    output << "--------------------------------------------------------------\n";
   }
 
 private:
@@ -752,12 +753,10 @@ auto extract_cartesian_periodic_boundaries(BCs const &boundary_conditions,
       dim_has_periodic_bcs[dd] = 1;
     }
 
-  // Periodic conditions are checked in order
-  // across Cartesian dimensions.
-  // If there are periodic BCs in all dimensions
-  // starting from 0 up to some dimension, add only those boundaries
-  // If there are gap dimensions between periodic dimensions,
-  // add {-inf, inf} boundaries.
+  // Periodic conditions are checked in order across Cartesian dimensions.
+  // If there are periodic BCs in all dimensions starting from 0 up to some
+  // dimension, add only those boundaries If there are gap dimensions between
+  // periodic dimensions, add {-inf, inf} boundaries.
   bool found_nonperiodic = 0;
   bool nonconsecutive_dims = 0;
   for (bool periodic : dim_has_periodic_bcs) {

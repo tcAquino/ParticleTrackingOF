@@ -83,20 +83,21 @@ struct Phase {
 
     /** \brief Output general information about object. */
     template <typename OStream> static void info(OStream &output) {
-      output << "--------------------------------------------------\n"
-                "Phase parameters\n"
-                "--------------------------------------------------\n"
-                "- Name of phase to be read from file\n"
-                "- Whether named phase is excluded or carrier phase\n"
-                "\texcluded: No transport in this phase\n"
-                "\tcarrier: Transport in this phase\n"
-                "- Wheteher to read or compute gradient of excluded phase\n"
-                "  (ignored if carrier phase is given)\n"
-                "\tread: Read gradient\n"
-                "\tcompute: Compute gradient\n"
-                "- Leakage tolerance\n"
-                "- Phase field value threshold to consider phase is present\n"
-                "--------------------------------------------------\n";
+      output
+          << "--------------------------------------------------------------\n"
+             "Phase parameters\n"
+             "--------------------------------------------------------------\n"
+             "- Name of phase to be read from file\n"
+             "- Whether named phase is excluded or carrier phase\n"
+             "\texcluded: No transport in this phase\n"
+             "\tcarrier: Transport in this phase\n"
+             "- Wheteher to read or compute gradient of excluded phase\n"
+             "  (ignored if carrier phase is given)\n"
+             "\tread: Read gradient\n"
+             "\tcompute: Compute gradient\n"
+             "- Leakage tolerance\n"
+             "- Phase field value threshold to consider phase is present\n"
+             "--------------------------------------------------------------\n";
     }
   };
 
