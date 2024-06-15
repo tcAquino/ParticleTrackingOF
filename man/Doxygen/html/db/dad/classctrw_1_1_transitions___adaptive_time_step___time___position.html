@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,9 +84,10 @@ $(document).ready(function(){initNavTree('db/dad/classctrw_1_1_transitions___ada
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt; Class Template Reference</div>  </div>
+<div class="title">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -95,47 +96,58 @@ $(document).ready(function(){initNavTree('db/dad/classctrw_1_1_transitions___ada
 
 <p><code>#include &lt;<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">Transitions.h</a>&gt;</code></p>
 <div class="dynheader">
-Collaboration diagram for ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;:</div>
+Collaboration diagram for ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d4/dfd/classctrw_1_1_transitions___adaptive_time_step___time___position__coll__graph.png" border="0" usemap="#actrw_1_1_transitions___adaptive_time_step___time___position_3_01_time_step_adaptor_00_01_time_generator_00_01_jump_generator_00_01_boundary_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="actrw_1_1_transitions___adaptive_time_step___time___position_3_01_time_step_adaptor_00_01_time_generator_00_01_jump_generator_00_01_boundary_01_4_coll__map" id="actrw_1_1_transitions___adaptive_time_step___time___position_3_01_time_step_adaptor_00_01_time_generator_00_01_jump_generator_00_01_boundary_01_4_coll__map">
-<area shape="rect" title="Update position and time according to specified jumps and time increments, using state&#45;based adaptive..." alt="" coords="5,95,265,165"/>
-<area shape="rect" href="../../d2/df1/classgeom_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="33,5,238,32"/>
+<div class="center"><img src="../../d4/dfd/classctrw_1_1_transitions___adaptive_time_step___time___position__coll__graph.png" border="0" usemap="#actrw_1_1_transitions___adaptive_time_step___time___position_3_01_time_step_adaptor_00_01_time_generator_00_01_jump_generator_00_01_locator_00_01_boundary_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="actrw_1_1_transitions___adaptive_time_step___time___position_3_01_time_step_adaptor_00_01_time_generator_00_01_jump_generator_00_01_locator_00_01_boundary_01_4_coll__map" id="actrw_1_1_transitions___adaptive_time_step___time___position_3_01_time_step_adaptor_00_01_time_generator_00_01_jump_generator_00_01_locator_00_01_boundary_01_4_coll__map">
+<area shape="rect" title="Update position and time according to specified jumps and time increments, using state&#45;based adaptive..." alt="" coords="19,95,285,165"/>
+<area shape="rect" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="5,5,117,32"/>
+<area shape="rect" href="../../d2/df1/classgeom_1_1_boundary___do_nothing.html" title="Boundary with no effect." alt="" coords="141,5,347,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a79af6ec382c53f51e66b81bf8b5155e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a79af6ec382c53f51e66b81bf8b5155e9">Transitions_AdaptiveTimeStep_Time_Position</a> (TimeStepAdaptor &amp;&amp;time_step_adaptor, TimeGenerator &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#ad442dc8b849494ad51e9646f2042656f">time_generator</a>, JumpGenerator &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a71d4df640d2493b9f5d4dc4e83db9401">jump_generator</a>, Boundary &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6cab8ccd2cd5ef8f4be51840e5a9f5c0">boundary</a>={})</td></tr>
-<tr class="separator:a79af6ec382c53f51e66b81bf8b5155e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c582d53d4667747552899671c145857"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a6c582d53d4667747552899671c145857"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6c582d53d4667747552899671c145857">operator()</a> (State &amp;state)</td></tr>
-<tr class="separator:a6c582d53d4667747552899671c145857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad442dc8b849494ad51e9646f2042656f"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#ad442dc8b849494ad51e9646f2042656f">time_generator</a> () const</td></tr>
-<tr class="separator:ad442dc8b849494ad51e9646f2042656f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71d4df640d2493b9f5d4dc4e83db9401"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a71d4df640d2493b9f5d4dc4e83db9401">jump_generator</a> () const</td></tr>
-<tr class="separator:a71d4df640d2493b9f5d4dc4e83db9401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cab8ccd2cd5ef8f4be51840e5a9f5c0"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6cab8ccd2cd5ef8f4be51840e5a9f5c0">boundary</a> () const</td></tr>
-<tr class="separator:a6cab8ccd2cd5ef8f4be51840e5a9f5c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af113d45396cc8162d68082bb1364217d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#af113d45396cc8162d68082bb1364217d">time_step</a> () const</td></tr>
-<tr class="separator:af113d45396cc8162d68082bb1364217d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cfd33c228267b0469c31a4f40a9cb3b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a8cfd33c228267b0469c31a4f40a9cb3b">Transitions_AdaptiveTimeStep_Time_Position</a> (TimeStepAdaptor &amp;&amp;time_step_adaptor, TimeGenerator &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a84f3a720af6c0c800990bf8f31e2a561">time_generator</a>, JumpGenerator &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6f58ac523bf1943cae712ec305647f6c">jump_generator</a>, Locator &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#ab5c767051726bdbf2188f6c58440f355">locator</a>={}, Boundary &amp;&amp;<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4e98c4bbe8cb9b9349899dc05aa596ed">boundary</a>={})</td></tr>
+<tr class="separator:a8cfd33c228267b0469c31a4f40a9cb3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5ee0cb3571c747c48f3913e33c409ac"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:aa5ee0cb3571c747c48f3913e33c409ac"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#aa5ee0cb3571c747c48f3913e33c409ac">operator()</a> (State &amp;state)</td></tr>
+<tr class="separator:aa5ee0cb3571c747c48f3913e33c409ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84f3a720af6c0c800990bf8f31e2a561"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a84f3a720af6c0c800990bf8f31e2a561">time_generator</a> () const</td></tr>
+<tr class="separator:a84f3a720af6c0c800990bf8f31e2a561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f58ac523bf1943cae712ec305647f6c"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6f58ac523bf1943cae712ec305647f6c">jump_generator</a> () const</td></tr>
+<tr class="separator:a6f58ac523bf1943cae712ec305647f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e98c4bbe8cb9b9349899dc05aa596ed"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4e98c4bbe8cb9b9349899dc05aa596ed">boundary</a> () const</td></tr>
+<tr class="separator:a4e98c4bbe8cb9b9349899dc05aa596ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c767051726bdbf2188f6c58440f355"><td class="memItemLeft" align="right" valign="top">auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#ab5c767051726bdbf2188f6c58440f355">locator</a> () const</td></tr>
+<tr class="separator:ab5c767051726bdbf2188f6c58440f355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69bfbe6b7923d6dfe4a1860402b1937e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a69bfbe6b7923d6dfe4a1860402b1937e">time_step</a> () const</td></tr>
+<tr class="separator:a69bfbe6b7923d6dfe4a1860402b1937e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6464f88e50ddafa91742058b9be479d5"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
+<tr class="memitem:a6464f88e50ddafa91742058b9be479d5"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6464f88e50ddafa91742058b9be479d5">locate</a> (State &amp;state)</td></tr>
+<tr class="separator:a6464f88e50ddafa91742058b9be479d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a999d0bccc6f91d4791f9718e09e03f12"><td class="memItemLeft" align="right" valign="top">TimeStepAdaptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a999d0bccc6f91d4791f9718e09e03f12">_time_step_adaptor</a></td></tr>
-<tr class="separator:a999d0bccc6f91d4791f9718e09e03f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fd9e63b1e611386ce4ed0b656d43100"><td class="memItemLeft" align="right" valign="top">TimeGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4fd9e63b1e611386ce4ed0b656d43100">_time_generator</a></td></tr>
-<tr class="separator:a4fd9e63b1e611386ce4ed0b656d43100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cea8850476a3012bdc54ed29b37ff32"><td class="memItemLeft" align="right" valign="top">JumpGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a8cea8850476a3012bdc54ed29b37ff32">_jump_generator</a></td></tr>
-<tr class="separator:a8cea8850476a3012bdc54ed29b37ff32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafa7fb83beca779661f9835bfb5da67e"><td class="memItemLeft" align="right" valign="top">Boundary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#aafa7fb83beca779661f9835bfb5da67e">_boundary</a></td></tr>
-<tr class="separator:aafa7fb83beca779661f9835bfb5da67e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d2803c3d97650706dd7fa889f618664"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a7d2803c3d97650706dd7fa889f618664">_time_step</a></td></tr>
-<tr class="separator:a7d2803c3d97650706dd7fa889f618664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab901a7b7ff27fbcb2164661db3949353"><td class="memItemLeft" align="right" valign="top">TimeStepAdaptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#ab901a7b7ff27fbcb2164661db3949353">_time_step_adaptor</a></td></tr>
+<tr class="separator:ab901a7b7ff27fbcb2164661db3949353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da06d397dca796adf5a8f6f26176215"><td class="memItemLeft" align="right" valign="top">TimeGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a2da06d397dca796adf5a8f6f26176215">_time_generator</a></td></tr>
+<tr class="separator:a2da06d397dca796adf5a8f6f26176215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f7228b4c78ab41ab2233dac53dcfa8"><td class="memItemLeft" align="right" valign="top">JumpGenerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a35f7228b4c78ab41ab2233dac53dcfa8">_jump_generator</a></td></tr>
+<tr class="separator:a35f7228b4c78ab41ab2233dac53dcfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1a8c7c9b470a6c72fdc8f6bb30e154"><td class="memItemLeft" align="right" valign="top">Locator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a1c1a8c7c9b470a6c72fdc8f6bb30e154">_locator</a></td></tr>
+<tr class="separator:a1c1a8c7c9b470a6c72fdc8f6bb30e154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4122eadbd7dceb00a8926f8cf31d2ce1"><td class="memItemLeft" align="right" valign="top">Boundary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4122eadbd7dceb00a8926f8cf31d2ce1">_boundary</a></td></tr>
+<tr class="separator:a4122eadbd7dceb00a8926f8cf31d2ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b6ae3aff42830332c196ad558432a82"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4b6ae3aff42830332c196ad558432a82">_time_step</a></td></tr>
+<tr class="separator:a4b6ae3aff42830332c196ad558432a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator, typename Boundary = geom::Boundary_DoNothing&gt;<br />
-class ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;</h3>
+<div class="textblock"><h3>template&lt;typename TimeStepAdaptor, typename TimeGenerator, typename JumpGenerator, typename Locator = useful::Empty, typename Boundary = geom::Boundary_DoNothing&gt;<br />
+class ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</h3>
 
 <p>Update position and time according to specified jumps and time increments, using state-based adaptive time steps. </p>
 <p>"CTRW/Transitions.h" </p><dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -153,19 +165,19 @@ class ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, Time
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a79af6ec382c53f51e66b81bf8b5155e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79af6ec382c53f51e66b81bf8b5155e9">&#9670;&nbsp;</a></span>Transitions_AdaptiveTimeStep_Time_Position()</h2>
+<a id="a8cfd33c228267b0469c31a4f40a9cb3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cfd33c228267b0469c31a4f40a9cb3b">&#9670;&nbsp;</a></span>Transitions_AdaptiveTimeStep_Time_Position()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">Transitions_AdaptiveTimeStep_Time_Position</a> </td>
+          <td class="memname"><a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::<a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">Transitions_AdaptiveTimeStep_Time_Position</a> </td>
           <td>(</td>
           <td class="paramtype">TimeStepAdaptor &amp;&amp;&#160;</td>
           <td class="paramname"><em>time_step_adaptor</em>, </td>
@@ -181,6 +193,12 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
           <td></td>
           <td class="paramtype">JumpGenerator &amp;&amp;&#160;</td>
           <td class="paramname"><em>jump_generator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Locator &amp;&amp;&#160;</td>
+          <td class="paramname"><em>locator</em> = <code>{}</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -204,19 +222,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6cab8ccd2cd5ef8f4be51840e5a9f5c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cab8ccd2cd5ef8f4be51840e5a9f5c0">&#9670;&nbsp;</a></span>boundary()</h2>
+<a id="a4e98c4bbe8cb9b9349899dc05aa596ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e98c4bbe8cb9b9349899dc05aa596ed">&#9670;&nbsp;</a></span>boundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::boundary </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -231,19 +249,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="a71d4df640d2493b9f5d4dc4e83db9401"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71d4df640d2493b9f5d4dc4e83db9401">&#9670;&nbsp;</a></span>jump_generator()</h2>
+<a id="a6f58ac523bf1943cae712ec305647f6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f58ac523bf1943cae712ec305647f6c">&#9670;&nbsp;</a></span>jump_generator()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::jump_generator </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::jump_generator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -258,13 +276,13 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="a6c582d53d4667747552899671c145857"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c582d53d4667747552899671c145857">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="a6464f88e50ddafa91742058b9be479d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6464f88e50ddafa91742058b9be479d5">&#9670;&nbsp;</a></span>locate()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <div class="memtemplate">
 template&lt;typename State &gt; </div>
 <table class="mlabels">
@@ -272,7 +290,73 @@ template&lt;typename State &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::operator() </td>
+          <td class="memname">void <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::locate </td>
+          <td>(</td>
+          <td class="paramtype">State &amp;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6464f88e50ddafa91742058b9be479d5_icgraph.png" border="0" usemap="#adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6464f88e50ddafa91742058b9be479d5_icgraph" alt=""/></div>
+<map name="adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6464f88e50ddafa91742058b9be479d5_icgraph" id="adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6464f88e50ddafa91742058b9be479d5_icgraph">
+<area shape="rect" title=" " alt="" coords="245,5,437,61"/>
+<area shape="rect" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#aa5ee0cb3571c747c48f3913e33c409ac" title=" " alt="" coords="5,5,197,61"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab5c767051726bdbf2188f6c58440f355"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5c767051726bdbf2188f6c58440f355">&#9670;&nbsp;</a></span>locator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::locator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa5ee0cb3571c747c48f3913e33c409ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5ee0cb3571c747c48f3913e33c409ac">&#9670;&nbsp;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+<div class="memtemplate">
+template&lt;typename State &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">State &amp;&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
@@ -288,29 +372,30 @@ template&lt;typename State &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6c582d53d4667747552899671c145857_cgraph.png" border="0" usemap="#adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6c582d53d4667747552899671c145857_cgraph" alt=""/></div>
-<map name="adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6c582d53d4667747552899671c145857_cgraph" id="adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_a6c582d53d4667747552899671c145857_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,197,61"/>
-<area shape="rect" href="../../db/dd7/namespaceop.html#afb06583511530d1d3e4390b149ad65ea" title="Element&#45;wise sum." alt="" coords="245,20,372,47"/>
-<area shape="rect" href="../../db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086" title="Element&#45;wise sum." alt="" coords="420,20,493,47"/>
+<div class="center"><img src="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_aa5ee0cb3571c747c48f3913e33c409ac_cgraph.png" border="0" usemap="#adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_aa5ee0cb3571c747c48f3913e33c409ac_cgraph" alt=""/></div>
+<map name="adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_aa5ee0cb3571c747c48f3913e33c409ac_cgraph" id="adb/dad/classctrw_1_1_transitions___adaptive_time_step___time___position_aa5ee0cb3571c747c48f3913e33c409ac_cgraph">
+<area shape="rect" title=" " alt="" coords="5,39,197,95"/>
+<area shape="rect" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a6464f88e50ddafa91742058b9be479d5" title=" " alt="" coords="245,5,437,61"/>
+<area shape="rect" href="../../db/dd7/namespaceop.html#afb06583511530d1d3e4390b149ad65ea" title="Element&#45;wise sum." alt="" coords="278,85,405,112"/>
+<area shape="rect" href="../../db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086" title="Element&#45;wise sum." alt="" coords="485,85,559,112"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ad442dc8b849494ad51e9646f2042656f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad442dc8b849494ad51e9646f2042656f">&#9670;&nbsp;</a></span>time_generator()</h2>
+<a id="a84f3a720af6c0c800990bf8f31e2a561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84f3a720af6c0c800990bf8f31e2a561">&#9670;&nbsp;</a></span>time_generator()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::time_generator </td>
+          <td class="memname">auto const&amp; <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::time_generator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -325,19 +410,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="af113d45396cc8162d68082bb1364217d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af113d45396cc8162d68082bb1364217d">&#9670;&nbsp;</a></span>time_step()</h2>
+<a id="a69bfbe6b7923d6dfe4a1860402b1937e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69bfbe6b7923d6dfe4a1860402b1937e">&#9670;&nbsp;</a></span>time_step()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::time_step </td>
+          <td class="memname">double <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::time_step </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -353,19 +438,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="aafa7fb83beca779661f9835bfb5da67e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafa7fb83beca779661f9835bfb5da67e">&#9670;&nbsp;</a></span>_boundary</h2>
+<a id="a4122eadbd7dceb00a8926f8cf31d2ce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4122eadbd7dceb00a8926f8cf31d2ce1">&#9670;&nbsp;</a></span>_boundary</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::_boundary</td>
+          <td class="memname">Boundary <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::_boundary</td>
         </tr>
       </table>
   </td>
@@ -377,19 +462,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="a8cea8850476a3012bdc54ed29b37ff32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cea8850476a3012bdc54ed29b37ff32">&#9670;&nbsp;</a></span>_jump_generator</h2>
+<a id="a35f7228b4c78ab41ab2233dac53dcfa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f7228b4c78ab41ab2233dac53dcfa8">&#9670;&nbsp;</a></span>_jump_generator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">JumpGenerator <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::_jump_generator</td>
+          <td class="memname">JumpGenerator <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::_jump_generator</td>
         </tr>
       </table>
   </td>
@@ -401,19 +486,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="a4fd9e63b1e611386ce4ed0b656d43100"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fd9e63b1e611386ce4ed0b656d43100">&#9670;&nbsp;</a></span>_time_generator</h2>
+<a id="a1c1a8c7c9b470a6c72fdc8f6bb30e154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1a8c7c9b470a6c72fdc8f6bb30e154">&#9670;&nbsp;</a></span>_locator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TimeGenerator <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::_time_generator</td>
+          <td class="memname">Locator <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::_locator</td>
         </tr>
       </table>
   </td>
@@ -425,19 +510,19 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="a7d2803c3d97650706dd7fa889f618664"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d2803c3d97650706dd7fa889f618664">&#9670;&nbsp;</a></span>_time_step</h2>
+<a id="a2da06d397dca796adf5a8f6f26176215"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da06d397dca796adf5a8f6f26176215">&#9670;&nbsp;</a></span>_time_generator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::_time_step</td>
+          <td class="memname">TimeGenerator <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::_time_generator</td>
         </tr>
       </table>
   </td>
@@ -449,19 +534,43 @@ template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGen
 
 </div>
 </div>
-<a id="a999d0bccc6f91d4791f9718e09e03f12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a999d0bccc6f91d4791f9718e09e03f12">&#9670;&nbsp;</a></span>_time_step_adaptor</h2>
+<a id="a4b6ae3aff42830332c196ad558432a82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b6ae3aff42830332c196ad558432a82">&#9670;&nbsp;</a></span>_time_step</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TimeStepAdaptor <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary &gt;::_time_step_adaptor</td>
+          <td class="memname">double <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::_time_step</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab901a7b7ff27fbcb2164661db3949353"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab901a7b7ff27fbcb2164661db3949353">&#9670;&nbsp;</a></span>_time_step_adaptor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TimeStepAdaptor , typename TimeGenerator , typename JumpGenerator , typename Locator  = useful::Empty, typename Boundary  = geom::Boundary_DoNothing&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TimeStepAdaptor <a class="el" href="../../db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html">ctrw::Transitions_AdaptiveTimeStep_Time_Position</a>&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;::_time_step_adaptor</td>
         </tr>
       </table>
   </td>

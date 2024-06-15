@@ -8,6 +8,7 @@ var namespacemeta =
     [ "has_member_impl< Z, types< Ts... >, std::void_t< Z< Ts... > > >", "db/d68/structmeta_1_1has__member__impl_3_01_z_00_01types_3_01_ts_8_8_8_01_4_00_01std_1_1void__t_3_01_z_3_01_ts_8_8_8_01_4_01_4_01_4.html", null ],
     [ "is_same", "dd/d94/structmeta_1_1is__same.html", "dd/d94/structmeta_1_1is__same" ],
     [ "is_arithmetic", "d1/d84/structmeta_1_1is__arithmetic.html", "d1/d84/structmeta_1_1is__arithmetic" ],
+    [ "is_integral", "d8/d68/structmeta_1_1is__integral.html", "d8/d68/structmeta_1_1is__integral" ],
     [ "can_call_sqrt", "da/dd4/structmeta_1_1can__call__sqrt.html", null ],
     [ "can_call_sqrt< std::void_t< decltype(std::sqrt(std::declval< Args >()...))>, Args... >", "d0/d7d/structmeta_1_1can__call__sqrt_3_01std_1_1void__t_3_01decltype_07std_1_1sqrt_07std_1_1declval_3_08d5bfbec0d91a76f978aad0e97e9a8e3.html", null ],
     [ "can_call_abs", "d8/d2a/structmeta_1_1can__call__abs.html", null ],
@@ -28,6 +29,7 @@ var namespacemeta =
       [ "Serial", "de/dc2/structmeta_1_1_parallel_options_1_1_serial.html", null ]
     ] ],
     [ "begin_result_t", "d8/db6/namespacemeta.html#aa21125603a13f72750e1bae718a5fbfc", null ],
+    [ "cell_t", "d8/db6/namespacemeta.html#abb073dfe684e7ed7dffef534f2558919", null ],
     [ "has_and", "d8/db6/namespacemeta.html#ae93b23ee4119fbdb6c6d2fedbab69590", null ],
     [ "has_begin", "d8/db6/namespacemeta.html#ac2c3d33e82b86f70cc5ba4648bc53571", null ],
     [ "has_bit_or", "d8/db6/namespacemeta.html#afa84d1371a290f69d0352a34f38e81f7", null ],
@@ -65,6 +67,7 @@ var namespacemeta =
     [ "has_begin_v", "d8/db6/namespacemeta.html#a4fc203ef1524c53e1aab19b38b5ced81", null ],
     [ "has_bit_or_v", "d8/db6/namespacemeta.html#ab948b98f8a210421e4d8b28f64dae1a0", null ],
     [ "has_bit_xor_v", "d8/db6/namespacemeta.html#ae4d11bd8b3ad412351b480ff45f97010", null ],
+    [ "has_cell_v", "d8/db6/namespacemeta.html#a9945f580ee439cbe43c0238f37bf44f4", null ],
     [ "has_divides_v", "d8/db6/namespacemeta.html#abcc38d96ee68396203edd98fdcc1ee43", null ],
     [ "has_equality_v", "d8/db6/namespacemeta.html#a5d2676a9032d00839d6f9a98261c6c44", null ],
     [ "has_greater_equal_v", "d8/db6/namespacemeta.html#ad5028e32ed9bd02e0bab8de0d7da8ce8", null ],

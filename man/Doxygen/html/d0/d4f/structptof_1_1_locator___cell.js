@@ -6,8 +6,6 @@ var structptof_1_1_locator___cell =
     [ "Point", "d0/d4f/structptof_1_1_locator___cell.html#a13c4e745e8e1661315cde8c931934812", null ],
     [ "Point2D", "d0/d4f/structptof_1_1_locator___cell.html#a4f18e69f252436d431b59a8e75785552", null ],
     [ "Scalar", "d0/d4f/structptof_1_1_locator___cell.html#af84ebb7c42679011b560bf177241e5f7", null ],
-    [ "Vector", "d0/d4f/structptof_1_1_locator___cell.html#a21e4df8118e7124bee903d346823a24a", null ],
-    [ "Vector2D", "d0/d4f/structptof_1_1_locator___cell.html#a2af0f8fa7c847f84a50c8aac9436e919", null ],
     [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html#a3e4aea8a3d96ba660f71aca76e8728b1", null ],
     [ "mesh", "d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871", null ],
     [ "mesh_search", "d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b", null ],

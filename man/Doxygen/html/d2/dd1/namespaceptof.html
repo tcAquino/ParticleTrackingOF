@@ -778,7 +778,7 @@ Functions</h2></td></tr>
 <tr class="separator:a771b932077b91dda298c2ba0aa8b5959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eb50971f56058c9e0ddac8e4d118d86"><td class="memTemplParams" colspan="2">template&lt;bool warn_if_outside&gt; </td></tr>
 <tr class="memitem:a4eb50971f56058c9e0ddac8e4d118d86"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a4eb50971f56058c9e0ddac8e4d118d86">outside</a> (Foam::label cell, Foam::point const &amp;position, std::string const &amp;extra_warning_info={})</td></tr>
-<tr class="memdesc:a4eb50971f56058c9e0ddac8e4d118d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether cell index indicates outside mesh, and warn and print position if warning is enabled.  <a href="../../d2/dd1/namespaceptof.html#a4eb50971f56058c9e0ddac8e4d118d86">More...</a><br /></td></tr>
+<tr class="memdesc:a4eb50971f56058c9e0ddac8e4d118d86"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> whether cell index is outside mesh.  <a href="../../d2/dd1/namespaceptof.html#a4eb50971f56058c9e0ddac8e4d118d86">More...</a><br /></td></tr>
 <tr class="separator:a4eb50971f56058c9e0ddac8e4d118d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a218beff88363f0d2ba3306e2e574bacc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">make_point</a> (Foam::Vector2D&lt; Foam::scalar &gt; const &amp;point)</td></tr>
 <tr class="memdesc:a218beff88363f0d2ba3306e2e574bacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make 3D point from 2D point.  <a href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">More...</a><br /></td></tr>
@@ -1097,8 +1097,8 @@ template&lt;typename Locator &gt; </div>
 <p>Compute face center's position if face center is in mesh, owner cell center otherwise. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">face</td><td>Mesh face index.</td></tr>
-    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh.</td></tr>
+    <tr><td class="paramname">face</td><td>Mesh face index. </td></tr>
+    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
     <tr><td class="paramname">cell_hint</td><td>Hint of face's owner cell. </td></tr>
   </table>
   </dd>
@@ -1743,7 +1743,7 @@ template&lt;typename Locator &gt; </div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension.</td></tr>
+    <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension. </td></tr>
     <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
   </table>
   </dd>
@@ -2128,7 +2128,7 @@ template&lt;typename Locator &gt; </div>
 <p>Sometimes the face center associated with a mesh face is not considered within the owner cell. Verify this. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh.</td></tr>
+    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
     <tr><td class="paramname">cell_hint</td><td>Hint of face's owner cell </td></tr>
   </table>
   </dd>
@@ -2184,8 +2184,8 @@ template&lt;typename Locator &gt; </div>
 <p>Sometimes the face center associated with a mesh face is not considered within the cell and may be outside the mesh. Verify this. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">face</td><td>Mesh face index.</td></tr>
-    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh.</td></tr>
+    <tr><td class="paramname">face</td><td>Mesh face index. </td></tr>
+    <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
     <tr><td class="paramname">cell_hint</td><td>Hint of face's owner cell </td></tr>
   </table>
   </dd>
@@ -3431,7 +3431,7 @@ template&lt;typename OStream , typename Subject &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">output</td><td><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stream.</td></tr>
-    <tr><td class="paramname">subject</td><td>CTRW object.</td></tr>
+    <tr><td class="paramname">subject</td><td>CTRW object. </td></tr>
     <tr><td class="paramname">time</td><td>Current time. </td></tr>
   </table>
   </dd>
@@ -3678,8 +3678,8 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Make 3D point from 2D point." alt="" coords="939,260,1069,287"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#af894073228a9ff955cee4a2de71ba6c3" title="Apply reflecting boundary condition." alt="" coords="697,5,881,32"/>
 <area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#a16267dd9a57b2a950a427b9cfdab96a0" title=" " alt="" coords="722,57,857,98"/>
-<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a157e3a9fdf698616fc5ba856fcec8e02" title="Interpolate field." alt="" coords="688,122,891,163"/>
-<area shape="rect" href="../../d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a81e30bf8da3407f151d2efb498b9fa0d" title="Interpolate field." alt="" coords="688,187,891,229"/>
+<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a84d823500934f7958834984379cb07b3" title="Interpolate field." alt="" coords="688,122,891,163"/>
+<area shape="rect" href="../../d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a1047a89203c8370cf98801b7b040e8b8" title="Interpolate field." alt="" coords="688,187,891,229"/>
 <area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#af928498223c8a67410d020a00aa570f5" title=" " alt="" coords="722,253,857,294"/>
 <area shape="rect" href="../../d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f" title="Update time step." alt="" coords="692,319,887,375"/>
 <area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3" title="Check if position is out of bounds." alt="" coords="708,399,871,441"/>
@@ -4758,7 +4758,7 @@ template&lt;typename Subject , typename Locator , typename Mask &gt; </div>
     <tr><td class="paramname">subject</td><td>CTRW object. </td></tr>
     <tr><td class="paramname">time</td><td>Current time. </td></tr>
     <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
-    <tr><td class="paramname">masks</td><td>Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].</td></tr>
+    <tr><td class="paramname">masks</td><td>Container of mask reference wrappers. Masks are scalar fields assigning values to mesh cells through operator[]. </td></tr>
     <tr><td class="paramname">tolerances</td><td>Vector of tolerances for each mask, such that cells where a mask is above the tolerance are considered. </td></tr>
   </table>
   </dd>
@@ -4769,9 +4769,10 @@ template&lt;typename Subject , typename Locator , typename Mask &gt; </div>
 <li>info.asorbed [std::size_t]</li>
 <li>time</li>
 </ol>
+<ul>
+<li><code>tolerances</code> must have at least the same size as <code>masks</code> </li>
+</ul>
 </dd></dl>
-<p>= <code>tolerances</code> must have at least the same size as <code>masks</code> <br  />
- </p>
 
 </div>
 </div>
@@ -6440,18 +6441,18 @@ template&lt;bool warn_if_outside&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Return whether cell index indicates outside mesh, and warn and print position if warning is enabled. </p>
+<p><a class="el" href="../../de/df2/class_check.html">Check</a> whether cell index is outside mesh. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">warn_if_outside</td><td><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> warning if true, do not if false</td></tr>
+    <tr><td class="paramname">warn_if_outside</td><td><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> warning if true, do not if false. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>Position to check.</td></tr>
-    <tr><td class="paramname">cell</td><td>Mesh index of cell position is in.</td></tr>
-    <tr><td class="paramname">extra_warning_info</td><td>Additional information to output if warning is issued. </td></tr>
+    <tr><td class="paramname">position</td><td>Position to check. </td></tr>
+    <tr><td class="paramname">cell</td><td>Mesh index of cell position is in. </td></tr>
+    <tr><td class="paramname">extra_warning_info</td><td>Additional info if warning is issued. </td></tr>
   </table>
   </dd>
 </dl>

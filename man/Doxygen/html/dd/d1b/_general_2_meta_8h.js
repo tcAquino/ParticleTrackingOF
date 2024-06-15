@@ -5,6 +5,7 @@ var _general_2_meta_8h =
     [ "has_member_impl< Z, types< Ts... >, std::void_t< Z< Ts... > > >", "db/d68/structmeta_1_1has__member__impl_3_01_z_00_01types_3_01_ts_8_8_8_01_4_00_01std_1_1void__t_3_01_z_3_01_ts_8_8_8_01_4_01_4_01_4.html", null ],
     [ "is_same", "dd/d94/structmeta_1_1is__same.html", "dd/d94/structmeta_1_1is__same" ],
     [ "is_arithmetic", "d1/d84/structmeta_1_1is__arithmetic.html", "d1/d84/structmeta_1_1is__arithmetic" ],
+    [ "is_integral", "d8/d68/structmeta_1_1is__integral.html", "d8/d68/structmeta_1_1is__integral" ],
     [ "can_call_sqrt", "da/dd4/structmeta_1_1can__call__sqrt.html", null ],
     [ "can_call_sqrt< std::void_t< decltype(std::sqrt(std::declval< Args >()...))>, Args... >", "d0/d7d/structmeta_1_1can__call__sqrt_3_01std_1_1void__t_3_01decltype_07std_1_1sqrt_07std_1_1declval_3_08d5bfbec0d91a76f978aad0e97e9a8e3.html", null ],
     [ "can_call_abs", "d8/d2a/structmeta_1_1can__call__abs.html", null ],
