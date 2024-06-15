@@ -403,7 +403,7 @@ using model_advection_diffusion_surface_decay_3d::Transport;
 namespace model_periodic_cartesian_advection_diffusion_3d_parallel {
 struct Model {
   inline static const std::string name{
-      "periodic_cartesian_advection_diffusion_3d_parallels"};
+      "periodic_cartesian_advection_diffusion_3d_parallel"};
 
   template <typename OStream> static void info(OStream &output) {
     output
