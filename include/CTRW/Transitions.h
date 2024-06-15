@@ -29,6 +29,7 @@ public:
 #include "General/Useful.h"
 #include "Geometry/Boundary.h"
 #include <limits>
+#include <type_traits>
 #include <utility>
 
 namespace ctrw {
@@ -103,13 +104,21 @@ public:
                                                           boundary)} {}
 
   template <typename State> void operator()(State &state) {
-    auto state_old = state;
-    _time_step_adaptor(state, _time_generator, _jump_generator);
-    op::plus_inplace(state.position, _jump_generator(state));
-    locate(state);
-    state.time += _time_generator(state);
-    if (_boundary(state, state_old))
+    if constexpr (std::is_same_v<Boundary, geom::Boundary_DoNothing>) {
+      _time_step_adaptor(state, _time_generator, _jump_generator);
+      double time_increment = time_generator(state);
+      op::plus_inplace(state.position, _jump_generator(state));
+      state.time += time_increment;
       locate(state);
+    } else {
+      auto state_old = state;
+      _time_step_adaptor(state, _time_generator, _jump_generator);
+      op::plus_inplace(state.position, _jump_generator(state));
+      state.time += _time_generator(state_old);
+      locate(state);
+      if (_boundary(state, state_old))
+        locate(state);
+    }
   }
 
   auto const &time_generator() const { return _time_generator; }
