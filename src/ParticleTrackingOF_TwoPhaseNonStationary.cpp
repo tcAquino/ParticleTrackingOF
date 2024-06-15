@@ -21,7 +21,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_diffusion_2d;
+  using namespace ptof::model_advection_diffusion_surface_decay_3d;
   using Phase = ptof::Phase;
 
   std::string banner =
