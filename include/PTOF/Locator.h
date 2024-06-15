@@ -17,13 +17,11 @@ namespace ptof {
 template <typename Geometry,
           typename SearchOption = SearchOptions::FirstNeighborPrecheck>
 struct Locator_Cell {
-  using Point = Foam::point;                     /**> 3D point. */
-  using Point2D = Foam::Vector2D<Foam::scalar>;  /**> 2D point. */
-  using Vector = Foam::vector;                   /**> 3D vector. */
-  using Vector2D = Foam::Vector2D<Foam::scalar>; /**> 2D vector. */
-  using Scalar = Foam::scalar;                   /**> Scalar (also 1D point). */
-  using Index = Foam::label;                     /**> Cell index.*/
-  using Mesh = typename Geometry::Mesh;          /**< Mesh. */
+  using Point = Foam::point;                    /**> 3D point. */
+  using Point2D = Foam::Vector2D<Foam::scalar>; /**> 2D point. */
+  using Scalar = Foam::scalar;                  /**> Scalar (also 1D point). */
+  using Index = Foam::label;                    /**> Cell index.*/
+  using Mesh = typename Geometry::Mesh;         /**< Mesh. */
   using MeshSearch =
       typename Geometry::MeshSearch; /**< Mesh searching tools. */
 

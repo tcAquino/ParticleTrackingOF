@@ -45,6 +45,11 @@ using is_void = is_same<X, Y, void>;
 template <template <typename> typename X, typename Y> struct is_arithmetic {
   static constexpr bool value = std::is_arithmetic_v<X<Y>>;
 };
+/** \class is_integral General/Meta.h "General/Meta.h"
+ \brief Check if X<Y> is of integral type. */
+template <template <typename> typename X, typename Y> struct is_integral {
+  static constexpr bool value = std::is_integral_v<X<Y>>;
+};
 
 /**\brief Type of \c X::begin(). */
 template <typename X>

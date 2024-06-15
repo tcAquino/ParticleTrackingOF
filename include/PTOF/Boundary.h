@@ -327,7 +327,6 @@ public:
 
     // When the start point is on a cell face,
     // sometimes the intersection with it is not found, and sometimes it is
-    state.cell = _locator(state);
     if (outside(state.cell)) {
       if (!intersection.hit()) {
         // If the final state is outside, avoid breaking by checking for
@@ -339,11 +338,11 @@ public:
                 _locator),
             make_point(state.position));
       }
-    } else if (op::abs_sq(make_point(state_old.position) -
+    } else if (intersection.hit() &&
+               op::abs_sq(make_point(state_old.position) -
                           intersection.point()) <
                    std::numeric_limits<double>::epsilon() *
-                       std::numeric_limits<double>::epsilon() &&
-               intersection.hit()) {
+                       std::numeric_limits<double>::epsilon()) {
       // If the final state is inside, ignore intersection if at the start
       // point and find the next intersection with a boundary patch
       auto old_intersection_point = intersection.point();
@@ -634,9 +633,12 @@ template <typename Boundary, typename Locator> struct Boundary_Periodic_OF {
     return boundary_periodic.out_of_bounds(position);
   }
 
-  /** \brief Enforce boundary condition  and place intersection at its periodic
-   image. \param state Particle state to apply BC to. \param intersection
-   Boundary intersection info, to be replaced by periodic image. \return \c true
+  /** \brief Enforce boundary condition and place intersection at its periodic
+   image.
+   \param state Particle state to apply BC to.
+   \param intersection Boundary intersection info, to be replaced by periodic
+   image.
+   \return \c true
    */
   template <typename State, typename Intersection>
   bool operator()(State &state, Intersection &intersection) const {

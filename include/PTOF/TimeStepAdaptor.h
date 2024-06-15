@@ -143,7 +143,6 @@ public:
   template <typename State, typename TimeGenerator, typename JumpGenerator>
   double operator()(State &state, TimeGenerator &time_generator,
                     JumpGenerator &jump_generator) const {
-    state.cell = _geometry.locator(state);
     auto cell_id = state.cell;
     if constexpr (check_if_outside)
       if (outside<warn_if_outside>(state.cell, make_point(state.position),

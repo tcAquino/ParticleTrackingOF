@@ -159,11 +159,10 @@ public:
   /**
    \brief Interpolate field.
    \param position 3D position.
-   \param cell Hint for mesh cell index position is in.
+   \param cell Mesh cell index position is in.
    \return interpolated field value.
   */
-  auto operator()(Point const &position, Index cell = -1) const {
-    cell = _locator(position, cell);
+  auto operator()(Point const &position, Index cell) const {
     if constexpr (check_if_outside)
       if (outside<warn_if_outside>(cell, position,
                                    "Assigning vector field value zero"))
@@ -178,10 +177,10 @@ public:
   /**
    \brief Interpolate field.
    \param position 2D position.
-   \param cell Hint for mesh cell index position is in.
+   \param cell Mesh cell index position is in.
    \return interpolated field value.
   */
-  auto operator()(Point2D const &position, Index cell = -1) const {
+  auto operator()(Point2D const &position, Index cell) const {
     auto interp = (*this)(make_point(position), cell);
 
     return Vector2D{interp[0], interp[1]};
@@ -190,10 +189,10 @@ public:
   /**
    \brief Interpolate field.
    \param position 1D position.
-   \param cell Hint for mesh cell index position is in.
+   \param cell Mesh cell index position is in.
    \return interpolated field value.
   */
-  auto operator()(Scalar position, Index cell = -1) const {
+  auto operator()(Scalar position, Index cell) const {
     return (*this)(make_point(position), cell)[0];
   }
 
@@ -203,6 +202,33 @@ public:
   */
   template <typename State> auto operator()(State const &state) const {
     return (*this)(state.position, state.cell);
+  }
+
+  /**
+   \brief Interpolate field.
+   \param position 3D position.
+   \return interpolated field value.
+  */
+  auto operator()(Point const &position) const {
+    return (*this)(position, _locator(position));
+  }
+
+  /**
+   \brief Interpolate field.
+   \param position 2D position.
+   \return interpolated field value.
+  */
+  auto operator()(Point2D const &position) const {
+    return (*this)(position, _locator(position));
+  }
+
+  /**
+   \brief Interpolate field.
+   \param position 1D position.
+   \return interpolated field value.
+  */
+  auto operator()(Scalar const &position) const {
+    return (*this)(position, _locator(position));
   }
 
   /**
@@ -437,11 +463,10 @@ public:
   /**
    \brief Interpolate field.
    \param position 3D position.
-   \param cell Hint for mesh cell index position is in.
+   \param cell Mesh cell index position is in.
    \return interpolated field value.
   */
-  auto operator()(Point const &position, Index cell = -1) const {
-    cell = _locator(position, cell);
+  auto operator()(Point const &position, Index cell) const {
     if constexpr (check_if_outside)
       if (outside<warn_if_outside>(cell, position,
                                    "Assigning scalar field value zero"))
@@ -456,20 +481,20 @@ public:
   /**
    \brief Interpolate field.
    \param position 2D position.
-   \param cell Hint for mesh cell index position is in.
+   \param cell Mesh cell index position is in.
    \return interpolated field value.
   */
-  auto operator()(Point2D const &position, Index cell = -1) const {
+  auto operator()(Point2D const &position, Index cell) const {
     return (*this)(make_point(position), cell);
   }
 
   /**
    \brief Interpolate field.
    \param position 1D position.
-   \param cell Hint for mesh cell index position is in.
+   \param cell Mesh cell index position is in.
    \return interpolated field value.
   */
-  auto operator()(Scalar position, Index cell = -1) const {
+  auto operator()(Scalar position, Index cell) const {
     return (*this)(make_point(position), cell);
   }
 
@@ -479,6 +504,33 @@ public:
   */
   template <typename State> auto operator()(State const &state) const {
     return (*this)(state.position, state.cell);
+  }
+
+  /**
+   \brief Interpolate field.
+   \param position 3D position.
+   \return interpolated field value.
+  */
+  auto operator()(Point const &position) const {
+    return (*this)(position, _locator(position));
+  }
+
+  /**
+   \brief Interpolate field.
+   \param position 2D position.
+   \return interpolated field value.
+  */
+  auto operator()(Point2D const &position) const {
+    return (*this)(position, _locator(position));
+  }
+
+  /**
+   \brief Interpolate field.
+   \param position 1D position.
+   \return interpolated field value.
+  */
+  auto operator()(Scalar const &position) const {
+    return (*this)(position, _locator(position));
   }
 
   /**

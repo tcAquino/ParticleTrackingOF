@@ -28,6 +28,7 @@ auto makeTransportTransitions(VelocityField const &velocity_field,
       Steppers::makeTimeGenerator(params_solvers),
       Steppers::makeJumpGenerator(velocity_field, boundary, params_transport,
                                   params_solvers, geometry.dim),
+      geometry.locator,
       boundary};
 }
 
@@ -48,6 +49,7 @@ auto makeTransportTransitions_Advection(
       Steppers::makeJumpGenerator_Advection(velocity_field, boundary,
                                             params_transport, params_solvers,
                                             geometry.dim),
+      geometry.locator,
       boundary};
 }
 } // namespace ptof
