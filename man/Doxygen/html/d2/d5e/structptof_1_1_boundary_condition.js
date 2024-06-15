@@ -13,6 +13,6 @@ var structptof_1_1_boundary_condition =
     [ "contains", "d2/d5e/structptof_1_1_boundary_condition.html#aa101a71f4115d0fcda32f855275e361c", null ],
     [ "name", "d2/d5e/structptof_1_1_boundary_condition.html#a17c760ea8d3c8d6df71b4b176b845a09", null ],
     [ "type", "d2/d5e/structptof_1_1_boundary_condition.html#ad9f4d05ae59a8e1cb5bc84d01cf20810", null ],
-    [ "name_to_type", "d2/d5e/structptof_1_1_boundary_condition.html#a2b79ab848753d03973ae4961f1f0eac3", null ],
-    [ "type_to_name", "d2/d5e/structptof_1_1_boundary_condition.html#a443fa107aa3ec4aca99b2d6c9668a280", null ]
+    [ "name_to_type", "d2/d5e/structptof_1_1_boundary_condition.html#a446ef0ad61bdc53847cbe88214f9e1b3", null ],
+    [ "type_to_name", "d2/d5e/structptof_1_1_boundary_condition.html#af4fcb82e59f8575d3376ba5cb2610d9e", null ]
 ];

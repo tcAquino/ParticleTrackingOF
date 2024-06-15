@@ -23,6 +23,6 @@ var structptof_1_1_measure =
     [ "exists", "dd/ddd/structptof_1_1_measure.html#aeb3b2482b0a8010f9ae0dd5fcb7a3e40", null ],
     [ "name", "dd/ddd/structptof_1_1_measure.html#ab6f62fd8b330df383cebee10820b3792", null ],
     [ "type", "dd/ddd/structptof_1_1_measure.html#abd63239733f5f503ee48f31d72128e18", null ],
-    [ "name_to_type", "dd/ddd/structptof_1_1_measure.html#ac148cfc463601c02de1910833b34c816", null ],
-    [ "type_to_name", "dd/ddd/structptof_1_1_measure.html#abfe0928a51dc4c066a1d564421d9b863", null ]
+    [ "name_to_type", "dd/ddd/structptof_1_1_measure.html#a740299aee172918cdc1947ebe0434f09", null ],
+    [ "type_to_name", "dd/ddd/structptof_1_1_measure.html#a6c69efcb2861d7551b55309632724cc0", null ]
 ];

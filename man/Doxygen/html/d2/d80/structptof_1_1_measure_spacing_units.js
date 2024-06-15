@@ -9,6 +9,6 @@ var structptof_1_1_measure_spacing_units =
     [ "exists", "d2/d80/structptof_1_1_measure_spacing_units.html#ac6826c126f9f522e98b9db22f7a55a17", null ],
     [ "name", "d2/d80/structptof_1_1_measure_spacing_units.html#a4f7edbeca47ecd98c4d4c4b7950e6c54", null ],
     [ "type", "d2/d80/structptof_1_1_measure_spacing_units.html#a292e1ae835a0ca302c6d505f947909d9", null ],
-    [ "name_to_type", "d2/d80/structptof_1_1_measure_spacing_units.html#afe0cd2b191eab4aefb6a2bf3d4491185", null ],
-    [ "type_to_name", "d2/d80/structptof_1_1_measure_spacing_units.html#a3fe270977bb992dafcaf38a255aae664", null ]
+    [ "name_to_type", "d2/d80/structptof_1_1_measure_spacing_units.html#a7b0273e27e3d038e46219b8babe1dd73", null ],
+    [ "type_to_name", "d2/d80/structptof_1_1_measure_spacing_units.html#ac5e9844fc62e192cdf787d8082ff492d", null ]
 ];

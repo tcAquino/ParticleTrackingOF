@@ -16,6 +16,6 @@ var structptof_1_1_initial_conditions =
     [ "contains", "d5/d77/structptof_1_1_initial_conditions.html#a316bd71877771be012bb9ed47335eab8", null ],
     [ "name", "d5/d77/structptof_1_1_initial_conditions.html#ae02f386901fa33ae454e041e53e4da1a", null ],
     [ "type", "d5/d77/structptof_1_1_initial_conditions.html#ab875f1de2b50d662c4db29c115b49259", null ],
-    [ "string_to_type", "d5/d77/structptof_1_1_initial_conditions.html#a45844e0d728a9c070a4fcf3f0c6f1d9c", null ],
-    [ "type_to_string", "d5/d77/structptof_1_1_initial_conditions.html#ac729095ef0d493c8f6582685bd4ad9bb", null ]
+    [ "string_to_type", "d5/d77/structptof_1_1_initial_conditions.html#aeb87b03d95070a6d876811ccfdb91573", null ],
+    [ "type_to_string", "d5/d77/structptof_1_1_initial_conditions.html#aed45dcdb1cc337bc351d4bd1977889c6", null ]
 ];

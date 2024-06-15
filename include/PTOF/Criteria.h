@@ -9,8 +9,8 @@
 
 #include "PTOF/Useful.h"
 #include <cstddef>
+#include <map>
 #include <string>
-#include <unordered_map>
 
 namespace ptof {
 /** \class Criterion PTOF/Output.h "PTOF/Output.h"
@@ -135,7 +135,7 @@ struct EndCriterion {
   }
 
   /** Map of names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"time", Type::time},
       {"time_max", Type::time_max},
       {"mass_below", Type::mass_below},
@@ -145,7 +145,7 @@ struct EndCriterion {
       {"fraction_not_absorbed", Type::fraction_not_absorbed}};
 
   /** Map of types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::time, "time"},
       {Type::time_max, "time_max"},
       {Type::mass_below, "mass_below"},

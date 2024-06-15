@@ -109,13 +109,13 @@ Collaboration diagram for ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:af2110e8463c90cfb6c9d18166805e457"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a> = std::unordered_map&lt; std::string, std::string &gt;</td></tr>
-<tr class="memdesc:af2110e8463c90cfb6c9d18166805e457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container type to hold patch names and associated bc type names.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">More...</a><br /></td></tr>
-<tr class="separator:af2110e8463c90cfb6c9d18166805e457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab55af71b2fd58b7543ca9f7de527743f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a> = std::map&lt; std::string, std::string &gt;</td></tr>
+<tr class="memdesc:ab55af71b2fd58b7543ca9f7de527743f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container type to hold patch names and associated bc type names.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">More...</a><br /></td></tr>
+<tr class="separator:ab55af71b2fd58b7543ca9f7de527743f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91">Boundary_Cases</a> (<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a> boundary_conditions, Locator &amp;&amp;locator, Store_Info &amp;&amp;store_info, Boundary_Periodic &amp;&amp;boundary_periodic=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, Boundary_Custom &amp;&amp;boundary_custom=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, SurfaceReaction &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#adfda84bee13c7821bc8ea6023884fa29">surface_reaction</a>=<a class="el" href="../../df/d31/classptof_1_1_surface_reaction___do_nothing.html">SurfaceReaction_DoNothing</a>{})</td></tr>
+<tr class="memitem:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91">Boundary_Cases</a> (<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a> boundary_conditions, Locator &amp;&amp;locator, Store_Info &amp;&amp;store_info, Boundary_Periodic &amp;&amp;boundary_periodic=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, Boundary_Custom &amp;&amp;boundary_custom=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, SurfaceReaction &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#adfda84bee13c7821bc8ea6023884fa29">surface_reaction</a>=<a class="el" href="../../df/d31/classptof_1_1_surface_reaction___do_nothing.html">SurfaceReaction_DoNothing</a>{})</td></tr>
 <tr class="separator:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3">out_of_bounds</a> (Position const &amp;position) const</td></tr>
@@ -150,7 +150,7 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a1744fc89cf2c7dde85f558949775a478"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a1744fc89cf2c7dde85f558949775a478">_boundary_conditions</a></td></tr>
+<tr class="memitem:a1744fc89cf2c7dde85f558949775a478"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a1744fc89cf2c7dde85f558949775a478">_boundary_conditions</a></td></tr>
 <tr class="separator:a1744fc89cf2c7dde85f558949775a478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9069aa818635fb6675ed386c4577a01a"><td class="memItemLeft" align="right" valign="top">Locator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9069aa818635fb6675ed386c4577a01a">_locator</a></td></tr>
 <tr class="separator:a9069aa818635fb6675ed386c4577a01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,8 +169,8 @@ class ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_
 
 <p>Boundary object to handle implemented boundary types. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="af2110e8463c90cfb6c9d18166805e457"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2110e8463c90cfb6c9d18166805e457">&#9670;&nbsp;</a></span>BCs</h2>
+<a id="ab55af71b2fd58b7543ca9f7de527743f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab55af71b2fd58b7543ca9f7de527743f">&#9670;&nbsp;</a></span>BCs</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +178,7 @@ class ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_
 template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom , typename SurfaceReaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a> =  std::unordered_map&lt;std::string, std::string&gt;</td>
+          <td class="memname">using <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a> =  std::map&lt;std::string, std::string&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -202,7 +202,7 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
         <tr>
           <td class="memname"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">Boundary_Cases</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a>&#160;</td>
           <td class="paramname"><em>boundary_conditions</em>, </td>
         </tr>
         <tr>
@@ -627,7 +627,7 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af2110e8463c90cfb6c9d18166805e457">BCs</a> <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::_boundary_conditions</td>
+          <td class="memname"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a> <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::_boundary_conditions</td>
         </tr>
       </table>
   </td>

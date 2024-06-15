@@ -9,6 +9,7 @@
 
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
+#include <IOobject.H>
 #include <cmath>
 #include <fieldTypes.H>
 #include <fvcGrad.H>

@@ -7,7 +7,7 @@
 #ifndef PTOF_PARTICLEMAKER_H
 #define PTOF_PARTICLEMAKER_H
 
-#include "General/Useful.h"
+#include "General/Meta.h"
 #include <utility>
 
 namespace ptof {

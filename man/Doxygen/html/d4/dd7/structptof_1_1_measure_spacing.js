@@ -8,6 +8,6 @@ var structptof_1_1_measure_spacing =
     [ "exists", "d4/dd7/structptof_1_1_measure_spacing.html#afdf40210547a65aa50e0d58526270734", null ],
     [ "name", "d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc", null ],
     [ "type", "d4/dd7/structptof_1_1_measure_spacing.html#a16b7443515ba29233e0276818b092e21", null ],
-    [ "name_to_type", "d4/dd7/structptof_1_1_measure_spacing.html#a25cceebfe23db83e7731215dacd07ba1", null ],
-    [ "type_to_name", "d4/dd7/structptof_1_1_measure_spacing.html#aed04fc99fd60ef0348c7d80aad446304", null ]
+    [ "name_to_type", "d4/dd7/structptof_1_1_measure_spacing.html#a3d0ee3da43c537c59a50e3f14a8c310a", null ],
+    [ "type_to_name", "d4/dd7/structptof_1_1_measure_spacing.html#a6e631a48ff5417b3277e04a718670e52", null ]
 ];

@@ -54,13 +54,11 @@ inline constexpr bool has_periodicity_v =
                        is_same<periodicity_t, X, std::vector<int>>>;
 
 /**\brief Type of \c X::cell. */
-template <typename X>
-using cell_t = decltype(std::declval<X>().cell);
+template <typename X> using cell_t = decltype(std::declval<X>().cell);
 /** \brief Check if a class has member <tt>integral_type cell</tt>. */
 template <typename X>
 inline constexpr bool has_cell_v =
-    std::conjunction_v<has_member<cell_t, X>,
-                       is_integral<cell_t, X>>;
+    std::conjunction_v<has_member<cell_t, X>, is_integral<cell_t, X>>;
 
 /** \class Parameters_or_empty General/Meta.h "General/Meta.h"
  \brief  Get Parameters type for true or Empty type for false. */

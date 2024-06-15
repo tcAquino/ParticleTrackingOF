@@ -7,14 +7,14 @@
 #ifndef PTOF_TIMESTEPADAPTOR_H
 #define PTOF_TIMESTEPADAPTOR_H
 
-#include <algorithm>
-#include <MinMax.H>
-#include <fieldTypes.H>
-#include <zero.H>
 #include "CTRW/Meta.h"
 #include "PTOF/Field.h"
 #include "PTOF/Reaction.h"
 #include "PTOF/Useful.h"
+#include <MinMax.H>
+#include <algorithm>
+#include <fieldTypes.H>
+#include <zero.H>
 
 namespace ptof {
 

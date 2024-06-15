@@ -12,13 +12,14 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
-#include <fvMesh.H>
+#include <fieldTypes.H>
+#include <map>
 #include <numeric>
+#include <point.H>
 #include <random>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
-#include <unordered_map>
 #include <vector>
 
 namespace ptof {
@@ -31,18 +32,18 @@ struct InitialConditions {
   enum class Type {
     uniform,      /**< Homogeneous throughout the domain.                     */
     fluxweighted, /**< Flux-weighted throughout the domain.                   */
-    uniform_inlet,            /**< Homogeneous at the inlet.            */
-    fluxweighted_inlet,       /**< Flux-weighted at the inlet.       */
-    uniform_solid,            /**< Homogeneous at the solid surface.            */
-    uniform_near_solid,       /**< Homogeneous at a fixed distance to the solid
-                                 interface.*/
-    uniform_region_cartesian, /**< Homogeneous in a Cartesian region        */
-    fluxweighted_region_cartesian, /**< Flux-weighted in a Cartesian region */
-    prescribed_positions,          /**< Prescribed positions          */
+    uniform_inlet,      /**< Homogeneous at the inlet.                        */
+    fluxweighted_inlet, /**< Flux-weighted at the inlet.                      */
+    uniform_solid,      /**< Homogeneous at the solid surface.                */
+    uniform_near_solid, /**< Homogeneous at a fixed distance to the solid
+                           interface.                                         */
+    uniform_region_cartesian, /**< Homogeneous in a Cartesian region          */
+    fluxweighted_region_cartesian, /**< Flux-weighted in a Cartesian region   */
+    prescribed_positions,          /**< Prescribed positions                  */
     uniform_inlet_continuous,      /**< Continuous injection homogeneous at the
-                                      inlet.         */
+                                      inlet.                                  */
     fluxweighted_inlet_continuous, /**< Continuous injection flux-weighted at
-                                      the inlet.       */
+                                      the inlet.                              */
   };
 
   /** Type from name. */
@@ -57,7 +58,7 @@ struct InitialConditions {
   }
 
   /** Map names to types. */
-  inline static const std::unordered_map<std::string, Type> string_to_type{
+  inline static const std::map<std::string, Type> string_to_type{
       {"uniform", Type::uniform},
       {"fluxweighted", Type::fluxweighted},
       {"uniform_inlet", Type::uniform_inlet},
@@ -71,7 +72,7 @@ struct InitialConditions {
       {"fluxweighted_inlet_continuous", Type::fluxweighted_inlet_continuous}};
 
   /** Map types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_string{
+  inline static const std::map<Type, std::string> type_to_string{
       {
           Type::uniform,
           "uniform",
@@ -729,7 +730,7 @@ public:
 
 private:
   typename Geometry::Locator const &_locator; /**< Object to search mesh. */
-  VelocityField const &_velocity_field;       /**< Underlying flow field.       */
+  VelocityField const &_velocity_field; /**< Underlying flow field.       */
   ParticleMaker _particle_maker; /**< Makes a particle given a position.*/
   std::size_t _nr_particles;     /**< Number of particles per injection step. */
   std::mt19937 _rng{std::random_device{}()}; /**< Random number generator. */

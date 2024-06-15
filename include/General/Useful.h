@@ -289,8 +289,8 @@ inline std::ofstream open_write(std::string const &filename) {
 
 /** \brief Load 1-column file into vector of doubles. */
 inline auto load_1(std::string const &filename, std::size_t nr_estimate = 0,
-            std::size_t header_lines = 0,
-            std::string const &delims = "\t,|\r ") {
+                   std::size_t header_lines = 0,
+                   std::string const &delims = "\t,|\r ") {
   using Value = double;
   using Container = std::vector<Value>;
   Container values;
@@ -315,8 +315,8 @@ inline auto load_1(std::string const &filename, std::size_t nr_estimate = 0,
 
 /** \brief Load 2-column file into pair of vectors of doubles. */
 inline auto load_2(std::string const &filename, std::size_t nr_estimate = 0,
-            std::size_t header_lines = 0,
-            std::string const &delims = "\t,|\r ") {
+                   std::size_t header_lines = 0,
+                   std::string const &delims = "\t,|\r ") {
   using Value = double;
   using Container = std::vector<Value>;
   std::pair<Container, Container> values;
@@ -344,9 +344,10 @@ inline auto load_2(std::string const &filename, std::size_t nr_estimate = 0,
 
 /** \brief Load 3-column file,  first two columns into vector of pairs, last
  * column into vector of doubles. */
-inline auto load_pair_1(std::string const &filename, std::size_t nr_estimate = 0,
-                 std::size_t header_lines = 0,
-                 std::string const &delims = "\t,|\r ") {
+inline auto load_pair_1(std::string const &filename,
+                        std::size_t nr_estimate = 0,
+                        std::size_t header_lines = 0,
+                        std::string const &delims = "\t,|\r ") {
   using Value = double;
   using Container_pair = std::vector<std::pair<Value, Value>>;
   using Container_scalar = std::vector<Value>;
@@ -378,8 +379,8 @@ inline auto load_pair_1(std::string const &filename, std::size_t nr_estimate = 0
 
 /** \brief Load file into vector of vectors of doubles. */
 inline auto load(std::string const &filename, std::size_t nr_columns,
-          std::size_t nr_estimate = 0, std::size_t header_lines = 0,
-          std::string const &delims = "\t,|\r ") {
+                 std::size_t nr_estimate = 0, std::size_t header_lines = 0,
+                 std::string const &delims = "\t,|\r ") {
   using Value = double;
   using Container = std::vector<Value>;
   std::vector<Container> values(nr_columns);
@@ -430,13 +431,13 @@ template <typename Type> Type convert_to(std::string const &str) {
 
 /** \brief Remove comments after escape sequence */
 inline std::string clear_escape(std::string const &str,
-                         std::string const &escape_sequence) {
+                                std::string const &escape_sequence) {
   return str.substr(0, str.find(escape_sequence));
 }
 
 /** \brief Remove comments after escape sequence */
 inline std::string &clear_escape_in_place(std::string &str,
-                                   std::string const &escape_sequence) {
+                                          std::string const &escape_sequence) {
   std::size_t pos = str.find(escape_sequence);
   if (pos != std::string::npos)
     str.erase(pos);

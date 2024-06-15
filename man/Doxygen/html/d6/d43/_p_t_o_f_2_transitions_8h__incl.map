@@ -1,51 +1,51 @@
 <map id="PTOF/Transitions.h" name="PTOF/Transitions.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1622,5,1765,32"/>
-<area shape="rect" id="node2" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="1043,155,1189,181"/>
-<area shape="rect" id="node33" href="$df/d96/_field_8h.html" title=" " alt="" coords="2125,229,2227,256"/>
-<area shape="rect" id="node44" href="$dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="2297,80,2481,107"/>
-<area shape="rect" id="node3" href="$d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="1029,229,1203,256"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2210,603,2302,629"/>
-<area shape="rect" id="node9" title=" " alt="" coords="279,603,339,629"/>
-<area shape="rect" id="node10" href="$d9/d18/_general_2_useful_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="1527,453,1657,480"/>
-<area shape="rect" id="node26" href="$d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="825,453,985,480"/>
-<area shape="rect" id="node27" href="$d8/dab/_geometry_2_boundary_8h.html" title="Boundary&#45;enforcing classes for particle tracking." alt="" coords="516,304,679,331"/>
-<area shape="rect" id="node31" href="$d0/dd6/_time_generator_8h.html" title="Objects to generate time increments for particle tracking." alt="" coords="1430,229,1605,256"/>
-<area shape="rect" id="node32" title=" " alt="" coords="680,229,739,256"/>
-<area shape="rect" id="node4" href="$d2/d84/_c_t_r_w_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="1277,379,1387,405"/>
-<area shape="rect" id="node6" title=" " alt="" coords="481,603,543,629"/>
-<area shape="rect" id="node11" title=" " alt="" coords="2293,528,2379,555"/>
-<area shape="rect" id="node25" href="$db/d51/_constants_8h.html" title=" " alt="" coords="685,379,840,405"/>
-<area shape="rect" id="node30" title=" " alt="" coords="1483,304,1555,331"/>
-<area shape="rect" id="node5" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="789,528,912,555"/>
-<area shape="rect" id="node7" title=" " alt="" coords="807,603,894,629"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1200,528,1267,555"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1291,528,1362,555"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1386,528,1451,555"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1475,528,1549,555"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1573,528,1648,555"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1673,528,1714,555"/>
-<area shape="rect" id="node18" title=" " alt="" coords="2037,528,2117,555"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1739,528,1781,555"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1805,528,1864,555"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1888,528,1963,555"/>
-<area shape="rect" id="node22" title=" " alt="" coords="937,528,1023,555"/>
-<area shape="rect" id="node23" title=" " alt="" coords="2453,528,2512,555"/>
-<area shape="rect" id="node24" title=" " alt="" coords="651,528,714,555"/>
-<area shape="rect" id="node28" href="$d2/d10/_symmetry_planes_8h.html" title="Symmetry planes to describe general symmetries." alt="" coords="345,379,559,405"/>
-<area shape="rect" id="node29" title=" " alt="" coords="195,379,269,405"/>
-<area shape="rect" id="node34" href="$d0/df6/_p_t_o_f_2_useful_8h.html" title=" " alt="" coords="2236,304,2351,331"/>
-<area shape="rect" id="node37" title=" " alt="" coords="2739,379,2840,405"/>
-<area shape="rect" id="node38" title=" " alt="" coords="1853,379,1923,405"/>
-<area shape="rect" id="node39" title=" " alt="" coords="1947,379,2042,405"/>
-<area shape="rect" id="node42" title=" " alt="" coords="1833,304,1909,331"/>
-<area shape="rect" id="node43" title=" " alt="" coords="1933,304,2110,331"/>
-<area shape="rect" id="node35" title=" " alt="" coords="2269,379,2312,405"/>
-<area shape="rect" id="node36" title=" " alt="" coords="2438,379,2562,405"/>
-<area shape="rect" id="node40" href="$dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="1102,379,1253,405"/>
-<area shape="rect" id="node41" href="$d9/d02/_ranges_8h.html" title=" " alt="" coords="1955,453,2093,480"/>
-<area shape="rect" id="node45" title=" " alt="" coords="2427,155,2515,181"/>
-<area shape="rect" id="node46" title=" " alt="" coords="2539,155,2603,181"/>
-<area shape="rect" id="node47" href="$de/ddd/_reaction_8h.html" title=" " alt="" coords="2627,155,2757,181"/>
-<area shape="rect" id="node48" href="$db/dcf/_locator_8h.html" title=" " alt="" coords="2631,229,2750,256"/>
-<area shape="rect" id="node49" title=" " alt="" coords="2633,304,2749,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="2354,5,2497,32"/>
+<area shape="rect" id="node2" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="1147,155,1293,181"/>
+<area shape="rect" id="node33" href="$df/d96/_field_8h.html" title=" " alt="" coords="2631,229,2734,256"/>
+<area shape="rect" id="node44" href="$dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="2333,80,2517,107"/>
+<area shape="rect" id="node3" href="$d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="1133,229,1307,256"/>
+<area shape="rect" id="node8" title=" " alt="" coords="2337,603,2429,629"/>
+<area shape="rect" id="node9" title=" " alt="" coords="551,603,611,629"/>
+<area shape="rect" id="node10" href="$d9/d18/_general_2_useful_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="1631,453,1761,480"/>
+<area shape="rect" id="node26" href="$d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="792,453,952,480"/>
+<area shape="rect" id="node27" href="$d8/dab/_geometry_2_boundary_8h.html" title="Boundary&#45;enforcing classes for particle tracking." alt="" coords="449,304,612,331"/>
+<area shape="rect" id="node31" href="$d0/dd6/_time_generator_8h.html" title="Objects to generate time increments for particle tracking." alt="" coords="1534,229,1709,256"/>
+<area shape="rect" id="node32" title=" " alt="" coords="5,229,64,256"/>
+<area shape="rect" id="node4" href="$d2/d84/_c_t_r_w_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="1299,379,1410,405"/>
+<area shape="rect" id="node6" title=" " alt="" coords="449,603,511,629"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2260,528,2345,555"/>
+<area shape="rect" id="node25" href="$db/d51/_constants_8h.html" title=" " alt="" coords="139,379,293,405"/>
+<area shape="rect" id="node30" title=" " alt="" coords="1587,304,1659,331"/>
+<area shape="rect" id="node5" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="909,528,1032,555"/>
+<area shape="rect" id="node7" title=" " alt="" coords="927,603,1014,629"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1933,528,2000,555"/>
+<area shape="rect" id="node13" title=" " alt="" coords="2025,528,2095,555"/>
+<area shape="rect" id="node14" title=" " alt="" coords="2119,528,2185,555"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1371,528,1445,555"/>
+<area shape="rect" id="node16" title=" " alt="" coords="1469,528,1544,555"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1619,528,1661,555"/>
+<area shape="rect" id="node18" title=" " alt="" coords="2420,528,2500,555"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1685,528,1728,555"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1752,528,1811,555"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1835,528,1909,555"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1107,528,1194,555"/>
+<area shape="rect" id="node23" title=" " alt="" coords="2676,528,2735,555"/>
+<area shape="rect" id="node24" title=" " alt="" coords="619,528,682,555"/>
+<area shape="rect" id="node28" href="$d2/d10/_symmetry_planes_8h.html" title="Symmetry planes to describe general symmetries." alt="" coords="569,379,783,405"/>
+<area shape="rect" id="node29" title=" " alt="" coords="368,379,443,405"/>
+<area shape="rect" id="node34" href="$d0/df6/_p_t_o_f_2_useful_8h.html" title=" " alt="" coords="2207,304,2321,331"/>
+<area shape="rect" id="node37" title=" " alt="" coords="2005,379,2099,405"/>
+<area shape="rect" id="node38" title=" " alt="" coords="2860,379,2961,405"/>
+<area shape="rect" id="node40" title=" " alt="" coords="2503,379,2572,405"/>
+<area shape="rect" id="node42" title=" " alt="" coords="2783,304,2961,331"/>
+<area shape="rect" id="node43" title=" " alt="" coords="2683,304,2759,331"/>
+<area shape="rect" id="node35" href="$dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="1125,379,1275,405"/>
+<area shape="rect" id="node36" href="$d9/d02/_ranges_8h.html" title=" " alt="" coords="1082,453,1219,480"/>
+<area shape="rect" id="node39" title=" " alt="" coords="2327,379,2377,405"/>
+<area shape="rect" id="node41" title=" " alt="" coords="1937,379,1980,405"/>
+<area shape="rect" id="node45" href="$de/ddd/_reaction_8h.html" title=" " alt="" coords="1986,155,2115,181"/>
+<area shape="rect" id="node48" title=" " alt="" coords="2331,155,2419,181"/>
+<area shape="rect" id="node49" title=" " alt="" coords="2443,155,2507,181"/>
+<area shape="rect" id="node46" href="$db/dcf/_locator_8h.html" title=" " alt="" coords="2137,229,2255,256"/>
+<area shape="rect" id="node47" title=" " alt="" coords="1989,229,2113,256"/>
 </map>

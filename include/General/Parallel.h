@@ -8,8 +8,8 @@
 #ifndef GENERAL_PARALLEL_H
 #define GENERAL_PARALLEL_H
 
-#include <omp.h>
 #include "General/Meta.h"
+#include <omp.h>
 
 namespace useful {
 inline std::size_t get_thread_num(meta::ParallelOptions::Parallel) {

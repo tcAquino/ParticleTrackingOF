@@ -7,12 +7,12 @@
 #ifndef MultiArray_h
 #define MultiArray_h
 
+#include "General/Modular.h"
 #include <cassert>
 #include <cstddef>
 #include <functional>
 #include <numeric>
 #include <vector>
-#include "General/Modular.h"
 
 namespace useful {
 /** \class MultiArray General/MultiArray.h "General/MultiArray.h"

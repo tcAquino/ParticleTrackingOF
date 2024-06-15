@@ -23,8 +23,8 @@ class TimeGenerator
 #ifndef CTRW_TIMEGENERATOR_H
 #define CTRW_TIMEGENERATOR_H
 
-#include <random>
 #include "General/Useful.h"
+#include <random>
 
 namespace ctrw {
 /** \class TimeGenerator_Step CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"

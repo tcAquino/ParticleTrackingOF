@@ -15,13 +15,15 @@
 #include "PTOF/Useful.h"
 #include <algorithm>
 #include <cstddef>
+#include <fieldTypes.H>
 #include <fstream>
 #include <iterator>
 #include <limits>
+#include <map>
+#include <point.H>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -66,7 +68,7 @@ struct BoundaryCondition {
   }
 
   /** \brief Map names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"reflecting", Type::reflecting},
       {"reacting_reflecting", Type::reacting_reflecting},
       {"periodic", Type::periodic},
@@ -77,7 +79,7 @@ struct BoundaryCondition {
   };
 
   /** \brief Map types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::reflecting, "reflecting"},
       {Type::reacting_reflecting, "reacting_reflecting"},
       {Type::periodic, "periodic"},
@@ -126,7 +128,7 @@ void boundary_absorbing(State &state, Foam::point const &contact_point) {
 */
 inline auto get_boundary_conditions(std::string const &filename,
                                     std::string const &delims = "\t,| ") {
-  std::unordered_map<std::string, std::string> boundary_conditions;
+  std::map<std::string, std::string> boundary_conditions;
   std::string comment_sequence = "#";
 
   auto file = useful::open_read(filename);
@@ -272,7 +274,7 @@ template <typename Locator, typename Store_Info, typename Boundary_Periodic,
 class Boundary_Cases {
 public:
   /** \brief Container type to hold patch names and associated bc type names. */
-  using BCs = std::unordered_map<std::string, std::string>;
+  using BCs = std::map<std::string, std::string>;
 
   /** Constructor
    \param boundary_conditions Patch names and associated  boundary condition
@@ -357,7 +359,7 @@ public:
     }
 
     bool had_effect = 0;
-        
+
     // While some patch is intersected
     while (intersection.hit()) {
       /** Find patch in mesh and associated boundary type name. */
@@ -375,7 +377,7 @@ public:
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
         had_effect = 1;
-        break;        
+        break;
       }
       case BoundaryCondition::Type::reacting_reflecting: {
         _store_info(state, state_old, intersection, _boundary_condition_types,
@@ -478,7 +480,8 @@ public:
         output << std::left << std::setw(width_bc) << bc.second;
       output << "\n";
     }
-    output << "--------------------------------------------------------------\n";
+    output
+        << "--------------------------------------------------------------\n";
   }
 
 private:

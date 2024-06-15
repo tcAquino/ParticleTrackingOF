@@ -22,6 +22,7 @@
 #include <string>
 #include <type_traits>
 #include <vector>
+#include <volFieldsFwd.H>
 
 namespace ptof {
 /** \class MeasurerTime PTOF/Output.h "PTOF/Output.h"

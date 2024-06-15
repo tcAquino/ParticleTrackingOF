@@ -9,8 +9,10 @@
 
 #include "General/Useful.h"
 #include "PTOF/Useful.h"
+#include <Vector2D.H>
 #include <cstddef>
 #include <fieldTypes.H>
+#include <point.H>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>

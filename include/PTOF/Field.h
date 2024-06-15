@@ -9,12 +9,12 @@
 
 #include "General/Useful.h"
 #include "PTOF/Useful.h"
-#include <fieldTypes.H>
-#include <point.H>
-#include <vector.H>
 #include <Vector2D.H>
+#include <fieldTypes.H>
 #include <interpolationCellPoint.H>
+#include <point.H>
 #include <type_traits>
+#include <vector.H>
 
 namespace ptof {
 /** \class VectorField_LinearInterpolation_OF PTOF/Field.h "PTOF/Field.h"

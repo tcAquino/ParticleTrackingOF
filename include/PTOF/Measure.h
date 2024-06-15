@@ -7,8 +7,8 @@
 #ifndef PTOF_MEASURE_H
 #define PTOF_MEASURE_H
 
+#include <map>
 #include <string>
-#include <unordered_map>
 
 namespace ptof {
 /** \struct Measure PTOF/Output.h "PTOF/Output.h"
@@ -58,7 +58,7 @@ struct Measure {
   }
 
   /** Map of names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"position", Type::position},
       {"position_in_regions", Type::position_in_regions},
       {"position_mean", Type::position_mean},
@@ -80,7 +80,7 @@ struct Measure {
       {"absorption_time", Type::absorption_time}};
 
   /** Map of types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::position, "position"},
       {Type::position_in_regions, "position_in_regions"},
       {Type::position_mean, "position_mean"},
@@ -124,11 +124,11 @@ struct MeasureSpacing {
   }
 
   /** Map of names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"linear", Type::linear}, {"log", Type::log}, {"step", Type::step}};
 
   /** Map of types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::linear, "linear"}, {Type::log, "log"}, {Type::step, "step"}};
 };
 
@@ -156,14 +156,14 @@ struct MeasureSpacingUnits {
   }
 
   /** Map of names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"diffusion", Type::diffusion},
       {"advection", Type::advection},
       {"reaction", Type::reaction},
       {"arbitrary", Type::arbitrary}};
 
   /** Map of types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::diffusion, "diffusion"},
       {Type::advection, "advection"},
       {Type::reaction, "reaction"},

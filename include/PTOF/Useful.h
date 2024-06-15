@@ -7,18 +7,18 @@
 #ifndef PTOF_USEFUL_H
 #define PTOF_USEFUL_H
 
-#include <iostream>
-#include <set>
-#include <string>
-#include <type_traits>
-#include <unordered_map>
-#include <fieldTypes.H>
-#include <point.H>
-#include <Vector2D.H>
 #include "CTRW/StateGetter.h"
 #include "General/Operations.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
+#include <Vector2D.H>
+#include <fieldTypes.H>
+#include <iostream>
+#include <map>
+#include <point.H>
+#include <set>
+#include <string>
+#include <type_traits>
 
 namespace ptof {
 /** \struct CheckOptions PTOF/Useful.h "PTOF/Useful.h"
@@ -86,13 +86,13 @@ struct Dynamics {
   }
 
   /** \brief Map names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"transport", Type::transport},
       {"firstpassage", Type::firstpassage},
   };
 
   /** \brief Map types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::transport, "transport"},
       {Type::firstpassage, "firstpassage"},
   };
@@ -120,11 +120,11 @@ struct Periodicity {
   }
 
   /** \brief Map names to types. */
-  inline static const std::unordered_map<std::string, Type> name_to_type{
+  inline static const std::map<std::string, Type> name_to_type{
       {"cartesian", Type::cartesian}, {"symmetryplanes", Type::symmetryplanes}};
 
   /** \brief Map types to names. */
-  inline static const std::unordered_map<Type, std::string> type_to_name{
+  inline static const std::map<Type, std::string> type_to_name{
       {Type::cartesian, "cartesian"}, {Type::symmetryplanes, "symmetryplanes"}};
 };
 
@@ -336,7 +336,7 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
   if (outside(locator(begin, owner_cell)))
     return point;
-  while (outside(locator(point, owner_cell))){
+  while (outside(locator(point, owner_cell))) {
     offset /= 2.;
     point = begin + offset;
   }

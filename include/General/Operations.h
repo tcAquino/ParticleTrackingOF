@@ -14,12 +14,12 @@
 #ifndef GENERAL_OPERATIONS_H
 #define GENERAL_OPERATIONS_H
 
+#include "General/Meta.h"
 #include <cmath>
-#include <stdexcept>
 #include <functional>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
-#include "General/Meta.h"
 
 /** \namespace op Uniform interface for operations on PODs and containers. */
 namespace op {
@@ -554,7 +554,8 @@ void mean(Container_1 const &input_1, Container_2 const &input_2,
           Container_out &output) {
   if constexpr (meta::is_convertible_from_multiplies_v<
                     Container_out, Container_1, Container_2> &&
-                meta::is_convertible_from_multiplies_v<Container_out, double, Container_out>)
+                meta::is_convertible_from_multiplies_v<Container_out, double,
+                                                       Container_out>)
     output = 0.5 * (input_1 + input_2);
   else {
     for (std::size_t ii = 0; ii < input_1.size(); ++ii)
@@ -567,7 +568,8 @@ template <typename Container_1, typename Container_2>
 auto mean(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container_1, Container_1,
                                                        Container_2> &&
-                meta::is_convertible_from_multiplies_v<Container_1, double, Container_1>)
+                meta::is_convertible_from_multiplies_v<Container_1, double,
+                                                       Container_1>)
     return 0.5 * (input_1 + input_2);
   else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
@@ -729,7 +731,9 @@ inline auto dot(double input_1, double input_2) { return input_1 * input_2; }
 inline auto dot(int input_1, int input_2) { return input_1 * input_2; }
 
 /** \brief Dot product. */
-inline auto dot(std::size_t input_1, std::size_t input_2) { return input_1 * input_2; }
+inline auto dot(std::size_t input_1, std::size_t input_2) {
+  return input_1 * input_2;
+}
 
 /** \brief Container of containers dotted into container, \c
  * =sum_j(\input_1)_{ij}(input_2)_j. */
@@ -845,7 +849,9 @@ template <> inline auto project<0, double>(double const &val) { return val; }
 template <> inline auto project<0, int>(int const &val) { return val; }
 
 /** \brief Get component overload to get number itself from a \c size_t . */
-template <> inline auto project<0, std::size_t>(std::size_t const &val) { return val; }
+template <> inline auto project<0, std::size_t>(std::size_t const &val) {
+  return val;
+}
 
 /** \return Factorial of \c nn. */
 inline std::size_t factorial(std::size_t nn) {

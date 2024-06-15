@@ -7,14 +7,14 @@
 #ifndef PTOF_REACTION_H
 #define PTOF_REACTION_H
 
+#include "General/Constants.h"
+#include "PTOF/Locator.h"
+#include "PTOF/Useful.h"
 #include <cmath>
 #include <fieldTypes.H>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "General/Constants.h"
-#include "PTOF/Locator.h"
-#include "PTOF/Useful.h"
 
 namespace ptof {
 /**

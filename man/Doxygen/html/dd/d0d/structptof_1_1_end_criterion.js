@@ -12,6 +12,6 @@ var structptof_1_1_end_criterion =
     [ "exists", "dd/d0d/structptof_1_1_end_criterion.html#a074d012cd1ab92a5ca6c03f3e3b1017f", null ],
     [ "name", "dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b", null ],
     [ "type", "dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062", null ],
-    [ "name_to_type", "dd/d0d/structptof_1_1_end_criterion.html#a355fd58170c228bc1ff0d1d2d1a5acd2", null ],
-    [ "type_to_name", "dd/d0d/structptof_1_1_end_criterion.html#adfd5a03dcb524e639f3d72e090404522", null ]
+    [ "name_to_type", "dd/d0d/structptof_1_1_end_criterion.html#a41ff2814cfc869e01e35389afbf3a573", null ],
+    [ "type_to_name", "dd/d0d/structptof_1_1_end_criterion.html#a64c215415016f2f75b4e7856245d44a9", null ]
 ];

@@ -9,12 +9,12 @@
 #ifndef GENERAL_RANGES_H
 #define GENERAL_RANGES_H
 
+#include "General/Meta.h"
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
-#include "General/Meta.h"
 
 /** \namespace range Numerical sequences with different inter-element spacings.
  */

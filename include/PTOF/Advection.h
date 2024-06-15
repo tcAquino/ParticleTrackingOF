@@ -10,8 +10,8 @@
 #include "PTOF/Field.h"
 #include <IOobject.H>
 #include <fieldTypes.H>
-#include <meshSearch.H>
 #include <utility>
+#include <volFieldsFwd.H>
 
 namespace ptof {
 /**

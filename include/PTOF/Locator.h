@@ -8,8 +8,10 @@
 #define PTOF_LOCATOR_H
 
 #include "PTOF/Useful.h"
+#include <Vector2D.H>
 #include <fieldTypes.H>
-#include <meshSearch.H>
+#include <point.H>
+#include <set>
 
 namespace ptof {
 /** \class Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
@@ -46,15 +48,19 @@ struct Locator_Cell {
           return hint;
 
       if constexpr (SearchOption::neighbor_check_level >= 1)
-        for (auto const &cell_index : mesh().cellCells()[hint])
+        for (auto cell_index : mesh().cellCells()[hint])
           if (mesh().pointInCell(position, cell_index))
             return cell_index;
 
-      if constexpr (SearchOption::neighbor_check_level >= 2)
-        for (auto const &cell_index_1 : mesh().cellCells()[hint])
-          for (auto const &cell_index : mesh().cellCells()[cell_index_1])
-            if (mesh().pointInCell(position, cell_index))
-              return cell_index;
+      if constexpr (SearchOption::neighbor_check_level >= 2) {
+        std::set<Index> second_neighbors;
+        for (auto cell_index_1 : mesh().cellCells()[hint])
+          for (auto cell_index : mesh().cellCells()[cell_index_1])
+            second_neighbors.insert(cell_index);
+        for (auto cell_index : second_neighbors)
+          if (mesh().pointInCell(position, cell_index))
+            return cell_index;
+      }
     }
 
     return mesh_search().findCell(position, hint);

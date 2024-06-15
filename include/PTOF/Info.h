@@ -10,6 +10,7 @@
 #include "General/Useful.h"
 #include <cstddef>
 #include <fieldTypes.H>
+#include <point.H>
 #include <string>
 
 namespace ptof {
