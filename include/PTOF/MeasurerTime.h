@@ -240,7 +240,8 @@ struct MeasurerTime_position_second_moment final
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_second_moment_" + std::to_string(dd) << "\n";
+              << "Position_second_moment_" + std::to_string(dd);
+    _output << "\n";
   }
 
   void operator()(double time) override {
@@ -275,7 +276,8 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_variance_" + std::to_string(dd) << "\n";
+              << "Position_variance_" + std::to_string(dd);
+    _output << "\n";
   }
 
   void operator()(double time) override {
@@ -844,7 +846,8 @@ struct MeasurerTime_position_mean_periodic final
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_mean_" + std::to_string(dd) << "\n";
+              << "Position_mean_" + std::to_string(dd);
+    _output << "\n";
   }
 
   void operator()(double time) override {
@@ -889,7 +892,8 @@ struct MeasurerTime_position_second_moment_periodic final
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_second_moment_" + std::to_string(dd) << "\n";
+              << "Position_second_moment_" + std::to_string(dd);
+    _output << "\n";
   }
 
   void operator()(double time) override {
@@ -934,7 +938,8 @@ struct MeasurerTime_position_variance_periodic final
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_variance_" + std::to_string(dd) << "\n";
+              << "Position_variance_" + std::to_string(dd);
+    _output << "\n";
   }
 
   void operator()(double time) override {
