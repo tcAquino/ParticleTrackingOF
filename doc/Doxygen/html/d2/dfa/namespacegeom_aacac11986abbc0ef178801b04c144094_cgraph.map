@@ -1,0 +1,13 @@
+<map id="geom::reflectOffSphere_outsideToInside" name="geom::reflectOffSphere_outsideToInside">
+<area shape="rect" id="node1" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,150,177,191"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="263,5,354,32"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="719,5,789,32"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a37bee8d9e662c15db127146db832000c" title="Element&#45;wise division by scalar." alt="" coords="225,107,392,133"/>
+<area shape="rect" id="node8" href="$db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3" title="Dot product." alt="" coords="275,157,342,184"/>
+<area shape="rect" id="node9" href="$db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339" title="lambda_1*input_1+lambda_2*input2." alt="" coords="259,208,358,235"/>
+<area shape="rect" id="node10" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="265,259,352,285"/>
+<area shape="rect" id="node11" href="$db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6" title="Element&#45;wise multiplication by scalar." alt="" coords="244,309,373,336"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="461,5,531,32"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="600,5,671,32"/>
+<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#a953f88ae36f4ca19d7462e52c7850ebb" title="Element&#45;wise division by scalar." alt="" coords="440,107,552,133"/>
+</map>

@@ -2,32 +2,44 @@
 GREEN='\033[1;32m'
 RED='\033[1;31m'
 NC='\033[0m'
-if [[ "$#" -eq 1 ]]
+BUILD=release
+if [[ "$#" -eq 2 ]]
+  then
+  if [[ "$2" != "debug" ]] && [[ "$2" != "release" ]]
+  then
+    echo -e "${RED}Build mode should be release or debug, got $2.${NC}"
+    exit 3
+  fi
+  BUILD="$2"
+fi
+PTHBIN_BASE="../bin"
+if [[ "$#" -eq 1 ]] || [[ "$#" -eq 2 ]]
 then
   err=0
-  echo -e "${GREEN}Making ParticleTrackingOF executable for model_$1...${NC}"
-	./set_model.sh $1
-	make ParticleTrackingOF
-  if [[ $? -eq 0 ]]
-  then
-    mv "../bin/ParticleTrackingOF" "../bin/ParticleTrackingOF_$1"
-    echo -e "${GREEN}Done.${NC}"
-  else
-    echo -e "${RED}Failed.${NC}"
-    ((++err))
-  fi
-  echo -e "${GREEN}Making ParticleTrackingOF_TwoPhaseNonStationary executable for model_$1...${NC}"
+  echo -e "${GREEN}Making ParticleTrackingOF executable for model_$1 ($BUILD build)...${NC}"
   ./set_model.sh $1
-  make ParticleTrackingOF_TwoPhaseNonStationary
+  make "BUILD=$BUILD" "PTHBIN_BASE=$PTHBIN_BASE" ParticleTrackingOF
   if [[ $? -eq 0 ]]
   then
-    mv "../bin/ParticleTrackingOF_TwoPhaseNonStationary" "../bin/ParticleTrackingOF_TwoPhaseNonStationary_$1"
+    mv "$PTHBIN_BASE/$BUILD/ParticleTrackingOF" "$PTHBIN_BASE/$BUILD/ParticleTrackingOF_$1"
     echo -e "${GREEN}Done.${NC}"
   else
     echo -e "${RED}Failed.${NC}"
     ((++err))
   fi
-	exit "$err"
+  echo -e "${GREEN}Making ParticleTrackingOF_TwoPhaseNonStationary executable for model_$1 ($BUILD build)...${NC}"
+  ./set_model.sh $1
+  make "BUILD=$BUILD" "PTHBIN_BASE=$PTHBIN_BASE" ParticleTrackingOF_TwoPhaseNonStationary
+  fi 
+  if [[ $? -eq 0 ]]
+  then
+    mv "$PTHBIN_BASE/$BUILD/ParticleTrackingOF_TwoPhaseNonStationary" "$PTHBIN_BASE/$BUILD/ParticleTrackingOF_TwoPhaseNonStationary_$1"
+    echo -e "${GREEN}Done.${NC}"
+  else
+    echo -e "${RED}Failed.${NC}"
+    ((++err))
+  fi
+    exit "$err"
 fi
 echo -e "${RED}Bad parameters.${NC}"
 exit 3

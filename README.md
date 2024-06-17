@@ -11,7 +11,7 @@ A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5 a
 
 ## Documentation
 
-Basic information on code structure, compilation, and execution is given in man/Manual.pdf. Doxygen documentation can be found in man/Doxygen/.
+Basic information on code structure, compilation, and execution is given in doc/Manual.pdf. Doxygen documentation can be found in doc/Doxygen.
 
 ## Citations
 

@@ -1,3 +1,5 @@
+BUILD := release
+
 ifneq ($(findstring darwin,$(WM_ARCH)),)
 	CXX = clang++
 else ifneq ($(findstring linux,$(WM_ARCH)),)
@@ -6,8 +8,13 @@ endif
 PTHOFINC = $(FOAM_SRC)
 PTHOFLIB = $(FOAM_LIBBIN)
 PTH = ../include
-PTHBIN = ../bin
-OPT = -DNDEBUG -O3
+PTHBIN_BASE :=  ../bin
+PTHBIN.release = $(PTHBIN_BASE)/release
+PTHBIN.debug = $(PTHBIN_BASE)/debug
+PTHBIN := $(PTHBIN.$(BUILD))
+OPT.release = -DNDEBUG -O3
+OPT.debug =
+OPT := $(OPT.$(BUILD))
 WFLAGS = -Wall -Wextra -Wno-unused-parameter
 LIB = -L$(PTHOFLIB) -L$(PTHOFLIB)/sys-openmpi 
 INC = -I/usr/local/include -I$(PTH) -I$(PTHOFINC)/finiteVolume/lnInclude -I$(PTHOFINC)/meshTools/lnInclude -I$(PTHOFINC)/OpenFOAM/lnInclude -I$(PTHOFINC)/OSspecific/POSIX/lnInclude
@@ -15,7 +22,9 @@ INC = -I/usr/local/include -I$(PTH) -I$(PTHOFINC)/finiteVolume/lnInclude -I$(PTH
 CXXFLAGS = -std=c++17 -DOPENFOAM=$(WM_PROJECT_VERSION) -DWM_$(WM_PRECISION_OPTION) -DWM_LABEL_SIZE=$(WM_LABEL_SIZE) -DNoRepository $(OPT) $(WFLAGS)
 LFLAGS = -lPstream -lfiniteVolume -lmeshTools -lOpenFOAM -Wl,-undefined,dynamic_lookup
 LFLAGST = $(LFLAGS) -ltwoPhaseProperties
-
+DFLAGS.release =
+DFLAGS.debug = -ggdb3 -D_GLIBCXX_ASSERTIONS -fsanitize=address
+DFLAGS = $(DFLAGS.$(BUILD))
 
 ifeq ($(CXX),g++)
 	PFLAGS += -fopenmp
@@ -36,40 +45,41 @@ ifeq ($(CXX),clang++)
 endif
 
 ParticleTrackingOF : ParticleTrackingOF.o
-	$(CXX) $(LIB) $(WFLAGS) $(OPT) -o ParticleTrackingOF ParticleTrackingOF.o $(LFLAGS)
+	$(CXX) $(LIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF ParticleTrackingOF.o $(LFLAGS)
 	mv ParticleTrackingOF $(PTHBIN)/ParticleTrackingOF
 	rm ParticleTrackingOF.o
 
 ParticleTrackingOF.o : ParticleTrackingOF.cpp
-	$(CXX) $(CXXFLAGS) $(INC) -c $<
+	$(CXX) $(CXXFLAGS) $(DFLAGS) $(INC) -c $<
 
 ParticleTrackingOF_TwoPhaseNonStationary : ParticleTrackingOF_TwoPhaseNonStationary.o
-	$(CXX) $(LIB) $(WFLAGS) $(OPT) -o ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_TwoPhaseNonStationary.o $(LFLAGST)
+	$(CXX) $(LIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_TwoPhaseNonStationary.o $(LFLAGST)
 	mv ParticleTrackingOF_TwoPhaseNonStationary $(PTHBIN)/ParticleTrackingOF_TwoPhaseNonStationary
 	rm ParticleTrackingOF_TwoPhaseNonStationary.o
 
 ParticleTrackingOF_TwoPhaseNonStationary.o : ParticleTrackingOF_TwoPhaseNonStationary.cpp
-	$(CXX) $(CXXFLAGS) $(INC) -c $<
+	$(CXX) $(CXXFLAGS) $(DFLAGS) $(INC) -c $<
 
 ParticleTrackingOF_Parallel : ParticleTrackingOF_Parallel.o
-	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(OPT) -o ParticleTrackingOF_Parallel ParticleTrackingOF_Parallel.o $(LFLAGS) $(PLFLAGS)
+	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_Parallel ParticleTrackingOF_Parallel.o $(LFLAGS) $(PLFLAGS)
 	mv ParticleTrackingOF_Parallel $(PTHBIN)/ParticleTrackingOF_Parallel
 	rm ParticleTrackingOF_Parallel.o
 
 ParticleTrackingOF_Parallel.o : ParticleTrackingOF_Parallel.cpp
-	$(CXX) $(CXXFLAGS) $(PFLAGS) $(INC) $(PINC) -c $<
+	$(CXX) $(CXXFLAGS) $(DFLAGS) $(PFLAGS) $(INC) $(PINC) -c $<
 
 ParticleTrackingOF_TwoPhaseNonStationary_Parallel : ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
-	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(OPT) -o ParticleTrackingOF_TwoPhaseNonStationary_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o $(LFLAGST) $(PLFLAGS)
+	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_TwoPhaseNonStationary_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o $(LFLAGST) $(PLFLAGS)
 	mv ParticleTrackingOF_TwoPhaseNonStationary_Parallel $(PTHBIN)/ParticleTrackingOF_TwoPhaseNonStationary_Parallel
 	rm ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
 
 ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o : ParticleTrackingOF_TwoPhaseNonStationary_Parallel.cpp
-	$(CXX) $(CXXFLAGS) $(PFLAGS) $(INC) $(PINC) -c $< $(PFLAGS) 
+	$(CXX) $(CXXFLAGS) $(DFLAGS) $(PFLAGS) $(INC) $(PINC) -c $< $(PFLAGS) 
+
 
 all : ParticleTrackingOF ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel
-
 
 clean :
 	rm -f ParticleTrackingOF ParticleTrackingOF.o ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_TwoPhaseNonStationary.o ParticleTrackingOF_Parallel ParticleTrackingOF_Parallel.o ParticleTrackingOF_TwoPhaseNonStationary_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
 	rm -f $(PTHBIN)/ParticleTrackingOF*
+
