@@ -229,7 +229,9 @@ public:
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
-    op::plus_inplace(position, op::times(domain_dimensions, projections));
+    auto increment = op::times(domain_dimensions, projections);
+    for (std::size_t dd = 0; dd < increment.size(); ++dd)
+      position[dd] += increment[dd];
   }
 
 private:
@@ -351,7 +353,9 @@ public:
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
-    op::plus_inplace(position, op::times(domain_dimensions, projections));
+    auto increment = op::times(domain_dimensions, projections);
+    for (std::size_t dd = 0; dd < increment.size(); ++dd)
+      position[dd] += increment[dd];
   }
 
 private:

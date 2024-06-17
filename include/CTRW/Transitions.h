@@ -107,7 +107,7 @@ public:
     if constexpr (std::is_same_v<Boundary, geom::Boundary_DoNothing>) {
       _time_step_adaptor(state, _time_generator, _jump_generator);
       double time_increment = time_generator(state);
-      op::plus_inplace(state.position, _jump_generator(state));
+      op::plus_inplace(state.position, _jump_generator(state));      
       state.time += time_increment;
       locate(state);
     } else {

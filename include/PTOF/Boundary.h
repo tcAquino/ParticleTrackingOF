@@ -473,7 +473,7 @@ public:
         1;
     width_bc = std::max(width_bc, int(_boundary_custom.name().length()));
     for (auto const &bc : _boundary_conditions) {
-      std::cout << std::left << std::setw(width_patch) << bc.first;
+      output << std::left << std::setw(width_patch) << bc.first;
       if (bc.second == "custom")
         output << std::left << std::setw(width_bc) << _boundary_custom.name();
       else

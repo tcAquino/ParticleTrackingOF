@@ -18,6 +18,7 @@
 
 #include "General/Operations.h"
 #include <cmath>
+#include <vector>
 
 namespace geom {
 /** \struct SymmetryPlanes_Bcc Geometry/SymmetryPlanes.h

@@ -38,7 +38,7 @@ template <typename Position_t = std::vector<double>> struct Parallelepiped {
 
   /** \return \c true if \p position is inside rectangle, \c false otherwise. */
   template <typename Position> bool inside(Position const &position) const {
-    auto position_helper = operation::minus(position, get_center());
+    auto position_helper = op::minus(position, get_center());
     auto half_dim = get_half_dimensions();
     for (std::size_t dd = 0; dd < dim(); ++dd)
       if (std::abs(position_helper[dd]) > half_dim[dd])
@@ -48,12 +48,12 @@ template <typename Position_t = std::vector<double>> struct Parallelepiped {
 
   /** \return Half the size along each dimension. */
   Position get_half_dimensions() const {
-    return operation::div_scalar(dimensions, 2.);
+    return op::div_scalar(dimensions, 2.);
   }
 
   /** \return Position of rectangle center. */
   Position get_center() const {
-    return operation::plus(corner, get_half_dimensions());
+    return op::plus(corner, get_half_dimensions());
   };
 };
 
@@ -82,8 +82,8 @@ template <typename Position_t = std::vector<double>> struct Sphere {
 
   /** \return \c true if \p position is inside spherer, \c false otherwise. */
   template <typename Position> bool inside(Position const &position) const {
-    auto position_helper = operation::minus(position, center);
-    if (operation::abs_sq(position_helper) > radius * radius)
+    auto position_helper = op::minus(position, center);
+    if (op::abs_sq(position_helper) > radius * radius)
       return false;
     return true;
   }
@@ -162,32 +162,32 @@ void reflectOffSphere_outsideToInside(Position const &position_new,
                                       Sphere const &sphere, Position &reflected,
                                       Position &contact_point) {
   // Vector from outside position to inside position
-  auto insideminusoutside = operation::minus(position_new, position_old);
+  auto insideminusoutside = op::minus(position_new, position_old);
 
   // Vector from outside position to sphere center
-  auto outsideminuscenter = operation::minus(position_old, sphere.center);
+  auto outsideminuscenter = op::minus(position_old, sphere.center);
 
   // Find contact point with sphere
-  double coeff_a = operation::abs_sq(insideminusoutside);
-  double coeff_b = 2. * operation::dot(insideminusoutside, outsideminuscenter);
-  double coeff_c = operation::dot(outsideminuscenter, outsideminuscenter) -
+  double coeff_a = op::abs_sq(insideminusoutside);
+  double coeff_b = 2. * op::dot(insideminusoutside, outsideminuscenter);
+  double coeff_c = op::dot(outsideminuscenter, outsideminuscenter) -
                    sphere.radius * sphere.radius;
   double fraction_to_intersection =
       -(coeff_b + std::sqrt(coeff_b * coeff_b - 4. * coeff_a * coeff_c)) /
       (2. * coeff_a);
-  operation::linearOp(fraction_to_intersection, insideminusoutside,
+  op::linearop(fraction_to_intersection, insideminusoutside,
                       position_old, contact_point);
 
   // Vector from contact point to inside position
-  auto leftover = operation::times_scalar(1. - fraction_to_intersection,
+  auto leftover = op::times_scalar(1. - fraction_to_intersection,
                                           insideminusoutside);
 
   // Compute unit normal to sphere surface at contact
-  auto normal = operation::minus(contact_point, sphere.center);
-  operation::div_scalar_InPlace(normal, sphere.radius);
+  auto normal = op::minus(contact_point, sphere.center);
+  op::div_scalar_inplace(normal, sphere.radius);
 
   // Compute reflected position
-  operation::linearOp(-2. * operation::dot(leftover, normal), normal,
+  op::linearop(-2. * op::dot(leftover, normal), normal,
                       position_new, reflected);
 }
 
@@ -238,49 +238,49 @@ void reflectOffSphere_velocity_outsideToInside(
   double effective_radius = sphere.radius + radius;
 
   // Vector from outside position to inside position
-  auto insideminusoutside = operation::minus(position_new, position_old);
+  auto insideminusoutside = op::minus(position_new, position_old);
 
   // Vector from outside position to sphere center
-  auto outsideminuscenter = operation::minus(position_old, sphere.center);
+  auto outsideminuscenter = op::minus(position_old, sphere.center);
 
   // Find contact point with sphere
-  double coeff_a = operation::abs_sq(insideminusoutside);
-  double coeff_b = 2. * operation::dot(insideminusoutside, outsideminuscenter);
-  double coeff_c = operation::dot(outsideminuscenter, outsideminuscenter) -
+  double coeff_a = op::abs_sq(insideminusoutside);
+  double coeff_b = 2. * op::dot(insideminusoutside, outsideminuscenter);
+  double coeff_c = op::dot(outsideminuscenter, outsideminuscenter) -
                    effective_radius * effective_radius;
   double fraction_to_intersection =
       -(coeff_b + std::sqrt(coeff_b * coeff_b - 4. * coeff_a * coeff_c)) /
       (2. * coeff_a);
-  operation::linearOp(fraction_to_intersection, insideminusoutside,
+  op::linearop(fraction_to_intersection, insideminusoutside,
                       position_old, contact_point);
 
   // Vector from outside position to contact point
   auto to_contact =
-      operation::times_scalar(fraction_to_intersection, insideminusoutside);
+      op::times_scalar(fraction_to_intersection, insideminusoutside);
 
   // Compute unit normal to sphere surface at contact
-  auto normal = operation::minus(contact_point, sphere.center);
-  operation::div_scalar_InPlace(normal, effective_radius);
+  auto normal = op::minus(contact_point, sphere.center);
+  op::div_scalar_inplace(normal, effective_radius);
 
-  time_to_contact = std::sqrt(operation::abs_sq(to_contact) /
-                              operation::abs_sq(velocity_old));
-  operation::linearOp(time_to_contact, acceleration, contact_velocity,
+  time_to_contact = std::sqrt(op::abs_sq(to_contact) /
+                              op::abs_sq(velocity_old));
+  op::linearop(time_to_contact, acceleration, contact_velocity,
                       contact_velocity);
-  operation::linearOp(-2. * operation::dot(contact_velocity, normal), normal,
+  op::linearop(-2. * op::dot(contact_velocity, normal), normal,
                       velocity_old, contact_velocity);
 
   auto normal_vel =
-      operation::times_scalar(operation::dot(contact_velocity, normal), normal);
-  auto tangential_vel = operation::minus(contact_velocity, normal_vel);
-  operation::times_scalar_InPlace(restitution_coeff_norm, normal_vel);
-  operation::times_scalar_InPlace(restitution_coeff_tang, tangential_vel);
-  operation::plus(normal_vel, tangential_vel, contact_velocity);
+      op::times_scalar(op::dot(contact_velocity, normal), normal);
+  auto tangential_vel = op::minus(contact_velocity, normal_vel);
+  op::times_scalar_inplace(restitution_coeff_norm, normal_vel);
+  op::times_scalar_inplace(restitution_coeff_tang, tangential_vel);
+  op::plus(normal_vel, tangential_vel, contact_velocity);
 
   // Compute reflected position and velocity
   double time_leftover = time_step - time_to_contact;
-  operation::linearOp(time_leftover, contact_velocity, contact_point,
+  op::linearop(time_leftover, contact_velocity, contact_point,
                       position_reflected);
-  operation::linearOp(time_leftover, acceleration, contact_velocity,
+  op::linearop(time_leftover, acceleration, contact_velocity,
                       velocity_reflected);
 }
 
