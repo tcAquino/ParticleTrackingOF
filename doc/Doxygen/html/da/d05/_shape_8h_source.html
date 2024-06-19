@@ -206,20 +206,20 @@ $(document).ready(function(){initNavTree('da/d05/_shape_8h_source.html','../../'
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="keywordtype">double</span> fraction_to_intersection =</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      -(coeff_b + <a class="code" href="../../db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e">std::sqrt</a>(coeff_b * coeff_b - 4. * coeff_a * coeff_c)) /</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      (2. * coeff_a);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(fraction_to_intersection, insideminusoutside,</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                      position_old, contact_point);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(fraction_to_intersection, insideminusoutside, position_old,</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;               contact_point);</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="comment">// Vector from contact point to inside position</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keyword">auto</span> leftover = <a class="code" href="../../db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6">op::times_scalar</a>(1. - fraction_to_intersection,</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                                          insideminusoutside);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keyword">auto</span> leftover =</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      <a class="code" href="../../db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6">op::times_scalar</a>(1. - fraction_to_intersection, insideminusoutside);</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  <span class="comment">// Compute unit normal to sphere surface at contact</span></div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keyword">auto</span> normal = <a class="code" href="../../db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd">op::minus</a>(contact_point, sphere.<a class="code" href="../../d0/da4/structgeom_1_1_sphere.html#ada4427efd74639f2f31a7f4fa24771e2">center</a>);</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a37bee8d9e662c15db127146db832000c">op::div_scalar_inplace</a>(normal, sphere.<a class="code" href="../../d0/da4/structgeom_1_1_sphere.html#ace0f5bb19178e0c2ce6e88d4d99a6a26">radius</a>);</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="comment">// Compute reflected position</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(-2. * <a class="code" href="../../db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3">op::dot</a>(leftover, normal), normal,</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                      position_new, reflected);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(-2. * <a class="code" href="../../db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3">op::dot</a>(leftover, normal), normal, position_new,</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;               reflected);</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;}</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Position, <span class="keyword">typename</span> Sphere&gt;</div>
@@ -257,8 +257,8 @@ $(document).ready(function(){initNavTree('da/d05/_shape_8h_source.html','../../'
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordtype">double</span> fraction_to_intersection =</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      -(coeff_b + <a class="code" href="../../db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e">std::sqrt</a>(coeff_b * coeff_b - 4. * coeff_a * coeff_c)) /</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      (2. * coeff_a);</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(fraction_to_intersection, insideminusoutside,</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                      position_old, contact_point);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(fraction_to_intersection, insideminusoutside, position_old,</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;               contact_point);</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="comment">// Vector from outside position to contact point</span></div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keyword">auto</span> to_contact =</div>
@@ -268,47 +268,46 @@ $(document).ready(function(){initNavTree('da/d05/_shape_8h_source.html','../../'
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keyword">auto</span> normal = <a class="code" href="../../db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd">op::minus</a>(contact_point, sphere.<a class="code" href="../../d0/da4/structgeom_1_1_sphere.html#ada4427efd74639f2f31a7f4fa24771e2">center</a>);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a37bee8d9e662c15db127146db832000c">op::div_scalar_inplace</a>(normal, effective_radius);</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  time_to_contact = <a class="code" href="../../db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e">std::sqrt</a>(<a class="code" href="../../db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a">op::abs_sq</a>(to_contact) /</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                              <a class="code" href="../../db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a">op::abs_sq</a>(velocity_old));</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  time_to_contact =</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <a class="code" href="../../db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e">std::sqrt</a>(<a class="code" href="../../db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a">op::abs_sq</a>(to_contact) / <a class="code" href="../../db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a">op::abs_sq</a>(velocity_old));</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(time_to_contact, acceleration, contact_velocity,</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                      contact_velocity);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(-2. * <a class="code" href="../../db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3">op::dot</a>(contact_velocity, normal), normal,</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                      velocity_old, contact_velocity);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;               contact_velocity);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(-2. * <a class="code" href="../../db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3">op::dot</a>(contact_velocity, normal), normal, velocity_old,</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;               contact_velocity);</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keyword">auto</span> normal_vel =</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      <a class="code" href="../../db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6">op::times_scalar</a>(<a class="code" href="../../db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3">op::dot</a>(contact_velocity, normal), normal);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keyword">auto</span> tangential_vel = <a class="code" href="../../db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd">op::minus</a>(contact_velocity, normal_vel);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#af0578f1c211262387290d1cfa4572dcb">op::times_scalar_inplace</a>(restitution_coeff_norm, normal_vel);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#af0578f1c211262387290d1cfa4572dcb">op::times_scalar_inplace</a>(restitution_coeff_tang, tangential_vel);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086">op::plus</a>(normal_vel, tangential_vel, contact_velocity);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="comment">// Compute reflected position and velocity</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  <span class="keywordtype">double</span> time_leftover = time_step - time_to_contact;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(time_leftover, contact_velocity, contact_point,</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                      position_reflected);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(time_leftover, acceleration, contact_velocity,</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                      velocity_reflected);</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Position, <span class="keyword">typename</span> Sphere, <span class="keyword">typename</span> <a class="code" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a4a63e3520e9de1ef10fbba393c84f593">State</a>,</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;          <span class="keyword">typename</span> Acceleration&gt;</div>
-<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="../../d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e">  304</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc">reflectOffSphere_velocity_outsideToInside</a>(</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    Position <span class="keyword">const</span> &amp;position_new, Position <span class="keyword">const</span> &amp;position_old,</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    Position <span class="keyword">const</span> &amp;velocity_old, <a class="code" href="../../d0/da4/structgeom_1_1_sphere.html">Sphere</a> <span class="keyword">const</span> &amp;sphere,</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    Position &amp;position_reflected, Position &amp;velocity_reflected,</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordtype">double</span> time_step, Position <span class="keyword">const</span> &amp;acceleration,</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keywordtype">double</span> restitution_coeff = 1., <span class="keywordtype">double</span> radius = 0.) {</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keyword">auto</span> contact_point(position_new.size());</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keyword">auto</span> contact_velocity(position_new.size());</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keywordtype">double</span> time_to_contact;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <a class="code" href="../../d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc">reflectOffSphere_velocity_outsideToInside</a>(</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      position_new, position_old, velocity_old, sphere, position_reflected,</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;      velocity_reflected, contact_point, contact_velocity, time_to_contact,</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      time_step, acceleration, restitution_coeff, restitution_coeff, radius);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;}</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;} <span class="comment">// namespace geom</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* Shape_h */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keyword">auto</span> normal_vel = <a class="code" href="../../db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6">op::times_scalar</a>(<a class="code" href="../../db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3">op::dot</a>(contact_velocity, normal), normal);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  <span class="keyword">auto</span> tangential_vel = <a class="code" href="../../db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd">op::minus</a>(contact_velocity, normal_vel);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#af0578f1c211262387290d1cfa4572dcb">op::times_scalar_inplace</a>(restitution_coeff_norm, normal_vel);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#af0578f1c211262387290d1cfa4572dcb">op::times_scalar_inplace</a>(restitution_coeff_tang, tangential_vel);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086">op::plus</a>(normal_vel, tangential_vel, contact_velocity);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="comment">// Compute reflected position and velocity</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keywordtype">double</span> time_leftover = time_step - time_to_contact;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(time_leftover, contact_velocity, contact_point,</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;               position_reflected);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  <a class="code" href="../../db/dd7/namespaceop.html#a6f9a742565e3c792a0e61bd38253e339">op::linearop</a>(time_leftover, acceleration, contact_velocity,</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;               velocity_reflected);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Position, <span class="keyword">typename</span> Sphere, <span class="keyword">typename</span> <a class="code" href="../../dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html#a4a63e3520e9de1ef10fbba393c84f593">State</a>,</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;          <span class="keyword">typename</span> Acceleration&gt;</div>
+<div class="line"><a name="l00303"></a><span class="lineno"><a class="line" href="../../d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e">  303</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc">reflectOffSphere_velocity_outsideToInside</a>(</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    Position <span class="keyword">const</span> &amp;position_new, Position <span class="keyword">const</span> &amp;position_old,</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    Position <span class="keyword">const</span> &amp;velocity_old, <a class="code" href="../../d0/da4/structgeom_1_1_sphere.html">Sphere</a> <span class="keyword">const</span> &amp;sphere,</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    Position &amp;position_reflected, Position &amp;velocity_reflected,</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordtype">double</span> time_step, Position <span class="keyword">const</span> &amp;acceleration,</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordtype">double</span> restitution_coeff = 1., <span class="keywordtype">double</span> radius = 0.) {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="keyword">auto</span> contact_point(position_new.size());</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keyword">auto</span> contact_velocity(position_new.size());</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keywordtype">double</span> time_to_contact;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <a class="code" href="../../d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc">reflectOffSphere_velocity_outsideToInside</a>(</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      position_new, position_old, velocity_old, sphere, position_reflected,</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      velocity_reflected, contact_point, contact_velocity, time_to_contact,</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;      time_step, acceleration, restitution_coeff, restitution_coeff, radius);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;}</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;} <span class="comment">// namespace geom</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* Shape_h */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="a_operations_8h_html"><div class="ttname"><a href="../../d7/d14/_operations_8h.html">Operations.h</a></div><div class="ttdoc">Miscelaneous operations on containers.</div></div>
 <div class="ttc" id="anamespacectrw_html"><div class="ttname"><a href="../../d8/d34/namespacectrw.html">ctrw</a></div></div>
 <div class="ttc" id="anamespacegeom_html"><div class="ttname"><a href="../../d2/dfa/namespacegeom.html">geom</a></div><div class="ttdef"><b>Definition:</b> Boundary.h:44</div></div>

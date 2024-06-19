@@ -252,7 +252,8 @@ bool face_center_is_in_cell(Foam::label face, Locator const &locator,
 
 /**
    \brief Compute face center's position if face center is in mesh, owner cell
-center otherwise \param face Mesh face index.
+center otherwise.
+\param face Mesh face index.
 \param locator Object to locate positions in mesh.
 \param cell_hint Hint of face's owner cell.
 \return Position.

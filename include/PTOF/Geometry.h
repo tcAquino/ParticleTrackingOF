@@ -127,8 +127,7 @@ struct Geometry {
                   "\treflecting: Reflecting\n"
                   "\treacting_reflecting: Reflection and surface reaction\n"
                   "\tabsorbing: Absorbing\n"
-                  "\tinfo: Information upon crossing\n"
-                  "\tcustom: ";
+                  "\tinfo: Information upon crossing\n";
     if constexpr (dynamics != Dynamics::Type::firstpassage)
       output << "\tcustom: Reinject according to initial condition\n";
     output
