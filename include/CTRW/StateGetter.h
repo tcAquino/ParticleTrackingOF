@@ -368,11 +368,10 @@ struct Get_time_interp_velocity {
   Getter_velocity get_velocity;
   Getter_position get_position;
 
-  Get_time_interp_velocity(double position,
-                           Getter_velocity &&get_velocity = {},
+  Get_time_interp_velocity(double position, Getter_velocity &&get_velocity = {},
                            Getter_position &&get_position = {})
-      : position{position},
-        get_velocity{std::forward<Getter_velocity>(get_velocity)},
+      : position{position}, get_velocity{std::forward<Getter_velocity>(
+                                get_velocity)},
         get_position{std::forward<Getter_position>(get_position)} {}
 
   template <typename State>

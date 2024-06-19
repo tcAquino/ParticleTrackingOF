@@ -175,20 +175,20 @@ void reflectOffSphere_outsideToInside(Position const &position_new,
   double fraction_to_intersection =
       -(coeff_b + std::sqrt(coeff_b * coeff_b - 4. * coeff_a * coeff_c)) /
       (2. * coeff_a);
-  op::linearop(fraction_to_intersection, insideminusoutside,
-                      position_old, contact_point);
+  op::linearop(fraction_to_intersection, insideminusoutside, position_old,
+               contact_point);
 
   // Vector from contact point to inside position
-  auto leftover = op::times_scalar(1. - fraction_to_intersection,
-                                          insideminusoutside);
+  auto leftover =
+      op::times_scalar(1. - fraction_to_intersection, insideminusoutside);
 
   // Compute unit normal to sphere surface at contact
   auto normal = op::minus(contact_point, sphere.center);
   op::div_scalar_inplace(normal, sphere.radius);
 
   // Compute reflected position
-  op::linearop(-2. * op::dot(leftover, normal), normal,
-                      position_new, reflected);
+  op::linearop(-2. * op::dot(leftover, normal), normal, position_new,
+               reflected);
 }
 
 /** \brief Reflect off sphere exterior (in any dimension).
@@ -251,8 +251,8 @@ void reflectOffSphere_velocity_outsideToInside(
   double fraction_to_intersection =
       -(coeff_b + std::sqrt(coeff_b * coeff_b - 4. * coeff_a * coeff_c)) /
       (2. * coeff_a);
-  op::linearop(fraction_to_intersection, insideminusoutside,
-                      position_old, contact_point);
+  op::linearop(fraction_to_intersection, insideminusoutside, position_old,
+               contact_point);
 
   // Vector from outside position to contact point
   auto to_contact =
@@ -262,15 +262,14 @@ void reflectOffSphere_velocity_outsideToInside(
   auto normal = op::minus(contact_point, sphere.center);
   op::div_scalar_inplace(normal, effective_radius);
 
-  time_to_contact = std::sqrt(op::abs_sq(to_contact) /
-                              op::abs_sq(velocity_old));
+  time_to_contact =
+      std::sqrt(op::abs_sq(to_contact) / op::abs_sq(velocity_old));
   op::linearop(time_to_contact, acceleration, contact_velocity,
-                      contact_velocity);
-  op::linearop(-2. * op::dot(contact_velocity, normal), normal,
-                      velocity_old, contact_velocity);
+               contact_velocity);
+  op::linearop(-2. * op::dot(contact_velocity, normal), normal, velocity_old,
+               contact_velocity);
 
-  auto normal_vel =
-      op::times_scalar(op::dot(contact_velocity, normal), normal);
+  auto normal_vel = op::times_scalar(op::dot(contact_velocity, normal), normal);
   auto tangential_vel = op::minus(contact_velocity, normal_vel);
   op::times_scalar_inplace(restitution_coeff_norm, normal_vel);
   op::times_scalar_inplace(restitution_coeff_tang, tangential_vel);
@@ -279,9 +278,9 @@ void reflectOffSphere_velocity_outsideToInside(
   // Compute reflected position and velocity
   double time_leftover = time_step - time_to_contact;
   op::linearop(time_leftover, contact_velocity, contact_point,
-                      position_reflected);
+               position_reflected);
   op::linearop(time_leftover, acceleration, contact_velocity,
-                      velocity_reflected);
+               velocity_reflected);
 }
 
 /** \brief Reflect off sphere exterior (in any dimension).

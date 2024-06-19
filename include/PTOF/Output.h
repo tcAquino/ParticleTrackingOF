@@ -55,11 +55,10 @@ public:
 
     Measurement(std::string name, std::string field_name, int precision)
         : Measurement{name, field_name, {}, {}, precision} {}
-    
+
     Measurement(std::string name, int precision)
         : Measurement{name, {}, {}, {}, precision} {}
 
-    
     std::string name;
     std::string field_name;
     std::vector<std::size_t> uint_params;
@@ -702,7 +701,8 @@ private:
       case Measure::Type::velocity_gradient_mean: {
         if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
           _output_time.emplace_back(
-              std::make_unique<MeasurerTime_tensor_field_mean<Subject, Geometry>>(
+              std::make_unique<
+                  MeasurerTime_tensor_field_mean<Subject, Geometry>>(
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
                   directories, identifier, "gradU", measurement.precision));
         else
@@ -732,7 +732,7 @@ private:
                 measurement.field_name, measurement.precision));
         break;
       }
-        case Measure::Type::scalar_field_mean: {
+      case Measure::Type::scalar_field_mean: {
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_scalar_field_mean<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -855,8 +855,7 @@ private:
             std::make_unique<
                 MeasurerTime_first_crossing_time<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
-                measurement.uint_params[0],
-                measurement.double_params[0],
+                measurement.uint_params[0], measurement.double_params[0],
                 measurement.precision));
         break;
       }

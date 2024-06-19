@@ -800,7 +800,7 @@ template <typename Subject, typename Geometry>
 MeasurerTime_scalar_field_mean(Subject const &, Geometry const &,
                                Directories const &, std::string const &,
                                std::string const &)
-    ->MeasurerTime_scalar_field_mean<
+    -> MeasurerTime_scalar_field_mean<
         Subject, Geometry,
         ScalarField_LinearInterpolation_OF<Foam::volScalarField,
                                            typename Geometry::Locator const &,
@@ -965,7 +965,9 @@ struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    auto field_mean = mean(_subject, time, [this](State const& state){ return this->_field[state.cell]; });
+    auto field_mean = mean(_subject, time, [this](State const &state) {
+      return this->_field[state.cell];
+    });
     for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
       for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
         _output << std::setw(_column_widths[1]) << field_mean.row(dd1)[dd2];
@@ -1327,7 +1329,8 @@ struct MeasurerTime_first_crossing_time final
     for (auto const &tag_time_mass : _crossing_times_masses) {
       _output << std::setw(_column_widths[0]) << tag_time_mass.second.first
               << std::setw(_column_widths[1]) << tag_time_mass.first
-              << std::setw(_column_widths[2]) << tag_time_mass.second.second << "\n";
+              << std::setw(_column_widths[2]) << tag_time_mass.second.second
+              << "\n";
     }
   }
 

@@ -107,8 +107,8 @@ void plus_scalar_inplace(Container &input, Scalar cc) {
 template <typename Container_1, typename Container_2, typename Container_out>
 void plus(Container_1 const &input_1, Container_2 const &input_2,
           Container_out &output) {
-  if constexpr (meta::is_convertible_from_plus_v<Container_1,
-                Container_2, Container_out>)
+  if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
+                                                 Container_out>)
     output = input_1 + input_2;
   else {
     for (std::size_t ii = 0; ii < output.size(); ++ii)
@@ -144,8 +144,8 @@ void plus_inplace(Container_1 &input_1, Container_2 const &input_2) {
 /** \brief Element-wise subtraction of scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 void minus_scalar(Container const &input, Scalar cc, Container_out &output) {
-  if constexpr (meta::is_convertible_from_minus_v<Container,
-                Scalar, Container_out>)
+  if constexpr (meta::is_convertible_from_minus_v<Container, Scalar,
+                                                  Container_out>)
     output = input - cc;
   else
     for (std::size_t ii = 0; ii < output.size(); ++ii)
@@ -179,8 +179,8 @@ void minus_scalar_inplace(Container &input, Scalar cc) {
 /** \brief Element-wise subtraction from scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 void scalar_minus(Scalar cc, Container const &input, Container_out &output) {
-  if constexpr (meta::is_convertible_from_minus_v<Scalar,
-                Container, Container_out>)
+  if constexpr (meta::is_convertible_from_minus_v<Scalar, Container,
+                                                  Container_out>)
     output = cc - input;
   else {
     for (std::size_t ii = 0; ii < output.size(); ++ii)
@@ -216,8 +216,8 @@ void scalar_minus_inplace(Scalar cc, Container &input) {
 template <typename Container_1, typename Container_2, typename Container_out>
 void minus(Container_1 const &input_1, Container_2 const &input_2,
            Container_out &output) {
-  if constexpr (meta::is_convertible_from_minus_v<Container_1,
-                Container_2, Container_out>)
+  if constexpr (meta::is_convertible_from_minus_v<Container_1, Container_2,
+                                                  Container_out>)
     output = input_1 - input_2;
   else {
     for (std::size_t ii = 0; ii < output.size(); ++ii)
@@ -248,8 +248,8 @@ void minus_inplace(Container_1 &input_1, Container_2 const &input_2) {
 template <typename Container, typename Scalar, typename Container_out>
 void times_scalar(Scalar lambda, Container const &input,
                   Container_out &output) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Scalar,
-                Container, Container_out>)
+  if constexpr (meta::is_convertible_from_multiplies_v<Scalar, Container,
+                                                       Container_out>)
     output = lambda * input;
   else
     for (std::size_t ii = 0; ii < input.size(); ++ii)
@@ -259,8 +259,8 @@ void times_scalar(Scalar lambda, Container const &input,
 /** \brief Element-wise multiplication by scalar. */
 template <typename Container, typename Scalar>
 auto times_scalar(Scalar lambda, Container const &input) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Scalar,
-                Container, Container>)
+  if constexpr (meta::is_convertible_from_multiplies_v<Scalar, Container,
+                                                       Container>)
     return lambda * input;
   if constexpr (meta::is_constructible_from_size_v<Container>) {
     Container output(input.size());
@@ -283,8 +283,8 @@ void times_scalar_inplace(Scalar lambda, Container &input) {
 template <typename Container_1, typename Container_2, typename Container_out>
 void times(Container_1 const &input_1, Container_2 const &input_2,
            Container_out &output) {
-  if constexpr (meta::is_convertible_from_multiplies_v<
-                Container_1, Container_2, Container_out>)
+  if constexpr (meta::is_convertible_from_multiplies_v<Container_1, Container_2,
+                                                       Container_out>)
     output = input_1 * input_2;
   else
     for (std::size_t ii = 0; ii < output.size(); ++ii)
@@ -294,8 +294,8 @@ void times(Container_1 const &input_1, Container_2 const &input_2,
 /** \brief Element-wise multiplication. */
 template <typename Container_1, typename Container_2>
 auto times(Container_1 const &input_1, Container_2 const &input_2) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Container_1,
-                Container_2, Container_1>)
+  if constexpr (meta::is_convertible_from_multiplies_v<Container_1, Container_2,
+                                                       Container_1>)
     return input_1 * input_2;
   else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
@@ -319,8 +319,8 @@ void times_inplace(Container_1 &input_1, Container_2 const &input_2) {
 /** \brief Element-wise division by scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 void div_scalar(Container const &input, Scalar lambda, Container_out &output) {
-  if constexpr (meta::is_convertible_from_divides_v<Container,
-                Scalar, Container_out>)
+  if constexpr (meta::is_convertible_from_divides_v<Container, Scalar,
+                                                    Container_out>)
     output = input / lambda;
   else
     for (std::size_t ii = 0; ii < input.size(); ++ii)
@@ -330,8 +330,8 @@ void div_scalar(Container const &input, Scalar lambda, Container_out &output) {
 /** \brief Element-wise division by scalar. */
 template <typename Container, typename Scalar>
 auto div_scalar(Container const &input, Scalar lambda) {
-  if constexpr (meta::is_convertible_from_divides_v<Container,
-                Scalar, Container>)
+  if constexpr (meta::is_convertible_from_divides_v<Container, Scalar,
+                                                    Container>)
     return input / lambda;
   else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
@@ -356,8 +356,8 @@ void div_scalar_inplace(Container &input, Scalar lambda) {
 template <typename Container_1, typename Container_2, typename Container_out>
 void div(Container_1 const &input_1, Container_2 const &input_2,
          Container_out &output) {
-  if constexpr (meta::is_convertible_from_divides_v<Container_1,
-                Container_2, Container_out>)
+  if constexpr (meta::is_convertible_from_divides_v<Container_1, Container_2,
+                                                    Container_out>)
     output = input_1 / input_2;
   else {
     for (std::size_t ii = 0; ii < output.size(); ++ii)
@@ -395,12 +395,12 @@ template <typename Container_1, typename Scalar_1, typename Container_2,
           typename Scalar_2, typename Container_out>
 void linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
               Container_2 const &input_2, Container_out &output) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Scalar_1,
-                Container_1, Container_1> &&
-                meta::is_convertible_from_multiplies_v<Scalar_2,
-                Container_2, Container_2> &&
-                meta::is_convertible_from_plus_v<Container_1,
-                Container_2, Container_out>)
+  if constexpr (meta::is_convertible_from_multiplies_v<Scalar_1, Container_1,
+                                                       Container_1> &&
+                meta::is_convertible_from_multiplies_v<Scalar_2, Container_2,
+                                                       Container_2> &&
+                meta::is_convertible_from_plus_v<Container_1, Container_2,
+                                                 Container_out>)
     output = lambda_1 * input_1 + lambda_2 * input_2;
   else
     for (size_t ii = 0; ii < output.size(); ++ii)
@@ -412,10 +412,10 @@ template <typename Container_1, typename Scalar_1, typename Container_2,
           typename Scalar_2>
 auto linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
               Container_2 const &input_2) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Scalar_1,
-                Container_1, Container_1> &&
-                meta::is_convertible_from_multiplies_v<Scalar_2,
-                Container_2, Container_2> &&
+  if constexpr (meta::is_convertible_from_multiplies_v<Scalar_1, Container_1,
+                                                       Container_1> &&
+                meta::is_convertible_from_multiplies_v<Scalar_2, Container_2,
+                                                       Container_2> &&
                 meta::is_convertible_from_plus_v<Container_1, Container_2,
                                                  Container_1>)
     return lambda_1 * input_1 + lambda_2 * input_2;
@@ -445,10 +445,10 @@ template <typename Container_1, typename Scalar, typename Container_2,
           typename Container_out>
 void linearop(Scalar lambda, Container_1 const &input_1,
               Container_2 const &input_2, Container_out &output) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Scalar,
-                Container_1, Container_1> &&
-                meta::is_convertible_from_plus_v<Container_1,
-                Container_2, Container_out>)
+  if constexpr (meta::is_convertible_from_multiplies_v<Scalar, Container_1,
+                                                       Container_1> &&
+                meta::is_convertible_from_plus_v<Container_1, Container_2,
+                                                 Container_out>)
     output = lambda * input_1 + input_2;
   else
     for (size_t ii = 0; ii < output.size(); ++ii)
@@ -552,8 +552,8 @@ template <typename Container> void sqrt_inplace(Container &input) {
 template <typename Container_1, typename Container_2, typename Container_out>
 void mean(Container_1 const &input_1, Container_2 const &input_2,
           Container_out &output) {
-  if constexpr (meta::is_convertible_from_plus_v<
-                    Container_1, Container_2, Container_1> &&
+  if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
+                                                 Container_1> &&
                 meta::is_convertible_from_multiplies_v<double, Container_1,
                                                        Container_out>)
     output = 0.5 * (input_1 + input_2);
@@ -567,7 +567,7 @@ void mean(Container_1 const &input_1, Container_2 const &input_2,
 template <typename Container_1, typename Container_2>
 auto mean(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
-                                                       Container_1> &&
+                                                 Container_1> &&
                 meta::is_convertible_from_multiplies_v<double, Container_1,
                                                        Container_1>)
     return 0.5 * (input_1 + input_2);
@@ -860,13 +860,18 @@ auto project(Container const &container, Index dd) {
 }
 
 /** \brief Get component overload to get number itself from a \c double . */
-template <> inline auto project<double>(double const &val, std::size_t) { return val; }
+template <> inline auto project<double>(double const &val, std::size_t) {
+  return val;
+}
 
 /** \brief Get component overload to get number itself from an \c int . */
-template <> inline auto project<int>(int const &val, std::size_t) { return val; }
+template <> inline auto project<int>(int const &val, std::size_t) {
+  return val;
+}
 
 /** \brief Get component overload to get number itself from a \c size_t . */
-template <> inline auto project<std::size_t>(std::size_t const &val, std::size_t) {
+template <>
+inline auto project<std::size_t>(std::size_t const &val, std::size_t) {
   return val;
 }
 
