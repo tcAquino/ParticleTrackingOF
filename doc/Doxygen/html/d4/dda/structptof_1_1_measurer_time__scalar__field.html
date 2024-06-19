@@ -126,11 +126,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1681348f09716bb0a351f5d95f81b98c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#a1681348f09716bb0a351f5d95f81b98c">MeasurerTime_scalar_field</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::string const &amp;field_name, int precision=8)</td></tr>
 <tr class="separator:a1681348f09716bb0a351f5d95f81b98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4c659828333c1e49a0dfe96a4c3ca39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#ae4c659828333c1e49a0dfe96a4c3ca39">operator()</a> (double time) override</td></tr>
-<tr class="memdesc:ae4c659828333c1e49a0dfe96a4c3ca39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make measurement and output, given current time <code>time</code>.  <a href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#ae4c659828333c1e49a0dfe96a4c3ca39">More...</a><br /></td></tr>
+<tr class="memdesc:ae4c659828333c1e49a0dfe96a4c3ca39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make measurement and output or store, given current time <code>time</code>.  <a href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#ae4c659828333c1e49a0dfe96a4c3ca39">More...</a><br /></td></tr>
 <tr class="separator:ae4c659828333c1e49a0dfe96a4c3ca39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a6ab732c737ebf35cbb3003e7c72307"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#a8a6ab732c737ebf35cbb3003e7c72307">update</a> (double time, double time_of_change) override</td></tr>
 <tr class="memdesc:a8a6ab732c737ebf35cbb3003e7c72307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update internal state.  <a href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#a8a6ab732c737ebf35cbb3003e7c72307">More...</a><br /></td></tr>
 <tr class="separator:a8a6ab732c737ebf35cbb3003e7c72307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb7099e11aa1b8bb712ae9a8b835871d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">print</a> ()</td></tr>
+<tr class="memdesc:abb7099e11aa1b8bb712ae9a8b835871d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stored information (do nothing if not overriden).  <a href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">More...</a><br /></td></tr>
+<tr class="separator:abb7099e11aa1b8bb712ae9a8b835871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -406,9 +409,40 @@ template&lt;typename Subject , typename Geometry , typename Field  = ScalarField
 </table>
 </div><div class="memdoc">
 
-<p>Make measurement and output, given current time <code>time</code>. </p>
+<p>Make measurement and output or store, given current time <code>time</code>. </p>
 
 <p>Implements <a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#aed5934ed59db8d23144ece975afdceff">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>.</p>
+
+</div>
+</div>
+<a id="abb7099e11aa1b8bb712ae9a8b835871d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb7099e11aa1b8bb712ae9a8b835871d">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject , typename Geometry &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">ptof::MeasurerTime</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stored information (do nothing if not overriden). </p>
+
+<p>Reimplemented in <a class="el" href="../../dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a0c1182ca35515972e1dc5a7116118248">ptof::MeasurerTime_first_crossing_time&lt; Subject, Geometry &gt;</a>.</p>
 
 </div>
 </div>

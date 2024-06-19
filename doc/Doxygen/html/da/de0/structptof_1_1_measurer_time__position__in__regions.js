@@ -3,6 +3,7 @@ var structptof_1_1_measurer_time__position__in__regions =
     [ "MeasurerTime_position_in_regions", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#aeb096891a3b2ea46c4589e441679ffd5", null ],
     [ "open_write", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#abc72cf9a84deffff2ecc4b95bd22787c", null ],
     [ "operator()", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#aa88d7f9a86c7b99f596594147e7c5904", null ],
+    [ "print", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#abb7099e11aa1b8bb712ae9a8b835871d", null ],
     [ "update", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#a004d1d5b4eb8b6ef9b50c970179716ec", null ],
     [ "_column_widths", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#a3645d7038ad3e2145ea5d5f0d5a583cc", null ],
     [ "_geometry", "da/de0/structptof_1_1_measurer_time__position__in__regions.html#ab3cd07a64c20a701d8ced561cb3d8f3a", null ],

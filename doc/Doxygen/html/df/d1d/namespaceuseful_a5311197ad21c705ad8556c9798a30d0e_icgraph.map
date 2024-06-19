@@ -1,18 +1,17 @@
 <map id="useful::read_first_from_line" name="useful::read_first_from_line">
-<area shape="rect" id="node1" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="569,497,700,539"/>
-<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="227,5,521,47"/>
-<area shape="rect" id="node3" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="302,71,446,112"/>
-<area shape="rect" id="node4" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aca26a897eefb30acfe73c3197b36fb1c" title=" " alt="" coords="281,137,467,193"/>
-<area shape="rect" id="node5" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be" title=" " alt="" coords="277,217,471,273"/>
-<area shape="rect" id="node6" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187" title=" " alt="" coords="262,297,486,353"/>
-<area shape="rect" id="node7" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#acf64472def0b1b10dcb50a21bc49f0fc" title=" " alt="" coords="278,377,470,433"/>
-<area shape="rect" id="node8" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title=" " alt="" coords="286,457,462,499"/>
-<area shape="rect" id="node9" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66" title=" " alt="" coords="278,523,470,593"/>
-<area shape="rect" id="node10" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79" title=" " alt="" coords="281,618,467,674"/>
-<area shape="rect" id="node11" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc" title=" " alt="" coords="283,698,465,754"/>
-<area shape="rect" id="node12" href="$da/dac/structptof_1_1_output_parameters.html#af47778bfc239d2dcb789dae461cdd841" title="Read end criterion from input stream." alt="" coords="287,779,461,820"/>
-<area shape="rect" id="node14" href="$df/d1d/namespaceuseful.html#af5694b6f3384bf45fe3d7f7ea1d982e5" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="309,844,439,885"/>
-<area shape="rect" id="node15" href="$da/dac/structptof_1_1_output_parameters.html#aedb33d453988c13505f0b79a0402fa36" title="Read measure spacing type from input stream." alt="" coords="284,909,464,951"/>
-<area shape="rect" id="node16" href="$da/dac/structptof_1_1_output_parameters.html#abfe930c0a12e406281a9312494abea07" title="Read measure spacing time units from input stream." alt="" coords="287,975,461,1016"/>
-<area shape="rect" id="node13" href="$da/dac/structptof_1_1_output_parameters.html#a5fbbe7fd814d6ce687a4beeaa5bd1f5a" title=" " alt="" coords="5,909,179,951"/>
+<area shape="rect" id="node1" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="348,497,479,539"/>
+<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="5,5,300,47"/>
+<area shape="rect" id="node3" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="81,71,225,112"/>
+<area shape="rect" id="node4" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aca26a897eefb30acfe73c3197b36fb1c" title=" " alt="" coords="59,137,246,193"/>
+<area shape="rect" id="node5" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be" title=" " alt="" coords="55,217,250,273"/>
+<area shape="rect" id="node6" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187" title=" " alt="" coords="41,297,265,353"/>
+<area shape="rect" id="node7" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#acf64472def0b1b10dcb50a21bc49f0fc" title=" " alt="" coords="57,377,249,433"/>
+<area shape="rect" id="node8" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title=" " alt="" coords="65,457,241,499"/>
+<area shape="rect" id="node9" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66" title=" " alt="" coords="57,523,249,593"/>
+<area shape="rect" id="node10" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79" title=" " alt="" coords="59,618,246,674"/>
+<area shape="rect" id="node11" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc" title=" " alt="" coords="61,698,244,754"/>
+<area shape="rect" id="node12" href="$da/dac/structptof_1_1_output_parameters.html#af47778bfc239d2dcb789dae461cdd841" title="Read end criterion from input stream." alt="" coords="66,779,239,820"/>
+<area shape="rect" id="node13" href="$df/d1d/namespaceuseful.html#af5694b6f3384bf45fe3d7f7ea1d982e5" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="87,844,218,885"/>
+<area shape="rect" id="node14" href="$da/dac/structptof_1_1_output_parameters.html#aedb33d453988c13505f0b79a0402fa36" title="Read measure spacing type from input stream." alt="" coords="63,909,243,951"/>
+<area shape="rect" id="node15" href="$da/dac/structptof_1_1_output_parameters.html#abfe930c0a12e406281a9312494abea07" title="Read measure spacing time units from input stream." alt="" coords="66,975,239,1016"/>
 </map>

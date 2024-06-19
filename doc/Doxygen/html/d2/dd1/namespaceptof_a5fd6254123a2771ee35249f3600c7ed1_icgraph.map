@@ -1,19 +1,23 @@
 <map id="ptof::identifier" name="ptof::identifier">
-<area shape="rect" id="node1" title=" " alt="" coords="300,612,413,639"/>
+<area shape="rect" id="node1" title=" " alt="" coords="300,809,413,836"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aedb49ff2414c2b70843429b4d18d243f" title=" " alt="" coords="72,5,185,32"/>
 <area shape="rect" id="node3" href="$d4/d33/structptof_1_1_measurer__absorption__time.html#a9886fe684ec6108f3a93900beb419126" title=" " alt="" coords="8,57,249,98"/>
-<area shape="rect" id="node4" href="$d7/db9/structptof_1_1_measurer_time__mass.html#a30e13cafe450c2153703054127404b65" title=" " alt="" coords="25,122,233,163"/>
-<area shape="rect" id="node5" href="$d3/dc2/structptof_1_1_measurer_time__position.html#afd80441e37b653991d065cde3c163e54" title=" " alt="" coords="37,188,220,244"/>
-<area shape="rect" id="node6" href="$dd/d55/structptof_1_1_measurer_time__position__mean.html#a413324d66f169da3d91420074c7c7231" title=" " alt="" coords="15,268,242,324"/>
-<area shape="rect" id="node7" href="$dd/da6/structptof_1_1_measurer_time__position__mean__periodic.html#ae16cc72aac9676aa7fa70e5697289b13" title=" " alt="" coords="37,349,221,419"/>
-<area shape="rect" id="node8" href="$da/dc0/structptof_1_1_measurer_time__position__periodic.html#ab266ddfc551c844b4cef085178f8fcd5" title=" " alt="" coords="41,443,216,514"/>
-<area shape="rect" id="node9" href="$d2/d8d/structptof_1_1_measurer_time__position__second__moment.html#a20290cdd503608c096047db8f92d0380" title=" " alt="" coords="31,538,227,609"/>
-<area shape="rect" id="node10" href="$d4/db6/structptof_1_1_measurer_time__position__second__moment__periodic.html#ab646df0501b1267351d560bc06f87cd3" title=" " alt="" coords="31,633,227,719"/>
-<area shape="rect" id="node11" href="$d2/d0d/structptof_1_1_measurer_time__position__variance.html#a20db78f3a8a856a1d0d59a58268a7469" title=" " alt="" coords="41,743,216,814"/>
-<area shape="rect" id="node12" href="$d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#a365e63ed898d136d4296700bf1f65d0c" title=" " alt="" coords="5,838,252,909"/>
-<area shape="rect" id="node13" href="$d4/dda/structptof_1_1_measurer_time__scalar__field.html#a59d085f972930ee541348c77d9343489" title=" " alt="" coords="26,933,231,989"/>
-<area shape="rect" id="node14" href="$d9/d35/structptof_1_1_measurer_time__tensor__field.html#afeba0cabd261bb377aac20fc2d495bda" title=" " alt="" coords="25,1013,232,1069"/>
-<area shape="rect" id="node15" href="$db/d15/structptof_1_1_measurer_time__vector__field.html#a8fe5192a06ba2021e71554259ca79dd0" title=" " alt="" coords="25,1093,232,1149"/>
-<area shape="rect" id="node16" href="$db/d74/structptof_1_1_measurer.html#a818dc8c835d45c1b4156e054421ec2d4" title=" " alt="" coords="51,1174,207,1215"/>
-<area shape="rect" id="node17" href="$dc/d05/structptof_1_1_measurer_time.html#abc72cf9a84deffff2ecc4b95bd22787c" title="Open output file for a given output type." alt="" coords="54,1239,203,1281"/>
+<area shape="rect" id="node4" href="$dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#af67e27b00dafea484543b20a18a5735b" title=" " alt="" coords="51,122,207,193"/>
+<area shape="rect" id="node5" href="$d7/db9/structptof_1_1_measurer_time__mass.html#a30e13cafe450c2153703054127404b65" title=" " alt="" coords="25,217,233,258"/>
+<area shape="rect" id="node6" href="$d3/dc2/structptof_1_1_measurer_time__position.html#afd80441e37b653991d065cde3c163e54" title=" " alt="" coords="37,283,220,339"/>
+<area shape="rect" id="node7" href="$dd/d55/structptof_1_1_measurer_time__position__mean.html#a413324d66f169da3d91420074c7c7231" title=" " alt="" coords="15,363,242,419"/>
+<area shape="rect" id="node8" href="$dd/da6/structptof_1_1_measurer_time__position__mean__periodic.html#ae16cc72aac9676aa7fa70e5697289b13" title=" " alt="" coords="37,443,221,514"/>
+<area shape="rect" id="node9" href="$da/dc0/structptof_1_1_measurer_time__position__periodic.html#ab266ddfc551c844b4cef085178f8fcd5" title=" " alt="" coords="41,538,216,609"/>
+<area shape="rect" id="node10" href="$d2/d8d/structptof_1_1_measurer_time__position__second__moment.html#a20290cdd503608c096047db8f92d0380" title=" " alt="" coords="31,633,227,703"/>
+<area shape="rect" id="node11" href="$d4/db6/structptof_1_1_measurer_time__position__second__moment__periodic.html#ab646df0501b1267351d560bc06f87cd3" title=" " alt="" coords="31,728,227,813"/>
+<area shape="rect" id="node12" href="$d2/d0d/structptof_1_1_measurer_time__position__variance.html#a20db78f3a8a856a1d0d59a58268a7469" title=" " alt="" coords="41,838,216,909"/>
+<area shape="rect" id="node13" href="$d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#a365e63ed898d136d4296700bf1f65d0c" title=" " alt="" coords="5,933,252,1003"/>
+<area shape="rect" id="node14" href="$d4/dda/structptof_1_1_measurer_time__scalar__field.html#a59d085f972930ee541348c77d9343489" title=" " alt="" coords="26,1028,231,1084"/>
+<area shape="rect" id="node15" href="$d7/d28/structptof_1_1_measurer_time__scalar__field__mean.html#a81ecf4a494fa02d3d9e1519bbc7a859e" title=" " alt="" coords="8,1108,249,1164"/>
+<area shape="rect" id="node16" href="$d9/d35/structptof_1_1_measurer_time__tensor__field.html#afeba0cabd261bb377aac20fc2d495bda" title=" " alt="" coords="25,1188,232,1244"/>
+<area shape="rect" id="node17" href="$d8/df5/structptof_1_1_measurer_time__tensor__field__mean.html#a6b9983152ba2a97cae65cbea61df2bd8" title=" " alt="" coords="7,1268,250,1324"/>
+<area shape="rect" id="node18" href="$db/d15/structptof_1_1_measurer_time__vector__field.html#a8fe5192a06ba2021e71554259ca79dd0" title=" " alt="" coords="25,1348,232,1404"/>
+<area shape="rect" id="node19" href="$d5/d79/structptof_1_1_measurer_time__vector__field__mean.html#a9eb957641d12672a895a15526c33227e" title=" " alt="" coords="7,1428,250,1484"/>
+<area shape="rect" id="node20" href="$db/d74/structptof_1_1_measurer.html#a818dc8c835d45c1b4156e054421ec2d4" title=" " alt="" coords="51,1509,207,1550"/>
+<area shape="rect" id="node21" href="$dc/d05/structptof_1_1_measurer_time.html#abc72cf9a84deffff2ecc4b95bd22787c" title="Open output file for a given output type." alt="" coords="54,1574,203,1615"/>
 </map>

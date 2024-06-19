@@ -119,7 +119,7 @@ template&lt;typename X , typename Y , typename Z &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">      std::is_convertible_v&lt;X, decltype(std::declval&lt;Y&gt;() * std::declval&lt;Z&gt;())&gt;</div>
+<div class="line">      std::is_convertible_v&lt;decltype(std::declval&lt;X&gt;() * std::declval&lt;Y&gt;()), Z&gt;</div>
 </div><!-- fragment -->
 </div>
 </div>

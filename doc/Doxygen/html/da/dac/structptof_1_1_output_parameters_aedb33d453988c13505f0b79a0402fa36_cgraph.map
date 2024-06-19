@@ -1,9 +1,7 @@
 <map id="ptof::OutputParameters::read_measure_spacing" name="ptof::OutputParameters::read_measure_spacing">
-<area shape="rect" id="node1" title="Read measure spacing type from input stream." alt="" coords="5,156,185,197"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a5311197ad21c705ad8556c9798a30d0e" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="249,97,380,139"/>
-<area shape="rect" id="node6" href="$d4/dd7/structptof_1_1_measure_spacing.html#a16b7443515ba29233e0276818b092e21" title=" " alt="" coords="233,188,396,229"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12" title="Remove comments after escape sequence." alt="" coords="457,5,611,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="444,71,624,112"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="485,137,583,163"/>
-<area shape="rect" id="node7" href="$d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc" title=" " alt="" coords="453,188,615,229"/>
+<area shape="rect" id="node1" title="Read measure spacing type from input stream." alt="" coords="5,71,185,112"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a5311197ad21c705ad8556c9798a30d0e" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="233,71,364,112"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12" title="Remove comments after escape sequence." alt="" coords="425,5,579,47"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="412,71,592,112"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="453,137,551,163"/>
 </map>

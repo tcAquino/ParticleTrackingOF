@@ -30,8 +30,8 @@ struct has_member_impl<Z, types<Ts...>, std::void_t<Z<Ts...>>>
 /** \brief Check if a class has a member. */
 template <template <typename...> typename Z, typename... Ts>
 using has_member = has_member_impl<Z, types<Ts...>>;
-/** \class is_same General/Meta.h "General/Meta.h"
 
+/** \class is_same General/Meta.h "General/Meta.h"
  \class Check if X<Y> is the same type as Z. */
 template <template <typename> typename X, typename Y, typename Z>
 struct is_same {
@@ -50,6 +50,13 @@ template <template <typename> typename X, typename Y> struct is_arithmetic {
 template <template <typename> typename X, typename Y> struct is_integral {
   static constexpr bool value = std::is_integral_v<X<Y>>;
 };
+
+/**\brief Type of \c X::print(). */
+template <typename X> using print_t = decltype(std::declval<X>().print());
+/** \brief Check if a class has method \c print(). */
+template <typename X> using has_print = has_member<print_t, X>;
+/** \brief Check if a class has method \c print(). */
+template <typename X> inline constexpr bool has_print_v = has_print<X>::value;
 
 /**\brief Type of \c X::begin(). */
 template <typename X>
@@ -100,7 +107,7 @@ inline constexpr bool can_call_sqrt_v = can_call_sqrt<void, Args...>::value;
 
 template <typename = void, typename... Args>
 struct can_call_abs : std::false_type {};
-/** \class is_arithmetic General/Meta.h "General/Meta.h"
+/** \class can_call_abs General/Meta.h "General/Meta.h"
  \brief Check whether class can call abs. */
 template <typename... Args>
 struct can_call_abs<std::void_t<decltype(std::abs(std::declval<Args>()...))>,
@@ -278,77 +285,77 @@ inline constexpr bool is_constructible_from_size_v =
     std::conjunction_v<has_size<X>, is_constructible_from_size_impl<X>>;
 
 /** \class is_convertible_from_times_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X=Y*Z is viable. */
+ \brief Check if \c Z=X*Y is viable. */
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_multiplies_impl {
   static constexpr bool value =
-      std::is_convertible_v<X, decltype(std::declval<Y>() * std::declval<Z>())>;
+      std::is_convertible_v<decltype(std::declval<X>() * std::declval<Y>()), Z>;
 };
-/** \brief Check if X = Y*Z is viable. */
+/** \brief Check if \c Z=X*Y is viable. */
 template <typename X, typename Y, typename Z>
 inline constexpr bool is_convertible_from_multiplies_v =
-    std::conjunction_v<has_multiplies<Y, Z>,
+    std::conjunction_v<has_multiplies<X, Y>,
                        is_convertible_from_multiplies_impl<X, Y, Z>>;
 
 /** \class is_convertible_from_plus_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X=Y+Z is viable. */
+ \brief Check if \c Z=X+Y is viable. */
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_plus_impl {
   static constexpr bool value =
-      std::is_convertible_v<X, decltype(std::declval<Y>() + std::declval<Z>())>;
+      std::is_convertible_v<decltype(std::declval<X>() + std::declval<Y>()), Z>;
 };
-/** \brief Check if \c X=Y+Z is viable. */
+/** \brief Check if \c Z=X+Y is viable. */
 template <typename X, typename Y, typename Z>
 inline constexpr bool is_convertible_from_plus_v =
-    std::conjunction_v<has_plus<Y, Z>, is_convertible_from_plus_impl<X, Y, Z>>;
+    std::conjunction_v<has_plus<X, Y>, is_convertible_from_plus_impl<X, Y, Z>>;
 
 /** \class is_convertible_from_minus_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X=Y-Z is viable. */
+ \brief Check if \c Z=X-Y is viable. */
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_minus_impl {
   static constexpr bool value =
-      std::is_convertible_v<X, decltype(std::declval<Y>() - std::declval<Z>())>;
+      std::is_convertible_v<decltype(std::declval<X>() - std::declval<Y>()), Z>;
 };
-/** \brief Check if \c X=Y-Z is viable. */
+/** \brief Check if \c Z=X-Y is viable. */
 template <typename X, typename Y, typename Z>
 inline constexpr bool is_convertible_from_minus_v =
-    std::conjunction_v<has_minus<Y, Z>,
+    std::conjunction_v<has_minus<X, Y>,
                        is_convertible_from_minus_impl<X, Y, Z>>;
 
 /** \class is_convertible_from_divides_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X=Y/Z is viable. */
+ \brief Check if \c Z=X/Y is viable. */
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_divides_impl {
   static constexpr bool value =
-      std::is_convertible_v<X, decltype(std::declval<Y>() / std::declval<Z>())>;
+      std::is_convertible_v<decltype(std::declval<X>() / std::declval<Y>()), Z>;
 };
-/** \brief Check if \c X=Y/Z is viable. */
+/** \brief Check if \c Z=X/Y is viable. */
 template <typename X, typename Y, typename Z>
 inline constexpr bool is_convertible_from_divides_v =
-    std::conjunction_v<has_divides<Y, Z>,
+    std::conjunction_v<has_divides<X, Y>,
                        is_convertible_from_divides_impl<X, Y, Z>>;
 
 /** \class is_convertible_from_abs_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X=std::abs(Y) iis viable. */
+ \brief Check if \c Y=std::abs(X) is viable. */
 template <typename X, typename Y> struct is_convertible_from_abs_impl {
   static constexpr bool value =
-      std::is_convertible_v<X, decltype(std::abs(std::declval<Y>()))>;
+      std::is_convertible_v<decltype(std::abs(std::declval<X>())), Y>;
 };
-/** \brief Check if \c X=std::abs(Y) iis viable. */
+/** \brief Check if \c Y=std::abs(X) is viable. */
 template <typename X, typename Y>
 inline constexpr bool is_convertible_from_abs_v =
-    std::conjunction_v<can_call_abs<Y>, is_convertible_from_abs_impl<X, Y>>;
+    std::conjunction_v<can_call_abs<X>, is_convertible_from_abs_impl<X, Y>>;
 
 /** \class is_convertible_from_sqrt_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X=std::sqrt(Y) is viable. */
+ \brief Check if \c Y=std::sqrt(X) is viable. */
 template <typename X, typename Y> struct is_convertible_from_sqrt_impl {
   static constexpr bool value =
-      std::is_convertible_v<X, decltype(std::sqrt(std::declval<Y>()))>;
+      std::is_convertible_v<decltype(std::sqrt(std::declval<X>())), Y>;
 };
-/** \brief Check if \c X=std::sqrt(Y) is viable. */
+/** \brief Check if \c Y=std::sqrt(X) is viable. */
 template <typename X, typename Y>
 inline constexpr bool is_convertible_from_sqrt_v =
-    std::conjunction_v<can_call_sqrt<Y>, is_convertible_from_sqrt_impl<X, Y>>;
+    std::conjunction_v<can_call_sqrt<X>, is_convertible_from_sqrt_impl<X, Y>>;
 
 /** \class indices General/Meta.h "General/Meta.h"
  \brief Indices for template metamagic. */

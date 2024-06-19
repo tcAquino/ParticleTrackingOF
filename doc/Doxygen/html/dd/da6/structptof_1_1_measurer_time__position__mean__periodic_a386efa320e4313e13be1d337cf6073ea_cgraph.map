@@ -1,5 +1,5 @@
 <map id="ptof::MeasurerTime_position_mean_periodic::operator()" name="ptof::MeasurerTime_position_mean_periodic::operator()">
-<area shape="rect" id="node1" title="Make measurement and output, given current time time." alt="" coords="5,16,189,72"/>
+<area shape="rect" id="node1" title="Make measurement and output or store, given current time time." alt="" coords="5,16,189,72"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#afa9d19c7a5e17ddede0cc867b993ccea" title=" " alt="" coords="237,5,388,32"/>
 <area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a760db0aa4629f0aa166c019c86e5871d" title="Print values in container." alt="" coords="263,56,363,83"/>
 </map>

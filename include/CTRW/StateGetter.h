@@ -88,7 +88,7 @@ struct Get_position_component_arg {
   Get_position_component_arg(std::size_t dd) : dd{dd} {}
 
   template <typename State> auto operator()(State const &state) const {
-    return state.position[dd];
+    return op::project(state.position, dd);
   }
 };
 
@@ -330,9 +330,9 @@ template <typename Getter> Get_old(Getter &&) -> Get_old<Getter>;
 
 /** \class Get_position_interp_velocity CTRW/StateGetter.h "CTRW/StateGetter.h"
  *  \brief Get linearly interpolated position according to velocity in old state
- * given new state and old state. \tparam Getter Object to extract quantity
- * given state. \tparam Getter_velocity Object to extract velocity quantity
- * given state. */
+ * given new state and old state. \tparam Getter Object to extract position
+ * given state. \tparam Getter_velocity Object to extract velocity given state.
+ */
 template <typename Getter = Get_position,
           typename Getter_velocity = Get_velocity>
 struct Get_position_interp_velocity {
@@ -348,8 +348,8 @@ struct Get_position_interp_velocity {
   template <typename State>
   auto operator()(State const &state_new, State const &state_old) const {
     double delta_t = time - state_old.time;
-    auto vel = get_velocity(state_old.velocity);
-    return op::plus(get(state_old.position), vel * delta_t);
+    auto vel = get_velocity(state_old);
+    return op::plus(get(state_old), vel * delta_t);
   }
 };
 template <typename Getter, typename Getter_velocity>
@@ -357,32 +357,56 @@ Get_position_interp_velocity(double, Getter &&, Getter_velocity &&)
     -> Get_position_interp_velocity<Getter, Getter_velocity>;
 
 /** \class Get_time_interp_velocity CTRW/StateGetter.h "CTRW/StateGetter.h"
- *  \brief Get linearly interpolated time according to (a function of) velocity
- * in old state given new state and old state. \tparam Getter Object to extract
- * time quantity given state. \tparam VelocityMapper Object to apply to velocity
- * before interpolating. */
-template <typename Getter = Get_time,
-          typename VelocityMapper = useful::Forward<double>>
+ *  \brief Get linearly interpolated time according to velocity
+ * in old state given new state and old state.
+ * \tparam Getter_velocity Object to extract velocity given state.
+ * \tparam Getter_position Object to extract position given state. */
+template <typename Getter_velocity = Get_velocity,
+          typename Getter_position = Get_position>
 struct Get_time_interp_velocity {
   double position;
-  Getter get;
-  VelocityMapper velocity_mapper;
+  Getter_velocity get_velocity;
+  Getter_position get_position;
 
-  Get_time_interp_velocity(double position, Getter &&get = {},
-                           VelocityMapper &&velocity_mapper = {})
-      : position{position}, Getter{std::forward<Getter>(get)},
-        velocity_mapper{std::forward<VelocityMapper>(velocity_mapper)} {}
+  Get_time_interp_velocity(double position,
+                           Getter_velocity &&get_velocity = {},
+                           Getter_position &&get_position = {})
+      : position{position},
+        get_velocity{std::forward<Getter_velocity>(get_velocity)},
+        get_position{std::forward<Getter_position>(get_position)} {}
 
   template <typename State>
   auto operator()(State const &state_new, State const &state_old) const {
-    double delta_x = position - state_old.position;
-    double vel = velocity_mapper(state_old.velocity);
+    double delta_x = std::abs(position - getter_position(state_old));
+    double vel = op::abs(get_velocity(state_old.velocity));
     return state_old.time + delta_x / vel;
   }
 };
-template <typename Getter, typename VelocityMapper>
-Get_time_interp_velocity(double, Getter &&, VelocityMapper &&)
-    -> Get_time_interp_velocity<Getter, VelocityMapper>;
+template <typename Getter_velocity, typename Getter_position>
+Get_time_interp_velocity(double, Getter_velocity &&, Getter_position &&)
+    -> Get_time_interp_velocity<Getter_velocity, Getter_position>;
+
+/** \class Get_time_interp CTRW/StateGetter.h "CTRW/StateGetter.h"
+ *  \brief Get linearly interpolated time.
+ * \tparam Getter_position Object to extract position given state. */
+template <typename Getter_position = Get_position> struct Get_time_interp {
+  double position;
+  Getter_position get_position;
+
+  Get_time_interp(double position, Getter_position &&get_position = {})
+      : position{position}, get_position{
+                                std::forward<Getter_position>(get_position)} {}
+
+  template <typename State>
+  auto operator()(State const &state_new, State const &state_old) const {
+    double delta_x = std::abs(position - get_position(state_old));
+    double vel = std::abs(get_position(state_new) - get_position(state_old)) /
+                 (state_new.time - state_old.time);
+    return state_old.time + delta_x / vel;
+  }
+};
+template <typename Getter_position>
+Get_time_interp(double, Getter_position &&) -> Get_time_interp<Getter_position>;
 } // namespace ctrw
 
 #endif /* CTRW_STATEGETTER_H */

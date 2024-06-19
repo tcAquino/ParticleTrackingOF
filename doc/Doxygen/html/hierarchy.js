@@ -48,7 +48,6 @@ var hierarchy =
       [ "meta::has_member_impl< Z, types, typename >", "db/d1b/structmeta_1_1has__member__impl.html", null ]
     ] ],
     [ "useful::Forward< Object_Type >", "df/d34/structuseful_1_1_forward.html", null ],
-    [ "useful::Forward< double >", "df/d34/structuseful_1_1_forward.html", null ],
     [ "useful::Forward_ref< Object_Type >", "d6/d37/structuseful_1_1_forward__ref.html", null ],
     [ "ptof::Geometry< dim_val, ParallelOption_t, dynamics, SearchOption >", "dc/d30/structptof_1_1_geometry.html", null ],
     [ "ptof::Geometry_Bcc< ParallelOption_t, periodicity, dynamics, SearchOption >", "da/d9d/structptof_1_1_geometry___bcc.html", null ],
@@ -75,7 +74,8 @@ var hierarchy =
     [ "ctrw::Get_projection< Getter >", "df/de2/structctrw_1_1_get__projection.html", null ],
     [ "ctrw::Get_tag", "d5/daf/structctrw_1_1_get__tag.html", null ],
     [ "ctrw::Get_time", "da/dad/structctrw_1_1_get__time.html", null ],
-    [ "ctrw::Get_time_interp_velocity< Getter, VelocityMapper >", "d5/d10/structctrw_1_1_get__time__interp__velocity.html", null ],
+    [ "ctrw::Get_time_interp< Getter_position >", "d1/d4f/structctrw_1_1_get__time__interp.html", null ],
+    [ "ctrw::Get_time_interp_velocity< Getter_velocity, Getter_position >", "d5/d10/structctrw_1_1_get__time__interp__velocity.html", null ],
     [ "ctrw::Get_velocity", "d1/d4e/structctrw_1_1_get__velocity.html", null ],
     [ "ctrw::Get_velocity_component< dd >", "de/d39/structctrw_1_1_get__velocity__component.html", null ],
     [ "ctrw::Get_velocity_property< Property >", "d9/d1a/structctrw_1_1_get__velocity__property.html", null ],
@@ -123,6 +123,7 @@ var hierarchy =
       [ "ptof::Measurer_absorption_time< Subject, Geometry >", "d4/d33/structptof_1_1_measurer__absorption__time.html", null ]
     ] ],
     [ "ptof::MeasurerTime< Subject, Geometry >", "dc/d05/structptof_1_1_measurer_time.html", [
+      [ "ptof::MeasurerTime_first_crossing_time< Subject, Geometry >", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html", null ],
       [ "ptof::MeasurerTime_mass< Subject, Geometry >", "d7/db9/structptof_1_1_measurer_time__mass.html", null ],
       [ "ptof::MeasurerTime_mass_in_regions< Subject, Geometry, Mask >", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html", null ],
       [ "ptof::MeasurerTime_position< Subject, Geometry >", "d3/dc2/structptof_1_1_measurer_time__position.html", null ],
@@ -136,8 +137,11 @@ var hierarchy =
       [ "ptof::MeasurerTime_position_variance< Subject, Geometry >", "d2/d0d/structptof_1_1_measurer_time__position__variance.html", null ],
       [ "ptof::MeasurerTime_position_variance_periodic< Subject, Geometry >", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html", null ],
       [ "ptof::MeasurerTime_scalar_field< Subject, Geometry, Field >", "d4/dda/structptof_1_1_measurer_time__scalar__field.html", null ],
+      [ "ptof::MeasurerTime_scalar_field_mean< Subject, Geometry, Field >", "d7/d28/structptof_1_1_measurer_time__scalar__field__mean.html", null ],
       [ "ptof::MeasurerTime_tensor_field< Subject, Geometry, Field >", "d9/d35/structptof_1_1_measurer_time__tensor__field.html", null ],
-      [ "ptof::MeasurerTime_vector_field< Subject, Geometry, Field >", "db/d15/structptof_1_1_measurer_time__vector__field.html", null ]
+      [ "ptof::MeasurerTime_tensor_field_mean< Subject, Geometry, Field >", "d8/df5/structptof_1_1_measurer_time__tensor__field__mean.html", null ],
+      [ "ptof::MeasurerTime_vector_field< Subject, Geometry, Field >", "db/d15/structptof_1_1_measurer_time__vector__field.html", null ],
+      [ "ptof::MeasurerTime_vector_field_mean< Subject, Geometry, Field >", "d5/d79/structptof_1_1_measurer_time__vector__field__mean.html", null ]
     ] ],
     [ "ptof::MeasureSpacing", "d4/dd7/structptof_1_1_measure_spacing.html", null ],
     [ "ptof::MeasureSpacingUnits", "d2/d80/structptof_1_1_measure_spacing_units.html", null ],

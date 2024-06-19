@@ -26,11 +26,18 @@ struct Measure {
     mass,                   /**< Time and total mass. */
     mass_in_regions, /**< Time and total mass in regions speciefied by masks. */
     velocity,        /**< Time, particle tags, and local velocities. */
+    velocity_mean,   /**< Time and mean of velocity field over particles. */
     velocity_gradient, /**< Time, particle tags, and local velocity gradients.
                         */
+    velocity_gradient_mean, /**< Time and mean of velocity gradient field over
+                             * particles.
+                             */
     scalar_field, /**< Time, particle tags, and local values of scalar field. */
     vector_field, /**< Time, particle tags, and local values of vector field. */
     tensor_field, /**< Time, particle tags and local values of tensor field. */
+    scalar_field_mean, /**< Time and mean of scalar field over particles. */
+    vector_field_mean, /**< Time and mean of vector field over particles. */
+    tensor_field_mean, /**< Time and mean of tensor field over particles. */
     position_periodic, /**< Time, particle tags, true positions accounting for
                           periodicity, and masses. */
     position_in_regions_periodic, /**< Time, particle tags, true positions
@@ -42,6 +49,8 @@ struct Measure {
                                         accounting for periodicity. */
     position_variance_periodic, /**< Time and true position variance accounting
                                    for periodicity. */
+    first_crossing_time, /**< First crossing time, tag, and mass for specified
+                            position along specified dimension. */
     absorption_time /**< Particle absorption times, tags, and masses at end of
                        dynamics. */
   };
@@ -67,16 +76,22 @@ struct Measure {
       {"mass", Type::mass},
       {"mass_in_regions", Type::mass_in_regions},
       {"velocity", Type::velocity},
+      {"velocity_mean", Type::velocity_mean},
       {"velocity_gradient", Type::velocity_gradient},
+      {"velocity_gradient_mean", Type::velocity_gradient_mean},
       {"scalar_field", Type::scalar_field},
-      {"vector_field", Type::scalar_field},
-      {"tensor_field", Type::scalar_field},
+      {"vector_field", Type::vector_field},
+      {"tensor_field", Type::tensor_field},
+      {"scalar_field_mean", Type::scalar_field_mean},
+      {"vector_field_mean", Type::vector_field_mean},
+      {"tensor_field_mean", Type::scalar_field_mean},
       {"position_periodic", Type::position_periodic},
       {"position_in_regions_periodic", Type::position_in_regions_periodic},
       {"position_mean_periodic", Type::position_mean_periodic},
       {"position_second_moment_periodic",
        Type::position_second_moment_periodic},
       {"position_variance_periodic", Type::position_variance_periodic},
+      {"first_crossing_time", Type::first_crossing_time},
       {"absorption_time", Type::absorption_time}};
 
   /** Map of types to names. */
@@ -89,13 +104,22 @@ struct Measure {
       {Type::mass, "mass"},
       {Type::mass_in_regions, "mass_in_regions"},
       {Type::velocity, "velocity"},
+      {Type::velocity_mean, "velocity_mean"},
       {Type::velocity_gradient, "velocity_gradient"},
+      {Type::velocity_gradient_mean, "velocity_gradient_mean"},
+      {Type::scalar_field, "scalar_field"},
+      {Type::vector_field, "vector_field"},
+      {Type::tensor_field, "tensor_field"},
+      {Type::scalar_field_mean, "scalar_field_mean"},
+      {Type::vector_field_mean, "vector_field_mean"},
+      {Type::scalar_field_mean, "tensor_field_mean"},
       {Type::position_periodic, "position_periodic"},
       {Type::position_in_regions_periodic, "position_in_regions_periodic"},
       {Type::position_mean_periodic, "position_mean_periodic"},
       {Type::position_second_moment_periodic,
        "position_second_moment_periodic"},
       {Type::position_variance_periodic, "position_variance_periodic"},
+      {Type::first_crossing_time, "first_crossing_time"},
       {Type::absorption_time, "absorption_time"}};
 };
 

@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('df/d22/structmeta_1_1is__convertible__
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::abs(Y)</code> iis viable.  
+<p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>Y=std::abs(X)</code> is viable.  
  <a href="../../df/d22/structmeta_1_1is__convertible__from__abs__impl.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/d1b/_general_2_meta_8h_source.html">General/Meta.h</a>&quot;</code></p>
@@ -103,7 +103,7 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><h3>template&lt;typename X, typename Y&gt;<br />
 class meta::is_convertible_from_abs_impl&lt; X, Y &gt;</h3>
 
-<p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>X=std::abs(Y)</code> iis viable. </p>
+<p><a class="el" href="../../de/df2/class_check.html">Check</a> if <code>Y=std::abs(X)</code> is viable. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="aaf8de8faa3caf46b0a52439ec4036fd2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaf8de8faa3caf46b0a52439ec4036fd2">&#9670;&nbsp;</a></span>value</h2>
@@ -127,7 +127,7 @@ template&lt;typename X , typename Y &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">      std::is_convertible_v&lt;X, decltype(std::abs(std::declval&lt;Y&gt;()))&gt;</div>
+<div class="line">      std::is_convertible_v&lt;decltype(std::abs(std::declval&lt;X&gt;())), Y&gt;</div>
 </div><!-- fragment -->
 </div>
 </div>

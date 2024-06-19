@@ -123,8 +123,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeb096891a3b2ea46c4589e441679ffd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/de0/structptof_1_1_measurer_time__position__in__regions.html#aeb096891a3b2ea46c4589e441679ffd5">MeasurerTime_position_in_regions</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::vector&lt; double &gt; thresholds={}, int precision=8)</td></tr>
 <tr class="separator:aeb096891a3b2ea46c4589e441679ffd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa88d7f9a86c7b99f596594147e7c5904"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/de0/structptof_1_1_measurer_time__position__in__regions.html#aa88d7f9a86c7b99f596594147e7c5904">operator()</a> (double time) override</td></tr>
-<tr class="memdesc:aa88d7f9a86c7b99f596594147e7c5904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make measurement and output, given current time <code>time</code>.  <a href="../../da/de0/structptof_1_1_measurer_time__position__in__regions.html#aa88d7f9a86c7b99f596594147e7c5904">More...</a><br /></td></tr>
+<tr class="memdesc:aa88d7f9a86c7b99f596594147e7c5904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make measurement and output or store, given current time <code>time</code>.  <a href="../../da/de0/structptof_1_1_measurer_time__position__in__regions.html#aa88d7f9a86c7b99f596594147e7c5904">More...</a><br /></td></tr>
 <tr class="separator:aa88d7f9a86c7b99f596594147e7c5904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb7099e11aa1b8bb712ae9a8b835871d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">print</a> ()</td></tr>
+<tr class="memdesc:abb7099e11aa1b8bb712ae9a8b835871d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stored information (do nothing if not overriden).  <a href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">More...</a><br /></td></tr>
+<tr class="separator:abb7099e11aa1b8bb712ae9a8b835871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a004d1d5b4eb8b6ef9b50c970179716ec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a004d1d5b4eb8b6ef9b50c970179716ec">update</a> (double time, double time_of_change)</td></tr>
 <tr class="memdesc:a004d1d5b4eb8b6ef9b50c970179716ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update internal state.  <a href="../../dc/d05/structptof_1_1_measurer_time.html#a004d1d5b4eb8b6ef9b50c970179716ec">More...</a><br /></td></tr>
 <tr class="separator:a004d1d5b4eb8b6ef9b50c970179716ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -322,7 +325,7 @@ template&lt;typename Subject , typename Geometry , typename Mask &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Make measurement and output, given current time <code>time</code>. </p>
+<p>Make measurement and output or store, given current time <code>time</code>. </p>
 
 <p>Implements <a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#aed5934ed59db8d23144ece975afdceff">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>.</p>
 <div class="dynheader">
@@ -330,11 +333,42 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/de0/structptof_1_1_measurer_time__position__in__regions_aa88d7f9a86c7b99f596594147e7c5904_cgraph.png" border="0" usemap="#ada/de0/structptof_1_1_measurer_time__position__in__regions_aa88d7f9a86c7b99f596594147e7c5904_cgraph" alt=""/></div>
 <map name="ada/de0/structptof_1_1_measurer_time__position__in__regions_aa88d7f9a86c7b99f596594147e7c5904_cgraph" id="ada/de0/structptof_1_1_measurer_time__position__in__regions_aa88d7f9a86c7b99f596594147e7c5904_cgraph">
-<area shape="rect" title="Make measurement and output, given current time time." alt="" coords="5,16,160,72"/>
+<area shape="rect" title="Make measurement and output or store, given current time time." alt="" coords="5,16,160,72"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="208,5,311,32"/>
 <area shape="rect" href="../../df/d1d/namespaceuseful.html#a760db0aa4629f0aa166c019c86e5871d" title="Print values in container." alt="" coords="209,56,309,83"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="abb7099e11aa1b8bb712ae9a8b835871d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb7099e11aa1b8bb712ae9a8b835871d">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject , typename Geometry &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">ptof::MeasurerTime</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stored information (do nothing if not overriden). </p>
+
+<p>Reimplemented in <a class="el" href="../../dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a0c1182ca35515972e1dc5a7116118248">ptof::MeasurerTime_first_crossing_time&lt; Subject, Geometry &gt;</a>.</p>
 
 </div>
 </div>
@@ -376,7 +410,7 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 <p>Update internal state. </p>
 
-<p>Reimplemented in <a class="el" href="../../d9/d35/structptof_1_1_measurer_time__tensor__field.html#a97e662dd8de90aaba928932d50fcce73">ptof::MeasurerTime_tensor_field&lt; Subject, Geometry, Field &gt;</a>, <a class="el" href="../../db/d15/structptof_1_1_measurer_time__vector__field.html#a17830a05e7eb3c8bfbac7fb56edc634c">ptof::MeasurerTime_vector_field&lt; Subject, Geometry, Field &gt;</a>, and <a class="el" href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#a8a6ab732c737ebf35cbb3003e7c72307">ptof::MeasurerTime_scalar_field&lt; Subject, Geometry, Field &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d8/df5/structptof_1_1_measurer_time__tensor__field__mean.html#a73b4067d797b42f0339a49060f99658e">ptof::MeasurerTime_tensor_field_mean&lt; Subject, Geometry, Field &gt;</a>, <a class="el" href="../../d5/d79/structptof_1_1_measurer_time__vector__field__mean.html#a65a39b9fbe4aad888596355f751a1761">ptof::MeasurerTime_vector_field_mean&lt; Subject, Geometry, Field &gt;</a>, <a class="el" href="../../d7/d28/structptof_1_1_measurer_time__scalar__field__mean.html#a7b5fcf6bb7ff389debbb8d005eb450c4">ptof::MeasurerTime_scalar_field_mean&lt; Subject, Geometry, Field &gt;</a>, <a class="el" href="../../d9/d35/structptof_1_1_measurer_time__tensor__field.html#a97e662dd8de90aaba928932d50fcce73">ptof::MeasurerTime_tensor_field&lt; Subject, Geometry, Field &gt;</a>, <a class="el" href="../../db/d15/structptof_1_1_measurer_time__vector__field.html#a17830a05e7eb3c8bfbac7fb56edc634c">ptof::MeasurerTime_vector_field&lt; Subject, Geometry, Field &gt;</a>, and <a class="el" href="../../d4/dda/structptof_1_1_measurer_time__scalar__field.html#a8a6ab732c737ebf35cbb3003e7c72307">ptof::MeasurerTime_scalar_field&lt; Subject, Geometry, Field &gt;</a>.</p>
 
 </div>
 </div>

@@ -593,7 +593,7 @@ auto cell_ids_region_cartesian(
  \param time Current time.
  \return Number of absorbed particles.
  \note Particle states must implement:
- - info.asorbed [std::size_t]
+ - info.absorbed [std::size_t]
  - time */
 template <typename Subject>
 std::size_t nr_absorbed(Subject const &subject, double time) {
@@ -611,7 +611,7 @@ std::size_t nr_absorbed(Subject const &subject, double time) {
 \return Total mass.
 \note Particle states must implement:
  - mass [double]
- - info.asorbed [std::size_t]
+ - info.absorbed [std::size_t]
  - time */
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
@@ -635,7 +635,7 @@ template <typename Subject> auto mass(Subject const &subject, double time) {
  \note
  -Particle states must implement:
  -# mass [double]
- -# info.asorbed [std::size_t]
+ -# info.absorbed [std::size_t]
  -# time
  - \c tolerances must have at least the same size as \c masks
 */
@@ -664,7 +664,7 @@ auto mass(Subject const &subject, double time, Locator const &locator,
   \return Mean position (weighted by mass).
   \note Particle states must implement:
   - position [for default positition getter]
-  - info.asorbed [std::size_t]
+  - info.absorbed [std::size_t]
   - mass
   - time
 */
@@ -690,7 +690,7 @@ auto position_mean(Subject const &subject, double time,
  \return Second moment of position (weighted by mass).
  \note Particle states must implement:
  - position [for default positition getter]
- - info.asorbed [std::size_t]
+ - info.absorbed [std::size_t]
  - mass
 */
 template <typename Subject, typename GetterPosition = ctrw::Get_position>
@@ -716,7 +716,7 @@ default.
 \return Position variance (weighted by mass).
 \note Particle states must implement:
 - position [for default positition getter]
-- info.asorbed [std::size_t]
+- info.absorbed [std::size_t]
 - mass
 */
 template <typename Subject, typename GetterPosition = ctrw::Get_position>
@@ -724,6 +724,30 @@ auto position_variance(Subject const &subject, double time,
                        GetterPosition getter_position = {}) {
   return position_second_moment(subject, time, getter_position) -
          op::square(position_mean(subject, time, getter_position));
+};
+
+/**
+  \param subject CTRW object.
+  \param time Current time.
+  \param getter_position Get position from state, gets position directly by
+  default.
+  \return Mean field value (weighted by mass).
+  \note Particle states must implement:
+  - info.absorbed [std::size_t]
+  - mass
+  - time
+*/
+template <typename Subject, typename Field,
+          typename GetterPosition = ctrw::Get_position>
+auto mean(Subject const &subject, double time, Field const &field) {
+  decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
+  for (auto const &part : subject.particles()) {
+    auto const &state = part.state_new();
+    if (!state.info.absorbed && part.state_old().time <= time) {
+      field_mean += state.mass * field(state);
+    }
+  }
+  return field_mean / mass(subject, time);
 };
 
 /** \brief Output time information.
@@ -743,7 +767,7 @@ void info_time(OStream &output, ParametersOutput const &params, double time) {
  \param output Output stream. \param subject CTRW object.
  \param time Current time.
  \note Particle states must implement:
- - info.asorbed [std::size_t]
+ - info.absorbed [std::size_t]
 */
 template <typename OStream, typename Subject>
 void info_fraction_not_absorbed(OStream &output, Subject const &subject,

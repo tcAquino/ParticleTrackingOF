@@ -3,6 +3,7 @@ var structptof_1_1_measurer_time__mass__in__regions =
     [ "MeasurerTime_mass_in_regions", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#a2aef94b5977aee29e83df14d036b5c64", null ],
     [ "open_write", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#abc72cf9a84deffff2ecc4b95bd22787c", null ],
     [ "operator()", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#ab8e351d3f04f8ad69de7c19d71d6d826", null ],
+    [ "print", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#abb7099e11aa1b8bb712ae9a8b835871d", null ],
     [ "update", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#a004d1d5b4eb8b6ef9b50c970179716ec", null ],
     [ "_column_widths", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#a596aef38cc4ef27da934df68bc55ff31", null ],
     [ "_geometry", "d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#ab3cd07a64c20a701d8ced561cb3d8f3a", null ],

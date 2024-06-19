@@ -25,6 +25,7 @@ var _state_getter_8h =
     [ "Get_old", "dd/d08/structctrw_1_1_get__old.html", "dd/d08/structctrw_1_1_get__old" ],
     [ "Get_position_interp_velocity", "d7/d1a/structctrw_1_1_get__position__interp__velocity.html", "d7/d1a/structctrw_1_1_get__position__interp__velocity" ],
     [ "Get_time_interp_velocity", "d5/d10/structctrw_1_1_get__time__interp__velocity.html", "d5/d10/structctrw_1_1_get__time__interp__velocity" ],
+    [ "Get_time_interp", "d1/d4f/structctrw_1_1_get__time__interp.html", "d1/d4f/structctrw_1_1_get__time__interp" ],
     [ "Get_from_particle", "dd/ddd/_state_getter_8h.html#a1cef7f4dbbb1e4d7267c11685ebebd8e", null ],
     [ "Get_new", "dd/ddd/_state_getter_8h.html#aec427b9f737bcfdffef3dc35f5f84b5a", null ],
     [ "Get_new_from_particle", "dd/ddd/_state_getter_8h.html#a07f6a96574b48f76d007607885d87542", null ],
@@ -34,6 +35,7 @@ var _state_getter_8h =
     [ "Get_position_periodic", "dd/ddd/_state_getter_8h.html#a46f2e48912ee1439ceee6505b503d23f", null ],
     [ "Get_position_property", "dd/ddd/_state_getter_8h.html#a958f857e422a0d3e7db32e1d7339cdba", null ],
     [ "Get_projection", "dd/ddd/_state_getter_8h.html#af98b15d69c2ab06dec3aabdb6a7c4f11", null ],
-    [ "Get_time_interp_velocity", "dd/ddd/_state_getter_8h.html#a77e2ecb7539820e12b387df042555751", null ],
+    [ "Get_time_interp", "dd/ddd/_state_getter_8h.html#adee9aedbe5bd8e9f606626a5efebe6bd", null ],
+    [ "Get_time_interp_velocity", "dd/ddd/_state_getter_8h.html#a8472ab0ff35c8c12ccc75664f238f0dd", null ],
     [ "Get_velocity_property", "dd/ddd/_state_getter_8h.html#aba0ac2bfe7511a67c2ab51a9e8b898fb", null ]
 ];

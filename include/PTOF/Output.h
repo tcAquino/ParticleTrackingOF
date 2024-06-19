@@ -48,14 +48,22 @@ public:
   double time_increment;
   struct Measurement {
     Measurement(std::string name, std::string field_name = {},
-                int precision = 8)
-        : name{name}, field_name{field_name}, precision{precision} {}
+                std::vector<std::size_t> uint_params = {},
+                std::vector<double> double_params = {}, int precision = 8)
+        : name{name}, field_name{field_name}, uint_params{uint_params},
+          double_params{double_params}, precision{precision} {}
 
+    Measurement(std::string name, std::string field_name, int precision)
+        : Measurement{name, field_name, {}, {}, precision} {}
+    
     Measurement(std::string name, int precision)
-        : name{name}, field_name{}, precision{precision} {}
+        : Measurement{name, {}, {}, {}, precision} {}
 
+    
     std::string name;
     std::string field_name;
+    std::vector<std::size_t> uint_params;
+    std::vector<double> double_params;
     int precision;
   };
   std::vector<Measurement> measurements;
@@ -90,7 +98,7 @@ public:
            "--------------------------------------------------------------\n"
            "- Time units to rescale measurement times:\n"
            "\tdiffusion: Rescale by diffusion time\n"
-           "\tadvection: Rescale by reaction time\n"
+           "\tadvection: Rescale by advection time\n"
            "\treaction: Rescale by reaction time\n"
            "\tarbitrary: Do not rescale\n"
            "- End criterion to finish dynamics:\n"
@@ -127,8 +135,10 @@ public:
            "\tmass_in_regions: Time and total mass within regions specified\n"
            "\t                 by masks\n"
            "\tvelocity: Time, particle tags, and local velocities\n"
+           "\tvelocity: Time and mean of velocity field over particles\n"
            "\tvelocity_gradient: Time, particle tags, and local velocity\n"
-           "\t                   gradients\n"
+           "\tvelocity_gradient_mean: Time and mean of velocity gradient\n"
+           "\t                        field over particles\n"
            "\tscalar_field: Time, particle tags, and local scalar field\n"
            "\t              values (specify field name on same line; field\n"
            "\t              to be read from OF file)\n"
@@ -138,6 +148,15 @@ public:
            "\ttensor_field: Time, particle tags, and local tensor field\n"
            "\t              values (specify field name on same line; field\n"
            "\t              to be read from OF file)\n"
+           "\tscalar_field_mean: Time and mean of scalar field over particles\n"
+           "\t              (specify field name on same line; field to be\n"
+           "\t              read from OF file)\n"
+           "\tvector_field_mean: Time and mean of vector field over particles\n"
+           "\t              (specify field name on same line; field to be\n"
+           "\t              read from OF file)\n"
+           "\ttensor_field_mean: Time and mean of tensor field over particles\n"
+           "\t              (specify field name on same line; field to be\n"
+           "\t              read from OF file)\n"
            "\tposition_periodic: Time, particle tags, true positions\n"
            "\t                   accounting for periodicity, and masses\n"
            "\tposition_in_regions_periodic: Time, particle tags, true\n"
@@ -151,6 +170,10 @@ public:
            "\t                                 periodicity\n"
            "\tposition_variance_periodic: Time and true position variance\n"
            "\t                            accounting for periodicity\n"
+           "\tfirst_crossing_time: Crossing times, particle tags, and\n"
+           "\t                     particle masses at end of dynamics\n"
+           "\t                     (specify dimension and crossing position\n"
+           "\t                     along dimension on same line)\n"
            "\tabsorption_time: Particle absorption times, particle tags, and\n"
            "\t                 particle masses at end of dynamics\n"
            "--------------------------------------------------------------\n";
@@ -292,7 +315,7 @@ public:
       auto split_line = useful::split(line);
       std::size_t required_size = 1;
       if (split_line.size() < required_size)
-        throw std::runtime_error{"Could not parse measurement types"};
+        throw std::runtime_error{"Could not parse measurement type"};
       std::string const &name = split_line[0];
       measurements.emplace_back(name);
       if (name == "scalar_field" || name == "vector_field" ||
@@ -303,6 +326,16 @@ public:
                                    ": "
                                    "Field name not provided"};
         measurements.back().field_name = split_line[1];
+      }
+      if (name == "first_crossing_time") {
+        required_size = 3;
+        if (split_line.size() < required_size)
+          throw std::runtime_error{
+              std::string("Measurement type ") + name +
+              ": "
+              "Crossing dimension and/or position not provided"};
+        measurements.back().uint_params.push_back(std::stoul(split_line[1]));
+        measurements.back().double_params.push_back(std::stod(split_line[2]));
       }
       if (split_line.size() > required_size)
         measurements.back().precision = std::stod(split_line.back());
@@ -461,7 +494,9 @@ public:
   /** \brief Output current information. */
   void operator()() {
     for (auto const &output : _output)
-      output->operator()();
+      output->print();
+    for (auto const &output : _output_time)
+      output->print();
   }
 
   /** \brief Update internal state. */
@@ -639,10 +674,35 @@ private:
                                    "Velocity field not provided"};
         break;
       }
+      case Measure::Type::velocity_mean: {
+        if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+          _output_time.emplace_back(
+              std::make_unique<MeasurerTime_vector_field_mean<
+                  Subject, Geometry, VelocityField const &>>(
+                  subject, velocity_field, geometry, directories, identifier,
+                  "U", measurement.precision));
+        else
+          throw std::runtime_error{std::string("Measurement type ") +
+                                   measurement.name + ": " +
+                                   "Velocity field not provided"};
+        break;
+      }
       case Measure::Type::velocity_gradient: {
         if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_tensor_field<Subject, Geometry>>(
+                  subject, Foam::fvc::grad(velocity_field.field()), geometry,
+                  directories, identifier, "gradU", measurement.precision));
+        else
+          throw std::runtime_error{std::string("Measurement type ") +
+                                   measurement.name + ": " +
+                                   "Velocity field not provided"};
+        break;
+      }
+      case Measure::Type::velocity_gradient_mean: {
+        if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+          _output_time.emplace_back(
+              std::make_unique<MeasurerTime_tensor_field_mean<Subject, Geometry>>(
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
                   directories, identifier, "gradU", measurement.precision));
         else
@@ -668,6 +728,27 @@ private:
       case Measure::Type::tensor_field: {
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_tensor_field<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement.field_name, measurement.precision));
+        break;
+      }
+        case Measure::Type::scalar_field_mean: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_scalar_field_mean<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement.field_name, measurement.precision));
+        break;
+      }
+      case Measure::Type::vector_field_mean: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_vector_field_mean<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement.field_name, measurement.precision));
+        break;
+      }
+      case Measure::Type::tensor_field_mean: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_tensor_field_mean<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
                 measurement.field_name, measurement.precision));
         break;
@@ -752,6 +833,31 @@ private:
                                    measurement.name +
                                    ": "
                                    "Particle state must define periodicity"};
+        break;
+      }
+      case Measure::Type::first_crossing_time: {
+        if (measurement.uint_params.size() == 0)
+          throw std::runtime_error{std::string("Measurement type ") +
+                                   measurement.name +
+                                   ": "
+                                   "Could not read crossing dimension"};
+        throw std::runtime_error{
+            std::string("Measurement type ") + measurement.name +
+            ": "
+            "Crossing dimension higher than simulation dimension"};
+        if (measurement.uint_params[0] >= Geometry::dim)
+          if (measurement.double_params.size() == 0)
+            throw std::runtime_error{std::string("Measurement type ") +
+                                     measurement.name +
+                                     ": "
+                                     "Could not read crossing position"};
+        _output_time.emplace_back(
+            std::make_unique<
+                MeasurerTime_first_crossing_time<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement.uint_params[0],
+                measurement.double_params[0],
+                measurement.precision));
         break;
       }
       case Measure::Type::absorption_time: {

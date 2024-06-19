@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
   std::string params_output_name = argv[arg++];
   std::string dir_output = argv[arg++];
   std::string run_nr = argv[arg++];
-  std::size_t num_threads = strtoul(argv[arg++], NULL, 0);
+  std::size_t num_threads = std::stoul(argv[arg++]);
 
   if (num_threads == 0)
     throw std::runtime_error{"Requested 0 threads"};

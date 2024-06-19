@@ -228,8 +228,11 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1a/structctrw_1_1_get__position__interp__velocity.html">ctrw::Get_position_interp_velocity&lt; Getter, Getter_velocity &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get linearly interpolated position according to velocity in old state given new state and old state.  <a href="../../d7/d1a/structctrw_1_1_get__position__interp__velocity.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d10/structctrw_1_1_get__time__interp__velocity.html">ctrw::Get_time_interp_velocity&lt; Getter, VelocityMapper &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get linearly interpolated time according to (a function of) velocity in old state given new state and old state.  <a href="../../d5/d10/structctrw_1_1_get__time__interp__velocity.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d10/structctrw_1_1_get__time__interp__velocity.html">ctrw::Get_time_interp_velocity&lt; Getter_velocity, Getter_position &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get linearly interpolated time according to velocity in old state given new state and old state.  <a href="../../d5/d10/structctrw_1_1_get__time__interp__velocity.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d4f/structctrw_1_1_get__time__interp.html">ctrw::Get_time_interp&lt; Getter_position &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get linearly interpolated time.  <a href="../../d1/d4f/structctrw_1_1_get__time__interp.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -269,9 +272,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ae666336630f121f84a0212482d940247"><td class="memTemplParams" colspan="2">template&lt;typename Getter , typename Getter_velocity &gt; </td></tr>
 <tr class="memitem:ae666336630f121f84a0212482d940247"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d34/namespacectrw.html#ae666336630f121f84a0212482d940247">ctrw::Get_position_interp_velocity</a> (double, Getter &amp;&amp;, Getter_velocity &amp;&amp;) -&gt; Get_position_interp_velocity&lt; Getter, Getter_velocity &gt;</td></tr>
 <tr class="separator:ae666336630f121f84a0212482d940247"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77e2ecb7539820e12b387df042555751"><td class="memTemplParams" colspan="2">template&lt;typename Getter , typename VelocityMapper &gt; </td></tr>
-<tr class="memitem:a77e2ecb7539820e12b387df042555751"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d34/namespacectrw.html#a77e2ecb7539820e12b387df042555751">ctrw::Get_time_interp_velocity</a> (double, Getter &amp;&amp;, VelocityMapper &amp;&amp;) -&gt; Get_time_interp_velocity&lt; Getter, VelocityMapper &gt;</td></tr>
-<tr class="separator:a77e2ecb7539820e12b387df042555751"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8472ab0ff35c8c12ccc75664f238f0dd"><td class="memTemplParams" colspan="2">template&lt;typename Getter_velocity , typename Getter_position &gt; </td></tr>
+<tr class="memitem:a8472ab0ff35c8c12ccc75664f238f0dd"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d34/namespacectrw.html#a8472ab0ff35c8c12ccc75664f238f0dd">ctrw::Get_time_interp_velocity</a> (double, Getter_velocity &amp;&amp;, Getter_position &amp;&amp;) -&gt; Get_time_interp_velocity&lt; Getter_velocity, Getter_position &gt;</td></tr>
+<tr class="separator:a8472ab0ff35c8c12ccc75664f238f0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee9aedbe5bd8e9f606626a5efebe6bd"><td class="memTemplParams" colspan="2">template&lt;typename Getter_position &gt; </td></tr>
+<tr class="memitem:adee9aedbe5bd8e9f606626a5efebe6bd"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d34/namespacectrw.html#adee9aedbe5bd8e9f606626a5efebe6bd">ctrw::Get_time_interp</a> (double, Getter_position &amp;&amp;) -&gt; Get_time_interp&lt; Getter_position &gt;</td></tr>
+<tr class="separator:adee9aedbe5bd8e9f606626a5efebe6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handlers to extract information from particles and particle states. </p>

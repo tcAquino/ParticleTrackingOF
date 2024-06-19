@@ -4,6 +4,7 @@ var structptof_1_1_measurer_time__position__variance__periodic =
     [ "MeasurerTime_position_variance_periodic", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#a365e63ed898d136d4296700bf1f65d0c", null ],
     [ "open_write", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#abc72cf9a84deffff2ecc4b95bd22787c", null ],
     [ "operator()", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#a18c8e628cf9baa8142be0614bbf3ba6e", null ],
+    [ "print", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#abb7099e11aa1b8bb712ae9a8b835871d", null ],
     [ "update", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#a004d1d5b4eb8b6ef9b50c970179716ec", null ],
     [ "_column_widths", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#ab024c71fe5b0f56f407cf6fa17c7502b", null ],
     [ "_geometry", "d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#ab3cd07a64c20a701d8ced561cb3d8f3a", null ],

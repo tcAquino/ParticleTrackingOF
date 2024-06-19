@@ -33,6 +33,7 @@ var _p_t_o_f_2_useful_8h =
     [ "make_point", "d0/df6/_p_t_o_f_2_useful_8h.html#a17099482c96df7b882205c050f9aef1d", null ],
     [ "mass", "d0/df6/_p_t_o_f_2_useful_8h.html#a5bc754535412500a84cc47c7f639cc8e", null ],
     [ "mass", "d0/df6/_p_t_o_f_2_useful_8h.html#aeb5bb66c83bf12e835f7a9efa2c3a5c9", null ],
+    [ "mean", "d0/df6/_p_t_o_f_2_useful_8h.html#ab8774a56d0a39b0593063f39d575aaea", null ],
     [ "nr_absorbed", "d0/df6/_p_t_o_f_2_useful_8h.html#a264d1e003d2d971ee7b42743e8db9fa8", null ],
     [ "offset_backward_cell", "d0/df6/_p_t_o_f_2_useful_8h.html#aa74dcf8fcf3cb084637b7f209ff24fc4", null ],
     [ "offset_backward_cell_keep_inside", "d0/df6/_p_t_o_f_2_useful_8h.html#a403f2134a620767dd025954e733b68c5", null ],

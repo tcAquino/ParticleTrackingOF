@@ -25,7 +25,7 @@ template <typename Subject, typename Geometry> struct Measurer {
   virtual ~Measurer() { _output.close(); }
 
   /** \brief Make measurement and output. */
-  virtual void operator()() = 0;
+  virtual void print() = 0;
 
 protected:
   /** Constructor.
@@ -65,7 +65,7 @@ protected:
 };
 
 /** \class Measurer_absorption_time PTOF/Output.h "PTOF/Output.h"
- *  \brief  Output absorption times, tags, masses of absorbed particles. */
+ *  \brief  Output absorption times, tags, and masses of absorbed particles. */
 template <typename Subject, typename Geometry>
 struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
   Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
@@ -83,7 +83,7 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
             << "\n";
   }
 
-  void operator()() override {
+  void print() override {
     for (auto const &part : _subject.particles()) {
       auto const &state = part.state_new();
       if (state.info.absorbed)
