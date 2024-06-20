@@ -346,9 +346,7 @@ public:
                 unit_normal_outward(intersection.index(), _locator.mesh())) <
                    0. &&
                op::abs_sq(make_point(state_old.position) -
-                          intersection.point()) <
-                   std::numeric_limits<double>::epsilon() *
-                       std::numeric_limits<double>::epsilon()) {
+                          intersection.point()) < tol_sq) {
       // If the final state is inside, ignore intersection if at the start
       // point and find the next intersection with a boundary patch
       auto old_intersection = intersection;
@@ -442,6 +440,16 @@ public:
               intersection, old_intersection.point(), state) ||
           intersection.index() == old_intersection.index())
         intersection.setMiss();
+
+      // Sometimes there is not enough precision to ensure that the final state
+      // is inside the mesh, even if no intersections are found. If so, place
+      // the final state at the last intersection to avoid breaking
+      if (!intersection.hit()) {
+        state.cell = _locator(state);
+        if (outside(state.cell))
+          state.set_position(old_intersection.point());
+        break;
+      }
     }
 
     return had_effect;
@@ -497,6 +505,8 @@ private:
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
   Boundary_Custom
       _boundary_custom; /**< Boundary object to handle 'custom' bc type. */
+  double tol_sq = std::numeric_limits<double>::epsilon() *
+                  std::numeric_limits<double>::epsilon();
 
 public:
   SurfaceReaction

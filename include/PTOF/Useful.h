@@ -277,7 +277,7 @@ auto adjusted_face_center(Foam::label face, Locator const &locator,
 
 /** \brief Small offset forward given current face and direction.*/
 template <typename Locator>
-Foam::vector offset_face(Foam::point const &begin, Foam::label face,
+Foam::vector offset_face(Foam::label face,
                          Foam::vector const &direction,
                          Locator const &locator) {
   auto const &mesh = locator.mesh();
@@ -298,8 +298,7 @@ Foam::vector offset_face(Foam::point const &begin, Foam::label face,
 template <typename Locator>
 Foam::vector offset_face(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
-  return offset_face(face_center(face, mesh), face,
-                     unit_normal_outward(face, mesh), locator);
+  return offset_face(face, unit_normal_outward(face, mesh), locator);
 }
 
 /**
@@ -314,8 +313,7 @@ template <typename Locator>
 Foam::point offset_forward_face(Foam::point const &begin, Foam::label face,
                                 Foam::vector const &direction,
                                 Locator const &locator) {
-  return begin + offset_face(begin, face, direction, locator);
-  ;
+  return begin + offset_face(face, direction, locator);
 }
 
 /**
@@ -332,7 +330,7 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
                                             Foam::label face,
                                             Foam::vector const &direction,
                                             Locator const &locator) {
-  auto offset = offset_face(begin, face, direction, locator);
+  auto offset = offset_face(face, direction, locator);
   auto point = begin + offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
   auto begin_cell = locator(begin, owner_cell);
@@ -375,7 +373,7 @@ Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
                                              Foam::label face,
                                              Foam::vector const &direction,
                                              Locator const &locator) {
-  auto offset = offset_face(begin, face, direction, locator);
+  auto offset = offset_face(face, direction, locator);
   auto point = begin - offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
   auto begin_cell = locator(begin, owner_cell);
