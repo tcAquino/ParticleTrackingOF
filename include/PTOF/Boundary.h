@@ -347,13 +347,15 @@ public:
                        std::numeric_limits<double>::epsilon()) {
       // If the final state is inside, ignore intersection if at the start
       // point and find the next intersection with a boundary patch
-      auto old_intersection_point = intersection.point();
+      auto old_intersection = intersection;
       intersection = next_intersection(intersection, make_point(state.position),
                                        state.cell);
 
-      // Ignore new intersection if offset went beyond final point
+      // Ignore new intersection if offset went beyond final point or if there
+      // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
-              intersection, old_intersection_point, state))
+              intersection, old_intersection.point(), state) ||
+          intersection.index() == old_intersection.index())
         intersection.setMiss();
     }
 
@@ -429,12 +431,14 @@ public:
         break;
 
       // Find the next intersection with a boundary patch
-      auto old_intersection_point = intersection.point();
+      auto old_intersection = intersection;
       intersection = next_intersection(intersection, make_point(state.position),
                                        state.cell);
-      // Ignore new intersection if offset went beyond final point
+      // Ignore new intersection if offset went beyond final point or if there
+      // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
-              intersection, old_intersection_point, state))
+              intersection, old_intersection.point(), state) ||
+          intersection.index() == old_intersection.index())
         intersection.setMiss();
     }
 
@@ -535,7 +539,7 @@ private:
   template <typename Intersection, typename State>
   auto next_intersection_is_beyond_final_point(
       Intersection const &next_intersection,
-      Foam::vector const &old_intersection_point, State const &state) {
+      Foam::point const &old_intersection_point, State const &state) {
     return next_intersection.hit() &&
            ((next_intersection.point() - old_intersection_point) &
             (make_point(state.position) - next_intersection.point())) < 0.;

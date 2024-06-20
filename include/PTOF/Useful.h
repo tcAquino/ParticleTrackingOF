@@ -320,7 +320,7 @@ Foam::point offset_forward_face(Foam::point const &begin, Foam::label face,
 
 /**
  \brief Small offset forward from a point on a face.
- \details If begin point is in mesh, guarantee offset point in mesh.
+ \details If begin point is in mesh, guarantee offset point in same cell.
  \param begin Starting point (on a face).
  \param face Mesh face index where \p begin is located.
  \param direction Direction of offset.
@@ -335,12 +335,14 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
   auto offset = offset_face(begin, face, direction, locator);
   auto point = begin + offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
-  if (outside(locator(begin, owner_cell)))
+  auto begin_cell = locator(begin, owner_cell);
+  if (outside(begin_cell))
     return point;
-  while (outside(locator(point, owner_cell))) {
+  while (locator(point, begin_cell) != begin_cell) {
     offset /= 2.;
     point = begin + offset;
   }
+  
   return point;
 }
 
@@ -361,7 +363,7 @@ Foam::point offset_backward_face(Foam::point const &begin, Foam::label face,
 
 /**
  \brief Small offset backward from a point on a face.
- \details If begin point is in mesh, guarantee offset point in mesh.
+ \details If begin point is in mesh, guarantee offset point in same cell.
  \param begin Starting point (on a face).
  \param face Mesh face index where \p begin is located.
  \param direction Direction of offset.
@@ -376,9 +378,10 @@ Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
   auto offset = offset_face(begin, face, direction, locator);
   auto point = begin - offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
-  if (locator(begin, owner_cell) < 0)
+  auto begin_cell = locator(begin, owner_cell);
+  if (outside(begin_cell))
     return point;
-  while (locator(point, owner_cell) < 0) {
+  while (locator(point, begin_cell) != begin_cell) {
     offset /= 2.;
     point = begin - offset;
   }
@@ -446,7 +449,7 @@ Foam::point offset_forward_cell(Foam::point const &begin, Foam::label cell,
 
 /** Small offset forward
  \brief Small offset forward.
- \details If begin point is in mesh, guarantee offset point in mesh.
+ \details If begin point is in mesh, guarantee offset point in same cell.
  \param begin Starting point in cell.
  \param cell Hint for cell index where \p begin is located.
  \param direction Direction of offset.
@@ -460,9 +463,9 @@ Foam::point offset_forward_cell_keep_inside(Foam::point const &begin,
                                             Locator const &locator) {
   auto offset = offset_cell(begin, cell, direction, locator);
   auto point = begin + offset;
-  if (locator(begin, cell) < 0)
+  if (outside(cell))
     return point;
-  while (locator(point, cell) < 0) {
+  while (locator(point, cell) != cell) {
     offset /= 2.;
     point = begin + offset;
   }
@@ -486,7 +489,7 @@ Foam::point offset_backward_cell(Foam::point const &begin, Foam::label cell,
 
 /**
  \brief Small offset backward.
- \details If begin point is in mesh, guarantee offset point in mesh.
+ \details If begin point is in mesh, guarantee offset point in same cell.
  \param begin Starting point in cell.
  \param cell Hint for cell index where \p begin is located.
  \param direction Direction of offset.
@@ -500,9 +503,9 @@ Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
                                              Locator const &locator) {
   auto offset = offset_cell(begin, cell, direction, locator);
   auto point = begin - offset;
-  if (outside(locator(begin, cell)))
+  if (outside(cell))
     return point;
-  while (outside(locator(point, cell))) {
+  while (locator(point, cell) != cell) {
     offset /= 2.;
     point = begin - offset;
   }
