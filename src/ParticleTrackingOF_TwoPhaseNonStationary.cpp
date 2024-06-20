@@ -21,7 +21,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_bcc_symmetryplanes_advection;
+  using namespace ptof::model_advection_diffusion_2d;
   using Phase = ptof::Phase;
 
   std::string banner =
