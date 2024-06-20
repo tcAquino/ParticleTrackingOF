@@ -334,10 +334,10 @@ public:
         // If the final state is outside, avoid breaking by checking for
         // intersections with a small backwards offset
         intersection = _locator.mesh_search().intersection(
-            offset_backward_cell_keep_inside(
-                make_point(state_old.position), state_old.cell,
-                make_point(state.position) - make_point(state_old.position),
-                _locator),
+            offset_backward_cell(make_point(state_old.position), state_old.cell,
+                                 make_point(state.position) -
+                                     make_point(state_old.position),
+                                 _locator),
             make_point(state.position));
       }
     } else if (intersection.hit() &&
@@ -352,9 +352,8 @@ public:
                                        state.cell);
 
       // Ignore new intersection if offset went beyond final point
-      if (intersection.hit() &&
-          ((intersection.point() - old_intersection_point) &
-           (make_point(state.position) - old_intersection_point)) < 0.)
+      if (next_intersection_is_beyond_final_point(
+              intersection, old_intersection_point, state))
         intersection.setMiss();
     }
 
@@ -434,9 +433,8 @@ public:
       intersection = next_intersection(intersection, make_point(state.position),
                                        state.cell);
       // Ignore new intersection if offset went beyond final point
-      if (intersection.hit() &&
-          ((intersection.point() - old_intersection_point) &
-           (make_point(state.position) - old_intersection_point)) < 0.)
+      if (next_intersection_is_beyond_final_point(
+              intersection, old_intersection_point, state))
         intersection.setMiss();
     }
 
@@ -532,6 +530,15 @@ private:
                                         intersection.index(),
                                         end - intersection.point(), _locator),
         end);
+  }
+
+  template <typename Intersection, typename State>
+  auto next_intersection_is_beyond_final_point(
+      Intersection const &next_intersection,
+      Foam::vector const &old_intersection_point, State const &state) {
+    return next_intersection.hit() &&
+           ((next_intersection.point() - old_intersection_point) &
+            (make_point(state.position) - next_intersection.point())) < 0.;
   }
 };
 template <typename Locator, typename Store_Info, typename Boundary_Periodic,

@@ -500,9 +500,9 @@ Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
                                              Locator const &locator) {
   auto offset = offset_cell(begin, cell, direction, locator);
   auto point = begin - offset;
-  if (locator(begin, cell) < 0)
+  if (outside(locator(begin, cell)))
     return point;
-  while (locator(point, cell) < 0) {
+  while (outside(locator(point, cell))) {
     offset /= 2.;
     point = begin - offset;
   }
