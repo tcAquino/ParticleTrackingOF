@@ -1,29 +1,30 @@
 <map id="ptof::face_center" name="ptof::face_center">
-<area shape="rect" id="node1" title="Center of a face." alt="" coords="1597,229,1728,255"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a8e064c86d019dd8fe7d33b911e256983" title="Compute face center&#39;s position if face center is in mesh, owner cell center otherwise." alt="" coords="1161,67,1308,108"/>
-<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="1381,188,1549,229"/>
-<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a8e442ed07acb23678f6f2cea03381682" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="1391,253,1540,295"/>
-<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a234f247f1d1cde838683af176475e78f" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="1391,71,1540,112"/>
-<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="1402,343,1529,370"/>
-<area shape="rect" id="node24" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="1145,483,1324,510"/>
-<area shape="rect" id="node25" href="$d2/dd1/namespaceptof.html#a2454b3742dec17f5af7a104d80cd8454" title="Small offset outward along face normal starting from face center." alt="" coords="1141,534,1328,561"/>
-<area shape="rect" id="node26" href="$d2/dd1/namespaceptof.html#ab900f3e1b8be86ec43dec148b24bb40e" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="1394,5,1537,47"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a239bfd23fb207dcefa7bfe3a6763b158" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="923,123,1062,164"/>
+<area shape="rect" id="node1" title="Center of a face." alt="" coords="1597,294,1728,321"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a8e064c86d019dd8fe7d33b911e256983" title="Compute face center&#39;s position if face center is in mesh, owner cell center otherwise." alt="" coords="1161,64,1308,105"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="1381,253,1549,295"/>
+<area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a8e442ed07acb23678f6f2cea03381682" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="1391,319,1540,360"/>
+<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a234f247f1d1cde838683af176475e78f" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="1391,123,1540,164"/>
+<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="1402,401,1529,427"/>
+<area shape="rect" id="node25" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="1145,533,1324,559"/>
+<area shape="rect" id="node26" href="$d2/dd1/namespaceptof.html#a2454b3742dec17f5af7a104d80cd8454" title="Small offset outward along face normal starting from face center." alt="" coords="1141,583,1328,610"/>
+<area shape="rect" id="node27" href="$d2/dd1/namespaceptof.html#ab900f3e1b8be86ec43dec148b24bb40e" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="1394,188,1537,229"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a239bfd23fb207dcefa7bfe3a6763b158" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="923,5,1062,47"/>
 <area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#adb9649d8f54f80a8941b39210b9d963d" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="919,71,1067,98"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a86238d69aed525b5f6d8c540204c6716" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="692,123,831,164"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a86238d69aed525b5f6d8c540204c6716" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="692,5,831,47"/>
 <area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="451,64,625,105"/>
 <area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,31,403,72"/>
 <area shape="rect" id="node8" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,96,391,137"/>
 <area shape="rect" id="node7" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,31,176,72"/>
 <area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#ae46fe34418d665c7f917968705ded6fc" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="679,71,843,98"/>
-<area shape="rect" id="node12" href="$da/d9d/structptof_1_1_geometry___bcc.html#a114789a7bea9fe572603e0beea5f4fbf" title="Make a boundary object to enforce cartesian periodicity." alt="" coords="1138,132,1331,173"/>
-<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a1a70e9f5db937c669e3accf8b457f995" title="Small offset backward from a point on a face." alt="" coords="1136,198,1333,225"/>
-<area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#a1ac1eb7cdfb814fb2a4e8137917bec26" title="Small offset backward from a point on a face." alt="" coords="1153,249,1316,291"/>
-<area shape="rect" id="node18" href="$d2/dd1/namespaceptof.html#aa3001150c0a019905f023f5d5a60ff61" title="Small offset along face normal (outward)." alt="" coords="1171,315,1298,342"/>
-<area shape="rect" id="node19" href="$d2/dd1/namespaceptof.html#a67459c219dcedf37533595b362a7bed1" title="Small offset forward from a point on a face." alt="" coords="1143,366,1327,393"/>
-<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="1160,417,1309,459"/>
-<area shape="rect" id="node20" href="$d2/dd1/namespaceptof.html#a4a979c6dbff09b46400fc4854dc2d048" title="Find periodic image of intersection point." alt="" coords="897,366,1088,393"/>
-<area shape="rect" id="node21" href="$df/d60/structptof_1_1_boundary___periodic___o_f.html#a3bfff1a7e879012ed06897860502f869" title="Enforce boundary condition and place intersection at its periodic image." alt="" coords="673,359,849,400"/>
-<area shape="rect" id="node23" href="$d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a" title="Find next intersection with a boundary." alt="" coords="911,417,1074,459"/>
-<area shape="rect" id="node27" href="$d2/dd1/namespaceptof.html#a3c91c7ab1672330c2bda4789323a9050" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="687,5,835,47"/>
+<area shape="rect" id="node12" href="$da/d9d/structptof_1_1_geometry___bcc.html#a114789a7bea9fe572603e0beea5f4fbf" title="Make a boundary object to enforce cartesian periodicity." alt="" coords="1138,181,1331,223"/>
+<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a1a70e9f5db937c669e3accf8b457f995" title="Small offset backward from a point on a face." alt="" coords="1136,247,1333,274"/>
+<area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#a1ac1eb7cdfb814fb2a4e8137917bec26" title="Small offset backward from a point on a face." alt="" coords="1153,299,1316,340"/>
+<area shape="rect" id="node18" href="$d2/dd1/namespaceptof.html#aa3001150c0a019905f023f5d5a60ff61" title="Small offset along face normal (outward)." alt="" coords="1171,365,1298,391"/>
+<area shape="rect" id="node19" href="$d2/dd1/namespaceptof.html#a67459c219dcedf37533595b362a7bed1" title="Small offset forward from a point on a face." alt="" coords="1143,415,1327,442"/>
+<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="1160,467,1309,508"/>
+<area shape="rect" id="node20" href="$d2/dd1/namespaceptof.html#a4a979c6dbff09b46400fc4854dc2d048" title="Find periodic image of intersection point." alt="" coords="897,414,1088,441"/>
+<area shape="rect" id="node21" href="$df/d60/structptof_1_1_boundary___periodic___o_f.html#a3bfff1a7e879012ed06897860502f869" title="Enforce boundary condition and place intersection at its periodic image." alt="" coords="673,403,849,444"/>
+<area shape="rect" id="node23" href="$d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a" title="Find next intersection with a boundary." alt="" coords="911,469,1074,511"/>
+<area shape="rect" id="node24" href="$d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title=" " alt="" coords="680,469,843,525"/>
+<area shape="rect" id="node28" href="$d2/dd1/namespaceptof.html#a3c91c7ab1672330c2bda4789323a9050" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="919,123,1067,164"/>
 </map>

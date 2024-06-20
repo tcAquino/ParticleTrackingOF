@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['empty_1057',['Empty',['../da/d86/structuseful_1_1_empty.html',1,'useful']]],
-  ['endcriterion_1058',['EndCriterion',['../dd/d0d/structptof_1_1_end_criterion.html',1,'ptof']]]
+  ['empty_1055',['Empty',['../da/d86/structuseful_1_1_empty.html',1,'useful']]],
+  ['endcriterion_1056',['EndCriterion',['../dd/d0d/structptof_1_1_end_criterion.html',1,'ptof']]]
 ];

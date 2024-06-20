@@ -4,6 +4,7 @@ var classptof_1_1_boundary___cases =
     [ "Boundary_Cases", "d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91", null ],
     [ "info_runtime", "d4/d49/classptof_1_1_boundary___cases.html#a9fe929a550b4e045bf95eb30961b2aa2", null ],
     [ "next_intersection", "d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a", null ],
+    [ "next_intersection_is_beyond_final_point", "d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c", null ],
     [ "operator()", "d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba", null ],
     [ "out_of_bounds", "d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3", null ],
     [ "patch_name", "d4/d49/classptof_1_1_boundary___cases.html#a634079c44ca165645ca5eb155aa9c2c1", null ],

@@ -1,6 +1,7 @@
 <map id="ptof::offset_backward_face_keep_inside" name="ptof::offset_backward_face_keep_inside">
-<area shape="rect" id="node1" title="Small offset backward from a point on a face." alt="" coords="5,23,168,65"/>
+<area shape="rect" id="node1" title="Small offset backward from a point on a face." alt="" coords="5,49,168,90"/>
 <area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="216,31,343,57"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="228,81,331,108"/>
 <area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="393,5,519,32"/>
 <area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="391,56,521,83"/>
 </map>

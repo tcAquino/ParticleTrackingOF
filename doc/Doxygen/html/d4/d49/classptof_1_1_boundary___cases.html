@@ -147,6 +147,9 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:af4fb0399759ff9099837e98bc1f9903a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a">next_intersection</a> (Intersection const &amp;intersection, Foam::point const &amp;end, Foam::label cell) const</td></tr>
 <tr class="memdesc:af4fb0399759ff9099837e98bc1f9903a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next intersection with a boundary.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a">More...</a><br /></td></tr>
 <tr class="separator:af4fb0399759ff9099837e98bc1f9903a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5af3482568bb10d456c261cc91acf16c"><td class="memTemplParams" colspan="2">template&lt;typename Intersection , typename State &gt; </td></tr>
+<tr class="memitem:a5af3482568bb10d456c261cc91acf16c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c">next_intersection_is_beyond_final_point</a> (Intersection const &amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a">next_intersection</a>, Foam::point const &amp;old_intersection_point, <a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;state)</td></tr>
+<tr class="separator:a5af3482568bb10d456c261cc91acf16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -359,6 +362,76 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="425,81,528,108"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="590,5,717,32"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="588,56,719,83"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d49/classptof_1_1_boundary___cases_af4fb0399759ff9099837e98bc1f9903a_icgraph.png" border="0" usemap="#ad4/d49/classptof_1_1_boundary___cases_af4fb0399759ff9099837e98bc1f9903a_icgraph" alt=""/></div>
+<map name="ad4/d49/classptof_1_1_boundary___cases_af4fb0399759ff9099837e98bc1f9903a_icgraph" id="ad4/d49/classptof_1_1_boundary___cases_af4fb0399759ff9099837e98bc1f9903a_icgraph">
+<area shape="rect" title="Find next intersection with a boundary." alt="" coords="216,13,379,54"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title=" " alt="" coords="5,5,168,61"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5af3482568bb10d456c261cc91acf16c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5af3482568bb10d456c261cc91acf16c">&#9670;&nbsp;</a></span>next_intersection_is_beyond_final_point()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic , typename Boundary_Custom , typename SurfaceReaction &gt; </div>
+<div class="memtemplate">
+template&lt;typename Intersection , typename State &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;::next_intersection_is_beyond_final_point </td>
+          <td>(</td>
+          <td class="paramtype">Intersection const &amp;&#160;</td>
+          <td class="paramname"><em>next_intersection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Foam::point const &amp;&#160;</td>
+          <td class="paramname"><em>old_intersection_point</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph.png" border="0" usemap="#ad4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph" alt=""/></div>
+<map name="ad4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph" id="ad4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,20,168,76"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="232,5,363,32"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a" title="Find next intersection with a boundary." alt="" coords="216,57,379,98"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="427,57,576,98"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="624,39,751,65"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="636,89,739,116"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="801,13,927,40"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="799,64,929,91"/>
 </map>
 </div>
 
