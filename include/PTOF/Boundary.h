@@ -329,8 +329,10 @@ public:
 
     // When the start point is on a cell face,
     // sometimes the intersection with it is not found, and sometimes it is
-    if (outside(state.cell)) {
-      if (!intersection.hit()) {
+    if (!intersection.hit())
+    {
+      state.cell = _locator(state);
+      if (outside(state.cell)) {
         // If the final state is outside, avoid breaking by checking for
         // intersections with a small backwards offset
         intersection = _locator.mesh_search().intersection(
@@ -340,7 +342,9 @@ public:
                                  _locator),
             make_point(state.position));
       }
-    } else if (intersection.hit() &&
+    } else if (((make_point(state.position) - intersection.point()) &
+                unit_normal_outward(intersection.index(), _locator.mesh())) <
+                   0. &&
                op::abs_sq(make_point(state_old.position) -
                           intersection.point()) <
                    std::numeric_limits<double>::epsilon() *
@@ -348,8 +352,7 @@ public:
       // If the final state is inside, ignore intersection if at the start
       // point and find the next intersection with a boundary patch
       auto old_intersection = intersection;
-      intersection = next_intersection(intersection, make_point(state.position),
-                                       state.cell);
+      intersection = next_intersection(intersection, make_point(state.position));
 
       // Ignore new intersection if offset went beyond final point or if there
       // is not enough precision to find a different intersection
@@ -432,8 +435,7 @@ public:
 
       // Find the next intersection with a boundary patch
       auto old_intersection = intersection;
-      intersection = next_intersection(intersection, make_point(state.position),
-                                       state.cell);
+      intersection = next_intersection(intersection, make_point(state.position));
       // Ignore new intersection if offset went beyond final point or if there
       // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
@@ -528,7 +530,7 @@ private:
    \return Next intersection. */
   template <typename Intersection>
   auto next_intersection(Intersection const &intersection,
-                         Foam::point const &end, Foam::label cell) const {
+                         Foam::point const &end) const {
     return _locator.mesh_search().intersection(
         offset_forward_face_keep_inside(intersection.point(),
                                         intersection.index(),

@@ -82,4 +82,5 @@ all : ParticleTrackingOF ParticleTrackingOF_TwoPhaseNonStationary ParticleTracki
 clean :
 	rm -f ParticleTrackingOF ParticleTrackingOF.o ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_TwoPhaseNonStationary.o ParticleTrackingOF_Parallel ParticleTrackingOF_Parallel.o ParticleTrackingOF_TwoPhaseNonStationary_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
 	rm -f $(PTHBIN)/ParticleTrackingOF*
+	rm -rf $(PTHBIN)/dynamicCode
 

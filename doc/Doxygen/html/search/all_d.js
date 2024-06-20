@@ -7,7 +7,7 @@ var searchData=
   ['neighbor_5fcheck_5flevel_568',['neighbor_check_level',['../da/dd0/structptof_1_1_search_options_1_1_neighbor_precheck.html#a10130fd0aeafb7fdf8bf4b6a9ffba5c6',1,'ptof::SearchOptions::NeighborPrecheck']]],
   ['neighborprecheck_569',['NeighborPrecheck',['../da/dd0/structptof_1_1_search_options_1_1_neighbor_precheck.html',1,'ptof::SearchOptions::NeighborPrecheck&lt; level &gt;'],['../d1/df9/class_search_options_1_1_neighbor_precheck.html',1,'NeighborPrecheck']]],
   ['next_570',['next',['../d5/d37/structmeta_1_1indices.html#a21fac62f7dac2684f27b41764f273d11',1,'meta::indices']]],
-  ['next_5fintersection_571',['next_intersection',['../d4/d49/classptof_1_1_boundary___cases.html#af4fb0399759ff9099837e98bc1f9903a',1,'ptof::Boundary_Cases']]],
+  ['next_5fintersection_571',['next_intersection',['../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b',1,'ptof::Boundary_Cases']]],
   ['next_5fintersection_5fis_5fbeyond_5ffinal_5fpoint_572',['next_intersection_is_beyond_final_point',['../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c',1,'ptof::Boundary_Cases']]],
   ['next_5fmeasure_5ftime_573',['next_measure_time',['../d5/de8/classptof_1_1_output___cases.html#a640274532ae6c0ce67cae2fa75abb409',1,'ptof::Output_Cases']]],
   ['nextmeasuretime_574',['NextMeasureTime',['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#ac6d2586fb630783fffac03443fff6ef6',1,'ptof::Output_Cases::NextMeasureTime::NextMeasureTime()'],['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html',1,'ptof::Output_Cases&lt; Subject, Geometry &gt;::NextMeasureTime']]],

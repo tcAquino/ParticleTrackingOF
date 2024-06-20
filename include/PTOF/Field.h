@@ -164,9 +164,15 @@ public:
   */
   auto operator()(Point const &position, Index cell) const {
     if constexpr (check_if_outside)
-      if (outside<warn_if_outside>(cell, position,
-                                   "Assigning vector field value zero"))
-        return Vector::zero;
+      if (outside<warn_if_outside>(
+              cell, position,
+              "Assigning vector field value from nearest cell")) {
+        cell = _locator.nearest_cell(position);
+        if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
+          return _field[cell] + _uninterpolated[cell];
+        else
+          return _field[cell];
+      }
 
     if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
       return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
@@ -468,9 +474,15 @@ public:
   */
   auto operator()(Point const &position, Index cell) const {
     if constexpr (check_if_outside)
-      if (outside<warn_if_outside>(cell, position,
-                                   "Assigning scalar field value zero"))
-        return 0.;
+      if (outside<warn_if_outside>(
+              cell, position,
+              "Assigning scalar field value from nearest cell")) {
+        cell = _locator.nearest_cell(position);
+        if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
+          return _field[cell] + _uninterpolated[cell];
+        else
+          return _field[cell];
+      }
 
     if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
       return _interpolant.interpolate(position, cell) + _uninterpolated[cell];

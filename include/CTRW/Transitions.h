@@ -115,9 +115,8 @@ public:
       _time_step_adaptor(state, _time_generator, _jump_generator);
       op::plus_inplace(state.position, _jump_generator(state));
       state.time += _time_generator(state_old);
+      _boundary(state, state_old);
       locate(state);
-      if (_boundary(state, state_old))
-        locate(state);
     }
   }
 
