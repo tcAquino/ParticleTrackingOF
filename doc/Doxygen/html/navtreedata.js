@@ -25,12 +25,15 @@
 var NAVTREE =
 [
   [ "ParticleTrackingOF", "index.html", [
-    [ "Dependencies", "index.html#autotoc_md1", null ],
-    [ "Documentation", "index.html#autotoc_md2", null ],
-    [ "Citations", "index.html#autotoc_md3", null ],
-    [ "License", "index.html#autotoc_md4", null ],
-    [ "About the author", "index.html#autotoc_md5", null ],
-    [ "Collaborators", "index.html#autotoc_md6", null ],
+    [ "ParticleTrackingOF (PTOF)", "index.html", [
+      [ "Dependencies", "index.html#autotoc_md1", null ],
+      [ "Documentation", "index.html#autotoc_md2", null ],
+      [ "Notes and known issues", "index.html#autotoc_md3", null ],
+      [ "Citations", "index.html#autotoc_md4", null ],
+      [ "License", "index.html#autotoc_md5", null ],
+      [ "About the author", "index.html#autotoc_md6", null ],
+      [ "Contributors", "index.html#autotoc_md7", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [

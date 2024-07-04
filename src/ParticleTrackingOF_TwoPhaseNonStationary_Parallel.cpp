@@ -1,5 +1,5 @@
 //
-//  ParticleTrackingOF_TwoPhaseNonStationary.cpp
+//  ParticleTrackingOF_TwoPhaseNonStationary_Parallel.cpp
 //  PTOF
 //
 //  Created by Tomás Aquino on 07/02/2024.
@@ -22,13 +22,14 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_periodic_cartesian_advection_diffusion_3d_parallel;
+  using namespace ptof::model_advection_diffusion_2d_parallel;
   using Phase = ptof::Phase;
 
   std::string banner =
       "--------------------------------------------------------------\n"
-      "ParticleTrackingOF_TwoPhaseNonStationary\n"
+      "ParticleTrackingOF_TwoPhaseNonStationary_Parallel\n"
       "--------------------------------------------------------------\n";
+  int nr_parameters = 12;
 
   if (useful::check_options_help(argc, argv)) {
     std::cout
@@ -45,7 +46,8 @@ int main(int argc, char *argv[]) {
            "- Name of initial condition parameter set\n"
            "- Name of output parameter set\n"
            "- Output directory [<Case directory>/output]\n"
-           "- Run number (nonnegative integer to index output) [none]\n"
+           "- Output file identifier [Based on parameter set names]\n"
+           "- Run number (nonnegative integer to index output) [None]\n"
            "- Number of parallel threads\n"
            "--------------------------------------------------------------\n";
     std::cout << std::endl;
@@ -75,7 +77,7 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
     return 0;
   }
-  if (argc != 12)
+  if (argc != nr_parameters + 1)
     throw useful::bad_parameters_help();
 
   std::size_t arg = 1;
@@ -88,6 +90,7 @@ int main(int argc, char *argv[]) {
   std::string params_initial_condition_name = argv[arg++];
   std::string params_output_name = argv[arg++];
   std::string dir_output = argv[arg++];
+  std::string filename_output_identifier = argv[arg++];
   std::string run_nr = argv[arg++];
   std::size_t num_threads = std::stoul(argv[arg++]);
 
@@ -279,12 +282,13 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  std::string filename_output_identifier =
-      ptof::identifier("TwoPhaseNonStationary_" + Model::name, case_name,
-                       directories_of.case_name, params_transport_name,
-                       params_phase_name, params_reaction_name,
-                       params_solvers_name, params_initial_condition_name,
-                       params_output_name) +
+  if (useful::is_empty(filename_output_identifier))
+    filename_output_identifier = ptof::identifier(
+        "TwoPhaseNonStationary_" + Model::name, case_name,
+        directories_of.case_name, params_transport_name, params_phase_name,
+        params_reaction_name, params_solvers_name,
+        params_initial_condition_name, params_output_name);
+  filename_output_identifier +=
       (useful::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
   auto output = Output::makeOutput(ctrw, velocity_field, geometry, directories,
                                    params_output, filename_output_identifier,

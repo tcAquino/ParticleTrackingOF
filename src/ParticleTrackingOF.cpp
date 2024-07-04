@@ -15,12 +15,14 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_bcc_symmetryplanes_advection_diffusion_surface_decay;
+  using namespace ptof::
+      model_bcc_symmetryplanes_advection_diffusion_surface_decay;
 
   std::string banner =
       "--------------------------------------------------------------\n"
       "ParticleTrackingOF\n"
       "--------------------------------------------------------------\n";
+  int nr_parameters = 10;
 
   if (useful::check_options_help(argc, argv)) {
     std::cout
@@ -36,7 +38,8 @@ int main(int argc, char *argv[]) {
            "- Name of initial condition parameter set\n"
            "- Name of output parameter set\n"
            "- Output directory [<Case directory>/output]\n"
-           "- Run number (nonnegative integer to index output) [none]\n"
+           "- Output file identifier [Based on parameter set names]\n"
+           "- Run number (nonnegative integer to index output) [None]\n"
            "--------------------------------------------------------------\n";
     std::cout << std::endl;
     Model::info(std::cout);
@@ -63,7 +66,7 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
     return 0;
   }
-  if (argc != 10)
+  if (argc != nr_parameters + 1)
     throw useful::bad_parameters_help();
 
   std::size_t arg = 1;
@@ -75,6 +78,7 @@ int main(int argc, char *argv[]) {
   std::string params_initial_condition_name = argv[arg++];
   std::string params_output_name = argv[arg++];
   std::string dir_output = argv[arg++];
+  std::string filename_output_identifier = argv[arg++];
   std::string run_nr = argv[arg++];
 
   std::cout << banner << std::endl;
@@ -227,11 +231,12 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  std::string filename_output_identifier =
-      ptof::identifier(Model::name, case_name, directories_of.case_name,
-                       params_transport_name, params_reaction_name,
-                       params_solvers_name, params_initial_condition_name,
-                       params_output_name) +
+  if (useful::is_empty(filename_output_identifier))
+    filename_output_identifier = ptof::identifier(
+        Model::name, case_name, directories_of.case_name, params_transport_name,
+        params_reaction_name, params_solvers_name,
+        params_initial_condition_name, params_output_name);
+  filename_output_identifier +=
       (useful::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
   auto output = Output::makeOutput(ctrw, velocity_field, geometry, directories,
                                    params_output, filename_output_identifier);

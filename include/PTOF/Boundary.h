@@ -73,7 +73,6 @@ struct BoundaryCondition {
       {"reacting_reflecting", Type::reacting_reflecting},
       {"periodic", Type::periodic},
       {"absorbing", Type::absorbing},
-      {"info", Type::info},
       {"custom", Type::custom},
       {"empty", Type::empty},
   };
@@ -84,7 +83,6 @@ struct BoundaryCondition {
       {Type::reacting_reflecting, "reacting_reflecting"},
       {Type::periodic, "periodic"},
       {Type::absorbing, "absorbing"},
-      {Type::info, "info"},
       {Type::custom, "custom"},
       {Type::empty, "empty"}};
 };
@@ -329,28 +327,34 @@ public:
 
     // When the start point is on a cell face,
     // sometimes the intersection with it is not found, and sometimes it is
-    if (!intersection.hit())
-    {
+    if (!intersection.hit()) {
+      // Note: The code flow is chosen to avoid trying to locate particles which
+      // are outside as much as possible, because it is expensive
       state.cell = _locator(state);
       if (outside(state.cell)) {
-        // If the final state is outside, avoid breaking by checking for
-        // intersections with a small backwards offset
+        // If the final state is outside, avoid particles leaving the domain by
+        // checking for intersections with a small backwards offset
         intersection = _locator.mesh_search().intersection(
             offset_backward_cell(make_point(state_old.position), state_old.cell,
                                  make_point(state.position) -
                                      make_point(state_old.position),
                                  _locator),
             make_point(state.position));
+        // If this didn't work, place particle at nearest cell center to avoid
+        // breaking
+        if (!intersection.hit())
+          state.set_position(cell_center(_locator.nearest_cell(state.position),
+                                         _locator.mesh()));
       }
     } else if (((make_point(state.position) - intersection.point()) &
                 unit_normal_outward(intersection.index(), _locator.mesh())) <
-                   0. &&
-               op::abs_sq(make_point(state_old.position) -
-                          intersection.point()) < tol_sq) {
-      // If the final state is inside, ignore intersection if at the start
-      // point and find the next intersection with a boundary patch
+               0.) {
+      // If the displacement is against the local face normal (into the domain
+      // at the boundary), ignore intersection and find
+      // the next intersection with a boundary patch
       auto old_intersection = intersection;
-      intersection = next_intersection(intersection, make_point(state.position));
+      intersection =
+          next_intersection(intersection, make_point(state.position));
 
       // Ignore new intersection if offset went beyond final point or if there
       // is not enough precision to find a different intersection
@@ -358,6 +362,16 @@ public:
               intersection, old_intersection.point(), state) ||
           intersection.index() == old_intersection.index())
         intersection.setMiss();
+
+      // If there was no new hit and the particle is still outside, there is a
+      // precision issue in finding intersections for the mesh. Place particle
+      // at nearest cell center.
+      if (!intersection.hit() && outside(_locator(state))) {
+        std::cout << "ola" << std::endl;
+        state.cell = _locator.nearest_cell(state.position);
+        state.set_position(cell_center(state.cell, _locator.mesh()));
+        return true;
+      }
     }
 
     bool had_effect = 0;
@@ -413,12 +427,6 @@ public:
         had_effect += _boundary_custom(state, state_old, intersection);
         break;
       }
-      case BoundaryCondition::Type::info: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
-                    meta::Selector<BoundaryCondition::Type,
-                                   BoundaryCondition::Type::info>{});
-        break;
-      }
       case BoundaryCondition::Type::empty: {
       }
       default:
@@ -441,9 +449,9 @@ public:
           intersection.index() == old_intersection.index())
         intersection.setMiss();
 
-      // Sometimes there is not enough precision to ensure that the final state
-      // is inside the mesh, even if no intersections are found. If so, place
-      // the final state at the last intersection to avoid breaking
+      // Sometimes there is not enough precision to find the next intersection.
+      // Avoid particles leaving the domain by placing the final state at the
+      // last intersection
       if (!intersection.hit()) {
         state.cell = _locator(state);
         if (outside(state.cell))
@@ -505,8 +513,6 @@ private:
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
   Boundary_Custom
       _boundary_custom; /**< Boundary object to handle 'custom' bc type. */
-  double tol_sq = std::numeric_limits<double>::epsilon() *
-                  std::numeric_limits<double>::epsilon();
 
 public:
   SurfaceReaction
@@ -603,39 +609,46 @@ auto periodic_intersection(State state_outside, State const &state_image,
   // Compute displacement from intersection to outside position.
   auto displacement = make_point(state_outside.position) - intersection.point();
 
-  // Slight offset from intersection towards the outside point
-  // The goal is to find the periodic image
-  // of a point close to the intersection,
-  // so we can find its periodic image within the domain
-  // and then use it to find the periodic image of the intersection
-  // itself. Using a periodic image like this should work also for
-  // non-cartesian symmetry planes.
+  // Slight offset from intersection towards the outside point.
+  // The goal is to find the periodic image of a point close to the
+  // intersection, so we can find its periodic image within the domain and then
+  // use it to find the periodic image of the intersection itself.
   auto offset_pos = offset_forward_face(
       intersection.point(), intersection.index(), displacement, locator);
+  auto offset = offset_pos - intersection.point();
 
-  // Ensure offset position is closer to
-  // intersection than outside position
-  // If less than halfway
-  // (arbitrary point between the two; 0.25 of mag squared),
-  // set outside position to offset position
-  // otherwise, use the halfway point
-  if (Foam::magSqr(offset_pos - intersection.point()) <
-      0.25 * Foam::magSqr(displacement))
+  // Ensure offset position is closer to intersection than outside position.
+  // Otherwise, use displacement.
+  if (Foam::magSqr(offset) < Foam::magSqr(displacement))
     state_outside.set_position(offset_pos);
-  else
-    state_outside.set_position(intersection.point() + 0.5 * displacement);
+  else {
+    offset = make_point(state_outside.position) - intersection.point();
+    state_outside.set_position(intersection.point() + offset);
+  }
 
-  // Find the periodic image of the offset point
+  // Place the offset point at its periodic image
   boundary(state_outside);
 
-  // Find the periodic image of the intersection by
-  // looking from outside the domain towards the final periodic image
-  // Start at the outside point found by taking
-  return locator.mesh_search().intersection(
-      make_point(state_outside.position) -
-          2. * (make_point(state_image.position) -
-                make_point(state_outside.position)),
-      make_point(state_outside.position));
+  // Find the periodic image of the intersection by looking from outside the
+  // domain towards the offset point
+
+  // For some meshes, numerical error can lead to the intersection point not
+  // being found. Avoid breaking by repeatedly doubling the size of the interval
+  // until the intersection is found or too many tries have been made.
+  std::size_t max_nr_doublings = 20;
+  std::size_t iter = 0;
+  do {
+    // if (iter > 0)
+    //   std::cout << iter << std::endl;
+    offset *= 2;
+    auto new_intersection = locator.mesh_search().intersection(
+        make_point(state_outside.position) - offset,
+        make_point(state_outside.position));
+    if (new_intersection.hit())
+      return new_intersection;
+  } while (iter++ < max_nr_doublings);
+
+  return Intersection{};
 }
 
 /** \class Boundary_Periodic_OF PTOF/Boundary.h "PTOF/Boundary.h"
@@ -674,9 +687,9 @@ template <typename Boundary, typename Locator> struct Boundary_Periodic_OF {
                                          boundary_periodic, locator);
     if (!intersection.hit())
       throw std::runtime_error{
-          "Could not find image of periodic boundary intersection"};
+        "Could not find image of periodic boundary intersection"};
 
-    return 1;
+    return true;
   }
 
   Boundary boundary_periodic; /**< Periodic boundary type. */
@@ -705,7 +718,7 @@ template <typename InitialCondition> struct Boundary_Reinject {
   bool operator()(State &state, State const &state_old,
                   Intersection const &intersection) const {
     state.set_position(initial_condition.make_position());
-    return 1;
+    return true;
   }
 
   /** \brief Name of boundary condition type. */

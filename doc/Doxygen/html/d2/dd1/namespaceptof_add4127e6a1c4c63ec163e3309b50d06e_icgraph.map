@@ -4,7 +4,7 @@
 <area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="1381,253,1549,295"/>
 <area shape="rect" id="node13" href="$d2/dd1/namespaceptof.html#a8e442ed07acb23678f6f2cea03381682" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="1391,319,1540,360"/>
 <area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a234f247f1d1cde838683af176475e78f" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="1391,123,1540,164"/>
-<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a91a1b931edc8a9eb0bd01b2d01f01164" title="Small offset forward given current face and direction." alt="" coords="1402,401,1529,427"/>
+<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a5c1f93251005a76a298700d652da61b9" title="Small offset forward given current face and direction." alt="" coords="1402,401,1529,427"/>
 <area shape="rect" id="node25" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="1145,533,1324,559"/>
 <area shape="rect" id="node26" href="$d2/dd1/namespaceptof.html#a2454b3742dec17f5af7a104d80cd8454" title="Small offset outward along face normal starting from face center." alt="" coords="1141,583,1328,610"/>
 <area shape="rect" id="node27" href="$d2/dd1/namespaceptof.html#ab900f3e1b8be86ec43dec148b24bb40e" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="1394,188,1537,229"/>

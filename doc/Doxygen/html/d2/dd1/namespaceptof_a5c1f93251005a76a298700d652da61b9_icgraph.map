@@ -1,0 +1,14 @@
+<map id="ptof::offset_face" name="ptof::offset_face">
+<area shape="rect" id="node1" title="Small offset forward given current face and direction." alt="" coords="713,173,840,200"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a1a70e9f5db937c669e3accf8b457f995" title="Small offset backward from a point on a face." alt="" coords="468,5,665,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a1ac1eb7cdfb814fb2a4e8137917bec26" title="Small offset backward from a point on a face." alt="" coords="485,57,648,98"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#aa3001150c0a019905f023f5d5a60ff61" title="Small offset along face normal (outward)." alt="" coords="503,123,630,149"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a67459c219dcedf37533595b362a7bed1" title="Small offset forward from a point on a face." alt="" coords="475,173,659,200"/>
+<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="492,225,641,266"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#aeca56e7078208a75ceabaa32e4873510" title="Small offset inward along face normal starting from face center." alt="" coords="477,291,656,317"/>
+<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#a2454b3742dec17f5af7a104d80cd8454" title="Small offset outward along face normal starting from face center." alt="" coords="473,341,660,368"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a4a979c6dbff09b46400fc4854dc2d048" title="Find periodic image of intersection point." alt="" coords="229,172,420,199"/>
+<area shape="rect" id="node7" href="$df/d60/structptof_1_1_boundary___periodic___o_f.html#a3bfff1a7e879012ed06897860502f869" title="Enforce boundary condition and place intersection at its periodic image." alt="" coords="5,161,181,202"/>
+<area shape="rect" id="node9" href="$d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b" title="Find next intersection with a boundary." alt="" coords="243,227,406,269"/>
+<area shape="rect" id="node10" href="$d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title=" " alt="" coords="12,227,175,283"/>
+</map>

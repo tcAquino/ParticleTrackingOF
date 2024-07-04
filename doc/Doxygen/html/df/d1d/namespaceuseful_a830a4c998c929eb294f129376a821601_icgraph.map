@@ -1,4 +1,5 @@
 <map id="useful::expand_home_dir" name="useful::expand_home_dir">
-<area shape="rect" id="node1" title="Expand ~ if present at the beginning of directory dir." alt="" coords="197,13,384,39"/>
-<area shape="rect" id="node2" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="5,5,149,47"/>
+<area shape="rect" id="node1" title="Expand ~ if present at the beginning of directory dir." alt="" coords="348,46,535,73"/>
+<area shape="rect" id="node2" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="5,5,300,47"/>
+<area shape="rect" id="node3" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="81,71,225,112"/>
 </map>

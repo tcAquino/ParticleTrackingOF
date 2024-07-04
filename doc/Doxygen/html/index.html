@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ParticleTrackingOF</title>
+<title>ParticleTrackingOF: ParticleTrackingOF (PTOF)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,7 +83,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">ParticleTrackingOF </div>  </div>
+<div class="title">ParticleTrackingOF (PTOF) </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__home_tomas_Dropbox_github_ParticleTrackingOF_code_README"></a> Particle tracking based on OpenFOAM-generated meshes and flow fields, including advection, diffusion, and reaction processes. This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software and owner of the OPENFOAM® and OpenCFD® trade marks.</p>
@@ -97,18 +97,26 @@ Dependencies</h1>
 Documentation</h1>
 <p>Basic information on code structure, compilation, and execution is given in doc/Manual.pdf. Doxygen documentation can be found in doc/Doxygen.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
+Notes and known issues</h1>
+<ul>
+<li>If the underlying OpenFOAM case uses dynamicCode functionalities, they are compiled at runtime by OpenFOAM when running PTOF executables on that case for the first time and placed on a dynamicCode folder in the same folder as the executable. If more than one instance of PTOF is run simultaneously during this first run, this can cause a conflict and lead to a crash. A simple workaround is to wait for dynamic compilation, which happens early on, before launching a second instance on the first run.</li>
+<li>Parall simulations employ parallelization over particles across the whole spatial domain. This means that parallel OpenFOAM cases must be reconstructed before using PTOF, and that each thread must have access to the full mesh. Unfortunatlely, OpenFOAM is not designed with this type of parallelization in mind, and even mesh searching methods that are marked const can make changes to mutable members of the mesh object. At least for the moment, this requires each thread to have its own dedicated copy of the full mesh. Because of this, you should be careful of RAM consumption when running parallel simulations.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Citations</h1>
 <p>Please link to this repository (<a href="https://github.com/tcAquino/ParticleTrackingOF">https://github.com/tcAquino/ParticleTrackingOF</a>).</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 License</h1>
 <p>License information can be found in the file LICENSE.txt.</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 About the author</h1>
 <p>Tomás Aquino is a researcher at IDAEA-CSIC, Barcelona, Spain. He can be contacted at <a href="#" onclick="location.href='mai'+'lto:'+'tom'+'as'+'.aq'+'ui'+'no@'+'id'+'aea'+'.c'+'sic'+'.e'+'s'; return false;">tomas<span style="display: none;">.nosp@m.</span>.aqu<span style="display: none;">.nosp@m.</span>ino@i<span style="display: none;">.nosp@m.</span>daea<span style="display: none;">.nosp@m.</span>.csic<span style="display: none;">.nosp@m.</span>.es</a>.</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
-Collaborators</h1>
+<h1><a class="anchor" id="autotoc_md7"></a>
+Contributors</h1>
 <ul>
-<li>Nolwenn Delouche </li>
+<li>Tomás Aquino (main developer)</li>
+<li>Nolwenn Delouche (testing and original Doxygen documentation setup)</li>
+<li>Yang Liu (testing) </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

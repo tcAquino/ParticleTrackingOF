@@ -608,7 +608,7 @@ public:
   InitialConditions::Type type;
   double distance_wall;
   std::vector<std::pair<double, double>> region_boundaries;
-  std::string position_data;
+  std::string filename_position_data;
   double initial_mass;
   double time_min;
   double time_step_accuracy_adv;
@@ -650,8 +650,11 @@ public:
             {std::stod(split_line[ii]), std::stod(split_line[ii + 1])});
       }
     }
-    if (type == InitialConditions::Type::prescribed_positions)
-      useful::read_first_from_line(input, position_data, comment_sequence);
+    if (type == InitialConditions::Type::prescribed_positions) {
+      useful::read_first_from_line(input, filename_position_data,
+                                   comment_sequence);
+      useful::expand_env(useful::expand_home_dir(filename_position_data));
+    }
     useful::read_first_from_line(input, initial_mass, comment_sequence);
     useful::read_first_from_line(input, time_min, comment_sequence);
     if (type == InitialConditions::Type::uniform_inlet_continuous ||
@@ -693,11 +696,9 @@ public:
            "\tfluxweighted_inlet_continuous: Continuous injection\n"
            "\t                               flux-weighted at the inlet\n"
            "- Initial distance from solid phase (with full path) for\n"
-           "  prescribed positions (pass only for type\n"
-           "  prescribed_positions)\n"
-           "- Region boundaries (pass only for types\n"
-           "  uniform_region_cartesian or\n"
-           "  fluxweighted_region_cartesian)\n"
+           "  prescribed positions (pass only for type prescribed_positions)\n"
+           "- Region boundaries (pass only for types uniform_region_cartesian\n"
+           "  or fluxweighted_region_cartesian)\n"
            "- Filename (with full path) for prescribed positions (pass only\n"
            "  for type prescribed_positions)\n"
            "- Total injected mass in each injection step\n"
@@ -889,8 +890,8 @@ private:
                        _mask, _threshold),
             _velocity_field, _locator.mesh(), _rng, particle_maker);
     case InitialConditions::Type::prescribed_positions:
-      return prescribed_positions(nr_particles, parameters.position_data,
-                                  particle_maker);
+      return prescribed_positions(
+          nr_particles, parameters.filename_position_data, particle_maker);
     case InitialConditions::Type::uniform_inlet_continuous:
       if constexpr (std::is_same_v<Mask, useful::Empty>)
         return continuous_injection(
