@@ -367,7 +367,6 @@ public:
       // precision issue in finding intersections for the mesh. Place particle
       // at nearest cell center.
       if (!intersection.hit() && outside(_locator(state))) {
-        std::cout << "ola" << std::endl;
         state.cell = _locator.nearest_cell(state.position);
         state.set_position(cell_center(state.cell, _locator.mesh()));
         return true;
@@ -638,8 +637,6 @@ auto periodic_intersection(State state_outside, State const &state_image,
   std::size_t max_nr_doublings = 20;
   std::size_t iter = 0;
   do {
-    // if (iter > 0)
-    //   std::cout << iter << std::endl;
     offset *= 2;
     auto new_intersection = locator.mesh_search().intersection(
         make_point(state_outside.position) - offset,
