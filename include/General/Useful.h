@@ -112,31 +112,37 @@ inline std::string change_extension(std::string const &filename,
 }
 
 /** \brief Remove \verbatim \r \endverbatim character */
-inline std::string remove_carriage_return(std::string const &str) {
-  std::string str_copy;
-  if (!str_copy.empty() && str_copy.back() == '\r')
-    str_copy.pop_back();
-  return str_copy;
-}
-
-/** \brief Remove \verbatim \r \endverbatim character */
 inline std::string &remove_carriage_return_in_place(std::string &str) {
   if (!str.empty() && str.back() == '\r')
     str.pop_back();
   return str;
 }
 
+/** \brief Remove \verbatim \r \endverbatim character */
+inline std::string remove_carriage_return(std::string str) {
+  remove_carriage_return_in_place(str);
+  return str;
+}
+
 // Based on Toby Speight's answer here:
 // https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion
 /** \brief Expand environment variables. */
-inline std::string expand_env(std::string text) {
+inline std::string &expand_env_in_place(std::string &str) {
   static const std::regex env_re{R"--(\$\{([^}]+)\})--"};
   std::smatch match;
-  while (std::regex_search(text, match, env_re)) {
+  while (std::regex_search(str, match, env_re)) {
     auto const from = match[0];
-    text.replace(from.first, from.second, std::getenv(match[1].str().c_str()));
+    str.replace(from.first, from.second, std::getenv(match[1].str().c_str()));
   }
-  return text;
+  return str;
+}
+
+// Based on Toby Speight's answer here:
+// https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion
+/** \brief Expand environment variables. */
+inline std::string expand_env(std::string str) {
+  expand_env_in_place(str);
+  return str;
 }
 
 /** \brief Check if sorted \p container contains \p val.
@@ -733,16 +739,15 @@ inline std::string getenv_home_check() {
 }
 
 /** \brief Expand ~ if present at the beginning of directory \c dir. */
-inline std::string expand_home_dir(std::string dir) {
+inline std::string &expand_home_dir_in_place(std::string &dir) {
   if (dir[0] == '~')
     dir.replace(0, 1, getenv_home_check());
   return dir;
 }
 
 /** \brief Expand ~ if present at the beginning of directory \c dir. */
-inline std::string &expand_home_dir_inplace(std::string &dir) {
-  if (dir[0] == '~')
-    dir.replace(0, 1, getenv_home_check());
+inline std::string expand_home_dir(std::string dir) {
+  expand_home_dir_in_place(dir);
   return dir;
 }
 } // namespace useful

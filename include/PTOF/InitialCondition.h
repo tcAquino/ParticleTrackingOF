@@ -84,7 +84,7 @@ struct InitialConditions {
       {Type::uniform_near_solid, "uniform_near_solid"},
       {Type::uniform_region_cartesian, "uniform_region_cartesian"},
       {Type::fluxweighted_region_cartesian, "fluxweighted_region_cartesian"},
-      {Type::fluxweighted_region_cartesian, "prescribed_positions"},
+      {Type::prescribed_positions, "prescribed_positions"},
       {Type::uniform_inlet_continuous, "uniform_inlet_continuous"},
       {Type::fluxweighted_inlet_continuous, "fluxweighted_inlet_continuous"}};
 };
@@ -653,7 +653,9 @@ public:
     if (type == InitialConditions::Type::prescribed_positions) {
       useful::read_first_from_line(input, filename_position_data,
                                    comment_sequence);
-      useful::expand_env(useful::expand_home_dir(filename_position_data));
+      useful::expand_env_in_place(
+          useful::expand_home_dir_in_place(filename_position_data));
+      std::cout << filename_position_data << std::endl;
     }
     useful::read_first_from_line(input, initial_mass, comment_sequence);
     useful::read_first_from_line(input, time_min, comment_sequence);
@@ -695,8 +697,8 @@ public:
            "\t                          the inlet\n"
            "\tfluxweighted_inlet_continuous: Continuous injection\n"
            "\t                               flux-weighted at the inlet\n"
-           "- Initial distance from solid phase (with full path) for\n"
-           "  prescribed positions (pass only for type prescribed_positions)\n"
+           "- Initial distance from solid phase (pass only for type\n"
+           "  uniform_near_solid)\n"
            "- Region boundaries (pass only for types uniform_region_cartesian\n"
            "  or fluxweighted_region_cartesian)\n"
            "- Filename (with full path) for prescribed positions (pass only\n"

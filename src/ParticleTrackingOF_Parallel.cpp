@@ -1,5 +1,5 @@
 //
-//  ParticleTrackingOF.cpp
+//  ParticleTrackingOF_Parallel.cpp
 //  PTOF
 //
 //  Created by Tomás Aquino on 16/02/2022.
@@ -17,7 +17,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_bcc_symmetryplanes_advection_parallel;
+  using namespace ptof::model_advection_diffusion_3d_parallel;
 
   std::string banner =
       "--------------------------------------------------------------\n"
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
     return 0;
   }
-  if (argc != nr_parameters+1)
+  if (argc != nr_parameters + 1)
     throw useful::bad_parameters_help();
 
   std::size_t arg = 1;

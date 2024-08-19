@@ -125,7 +125,7 @@ public:
 
     if (useful::is_empty(dir))
       dir = "${FOAM_RUN}";
-    dir = useful::expand_env(useful::expand_home_dir(dir));
+    useful::expand_env_in_place(useful::expand_home_dir_in_place(dir));
 
     dir_case = dir + "/" + case_name;
 
