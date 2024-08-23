@@ -1,8 +1,8 @@
 <map id="useful::getenv_home" name="useful::getenv_home">
-<area shape="rect" id="node1" title="Get $HOME environment variable." alt="" coords="789,75,948,102"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="583,68,741,109"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="348,46,535,73"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a5a38941df706563e8081b3ab540e1f3b" title="Expand ~ if present at the beginning of directory dir." alt="" coords="360,97,523,139"/>
-<area shape="rect" id="node4" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="5,5,300,47"/>
-<area shape="rect" id="node5" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="81,71,225,112"/>
+<area shape="rect" id="node1" title="Get $HOME environment variable." alt="" coords="765,64,924,91"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="559,57,717,98"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#af16a1231d16103a8216fb1935113de82" title="Expand ~ if present at the beginning of directory dir." alt="" coords="348,57,511,98"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="59,5,246,32"/>
+<area shape="rect" id="node5" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="5,57,300,98"/>
+<area shape="rect" id="node6" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="81,122,225,163"/>
 </map>

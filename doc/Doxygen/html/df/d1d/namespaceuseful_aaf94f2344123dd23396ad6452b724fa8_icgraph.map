@@ -1,7 +1,7 @@
 <map id="useful::open_read_error" name="useful::open_read_error">
-<area shape="rect" id="node1" title=" " alt="" coords="727,541,903,567"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="540,515,679,542"/>
-<area shape="rect" id="node22" href="$df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01" title="Read contents of file as a sequence of doubles." alt="" coords="560,566,659,593"/>
+<area shape="rect" id="node1" title=" " alt="" coords="727,617,903,643"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="540,591,679,618"/>
+<area shape="rect" id="node24" href="$df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01" title="Read contents of file as a sequence of doubles." alt="" coords="560,642,659,669"/>
 <area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="273,5,417,47"/>
 <area shape="rect" id="node5" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="197,71,492,112"/>
 <area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd" title="Load file into vector of vectors of doubles." alt="" coords="295,137,394,163"/>
@@ -19,6 +19,8 @@
 <area shape="rect" id="node18" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66" title=" " alt="" coords="249,923,441,993"/>
 <area shape="rect" id="node19" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79" title=" " alt="" coords="251,1018,438,1074"/>
 <area shape="rect" id="node20" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc" title=" " alt="" coords="253,1098,436,1154"/>
-<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#a328db19f0cdcebf4879101663f4a1f13" title=" " alt="" coords="250,1178,439,1205"/>
+<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#a719227c35ec65723a7f6346fb5a70d37" title=" " alt="" coords="250,1178,439,1205"/>
+<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#ab791119939e6b60f3c753359f53a6d05" title=" " alt="" coords="250,1229,439,1271"/>
+<area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#a6bec304311d1483f6997642021035499" title=" " alt="" coords="250,1295,439,1336"/>
 <area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
 </map>

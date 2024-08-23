@@ -39,7 +39,11 @@ struct InitialConditions {
                            interface.                                         */
     uniform_region_cartesian, /**< Homogeneous in a Cartesian region          */
     fluxweighted_region_cartesian, /**< Flux-weighted in a Cartesian region   */
-    prescribed_positions,          /**< Prescribed positions                  */
+    prescribed_positions,          /**< Prescribed particle positions         */
+    prescribed_positions_masses,   /**< Prescribed particle positions and masses
+                                    */
+    prescribed_positions_masses_tags, /**< Prescribed particle positions,
+                                         masses, and tags                     */
     uniform_inlet_continuous,      /**< Continuous injection homogeneous at the
                                       inlet.                                  */
     fluxweighted_inlet_continuous, /**< Continuous injection flux-weighted at
@@ -68,6 +72,9 @@ struct InitialConditions {
       {"uniform_region_cartesian", Type::uniform_region_cartesian},
       {"fluxweighted_region_cartesian", Type::fluxweighted_region_cartesian},
       {"prescribed_positions", Type::prescribed_positions},
+      {"prescribed_positions_masses", Type::prescribed_positions_masses},
+      {"prescribed_positions_masses_tags",
+       Type::prescribed_positions_masses_tags},
       {"uniform_inlet_continuous", Type::uniform_inlet_continuous},
       {"fluxweighted_inlet_continuous", Type::fluxweighted_inlet_continuous}};
 
@@ -85,6 +92,9 @@ struct InitialConditions {
       {Type::uniform_region_cartesian, "uniform_region_cartesian"},
       {Type::fluxweighted_region_cartesian, "fluxweighted_region_cartesian"},
       {Type::prescribed_positions, "prescribed_positions"},
+      {Type::prescribed_positions_masses, "prescribed_positions_masses"},
+      {Type::prescribed_positions_masses_tags,
+       "prescribed_positions_masses_tags"},
       {Type::uniform_inlet_continuous, "uniform_inlet_continuous"},
       {Type::fluxweighted_inlet_continuous, "fluxweighted_inlet_continuous"}};
 };
@@ -541,10 +551,10 @@ auto prescribed_positions(Positions const &position_data,
 particle given a position. \return Container with particles. */
 template <typename ParticleMaker>
 auto prescribed_positions(std::size_t nr_particles,
-                          std::string const &filename_position_data,
+                          std::string const &filename_data,
                           ParticleMaker &particle_maker) {
   std::string comment_sequence = "#";
-  auto input = useful::open_read(filename_position_data);
+  auto input = useful::open_read(filename_data);
   std::vector<std::vector<double>> position_data;
   position_data.reserve(nr_particles);
   for (std::size_t pp = 0; pp < nr_particles; ++pp) {
@@ -570,14 +580,14 @@ auto prescribed_positions(std::size_t nr_particles,
 }
 
 /**
-\param filename_position_data Name of file with one position per line.
+\param filename_data Name of file with one position per line.
 \param particle_maker Functor to make a particle given a position.
 \return Container with particles. */
 template <typename ParticleMaker>
-auto prescribed_positions(std::string const &filename_position_data,
+auto prescribed_positions(std::string const &filename_data,
                           ParticleMaker &particle_maker) {
   std::string comment_sequence = "#";
-  auto input = useful::open_read(filename_position_data);
+  auto input = useful::open_read(filename_data);
   std::vector<std::vector<double>> position_data;
   std::string line;
   while (std::getline(input, line)) {
@@ -596,6 +606,185 @@ auto prescribed_positions(std::string const &filename_position_data,
   return prescribed_positions(position_data, particle_maker);
 }
 
+/** \param position_data Container of position vectors for each particle
+    \param mass_data Container of masses for each particle
+    \param particle_maker Functor to make a particle given a position.
+    \return Container with particles. */
+template <typename Positions, typename Masses, typename ParticleMaker>
+auto prescribed_positions_masses(Positions const &position_data,
+                                 Masses const &mass_data,
+                                 ParticleMaker &particle_maker) {
+  using Particle = decltype(particle_maker(Foam::point{}));
+  std::vector<Particle> particles;
+  particles.reserve(position_data.size());
+  for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
+    particle_maker.mass = mass_data[pp];
+    particles.push_back(particle_maker(make_point(position_data[pp])));
+  }
+
+  return particles;
+}
+
+/** \param nr_particles Number of particles to make.
+\param filename_data Name of file with one position and one mass per line; the
+first \c nr_particles lines are used. \param particle_maker Functor to make a
+particle given a position. \return Container with particles. */
+template <typename ParticleMaker>
+auto prescribed_positions_masses(std::size_t nr_particles,
+                                 std::string const &filename_position_mass_data,
+                                 ParticleMaker &particle_maker) {
+  std::string comment_sequence = "#";
+  auto input = useful::open_read(filename_position_mass_data);
+  std::vector<std::vector<double>> position_data;
+  position_data.reserve(nr_particles);
+  std::vector<double> mass_data;
+  mass_data.reserve(nr_particles);
+  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
+    std::string line;
+    while (std::getline(input, line))
+      if (line.find(comment_sequence) != 0)
+        break;
+    useful::remove_carriage_return_in_place(line);
+    useful::clear_escape_in_place(line, comment_sequence);
+    if (line.empty())
+      throw std::runtime_error{
+          std::string{"Could not parse prescribed position for "} +
+          std::to_string(pp) + "th particle"};
+    auto split_line = useful::split(line);
+    position_data.emplace_back();
+    position_data.back().reserve(split_line.size());
+    for (std::size_t ii = 0; ii < split_line.size() - 1; ++ii)
+      position_data.back().push_back(std::stod(split_line[ii]));
+    mass_data.push_back(std::stod(split_line.back()));
+  }
+  input.close();
+
+  return prescribed_positions_masses(position_data, mass_data, particle_maker);
+}
+
+/**
+\param filename_data Name of file with one position and one mass per line.
+\param particle_maker Functor to make a particle given a position.
+\return Container with particles. */
+template <typename ParticleMaker>
+auto prescribed_positions_masses(std::string const &filename_data,
+                                 ParticleMaker &particle_maker) {
+  std::string comment_sequence = "#";
+  auto input = useful::open_read(filename_data);
+  std::vector<std::vector<double>> position_data;
+  std::vector<double> mass_data;
+  std::string line;
+  while (std::getline(input, line)) {
+    if (line.find(comment_sequence) == 0)
+      continue;
+    useful::remove_carriage_return_in_place(line);
+    useful::clear_escape_in_place(line, comment_sequence);
+    auto split_line = useful::split(line);
+    position_data.emplace_back();
+    position_data.back().reserve(split_line.size());
+    for (std::size_t ii = 0; ii < split_line.size() - 1; ++ii)
+      position_data.back().push_back(std::stod(split_line[ii]));
+    mass_data.push_back(std::stod(split_line.back()));
+  }
+  input.close();
+
+  return prescribed_positions_masses(position_data, mass_data, particle_maker);
+}
+
+/** \param position_data Container of position vectors for each particle
+    \param mass_data Container of masses for each particle
+    \param tag_data Container of tags (non-negative integer identifiers) for
+   each particle \param particle_maker Functor to make a particle given a
+   position. \return Container with particles. */
+template <typename Positions, typename Masses, typename Tags,
+          typename ParticleMaker>
+auto prescribed_positions_masses_tags(Positions const &position_data,
+                                      Masses const &mass_data,
+                                      Tags const &tag_data,
+                                      ParticleMaker &particle_maker) {
+  using Particle = decltype(particle_maker(Foam::point{}));
+  std::vector<Particle> particles;
+  particles.reserve(position_data.size());
+  for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
+    particle_maker.mass = mass_data[pp];
+    particle_maker.tag = tag_data[pp];
+    particles.push_back(particle_maker(make_point(position_data[pp])));
+  }
+
+  return particles;
+}
+
+/** \param nr_particles Number of particles to make.
+\param filename_data Name of file with one position, one mass, and one tag per
+line; the first \c nr_particles lines are used. \param particle_maker Functor to
+make a particle given a position. \return Container with particles. */
+template <typename ParticleMaker>
+auto prescribed_positions_masses_tags(
+    std::size_t nr_particles, std::string const &filename_position_mass_data,
+    ParticleMaker &particle_maker) {
+  std::string comment_sequence = "#";
+  auto input = useful::open_read(filename_position_mass_data);
+  std::vector<std::vector<double>> position_data;
+  position_data.reserve(nr_particles);
+  std::vector<double> mass_data;
+  mass_data.reserve(nr_particles);
+  std::vector<std::size_t> tag_data;
+  tag_data.reserve(nr_particles);
+  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
+    std::string line;
+    while (std::getline(input, line))
+      if (line.find(comment_sequence) != 0)
+        break;
+    useful::remove_carriage_return_in_place(line);
+    useful::clear_escape_in_place(line, comment_sequence);
+    if (line.empty())
+      throw std::runtime_error{
+          std::string{"Could not parse prescribed position for "} +
+          std::to_string(pp) + "th particle"};
+    auto split_line = useful::split(line);
+    position_data.emplace_back();
+    position_data.back().reserve(split_line.size());
+    for (std::size_t ii = 0; ii < split_line.size() - 2; ++ii)
+      position_data.back().push_back(std::stod(split_line[ii]));
+    mass_data.push_back(std::stod(split_line[split_line.size() - 2]));
+    tag_data.push_back(std::stod(split_line.back()));
+  }
+  input.close();
+
+  return prescribed_positions_masses(position_data, mass_data, particle_maker);
+}
+
+/**
+\param filename_data Name of file with one position, one mass, and one tag per
+line. \param particle_maker Functor to make a particle given a position. \return
+Container with particles. */
+template <typename ParticleMaker>
+auto prescribed_positions_masses_tags(std::string const &filename_data,
+                                      ParticleMaker &particle_maker) {
+  std::string comment_sequence = "#";
+  auto input = useful::open_read(filename_data);
+  std::vector<std::vector<double>> position_data;
+  std::vector<double> mass_data;
+  std::vector<std::size_t> tag_data;
+  std::string line;
+  while (std::getline(input, line)) {
+    if (line.find(comment_sequence) == 0)
+      continue;
+    useful::remove_carriage_return_in_place(line);
+    useful::clear_escape_in_place(line, comment_sequence);
+    auto split_line = useful::split(line);
+    position_data.emplace_back();
+    position_data.back().reserve(split_line.size());
+    for (std::size_t ii = 0; ii < split_line.size() - 2; ++ii)
+      position_data.back().push_back(std::stod(split_line[ii]));
+    mass_data.push_back(std::stod(split_line[split_line.size() - 2]));
+    tag_data.push_back(std::stod(split_line.back()));
+  }
+  input.close();
+
+  return prescribed_positions_masses(position_data, mass_data, particle_maker);
+}
+
 /** \class InitialConditionParameters_Cases PTOF/InitialCondition.h
  * "PTOF/InitialCondition.h" \brief Initial condition condition parameters to
  * handle all initial condition types in \c InitialCondition_Cases. */
@@ -608,7 +797,7 @@ public:
   InitialConditions::Type type;
   double distance_wall;
   std::vector<std::pair<double, double>> region_boundaries;
-  std::string filename_position_data;
+  std::string filename_data;
   double initial_mass;
   double time_min;
   double time_step_accuracy_adv;
@@ -651,11 +840,10 @@ public:
       }
     }
     if (type == InitialConditions::Type::prescribed_positions) {
-      useful::read_first_from_line(input, filename_position_data,
-                                   comment_sequence);
+      useful::read_first_from_line(input, filename_data, comment_sequence);
       useful::expand_env_in_place(
-          useful::expand_home_dir_in_place(filename_position_data));
-      std::cout << filename_position_data << std::endl;
+          useful::expand_home_dir_in_place(filename_data));
+      std::cout << filename_data << std::endl;
     }
     useful::read_first_from_line(input, initial_mass, comment_sequence);
     useful::read_first_from_line(input, time_min, comment_sequence);
@@ -692,7 +880,11 @@ public:
            "\t                          cartesian region\n"
            "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed\n"
            "\t                               cartesian region\n"
-           "\tprescribed_positions: Prescribed positions\n"
+           "\tprescribed_positions: Prescribed particle positions\n"
+           "\tprescribed_positions_masses: Prescribed particle positions and\n"
+           "  masses\n"
+           "\tprescribed_positions_masses_tags: Prescribed particle\n"
+           "  positions, masses, and tags\n"
            "\tuniform_inlet_continuous: Continuous injection homogeneous at\n"
            "\t                          the inlet\n"
            "\tfluxweighted_inlet_continuous: Continuous injection\n"
@@ -701,8 +893,10 @@ public:
            "  uniform_near_solid)\n"
            "- Region boundaries (pass only for types uniform_region_cartesian\n"
            "  or fluxweighted_region_cartesian)\n"
-           "- Filename (with full path) for prescribed positions (pass only\n"
-           "  for type prescribed_positions)\n"
+           "- Filename (with full path) for prescribed positions, positions\n"
+           "  and masses, or positions, masses, and tags (pass only for type\n"
+           "  prescribed_positions, prescribed_position_masses, or\n"
+           "  prescribed_positions_masses_tags, respectively)\n"
            "- Total injected mass in each injection step\n"
            "- Initial injection time\n"
            "- Final injection time (pass only for types\n"
@@ -892,8 +1086,14 @@ private:
                        _mask, _threshold),
             _velocity_field, _locator.mesh(), _rng, particle_maker);
     case InitialConditions::Type::prescribed_positions:
-      return prescribed_positions(
-          nr_particles, parameters.filename_position_data, particle_maker);
+      return prescribed_positions(nr_particles, parameters.filename_data,
+                                  particle_maker);
+    case InitialConditions::Type::prescribed_positions_masses:
+      return prescribed_positions_masses(nr_particles, parameters.filename_data,
+                                         particle_maker);
+    case InitialConditions::Type::prescribed_positions_masses_tags:
+      return prescribed_positions_masses_tags(
+          nr_particles, parameters.filename_data, particle_maker);
     case InitialConditions::Type::uniform_inlet_continuous:
       if constexpr (std::is_same_v<Mask, useful::Empty>)
         return continuous_injection(

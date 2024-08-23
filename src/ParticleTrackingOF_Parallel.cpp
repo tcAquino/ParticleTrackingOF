@@ -17,7 +17,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_diffusion_3d_parallel;
+  using namespace ptof::model_advection_diffusion_fpt_2d_parallel;
 
   std::string banner =
       "--------------------------------------------------------------\n"

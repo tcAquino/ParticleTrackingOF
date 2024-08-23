@@ -10,6 +10,8 @@ var structptof_1_1_initial_conditions =
       [ "uniform_region_cartesian", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca02ae3cf08f775b35f0af8bd08744b34c", null ],
       [ "fluxweighted_region_cartesian", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca22f46fd6ceac61ea052e1629fc51cb12", null ],
       [ "prescribed_positions", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca3e1d33bf8a15571103e03fbf87016a28", null ],
+      [ "prescribed_positions_masses", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca52907735cfbd1d776549d4181dab51d6", null ],
+      [ "prescribed_positions_masses_tags", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca1205c1356c3eae630aa893ca2952e7cc", null ],
       [ "uniform_inlet_continuous", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca697e996029b7dd7862b76635af91e745", null ],
       [ "fluxweighted_inlet_continuous", "d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca664d8dedda38ef536b60df81a2ebfe46", null ]
     ] ],

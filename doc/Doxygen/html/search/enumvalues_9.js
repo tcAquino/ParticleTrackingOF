@@ -11,5 +11,7 @@ var searchData=
   ['position_5fsecond_5fmoment_5fperiodic_2146',['position_second_moment_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa',1,'ptof::Measure']]],
   ['position_5fvariance_2147',['position_variance',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58',1,'ptof::Measure']]],
   ['position_5fvariance_5fperiodic_2148',['position_variance_periodic',['../dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d',1,'ptof::Measure']]],
-  ['prescribed_5fpositions_2149',['prescribed_positions',['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca3e1d33bf8a15571103e03fbf87016a28',1,'ptof::InitialConditions']]]
+  ['prescribed_5fpositions_2149',['prescribed_positions',['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca3e1d33bf8a15571103e03fbf87016a28',1,'ptof::InitialConditions']]],
+  ['prescribed_5fpositions_5fmasses_2150',['prescribed_positions_masses',['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca52907735cfbd1d776549d4181dab51d6',1,'ptof::InitialConditions']]],
+  ['prescribed_5fpositions_5fmasses_5ftags_2151',['prescribed_positions_masses_tags',['../d5/d77/structptof_1_1_initial_conditions.html#ade48f9d1cc7258ef10ea36f8c381a94ca1205c1356c3eae630aa893ca2952e7cc',1,'ptof::InitialConditions']]]
 ];
