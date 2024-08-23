@@ -618,8 +618,8 @@ auto prescribed_positions_masses(Positions const &position_data,
   std::vector<Particle> particles;
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
-    particle_maker.mass = mass_data[pp];
     particles.push_back(particle_maker(make_point(position_data[pp])));
+    particles.back().mass = mass_data[pp];
   }
 
   return particles;
@@ -706,9 +706,9 @@ auto prescribed_positions_masses_tags(Positions const &position_data,
   std::vector<Particle> particles;
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
-    particle_maker.mass = mass_data[pp];
-    particle_maker.tag = tag_data[pp];
     particles.push_back(particle_maker(make_point(position_data[pp])));
+    particles.back().mass = mass_data[pp];
+    particles.back().tag = tag_data[pp];
   }
 
   return particles;

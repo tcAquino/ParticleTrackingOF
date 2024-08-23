@@ -528,8 +528,8 @@ $(document).ready(function(){initNavTree('d6/d44/_initial_condition_8h_source.ht
 <div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;  std::vector&lt;Particle&gt; particles;</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;  particles.reserve(position_data.size());</div>
 <div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;  <span class="keywordflow">for</span> (std::size_t pp = 0; pp &lt; position_data.size(); ++pp) {</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;    particle_maker.<a class="code" href="../../da/dae/structptof_1_1_particle_maker.html#a01641c53717ab545eeba7439c29944f7">mass</a> = mass_data[pp];</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    particles.push_back(particle_maker(<a class="code" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">make_point</a>(position_data[pp])));</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;    particles.push_back(particle_maker(<a class="code" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">make_point</a>(position_data[pp])));</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    particles.back().mass = mass_data[pp];</div>
 <div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;  }</div>
 <div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160; </div>
 <div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;  <span class="keywordflow">return</span> particles;</div>
@@ -603,9 +603,9 @@ $(document).ready(function(){initNavTree('d6/d44/_initial_condition_8h_source.ht
 <div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;  std::vector&lt;Particle&gt; particles;</div>
 <div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;  particles.reserve(position_data.size());</div>
 <div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;  <span class="keywordflow">for</span> (std::size_t pp = 0; pp &lt; position_data.size(); ++pp) {</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    particle_maker.<a class="code" href="../../da/dae/structptof_1_1_particle_maker.html#a01641c53717ab545eeba7439c29944f7">mass</a> = mass_data[pp];</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    particle_maker.<a class="code" href="../../da/dae/structptof_1_1_particle_maker.html#a35fcf26991227c3f698fd74915c655ee">tag</a> = tag_data[pp];</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    particles.push_back(particle_maker(<a class="code" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">make_point</a>(position_data[pp])));</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    particles.push_back(particle_maker(<a class="code" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc">make_point</a>(position_data[pp])));</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    particles.back().mass = mass_data[pp];</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    particles.back().tag = tag_data[pp];</div>
 <div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;  }</div>
 <div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
 <div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;  <span class="keywordflow">return</span> particles;</div>
@@ -1112,8 +1112,6 @@ $(document).ready(function(){initNavTree('d6/d44/_initial_condition_8h_source.ht
 <div class="ttc" id="astructptof_1_1_locator___cell_html"><div class="ttname"><a href="../../d0/d4f/structptof_1_1_locator___cell.html">ptof::Locator_Cell</a></div><div class="ttdoc">Object to locate positions or states in mesh.</div><div class="ttdef"><b>Definition:</b> Locator.h:21</div></div>
 <div class="ttc" id="astructptof_1_1_locator___cell_html_a019fcb55e2bfa45e1c708c108b274871"><div class="ttname"><a href="../../d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871">ptof::Locator_Cell::mesh</a></div><div class="ttdeci">Mesh const  &amp; mesh() const</div><div class="ttdef"><b>Definition:</b> Locator.h:38</div></div>
 <div class="ttc" id="astructptof_1_1_particle_maker_html"><div class="ttname"><a href="../../da/dae/structptof_1_1_particle_maker.html">ptof::ParticleMaker</a></div><div class="ttdoc">Functor to make particles given position.</div><div class="ttdef"><b>Definition:</b> ParticleMaker.h:16</div></div>
-<div class="ttc" id="astructptof_1_1_particle_maker_html_a01641c53717ab545eeba7439c29944f7"><div class="ttname"><a href="../../da/dae/structptof_1_1_particle_maker.html#a01641c53717ab545eeba7439c29944f7">ptof::ParticleMaker::mass</a></div><div class="ttdeci">Mass mass</div><div class="ttdef"><b>Definition:</b> ParticleMaker.h:35</div></div>
-<div class="ttc" id="astructptof_1_1_particle_maker_html_a35fcf26991227c3f698fd74915c655ee"><div class="ttname"><a href="../../da/dae/structptof_1_1_particle_maker.html#a35fcf26991227c3f698fd74915c655ee">ptof::ParticleMaker::tag</a></div><div class="ttdeci">Tag tag</div><div class="ttdef"><b>Definition:</b> ParticleMaker.h:36</div></div>
 <div class="ttc" id="astructptof_1_1_particle_maker_html_ac096f1092fed0a8efa6c732ad28e0e2d"><div class="ttname"><a href="../../da/dae/structptof_1_1_particle_maker.html#ac096f1092fed0a8efa6c732ad28e0e2d">ptof::ParticleMaker::time</a></div><div class="ttdeci">Time time</div><div class="ttdef"><b>Definition:</b> ParticleMaker.h:34</div></div>
 <div class="ttc" id="astructuseful_1_1_empty_html"><div class="ttname"><a href="../../da/d86/structuseful_1_1_empty.html">useful::Empty</a></div><div class="ttdoc">Class holding nothing and doing nothing.</div><div class="ttdef"><b>Definition:</b> Useful.h:515</div></div>
 </div><!-- fragment --></div><!-- contents -->
