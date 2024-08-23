@@ -7,6 +7,7 @@
 #ifndef PTOF_INITIALCONDITIONS_H
 #define PTOF_INITIALCONDITIONS_H
 
+#include "CTRW/Meta.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/Useful.h"
 #include <algorithm>
@@ -619,8 +620,8 @@ auto prescribed_positions_masses(Positions const &position_data,
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
     particles.push_back(particle_maker(make_point(position_data[pp])));
-    particles.back().transform_both(
-        [&mass_data, pp](auto &state) { state.mass = mass_data[pp]; });
+    if constexpr (meta::has_mass_v<Particle>)
+      particle_maker.mass = mass_data[pp];
   }
 
   return particles;
@@ -708,10 +709,10 @@ auto prescribed_positions_masses_tags(Positions const &position_data,
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
     particles.push_back(particle_maker(make_point(position_data[pp])));
-    particles.back().transform_both([&mass_data, &tag_data, pp](auto &state) {
-      state.mass = mass_data[pp];
-      state.tag = tag_data[pp];
-    });
+    if constexpr (meta::has_mass_v<Particle>)
+      particle_maker.mass = mass_data[pp];
+    if constexpr (meta::has_tag_v<Particle>)
+      particle_maker.tag = tag_data[pp];
   }
 
   return particles;

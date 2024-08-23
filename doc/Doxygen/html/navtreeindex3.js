@@ -1,5 +1,9 @@
 var NAVTREEINDEX3 =
 {
+"d3/d2e/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d.html#aafc6a1b1af2feec6b3cae5ec6d98a434":[1,0,7,40,3],
+"d3/d2e/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d.html#ada7ae7651dbd0e813be6cf6480759cde":[1,0,7,40,2],
+"d3/d3b/namespaceptof_1_1model__advection__diffusion__3d.html":[1,0,7,6],
+"d3/d3b/namespaceptof_1_1model__advection__diffusion__3d.html#a0ec7a01dcca31235a1086c0262acee0f":[1,0,7,6,4],
 "d3/d3b/namespaceptof_1_1model__advection__diffusion__3d.html#a6d7ed75e1fccc221ec2c586d5c731c72":[1,0,7,6,2],
 "d3/d3b/namespaceptof_1_1model__advection__diffusion__3d.html#a7cce248a90c0c566bf0d94a120ea1a11":[1,0,7,6,3],
 "d3/d3b/namespaceptof_1_1model__advection__diffusion__3d.html#ab97cff4cc79acd07c765450a7279fafc":[1,0,7,6,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX3 =
 "d4/db6/structptof_1_1_measurer_time__position__second__moment__periodic.html#ac8ba4a123700d26d85df6e0ceb12ce8a":[2,0,3,97,11],
 "d4/dd7/structptof_1_1_measure_spacing.html":[2,0,3,76],
 "d4/dd7/structptof_1_1_measure_spacing.html#a16b7443515ba29233e0276818b092e21":[2,0,3,76,3],
-"d4/dd7/structptof_1_1_measure_spacing.html#a3d0ee3da43c537c59a50e3f14a8c310a":[2,0,3,76,4],
-"d4/dd7/structptof_1_1_measure_spacing.html#a6e631a48ff5417b3277e04a718670e52":[2,0,3,76,5],
-"d4/dd7/structptof_1_1_measure_spacing.html#aaaaee6ba9d933b39b67f5b35d93db1dc":[2,0,3,76,2],
-"d4/dd7/structptof_1_1_measure_spacing.html#acd7306cfaa066f22540a9b4c5d7ef10e":[2,0,3,76,0],
-"d4/dd7/structptof_1_1_measure_spacing.html#acd7306cfaa066f22540a9b4c5d7ef10ea2764ca9d34e90313978d044f27ae433b":[2,0,3,76,0,2]
+"d4/dd7/structptof_1_1_measure_spacing.html#a3d0ee3da43c537c59a50e3f14a8c310a":[2,0,3,76,4]
 };
