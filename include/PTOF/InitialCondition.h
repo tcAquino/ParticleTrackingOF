@@ -619,7 +619,8 @@ auto prescribed_positions_masses(Positions const &position_data,
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
     particles.push_back(particle_maker(make_point(position_data[pp])));
-    particles.back().mass = mass_data[pp];
+    particles.back().transform_both(
+        [&mass_data, pp](auto &state) { state.mass = mass_data[pp]; });
   }
 
   return particles;
@@ -707,8 +708,10 @@ auto prescribed_positions_masses_tags(Positions const &position_data,
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
     particles.push_back(particle_maker(make_point(position_data[pp])));
-    particles.back().mass = mass_data[pp];
-    particles.back().tag = tag_data[pp];
+    particles.back().transform_both([&mass_data, &tag_data, pp](auto &state) {
+      state.mass = mass_data[pp];
+      state.tag = tag_data[pp];
+    });
   }
 
   return particles;
@@ -845,7 +848,9 @@ public:
           useful::expand_home_dir_in_place(filename_data));
       std::cout << filename_data << std::endl;
     }
-    useful::read_first_from_line(input, initial_mass, comment_sequence);
+    if (type != InitialConditions::Type::prescribed_positions_masses &&
+        type == InitialConditions::Type::prescribed_positions_masses_tags)
+      useful::read_first_from_line(input, initial_mass, comment_sequence);
     useful::read_first_from_line(input, time_min, comment_sequence);
     if (type == InitialConditions::Type::uniform_inlet_continuous ||
         type == InitialConditions::Type::fluxweighted_inlet_continuous) {
@@ -897,7 +902,9 @@ public:
            "  and masses, or positions, masses, and tags (pass only for type\n"
            "  prescribed_positions, prescribed_position_masses, or\n"
            "  prescribed_positions_masses_tags, respectively)\n"
-           "- Total injected mass in each injection step\n"
+           "- Total injected mass in each injection step (pass for all types\n"
+           "  except prescribed_position_masses and\n"
+           "  prescribed_positions_masses_tags)\n"
            "- Initial injection time\n"
            "- Final injection time (pass only for types\n"
            "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
