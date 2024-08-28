@@ -1,8 +1,9 @@
 <map id="modular::increment" name="modular::increment">
-<area shape="rect" id="node1" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="405,85,556,112"/>
-<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#a8751a12845164316558a4f8642da4578" title="num are the digits of a number such that each digit ranges from 0 to basis[dig] &#45; 1...." alt="" coords="182,5,333,32"/>
-<area shape="rect" id="node3" href="$d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64" title=" " alt="" coords="205,56,309,83"/>
-<area shape="rect" id="node5" href="$d8/d1f/classgeom_1_1_boundary___periodic.html#afafd90feed6104e8fa303e26ff48af93" title="Translate a position according to projection in periodic cell." alt="" coords="163,107,351,149"/>
-<area shape="rect" id="node6" href="$d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#ab50748fa677fc8faad1f60763b537a1f" title="Translate a position according to projection in periodic cell." alt="" coords="157,173,357,214"/>
-<area shape="rect" id="node4" href="$d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48" title=" " alt="" coords="5,56,109,83"/>
+<area shape="rect" id="node1" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="405,107,556,133"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a6ecefd5355b441dc382fac8afa06a318" title=" " alt="" coords="181,5,334,32"/>
+<area shape="rect" id="node3" href="$da/d32/namespacemodular.html#a8751a12845164316558a4f8642da4578" title="num are the digits of a number such that each digit ranges from 0 to basis[dig] &#45; 1...." alt="" coords="182,56,333,83"/>
+<area shape="rect" id="node4" href="$d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64" title=" " alt="" coords="205,107,309,133"/>
+<area shape="rect" id="node6" href="$d8/d1f/classgeom_1_1_boundary___periodic.html#afafd90feed6104e8fa303e26ff48af93" title="Translate a position according to projection in periodic cell." alt="" coords="163,158,351,199"/>
+<area shape="rect" id="node7" href="$d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#ab50748fa677fc8faad1f60763b537a1f" title="Translate a position according to projection in periodic cell." alt="" coords="157,223,357,265"/>
+<area shape="rect" id="node5" href="$d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48" title=" " alt="" coords="5,107,109,133"/>
 </map>

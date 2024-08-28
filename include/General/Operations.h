@@ -15,6 +15,7 @@
 #define GENERAL_OPERATIONS_H
 
 #include "General/Meta.h"
+#include "General/Modular.h"
 #include <cmath>
 #include <functional>
 #include <stdexcept>
@@ -842,13 +843,13 @@ auto project(Container const &container) {
   return container[dd];
 }
 
-/** \brief Get component overload to get number itself from a \c double . */
+/** \brief Get component overload to get number itself from a \c double. */
 template <> inline auto project<0, double>(double const &val) { return val; }
 
-/** \brief Get component overload to get number itself from an \c int . */
+/** \brief Get component overload to get number itself from an \c int. */
 template <> inline auto project<0, int>(int const &val) { return val; }
 
-/** \brief Get component overload to get number itself from a \c size_t . */
+/** \brief Get component overload to get number itself from a \c size_t. */
 template <> inline auto project<0, std::size_t>(std::size_t const &val) {
   return val;
 }
@@ -859,29 +860,29 @@ auto project(Container const &container, Index dd) {
   return container[dd];
 }
 
-/** \brief Get component overload to get number itself from a \c double . */
+/** \brief Get component overload to get number itself from a \c double. */
 template <> inline auto project<double>(double const &val, std::size_t) {
   return val;
 }
 
-/** \brief Get component overload to get number itself from an \c int . */
+/** \brief Get component overload to get number itself from an \c int. */
 template <> inline auto project<int>(int const &val, std::size_t) {
   return val;
 }
 
-/** \brief Get component overload to get number itself from a \c size_t . */
+/** \brief Get component overload to get number itself from a \c size_t. */
 template <>
 inline auto project<std::size_t>(std::size_t const &val, std::size_t) {
   return val;
 }
 
-/** \brief Get component overload to get number itself from a \c double . */
+/** \brief Get component overload to get number itself from a \c double. */
 template <> inline auto project<double>(double const &val, int) { return val; }
 
-/** \brief Get component overload to get number itself from an \c int . */
+/** \brief Get component overload to get number itself from an \c int. */
 template <> inline auto project<int>(int const &val, int) { return val; }
 
-/** \brief Get component overload to get number itself from a \c size_t . */
+/** \brief Get component overload to get number itself from a \c size_t. */
 template <> inline auto project<std::size_t>(std::size_t const &val, int) {
   return val;
 }
@@ -904,6 +905,27 @@ inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
 
 /** \return Sign of \c val. */
 template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
+
+/** \return Cartesian power of \c set, <tt>set^{power} = set \times \ldots
+ * set<tt>*/
+template <typename Set>
+std::vector<std::vector<typename Set::value_type>>
+cartesian_power(Set const &set, std::size_t power) {
+  std::vector<std::size_t> index(power, 0);
+  std::size_t nr_elements = std::pow(set.size(), power);
+  std::vector<std::vector<typename Set::value_type>> result;
+  result.reserve(nr_elements);
+
+  for (std::size_t ii = 0; ii < nr_elements; ++ii) {
+    modular::increment(index, set.size());
+    result.push_back({});
+    result.back().reserve(power);
+    for (std::size_t jj = 0; jj < power; ++jj)
+      result.back().push_back(set[index[jj]]);
+  }
+
+  return result;
+};
 } // namespace op
 
 #endif /* GENERAL_OPERATIONS_H */

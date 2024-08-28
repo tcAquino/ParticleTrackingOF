@@ -620,8 +620,11 @@ auto prescribed_positions_masses(Positions const &position_data,
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
     particles.push_back(particle_maker(make_point(position_data[pp])));
-    if constexpr (meta::has_mass_v<Particle>)
+    if constexpr (meta::has_mass_v<ParticleMaker>)
       particle_maker.mass = mass_data[pp];
+    else
+      throw std::runtime_error{
+          "prescribed_positions_masses : ParticleMaker does not define mass"};
   }
 
   return particles;
@@ -709,10 +712,16 @@ auto prescribed_positions_masses_tags(Positions const &position_data,
   particles.reserve(position_data.size());
   for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
     particles.push_back(particle_maker(make_point(position_data[pp])));
-    if constexpr (meta::has_mass_v<Particle>)
+    if constexpr (meta::has_mass_v<ParticleMaker>)
       particle_maker.mass = mass_data[pp];
-    if constexpr (meta::has_tag_v<Particle>)
+    else
+      throw std::runtime_error{"prescribed_positions_masses_tags : "
+                               "ParticleMaker does not define mass"};
+    if constexpr (meta::has_tag_v<ParticleMaker>)
       particle_maker.tag = tag_data[pp];
+    else
+      throw std::runtime_error{"prescribed_positions_masses_tags : "
+                               "ParticleMaker does not define tag"};
   }
 
   return particles;

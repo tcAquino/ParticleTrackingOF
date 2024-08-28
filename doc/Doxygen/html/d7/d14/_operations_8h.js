@@ -5,6 +5,7 @@ var _operations_8h =
     [ "adjacent_difference", "d7/d14/_operations_8h.html#a03f6bb5fc573839017c2eefe9a56ef00", null ],
     [ "bin_widths", "d7/d14/_operations_8h.html#a00dc3d7ea743e000d0a7321e9ea708c9", null ],
     [ "bin_widths", "d7/d14/_operations_8h.html#af0def2af8c45e873d3229198c25b7a05", null ],
+    [ "cartesian_power", "d7/d14/_operations_8h.html#a6ecefd5355b441dc382fac8afa06a318", null ],
     [ "convolution", "d7/d14/_operations_8h.html#aa744e5acdcd4e1bfe05bd345cc4ceea2", null ],
     [ "convolution_trap", "d7/d14/_operations_8h.html#a7003573748d3e66f4b45d88826fec7cb", null ],
     [ "diff", "d7/d14/_operations_8h.html#a6a5b83387e1d537e9d3e319325710cdc", null ],
