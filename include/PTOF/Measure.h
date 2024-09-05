@@ -22,6 +22,7 @@ struct Measure {
                                regions specified by masks. */
     position_mean,          /**< Time and mean position. */
     position_second_moment, /**< Time and position second moment. */
+    position_nth_moment,    /**< Time and position nth moment. */
     position_variance,      /**< Time and position variance. */
     mass,                   /**< Time and total mass. */
     mass_in_regions, /**< Time and total mass in regions speciefied by masks. */
@@ -47,6 +48,8 @@ struct Measure {
                                periodicity. */
     position_second_moment_periodic, /**< Time and true position second moment
                                         accounting for periodicity. */
+    position_nth_moment_periodic,    /**< Time and true position nth moment
+                                           accounting for periodicity. */
     position_variance_periodic, /**< Time and true position variance accounting
                                    for periodicity. */
     first_crossing_time, /**< First crossing time, tag, and mass for specified

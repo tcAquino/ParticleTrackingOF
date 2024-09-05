@@ -129,6 +129,7 @@ public:
            "\t                     specified by masks\n"
            "\tposition_mean: Time and mean position\n"
            "\tposition_second_moment: Time and position second moment\n"
+           "\tposition_nth_moment: Time and position nth moment\n"
            "\tposition_variance: Time and position variance\n"
            "\tmass: Time and total mass\n"
            "\tmass_in_regions: Time and total mass within regions specified\n"
@@ -165,6 +166,9 @@ public:
            "\tposition_mean_periodic: Time and true mean position accounting\n"
            "\t                        for periodicity\n"
            "\tposition_second_moment_periodic: Time and true position second\n"
+           "\t                                 moment accounting for\n"
+           "\t                                 periodicity\n"
+           "\tposition_second_moment_periodic: Time and true position nth\n"
            "\t                                 moment accounting for\n"
            "\t                                 periodicity\n"
            "\tposition_variance_periodic: Time and true position variance\n"
@@ -323,18 +327,25 @@ public:
         if (split_line.size() < required_size)
           throw std::runtime_error{std::string("Measurement type ") + name +
                                    ": "
-                                   "Field name not provided"};
+                                   "Could not parse field name"};
         measurements.back().field_name = split_line[1];
-      }
-      if (name == "first_crossing_time") {
+      } else if (name == "first_crossing_time") {
         required_size = 3;
         if (split_line.size() < required_size)
           throw std::runtime_error{
               std::string("Measurement type ") + name +
               ": "
-              "Crossing dimension and/or position not provided"};
+              "Could not parse crossing dimension and/or position"};
         measurements.back().uint_params.push_back(std::stoul(split_line[1]));
         measurements.back().double_params.push_back(std::stod(split_line[2]));
+      } else if (name == "position_nth_moment" ||
+                 name == "position_nth_moment_periodic") {
+        required_size = 2;
+        if (split_line.size() < required_size)
+          throw std::runtime_error{std::string("Measurement type ") + name +
+                                   ": "
+                                   "Could not parse moment order"};
+        measurements.back().double_params.push_back(std::stod(split_line[1]));
       }
       if (split_line.size() > required_size)
         measurements.back().precision = std::stod(split_line.back());
@@ -614,7 +625,7 @@ private:
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Region masks not specified"};
+                                   "Region masks not provided"};
         break;
       }
       case Measure::Type::position_mean: {
@@ -630,6 +641,19 @@ private:
                 MeasurerTime_position_second_moment<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
                 measurement.precision));
+        break;
+      }
+      case Measure::Type::position_nth_moment: {
+        if (measurement.double_params.size() == 0)
+          throw std::runtime_error{std::string("Measurement type ") +
+                                   measurement.name +
+                                   ": "
+                                   "Crossing position not provided"};
+        _output_time.emplace_back(
+            std::make_unique<
+                MeasurerTime_position_nth_moment<Subject, Geometry>>(
+                subject, measurement.double_params[0], geometry, directories,
+                identifier, measurement.precision));
         break;
       }
       case Measure::Type::position_variance: {
@@ -657,7 +681,7 @@ private:
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Region masks not specified"};
+                                   "Region masks not provided"};
         break;
       }
       case Measure::Type::velocity: {
@@ -762,10 +786,10 @@ private:
                   subject, geometry, directories, identifier,
                   measurement.precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement.name +
-                                   ": "
-                                   "Particle state must define periodicity"};
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Particle state does not define periodicity"};
         break;
       }
       case Measure::Type::position_in_regions_periodic: {
@@ -780,14 +804,14 @@ private:
         else {
           if constexpr (!meta::has_periodicity_v<
                             typename Subject::Particle::State>)
-            throw std::runtime_error{std::string("Measurement type ") +
-                                     measurement.name +
-                                     ": "
-                                     "Particle state must define periodicity"};
+            throw std::runtime_error{
+                std::string("Measurement type ") + measurement.name +
+                ": "
+                "Particle state does not define periodicity"};
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Region masks not specified"};
+                                   "Region masks not provided"};
         }
         break;
       }
@@ -800,10 +824,10 @@ private:
                   subject, geometry, directories, identifier,
                   measurement.precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement.name +
-                                   ": "
-                                   "Particle state must define periodicity"};
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Particle state does not define periodicity"};
         break;
       }
       case Measure::Type::position_second_moment_periodic: {
@@ -814,10 +838,10 @@ private:
                   Subject, Geometry>>(subject, geometry, directories,
                                       identifier, measurement.precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement.name +
-                                   ": "
-                                   "Particle state must define periodicity"};
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Particle state does not define periodicity"};
         break;
       }
       case Measure::Type::position_variance_periodic: {
@@ -829,10 +853,30 @@ private:
                   subject, geometry, directories, identifier,
                   measurement.precision));
         else
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Particle state does not define periodicity"};
+        break;
+      }
+      case Measure::Type::position_nth_moment_periodic: {
+        if (measurement.double_params.size() == 0)
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Particle state must define periodicity"};
+                                   "Crossing position not provided"};
+        if constexpr (meta::has_periodicity_v<
+                          typename Subject::Particle::State>)
+          _output_time.emplace_back(
+              std::make_unique<
+                  MeasurerTime_position_nth_moment_periodic<Subject, Geometry>>(
+                  subject, measurement.double_params[0], geometry, directories,
+                  identifier, measurement.precision));
+        else
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Particle state does not define periodicity"};
         break;
       }
       case Measure::Type::first_crossing_time: {
@@ -840,17 +884,17 @@ private:
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Could not read crossing dimension"};
-        throw std::runtime_error{
-            std::string("Measurement type ") + measurement.name +
-            ": "
-            "Crossing dimension higher than simulation dimension"};
+                                   "Crossing dimension not provided"};
         if (measurement.uint_params[0] >= Geometry::dim)
-          if (measurement.double_params.size() == 0)
-            throw std::runtime_error{std::string("Measurement type ") +
-                                     measurement.name +
-                                     ": "
-                                     "Could not read crossing position"};
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Crossing dimension higher than simulation dimension"};
+        if (measurement.double_params.size() == 0)
+          throw std::runtime_error{std::string("Measurement type ") +
+                                   measurement.name +
+                                   ": "
+                                   "Crossing position not provided"};
         _output_time.emplace_back(
             std::make_unique<
                 MeasurerTime_first_crossing_time<Subject, Geometry>>(

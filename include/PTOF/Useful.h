@@ -711,6 +711,33 @@ auto position_second_moment(Subject const &subject, double time,
 };
 
 /**
+ \param subject CTRW object.
+ \param nn Order of moment.
+ \param time Current time.
+ \param getter_position Get position from state, gets \c position directly by
+ default.
+ \return Nth moment of position (weighted by mass).
+ \note Particle states must implement:
+ - position [for default positition getter]
+ - info.absorbed [std::size_t]
+ - mass
+*/
+template <typename Subject, typename GetterPosition = ctrw::Get_position>
+auto position_nth_moment(Subject const &subject, std::size_t nn, double time,
+                         GetterPosition getter_position = {}) {
+  decltype(getter_position(subject.particles(0).state_new())) nth_moment =
+      Foam::zero{};
+  for (auto const &part : subject.particles()) {
+    auto const &state = part.state_new();
+    if (!state.info.absorbed && part.state_old().time <= time)
+      op::plus_inplace(
+          nth_moment,
+          op::times_scalar(state.mass, op::pow(getter_position(state), nn)));
+  }
+  return nth_moment / mass(subject, time);
+};
+
+/**
 \param subject CTRW object.
 \param time Current time.
 \param getter_position Get position from state, gets position directly by

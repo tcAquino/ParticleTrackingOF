@@ -261,6 +261,45 @@ private:
   std::array<int, 2> _column_widths;
 };
 
+/** \class MeasurerTime_position_nth_moment PTOF/Output.h "PTOF/Output.h"
+ *  \brief  Output time and nth moment of position (weighted by mass). */
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_nth_moment final
+    : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_nth_moment(Subject const &subject, std::size_t nn,
+                                   Geometry const &geometry,
+                                   Directories const &directories,
+                                   std::string const &identifier,
+                                   int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, "position_nth_moment",
+                                        identifier,  precision},
+        _nn{nn},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_nth_moment_"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      _output << std::setw(_column_widths[1]) << "Position_" << _nn
+              << "th_moment_" + std::to_string(dd);
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    useful::print(_output, position_nth_moment(_subject, _nn, time),
+                  _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  std::size_t _nn;
+  std::array<int, 2> _column_widths;
+};
+
 /** \class MeasurerTime_position_variance PTOF/Output.h "PTOF/Output.h"
  *  \brief  Output time and position variance (weighted by mass). */
 template <typename Subject, typename Geometry>
@@ -1225,6 +1264,54 @@ private:
   using Boundary =
       std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
   ctrw::Get_position_periodic<Boundary const &> getter_position;
+  std::array<int, 2> _column_widths;
+};
+
+/** \class MeasurerTime_position_nth_moment_periodic PTOF/Output.h
+ * "PTOF/Output.h" \brief  Output time and nth moment of position (weighted
+ * by mass), with position accounting for periodicity. */
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_nth_moment_periodic final
+    : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_nth_moment_periodic(Subject const &subject,
+                                            std::size_t nn,
+                                            Geometry const &geometry,
+                                            Directories const &directories,
+                                            std::string const &identifier,
+                                            int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,
+                                        geometry,
+                                        directories,
+                                        "position_nth_moment_periodic",
+                                        identifier,
+                                        precision},
+        getter_position{geometry.boundary_periodic}, _nn{nn},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_nth_moment_"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      _output << std::setw(_column_widths[1])
+              << "Position_nth_moment_" + std::to_string(dd);
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    useful::print(_output,
+                  position_nth_moment(_subject, _nn, time, getter_position),
+                  _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  using Boundary =
+      std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
+  ctrw::Get_position_periodic<Boundary const &> getter_position;
+  std::size_t _nn;
   std::array<int, 2> _column_widths;
 };
 

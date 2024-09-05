@@ -519,8 +519,8 @@ struct Empty {
 
 /** \brief Print values in container. */
 template <typename Stream, typename Container>
-void print(Stream &stream, Container const &container, bool delimit_first = 0,
-           std::string delimiter = "\t") {
+void print(Stream &stream, Container const &container,
+           bool delimit_first = false, std::string delimiter = "\t") {
   // TODO: Choose this specialization when stream << container exists
   if constexpr (std::is_pod<Container>::value) {
     if (delimit_first)

@@ -517,6 +517,42 @@ template <typename Container> void square_inplace(Container &input) {
   square(input, input);
 }
 
+/** \brief Element-wise power. */
+template <typename Container, typename Scalar, typename Container_out>
+void pow(Container const &input, Scalar exp, Container_out &output) {
+  if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
+                                                       Container_out>)
+    output = input * input;
+  else
+    for (std::size_t ii = 0; ii < output.size(); ++ii)
+      output[ii] = std::pow(input[ii], exp);
+}
+
+/** \brief Element-wise power. */
+template <typename Container, typename Scalar>
+auto pow(Container const &input, Scalar exp) {
+  if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
+                                                       Container>)
+    return input * input;
+  else {
+    if constexpr (meta::is_constructible_from_size_v<Container>) {
+      Container output(input.size());
+      pow(input, exp, output);
+      return output;
+    } else {
+      Container output{};
+      pow(input, exp, output);
+      return output;
+    }
+  }
+}
+
+/** \brief Element-wise power. */
+template <typename Container, typename Scalar>
+void pow_inplace(Container &input, Scalar exp) {
+  pow(input, exp, input);
+}
+
 /** \brief Element-wise square root. */
 template <typename Container, typename Container_out>
 void sqrt(Container const &input, Container_out &output) {
