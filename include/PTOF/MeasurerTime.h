@@ -271,9 +271,14 @@ struct MeasurerTime_position_nth_moment final
                                    Directories const &directories,
                                    std::string const &identifier,
                                    int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_nth_moment",
-                                        identifier,  precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"position_nth_moment"} + std::to_string(nn),
+                      identifier,
+                      precision},
         _nn{nn},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
@@ -281,8 +286,8 @@ struct MeasurerTime_position_nth_moment final
                      int(2 + std::string{"Position_nth_moment_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
-      _output << std::setw(_column_widths[1]) << "Position_" << _nn
-              << "th_moment_" + std::to_string(dd);
+      _output << std::setw(_column_widths[1])
+              << "Position_nth_moment_" + std::to_string(dd);
     _output << "\n";
   }
 
@@ -1282,7 +1287,9 @@ struct MeasurerTime_position_nth_moment_periodic final
       : MeasurerTime<Subject, Geometry>{subject,
                                         geometry,
                                         directories,
-                                        "position_nth_moment_periodic",
+                                        std::string{"position_nth_moment_"
+                                                    "periodic"} +
+                                            std::to_string(nn),
                                         identifier,
                                         precision},
         getter_position{geometry.boundary_periodic}, _nn{nn},
