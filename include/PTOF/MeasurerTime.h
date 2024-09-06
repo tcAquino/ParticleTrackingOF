@@ -276,7 +276,7 @@ struct MeasurerTime_position_nth_moment final
             Geometry>{subject,
                       geometry,
                       directories,
-                      std::string{"position_nth_moment"} + std::to_string(nn),
+                      std::string{"position_nth_moment_"} + std::to_string(nn),
                       identifier,
                       precision},
         _nn{nn},
@@ -1288,7 +1288,7 @@ struct MeasurerTime_position_nth_moment_periodic final
                                         geometry,
                                         directories,
                                         std::string{"position_nth_moment_"
-                                                    "periodic"} +
+                                                    "periodic_"} +
                                             std::to_string(nn),
                                         identifier,
                                         precision},
