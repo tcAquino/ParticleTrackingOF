@@ -23,16 +23,17 @@ struct Measure {
     position_mean,          /**< Time and mean position. */
     position_second_moment, /**< Time and position second moment. */
     position_nth_moment,    /**< Time and position nth moment. */
-    position_variance,      /**< Time and position variance. */
-    mass,                   /**< Time and total mass. */
+    position_moment,   /**< Time and position moment with specified exponents
+                          along each dimension. */
+    position_variance, /**< Time and position variance. */
+    mass,              /**< Time and total mass. */
     mass_in_regions, /**< Time and total mass in regions speciefied by masks. */
     velocity,        /**< Time, particle tags, and local velocities. */
     velocity_mean,   /**< Time and mean of velocity field over particles. */
     velocity_gradient, /**< Time, particle tags, and local velocity gradients.
                         */
     velocity_gradient_mean, /**< Time and mean of velocity gradient field over
-                             * particles.
-                             */
+                               particles. */
     scalar_field, /**< Time, particle tags, and local values of scalar field. */
     vector_field, /**< Time, particle tags, and local values of vector field. */
     tensor_field, /**< Time, particle tags and local values of tensor field. */
@@ -50,6 +51,8 @@ struct Measure {
                                         accounting for periodicity. */
     position_nth_moment_periodic,    /**< Time and true position nth moment
                                            accounting for periodicity. */
+    position_moment_periodic,   /**< Time and position moment with specified
+                                   exponents along each dimension. */
     position_variance_periodic, /**< Time and true position variance accounting
                                    for periodicity. */
     first_crossing_time, /**< First crossing time, tag, and mass for specified
@@ -75,6 +78,8 @@ struct Measure {
       {"position_in_regions", Type::position_in_regions},
       {"position_mean", Type::position_mean},
       {"position_second_moment", Type::position_second_moment},
+      {"position_nth_moment", Type::position_nth_moment},
+      {"position_moment", Type::position_moment},
       {"position_variance", Type::position_variance},
       {"mass", Type::mass},
       {"mass_in_regions", Type::mass_in_regions},
@@ -93,6 +98,8 @@ struct Measure {
       {"position_mean_periodic", Type::position_mean_periodic},
       {"position_second_moment_periodic",
        Type::position_second_moment_periodic},
+      {"position_nth_moment_periodic", Type::position_nth_moment},
+      {"position_moment_periodic", Type::position_moment_periodic},
       {"position_variance_periodic", Type::position_variance_periodic},
       {"first_crossing_time", Type::first_crossing_time},
       {"absorption_time", Type::absorption_time}};
@@ -103,6 +110,8 @@ struct Measure {
       {Type::position_in_regions, "position_in_regions"},
       {Type::position_mean, "position_mean"},
       {Type::position_second_moment, "position_second_moment"},
+      {Type::position_nth_moment, "position_nth_moment"},
+      {Type::position_moment, "position_moment"},
       {Type::position_variance, "position_variance"},
       {Type::mass, "mass"},
       {Type::mass_in_regions, "mass_in_regions"},
@@ -121,6 +130,8 @@ struct Measure {
       {Type::position_mean_periodic, "position_mean_periodic"},
       {Type::position_second_moment_periodic,
        "position_second_moment_periodic"},
+      {Type::position_nth_moment_periodic, "position_nth_moment_periodic"},
+      {Type::position_moment_periodic, "position_moment_periodic"},
       {Type::position_variance_periodic, "position_variance_periodic"},
       {Type::first_crossing_time, "first_crossing_time"},
       {Type::absorption_time, "absorption_time"}};

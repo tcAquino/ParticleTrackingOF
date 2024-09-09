@@ -8,6 +8,7 @@
 #define PTOF_OUTPUT_H
 
 #include "CTRW/Meta.h"
+#include "General/Meta.h"
 #include "General/Useful.h"
 #include "PTOF/Criteria.h"
 #include "PTOF/Directories.h"
@@ -130,6 +131,8 @@ public:
            "\tposition_mean: Time and mean position\n"
            "\tposition_second_moment: Time and position second moment\n"
            "\tposition_nth_moment: Time and position nth moment\n"
+           "\tposition__moment: Time and position moment with orders\n"
+           "\t                  specified along each dimension\n"
            "\tposition_variance: Time and position variance\n"
            "\tmass: Time and total mass\n"
            "\tmass_in_regions: Time and total mass within regions specified\n"
@@ -168,9 +171,12 @@ public:
            "\tposition_second_moment_periodic: Time and true position second\n"
            "\t                                 moment accounting for\n"
            "\t                                 periodicity\n"
-           "\tposition_second_moment_periodic: Time and true position nth\n"
-           "\t                                 moment accounting for\n"
-           "\t                                 periodicity\n"
+           "\tposition_nth_moment_periodic: Time and true position nth\n"
+           "\t                              moment accounting for\n"
+           "\t                              periodicity\n"
+           "\tposition_moment: Time and true position moment with orders\n"
+           "\t                 specified along each dimension accounting for\n"
+           "\t                 periodicity\n"
            "\tposition_variance_periodic: Time and true position variance\n"
            "\t                            accounting for periodicity\n"
            "\tfirst_crossing_time: Crossing times, particle tags, and\n"
@@ -346,6 +352,16 @@ public:
                                    ": "
                                    "Could not parse moment order"};
         measurements.back().double_params.push_back(std::stod(split_line[1]));
+      } else if (name == "position_moment" ||
+                 name == "position_moment_periodic") {
+        required_size = 2;
+        if (split_line.size() < required_size)
+          throw std::runtime_error{std::string("Measurement type ") + name +
+                                   ": "
+                                   "Could not parse coordinate moment orders"};
+        for (std::size_t ii = 1; ii < split_line.size(); ++ii)
+          measurements.back().double_params.push_back(
+              std::stod(split_line[ii]));
       }
       if (split_line.size() > required_size)
         measurements.back().precision = std::stod(split_line.back());
@@ -648,11 +664,23 @@ private:
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Crossing position not provided"};
+                                   "Moment order not provided"};
         _output_time.emplace_back(
             std::make_unique<
                 MeasurerTime_position_nth_moment<Subject, Geometry>>(
                 subject, measurement.double_params[0], geometry, directories,
+                identifier, measurement.precision));
+        break;
+      }
+      case Measure::Type::position_moment: {
+        if (measurement.double_params.size() != Geometry::dim)
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Moment orders along each dimension not provided"};
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_position_moment<Subject, Geometry>>(
+                subject, measurement.double_params, geometry, directories,
                 identifier, measurement.precision));
         break;
       }
@@ -864,7 +892,27 @@ private:
           throw std::runtime_error{std::string("Measurement type ") +
                                    measurement.name +
                                    ": "
-                                   "Crossing position not provided"};
+                                   "Moment order not provided"};
+        if constexpr (meta::has_periodicity_v<
+                          typename Subject::Particle::State>)
+          _output_time.emplace_back(
+              std::make_unique<
+                  MeasurerTime_position_nth_moment_periodic<Subject, Geometry>>(
+                  subject, measurement.double_params[0], geometry, directories,
+                  identifier, measurement.precision));
+        else
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Particle state does not define periodicity"};
+        break;
+      }
+      case Measure::Type::position_moment_periodic: {
+        if (measurement.double_params.size() != Geometry::dim)
+          throw std::runtime_error{
+              std::string("Measurement type ") + measurement.name +
+              ": "
+              "Moment orders along each dimension not provided"};
         if constexpr (meta::has_periodicity_v<
                           typename Subject::Particle::State>)
           _output_time.emplace_back(

@@ -20,6 +20,8 @@
 #include <functional>
 #include <iomanip>
 #include <map>
+#include <sstream>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -266,19 +268,13 @@ private:
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_nth_moment final
     : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_nth_moment(Subject const &subject, std::size_t nn,
+  MeasurerTime_position_nth_moment(Subject const &subject, double nn,
                                    Geometry const &geometry,
                                    Directories const &directories,
                                    std::string const &identifier,
                                    int precision = 8)
-      : MeasurerTime<
-            Subject,
-            Geometry>{subject,
-                      geometry,
-                      directories,
-                      std::string{"position_nth_moment_"} + std::to_string(nn),
-                      identifier,
-                      precision},
+      : MeasurerTime<Subject, Geometry>{subject,       geometry,   directories,
+                                        make_name(nn), identifier, precision},
         _nn{nn},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
@@ -293,15 +289,72 @@ struct MeasurerTime_position_nth_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_nth_moment(_subject, _nn, time),
+    useful::print(_output, position_moment(_subject, _nn, time),
                   _column_widths[1]);
     _output << "\n";
   }
 
 private:
+  static std::string make_name(double nn) {
+    std::stringstream stream;
+    stream << std::scientific << std::setprecision(2);
+    stream << "_" << nn;
+    return std::string{"position_nth_moment_"} + stream.str();
+  }
+
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
-  std::size_t _nn;
+  double _nn;
+  std::array<int, 2> _column_widths;
+};
+
+/** \class MeasurerTime_position_moment PTOF/Output.h "PTOF/Output.h"
+ *  \brief  Output time and moment of position with specified exponents for each
+ * coordinate (weighted by mass). */
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_moment(Subject const &subject,
+                               std::vector<double> exponents,
+                               Geometry const &geometry,
+                               Directories const &directories,
+                               std::string const &identifier, int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, make_name(exponents),
+                                        identifier,  precision},
+        _exponents{exponents},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_cross_moment_"}.length()))} {
+    if (_exponents.size() != Geometry::dim)
+      throw std::runtime_error{
+          "Number of moment exponents is not the same as spatial dimension"};
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      _output << std::setw(_column_widths[1])
+              << "Position_cross_moment_" + std::to_string(dd);
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    useful::print(_output, position_moment(_subject, _exponents, time),
+                  _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  static std::string make_name(std::vector<double> const &exponents) {
+    std::stringstream stream;
+    stream << std::scientific << std::setprecision(2);
+    for (auto exp : exponents)
+      stream << "_" << exp;
+    return std::string{"position_moment"} + stream.str();
+  }
+
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  std::vector<double> _exponents;
   std::array<int, 2> _column_widths;
 };
 
@@ -1278,20 +1331,13 @@ private:
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_nth_moment_periodic final
     : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_nth_moment_periodic(Subject const &subject,
-                                            std::size_t nn,
+  MeasurerTime_position_nth_moment_periodic(Subject const &subject, double nn,
                                             Geometry const &geometry,
                                             Directories const &directories,
                                             std::string const &identifier,
                                             int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        std::string{"position_nth_moment_"
-                                                    "periodic_"} +
-                                            std::to_string(nn),
-                                        identifier,
-                                        precision},
+      : MeasurerTime<Subject, Geometry>{subject,       geometry,   directories,
+                                        make_name(nn), identifier, precision},
         getter_position{geometry.boundary_periodic}, _nn{nn},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
@@ -1307,18 +1353,83 @@ struct MeasurerTime_position_nth_moment_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     useful::print(_output,
-                  position_nth_moment(_subject, _nn, time, getter_position),
+                  position_moment(_subject, _nn, time, getter_position),
                   _column_widths[1]);
     _output << "\n";
   }
 
 private:
+  static std::string make_name(double nn) {
+    std::stringstream stream;
+    stream << std::scientific << std::setprecision(2);
+    stream << "_" << nn;
+    return std::string{"position_nth_moment_"
+                       "periodic_"} +
+           stream.str();
+  }
+
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary =
       std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
   ctrw::Get_position_periodic<Boundary const &> getter_position;
-  std::size_t _nn;
+  double _nn;
+  std::array<int, 2> _column_widths;
+};
+
+/** \class MeasurerTime_position_moment_periodic PTOF/Output.h
+ * "PTOF/Output.h" \brief  Output time and moment of position with specified
+ * exponents for each coordinate (weighted by mass), with position accounting
+ * for periodicity. */
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_moment_periodic final
+    : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_moment_periodic(Subject const &subject,
+                                        std::vector<double> exponents,
+                                        Geometry const &geometry,
+                                        Directories const &directories,
+                                        std::string const &identifier,
+                                        int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, make_name(exponents),
+                                        identifier,  precision},
+        getter_position{geometry.boundary_periodic}, _exponents{exponents},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_moment_"}.length()))} {
+    throw std::runtime_error{
+        "Number of moment exponents is not the same as spatial dimension"};
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      _output << std::setw(_column_widths[1])
+              << "Position_moment_" + std::to_string(dd);
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    useful::print(_output,
+                  position_moment(_subject, _exponents, time, getter_position),
+                  _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  static std::string make_name(std::vector<double> const &exponents) {
+    std::stringstream stream;
+    stream << std::scientific << std::setprecision(2);
+    for (auto exp : exponents)
+      stream << "_" << exp;
+    return std::string{"position_moment_periodic"} + stream.str();
+  }
+
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  using Boundary =
+      std::decay_t<decltype(std::declval<Geometry>().boundary_periodic)>;
+  ctrw::Get_position_periodic<Boundary const &> getter_position;
+  std::vector<double> _exponents;
   std::array<int, 2> _column_widths;
 };
 

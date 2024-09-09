@@ -346,6 +346,17 @@ template <typename X, typename Y>
 inline constexpr bool is_convertible_from_abs_v =
     std::conjunction_v<can_call_abs<X>, is_convertible_from_abs_impl<X, Y>>;
 
+/** \class is_convertible_from_pow_impl General/Meta.h "General/Meta.h"
+ \brief Check if \c Z=std::pow(X,Y) is viable. */
+template <typename X, typename Y, typename Z> struct is_convertible_from_pow_impl {
+  static constexpr bool value =
+      std::is_convertible_v<decltype(std::pow(std::declval<X>(), std::declval<Y>())), Z>;
+};
+/** \brief Check if \c Z=std::pow(X, Y) is viable. */
+template <typename X, typename Y, typename Z>
+inline constexpr bool is_convertible_from_pow_v =
+    std::conjunction_v<can_call_abs<X>, is_convertible_from_pow_impl<X, Y, Z>>;
+
 /** \class is_convertible_from_sqrt_impl General/Meta.h "General/Meta.h"
  \brief Check if \c Y=std::sqrt(X) is viable. */
 template <typename X, typename Y> struct is_convertible_from_sqrt_impl {

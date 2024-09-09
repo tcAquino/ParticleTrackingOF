@@ -712,7 +712,7 @@ auto position_second_moment(Subject const &subject, double time,
 
 /**
  \param subject CTRW object.
- \param nn Order of moment.
+ \param exponents Order of moment or vector with order for each dimension.
  \param time Current time.
  \param getter_position Get position from state, gets \c position directly by
  default.
@@ -722,19 +722,20 @@ auto position_second_moment(Subject const &subject, double time,
  - info.absorbed [std::size_t]
  - mass
 */
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
-auto position_nth_moment(Subject const &subject, std::size_t nn, double time,
-                         GetterPosition getter_position = {}) {
-  decltype(getter_position(subject.particles(0).state_new())) nth_moment =
+template <typename Subject, typename Exponents,
+          typename GetterPosition = ctrw::Get_position>
+auto position_moment(Subject const &subject, Exponents const &exponents,
+                     double time, GetterPosition getter_position = {}) {
+  decltype(getter_position(subject.particles(0).state_new())) moment =
       Foam::zero{};
   for (auto const &part : subject.particles()) {
     auto const &state = part.state_new();
     if (!state.info.absorbed && part.state_old().time <= time)
       op::plus_inplace(
-          nth_moment,
-          op::times_scalar(state.mass, op::pow(getter_position(state), nn)));
+          moment, op::times_scalar(state.mass,
+                                   op::pow(getter_position(state), exponents)));
   }
-  return nth_moment / mass(subject, time);
+  return moment / mass(subject, time);
 };
 
 /**

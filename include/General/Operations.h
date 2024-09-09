@@ -253,7 +253,7 @@ void times_scalar(Scalar lambda, Container const &input,
                                                        Container_out>)
     output = lambda * input;
   else
-    for (std::size_t ii = 0; ii < input.size(); ++ii)
+    for (std::size_t ii = 0; ii < output.size(); ++ii)
       output[ii] = lambda * input[ii];
 }
 
@@ -324,7 +324,7 @@ void div_scalar(Container const &input, Scalar lambda, Container_out &output) {
                                                     Container_out>)
     output = input / lambda;
   else
-    for (std::size_t ii = 0; ii < input.size(); ++ii)
+    for (std::size_t ii = 0; ii < output.size(); ++ii)
       output[ii] = input[ii] / lambda;
 }
 
@@ -518,39 +518,45 @@ template <typename Container> void square_inplace(Container &input) {
 }
 
 /** \brief Element-wise power. */
-template <typename Container, typename Scalar, typename Container_out>
-void pow(Container const &input, Scalar exp, Container_out &output) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
-                                                       Container_out>)
-    output = input * input;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
-      output[ii] = std::pow(input[ii], exp);
+template <typename Container, typename Container2, typename Container_out>
+void pow(Container const &input, Container2 const &exponents,
+         Container_out &output) {
+  if constexpr (meta::is_convertible_from_pow_v<Container, Container2,
+                                                Container_out>)
+    output = std::pow(input, exponents);
+  else {
+    if constexpr (std::is_arithmetic_v<Container2>)
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = std::pow(input[ii], exponents);
+    else
+      for (std::size_t ii = 0; ii < output.size(); ++ii)
+        output[ii] = std::pow(input[ii], exponents[ii]);
+  }
 }
 
 /** \brief Element-wise power. */
-template <typename Container, typename Scalar>
-auto pow(Container const &input, Scalar exp) {
-  if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
-                                                       Container>)
-    return input * input;
+template <typename Container, typename Container2>
+auto pow(Container const &input, Container2 const &exponents) {
+  if constexpr (meta::is_convertible_from_pow_v<Container, Container2,
+                                                Container>)
+    return std::pow(input, exponents);
   else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
-      pow(input, exp, output);
+      pow(input, exponents, output);
       return output;
     } else {
       Container output{};
-      pow(input, exp, output);
+      pow(input, exponents, output);
       return output;
     }
   }
 }
 
 /** \brief Element-wise power. */
-template <typename Container, typename Scalar>
-void pow_inplace(Container &input, Scalar exp) {
-  pow(input, exp, input);
+template <typename Container, typename Container2>
+void pow_inplace(Container &input, Container2 const &exponents) {
+  pow(input, exponents, input);
 }
 
 /** \brief Element-wise square root. */
@@ -673,7 +679,7 @@ adjacent_difference(InputIterator first, InputIterator last,
 /** \brief Averages of adjacent elements. */
 template <typename Container>
 void midpoints(Container const &input, Container &output) {
-  for (size_t ii = 0; ii < input.size() - 1; ++ii)
+  for (size_t ii = 0; ii < output.size() - 1; ++ii)
     output[ii] = (input[ii + 1] + input[ii]) / 2.;
 }
 
@@ -693,7 +699,7 @@ template <typename Container> Container midpoints(Container const &input) {
 /** \brief Differences of adjacent elements. */
 template <typename Container>
 void diff(Container const &input, Container &output) {
-  for (size_t ii = 0; ii < input.size() - 1; ++ii)
+  for (size_t ii = 0; ii < output.size() - 1; ++ii)
     output[ii] = input[ii + 1] - input[ii];
 }
 
