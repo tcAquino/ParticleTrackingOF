@@ -969,6 +969,8 @@ private:
 
   /** Set end criterion. */
   void set_end_criterion(Subject const &subject) {
+    // Note: The non-standard control flow structure of the if statements is
+    // needed to deal with the quirks of if constexpr.
     switch (EndCriterion::type(parameters.end_criterion)) {
     case EndCriterion::Type::time: {
       _end_criterion = std::make_unique<Criterion_time<Subject>>(
