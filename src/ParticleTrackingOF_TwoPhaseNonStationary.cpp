@@ -54,7 +54,7 @@ struct ExecutableInfo {
   template <typename OStream> static void help(OStream &output) {
     output
         << "--------------------------------------------------------------\n"
-           "Avayilable help options (pass any number after -h or --help):\n"
+           "Help options (pass any number after -h or --help):\n"
            "--------------------------------------------------------------\n"
            "-a / --all : All available info\n"
            "-e / --executable : Main executable info\n"

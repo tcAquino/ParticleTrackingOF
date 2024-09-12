@@ -65,7 +65,7 @@ struct ExecutableInfo {
 };
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_periodic_cartesian_advection_2d;
+  using namespace ptof::model_advection_diffusion_fpt_2d;
 
   ExecutableInfo::banner(std::cout);
   std::cout << "\n";
