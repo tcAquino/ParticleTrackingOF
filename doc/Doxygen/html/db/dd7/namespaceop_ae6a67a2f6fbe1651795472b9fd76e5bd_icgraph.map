@@ -1,0 +1,10 @@
+<map id="op::pow" name="op::pow">
+<area shape="rect" id="node1" title="Element&#45;wise power." alt="" coords="449,136,523,163"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a6ecefd5355b441dc382fac8afa06a318" title=" " alt="" coords="248,85,401,112"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a9f3bde2d684c9dd938d074e171353575" title="Element&#45;wise power." alt="" coords="288,136,361,163"/>
+<area shape="rect" id="node4" href="$d6/d48/namespacerange.html#a182433bea7304096a75a1f167f74fa1b" title=" " alt="" coords="40,5,165,32"/>
+<area shape="rect" id="node5" href="$d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a383a16feefcff61cd31bcdb18b82894f" title="Update time step." alt="" coords="5,56,200,112"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#adff86c6e5159a70740c538f980d5adfa" title="Element&#45;wise power." alt="" coords="39,136,166,163"/>
+<area shape="rect" id="node7" href="$da/dac/structptof_1_1_output_parameters.html#aedb33d453988c13505f0b79a0402fa36" title="Read measure spacing type from input stream." alt="" coords="13,187,193,229"/>
+<area shape="rect" id="node8" href="$d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log.html#a805ddf683ed5fd27b54b49e9d0296730" title=" " alt="" coords="14,253,191,309"/>
+</map>

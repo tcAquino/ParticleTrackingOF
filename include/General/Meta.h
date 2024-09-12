@@ -10,6 +10,7 @@
 
 #include <cmath>
 #include <functional>
+#include <iostream>
 #include <type_traits>
 #include <utility>
 
@@ -91,6 +92,24 @@ template <typename X> using has_push_back = has_member<push_back_result_t, X>;
 template <typename X>
 /** \brief Check if a class has method \c push_back(). */
 inline constexpr bool has_push_back_v = has_push_back<X>::value;
+
+/**\brief Type of static method \c X::info(std::cout). */
+template <typename X>
+using static_info_result_t = decltype(X::info(std::cout));
+/** \brief Check if a class can call static method \c info(std::cout). */
+template <typename X> using has_static_info = has_member<static_info_result_t, X>;
+template <typename X>
+/** \brief Check if a class can call static method \c info(std::cout). */
+inline constexpr bool has_static_info_v = has_static_info<X>::value;
+
+/**\brief Type of member \c X::Parameters. */
+template <typename X>
+using parameters_t = decltype(X::Parameters);
+/** \brief Check if a class defines type \c Parameters. */
+template <typename X> using has_parameters = has_member<parameters_t, X>;
+template <typename X>
+/** \brief Check if a class defines type \c Parameters. */
+inline constexpr bool has_parameters_v = has_parameters<X>::value;
 
 // The following can_call methods are adapted from Passer By's answer here:
 // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain

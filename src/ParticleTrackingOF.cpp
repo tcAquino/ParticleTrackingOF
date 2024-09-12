@@ -14,22 +14,24 @@
 #include <limits>
 #include <string>
 
-int main(int argc, char *argv[]) {
-  using namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_3d;
+struct ExecutableInfo {
+  template <typename OStream> static void banner(OStream &output) {
+    output
+        << "--------------------------------------------------------------\n"
+           "ParticleTrackingOF\n"
+           "--------------------------------------------------------------\n";
+  }
 
-  std::string banner =
-      "--------------------------------------------------------------\n"
-      "ParticleTrackingOF\n"
-      "--------------------------------------------------------------\n";
-  int nr_parameters = 10;
-
-  if (useful::check_options_help(argc, argv)) {
-    std::cout
-        << banner << std::endl
+  static int constexpr nr_parameters = 10;
+  
+  template <typename OStream> static void info(OStream &output) {
+    output
         << "--------------------------------------------------------------\n"
            "Executable parameters (pass '' for default in []):\n"
            "--------------------------------------------------------------\n"
-           "- Cases directory [../cases]\n"
+           "Number of parameters: "
+        << nr_parameters << "\n"
+        << "- Cases directory [../cases]\n"
            "- Name of case\n"
            "- Name of transport parameter set\n"
            "- Name of reaction parameter set\n"
@@ -40,32 +42,40 @@ int main(int argc, char *argv[]) {
            "- Output file identifier [Based on parameter set names]\n"
            "- Run number (nonnegative integer to index output) [None]\n"
            "--------------------------------------------------------------\n";
-    std::cout << std::endl;
-    Model::info(std::cout);
-    std::cout << std::endl;
-    Geometry::info(std::cout);
-    std::cout << std::endl;
-    ptof::DirectoriesOF::info(std::cout);
-    std::cout << std::endl;
-    Transport::info(std::cout);
-    std::cout << std::endl;
-    Reaction::info(std::cout);
-    std::cout << std::endl;
-    Solvers::info(std::cout);
-    std::cout << std::endl;
-    Transport::Parameters::info(std::cout);
-    std::cout << std::endl;
-    Reaction::Parameters::info(std::cout);
-    std::cout << std::endl;
-    Solvers::Parameters::info(std::cout);
-    std::cout << std::endl;
-    InitialCondition::Parameters::info(std::cout);
-    std::cout << std::endl;
-    Output::Parameters::info(std::cout);
-    std::cout << std::endl;
-    return 0;
   }
-  if (argc != nr_parameters + 1)
+
+  template <typename OStream> static void help(OStream &output) {
+    output
+        << "--------------------------------------------------------------\n"
+           "Available help options (pass any number after -h or --help):\n"
+           "--------------------------------------------------------------\n"
+           "-a or --all : All available info\n"
+           "-m or --main : Main executable info\n"
+           "-g or --geometry : Geometry info\n"
+           "-d or --directories-of : OpenFOAM directories info\n"
+           "-t or --transport : Transport info\n"
+           "-r or --reaction : Reaction info\n"
+           "-s or --solvers : Solvers info\n"
+           "-i or --initial-condition : Initial condition info\n"
+           "-o or --output : Output info\n"
+           "--------------------------------------------------------------\n";
+  }
+
+  ExecutableInfo() = delete;
+};
+
+int main(int argc, char *argv[]) {
+  using namespace ptof::model_advection_diffusion_fpt_2d;
+
+  ExecutableInfo::banner(std::cout);
+  std::cout << "\n";
+  Model::info(std::cout);
+
+  if (ptof::options_help<ExecutableInfo, Geometry, ptof::DirectoriesOF,
+                         Transport, useful::Empty, Reaction, Solvers,
+                         InitialCondition, Output>(std::cout, argc, argv))
+    return 0;
+  if (argc != ExecutableInfo::nr_parameters + 1)
     throw useful::bad_parameters_help();
 
   std::size_t arg = 1;
@@ -80,8 +90,6 @@ int main(int argc, char *argv[]) {
   std::string filename_output_identifier = argv[arg++];
   std::string run_nr = argv[arg++];
 
-  std::cout << banner << std::endl;
-  Model::info(std::cout);
   ptof::Directories directories{dir, case_name, dir_output};
   directories.info_runtime(std::cout);
   std::cout << std::endl;

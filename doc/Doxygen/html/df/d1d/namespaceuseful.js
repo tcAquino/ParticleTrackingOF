@@ -56,7 +56,7 @@ var namespaceuseful =
     [ "parse_error", "df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e", null ],
     [ "parse_error_file", "df/d1d/namespaceuseful.html#a226dd5c8011e58fb0a60e10c3a62b2d6", null ],
     [ "parse_error_line", "df/d1d/namespaceuseful.html#aa50044d36ce0a3ee16ca8c3144588567", null ],
-    [ "print", "df/d1d/namespaceuseful.html#a760db0aa4629f0aa166c019c86e5871d", null ],
+    [ "print", "df/d1d/namespaceuseful.html#a4034fa4ba5dae04b9693c96b80f6c966", null ],
     [ "print", "df/d1d/namespaceuseful.html#a513ff67b7b8e5c697b37881309ab1b82", null ],
     [ "read", "df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466", null ],
     [ "read", "df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01", null ],

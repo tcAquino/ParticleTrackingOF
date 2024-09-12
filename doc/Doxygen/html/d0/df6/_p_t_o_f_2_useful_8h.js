@@ -48,12 +48,15 @@ var _p_t_o_f_2_useful_8h =
     [ "offset_forward_face_keep_inside", "d0/df6/_p_t_o_f_2_useful_8h.html#a120e3e8989cc338634331c4cc77eb617", null ],
     [ "offset_inward_face", "d0/df6/_p_t_o_f_2_useful_8h.html#aeca56e7078208a75ceabaa32e4873510", null ],
     [ "offset_outward_face", "d0/df6/_p_t_o_f_2_useful_8h.html#a2454b3742dec17f5af7a104d80cd8454", null ],
+    [ "options_help", "d0/df6/_p_t_o_f_2_useful_8h.html#aef85c49552eddb04174dfee310ac0f89", null ],
     [ "outside", "d0/df6/_p_t_o_f_2_useful_8h.html#a771b932077b91dda298c2ba0aa8b5959", null ],
     [ "outside", "d0/df6/_p_t_o_f_2_useful_8h.html#a4eb50971f56058c9e0ddac8e4d118d86", null ],
     [ "patches_face_ids", "d0/df6/_p_t_o_f_2_useful_8h.html#a3c85b81a804f529745e4f53c6b35ec53", null ],
     [ "position_mean", "d0/df6/_p_t_o_f_2_useful_8h.html#afa9d19c7a5e17ddede0cc867b993ccea", null ],
+    [ "position_moment", "d0/df6/_p_t_o_f_2_useful_8h.html#adcea3bb8ec7456476d5d061451df13bd", null ],
     [ "position_second_moment", "d0/df6/_p_t_o_f_2_useful_8h.html#a01ecb53ae3d4241f08774ca21a23ea33", null ],
     [ "position_variance", "d0/df6/_p_t_o_f_2_useful_8h.html#a3ef3e25c8c2505a2225c174ccc046480", null ],
+    [ "print_static_info", "d0/df6/_p_t_o_f_2_useful_8h.html#a89b9101a2ee142d8d1e89fdf0c8431e9", null ],
     [ "unit_normal_inward", "d0/df6/_p_t_o_f_2_useful_8h.html#ad10f85db01b3c1f0a432df9f9642a5ee", null ],
     [ "unit_normal_outward", "d0/df6/_p_t_o_f_2_useful_8h.html#abf0aa3876390d4bac9c2877bfc88100b", null ]
 ];

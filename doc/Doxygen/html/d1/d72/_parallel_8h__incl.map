@@ -1,9 +1,10 @@
 <map id="General/Parallel.h" name="General/Parallel.h">
-<area shape="rect" id="node1" title="Algorithms for parallel implementations." alt="" coords="181,5,319,32"/>
-<area shape="rect" id="node2" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="130,80,253,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="277,80,340,107"/>
+<area shape="rect" id="node1" title="Algorithms for parallel implementations." alt="" coords="233,5,371,32"/>
+<area shape="rect" id="node2" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="182,80,305,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="329,80,392,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,155,68,181"/>
 <area shape="rect" id="node4" title=" " alt="" coords="92,155,179,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="203,155,295,181"/>
-<area shape="rect" id="node6" title=" " alt="" coords="319,155,379,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="203,155,283,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="308,155,400,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="424,155,484,181"/>
 </map>

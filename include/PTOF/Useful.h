@@ -8,6 +8,7 @@
 #define PTOF_USEFUL_H
 
 #include "CTRW/StateGetter.h"
+#include "General/Meta.h"
 #include "General/Operations.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
@@ -127,6 +128,105 @@ struct Periodicity {
   inline static const std::map<Type, std::string> type_to_name{
       {Type::cartesian, "cartesian"}, {Type::symmetryplanes, "symmetryplanes"}};
 };
+
+/**
+   \brief Print static info for \c Class and \c Class::Parameters, if defined.
+   \param output Output stream to print info.
+   \param warn_if_no_info Print notification if no info is available.
+   \param help_option Information about requested info, to print if info is not
+   available if notification is requested.
+   \return \c true if there is available info, \c false otherwise
+*/
+template <typename Class, typename OStream>
+bool print_static_info(OStream &output, bool notify_if_no_info = false,
+                       std::string const &help_option = {}) {
+  bool has_info = false;
+  if constexpr (meta::has_static_info_v<Class>) {
+    output << "\n";
+    Class::info(output);
+    has_info = true;
+  }
+  if constexpr (meta::has_parameters_v<Class>)
+    if constexpr (meta::has_static_info_v<typename Class::Parameters>) {
+      output << "\n";
+      Class::Parameters::info(output);
+      has_info = true;
+    }
+
+  if (notify_if_no_info) {
+    output << "\n"
+              "No static info available";
+    if (!help_option.empty())
+      output << " for help option " << help_option;
+    if (std::is_same_v<Class, useful::Empty>)
+      output << " : object type is empty";
+    output << "\n";
+  }
+
+  return has_info;
+}
+
+/**
+   \brief Handle help options for main executable
+   \return \c true if help flag was passed as first argument, \c false otherwise
+   \note \c useful::Empty can be passed for non-existent templated types, except
+   \c Main, which must define a static Main::help(OStream&) method
+*/
+template <typename Main, typename Geometry, typename DirectoriesOF,
+          typename Transport, typename Phase, typename Reaction,
+          typename Solvers, typename InitialCondition, typename Output,
+          typename OStream>
+bool options_help(OStream &output, int argc, const char *const *argv) {
+  if (!useful::check_options_help(argc, argv))
+    return 0;
+
+  if (argc == 2){
+    output << "\n";
+    Main::help(output);
+  }
+
+  for (int ii = 2; ii < argc; ++ii) {
+    std::string option = std::string{argv[1]};
+    if (option == "-a" || option == "--all") {
+      bool info = false;
+      info += print_static_info<Main>(output);
+      info += print_static_info<Geometry>(output);
+      info += print_static_info<DirectoriesOF>(output);
+      info += print_static_info<Transport>(output);
+      info += print_static_info<Phase>(output);
+      info += print_static_info<Reaction>(output);
+      info += print_static_info<InitialCondition>(output);
+      info += print_static_info<Output>(output);
+      if (!info)
+        output << "No help info available\n";
+    } else if (option == "-m" || option == "--main") {
+      print_static_info<Main>(output, true, "-m / --main");
+    } else if (option == "-g" || option == "--geometry") {
+      print_static_info<Geometry>(output, true, "-g / --geometry");
+    } else if (option == "-d" || option == "--directories-of") {
+      print_static_info<DirectoriesOF>(output, true, "-d / --directories-of");
+    } else if (option == "-t" || option == "--transport") {
+      print_static_info<Transport>(output, true, "-t / --transport");
+    } else if (option == "-p" || option == "--phase") {
+      print_static_info<Phase>(output, true, "-p / --phase");
+    } else if (option == "-r" || option == "--reaction") {
+      print_static_info<Reaction>(output, true, "-r / --reaction");
+    } else if (option == "-s" || option == "--solvers") {
+      print_static_info<Solvers>(output, true, "-s / --solvers");
+    } else if (option == "-i" || option == "--initial-condition") {
+      print_static_info<InitialCondition>(output, true,
+                                          "-i / --initial-condition");
+    } else if (option == "-o" || option == "--output") {
+      print_static_info<Output>(output, true, "-o / --output");
+    } else {
+      output << "\n"
+                "Help option "
+             << option << "not supported\n";
+    }
+  }
+
+  return 1;
+}
 
 /**
    \brief Return whether cell is outside mesh.
@@ -277,8 +377,7 @@ auto adjusted_face_center(Foam::label face, Locator const &locator,
 
 /** \brief Small offset forward given current face and direction.*/
 template <typename Locator>
-Foam::vector offset_face(Foam::label face,
-                         Foam::vector const &direction,
+Foam::vector offset_face(Foam::label face, Foam::vector const &direction,
                          Locator const &locator) {
   auto const &mesh = locator.mesh();
   Foam::label owner_cell = mesh.faceOwner()[face];
@@ -340,7 +439,7 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
     offset /= 2.;
     point = begin + offset;
   }
-  
+
   return point;
 }
 

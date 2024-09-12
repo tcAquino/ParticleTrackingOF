@@ -1,12 +1,13 @@
 <map id="General/Operations.h" name="General/Operations.h">
-<area shape="rect" id="node1" title="Miscelaneous operations on containers." alt="" coords="223,5,383,32"/>
-<area shape="rect" id="node2" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="341,80,463,107"/>
+<area shape="rect" id="node1" title="Miscelaneous operations on containers." alt="" coords="229,5,389,32"/>
+<area shape="rect" id="node2" href="$dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="346,80,469,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="181,155,244,181"/>
 <area shape="rect" id="node4" title=" " alt="" coords="268,155,355,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="463,155,555,181"/>
-<area shape="rect" id="node7" href="$db/d5a/_modular_8h.html" title="Modular arithmetic, basis change, and similar operations." alt="" coords="74,80,215,107"/>
-<area shape="rect" id="node9" title=" " alt="" coords="5,155,68,181"/>
-<area shape="rect" id="node10" title=" " alt="" coords="539,80,625,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="379,155,439,181"/>
-<area shape="rect" id="node8" title=" " alt="" coords="92,155,157,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="568,155,660,181"/>
+<area shape="rect" id="node8" href="$db/d5a/_modular_8h.html" title="Modular arithmetic, basis change, and similar operations." alt="" coords="78,80,219,107"/>
+<area shape="rect" id="node10" title=" " alt="" coords="5,155,68,181"/>
+<area shape="rect" id="node11" title=" " alt="" coords="544,80,631,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="463,155,543,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="379,155,439,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="92,155,157,181"/>
 </map>

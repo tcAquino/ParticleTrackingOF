@@ -271,7 +271,7 @@ inline auto bad_parameters_help() {
 
 /** \brief Check command line options for help flags. */
 inline bool check_options_help(int argc, const char *const argv[]) {
-  return argc == 2 &&
+  return argc >= 2 &&
          (std::string(argv[1]) == "--help" || std::string(argv[1]) == "-h");
 }
 

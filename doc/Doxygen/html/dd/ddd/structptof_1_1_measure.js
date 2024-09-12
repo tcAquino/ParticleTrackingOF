@@ -5,6 +5,8 @@ var structptof_1_1_measure =
       [ "position_in_regions", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a477a36181bf2cb1f2e72a43a5372889b", null ],
       [ "position_mean", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a221babae9f54bb1a44bb0b7768b6088b", null ],
       [ "position_second_moment", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ab9e14f59125617c5528268872fbf7617", null ],
+      [ "position_nth_moment", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a65a6b6070da4cde5e2657cd9ab5a1061", null ],
+      [ "position_moment", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ae9179c690b474240b1b9ccf0ed9755cf", null ],
       [ "position_variance", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8af3d8b7b20753fe7dfbc836546c70db58", null ],
       [ "mass", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ad90ccffa01275a7a7795fb6d1274e75f", null ],
       [ "mass_in_regions", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7db69034b6c71876c9e606b0f513daa7", null ],
@@ -22,6 +24,8 @@ var structptof_1_1_measure =
       [ "position_in_regions_periodic", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a8ae5d2081614c3a60e354c946a261a16", null ],
       [ "position_mean_periodic", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a51a37756b3c0a7f5d880786e05701fee", null ],
       [ "position_second_moment_periodic", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a280b543d35c78d5f35e7bd18a859abfa", null ],
+      [ "position_nth_moment_periodic", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8abd57c967f5a23c68e4477e2ca80ce716", null ],
+      [ "position_moment_periodic", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a4b5f439cf317e368af52c456abaf1079", null ],
       [ "position_variance_periodic", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a7fb93ff21910bf648878cc724509ae7d", null ],
       [ "first_crossing_time", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8a5b147c31d8b124850fe1a2aab7328740", null ],
       [ "absorption_time", "dd/ddd/structptof_1_1_measure.html#a2ef7090e40ed67cd27ad2713ac7e7cd8ac53af8b071ecb2fdae066118a9268109", null ]
