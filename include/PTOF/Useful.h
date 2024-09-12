@@ -146,14 +146,14 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
     Class::info(output);
     has_info = true;
   }
-  if constexpr (meta::has_parameters_v<Class>)
+  if constexpr (meta::has_parameters_type_v<Class>)
     if constexpr (meta::has_static_info_v<typename Class::Parameters>) {
       output << "\n";
       Class::Parameters::info(output);
       has_info = true;
     }
 
-  if (notify_if_no_info) {
+  if (notify_if_no_info && !has_info) {
     output << "\n"
               "No static info available";
     if (!help_option.empty())

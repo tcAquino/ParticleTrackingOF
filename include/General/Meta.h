@@ -104,12 +104,12 @@ inline constexpr bool has_static_info_v = has_static_info<X>::value;
 
 /**\brief Type of member \c X::Parameters. */
 template <typename X>
-using parameters_t = decltype(X::Parameters);
+using parameters_type_t = typename X::Parameters;
 /** \brief Check if a class defines type \c Parameters. */
-template <typename X> using has_parameters = has_member<parameters_t, X>;
+template <typename X> using has_parameters_type = has_member<parameters_type_t, X>;
 template <typename X>
 /** \brief Check if a class defines type \c Parameters. */
-inline constexpr bool has_parameters_v = has_parameters<X>::value;
+inline constexpr bool has_parameters_type_v = has_parameters_type<X>::value;
 
 // The following can_call methods are adapted from Passer By's answer here:
 // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
