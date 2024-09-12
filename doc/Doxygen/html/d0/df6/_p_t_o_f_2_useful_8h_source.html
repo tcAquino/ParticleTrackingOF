@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ii = 2; ii &lt; argc; ++ii) {</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    std::string option = std::string{argv[1]};</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    std::string option = std::string{argv[ii]};</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordflow">if</span> (option == <span class="stringliteral">&quot;-a&quot;</span> || option == <span class="stringliteral">&quot;--all&quot;</span>) {</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      <span class="keywordtype">bool</span> info = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      info += print_static_info&lt;ExecutableInfo&gt;(output);</div>
@@ -251,7 +251,7 @@ $(document).ready(function(){initNavTree('d0/df6/_p_t_o_f_2_useful_8h_source.htm
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      output &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                <span class="stringliteral">&quot;Help option &quot;</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;             &lt;&lt; option &lt;&lt; <span class="stringliteral">&quot;not supported\n&quot;</span>;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;             &lt;&lt; option &lt;&lt; <span class="stringliteral">&quot; not supported\n&quot;</span>;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    }</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  }</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>

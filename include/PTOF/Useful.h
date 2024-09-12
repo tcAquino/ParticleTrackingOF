@@ -187,7 +187,7 @@ bool options_help(OStream &output, int argc, const char *const *argv) {
   }
 
   for (int ii = 2; ii < argc; ++ii) {
-    std::string option = std::string{argv[1]};
+    std::string option = std::string{argv[ii]};
     if (option == "-a" || option == "--all") {
       bool info = false;
       info += print_static_info<ExecutableInfo>(output);
@@ -222,7 +222,7 @@ bool options_help(OStream &output, int argc, const char *const *argv) {
     } else {
       output << "\n"
                 "Help option "
-             << option << "not supported\n";
+             << option << " not supported\n";
     }
   }
 
