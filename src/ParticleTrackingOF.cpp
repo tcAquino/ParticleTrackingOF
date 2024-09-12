@@ -49,15 +49,15 @@ struct ExecutableInfo {
         << "--------------------------------------------------------------\n"
            "Available help options (pass any number after -h or --help):\n"
            "--------------------------------------------------------------\n"
-           "-a or --all : All available info\n"
-           "-m or --main : Main executable info\n"
-           "-g or --geometry : Geometry info\n"
-           "-d or --directories-of : OpenFOAM directories info\n"
-           "-t or --transport : Transport info\n"
-           "-r or --reaction : Reaction info\n"
-           "-s or --solvers : Solvers info\n"
-           "-i or --initial-condition : Initial condition info\n"
-           "-o or --output : Output info\n"
+           "-a / --all : All available info\n"
+           "-e / --executable : Main executable info\n"
+           "-g / --geometry : Geometry info\n"
+           "-d / --directories-of : OpenFOAM directories info\n"
+           "-t / --transport : Transport info\n"
+           "-r / --reaction : Reaction info\n"
+           "-s / --solvers : Solvers info\n"
+           "-i / --initial-condition : Initial condition info\n"
+           "-o / --output : Output info\n"
            "--------------------------------------------------------------\n";
   }
 
@@ -65,7 +65,7 @@ struct ExecutableInfo {
 };
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_diffusion_fpt_2d;
+  using namespace ptof::model_advection_diffusion_2d;
 
   ExecutableInfo::banner(std::cout);
   std::cout << "\n";
