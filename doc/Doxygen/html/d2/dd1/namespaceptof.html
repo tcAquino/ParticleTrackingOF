@@ -855,7 +855,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a89b9101a2ee142d8d1e89fdf0c8431e9"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a89b9101a2ee142d8d1e89fdf0c8431e9">print_static_info</a> (OStream &amp;output, bool notify_if_no_info=false, std::string const &amp;help_option={})</td></tr>
 <tr class="memdesc:a89b9101a2ee142d8d1e89fdf0c8431e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print static info for <code>Class</code> and <code>Class::Parameters</code>, if defined.  <a href="../../d2/dd1/namespaceptof.html#a89b9101a2ee142d8d1e89fdf0c8431e9">More...</a><br /></td></tr>
 <tr class="separator:a89b9101a2ee142d8d1e89fdf0c8431e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef85c49552eddb04174dfee310ac0f89"><td class="memTemplParams" colspan="2">template&lt;typename Main , typename Geometry , typename DirectoriesOF , typename Transport , typename Phase , typename Reaction , typename Solvers , typename InitialCondition , typename Output , typename OStream &gt; </td></tr>
+<tr class="memitem:aef85c49552eddb04174dfee310ac0f89"><td class="memTemplParams" colspan="2">template&lt;typename ExecutableInfo , typename Geometry , typename DirectoriesOF , typename Transport , typename Phase , typename Reaction , typename Solvers , typename InitialCondition , typename Output , typename OStream &gt; </td></tr>
 <tr class="memitem:aef85c49552eddb04174dfee310ac0f89"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#aef85c49552eddb04174dfee310ac0f89">options_help</a> (OStream &amp;output, int argc, const char *const *argv)</td></tr>
 <tr class="memdesc:aef85c49552eddb04174dfee310ac0f89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle help options for main executable.  <a href="../../d2/dd1/namespaceptof.html#aef85c49552eddb04174dfee310ac0f89">More...</a><br /></td></tr>
 <tr class="separator:aef85c49552eddb04174dfee310ac0f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7177,7 +7177,7 @@ Here is the call graph for this function:</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Main , typename Geometry , typename DirectoriesOF , typename Transport , typename Phase , typename Reaction , typename Solvers , typename InitialCondition , typename Output , typename OStream &gt; </div>
+template&lt;typename ExecutableInfo , typename Geometry , typename DirectoriesOF , typename Transport , typename Phase , typename Reaction , typename Solvers , typename InitialCondition , typename Output , typename OStream &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool ptof::options_help </td>
@@ -7207,7 +7207,7 @@ template&lt;typename Main , typename Geometry , typename DirectoriesOF , typenam
 
 <p>Handle help options for main executable. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if help flag was passed as first argument, <code>false</code> otherwise </dd></dl>
-<dl class="section note"><dt>Note</dt><dd><code><a class="el" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing.">useful::Empty</a></code> can be passed for non-existent templated types, except <code>Main</code>, which must define a static Main::help(OStream&amp;) method </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><code><a class="el" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing.">useful::Empty</a></code> can be passed for non-existent templated types, except <code>ExecutableInfo</code>, which must define a static ExecutableInfo::help(OStream&amp;) method </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

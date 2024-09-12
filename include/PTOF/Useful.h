@@ -170,9 +170,10 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
    \brief Handle help options for main executable
    \return \c true if help flag was passed as first argument, \c false otherwise
    \note \c useful::Empty can be passed for non-existent templated types, except
-   \c Main, which must define a static Main::help(OStream&) method
+   \c ExecutableInfo, which must define a static ExecutableInfo::help(OStream&)
+   method
 */
-template <typename Main, typename Geometry, typename DirectoriesOF,
+template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
           typename Transport, typename Phase, typename Reaction,
           typename Solvers, typename InitialCondition, typename Output,
           typename OStream>
@@ -180,16 +181,16 @@ bool options_help(OStream &output, int argc, const char *const *argv) {
   if (!useful::check_options_help(argc, argv))
     return 0;
 
-  if (argc == 2){
+  if (argc == 2) {
     output << "\n";
-    Main::help(output);
+    ExecutableInfo::help(output);
   }
 
   for (int ii = 2; ii < argc; ++ii) {
     std::string option = std::string{argv[1]};
     if (option == "-a" || option == "--all") {
       bool info = false;
-      info += print_static_info<Main>(output);
+      info += print_static_info<ExecutableInfo>(output);
       info += print_static_info<Geometry>(output);
       info += print_static_info<DirectoriesOF>(output);
       info += print_static_info<Transport>(output);
@@ -199,8 +200,8 @@ bool options_help(OStream &output, int argc, const char *const *argv) {
       info += print_static_info<Output>(output);
       if (!info)
         output << "No help info available\n";
-    } else if (option == "-m" || option == "--main") {
-      print_static_info<Main>(output, true, "-m / --main");
+    } else if (option == "-e" || option == "--executable") {
+      print_static_info<ExecutableInfo>(output, true, "-m / --main");
     } else if (option == "-g" || option == "--geometry") {
       print_static_info<Geometry>(output, true, "-g / --geometry");
     } else if (option == "-d" || option == "--directories-of") {
