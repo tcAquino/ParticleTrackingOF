@@ -266,7 +266,7 @@ struct Geometry_Periodic_Cartesian {
           boundary_conditions,
           locator,
           BoundaryInfo{},
-          BoundaryPeriodic{boundary_periodic, locator},
+          Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
