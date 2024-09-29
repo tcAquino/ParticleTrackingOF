@@ -2,7 +2,11 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
 [
     [ "Advection.h", "db/d50/_advection_8h.html", "db/d50/_advection_8h" ],
     [ "Boundary.h", "dd/da3/_p_t_o_f_2_boundary_8h.html", "dd/da3/_p_t_o_f_2_boundary_8h" ],
-    [ "Criteria.h", "df/d67/_criteria_8h.html", [
+    [ "Boundary_Cases.h", "d7/d77/_boundary___cases_8h.html", "d7/d77/_boundary___cases_8h" ],
+    [ "BoundaryConditionList.h", "d3/d08/_boundary_condition_list_8h.html", [
+      [ "BoundaryConditionList", "d8/ddb/structptof_1_1_boundary_condition_list.html", "d8/ddb/structptof_1_1_boundary_condition_list" ]
+    ] ],
+    [ "Criterion.h", "d0/d63/_criterion_8h.html", [
       [ "Criterion", "d9/d13/structptof_1_1_criterion.html", "d9/d13/structptof_1_1_criterion" ],
       [ "Criterion_time", "da/d6e/structptof_1_1_criterion__time.html", "da/d6e/structptof_1_1_criterion__time" ],
       [ "Criterion_mass_below", "da/df1/structptof_1_1_criterion__mass__below.html", "da/df1/structptof_1_1_criterion__mass__below" ],
@@ -24,13 +28,19 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
     ] ],
     [ "Info.h", "d2/d32/_info_8h.html", "d2/d32/_info_8h" ],
     [ "InitialCondition.h", "d6/d44/_initial_condition_8h.html", "d6/d44/_initial_condition_8h" ],
+    [ "InitialCondition_Cases.h", "d3/df6/_initial_condition___cases_8h.html", "d3/df6/_initial_condition___cases_8h" ],
+    [ "InitialConditionList.h", "d6/d5d/_initial_condition_list_8h.html", [
+      [ "InitialConditionList", "df/dfe/structptof_1_1_initial_condition_list.html", "df/dfe/structptof_1_1_initial_condition_list" ]
+    ] ],
     [ "Locator.h", "db/dcf/_locator_8h.html", [
       [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html", "d0/d4f/structptof_1_1_locator___cell" ]
     ] ],
-    [ "Measure.h", "d3/daa/_measure_8h.html", [
-      [ "Measure", "dd/ddd/structptof_1_1_measure.html", "dd/ddd/structptof_1_1_measure" ],
-      [ "MeasureSpacing", "d4/dd7/structptof_1_1_measure_spacing.html", "d4/dd7/structptof_1_1_measure_spacing" ],
-      [ "MeasureSpacingUnits", "d2/d80/structptof_1_1_measure_spacing_units.html", "d2/d80/structptof_1_1_measure_spacing_units" ]
+    [ "MeasurementList.h", "d0/d56/_measurement_list_8h.html", [
+      [ "MeasurementList", "d9/d22/struct_measurement_list.html", "d9/d22/struct_measurement_list" ]
+    ] ],
+    [ "MeasurementSpacing.h", "d9/d86/_measurement_spacing_8h.html", [
+      [ "MeasurementSpacing", "d3/da6/structptof_1_1_measurement_spacing.html", "d3/da6/structptof_1_1_measurement_spacing" ],
+      [ "MeasurementSpacingUnits", "d2/dfc/structptof_1_1_measurement_spacing_units.html", "d2/dfc/structptof_1_1_measurement_spacing_units" ]
     ] ],
     [ "Measurer.h", "d4/d94/_measurer_8h.html", [
       [ "Measurer", "db/d74/structptof_1_1_measurer.html", "db/d74/structptof_1_1_measurer" ],
@@ -40,14 +50,20 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
     [ "Meta.h", "d6/dfd/_p_t_o_f_2_meta_8h.html", "d6/dfd/_p_t_o_f_2_meta_8h" ],
     [ "Models.h", "d3/d74/_models_8h.html", "d3/d74/_models_8h" ],
     [ "Models_Parallel.h", "d0/dee/_models___parallel_8h.html", "d0/dee/_models___parallel_8h" ],
-    [ "Output.h", "d6/d77/_output_8h.html", [
-      [ "OutputParameters", "da/dac/structptof_1_1_output_parameters.html", "da/dac/structptof_1_1_output_parameters" ],
-      [ "Measurement", "dd/dcd/structptof_1_1_output_parameters_1_1_measurement.html", "dd/dcd/structptof_1_1_output_parameters_1_1_measurement" ],
-      [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
-      [ "NextMeasureTime", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html", "de/da7/structptof_1_1_output___cases_1_1_next_measure_time" ],
-      [ "NextMeasureTime_step", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step.html", "db/de3/structptof_1_1_output___cases_1_1_next_measure_time__step" ],
-      [ "NextMeasureTime_linear", "dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear.html", "dc/d4b/structptof_1_1_output___cases_1_1_next_measure_time__linear" ],
-      [ "NextMeasureTime_log", "d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log.html", "d6/de0/structptof_1_1_output___cases_1_1_next_measure_time__log" ]
+    [ "NextMeasurement.h", "dd/d29/_next_measurement_8h.html", [
+      [ "NextMeasurementTime", "d7/df2/struct_next_measurement_time.html", "d7/df2/struct_next_measurement_time" ],
+      [ "NextMeasurementTime_step", "de/d69/struct_next_measurement_time__step.html", "de/d69/struct_next_measurement_time__step" ],
+      [ "NextMeasurementTime_linear", "da/d8b/struct_next_measurement_time__linear.html", "da/d8b/struct_next_measurement_time__linear" ],
+      [ "NextMeasurementTime_log", "da/d3d/struct_next_measurement_time__log.html", "da/d3d/struct_next_measurement_time__log" ]
+    ] ],
+    [ "Output_Cases.h", "d9/ddf/_output___cases_8h.html", [
+      [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
+      [ "Measurement", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement" ],
+      [ "Measurement_field", "de/de8/structptof_1_1_output_parameters___cases_1_1_measurement__field.html", "de/de8/structptof_1_1_output_parameters___cases_1_1_measurement__field" ],
+      [ "Measurement_dim_position", "d6/dd8/structptof_1_1_output_parameters___cases_1_1_measurement__dim__position.html", "d6/dd8/structptof_1_1_output_parameters___cases_1_1_measurement__dim__position" ],
+      [ "Measurement_order", "d7/dc5/structptof_1_1_output_parameters___cases_1_1_measurement__order.html", "d7/dc5/structptof_1_1_output_parameters___cases_1_1_measurement__order" ],
+      [ "Measurement_orders", "d4/d2b/structptof_1_1_output_parameters___cases_1_1_measurement__orders.html", "d4/d2b/structptof_1_1_output_parameters___cases_1_1_measurement__orders" ],
+      [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ]
     ] ],
     [ "ParticleMaker.h", "da/d16/_particle_maker_8h.html", "da/d16/_particle_maker_8h" ],
     [ "Phase.h", "d9/daa/_phase_8h.html", [

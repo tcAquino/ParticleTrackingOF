@@ -18,11 +18,11 @@
 #include <string>
 
 namespace ptof {
-/** \class Output PTOF/Output.h "PTOF/Output.h"
+/** \class Measurer PTOF/Measurer.h "PTOF/Measurer.h"
  \brief Polymorphic output handler for outputting some quantity.
  \note To be used only through derived classes. */
 template <typename Subject, typename Geometry> struct Measurer {
-  virtual ~Measurer() { _output.close(); }
+  virtual ~Measurer() = default;
 
   /** \brief Make measurement and output. */
   virtual void print() = 0;
@@ -44,6 +44,15 @@ protected:
     _output << std::setprecision(precision) << std::scientific;
   }
 
+  Measurer(Subject &&, Geometry const &, Directories const &,
+           std::string const &, std::string const &, int = 8) = delete;
+
+  Measurer(Subject const &, Geometry &&, Directories const &,
+           std::string const &, std::string const &, int = 8) = delete;
+
+  Measurer(Subject &&, Geometry &&, Directories const &, std::string const &,
+           std::string const &, int = 8) = delete;
+
   Subject const &_subject;   /**< CTRW object to measure. */
   Geometry const &_geometry; /**< Domain geometry info and utilities. */
   typename Geometry::Locator const
@@ -64,7 +73,7 @@ protected:
   }
 };
 
-/** \class Measurer_absorption_time PTOF/Output.h "PTOF/Output.h"
+/** \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
  *  \brief  Output absorption times, tags, and masses of absorbed particles. */
 template <typename Subject, typename Geometry>
 struct Measurer_absorption_time final : Measurer<Subject, Geometry> {

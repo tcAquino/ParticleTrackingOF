@@ -99,6 +99,16 @@ inline bool is_empty(std::string const &str) {
   return str == "" || str == "''" || str == R"("")";
 }
 
+/** \return Ordinal string (1st, 2nd, 3rd, 4th, ...) for unsigned integer. */
+inline std::string ordinal(std::size_t number) {
+  switch (number){
+    case 1: return "1st";
+    case 2: return "2nd";
+    case 3: return "3rd";
+    default: return std::to_string(number) + "th";
+  }
+}
+
 /** \brief Remove extension after last dot, including dot. */
 inline std::string remove_extension(std::string const &filename) {
   return filename.substr(0, filename.find_last_of('.'));
@@ -177,12 +187,12 @@ inline bool ends_with(const std::string &string, const std::string &suffix) {
 }
 
 /** \brief Split \p string into vector of strings at instances of \p
- delimeter. \tparam empty_entries Whether to keep empty entries between
- delimiting characters */
+ delimeter and append to \c tokens. \tparam empty_entries Whether to keep empty
+ entries between delimiting characters. */
 template <bool empty_entries = false>
-std::vector<std::string> split(std::string const &str,
-                               std::string const &delims = "\t,|\r ") {
-  std::vector<std::string> tokens;
+std::vector<std::string> &split(std::string const &str,
+                                std::vector<std::string> &tokens,
+                                std::string const &delims = "\t,|\r ") {
   std::size_t pos_last_non_delim = str.find_last_not_of(delims);
   std::size_t upper_limit = pos_last_non_delim != std::string::npos
                                 ? pos_last_non_delim + 1
@@ -201,9 +211,9 @@ std::vector<std::string> split(std::string const &str,
 }
 
 template <>
-inline std::vector<std::string> split<true>(std::string const &str,
-                                            std::string const &delims) {
-  std::vector<std::string> tokens;
+inline std::vector<std::string> &split<true>(std::string const &str,
+                                             std::vector<std::string> &tokens,
+                                             std::string const &delims) {
   for (std::size_t start = 0, end; start < str.length(); start = end + 1) {
     std::size_t position = str.find_first_of(delims, start);
     end = position != std::string::npos ? position : str.length();
@@ -215,6 +225,17 @@ inline std::vector<std::string> split<true>(std::string const &str,
                   [&str](auto const &delim) { return delim == str.back(); }))
     tokens.push_back("");
 
+  return tokens;
+}
+
+/** \brief Split \p string into vector of strings at instances of \p
+ delimeter. \tparam empty_entries Whether to keep empty entries between
+ delimiting characters */
+template <bool empty_entries = false>
+std::vector<std::string> split(std::string const &str,
+                               std::string const &delims = "\t,|\r ") {
+  std::vector<std::string> tokens;
+  split<empty_entries>(str, tokens, delims);
   return tokens;
 }
 
@@ -437,13 +458,14 @@ template <typename Type> Type convert_to(std::string const &str) {
 
 /** \brief Remove comments after escape sequence */
 inline std::string clear_escape(std::string const &str,
-                                std::string const &escape_sequence) {
+                                std::string const &escape_sequence = "#") {
   return str.substr(0, str.find(escape_sequence));
 }
 
 /** \brief Remove comments after escape sequence */
-inline std::string &clear_escape_in_place(std::string &str,
-                                          std::string const &escape_sequence) {
+inline std::string &
+clear_escape_in_place(std::string &str,
+                      std::string const &escape_sequence = "#") {
   std::size_t pos = str.find(escape_sequence);
   if (pos != std::string::npos)
     str.erase(pos);
@@ -460,8 +482,9 @@ template <typename Type> void read(std::ifstream &input, Type &val) {
 /** \brief Extract first value from line, discarding escaped lines and the rest
  * of the line */
 template <typename Type>
-void read_first_from_line(std::ifstream &input, Type &val,
-                          std::string const &escape_sequence,
+void read_first_from_line(Type &val,
+                          std::ifstream &input,
+                          std::string const &escape_sequence = "#",
                           std::string const &delims = "\t,|\r ") {
   std::string line;
   while (std::getline(input, line))
@@ -480,11 +503,50 @@ void read_first_from_line(std::ifstream &input, Type &val,
  of the line \note Type must be default-constructible. */
 template <typename Type>
 Type read_first_from_line(std::ifstream &input,
-                          std::string const &escape_sequence,
+                          std::string const &escape_sequence = "#",
                           std::string const &delims = "\t,|\r ") {
   Type val;
-  read_first_from_line(input, val, escape_sequence, delims);
+  read_first_from_line(val, input, escape_sequence, delims);
   return val;
+}
+
+/** \brief Read and split next line, discarding escaped lines.
+    \tparam empty_entries Whether to keep empty entries between delimiting
+   characters*/
+template <bool empty_entries = false>
+inline auto split_line(std::ifstream &input,
+                       std::string const &escape_sequence = "#",
+                       std::string const &delims = "\t,|\r ") {
+  std::string line;
+  while (std::getline(input, line))
+    if (line.find(escape_sequence) != 0)
+      break;
+  useful::remove_carriage_return_in_place(line);
+  useful::clear_escape_in_place(line, escape_sequence);
+  return useful::split<empty_entries>(line, delims);
+}
+
+/** \brief Read and split next line into \c line_tokens, discarding escaped
+   lines, appending result to \c tokens. \tparam empty_entries Whether to keep
+   empty entries between delimiting characters. \return \c true if an unescaped
+   line was read, \c false otherwise. */
+template <bool empty_entries = false>
+bool split_line(std::ifstream &input, std::vector<std::string> &tokens,
+                std::string const &escape_sequence = "#",
+                std::string const &delims = "\t,|\r ") {
+  std::string line;
+  bool read = false;
+  while (std::getline(input, line))
+    if (line.find(escape_sequence) != 0) {
+      read = true;
+      break;
+    }
+  if (!read)
+    return false;
+  useful::remove_carriage_return_in_place(line);
+  useful::clear_escape_in_place(line, escape_sequence);
+  useful::split<empty_entries>(line, tokens, delims);
+  return true;
 }
 
 /** \return Sign of \p val. */
@@ -750,6 +812,7 @@ inline std::string expand_home_dir(std::string dir) {
   expand_home_dir_in_place(dir);
   return dir;
 }
+
 } // namespace useful
 
 #endif /* GENERAL_USEFUL_H */

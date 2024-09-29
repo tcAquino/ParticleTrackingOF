@@ -1,5 +1,9 @@
 <map id="ptof::EndCriterion::type" name="ptof::EndCriterion::type">
-<area shape="rect" id="node1" title=" " alt="" coords="371,5,505,47"/>
-<area shape="rect" id="node2" href="$dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="188,5,323,47"/>
-<area shape="rect" id="node3" href="$dd/d0d/structptof_1_1_end_criterion.html#a074d012cd1ab92a5ca6c03f3e3b1017f" title=" " alt="" coords="5,5,140,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="509,71,633,112"/>
+<area shape="rect" id="node2" href="$d5/de8/classptof_1_1_output___cases.html#a065b1518ed2121f95b7580e7a3e6ba58" title="Output information about current object." alt="" coords="303,5,439,47"/>
+<area shape="rect" id="node3" href="$dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="309,71,433,112"/>
+<area shape="rect" id="node5" href="$d8/d12/structptof_1_1_output_parameters___cases.html#af3c907b0efe517363333359ae1852533" title="Read end criterion from input stream." alt="" coords="280,136,461,177"/>
+<area shape="rect" id="node7" href="$d5/de8/classptof_1_1_output___cases.html#a41ff5aefb9c92a26e003b60919ae3b6a" title=" " alt="" coords="303,201,439,243"/>
+<area shape="rect" id="node4" href="$dd/d0d/structptof_1_1_end_criterion.html#a074d012cd1ab92a5ca6c03f3e3b1017f" title=" " alt="" coords="57,71,181,112"/>
+<area shape="rect" id="node6" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907" title=" " alt="" coords="5,136,232,177"/>
 </map>

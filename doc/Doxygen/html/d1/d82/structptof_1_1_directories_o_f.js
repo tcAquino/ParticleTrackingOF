@@ -7,7 +7,6 @@ var structptof_1_1_directories_o_f =
     [ "makeRunTime", "d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900", null ],
     [ "_time_name_input", "d1/d82/structptof_1_1_directories_o_f.html#a457ed0c7898ffdea27f206ac25ddb97e", null ],
     [ "case_name", "d1/d82/structptof_1_1_directories_o_f.html#a0c796b453a91eebbe9782226c99bf493", null ],
-    [ "comment_sequence", "d1/d82/structptof_1_1_directories_o_f.html#a2c0185ec3b4004b68e56db8789402012", null ],
     [ "dir_case", "d1/d82/structptof_1_1_directories_o_f.html#ae6fa3a6e5fdd987bf2ebe6ce9e16d63c", null ],
     [ "time", "d1/d82/structptof_1_1_directories_o_f.html#a277719db28ac3f1df84a95883b96458c", null ]
 ];

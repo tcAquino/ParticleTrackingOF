@@ -1,0 +1,6 @@
+<map id="NextMeasurementTime&lt; Parameters &gt;" name="NextMeasurementTime&lt; Parameters &gt;">
+<area shape="rect" id="node1" title="Polymorphic object to handle setting up the next measurement time." alt="" coords="5,71,164,112"/>
+<area shape="rect" id="node2" href="$da/d8b/struct_next_measurement_time__linear.html" title="NextMeasurementTime object for linearly&#45;spaced times." alt="" coords="212,5,371,47"/>
+<area shape="rect" id="node3" href="$da/d3d/struct_next_measurement_time__log.html" title=" " alt="" coords="212,71,371,112"/>
+<area shape="rect" id="node4" href="$de/d69/struct_next_measurement_time__step.html" title="NextMeasurementTime object for constant time step." alt="" coords="212,136,371,177"/>
+</map>

@@ -9,7 +9,7 @@
 
 #include "General/Meta.h"
 #include "General/Useful.h"
-#include "PTOF/Boundary.h"
+#include "PTOF/BoundaryConditionList.h"
 
 namespace ptof {
 /** \struct Store_Type PTOF/Store.h "PTOF/Store.h"
@@ -18,16 +18,17 @@ struct Store_Type {
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
    */
-  template <typename State, typename Intersection, BoundaryCondition::Type type>
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type, type>) const {
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {
     store_info_type(state, implemented.name(type));
   }
 };
@@ -38,16 +39,17 @@ struct Store_Nothing {
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
-  template <typename State, typename Intersection, BoundaryCondition::Type type>
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type, type>) const {}
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {}
 };
 
 /** \struct Store_Absorbed PTOF/Store.h "PTOF/Store.h"
@@ -56,31 +58,33 @@ struct Store_Absorbed {
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
-  template <typename State, typename Intersection, BoundaryCondition::Type type>
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type, type>) const {}
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {}
 
   /**
    \brief Store info
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type,
-                                 BoundaryCondition::Type::absorbing>) const {
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             BoundaryConditionList const &implemented,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::absorbing>) const {
     store_info_absorbed(state);
   }
 };
@@ -91,48 +95,50 @@ struct Store_Absorbed_Reinjections {
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
-  template <typename State, typename Intersection, BoundaryCondition::Type type>
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type, type>) const {}
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {}
 
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type,
-                                 BoundaryCondition::Type::absorbing>) const {
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             BoundaryConditionList const &implemented,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::absorbing>) const {
     store_info_absorbed(state);
   }
 
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
-  void operator()(
-      State &state, State const &state_old, Intersection const &intersection,
-      BoundaryCondition const &implemented,
-      meta::Selector<BoundaryCondition::Type, BoundaryCondition::Type::custom>)
-      const {
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type,
+                                 BoundaryConditionList::Type::custom>) const {
     store_info_reinjections(state);
   }
 };
@@ -143,31 +149,32 @@ struct Store_Info_Contact {
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
-  template <typename State, typename Intersection, BoundaryCondition::Type type>
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
-                  BoundaryCondition const &implemented,
-                  meta::Selector<BoundaryCondition::Type, type>) const {}
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {}
 
   /**
    \brief Store info.
    \note The boundary condition type is selected at compile time through the
-   type \c meta::Selector<BoundaryCondition::Type,type>. \param state Current
-   particle state. \param state_old Previous particle state. \param intersection
-   Information about intersection with boundary. \param implemented Information
-   about implemented boundary conditions.
+   type \c meta::Selector<BoundaryConditionList::Type,type>. \param state
+   Current particle state. \param state_old Previous particle state. \param
+   intersection Information about intersection with boundary. \param implemented
+   Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
-  void operator()(
-      State &state, State const &state_old, Intersection const &intersection,
-      BoundaryCondition const &implemented,
-      meta::Selector<BoundaryCondition::Type, BoundaryCondition::Type::info>)
-      const {
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type,
+                                 BoundaryConditionList::Type::info>) const {
     store_info_type(state, "info");
     store_info_contact(state, intersection.rawPoint());
     store_info_time(state, state.time);

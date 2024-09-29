@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zeroneighborprecheck_1045',['ZeroNeighborPrecheck',['../d7/d21/structptof_1_1_search_options.html#a3e154dc5e997c9b967a3b62935ae056a',1,'ptof::SearchOptions']]]
+  ['xi_1115',['xi',['../d7/db1/classstochastic_1_1skewedlevystable__distribution.html#ad5eb5b56f685cda9f93fc544973a1d5f',1,'stochastic::skewedlevystable_distribution']]]
 ];

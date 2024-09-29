@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['_7ecriterion_1046',['~Criterion',['../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6',1,'ptof::Criterion']]],
-  ['_7emeasurer_1047',['~Measurer',['../db/d74/structptof_1_1_measurer.html#a86d9a13f44b5db08feaa057c4f10a5cb',1,'ptof::Measurer']]],
-  ['_7emeasurertime_1048',['~MeasurerTime',['../dc/d05/structptof_1_1_measurer_time.html#ab050e63a490167cb4819fb7a326efb70',1,'ptof::MeasurerTime']]],
-  ['_7enextmeasuretime_1049',['~NextMeasureTime',['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#aaf1ff2f0785409916ca2adebf04f3040',1,'ptof::Output_Cases::NextMeasureTime']]]
+  ['zeroneighborprecheck_1116',['ZeroNeighborPrecheck',['../d7/d21/structptof_1_1_search_options.html#a3e154dc5e997c9b967a3b62935ae056a',1,'ptof::SearchOptions']]],
+  ['zeta_1117',['zeta',['../d7/db1/classstochastic_1_1skewedlevystable__distribution.html#a9486bf1299dfe354f7b7382580bb202e',1,'stochastic::skewedlevystable_distribution']]]
 ];

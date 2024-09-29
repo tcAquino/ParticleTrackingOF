@@ -11,7 +11,7 @@
 #include "General/Serial.h"
 #include "General/Useful.h"
 #include "Geometry/Boundary.h"
-#include "PTOF/Boundary.h"
+#include "PTOF/Boundary_Cases.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Locator.h"
 #include "PTOF/Store.h"
@@ -216,7 +216,7 @@ struct Geometry_Periodic_Cartesian {
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator = Locator_Cell<Geometry_Periodic_Cartesian,
                                SearchOption>; /**< Locate positions in mesh.*/
-  using Boundary_Periodic =
+  using BoundaryPeriodic =
       geom::Boundary_Periodic_WithOutsideInfo; /**< Periodic boundary. */
   using BoundaryInfo =
       Store_Absorbed; /**< What to store upon hitting a boundary. */
@@ -266,13 +266,13 @@ struct Geometry_Periodic_Cartesian {
           boundary_conditions,
           locator,
           BoundaryInfo{},
-          Boundary_Periodic_OF{boundary_periodic, locator},
+          BoundaryPeriodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
           boundary_conditions, locator, BoundaryInfo{},
-          Boundary_Periodic_OF{boundary_periodic, locator},
+          Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition)}};
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              Dynamics::name(dynamics) + " not supported"};
@@ -379,7 +379,7 @@ private:
 
 public:
   Locator locator{*this}; /**< To locate positions in mesh.*/
-  Boundary_Periodic
+  BoundaryPeriodic
       boundary_periodic; /**< Boundary object to enforce periodicity.*/
 };
 
@@ -399,7 +399,7 @@ struct Geometry_Bcc {
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator =
       Locator_Cell<Geometry_Bcc, SearchOption>; /**< Locate positions in mesh.*/
-  using Boundary_Periodic =
+  using BoundaryPeriodic =
       std::conditional_t<periodicity == Periodicity::Type::cartesian,
                          geom::Boundary_Periodic_WithOutsideInfo,
                          geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
@@ -461,13 +461,13 @@ struct Geometry_Bcc {
           boundary_conditions,
           locator,
           BoundaryInfo{},
-          Boundary_Periodic_OF{boundary_periodic, locator},
+          Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
           boundary_conditions, locator, BoundaryInfo{},
-          Boundary_Periodic_OF{boundary_periodic, locator},
+          Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition)}};
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              Dynamics::name(dynamics) + " not supported"};
@@ -567,7 +567,7 @@ private:
 public:
   Locator locator{*this}; /**< To locate positions in mesh.*/
   const double radius;    /**< Bead radius. */
-  Boundary_Periodic
+  BoundaryPeriodic
       boundary_periodic; /**< Boundary object to enforce periodicity. */
 
 private:
@@ -575,7 +575,7 @@ private:
   \brief Make a boundary object to enforce cartesian periodicity.
   \return Periodic boundary object.
   */
-  Boundary_Periodic make_boundary_periodic(
+  BoundaryPeriodic make_boundary_periodic(
       meta::Selector<Periodicity::Type, Periodicity::Type::cartesian>,
       Directories const &directories) {
     return {extract_cartesian_periodic_boundaries(
@@ -586,7 +586,7 @@ private:
   \brief Make a boundary object to enforce periodicity based on symmetry
   planes. \return Periodic boundary object.
   */
-  Boundary_Periodic make_boundary_periodic(
+  BoundaryPeriodic make_boundary_periodic(
       meta::Selector<Periodicity::Type, Periodicity::Type::symmetryplanes>,
       Directories const &directories) {
     return {radius};

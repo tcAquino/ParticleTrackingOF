@@ -63,9 +63,6 @@ struct Directories {
 /** \struct DirectoriesOF PTOF/Directories.h "PTOF/Directories.h"
  *  \brief Object to handle OpenFOAM case directories.*/
 struct DirectoriesOF {
-private:
-  std::string comment_sequence =
-      "#"; /**< Sequence of characters marking comment for file parsing. */
   std::string _time_name_input; /**< Information about time directory. */
 
 public:
@@ -118,9 +115,9 @@ public:
   Foam::Time makeRunTime(Directories const &directories) {
     auto input = useful::open_read(directories.dir_parameters + "/of.dat");
     auto dir =
-        useful::read_first_from_line<std::string>(input, comment_sequence);
-    useful::read_first_from_line(input, case_name, comment_sequence);
-    useful::read_first_from_line(input, _time_name_input, comment_sequence);
+        useful::read_first_from_line<std::string>(input);
+    useful::read_first_from_line(case_name, input);
+    useful::read_first_from_line(_time_name_input, input);
     input.close();
 
     if (useful::is_empty(dir))

@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('dc/d05/structptof_1_1_measurer_time.ht
 <p>Polymorphic output handler for outputting time and some quantity.  
  <a href="../../dc/d05/structptof_1_1_measurer_time.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="../../d4/de6/_measurer_time_8h_source.html">PTOF/Output.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d4/de6/_measurer_time_8h_source.html">PTOF/MeasurerTime.h</a>&quot;</code></p>
 <div class="dynheader">
 Inheritance diagram for ptof::MeasurerTime&lt; Subject, Geometry &gt;:</div>
 <div class="dyncontent">
@@ -140,13 +140,13 @@ Collaboration diagram for ptof::MeasurerTime&lt; Subject, Geometry &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab050e63a490167cb4819fb7a326efb70"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#ab050e63a490167cb4819fb7a326efb70">~MeasurerTime</a> ()</td></tr>
-<tr class="separator:ab050e63a490167cb4819fb7a326efb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ce00e8da7ba98397cdb52d7714dd6f3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a3ce00e8da7ba98397cdb52d7714dd6f3">~MeasurerTime</a> ()=default</td></tr>
+<tr class="separator:a3ce00e8da7ba98397cdb52d7714dd6f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed5934ed59db8d23144ece975afdceff"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#aed5934ed59db8d23144ece975afdceff">operator()</a> (double time)=0</td></tr>
 <tr class="memdesc:aed5934ed59db8d23144ece975afdceff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make measurement and output or store, given current time <code>time</code>.  <a href="../../dc/d05/structptof_1_1_measurer_time.html#aed5934ed59db8d23144ece975afdceff">More...</a><br /></td></tr>
 <tr class="separator:aed5934ed59db8d23144ece975afdceff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb7099e11aa1b8bb712ae9a8b835871d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">print</a> ()</td></tr>
-<tr class="memdesc:abb7099e11aa1b8bb712ae9a8b835871d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stored information (do nothing if not overriden).  <a href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">More...</a><br /></td></tr>
+<tr class="memdesc:abb7099e11aa1b8bb712ae9a8b835871d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stored information (do nothing if not overriden).  <a href="../../dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d">More...</a><br /></td></tr>
 <tr class="separator:abb7099e11aa1b8bb712ae9a8b835871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a004d1d5b4eb8b6ef9b50c970179716ec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a004d1d5b4eb8b6ef9b50c970179716ec">update</a> (double time, double time_of_change)</td></tr>
 <tr class="memdesc:a004d1d5b4eb8b6ef9b50c970179716ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update internal state.  <a href="../../dc/d05/structptof_1_1_measurer_time.html#a004d1d5b4eb8b6ef9b50c970179716ec">More...</a><br /></td></tr>
@@ -157,6 +157,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a649f495497af40c306b91ed0e5289101"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a649f495497af40c306b91ed0e5289101">MeasurerTime</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;output_name, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, int precision=8)</td></tr>
 <tr class="memdesc:a649f495497af40c306b91ed0e5289101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up output streams for requested output types.  <a href="../../dc/d05/structptof_1_1_measurer_time.html#a649f495497af40c306b91ed0e5289101">More...</a><br /></td></tr>
 <tr class="separator:a649f495497af40c306b91ed0e5289101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9196c00f812225a0b479ccc5a4af58b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a9196c00f812225a0b479ccc5a4af58b2">MeasurerTime</a> (Subject &amp;&amp;, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;, std::string const &amp;_name, std::string const &amp;, int=8)=delete</td></tr>
+<tr class="separator:a9196c00f812225a0b479ccc5a4af58b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d9c824f3152fe63ff92eb45ded32d5f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a9d9c824f3152fe63ff92eb45ded32d5f">MeasurerTime</a> (Subject const &amp;, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &amp;&amp;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;, std::string const &amp;_name, std::string const &amp;, int=8)=delete</td></tr>
+<tr class="separator:a9d9c824f3152fe63ff92eb45ded32d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bbdba08e73e510b19ca8e2036775679"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#a3bbdba08e73e510b19ca8e2036775679">MeasurerTime</a> (Subject &amp;&amp;, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &amp;&amp;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;, std::string const &amp;_name, std::string const &amp;, int=8)=delete</td></tr>
+<tr class="separator:a3bbdba08e73e510b19ca8e2036775679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc72cf9a84deffff2ecc4b95bd22787c"><td class="memItemLeft" align="right" valign="top">std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html#abc72cf9a84deffff2ecc4b95bd22787c">open_write</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;output_name, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>)</td></tr>
 <tr class="memdesc:abc72cf9a84deffff2ecc4b95bd22787c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open output file for a given output type.  <a href="../../dc/d05/structptof_1_1_measurer_time.html#abc72cf9a84deffff2ecc4b95bd22787c">More...</a><br /></td></tr>
 <tr class="separator:abc72cf9a84deffff2ecc4b95bd22787c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,8 +185,8 @@ class ptof::MeasurerTime&lt; Subject, Geometry &gt;</h3>
 <p>Polymorphic output handler for outputting time and some quantity. </p>
 <dl class="section note"><dt>Note</dt><dd>To be used only through derived classes. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab050e63a490167cb4819fb7a326efb70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab050e63a490167cb4819fb7a326efb70">&#9670;&nbsp;</a></span>~MeasurerTime()</h2>
+<a id="a3ce00e8da7ba98397cdb52d7714dd6f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ce00e8da7ba98397cdb52d7714dd6f3">&#9670;&nbsp;</a></span>~MeasurerTime()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,7 +205,7 @@ template&lt;typename Subject , typename Geometry &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -208,7 +214,7 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 </div>
 </div>
 <a id="a649f495497af40c306b91ed0e5289101"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a649f495497af40c306b91ed0e5289101">&#9670;&nbsp;</a></span>MeasurerTime()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a649f495497af40c306b91ed0e5289101">&#9670;&nbsp;</a></span>MeasurerTime() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,6 +288,192 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
+<a id="a9196c00f812225a0b479ccc5a4af58b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9196c00f812225a0b479ccc5a4af58b2">&#9670;&nbsp;</a></span>MeasurerTime() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject , typename Geometry &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">ptof::MeasurerTime</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a> </td>
+          <td>(</td>
+          <td class="paramtype">Subject &amp;&amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"> = <code>8</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9d9c824f3152fe63ff92eb45ded32d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d9c824f3152fe63ff92eb45ded32d5f">&#9670;&nbsp;</a></span>MeasurerTime() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject , typename Geometry &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">ptof::MeasurerTime</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a> </td>
+          <td>(</td>
+          <td class="paramtype">Subject const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &amp;&amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"> = <code>8</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3bbdba08e73e510b19ca8e2036775679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bbdba08e73e510b19ca8e2036775679">&#9670;&nbsp;</a></span>MeasurerTime() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject , typename Geometry &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">ptof::MeasurerTime</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a> </td>
+          <td>(</td>
+          <td class="paramtype">Subject &amp;&amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &amp;&amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"> = <code>8</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="abc72cf9a84deffff2ecc4b95bd22787c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc72cf9a84deffff2ecc4b95bd22787c">&#9670;&nbsp;</a></span>open_write()</h2>
@@ -334,7 +526,7 @@ template&lt;typename Subject , typename Geometry &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stream. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Output stream. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -406,7 +598,7 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stored information (do nothing if not overriden). </p>
+<p>Output stored information (do nothing if not overriden). </p>
 
 <p>Reimplemented in <a class="el" href="../../dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a0c1182ca35515972e1dc5a7116118248">ptof::MeasurerTime_first_crossing_time&lt; Subject, Geometry &gt;</a>.</p>
 
@@ -526,7 +718,7 @@ template&lt;typename Subject , typename Geometry &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="../../db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity.">Output</a> stream. </p>
+<p>Output stream. </p>
 
 </div>
 </div>

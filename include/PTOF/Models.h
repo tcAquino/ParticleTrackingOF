@@ -15,9 +15,9 @@
 #include "PTOF/Advection.h"
 #include "PTOF/Geometry.h"
 #include "PTOF/Info.h"
-#include "PTOF/InitialCondition.h"
+#include "PTOF/InitialCondition_Cases.h"
 #include "PTOF/Locator.h"
-#include "PTOF/Output.h"
+#include "PTOF/Output_Cases.h"
 #include "PTOF/ParticleMaker.h"
 #include "PTOF/Reaction.h"
 #include "PTOF/State.h"
@@ -64,10 +64,6 @@ struct Solvers {
   using Steppers = Steppers_Advection_Euler_Diffusion_Euler;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::size_t nr_particles;
     double local_time_step_adv;
@@ -85,19 +81,13 @@ struct Solvers {
                ReactionParameters const &params_reaction) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_solvers_" + name + ".dat");
-      useful::read_first_from_line(input, nr_particles, comment_sequence);
-      useful::read_first_from_line(input, local_time_step_adv,
-                                   comment_sequence);
-      useful::read_first_from_line(input, local_time_step_diff,
-                                   comment_sequence);
-      useful::read_first_from_line(input, local_time_step_react,
-                                   comment_sequence);
-      useful::read_first_from_line(input, global_time_step_adv,
-                                   comment_sequence);
-      useful::read_first_from_line(input, global_time_step_diff,
-                                   comment_sequence);
-      useful::read_first_from_line(input, global_time_step_react,
-                                   comment_sequence);
+      useful::read_first_from_line(nr_particles, input);
+      useful::read_first_from_line(local_time_step_adv, input);
+      useful::read_first_from_line(local_time_step_diff, input);
+      useful::read_first_from_line(local_time_step_react, input);
+      useful::read_first_from_line(global_time_step_adv, input);
+      useful::read_first_from_line(global_time_step_diff, input);
+      useful::read_first_from_line(global_time_step_react, input);
       input.close();
     }
 
@@ -136,10 +126,6 @@ struct Transport {
   Transport() = delete;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::string peclet_option;
     double lengthscale;
@@ -155,34 +141,34 @@ struct Transport {
                Geometry const &geometry) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_transport_" + name + ".dat");
-      useful::read_first_from_line(input, peclet_option, comment_sequence);
-      useful::read_first_from_line(input, lengthscale, comment_sequence);
+      useful::read_first_from_line(peclet_option, input);
+      useful::read_first_from_line(lengthscale, input);
       if (peclet_option == "rescale_velocity_to_peclet") {
-        useful::read_first_from_line(input, peclet, comment_sequence);
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(peclet, input);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
         advection_time = 2. * diffusion_time / peclet;
         mean_velocity = lengthscale / advection_time;
       } else if (peclet_option == "rescale_velocity_to_mean") {
-        useful::read_first_from_line(input, mean_velocity, comment_sequence);
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(mean_velocity, input);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
         peclet = lengthscale * mean_velocity / diff_coeff;
         advection_time = lengthscale / mean_velocity;
       } else if (peclet_option == "rescale_velocity_to_advection_time") {
-        useful::read_first_from_line(input, advection_time, comment_sequence);
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(advection_time, input);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
         peclet = 2. * diffusion_time / advection_time;
         mean_velocity = lengthscale / advection_time;
       } else if (peclet_option == "compute_from_diff_coeff") {
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       } else if (peclet_option == "compute_from_diff_time") {
-        useful::read_first_from_line(input, diffusion_time, comment_sequence);
+        useful::read_first_from_line(diffusion_time, input);
         diff_coeff = lengthscale * lengthscale / (2. * diffusion_time);
       } else if (peclet_option == "set_diff_coeff") {
-        useful::read_first_from_line(input, peclet, comment_sequence);
+        useful::read_first_from_line(peclet, input);
       } else
         throw std::runtime_error{"Peclet number setting option " +
                                  peclet_option + " not supported"};
@@ -388,14 +374,14 @@ struct InitialCondition {
 struct Output {
   Output() = delete;
 
-  using Parameters = OutputParameters;
+  using Parameters = OutputParameters_Cases;
 
   template <typename Subject, typename VelocityField, typename Geometry,
             typename Mask = useful::Empty>
   static auto
   makeOutput(Subject const &subject, VelocityField const &velocity_field,
              Geometry const &geometry, Directories const &directories,
-             Parameters parameters, std::string const &identifier,
+             Parameters const &parameters, std::string const &identifier,
              std::vector<std::reference_wrapper<const Mask>> masks = {},
              std::vector<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry, directories,
@@ -407,7 +393,7 @@ struct Output {
   static auto
   makeOutput(Subject const &subject, VelocityField const &velocity_field,
              Geometry const &geometry, Directories const &directories,
-             Parameters parameters, std::string const &identifier,
+             Parameters const &parameters, std::string const &identifier,
              std::initializer_list<std::reference_wrapper<const Mask>> masks,
              std::initializer_list<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry, directories,
@@ -419,7 +405,7 @@ struct Output {
   static auto
   makeOutput(Subject const &subject, VelocityField const &velocity_field,
              Geometry const &geometry, Directories const &directories,
-             Parameters parameters, std::string const &identifier,
+             Parameters const &parameters, std::string const &identifier,
              std::vector<std::reference_wrapper<const Mask>> masks,
              std::initializer_list<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry, directories,
@@ -431,7 +417,7 @@ struct Output {
   static auto
   makeOutput(Subject const &subject, VelocityField const &velocity_field,
              Geometry const &geometry, Directories const &directories,
-             Parameters parameters, std::string const &identifier,
+             Parameters const &parameters, std::string const &identifier,
              std::initializer_list<std::reference_wrapper<const Mask>> masks,
              std::vector<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry, directories,
@@ -510,10 +496,6 @@ struct Solvers {
   using Steppers = Steppers_Advection_Euler_Diffusion_Euler;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::size_t nr_particles;
     double local_time_step_adv;
@@ -531,11 +513,9 @@ struct Solvers {
                ReactionParameters const &params_reaction) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_solvers_" + name + ".dat");
-      useful::read_first_from_line(input, nr_particles, comment_sequence);
-      useful::read_first_from_line(input, local_time_step_adv,
-                                   comment_sequence);
-      useful::read_first_from_line(input, global_time_step_adv,
-                                   comment_sequence);
+      useful::read_first_from_line(nr_particles, input);
+      useful::read_first_from_line(local_time_step_adv, input);
+      useful::read_first_from_line(global_time_step_adv, input);
       input.close();
     }
 
@@ -570,10 +550,6 @@ struct Transport {
   Transport() = delete;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::string rescale_velocity_option;
     double lengthscale;
@@ -589,15 +565,14 @@ struct Transport {
                Geometry const &geometry) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_transport_" + name + ".dat");
-      useful::read_first_from_line(input, rescale_velocity_option,
-                                   comment_sequence);
-      useful::read_first_from_line(input, lengthscale, comment_sequence);
+      useful::read_first_from_line(rescale_velocity_option, input);
+      useful::read_first_from_line(lengthscale, input);
       if (rescale_velocity_option == "rescale_velocity_to_mean") {
-        useful::read_first_from_line(input, mean_velocity, comment_sequence);
+        useful::read_first_from_line(mean_velocity, input);
         advection_time = lengthscale / mean_velocity;
       } else if (rescale_velocity_option ==
                  "rescale_velocity_to_advection_time") {
-        useful::read_first_from_line(input, advection_time, comment_sequence);
+        useful::read_first_from_line(advection_time, input);
         mean_velocity = lengthscale / advection_time;
       } else if (rescale_velocity_option == "no_rescale_velocity") {
       } else
@@ -756,10 +731,6 @@ struct Reaction {
   using SurfaceReaction = SurfaceReaction_AFluidPlusASolidtoASolid;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     double damkohler;
     std::string initial_distribution;
@@ -773,11 +744,9 @@ struct Reaction {
                TransportParameters const &params_transport) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_reaction_" + name + ".dat");
-      useful::read_first_from_line(input, damkohler, comment_sequence);
-      useful::read_first_from_line(input, initial_distribution,
-                                   comment_sequence);
-      useful::read_first_from_line(input, surface_concentration,
-                                   comment_sequence);
+      useful::read_first_from_line(damkohler, input);
+      useful::read_first_from_line(initial_distribution, input);
+      useful::read_first_from_line(surface_concentration, input);
 
       rate_constant = params_transport.lengthscale * damkohler /
                       (surface_concentration * params_transport.diffusion_time);
@@ -1245,10 +1214,6 @@ struct Transport {
   Transport() = delete;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::string peclet_option;
     std::string lengthscale_option;
@@ -1269,8 +1234,8 @@ struct Transport {
                Geometry const &geometry) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_transport_" + name + ".dat");
-      useful::read_first_from_line(input, peclet_option, comment_sequence);
-      useful::read_first_from_line(input, lengthscale_option, comment_sequence);
+      useful::read_first_from_line(peclet_option, input);
+      useful::read_first_from_line(lengthscale_option, input);
       double radius = geometry.radius;
       cell_side = 4. / std::sqrt(3.) * radius;
       if (lengthscale_option == "radius")
@@ -1280,36 +1245,36 @@ struct Transport {
       else if (lengthscale_option == "cell_side")
         lengthscale = cell_side;
       else if (lengthscale_option == "custom")
-        useful::read_first_from_line(input, lengthscale, comment_sequence);
+        useful::read_first_from_line(lengthscale, input);
       else
         throw std::runtime_error{"Lengthscale definition option " +
                                  lengthscale_option + " not supported"};
       if (peclet_option == "rescale_velocity_to_peclet") {
-        useful::read_first_from_line(input, peclet, comment_sequence);
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(peclet, input);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
         advection_time = 2. * diffusion_time / peclet;
         mean_velocity = lengthscale / advection_time;
       } else if (peclet_option == "rescale_velocity_to_mean") {
-        useful::read_first_from_line(input, mean_velocity, comment_sequence);
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(mean_velocity, input);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
         peclet = lengthscale * mean_velocity / diff_coeff;
         advection_time = lengthscale / mean_velocity;
       } else if (peclet_option == "rescale_velocity_to_advection_time") {
-        useful::read_first_from_line(input, advection_time, comment_sequence);
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(advection_time, input);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
         peclet = 2. * diffusion_time / advection_time;
         mean_velocity = lengthscale / advection_time;
       } else if (peclet_option == "compute_from_diff_coeff") {
-        useful::read_first_from_line(input, diff_coeff, comment_sequence);
+        useful::read_first_from_line(diff_coeff, input);
         diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       } else if (peclet_option == "compute_from_diff_time") {
-        useful::read_first_from_line(input, diffusion_time, comment_sequence);
+        useful::read_first_from_line(diffusion_time, input);
         diff_coeff = lengthscale * lengthscale / (2. * diffusion_time);
       } else if (peclet_option == "set_diff_coeff") {
-        useful::read_first_from_line(input, peclet, comment_sequence);
+        useful::read_first_from_line(peclet, input);
       } else
         throw std::runtime_error{"Peclet number setting option " +
                                  peclet_option + " not supported"};
@@ -1495,10 +1460,6 @@ struct Transport {
   Transport() = delete;
 
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::string rescale_velocity_option;
     std::string lengthscale_option;
@@ -1519,9 +1480,8 @@ struct Transport {
                Geometry const &geometry) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_transport_" + name + ".dat");
-      useful::read_first_from_line(input, rescale_velocity_option,
-                                   comment_sequence);
-      useful::read_first_from_line(input, lengthscale_option, comment_sequence);
+      useful::read_first_from_line(rescale_velocity_option, input);
+      useful::read_first_from_line(lengthscale_option, input);
       double radius = geometry.radius;
       cell_side = 4. / std::sqrt(3.) * radius;
       if (lengthscale_option == "radius")
@@ -1531,16 +1491,16 @@ struct Transport {
       else if (lengthscale_option == "cell_side")
         lengthscale = cell_side;
       else if (lengthscale_option == "custom")
-        useful::read_first_from_line(input, lengthscale, comment_sequence);
+        useful::read_first_from_line(lengthscale, input);
       else
         throw std::runtime_error{"Lengthscale definition " +
                                  lengthscale_option + " not supported"};
       if (rescale_velocity_option == "rescale_velocity_to_mean") {
-        useful::read_first_from_line(input, mean_velocity, comment_sequence);
+        useful::read_first_from_line(mean_velocity, input);
         advection_time = lengthscale / mean_velocity;
       } else if (rescale_velocity_option ==
                  "rescale_velocity_to_advection_time") {
-        useful::read_first_from_line(input, advection_time, comment_sequence);
+        useful::read_first_from_line(advection_time, input);
         mean_velocity = lengthscale / advection_time;
       } else if (rescale_velocity_option == "no_rescale_velocity") {
       } else

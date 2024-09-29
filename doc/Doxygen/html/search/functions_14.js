@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['_7ecriterion_1850',['~Criterion',['../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6',1,'ptof::Criterion']]],
-  ['_7emeasurer_1851',['~Measurer',['../db/d74/structptof_1_1_measurer.html#a86d9a13f44b5db08feaa057c4f10a5cb',1,'ptof::Measurer']]],
-  ['_7emeasurertime_1852',['~MeasurerTime',['../dc/d05/structptof_1_1_measurer_time.html#ab050e63a490167cb4819fb7a326efb70',1,'ptof::MeasurerTime']]],
-  ['_7enextmeasuretime_1853',['~NextMeasureTime',['../de/da7/structptof_1_1_output___cases_1_1_next_measure_time.html#aaf1ff2f0785409916ca2adebf04f3040',1,'ptof::Output_Cases::NextMeasureTime']]]
+  ['_7ecriterion_1988',['~Criterion',['../d9/d13/structptof_1_1_criterion.html#aac3b80658fb839725be3209311bf7fa6',1,'ptof::Criterion']]],
+  ['_7emeasurement_1989',['~Measurement',['../df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html#a4928d921b87c2802aad18610b642af2f',1,'ptof::OutputParameters_Cases::Measurement']]],
+  ['_7emeasurer_1990',['~Measurer',['../db/d74/structptof_1_1_measurer.html#a2e4a1423774573f762fab4a4249762f3',1,'ptof::Measurer']]],
+  ['_7emeasurertime_1991',['~MeasurerTime',['../dc/d05/structptof_1_1_measurer_time.html#a3ce00e8da7ba98397cdb52d7714dd6f3',1,'ptof::MeasurerTime']]],
+  ['_7enextmeasurementtime_1992',['~NextMeasurementTime',['../d7/df2/struct_next_measurement_time.html#a5e156a2f77a4fe14d5f66124972fafad',1,'NextMeasurementTime']]]
 ];

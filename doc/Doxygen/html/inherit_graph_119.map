@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$db/db4/class_output.html" title="Polymorphic output handler for outputting some quantity." alt="" coords="5,5,72,32"/>
+<area shape="rect" id="node1" href="$d7/df2/struct_next_measurement_time.html" title="Polymorphic object to handle setting up the next measurement time." alt="" coords="5,71,164,112"/>
+<area shape="rect" id="node2" href="$da/d8b/struct_next_measurement_time__linear.html" title="NextMeasurementTime object for linearly&#45;spaced times." alt="" coords="212,5,371,47"/>
+<area shape="rect" id="node3" href="$da/d3d/struct_next_measurement_time__log.html" title=" " alt="" coords="212,71,371,112"/>
+<area shape="rect" id="node4" href="$de/d69/struct_next_measurement_time__step.html" title="NextMeasurementTime object for constant time step." alt="" coords="212,136,371,177"/>
 </map>

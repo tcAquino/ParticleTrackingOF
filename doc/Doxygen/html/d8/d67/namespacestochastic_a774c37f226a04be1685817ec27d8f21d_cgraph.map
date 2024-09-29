@@ -1,0 +1,4 @@
+<map id="stochastic::randSubset" name="stochastic::randSubset">
+<area shape="rect" id="node1" title="Generate a random non&#45;repeating sequence of subset.size() elements out of {0, 1, ...." alt="" coords="5,5,161,32"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="209,5,344,32"/>
+</map>

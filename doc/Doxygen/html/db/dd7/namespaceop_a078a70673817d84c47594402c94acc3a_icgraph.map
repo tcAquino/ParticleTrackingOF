@@ -1,41 +1,49 @@
 <map id="op::abs_sq" name="op::abs_sq">
-<area shape="rect" id="node1" title="Euclidean norm squared." alt="" coords="1687,496,1777,523"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="1483,311,1552,337"/>
-<area shape="rect" id="node25" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="1105,638,1348,679"/>
-<area shape="rect" id="node31" href="$db/dd7/namespaceop.html#ac0b1f4a3bf634a96a232393d8c023c60" title="Euclidean distance squared." alt="" coords="1471,412,1563,439"/>
-<area shape="rect" id="node32" href="$d0/da4/structgeom_1_1_sphere.html#aa06226ea58bea99b59c033ba20907f23" title=" " alt="" coords="1438,463,1597,489"/>
-<area shape="rect" id="node33" href="$df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a492b845009e383f8e0d898195a33ad97" title="Enforce boundary condition." alt="" coords="1432,513,1603,569"/>
-<area shape="rect" id="node34" href="$d2/d87/structctrw_1_1_get__dist__sq.html#a2afe21e0a57821ac022419ca1445cde9" title=" " alt="" coords="1447,594,1588,635"/>
-<area shape="rect" id="node35" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#ac2e82ca1f3b9df5225c837eac0ab1383" title="Check if position is out of bounds." alt="" coords="1396,659,1639,701"/>
-<area shape="rect" id="node36" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1431,725,1603,766"/>
-<area shape="rect" id="node38" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1423,790,1612,831"/>
-<area shape="rect" id="node3" href="$d2/dfa/namespacegeom.html#aec978d1ca7e9f03c5b023c25a452f6fd" title=" " alt="" coords="1129,5,1325,32"/>
-<area shape="rect" id="node4" href="$d2/dfa/namespacegeom.html#a4e988079c698894dd34fc55d5ecfa376" title="Covert cartesian (x, y) to polar (r, theta)." alt="" coords="1143,56,1311,83"/>
-<area shape="rect" id="node5" href="$d2/dfa/namespacegeom.html#ac71cbec5ade0c6a11b02e1065b9a69f9" title="Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation))." alt="" coords="1129,107,1324,133"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a64a4fdf8fb8647521e524ef0daedb6e7" title="If to_chop is smaller than tolerance, replace it with replace_with." alt="" coords="1176,157,1277,184"/>
-<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="1191,208,1262,235"/>
-<area shape="rect" id="node23" href="$dd/df2/structgeom_1_1_parallelepiped.html#a7aab7c01df20908fc4a61169015c0830" title=" " alt="" coords="1147,259,1306,301"/>
-<area shape="rect" id="node24" href="$de/de9/classctrw_1_1_transitions___position___velocity_step.html#a96797d2706b1fc69830e2e27ae73f1bd" title=" " alt="" coords="1133,325,1320,366"/>
-<area shape="rect" id="node26" href="$d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a566198533660764b49db4151cfdec48c" title=" " alt="" coords="1129,390,1324,431"/>
-<area shape="rect" id="node27" href="$d5/d10/structctrw_1_1_get__time__interp__velocity.html#a7aaf3118cc6f4d91cce1ae3b7f1d550d" title=" " alt="" coords="1145,455,1308,497"/>
-<area shape="rect" id="node28" href="$d1/d4f/structctrw_1_1_get__time__interp.html#ac327ff02f1490a1b6abc3234c636b1f8" title=" " alt="" coords="1145,521,1308,562"/>
-<area shape="rect" id="node29" href="$d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64" title=" " alt="" coords="1175,587,1279,613"/>
-<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a1483c85806e3e7a0f6210b180e7e1336" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="902,41,1041,82"/>
-<area shape="rect" id="node14" href="$d2/dd1/namespaceptof.html#a239bfd23fb207dcefa7bfe3a6763b158" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="902,106,1041,147"/>
-<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a6ba8c99a32d8de8eddbdfdb440f04515" title=" " alt="" coords="885,171,1057,213"/>
-<area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="900,237,1043,264"/>
-<area shape="rect" id="node19" href="$d2/dd1/namespaceptof.html#adb9649d8f54f80a8941b39210b9d963d" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="897,288,1045,315"/>
-<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#ab900f3e1b8be86ec43dec148b24bb40e" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="900,339,1043,381"/>
-<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a90e9b957bb1654a8d03cff06c83b8d19" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="686,19,825,45"/>
-<area shape="rect" id="node10" href="$db/dfb/classptof_1_1_initial_condition___cases.html#acde3c58c20a25e1957e6913e548ee5d0" title="Make given number of particles." alt="" coords="451,179,625,221"/>
-<area shape="rect" id="node11" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="224,146,403,187"/>
-<area shape="rect" id="node13" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="236,211,391,253"/>
-<area shape="rect" id="node12" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,146,176,187"/>
-<area shape="rect" id="node15" href="$d2/dd1/namespaceptof.html#a86238d69aed525b5f6d8c540204c6716" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="686,121,825,162"/>
-<area shape="rect" id="node18" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="702,237,809,264"/>
-<area shape="rect" id="node20" href="$d2/dd1/namespaceptof.html#ae46fe34418d665c7f917968705ded6fc" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="673,288,837,315"/>
-<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a3c91c7ab1672330c2bda4789323a9050" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="681,339,829,381"/>
-<area shape="rect" id="node30" href="$d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48" title=" " alt="" coords="919,587,1023,613"/>
-<area shape="rect" id="node37" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1141,725,1313,766"/>
-<area shape="rect" id="node39" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1132,790,1321,831"/>
+<area shape="rect" id="node1" title="Euclidean norm squared." alt="" coords="1580,779,1667,805"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="1389,564,1455,591"/>
+<area shape="rect" id="node25" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title=" " alt="" coords="1077,5,1231,32"/>
+<area shape="rect" id="node33" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="1044,975,1264,1017"/>
+<area shape="rect" id="node39" href="$db/dd7/namespaceop.html#ac0b1f4a3bf634a96a232393d8c023c60" title="Euclidean distance squared." alt="" coords="1379,728,1465,755"/>
+<area shape="rect" id="node40" href="$d0/da4/structgeom_1_1_sphere.html#aa06226ea58bea99b59c033ba20907f23" title=" " alt="" coords="1349,779,1495,805"/>
+<area shape="rect" id="node41" href="$df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a492b845009e383f8e0d898195a33ad97" title="Enforce boundary condition." alt="" coords="1345,829,1499,885"/>
+<area shape="rect" id="node42" href="$d2/d87/structctrw_1_1_get__dist__sq.html#a2afe21e0a57821ac022419ca1445cde9" title=" " alt="" coords="1355,910,1489,951"/>
+<area shape="rect" id="node43" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#ac2e82ca1f3b9df5225c837eac0ab1383" title="Check if position is out of bounds." alt="" coords="1312,975,1532,1017"/>
+<area shape="rect" id="node44" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1343,1041,1501,1082"/>
+<area shape="rect" id="node46" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1336,1106,1508,1147"/>
+<area shape="rect" id="node3" href="$d2/dfa/namespacegeom.html#aec978d1ca7e9f03c5b023c25a452f6fd" title=" " alt="" coords="1067,253,1241,280"/>
+<area shape="rect" id="node4" href="$d2/dfa/namespacegeom.html#a7d13e160911167de96fecbb1ba992be6" title="Covert cartesian (x, y) to polar (r, theta)." alt="" coords="1079,304,1229,331"/>
+<area shape="rect" id="node5" href="$d2/dfa/namespacegeom.html#a9800f4280b2ca36ee933ebc4b696320d" title="Get polar angle thera from cartesian (x, y)." alt="" coords="1079,355,1229,397"/>
+<area shape="rect" id="node6" href="$d2/dfa/namespacegeom.html#ac71cbec5ade0c6a11b02e1065b9a69f9" title="Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation))." alt="" coords="1067,421,1241,448"/>
+<area shape="rect" id="node7" href="$d2/dfa/namespacegeom.html#a8b8764ede93b5c3db756ba083f491c08" title="Get spherical angles (phi (azimuthal), theta (elevation)) from cartesian (x, y, z)." alt="" coords="1067,473,1241,514"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a64a4fdf8fb8647521e524ef0daedb6e7" title="If to_chop is smaller than tolerance, replace it with replace_with." alt="" coords="1107,539,1201,565"/>
+<area shape="rect" id="node9" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="1121,757,1187,784"/>
+<area shape="rect" id="node27" href="$dd/df2/structgeom_1_1_parallelepiped.html#a7aab7c01df20908fc4a61169015c0830" title=" " alt="" coords="1083,691,1225,733"/>
+<area shape="rect" id="node28" href="$db/dd7/namespaceop.html#a7d3205f418cfa9b7da0709a7d9f0db98" title=" " alt="" coords="1104,589,1204,616"/>
+<area shape="rect" id="node29" href="$d6/da5/namespacealgebra.html#aa5dc0e9a4621dad75881e990cbe801ea" title=" " alt="" coords="835,550,994,591"/>
+<area shape="rect" id="node30" href="$db/dd7/namespaceop.html#ad7c4eb6e5ab5e8e762b5eb631c42f89f" title=" " alt="" coords="1080,859,1228,885"/>
+<area shape="rect" id="node32" href="$de/de9/classctrw_1_1_transitions___position___velocity_step.html#a96797d2706b1fc69830e2e27ae73f1bd" title=" " alt="" coords="1067,910,1241,951"/>
+<area shape="rect" id="node34" href="$d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a566198533660764b49db4151cfdec48c" title=" " alt="" coords="1067,57,1241,98"/>
+<area shape="rect" id="node35" href="$d5/d10/structctrw_1_1_get__time__interp__velocity.html#a7aaf3118cc6f4d91cce1ae3b7f1d550d" title=" " alt="" coords="1081,122,1227,163"/>
+<area shape="rect" id="node36" href="$d1/d4f/structctrw_1_1_get__time__interp.html#ac327ff02f1490a1b6abc3234c636b1f8" title=" " alt="" coords="1081,187,1227,229"/>
+<area shape="rect" id="node37" href="$d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64" title=" " alt="" coords="1107,808,1201,835"/>
+<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a1483c85806e3e7a0f6210b180e7e1336" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="852,783,977,825"/>
+<area shape="rect" id="node16" href="$d2/dd1/namespaceptof.html#a239bfd23fb207dcefa7bfe3a6763b158" title="Make particles distributed over given cell faces with probability proportional to local velocity magn..." alt="" coords="852,849,977,890"/>
+<area shape="rect" id="node18" href="$d2/dd1/namespaceptof.html#a6ba8c99a32d8de8eddbdfdb440f04515" title=" " alt="" coords="837,914,992,955"/>
+<area shape="rect" id="node19" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="850,616,979,643"/>
+<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#adb9649d8f54f80a8941b39210b9d963d" title="Make particles distributed randomly uniformly over given mesh cell faces." alt="" coords="847,667,982,693"/>
+<area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#ab900f3e1b8be86ec43dec148b24bb40e" title="Make particles distributed randomly uniformly near given cell face centers." alt="" coords="851,718,978,759"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a90e9b957bb1654a8d03cff06c83b8d19" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="649,835,774,861"/>
+<area shape="rect" id="node12" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a7fd67d3e7c0fa728c44f8e6bc2c566fe" title="Make given number of particles." alt="" coords="427,718,589,759"/>
+<area shape="rect" id="node13" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="212,685,379,726"/>
+<area shape="rect" id="node15" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="226,750,365,791"/>
+<area shape="rect" id="node14" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,685,164,726"/>
+<area shape="rect" id="node17" href="$d2/dd1/namespaceptof.html#a86238d69aed525b5f6d8c540204c6716" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="649,886,774,927"/>
+<area shape="rect" id="node20" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="664,565,759,592"/>
+<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#ae46fe34418d665c7f917968705ded6fc" title="Make particles distributed randomly uniformly over cell faces in given patches." alt="" coords="637,667,785,693"/>
+<area shape="rect" id="node24" href="$d2/dd1/namespaceptof.html#a3c91c7ab1672330c2bda4789323a9050" title="Make particles distributed randomly uniformly near cell faces in given patches." alt="" coords="644,718,779,759"/>
+<area shape="rect" id="node26" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title=" " alt="" coords="837,236,992,263"/>
+<area shape="rect" id="node31" href="$d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#a69748c8dbc47a9e1b54c6d43c8b95848" title=" " alt="" coords="833,1031,996,1087"/>
+<area shape="rect" id="node38" href="$d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48" title=" " alt="" coords="867,980,962,1007"/>
+<area shape="rect" id="node45" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1075,1041,1233,1082"/>
+<area shape="rect" id="node47" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="1068,1106,1240,1147"/>
 </map>

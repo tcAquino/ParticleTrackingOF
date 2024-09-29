@@ -10,7 +10,7 @@ var classptof_1_1_boundary___cases =
     [ "patch_name", "d4/d49/classptof_1_1_boundary___cases.html#a634079c44ca165645ca5eb155aa9c2c1", null ],
     [ "patch_names", "d4/d49/classptof_1_1_boundary___cases.html#a024b0a2768c3f80a337d669432beaa17", null ],
     [ "reflection_normal", "d4/d49/classptof_1_1_boundary___cases.html#a867090f3023efbe2f6a54efdb0cb5ff0", null ],
-    [ "_boundary_condition_types", "d4/d49/classptof_1_1_boundary___cases.html#a803f580567d46e43e0d0f3a2a5ba66a5", null ],
+    [ "_boundary_condition_types", "d4/d49/classptof_1_1_boundary___cases.html#a8e7d29a9e5b35de3bf6c193ce0116ade", null ],
     [ "_boundary_conditions", "d4/d49/classptof_1_1_boundary___cases.html#a1744fc89cf2c7dde85f558949775a478", null ],
     [ "_boundary_custom", "d4/d49/classptof_1_1_boundary___cases.html#a916eff3bb314c496035328c612330f6b", null ],
     [ "_boundary_periodic", "d4/d49/classptof_1_1_boundary___cases.html#a20e33749c980767640b0fc4f8a710878", null ],

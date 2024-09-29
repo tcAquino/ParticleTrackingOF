@@ -30,10 +30,6 @@ struct Phase {
   /** \struct Phase::Parameters PTOF/Phase.h "PTOF/Phase.h"
    \brief Parameters for phase-related quantities. */
   struct Parameters {
-  private:
-    std::string comment_sequence =
-        "#"; /**< Sequence of characters marking comment for file parsing. */
-
   public:
     std::string
         phase_name; /**< Name of phase saturation field to be read from file. */
@@ -55,9 +51,8 @@ struct Phase {
                Geometry const &geometry) {
       auto input = useful::open_read(directories.dir_parameters +
                                      "/parameters_phase_" + name + ".dat");
-      useful::read_first_from_line(input, phase_name, comment_sequence);
-      auto phase_transport =
-          useful::read_first_from_line<std::string>(input, comment_sequence);
+      useful::read_first_from_line(phase_name, input);
+      auto phase_transport = useful::read_first_from_line<std::string>(input);
       if (phase_transport == "excluded") {
         excluded_phase = true;
       } else if (phase_transport == "carrier") {
@@ -65,8 +60,7 @@ struct Phase {
       } else
         throw std::invalid_argument{std::string("Unknown option ") +
                                     phase_transport + " for phase type"};
-      auto compute =
-          useful::read_first_from_line<std::string>(input, comment_sequence);
+      auto compute = useful::read_first_from_line<std::string>(input);
       if (compute == "compute") {
         compute_gradient = true;
       } else if (compute == "read") {
@@ -75,10 +69,9 @@ struct Phase {
         throw std::invalid_argument{
             std::string("Unknown option ") + compute +
             " for whether to compute or read excluded phase gradient"};
-      auto leakage_tolerance =
-          useful::read_first_from_line<double>(input, comment_sequence);
+      auto leakage_tolerance = useful::read_first_from_line<double>(input);
       leakage_coefficient = std::log(leakage_tolerance);
-      useful::read_first_from_line(input, phase_threshold, comment_sequence);
+      useful::read_first_from_line(phase_threshold, input);
       input.close();
     }
 

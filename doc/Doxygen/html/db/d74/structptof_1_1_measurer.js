@@ -1,7 +1,10 @@
 var structptof_1_1_measurer =
 [
-    [ "~Measurer", "db/d74/structptof_1_1_measurer.html#a86d9a13f44b5db08feaa057c4f10a5cb", null ],
+    [ "~Measurer", "db/d74/structptof_1_1_measurer.html#a2e4a1423774573f762fab4a4249762f3", null ],
     [ "Measurer", "db/d74/structptof_1_1_measurer.html#aea5c09c7e20e6f79400fb7c0104a3ecb", null ],
+    [ "Measurer", "db/d74/structptof_1_1_measurer.html#a12a8d5cc75bd1565334dbe554edc9396", null ],
+    [ "Measurer", "db/d74/structptof_1_1_measurer.html#a4167600e4626d31ddf132a547f93a493", null ],
+    [ "Measurer", "db/d74/structptof_1_1_measurer.html#ae5121e48a6ab03e6de3f99dd38170097", null ],
     [ "open_write", "db/d74/structptof_1_1_measurer.html#a818dc8c835d45c1b4156e054421ec2d4", null ],
     [ "print", "db/d74/structptof_1_1_measurer.html#a1687d7d304000d51e8c234ca4a9ecaf8", null ],
     [ "_geometry", "db/d74/structptof_1_1_measurer.html#ae3840c1b3cab5171fe2160ebcd00f711", null ],

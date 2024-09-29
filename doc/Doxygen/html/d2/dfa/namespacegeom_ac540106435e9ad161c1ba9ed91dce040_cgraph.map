@@ -1,5 +1,5 @@
 <map id="geom::project" name="geom::project">
-<area shape="rect" id="node1" title="Compute projection along basis vectors of symmetry planes." alt="" coords="5,5,117,32"/>
-<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a9fc90c273278edfed568324ce59bf15a" title="Compute projection along basis vectors of symmetry planes." alt="" coords="165,5,277,32"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="325,5,412,32"/>
+<area shape="rect" id="node1" title="Compute projection along basis vectors of symmetry planes." alt="" coords="5,5,107,32"/>
+<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a9fc90c273278edfed568324ce59bf15a" title="Compute projection along basis vectors of symmetry planes." alt="" coords="155,5,256,32"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a225d490a0ea3fa49263755d3735ad326" title="Element&#45;wise subtraction." alt="" coords="304,5,383,32"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['empty_2184',['empty',['../d2/d5e/structptof_1_1_boundary_condition.html#afddfe7134bccac2e81c325dc150ef66faa2e4822a98337283e39f7b60acf85ec9',1,'ptof::BoundaryCondition']]]
+  ['empty_2351',['empty',['../d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978aa2e4822a98337283e39f7b60acf85ec9',1,'ptof::BoundaryConditionList']]]
 ];

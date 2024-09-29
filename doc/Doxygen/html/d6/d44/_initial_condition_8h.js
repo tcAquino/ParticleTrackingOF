@@ -1,9 +1,5 @@
 var _initial_condition_8h =
 [
-    [ "InitialConditions", "d5/d77/structptof_1_1_initial_conditions.html", "d5/d77/structptof_1_1_initial_conditions" ],
-    [ "InitialConditionParameters_Cases", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html", "dd/d20/structptof_1_1_initial_condition_parameters___cases" ],
-    [ "InitialCondition_Cases", "db/dfb/classptof_1_1_initial_condition___cases.html", "db/dfb/classptof_1_1_initial_condition___cases" ],
-    [ "PositionMaker", "dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html", "dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker" ],
     [ "apply_mask", "d6/d44/_initial_condition_8h.html#a144ea961ac35c92d159391d22955c059", null ],
     [ "apply_mask_in_place", "d6/d44/_initial_condition_8h.html#a42b0ae8508d0fe2d62c5311583c263e2", null ],
     [ "continuous_injection", "d6/d44/_initial_condition_8h.html#a423f1c66f72fe07e0545aba4ecee8c56", null ],
@@ -13,7 +9,6 @@ var _initial_condition_8h =
     [ "fluxweighted_faces", "d6/d44/_initial_condition_8h.html#a239bfd23fb207dcefa7bfe3a6763b158", null ],
     [ "fluxweighted_patches", "d6/d44/_initial_condition_8h.html#a86238d69aed525b5f6d8c540204c6716", null ],
     [ "fluxweighted_patches", "d6/d44/_initial_condition_8h.html#ad8750bde84a1829ea2c35cf848d4e678", null ],
-    [ "InitialCondition_Cases", "d6/d44/_initial_condition_8h.html#a72d340d91d88076525ba8c2a85f9e797", null ],
     [ "prescribed_positions", "d6/d44/_initial_condition_8h.html#aedc246759e2a830f7ce2c15a17868c8e", null ],
     [ "prescribed_positions", "d6/d44/_initial_condition_8h.html#a719227c35ec65723a7f6346fb5a70d37", null ],
     [ "prescribed_positions", "d6/d44/_initial_condition_8h.html#a2b6630f5105806cb58dc65eaff9978e9", null ],
@@ -31,6 +26,5 @@ var _initial_condition_8h =
     [ "uniform_near_boundary_patches", "d6/d44/_initial_condition_8h.html#a3c91c7ab1672330c2bda4789323a9050", null ],
     [ "uniform_near_boundary_patches", "d6/d44/_initial_condition_8h.html#a2b7942e06d28beedaf6877994c7bf9f6", null ],
     [ "uniform_patches", "d6/d44/_initial_condition_8h.html#ae46fe34418d665c7f917968705ded6fc", null ],
-    [ "uniform_patches", "d6/d44/_initial_condition_8h.html#ace97194c7af839c1587a7f048af022a7", null ],
-    [ "verify_initial_condition", "d6/d44/_initial_condition_8h.html#ae7541bf164251ec2ae5dc20352c812f0", null ]
+    [ "uniform_patches", "d6/d44/_initial_condition_8h.html#ace97194c7af839c1587a7f048af022a7", null ]
 ];

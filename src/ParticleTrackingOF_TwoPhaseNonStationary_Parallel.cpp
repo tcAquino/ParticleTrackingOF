@@ -75,7 +75,7 @@ struct ExecutableInfo {
 };
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_diffusion_2d_parallel;
+  using namespace ptof::model_advection_diffusion_surface_decay_2d_parallel;
   using Phase = ptof::Phase;
 
   ExecutableInfo::banner(std::cout);
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
     return 0;
   if (argc != ExecutableInfo::nr_parameters + 1)
     throw useful::bad_parameters_help();
-  
+
   std::size_t arg = 1;
   std::string dir = argv[arg++];
   std::string case_name = argv[arg++];
@@ -266,8 +266,8 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   CTRW ctrw{initial_condition(), CTRW::Tag{}};
   auto transitions = makeTransitions<Transport, Solvers>(
-      velocity_field, geometry, boundary, params_transport, params_reaction,
-      params_solvers, bulk_reaction);
+      velocity_field, geometry, boundary, params_transport,
+      params_reaction, params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -365,17 +365,18 @@ int main(int argc, char *argv[]) {
         std::cout << "Done!\n";
       }
     }
-    while (output.next_measure_time() <= current_time) {
+    while (output.next_measurement_time() <= current_time) {
       std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, params_output, output.next_measure_time());
+      ptof::info_time(std::cout, params_output, output.next_measurement_time());
       ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                       output.next_measure_time());
-      output(output.next_measure_time());
+                                       output.next_measurement_time());
+      output(output.next_measurement_time());
       std::cout << "Done!\n";
     }
-    current_time = next_flow_time > current_time
-                       ? std::min(output.next_measure_time(), next_flow_time)
-                       : output.next_measure_time();
+    current_time =
+        next_flow_time > current_time
+            ? std::min(output.next_measurement_time(), next_flow_time)
+            : output.next_measurement_time();
     ctrw.evolve(
         [current_time](CTRW::Particle const &part) {
           return part.state_new().time < current_time &&
@@ -383,12 +384,12 @@ int main(int argc, char *argv[]) {
         },
         transitions);
   }
-  if (output.next_measure_time() <= current_time) {
+  if (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, params_output, output.next_measure_time());
+    ptof::info_time(std::cout, params_output, output.next_measurement_time());
     ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                     output.next_measure_time());
-    output(output.next_measure_time());
+                                     output.next_measurement_time());
+    output(output.next_measurement_time());
     std::cout << "Done!\n";
   }
   output();

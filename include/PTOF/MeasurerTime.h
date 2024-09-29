@@ -29,12 +29,12 @@
 #include <volFieldsFwd.H>
 
 namespace ptof {
-/** \class MeasurerTime PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  \brief Polymorphic output handler for outputting time and some quantity.
  \note To be used only through derived classes. */
 template <typename Subject, typename Geometry> struct MeasurerTime {
   /** Destructor. */
-  virtual ~MeasurerTime() { _output.close(); }
+  virtual ~MeasurerTime() = default;
 
   /** \brief Make measurement and output or store, given current time \c time.
    */
@@ -63,6 +63,15 @@ protected:
     _output << std::setprecision(precision) << std::scientific;
   }
 
+  MeasurerTime(Subject &&, Geometry const &, Directories const &,
+               std::string const &_name, std::string const &, int = 8) = delete;
+
+  MeasurerTime(Subject const &, Geometry &&, Directories const &,
+               std::string const &_name, std::string const &, int = 8) = delete;
+
+  MeasurerTime(Subject &&, Geometry &&, Directories const &,
+               std::string const &_name, std::string const &, int = 8) = delete;
+
   Subject const &_subject;   /**< CTRW object to measure. */
   Geometry const &_geometry; /**< Domain geometry info and utilities. */
   typename Geometry::Locator const
@@ -83,7 +92,7 @@ protected:
   }
 };
 
-/** \class MeasurerTime_position PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief Output time, tags, positions, and masses. */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
@@ -127,7 +136,7 @@ private:
   std::array<int, 4> _column_widths;
 };
 
-/** \class MeasurerTime_position_in_regions PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_in_regions PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time, tags, positions, and masses within regions specified by
  * masks. */
 template <typename Subject, typename Geometry, typename Mask>
@@ -193,7 +202,7 @@ private:
   std::array<int, 5> _column_widths;
 };
 
-/** \class MeasurerTime_position_mean PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and mean position (weighted by mass). */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
@@ -225,7 +234,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_second_moment PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_second_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and second moment of position (weighted by mass). */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_second_moment final
@@ -263,7 +272,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_nth_moment PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_nth_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and nth moment of position (weighted by mass). */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_nth_moment final
@@ -308,7 +317,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_moment PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and moment of position with specified exponents for each
  * coordinate (weighted by mass). */
 template <typename Subject, typename Geometry>
@@ -358,7 +367,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_variance PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_variance PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and position variance (weighted by mass). */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
@@ -394,7 +403,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_mass PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and total mass. */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_mass final : MeasurerTime<Subject, Geometry> {
@@ -422,7 +431,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass_in_regions PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_mass_in_regions PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and total mass in regions specified by maks. */
 template <typename Subject, typename Geometry, typename Mask>
 struct MeasurerTime_mass_in_regions final : MeasurerTime<Subject, Geometry> {
@@ -464,7 +473,7 @@ private:
 };
 
 /**
-\class MeasurerTime_scalar_field PTOF/Output.h "PTOF/Output.h"
+\class MeasurerTime_scalar_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
 \brief Output time, tags, and scalar field values.
 */
 template <typename Subject, typename Geometry,
@@ -575,7 +584,7 @@ MeasurerTime_scalar_field(Subject const &, Geometry const &,
                                            typename Geometry::Locator const &,
                                            CheckOptions::Check>>;
 
-/** \class MeasurerTime_vector_field PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_vector_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time, tags, and vector field values. */
 template <typename Subject, typename Geometry,
           typename Field = VectorField_LinearInterpolation_OF<
@@ -688,7 +697,7 @@ MeasurerTime_vector_field(Subject const &, Geometry const &,
                                            typename Geometry::Locator const &,
                                            CheckOptions::Check>>;
 
-/** \class MeasurerTime_tensor_field PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_tensor_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time, tag, and tensor field values. */
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
@@ -798,7 +807,7 @@ MeasurerTime_tensor_field(Subject const &, Geometry const &,
     -> MeasurerTime_tensor_field<Subject, Geometry, Foam::volTensorField>;
 
 /**
-\class MeasurerTime_scalar_field_mean PTOF/Output.h "PTOF/Output.h"
+\class MeasurerTime_scalar_field_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
 \brief Output time and mean of scalar field over particles.
 */
 template <typename Subject, typename Geometry,
@@ -903,7 +912,7 @@ MeasurerTime_scalar_field_mean(Subject const &, Geometry const &,
                                            typename Geometry::Locator const &,
                                            CheckOptions::Check>>;
 
-/** \class MeasurerTime_vector_field_mean PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_vector_field_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and mean of vector field over particles. */
 template <typename Subject, typename Geometry,
           typename Field = VectorField_LinearInterpolation_OF<
@@ -1009,7 +1018,7 @@ MeasurerTime_vector_field_mean(Subject const &, Geometry const &,
                                            typename Geometry::Locator const &,
                                            CheckOptions::Check>>;
 
-/** \class MeasurerTime_tensor_field_mean PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_tensor_field_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and mean of tensor field over particles. */
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
@@ -1112,7 +1121,7 @@ MeasurerTime_tensor_field_mean(Subject const &, Geometry const &,
                                std::string const &)
     -> MeasurerTime_tensor_field_mean<Subject, Geometry, Foam::volTensorField>;
 
-/** \class MeasurerTime_position_periodic PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_periodic PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time, tags, positions, and masses, with positions accounting
  * for periodicity. */
 template <typename Subject, typename Geometry>
@@ -1164,8 +1173,8 @@ private:
   std::array<int, 4> _column_widths;
 };
 
-/** \class MeasurerTime_position_in_regions_periodic PTOF/Output.h
- * "PTOF/Output.h" \brief  Output time, tags, positions, and masses within
+/** \class MeasurerTime_position_in_regions_periodic PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief  Output time, tags, positions, and masses within
  * regions specified by masks. */
 template <typename Subject, typename Geometry, typename Mask>
 struct MeasurerTime_position_in_regions_periodic final
@@ -1237,7 +1246,7 @@ private:
   std::array<int, 5> _column_widths;
 };
 
-/** \class MeasurerTime_position_mean_periodic PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_mean_periodic PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief Output time and mean position (weighted by mass), with positions
  * accounting for periodicity. */
 template <typename Subject, typename Geometry>
@@ -1278,8 +1287,8 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_second_moment_periodic PTOF/Output.h
- * "PTOF/Output.h" \brief  Output time and second moment of position (weighted
+/** \class MeasurerTime_position_second_moment_periodic PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief  Output time and second moment of position (weighted
  * by mass), with position accounting for periodicity. */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_second_moment_periodic final
@@ -1325,8 +1334,8 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_nth_moment_periodic PTOF/Output.h
- * "PTOF/Output.h" \brief  Output time and nth moment of position (weighted
+/** \class MeasurerTime_position_nth_moment_periodic PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief  Output time and nth moment of position (weighted
  * by mass), with position accounting for periodicity. */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_nth_moment_periodic final
@@ -1377,8 +1386,8 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_moment_periodic PTOF/Output.h
- * "PTOF/Output.h" \brief  Output time and moment of position with specified
+/** \class MeasurerTime_position_moment_periodic PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief  Output time and moment of position with specified
  * exponents for each coordinate (weighted by mass), with position accounting
  * for periodicity. */
 template <typename Subject, typename Geometry>
@@ -1433,7 +1442,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_variance_periodic PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_position_variance_periodic PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and position variance (weighted by mass), with position
  * accounting for periodicity. */
 template <typename Subject, typename Geometry>
@@ -1478,7 +1487,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_first_crossing_time PTOF/Output.h "PTOF/Output.h"
+/** \class MeasurerTime_first_crossing_time PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output first crossing times, tags, and masses. */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_first_crossing_time final

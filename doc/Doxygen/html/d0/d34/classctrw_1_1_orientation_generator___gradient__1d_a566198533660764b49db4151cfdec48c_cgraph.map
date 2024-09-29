@@ -1,7 +1,7 @@
 <map id="ctrw::OrientationGenerator_Gradient_1d::operator()" name="ctrw::OrientationGenerator_Gradient_1d::operator()">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,200,47"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="248,13,317,39"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="365,13,456,39"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="375,63,446,90"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="504,63,575,90"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,180,47"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="228,13,293,39"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="341,13,428,39"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="351,63,418,90"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a2b31f2c11ab895bd6137eca382720c0d" title="Element&#45;wise square root." alt="" coords="476,63,543,90"/>
 </map>

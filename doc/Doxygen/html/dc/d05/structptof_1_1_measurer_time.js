@@ -1,7 +1,10 @@
 var structptof_1_1_measurer_time =
 [
-    [ "~MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html#ab050e63a490167cb4819fb7a326efb70", null ],
+    [ "~MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html#a3ce00e8da7ba98397cdb52d7714dd6f3", null ],
     [ "MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html#a649f495497af40c306b91ed0e5289101", null ],
+    [ "MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html#a9196c00f812225a0b479ccc5a4af58b2", null ],
+    [ "MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html#a9d9c824f3152fe63ff92eb45ded32d5f", null ],
+    [ "MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html#a3bbdba08e73e510b19ca8e2036775679", null ],
     [ "open_write", "dc/d05/structptof_1_1_measurer_time.html#abc72cf9a84deffff2ecc4b95bd22787c", null ],
     [ "operator()", "dc/d05/structptof_1_1_measurer_time.html#aed5934ed59db8d23144ece975afdceff", null ],
     [ "print", "dc/d05/structptof_1_1_measurer_time.html#abb7099e11aa1b8bb712ae9a8b835871d", null ],

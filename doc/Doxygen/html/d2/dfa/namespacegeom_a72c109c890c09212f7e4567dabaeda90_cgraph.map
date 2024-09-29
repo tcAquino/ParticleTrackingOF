@@ -1,6 +1,6 @@
 <map id="geom::translate_back" name="geom::translate_back">
-<area shape="rect" id="node1" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="5,31,168,57"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a3ac65501117efd0085c21fb0c33abf57" title="Element&#45;wise subtraction." alt="" coords="216,5,356,32"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6" title="Element&#45;wise multiplication by scalar." alt="" coords="221,56,351,83"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="404,5,491,32"/>
+<area shape="rect" id="node1" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="5,31,152,57"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#aaf965d00da3f150372dcbf9e7cb37d21" title="Element&#45;wise subtraction." alt="" coords="200,5,327,32"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#aafe7f4a8472a74a5fdb2beb978d64df9" title="Element&#45;wise multiplication by scalar." alt="" coords="204,56,323,83"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a225d490a0ea3fa49263755d3735ad326" title="Element&#45;wise subtraction." alt="" coords="375,5,453,32"/>
 </map>

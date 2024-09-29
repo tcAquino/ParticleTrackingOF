@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['useful_1347',['useful',['../df/d1d/namespaceuseful.html',1,'']]]
+  ['range_1442',['range',['../d6/d48/namespacerange.html',1,'']]]
 ];

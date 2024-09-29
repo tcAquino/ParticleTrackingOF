@@ -1,26 +1,26 @@
 <map id="useful::open_read_error" name="useful::open_read_error">
-<area shape="rect" id="node1" title=" " alt="" coords="727,617,903,643"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="540,591,679,618"/>
-<area shape="rect" id="node24" href="$df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01" title="Read contents of file as a sequence of doubles." alt="" coords="560,642,659,669"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="273,5,417,47"/>
-<area shape="rect" id="node5" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="197,71,492,112"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd" title="Load file into vector of vectors of doubles." alt="" coords="295,137,394,163"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a98cb712af3c27b2f8650b4c78d181e3c" title="Load 1&#45;column file into vector of doubles." alt="" coords="288,187,401,214"/>
-<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a0363b363a89bc9844a8a29f1908ae11e" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="288,238,401,265"/>
-<area shape="rect" id="node9" href="$df/d1d/namespaceuseful.html#a78d057731be2e6d3e8ea19bd807e11f0" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="272,289,417,315"/>
-<area shape="rect" id="node10" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="273,340,417,381"/>
-<area shape="rect" id="node11" href="$df/d1d/namespaceuseful.html#ae315554e3d53371c53eaffe0102a5ae9" title="Get number of numbers in first line of file." alt="" coords="271,405,418,447"/>
-<area shape="rect" id="node12" href="$da/dac/structptof_1_1_output_parameters.html#a5fbbe7fd814d6ce687a4beeaa5bd1f5a" title=" " alt="" coords="258,471,431,512"/>
-<area shape="rect" id="node13" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aca26a897eefb30acfe73c3197b36fb1c" title=" " alt="" coords="251,537,438,593"/>
-<area shape="rect" id="node14" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be" title=" " alt="" coords="247,617,442,673"/>
-<area shape="rect" id="node15" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187" title=" " alt="" coords="233,697,457,753"/>
-<area shape="rect" id="node16" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#acf64472def0b1b10dcb50a21bc49f0fc" title=" " alt="" coords="249,777,441,833"/>
-<area shape="rect" id="node17" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title=" " alt="" coords="257,857,433,899"/>
-<area shape="rect" id="node18" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66" title=" " alt="" coords="249,923,441,993"/>
-<area shape="rect" id="node19" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79" title=" " alt="" coords="251,1018,438,1074"/>
-<area shape="rect" id="node20" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc" title=" " alt="" coords="253,1098,436,1154"/>
-<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#a719227c35ec65723a7f6346fb5a70d37" title=" " alt="" coords="250,1178,439,1205"/>
-<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#ab791119939e6b60f3c753359f53a6d05" title=" " alt="" coords="250,1229,439,1271"/>
-<area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#a6bec304311d1483f6997642021035499" title=" " alt="" coords="250,1295,439,1336"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="679,617,837,643"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="505,591,631,618"/>
+<area shape="rect" id="node24" href="$df/d1d/namespaceuseful.html#a1b871e37b166f17966b037893789fc01" title="Read contents of file as a sequence of doubles." alt="" coords="523,642,613,669"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="255,5,386,47"/>
+<area shape="rect" id="node5" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="184,71,457,112"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd" title="Load file into vector of vectors of doubles." alt="" coords="276,137,365,163"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a98cb712af3c27b2f8650b4c78d181e3c" title="Load 1&#45;column file into vector of doubles." alt="" coords="269,187,372,214"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a0363b363a89bc9844a8a29f1908ae11e" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="269,238,372,265"/>
+<area shape="rect" id="node9" href="$df/d1d/namespaceuseful.html#a78d057731be2e6d3e8ea19bd807e11f0" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="255,289,386,315"/>
+<area shape="rect" id="node10" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="254,340,387,381"/>
+<area shape="rect" id="node11" href="$df/d1d/namespaceuseful.html#ae315554e3d53371c53eaffe0102a5ae9" title="Get number of numbers in first line of file." alt="" coords="254,405,387,447"/>
+<area shape="rect" id="node12" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907" title=" " alt="" coords="207,471,434,512"/>
+<area shape="rect" id="node13" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aca26a897eefb30acfe73c3197b36fb1c" title=" " alt="" coords="235,537,407,593"/>
+<area shape="rect" id="node14" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be" title=" " alt="" coords="230,617,411,673"/>
+<area shape="rect" id="node15" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187" title=" " alt="" coords="219,697,423,753"/>
+<area shape="rect" id="node16" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#acf64472def0b1b10dcb50a21bc49f0fc" title=" " alt="" coords="233,777,408,833"/>
+<area shape="rect" id="node17" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title=" " alt="" coords="239,857,403,899"/>
+<area shape="rect" id="node18" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66" title=" " alt="" coords="231,923,410,993"/>
+<area shape="rect" id="node19" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79" title=" " alt="" coords="235,1018,407,1074"/>
+<area shape="rect" id="node20" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc" title=" " alt="" coords="235,1098,406,1154"/>
+<area shape="rect" id="node21" href="$d2/dd1/namespaceptof.html#a719227c35ec65723a7f6346fb5a70d37" title=" " alt="" coords="235,1178,406,1205"/>
+<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#ab791119939e6b60f3c753359f53a6d05" title=" " alt="" coords="235,1229,406,1271"/>
+<area shape="rect" id="node23" href="$d2/dd1/namespaceptof.html#a6bec304311d1483f6997642021035499" title=" " alt="" coords="235,1295,406,1336"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="5,5,136,47"/>
 </map>

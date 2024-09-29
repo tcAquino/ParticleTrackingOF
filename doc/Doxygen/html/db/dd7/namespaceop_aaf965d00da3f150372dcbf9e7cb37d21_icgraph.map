@@ -1,0 +1,7 @@
+<map id="op::minus_inplace" name="op::minus_inplace">
+<area shape="rect" id="node1" title="Element&#45;wise subtraction." alt="" coords="421,31,548,57"/>
+<area shape="rect" id="node2" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title=" " alt="" coords="219,5,373,32"/>
+<area shape="rect" id="node4" href="$d2/dfa/namespacegeom.html#a72c109c890c09212f7e4567dabaeda90" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="223,56,369,83"/>
+<area shape="rect" id="node3" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title=" " alt="" coords="11,5,165,32"/>
+<area shape="rect" id="node5" href="$d2/dfa/namespacegeom.html#a4fc84e21684ae11357a063628682fca9" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,56,171,83"/>
+</map>

@@ -1,8 +1,8 @@
 <map id="geom::place_in_unit_cell" name="geom::place_in_unit_cell">
-<area shape="rect" id="node1" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,31,188,57"/>
-<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a9fc90c273278edfed568324ce59bf15a" title="Compute projection along basis vectors of symmetry planes." alt="" coords="261,5,373,32"/>
-<area shape="rect" id="node4" href="$d2/dfa/namespacegeom.html#a72c109c890c09212f7e4567dabaeda90" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="236,56,399,83"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="635,31,721,57"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a3ac65501117efd0085c21fb0c33abf57" title="Element&#45;wise subtraction." alt="" coords="447,56,587,83"/>
-<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6" title="Element&#45;wise multiplication by scalar." alt="" coords="452,107,581,133"/>
+<area shape="rect" id="node1" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,31,171,57"/>
+<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a9fc90c273278edfed568324ce59bf15a" title="Compute projection along basis vectors of symmetry planes." alt="" coords="241,5,343,32"/>
+<area shape="rect" id="node4" href="$d2/dfa/namespacegeom.html#a72c109c890c09212f7e4567dabaeda90" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="219,56,365,83"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a225d490a0ea3fa49263755d3735ad326" title="Element&#45;wise subtraction." alt="" coords="588,31,667,57"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#aaf965d00da3f150372dcbf9e7cb37d21" title="Element&#45;wise subtraction." alt="" coords="413,56,540,83"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#aafe7f4a8472a74a5fdb2beb978d64df9" title="Element&#45;wise multiplication by scalar." alt="" coords="417,107,536,133"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="geom::translate" name="geom::translate">
-<area shape="rect" id="node1" title="Translate position along basis vectors of symmetry planes." alt="" coords="5,31,131,57"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#afb06583511530d1d3e4390b149ad65ea" title="Element&#45;wise sum." alt="" coords="180,5,307,32"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a42752f5a99843f102adc31e8aca39ab6" title="Element&#45;wise multiplication by scalar." alt="" coords="179,56,308,83"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a8759705acbac903d8f6bfe0d5d6a8086" title="Element&#45;wise sum." alt="" coords="356,5,429,32"/>
+<area shape="rect" id="node1" title="Translate position along basis vectors of symmetry planes." alt="" coords="5,31,117,57"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a1711f78a4206caaa55eb835dd746bafc" title="Element&#45;wise sum." alt="" coords="167,5,283,32"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#aafe7f4a8472a74a5fdb2beb978d64df9" title="Element&#45;wise multiplication by scalar." alt="" coords="165,56,284,83"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a992e4710a78c18b732b83702fc1ed016" title="Element&#45;wise sum." alt="" coords="332,5,400,32"/>
 </map>

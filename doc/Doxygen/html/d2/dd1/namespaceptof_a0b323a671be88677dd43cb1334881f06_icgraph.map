@@ -1,5 +1,5 @@
 <map id="ptof::store_info_type" name="ptof::store_info_type">
-<area shape="rect" id="node1" title="Store information about boundary condition type." alt="" coords="252,42,408,69"/>
-<area shape="rect" id="node2" href="$d0/d38/structptof_1_1_store___info___contact.html#a09b4597f6c2363c050b32ca9d19886ea" title="Store info." alt="" coords="15,5,194,47"/>
-<area shape="rect" id="node3" href="$d9/dcd/structptof_1_1_store___type.html#a0664c28769925f121a4c26d37aee4c07" title="Store info." alt="" coords="5,71,204,98"/>
+<area shape="rect" id="node1" title="Store information about boundary condition type." alt="" coords="235,42,376,69"/>
+<area shape="rect" id="node2" href="$d0/d38/structptof_1_1_store___info___contact.html#ac5028faf30bc8aaf9fd02f0359ea90e1" title="Store info." alt="" coords="13,5,179,47"/>
+<area shape="rect" id="node3" href="$d9/dcd/structptof_1_1_store___type.html#a6bd2a45a61b6bc74ae37920668254ce5" title="Store info." alt="" coords="5,71,187,98"/>
 </map>

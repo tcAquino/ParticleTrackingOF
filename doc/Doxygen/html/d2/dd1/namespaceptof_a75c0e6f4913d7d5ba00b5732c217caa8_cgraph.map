@@ -1,9 +1,10 @@
 <map id="ptof::get_boundary_conditions" name="ptof::get_boundary_conditions">
-<area shape="rect" id="node1" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="5,115,149,156"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12" title="Remove comments after escape sequence." alt="" coords="210,5,365,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="218,71,357,98"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="215,122,359,149"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="197,173,377,215"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="238,239,337,266"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="425,71,601,98"/>
+<area shape="rect" id="node1" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="5,125,136,166"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="372,109,515,150"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="187,5,312,32"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="184,107,315,133"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="363,191,524,233"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="205,208,294,235"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="191,157,307,184"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="364,5,523,32"/>
 </map>

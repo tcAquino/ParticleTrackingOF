@@ -1,5 +1,5 @@
 <map id="geom::Boundary_Periodic::translate" name="geom::Boundary_Periodic::translate">
-<area shape="rect" id="node1" title="Translate a position according to projection in periodic cell." alt="" coords="5,23,193,65"/>
-<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="241,5,392,32"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#aab8b9abc2987a12d3de135ab5871abe7" title="Element&#45;wise multiplication." alt="" coords="275,56,358,83"/>
+<area shape="rect" id="node1" title="Translate a position according to projection in periodic cell." alt="" coords="5,23,176,65"/>
+<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="224,5,357,32"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#aa8d1d94fad6502b9d34e7db0fec4471e" title="Element&#45;wise multiplication." alt="" coords="253,56,329,83"/>
 </map>

@@ -68,7 +68,7 @@ struct ExecutableInfo {
 };
 
 int main(int argc, char *argv[]) {
-  using namespace ptof::model_advection_diffusion_2d_parallel;
+  using namespace ptof::model_advection_diffusion_surface_decay_2d_parallel;
 
   ExecutableInfo::banner(std::cout);
   std::cout << "\n";
@@ -274,15 +274,15 @@ int main(int argc, char *argv[]) {
   double current_time = 0.;
   ptof::info_time(std::cout, params_output, current_time);
   while (!output.done(current_time)) {
-    while (output.next_measure_time() <= current_time) {
+    while (output.next_measurement_time() <= current_time) {
       std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, params_output, output.next_measure_time());
+      ptof::info_time(std::cout, params_output, output.next_measurement_time());
       ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                       output.next_measure_time());
-      output(output.next_measure_time());
+                                       output.next_measurement_time());
+      output(output.next_measurement_time());
       std::cout << "Done!\n";
     }
-    current_time = output.next_measure_time();
+    current_time = output.next_measurement_time();
     ctrw.evolve(
         [current_time](CTRW::Particle const &part) {
           return part.state_new().time < current_time &&
@@ -290,12 +290,12 @@ int main(int argc, char *argv[]) {
         },
         transitions);
   }
-  if (output.next_measure_time() <= current_time) {
+  if (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, params_output, output.next_measure_time());
+    ptof::info_time(std::cout, params_output, output.next_measurement_time());
     ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                     output.next_measure_time());
-    output(output.next_measure_time());
+                                     output.next_measurement_time());
+    output(output.next_measurement_time());
     std::cout << "Done!\n";
   }
   output();

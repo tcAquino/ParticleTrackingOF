@@ -1,0 +1,23 @@
+var structptof_1_1_output_parameters___cases =
+[
+    [ "Measurement", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html", "df/d93/structptof_1_1_output_parameters___cases_1_1_measurement" ],
+    [ "Measurement_dim_position", "d6/dd8/structptof_1_1_output_parameters___cases_1_1_measurement__dim__position.html", "d6/dd8/structptof_1_1_output_parameters___cases_1_1_measurement__dim__position" ],
+    [ "Measurement_field", "de/de8/structptof_1_1_output_parameters___cases_1_1_measurement__field.html", "de/de8/structptof_1_1_output_parameters___cases_1_1_measurement__field" ],
+    [ "Measurement_order", "d7/dc5/structptof_1_1_output_parameters___cases_1_1_measurement__order.html", "d7/dc5/structptof_1_1_output_parameters___cases_1_1_measurement__order" ],
+    [ "Measurement_orders", "d4/d2b/structptof_1_1_output_parameters___cases_1_1_measurement__orders.html", "d4/d2b/structptof_1_1_output_parameters___cases_1_1_measurement__orders" ],
+    [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907", null ],
+    [ "info", "d8/d12/structptof_1_1_output_parameters___cases.html#acc43bbe8a13869d2f9749e48d4dbca5c", null ],
+    [ "read_end_criterion", "d8/d12/structptof_1_1_output_parameters___cases.html#af3c907b0efe517363333359ae1852533", null ],
+    [ "read_measurement_spacing", "d8/d12/structptof_1_1_output_parameters___cases.html#a414fcadbf6541cd1fc284f5b6c341641", null ],
+    [ "read_measurement_types", "d8/d12/structptof_1_1_output_parameters___cases.html#a403eb897ccf6be7e1f968be2d64912eb", null ],
+    [ "read_time_units", "d8/d12/structptof_1_1_output_parameters___cases.html#a291fb372ced451c0ecfca6ed4ca5503e", null ],
+    [ "end_criterion", "d8/d12/structptof_1_1_output_parameters___cases.html#a57f85ee13f9a0d9364f716443d652b18", null ],
+    [ "end_value", "d8/d12/structptof_1_1_output_parameters___cases.html#a6d566c23e7dfefd267a2039588295b23", null ],
+    [ "measurement_spacing", "d8/d12/structptof_1_1_output_parameters___cases.html#af7cab6c3d9dd815ec7d0568ef0c2ed60", null ],
+    [ "measurements", "d8/d12/structptof_1_1_output_parameters___cases.html#a229f0e365816c58b5761e74d67847985", null ],
+    [ "time_increment", "d8/d12/structptof_1_1_output_parameters___cases.html#ab0f1005b34b5c96976853bf27ff4cc6d", null ],
+    [ "time_max", "d8/d12/structptof_1_1_output_parameters___cases.html#a0f128c01e99b8f7eff0bd8263c4f110c", null ],
+    [ "time_min", "d8/d12/structptof_1_1_output_parameters___cases.html#a17f8c7e775b7c3a68a91954854034d6c", null ],
+    [ "time_unit_factor", "d8/d12/structptof_1_1_output_parameters___cases.html#af640c888ea0480110ce7e023f3e2fc7d", null ],
+    [ "time_units", "d8/d12/structptof_1_1_output_parameters___cases.html#a7f8dcb69d8120f1e3c6a21609d1901f8", null ]
+];

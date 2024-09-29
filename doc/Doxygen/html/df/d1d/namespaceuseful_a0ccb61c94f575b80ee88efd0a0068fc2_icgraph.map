@@ -1,0 +1,25 @@
+<map id="useful::split" name="useful::split">
+<area shape="rect" id="node1" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="780,271,869,298"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="601,68,732,109"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd" title="Load file into vector of vectors of doubles." alt="" coords="622,195,711,222"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a98cb712af3c27b2f8650b4c78d181e3c" title="Load 1&#45;column file into vector of doubles." alt="" coords="615,246,718,273"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a0363b363a89bc9844a8a29f1908ae11e" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="615,297,718,323"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a78d057731be2e6d3e8ea19bd807e11f0" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="601,347,732,374"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a15d820b4096cdb22b03d681f6808a38c" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="607,523,726,564"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="351,5,482,47"/>
+<area shape="rect" id="node9" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="280,71,553,112"/>
+<area shape="rect" id="node10" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="350,136,483,177"/>
+<area shape="rect" id="node11" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#aca26a897eefb30acfe73c3197b36fb1c" title=" " alt="" coords="331,202,503,258"/>
+<area shape="rect" id="node12" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#a4f76e28e7d2bbf43e5e036d6129aa8be" title=" " alt="" coords="326,282,507,338"/>
+<area shape="rect" id="node13" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a1d73cb790fe35ad205b78eab7dcb9187" title=" " alt="" coords="315,362,519,418"/>
+<area shape="rect" id="node14" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#acf64472def0b1b10dcb50a21bc49f0fc" title=" " alt="" coords="329,442,504,498"/>
+<area shape="rect" id="node15" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title=" " alt="" coords="335,523,499,564"/>
+<area shape="rect" id="node16" href="$d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a379b17a8c03e90760b709e898e90cd66" title=" " alt="" coords="327,588,506,659"/>
+<area shape="rect" id="node17" href="$dc/d05/structptof_1_1model__advection__diffusion__2d_1_1_solvers_1_1_parameters.html#a6008256293cc43d3d73a1da012a64c79" title=" " alt="" coords="331,683,503,739"/>
+<area shape="rect" id="node18" href="$d6/d3d/structptof_1_1model__advection__2d_1_1_solvers_1_1_parameters.html#a33fcdbdae41b4f8bbaa18ff344e206cc" title=" " alt="" coords="331,763,502,819"/>
+<area shape="rect" id="node19" href="$d8/d12/structptof_1_1_output_parameters___cases.html#af3c907b0efe517363333359ae1852533" title="Read end criterion from input stream." alt="" coords="326,844,507,885"/>
+<area shape="rect" id="node21" href="$df/d1d/namespaceuseful.html#ac4a217c58253612e3abdf8481e2e83b0" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="357,909,476,951"/>
+<area shape="rect" id="node22" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a414fcadbf6541cd1fc284f5b6c341641" title="Read measure spacing type from input stream." alt="" coords="323,975,510,1031"/>
+<area shape="rect" id="node23" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a291fb372ced451c0ecfca6ed4ca5503e" title="Read measure spacing time units from input stream." alt="" coords="333,1056,500,1097"/>
+<area shape="rect" id="node20" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a4c6e62d9d30341869ca31af989891907" title=" " alt="" coords="5,983,232,1024"/>
+</map>

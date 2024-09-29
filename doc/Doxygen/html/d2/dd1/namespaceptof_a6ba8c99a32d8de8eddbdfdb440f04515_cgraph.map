@@ -1,9 +1,9 @@
 <map id="ptof::nearest_boundary_face_dist" name="ptof::nearest_boundary_face_dist">
-<area shape="rect" id="node1" title=" " alt="" coords="5,23,177,65"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="225,31,296,57"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="353,5,422,32"/>
-<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#ad6123bda10002da361b9884d448b27dd" title="Element&#45;wise subtraction." alt="" coords="344,56,431,83"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="479,5,569,32"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="489,56,559,83"/>
-<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a236eafbd96dfaf07eaf586e8110d9c2e" title="Element&#45;wise square root." alt="" coords="617,56,688,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,23,160,65"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="208,31,273,57"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="328,5,393,32"/>
+<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#a225d490a0ea3fa49263755d3735ad326" title="Element&#45;wise subtraction." alt="" coords="321,56,400,83"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="448,5,535,32"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="458,56,525,83"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a2b31f2c11ab895bd6137eca382720c0d" title="Element&#45;wise square root." alt="" coords="583,56,649,83"/>
 </map>
