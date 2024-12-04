@@ -1,7 +1,7 @@
 <map id="MeasurementList::type" name="MeasurementList::type">
-<area shape="rect" id="node1" title="Type from name." alt="" coords="991,5,1145,32"/>
-<area shape="rect" id="node2" href="$d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title="Name from type." alt="" coords="780,5,943,32"/>
-<area shape="rect" id="node4" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a40add8af1df753c49f1c9e453714dc5a" title="Read measurement type from input stream." alt="" coords="280,23,505,65"/>
-<area shape="rect" id="node3" href="$d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1" title="Check if name exists." alt="" coords="553,5,732,32"/>
-<area shape="rect" id="node5" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,23,232,65"/>
+<area shape="rect" id="node1" title="Type from name." alt="" coords="1063,5,1235,32"/>
+<area shape="rect" id="node2" href="$d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title="Name from type." alt="" coords="835,5,1015,32"/>
+<area shape="rect" id="node4" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a37c3a03bdf38eb32be577c31d038bfa2" title="Read measurement type from input stream." alt="" coords="293,23,540,65"/>
+<area shape="rect" id="node3" href="$d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1" title="Check if name exists." alt="" coords="588,5,787,32"/>
+<area shape="rect" id="node5" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,23,245,65"/>
 </map>

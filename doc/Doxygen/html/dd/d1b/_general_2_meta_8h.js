@@ -59,6 +59,8 @@ var _general_2_meta_8h =
     [ "static_info_result_t", "dd/d1b/_general_2_meta_8h.html#ae357c5b1a91a5acc72f74e7b1c2d4303", null ],
     [ "can_call_abs_v", "dd/d1b/_general_2_meta_8h.html#a607c32bcb5b310a633a192647a322d7b", null ],
     [ "can_call_sqrt_v", "dd/d1b/_general_2_meta_8h.html#af0c90681d9d7ecf8b97883b7f9eefb4a", null ],
+    [ "dependent_false_v", "dd/d1b/_general_2_meta_8h.html#a64e4ceba88aebeab1ed45f77b13ce4eb", null ],
+    [ "dependent_true_v", "dd/d1b/_general_2_meta_8h.html#a2ba3544645ffebe6d3f5268e9ea34a0e", null ],
     [ "has_and_v", "dd/d1b/_general_2_meta_8h.html#a6101c83d5c59bafda488129f18b0dff8", null ],
     [ "has_begin_v", "dd/d1b/_general_2_meta_8h.html#a4fc203ef1524c53e1aab19b38b5ced81", null ],
     [ "has_bit_or_v", "dd/d1b/_general_2_meta_8h.html#ab948b98f8a210421e4d8b28f64dae1a0", null ],
@@ -88,5 +90,7 @@ var _general_2_meta_8h =
     [ "is_convertible_from_multiplies_v", "dd/d1b/_general_2_meta_8h.html#acf7a6e2cab93e9a7ae073825305f1ea6", null ],
     [ "is_convertible_from_plus_v", "dd/d1b/_general_2_meta_8h.html#a549b1a3257e00e00834cc63353f77d28", null ],
     [ "is_convertible_from_pow_v", "dd/d1b/_general_2_meta_8h.html#af23f95b6eec357fa8b3668e50f14cb07", null ],
-    [ "is_convertible_from_sqrt_v", "dd/d1b/_general_2_meta_8h.html#a47e2052b2465410fb5782d688d49bfe5", null ]
+    [ "is_convertible_from_sqrt_v", "dd/d1b/_general_2_meta_8h.html#a47e2052b2465410fb5782d688d49bfe5", null ],
+    [ "is_instance_of_v", "dd/d1b/_general_2_meta_8h.html#ae6319fef5ccc36bcb39c9544364f07bb", null ],
+    [ "is_instance_of_v< U< Vs... >, U >", "dd/d1b/_general_2_meta_8h.html#a53757a9b93fed41dcec745ee34c48f64", null ]
 ];

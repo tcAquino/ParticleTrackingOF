@@ -1,0 +1,9 @@
+<map id="io::split" name="io::split">
+<area shape="rect" id="node1" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="445,107,516,133"/>
+<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#ac21286bff86df484360ec18680bd501d" title="Load file into vector of vectors of doubles." alt="" coords="276,5,347,32"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#a2241c961926d320a0691d4eb5a62918d" title="Load 1&#45;column file into vector of doubles." alt="" coords="269,56,354,83"/>
+<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a9eef99be14203759679ab7f542aeb0af" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="269,107,354,133"/>
+<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#a375aeae64bc3a6208b5343df9ac2777e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="253,157,370,184"/>
+<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#a674e1af6fffb7b3cf9458832d7197ceb" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="225,208,397,235"/>
+<area shape="rect" id="node7" href="$d1/d96/namespaceio.html#a106fc4b6c7919bfe29ec971999505634" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="5,208,177,235"/>
+</map>

@@ -349,7 +349,9 @@ var hierarchy =
     [ "ptof::Store_Absorbed_Reinjections", "de/dbb/structptof_1_1_store___absorbed___reinjections.html", null ],
     [ "ptof::Store_Nothing", "de/df6/structptof_1_1_store___nothing.html", null ],
     [ "ptof::Store_Type", "d9/dcd/structptof_1_1_store___type.html", null ],
+    [ "StoreConst", "d5/d99/class_store_const.html", null ],
     [ "useful::StoreConst< Object_Type, Return_Type >", "db/d1e/structuseful_1_1_store_const.html", null ],
+    [ "io::StreamScopeFormat< T >", "d4/d11/structio_1_1_stream_scope_format.html", null ],
     [ "ptof::SurfaceReaction_AFluidPlusASolidtoASolid", "d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html", null ],
     [ "ptof::SurfaceReaction_DoNothing", "df/d31/classptof_1_1_surface_reaction___do_nothing.html", null ],
     [ "geom::SymmetryPlanes_Bcc", "d3/dac/structgeom_1_1_symmetry_planes___bcc.html", null ],
@@ -386,6 +388,7 @@ var hierarchy =
       [ "meta::can_call_sqrt< std::void_t< decltype(std::sqrt(std::declval< Args >()...))>, Args... >", "d0/d7d/structmeta_1_1can__call__sqrt_3_01std_1_1void__t_3_01decltype_07std_1_1sqrt_07std_1_1declval_3_08d5bfbec0d91a76f978aad0e97e9a8e3.html", null ],
       [ "meta::has_member_impl< Z, types< Ts... >, std::void_t< Z< Ts... > > >", "db/d68/structmeta_1_1has__member__impl_3_01_z_00_01types_3_01_ts_8_8_8_01_4_00_01std_1_1void__t_3_01_z_3_01_ts_8_8_8_01_4_01_4_01_4.html", null ]
     ] ],
+    [ "io::tuple_types< Args >", "d7/dc7/structio_1_1tuple__types.html", null ],
     [ "meta::types<... >", "d7/dab/structmeta_1_1types.html", null ],
     [ "stochastic::uniform_cylinder_distribution", "d8/d10/classstochastic_1_1uniform__cylinder__distribution.html", null ],
     [ "stochastic::uniform_parallelipiped_distribution", "d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution.html", null ],

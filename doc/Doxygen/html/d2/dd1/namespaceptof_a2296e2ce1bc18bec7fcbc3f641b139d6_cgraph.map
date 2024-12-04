@@ -1,13 +1,11 @@
 <map id="ptof::get_boundary_conditions" name="ptof::get_boundary_conditions">
-<area shape="rect" id="node1" title="Get boundary conditions for dynamics type." alt="" coords="5,224,136,265"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="194,148,325,189"/>
-<area shape="rect" id="node10" href="$d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="184,307,335,334"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="584,5,727,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="392,206,517,233"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="389,155,520,182"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="575,88,736,129"/>
-<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="410,257,499,283"/>
-<area shape="rect" id="node9" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="397,54,513,81"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="576,206,735,233"/>
-<area shape="rect" id="node11" href="$d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="383,307,527,334"/>
+<area shape="rect" id="node1" title="Get boundary conditions for dynamics type." alt="" coords="5,82,149,123"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="208,53,352,94"/>
+<area shape="rect" id="node8" href="$d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="197,119,363,145"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#a8cc6b46536bb3ae60a8a72a3d5b1c2f9" title="Open file for reading." alt="" coords="434,9,545,36"/>
+<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="439,64,540,91"/>
+<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a6c2ebb3c165cea33a041174b0cd0823b" title=" " alt="" coords="618,5,766,32"/>
+<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="619,57,765,98"/>
+<area shape="rect" id="node7" href="$d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="616,122,768,163"/>
+<area shape="rect" id="node9" href="$d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="411,119,568,145"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="stochastic::randSubset" name="stochastic::randSubset">
-<area shape="rect" id="node1" title="Generate a random non&#45;repeating sequence of subset.size() elements out of {0, 1, ...." alt="" coords="5,5,161,32"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="209,5,344,32"/>
+<area shape="rect" id="node1" title="Generate a random non&#45;repeating sequence of subset.size() elements out of {0, 1, ...." alt="" coords="5,5,175,32"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="223,5,369,32"/>
 </map>

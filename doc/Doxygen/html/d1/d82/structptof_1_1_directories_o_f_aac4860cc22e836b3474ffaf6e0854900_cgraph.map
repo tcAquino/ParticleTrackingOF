@@ -1,16 +1,12 @@
 <map id="ptof::DirectoriesOF::makeRunTime" name="ptof::DirectoriesOF::makeRunTime">
-<area shape="rect" id="node1" title=" " alt="" coords="5,123,139,164"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#aa0bbd6fb78fcde88064d9a95ac47de4e" title="Expand environment variables." alt="" coords="601,5,736,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#af16a1231d16103a8216fb1935113de82" title="Expand ~ if present at the beginning of directory dir." alt="" coords="187,64,333,105"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#ac0f844a68a460a99b4f6365388026c76" title="Check if string is empty." alt="" coords="201,130,319,157"/>
-<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="197,181,323,207"/>
-<area shape="rect" id="node10" href="$df/d1d/namespaceuseful.html#a15d820b4096cdb22b03d681f6808a38c" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="201,253,319,295"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="797,42,901,69"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="389,64,532,105"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="597,71,740,98"/>
-<area shape="rect" id="node9" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="381,159,540,186"/>
-<area shape="rect" id="node11" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="597,329,740,371"/>
-<area shape="rect" id="node12" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="588,233,749,275"/>
-<area shape="rect" id="node13" href="$df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="416,261,505,287"/>
-<area shape="rect" id="node14" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="403,311,519,338"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,141,149,182"/>
+<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#a46c7417495897c82dae9c62e517d4b3b" title="Expand environment variables." alt="" coords="197,5,380,32"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#a8f0e02b5c22b00ac2dbca0ea11401fd0" title="Expand ~ if present at the beginning of directory dir." alt="" coords="209,57,368,98"/>
+<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a335dd9dd306cf8f02a197636710bd6ae" title="Check if string is empty." alt="" coords="237,123,340,149"/>
+<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#a8cc6b46536bb3ae60a8a72a3d5b1c2f9" title="Open file for reading." alt="" coords="233,173,344,200"/>
+<area shape="rect" id="node7" href="$d1/d96/namespaceio.html#a07f168349a7ec4b83432f5d55456ed65" title="Read next value from file." alt="" coords="253,224,324,251"/>
+<area shape="rect" id="node8" href="$d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="238,275,339,301"/>
+<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#a6c2ebb3c165cea33a041174b0cd0823b" title=" " alt="" coords="430,173,578,200"/>
+<area shape="rect" id="node9" href="$d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="431,246,577,287"/>
+<area shape="rect" id="node10" href="$d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="428,311,580,353"/>
 </map>

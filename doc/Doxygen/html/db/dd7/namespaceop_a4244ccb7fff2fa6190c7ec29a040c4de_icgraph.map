@@ -1,35 +1,35 @@
 <map id="op::abs" name="op::abs">
-<area shape="rect" id="node1" title="Euclidean norm." alt="" coords="764,713,829,740"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="585,414,672,441"/>
-<area shape="rect" id="node4" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title="Orthogonal basis from Gram&#45;schmidt decomposition, given complete set of linearly&#45;independent vectors...." alt="" coords="306,125,461,152"/>
-<area shape="rect" id="node7" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="5,615,225,656"/>
-<area shape="rect" id="node15" href="$d2/dfa/namespacegeom.html#aec978d1ca7e9f03c5b023c25a452f6fd" title=" " alt="" coords="541,516,716,542"/>
-<area shape="rect" id="node16" href="$d2/dfa/namespacegeom.html#a7d13e160911167de96fecbb1ba992be6" title="Covert cartesian (x, y) to polar (r, theta)." alt="" coords="553,566,704,593"/>
-<area shape="rect" id="node17" href="$d2/dfa/namespacegeom.html#a9800f4280b2ca36ee933ebc4b696320d" title="Get polar angle thera from cartesian (x, y)." alt="" coords="553,618,704,659"/>
-<area shape="rect" id="node18" href="$d2/dfa/namespacegeom.html#ac71cbec5ade0c6a11b02e1065b9a69f9" title="Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation))." alt="" coords="541,684,716,710"/>
-<area shape="rect" id="node19" href="$d2/dfa/namespacegeom.html#a8b8764ede93b5c3db756ba083f491c08" title="Get spherical angles (phi (azimuthal), theta (elevation)) from cartesian (x, y, z)." alt="" coords="541,735,716,776"/>
-<area shape="rect" id="node20" href="$df/d1d/namespaceuseful.html#a64a4fdf8fb8647521e524ef0daedb6e7" title="If to_chop is smaller than tolerance, replace it with replace_with." alt="" coords="582,801,675,828"/>
-<area shape="rect" id="node21" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="596,852,661,878"/>
-<area shape="rect" id="node23" href="$dd/df2/structgeom_1_1_parallelepiped.html#a7aab7c01df20908fc4a61169015c0830" title=" " alt="" coords="557,903,700,944"/>
-<area shape="rect" id="node24" href="$db/dd7/namespaceop.html#a7d3205f418cfa9b7da0709a7d9f0db98" title=" " alt="" coords="579,74,679,101"/>
-<area shape="rect" id="node25" href="$d6/da5/namespacealgebra.html#aa5dc0e9a4621dad75881e990cbe801ea" title=" " alt="" coords="304,8,463,50"/>
-<area shape="rect" id="node26" href="$db/dd7/namespaceop.html#ad7c4eb6e5ab5e8e762b5eb631c42f89f" title=" " alt="" coords="555,969,703,996"/>
-<area shape="rect" id="node28" href="$de/de9/classctrw_1_1_transitions___position___velocity_step.html#a96797d2706b1fc69830e2e27ae73f1bd" title=" " alt="" coords="542,1020,715,1062"/>
-<area shape="rect" id="node29" href="$d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ae266b85764060a9b6e5c0493ae8a72ba" title=" " alt="" coords="541,1086,716,1127"/>
-<area shape="rect" id="node30" href="$d5/d10/structctrw_1_1_get__time__interp__velocity.html#a7aaf3118cc6f4d91cce1ae3b7f1d550d" title=" " alt="" coords="555,1151,702,1192"/>
-<area shape="rect" id="node31" href="$d1/d4f/structctrw_1_1_get__time__interp.html#ac327ff02f1490a1b6abc3234c636b1f8" title=" " alt="" coords="555,1216,702,1258"/>
-<area shape="rect" id="node32" href="$d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64" title=" " alt="" coords="581,1282,676,1309"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ac0b1f4a3bf634a96a232393d8c023c60" title="Euclidean distance squared." alt="" coords="340,389,427,416"/>
-<area shape="rect" id="node6" href="$d0/da4/structgeom_1_1_sphere.html#aa06226ea58bea99b59c033ba20907f23" title=" " alt="" coords="311,440,456,466"/>
-<area shape="rect" id="node8" href="$df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a492b845009e383f8e0d898195a33ad97" title="Enforce boundary condition." alt="" coords="306,242,461,298"/>
-<area shape="rect" id="node9" href="$d2/d87/structctrw_1_1_get__dist__sq.html#a2afe21e0a57821ac022419ca1445cde9" title=" " alt="" coords="317,323,450,364"/>
-<area shape="rect" id="node10" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#ac2e82ca1f3b9df5225c837eac0ab1383" title="Check if position is out of bounds." alt="" coords="273,556,493,598"/>
-<area shape="rect" id="node11" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="305,176,462,218"/>
-<area shape="rect" id="node13" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="297,491,469,532"/>
-<area shape="rect" id="node5" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title="Orthogonal basis from Gram&#45;Schmidt decomposition, preserving given direction." alt="" coords="38,100,193,126"/>
-<area shape="rect" id="node12" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="37,176,194,218"/>
-<area shape="rect" id="node14" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="29,491,201,532"/>
-<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a6ba8c99a32d8de8eddbdfdb440f04515" title=" " alt="" coords="306,844,461,886"/>
-<area shape="rect" id="node27" href="$d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#ac85f7d10094b5c2f6a50e055af09401f" title=" " alt="" coords="302,954,465,1010"/>
-<area shape="rect" id="node33" href="$d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48" title=" " alt="" coords="336,1282,431,1309"/>
+<area shape="rect" id="node1" title="Euclidean norm." alt="" coords="831,717,900,744"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="639,419,730,445"/>
+<area shape="rect" id="node4" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title="Orthogonal basis from Gram&#45;schmidt decomposition, given complete set of linearly&#45;independent vectors...." alt="" coords="331,129,503,156"/>
+<area shape="rect" id="node7" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="5,619,248,661"/>
+<area shape="rect" id="node15" href="$d2/dfa/namespacegeom.html#aec978d1ca7e9f03c5b023c25a452f6fd" title=" " alt="" coords="587,520,783,547"/>
+<area shape="rect" id="node16" href="$d2/dfa/namespacegeom.html#a7d13e160911167de96fecbb1ba992be6" title="Covert cartesian (x, y) to polar (r, theta)." alt="" coords="601,571,769,597"/>
+<area shape="rect" id="node17" href="$d2/dfa/namespacegeom.html#a9800f4280b2ca36ee933ebc4b696320d" title="Get polar angle thera from cartesian (x, y)." alt="" coords="601,622,769,663"/>
+<area shape="rect" id="node18" href="$d2/dfa/namespacegeom.html#ac71cbec5ade0c6a11b02e1065b9a69f9" title="Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation))." alt="" coords="587,688,782,715"/>
+<area shape="rect" id="node19" href="$d2/dfa/namespacegeom.html#a8b8764ede93b5c3db756ba083f491c08" title="Get spherical angles (phi (azimuthal), theta (elevation)) from cartesian (x, y, z)." alt="" coords="587,739,782,781"/>
+<area shape="rect" id="node20" href="$df/d1d/namespaceuseful.html#ae6e213cd0bfbb67141b6dc9e15f5d2b3" title="If to_chop is smaller than tolerance, replace it with replace_with." alt="" coords="634,805,735,832"/>
+<area shape="rect" id="node21" href="$db/dd7/namespaceop.html#a81e6938dcf8b4d80c6c021670119f1ca" title="Euclidean distance." alt="" coords="649,856,720,883"/>
+<area shape="rect" id="node23" href="$dd/df2/structgeom_1_1_parallelepiped.html#a7aab7c01df20908fc4a61169015c0830" title=" " alt="" coords="605,907,764,949"/>
+<area shape="rect" id="node24" href="$db/dd7/namespaceop.html#a7d3205f418cfa9b7da0709a7d9f0db98" title=" " alt="" coords="629,79,740,105"/>
+<area shape="rect" id="node25" href="$d6/da5/namespacealgebra.html#aa5dc0e9a4621dad75881e990cbe801ea" title=" " alt="" coords="327,13,507,54"/>
+<area shape="rect" id="node26" href="$db/dd7/namespaceop.html#ad7c4eb6e5ab5e8e762b5eb631c42f89f" title=" " alt="" coords="602,973,767,1000"/>
+<area shape="rect" id="node28" href="$de/de9/classctrw_1_1_transitions___position___velocity_step.html#a96797d2706b1fc69830e2e27ae73f1bd" title=" " alt="" coords="591,1025,778,1066"/>
+<area shape="rect" id="node29" href="$d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ae266b85764060a9b6e5c0493ae8a72ba" title=" " alt="" coords="587,1090,782,1131"/>
+<area shape="rect" id="node30" href="$d5/d10/structctrw_1_1_get__time__interp__velocity.html#a7aaf3118cc6f4d91cce1ae3b7f1d550d" title=" " alt="" coords="603,1155,766,1197"/>
+<area shape="rect" id="node31" href="$d1/d4f/structctrw_1_1_get__time__interp.html#ac327ff02f1490a1b6abc3234c636b1f8" title=" " alt="" coords="603,1221,766,1262"/>
+<area shape="rect" id="node32" href="$d6/d48/namespacerange.html#ae0388a261163f8589377e0c4f2ac2f64" title=" " alt="" coords="633,1287,737,1313"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ac0b1f4a3bf634a96a232393d8c023c60" title="Euclidean distance squared." alt="" coords="371,393,463,420"/>
+<area shape="rect" id="node6" href="$d0/da4/structgeom_1_1_sphere.html#aa06226ea58bea99b59c033ba20907f23" title=" " alt="" coords="338,444,497,471"/>
+<area shape="rect" id="node8" href="$df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a492b845009e383f8e0d898195a33ad97" title="Enforce boundary condition." alt="" coords="332,247,503,303"/>
+<area shape="rect" id="node9" href="$d2/d87/structctrw_1_1_get__dist__sq.html#a2afe21e0a57821ac022419ca1445cde9" title=" " alt="" coords="347,327,488,369"/>
+<area shape="rect" id="node10" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#ac2e82ca1f3b9df5225c837eac0ab1383" title="Check if position is out of bounds." alt="" coords="296,561,539,602"/>
+<area shape="rect" id="node11" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="331,181,503,222"/>
+<area shape="rect" id="node13" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="323,495,512,537"/>
+<area shape="rect" id="node5" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title="Orthogonal basis from Gram&#45;Schmidt decomposition, preserving given direction." alt="" coords="41,104,213,131"/>
+<area shape="rect" id="node12" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="41,181,213,222"/>
+<area shape="rect" id="node14" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="32,495,221,537"/>
+<area shape="rect" id="node22" href="$d2/dd1/namespaceptof.html#a6ba8c99a32d8de8eddbdfdb440f04515" title=" " alt="" coords="331,849,503,890"/>
+<area shape="rect" id="node27" href="$d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#ac85f7d10094b5c2f6a50e055af09401f" title=" " alt="" coords="326,959,509,1015"/>
+<area shape="rect" id="node33" href="$d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48" title=" " alt="" coords="365,1287,469,1313"/>
 </map>

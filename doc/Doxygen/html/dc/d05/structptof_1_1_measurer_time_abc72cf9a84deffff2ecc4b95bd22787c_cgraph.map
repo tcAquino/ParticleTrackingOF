@@ -1,6 +1,6 @@
 <map id="ptof::MeasurerTime::open_write" name="ptof::MeasurerTime::open_write">
 <area shape="rect" id="node1" title="Open output file for a given output type." alt="" coords="5,23,155,65"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1" title=" " alt="" coords="217,5,331,32"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a48e78528550521cf552528f3a967bc44" title="Open file for writing." alt="" coords="203,56,345,83"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a57cc406fb9831a0cae5e713da7071a09" title=" " alt="" coords="393,49,536,90"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1" title=" " alt="" coords="203,5,317,32"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#adb789784912bfc13b8a0e6e37a4f9592" title="Open file for writing." alt="" coords="203,56,317,83"/>
+<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a1288eb6971676176c322ad597ecb2760" title=" " alt="" coords="365,56,517,83"/>
 </map>

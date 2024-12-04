@@ -1,0 +1,11 @@
+<map id="useful::swap_erase" name="useful::swap_erase">
+<area shape="rect" id="node1" title="Copy end element of container to index idx, then erase end element." alt="" coords="673,81,820,108"/>
+<area shape="rect" id="node2" href="$d8/d67/namespacestochastic.html#a774c37f226a04be1685817ec27d8f21d" title="Generate a random non&#45;repeating sequence of subset.size() elements out of {0, 1, ...." alt="" coords="456,5,625,32"/>
+<area shape="rect" id="node3" href="$d2/dd2/classctrw_1_1_c_t_r_w.html#aec2a1a80e0676090ff9180db384ccf5c" title="Remove particle." alt="" coords="464,56,617,83"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a4a599e922930387914a63559315e48f2" title="Swap&#45;erase elements in container at indices indices." alt="" coords="467,107,614,133"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="459,157,622,184"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="234,117,405,158"/>
+<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="231,182,408,223"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#a9362b0932b5dcc38c21c7a5cd2821349" title="Remove face indices if mask is below threshold." alt="" coords="9,124,179,151"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a407151a1ede68422b8f8bed2fb09bd4f" title="Remove face indices if mask is below threshold." alt="" coords="5,182,183,223"/>
+</map>

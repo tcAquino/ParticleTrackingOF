@@ -1,4 +1,4 @@
 <map id="ctrw::CTRW::remove" name="ctrw::CTRW::remove">
-<area shape="rect" id="node1" title="Remove particle." alt="" coords="5,5,152,32"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="200,5,335,32"/>
+<area shape="rect" id="node1" title="Remove particle." alt="" coords="5,5,159,32"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="207,5,353,32"/>
 </map>

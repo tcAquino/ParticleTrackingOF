@@ -207,8 +207,8 @@ var namespaceptof =
     [ "make_state", "d2/dd1/namespaceptof.html#aaf0a94bd7b6fe284d2c1d72082050285", null ],
     [ "make_state", "d2/dd1/namespaceptof.html#a5fea2243b158958907e902dac653ac38", null ],
     [ "make_state", "d2/dd1/namespaceptof.html#ab3093a9e937214181fe10b8d879e9050", null ],
-    [ "makeLinearVelocityInterpolator", "d2/dd1/namespaceptof.html#abb1ff965576a54cbd3d9f56e0f0cc381", null ],
-    [ "makeLinearVelocityInterpolator", "d2/dd1/namespaceptof.html#a9a987025004d45e9e31782cd7af5e857", null ],
+    [ "makeLinearVelocityInterpolator", "d2/dd1/namespaceptof.html#abe1b3eb8c34a82cc66ec361d9c13880b", null ],
+    [ "makeLinearVelocityInterpolator", "d2/dd1/namespaceptof.html#ac03d0655b6bd26d853407674412842f6", null ],
     [ "makeTransitions", "d2/dd1/namespaceptof.html#ae737149b2e8463a1e453354c0305a736", null ],
     [ "makeTransitions", "d2/dd1/namespaceptof.html#a7bbf3e36ac60b8cc2d0d9f7a5736ff9d", null ],
     [ "makeTransportTransitions", "d2/dd1/namespaceptof.html#a8764a901055b75d22226c474a83efef8", null ],
@@ -302,6 +302,7 @@ var namespaceptof =
     [ "uniform_solid_reactant", "d2/dd1/namespaceptof.html#a1b9c4cd8c5757b9bbe7e9b434704332f", null ],
     [ "unit_normal_inward", "d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee", null ],
     [ "unit_normal_outward", "d2/dd1/namespaceptof.html#abf0aa3876390d4bac9c2877bfc88100b", null ],
+    [ "update_velocity_field", "d2/dd1/namespaceptof.html#a607ed89b86fa2bc0881f8dfdd3ac63e0", null ],
     [ "VectorField_LinearInterpolation_OF", "d2/dd1/namespaceptof.html#a73b6fd69b0da044a662d0163237bb823", null ],
     [ "VectorField_LinearInterpolation_OF", "d2/dd1/namespaceptof.html#a2fa484c2d07e8f96ed9a8121abc7d881", null ],
     [ "verify_boundary_conditions", "d2/dd1/namespaceptof.html#ac6824bc0d78eaa7bf5e7a05716c60ea5", null ]

@@ -1,26 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$dc/d05/structptof_1_1_measurer_time.html" title="Abstract polymorphic output handler for outputting time and some quantity." alt="" coords="5,910,160,951"/>
-<area shape="rect" id="node2" href="$dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html" title="Output first crossing times, tags, and masses." alt="" coords="234,5,389,61"/>
-<area shape="rect" id="node3" href="$d7/db9/structptof_1_1_measurer_time__mass.html" title="Output time and total mass." alt="" coords="214,86,409,127"/>
-<area shape="rect" id="node4" href="$d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html" title="Output time and total mass in regions specified by maks." alt="" coords="218,152,405,208"/>
-<area shape="rect" id="node5" href="$d3/dc2/structptof_1_1_measurer_time__position.html" title="Output time, tags, positions, and masses." alt="" coords="244,232,379,288"/>
-<area shape="rect" id="node6" href="$da/de0/structptof_1_1_measurer_time__position__in__regions.html" title="Output time, tags, positions, and masses within regions specified by masks." alt="" coords="239,313,384,383"/>
-<area shape="rect" id="node7" href="$dd/d75/structptof_1_1_measurer_time__position__in__regions__periodic.html" title="Output time, tags, positions, and masses within regions specified by masks." alt="" coords="213,407,410,478"/>
-<area shape="rect" id="node8" href="$dd/d55/structptof_1_1_measurer_time__position__mean.html" title="Output time and mean position (weighted by mass)." alt="" coords="225,503,398,559"/>
-<area shape="rect" id="node9" href="$dd/da6/structptof_1_1_measurer_time__position__mean__periodic.html" title="Output time and mean position (weighted by mass), with positions accounting for periodicity." alt="" coords="229,583,394,639"/>
-<area shape="rect" id="node10" href="$d5/d78/structptof_1_1_measurer_time__position__moment.html" title="Output time and moment of position with specified exponents for each coordinate (weighted by mass)." alt="" coords="217,663,405,719"/>
-<area shape="rect" id="node11" href="$d8/d64/structptof_1_1_measurer_time__position__moment__periodic.html" title="Output time and moment of position with specified exponents for each coordinate (weighted by mass),..." alt="" coords="221,743,401,799"/>
-<area shape="rect" id="node12" href="$d4/d22/structptof_1_1_measurer_time__position__nth__moment.html" title="Output time and nth moment of position (weighted by mass)." alt="" coords="234,823,389,879"/>
-<area shape="rect" id="node13" href="$d2/d1c/structptof_1_1_measurer_time__position__nth__moment__periodic.html" title="Output time and nth moment of position (weighted by mass), with position accounting for periodicity." alt="" coords="208,903,415,959"/>
-<area shape="rect" id="node14" href="$da/dc0/structptof_1_1_measurer_time__position__periodic.html" title="Output time, tags, positions, and masses, with positions accounting for periodicity." alt="" coords="238,983,385,1039"/>
-<area shape="rect" id="node15" href="$d2/d8d/structptof_1_1_measurer_time__position__second__moment.html" title="Output time and second moment of position (weighted by mass)." alt="" coords="223,1063,400,1119"/>
-<area shape="rect" id="node16" href="$d4/db6/structptof_1_1_measurer_time__position__second__moment__periodic.html" title="Output time and second moment of position (weighted by mass), with position accounting for periodicit..." alt="" coords="208,1143,415,1199"/>
-<area shape="rect" id="node17" href="$d2/d0d/structptof_1_1_measurer_time__position__variance.html" title="Output time and position variance (weighted by mass)." alt="" coords="238,1223,385,1279"/>
-<area shape="rect" id="node18" href="$d6/def/structptof_1_1_measurer_time__position__variance__periodic.html" title="Output time and position variance (weighted by mass), with position accounting for periodicity." alt="" coords="220,1303,403,1359"/>
-<area shape="rect" id="node19" href="$d4/dda/structptof_1_1_measurer_time__scalar__field.html" title="Output time, tags, and scalar field values." alt="" coords="234,1383,389,1439"/>
-<area shape="rect" id="node20" href="$d7/d28/structptof_1_1_measurer_time__scalar__field__mean.html" title="Output time and mean of scalar field over particles." alt="" coords="221,1463,402,1519"/>
-<area shape="rect" id="node21" href="$d9/d35/structptof_1_1_measurer_time__tensor__field.html" title="Output time, tag, and tensor field values." alt="" coords="233,1543,389,1599"/>
-<area shape="rect" id="node22" href="$d8/df5/structptof_1_1_measurer_time__tensor__field__mean.html" title="Output time and mean of tensor field over particles." alt="" coords="221,1623,402,1679"/>
-<area shape="rect" id="node23" href="$db/d15/structptof_1_1_measurer_time__vector__field.html" title="Output time, tags, and vector field values." alt="" coords="233,1703,389,1759"/>
-<area shape="rect" id="node24" href="$d5/d79/structptof_1_1_measurer_time__vector__field__mean.html" title="Output time and mean of vector field over particles." alt="" coords="221,1783,402,1839"/>
+<area shape="rect" id="node1" href="$d3/da6/structptof_1_1_measurement_spacing.html" title=" " alt="" coords="5,5,201,32"/>
 </map>

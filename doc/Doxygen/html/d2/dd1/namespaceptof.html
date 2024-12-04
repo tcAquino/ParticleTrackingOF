@@ -454,14 +454,17 @@ Functions</h2></td></tr>
 <tr class="memitem:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24">get_velocity_data_rescaled</a> (Mesh const &amp;mesh, double average)</td></tr>
 <tr class="memdesc:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given average.  <a href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24">More...</a><br /></td></tr>
 <tr class="separator:aed570c766b2821d3cdfdf98b9a5f9a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb1ff965576a54cbd3d9f56e0f0cc381"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename Field , typename TransportParameters &gt; </td></tr>
-<tr class="memitem:abb1ff965576a54cbd3d9f56e0f0cc381"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#abb1ff965576a54cbd3d9f56e0f0cc381">makeLinearVelocityInterpolator</a> (Geometry const &amp;geometry, Field &amp;&amp;field, TransportParameters &amp;params_transport)</td></tr>
-<tr class="memdesc:abb1ff965576a54cbd3d9f56e0f0cc381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a linear interpolator for a field using OpenFOAM interpolation.  <a href="../../d2/dd1/namespaceptof.html#abb1ff965576a54cbd3d9f56e0f0cc381">More...</a><br /></td></tr>
-<tr class="separator:abb1ff965576a54cbd3d9f56e0f0cc381"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a987025004d45e9e31782cd7af5e857"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename Field , typename Uninterpolated , typename TransportParameters &gt; </td></tr>
-<tr class="memitem:a9a987025004d45e9e31782cd7af5e857"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a9a987025004d45e9e31782cd7af5e857">makeLinearVelocityInterpolator</a> (Geometry const &amp;geometry, Field &amp;&amp;field, Uninterpolated &amp;&amp;uninterpolated, TransportParameters &amp;params_transport)</td></tr>
-<tr class="memdesc:a9a987025004d45e9e31782cd7af5e857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a linear interpolator for a field using OpenFOAM interpolation.  <a href="../../d2/dd1/namespaceptof.html#a9a987025004d45e9e31782cd7af5e857">More...</a><br /></td></tr>
-<tr class="separator:a9a987025004d45e9e31782cd7af5e857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a607ed89b86fa2bc0881f8dfdd3ac63e0"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Geometry , typename TransportParameters &gt; </td></tr>
+<tr class="memitem:a607ed89b86fa2bc0881f8dfdd3ac63e0"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a607ed89b86fa2bc0881f8dfdd3ac63e0">update_velocity_field</a> (VelocityField &amp;velocity_field, Geometry const &amp;geometry, TransportParameters const &amp;params_transport)</td></tr>
+<tr class="separator:a607ed89b86fa2bc0881f8dfdd3ac63e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe1b3eb8c34a82cc66ec361d9c13880b"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename Field &gt; </td></tr>
+<tr class="memitem:abe1b3eb8c34a82cc66ec361d9c13880b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#abe1b3eb8c34a82cc66ec361d9c13880b">makeLinearVelocityInterpolator</a> (Geometry const &amp;geometry, Field &amp;&amp;field)</td></tr>
+<tr class="memdesc:abe1b3eb8c34a82cc66ec361d9c13880b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a linear interpolator for a field using OpenFOAM interpolation.  <a href="../../d2/dd1/namespaceptof.html#abe1b3eb8c34a82cc66ec361d9c13880b">More...</a><br /></td></tr>
+<tr class="separator:abe1b3eb8c34a82cc66ec361d9c13880b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac03d0655b6bd26d853407674412842f6"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename Field , typename Uninterpolated &gt; </td></tr>
+<tr class="memitem:ac03d0655b6bd26d853407674412842f6"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#ac03d0655b6bd26d853407674412842f6">makeLinearVelocityInterpolator</a> (Geometry const &amp;geometry, Field &amp;&amp;field, Uninterpolated &amp;&amp;uninterpolated)</td></tr>
+<tr class="memdesc:ac03d0655b6bd26d853407674412842f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a linear interpolator for a field using OpenFOAM interpolation.  <a href="../../d2/dd1/namespaceptof.html#ac03d0655b6bd26d853407674412842f6">More...</a><br /></td></tr>
+<tr class="separator:ac03d0655b6bd26d853407674412842f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af894073228a9ff955cee4a2de71ba6c3"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
 <tr class="memitem:af894073228a9ff955cee4a2de71ba6c3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#af894073228a9ff955cee4a2de71ba6c3">boundary_reflecting</a> (State &amp;state, Foam::point const &amp;contact_point, Foam::vector const &amp;unit_normal)</td></tr>
 <tr class="memdesc:af894073228a9ff955cee4a2de71ba6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply reflecting boundary condition.  <a href="../../d2/dd1/namespaceptof.html#af894073228a9ff955cee4a2de71ba6c3">More...</a><br /></td></tr>
@@ -1307,10 +1310,10 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_a9362b0932b5dcc38c21c7a5cd2821349_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a9362b0932b5dcc38c21c7a5cd2821349_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_a9362b0932b5dcc38c21c7a5cd2821349_cgraph" id="ad2/dd1/namespaceptof_a9362b0932b5dcc38c21c7a5cd2821349_cgraph">
-<area shape="rect" title="Remove face indices if mask is below threshold." alt="" coords="5,13,161,39"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="209,5,365,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="413,13,563,39"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="611,13,745,39"/>
+<area shape="rect" title="Remove face indices if mask is below threshold." alt="" coords="5,13,176,39"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="224,5,395,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="443,13,605,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="653,13,800,39"/>
 </map>
 </div>
 
@@ -1364,9 +1367,9 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_a68a956b1e94ac2bf574b1960324112b9_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a68a956b1e94ac2bf574b1960324112b9_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_a68a956b1e94ac2bf574b1960324112b9_cgraph" id="ad2/dd1/namespaceptof_a68a956b1e94ac2bf574b1960324112b9_cgraph">
-<area shape="rect" title="Remove cell indices if mask is below threshold." alt="" coords="5,5,161,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="209,13,359,39"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="407,13,541,39"/>
+<area shape="rect" title="Remove cell indices if mask is below threshold." alt="" coords="5,5,176,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="224,13,387,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="435,13,581,39"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1436,10 +1439,10 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_a407151a1ede68422b8f8bed2fb09bd4f_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a407151a1ede68422b8f8bed2fb09bd4f_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_a407151a1ede68422b8f8bed2fb09bd4f_cgraph" id="ad2/dd1/namespaceptof_a407151a1ede68422b8f8bed2fb09bd4f_cgraph">
-<area shape="rect" title="Remove face indices if mask is below threshold." alt="" coords="5,5,167,47"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="215,5,376,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="424,13,573,39"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="621,13,756,39"/>
+<area shape="rect" title="Remove face indices if mask is below threshold." alt="" coords="5,5,183,47"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="231,5,408,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="456,13,619,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="667,13,813,39"/>
 </map>
 </div>
 
@@ -1499,9 +1502,9 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_aae3c9c092de08d61fe0d9ae0ac77d2eb_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_aae3c9c092de08d61fe0d9ae0ac77d2eb_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_aae3c9c092de08d61fe0d9ae0ac77d2eb_cgraph" id="ad2/dd1/namespaceptof_aae3c9c092de08d61fe0d9ae0ac77d2eb_cgraph">
-<area shape="rect" title="Remove face indices if mask is below threshold." alt="" coords="5,5,167,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="215,13,364,39"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="412,13,547,39"/>
+<area shape="rect" title="Remove face indices if mask is below threshold." alt="" coords="5,5,183,47"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="231,13,393,39"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="441,13,588,39"/>
 </map>
 </div>
 <div class="dynheader">
@@ -2757,17 +2760,15 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_a2296e2ce1bc18bec7fcbc3f641b139d6_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a2296e2ce1bc18bec7fcbc3f641b139d6_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_a2296e2ce1bc18bec7fcbc3f641b139d6_cgraph" id="ad2/dd1/namespaceptof_a2296e2ce1bc18bec7fcbc3f641b139d6_cgraph">
-<area shape="rect" title="Get boundary conditions for dynamics type." alt="" coords="5,224,136,265"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="194,148,325,189"/>
-<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="184,307,335,334"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="584,5,727,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="392,206,517,233"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="389,155,520,182"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="575,88,736,129"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="410,257,499,283"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="397,54,513,81"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="576,206,735,233"/>
-<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="383,307,527,334"/>
+<area shape="rect" title="Get boundary conditions for dynamics type." alt="" coords="5,82,149,123"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="208,53,352,94"/>
+<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="197,119,363,145"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a8cc6b46536bb3ae60a8a72a3d5b1c2f9" title="Open file for reading." alt="" coords="434,9,545,36"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="439,64,540,91"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a6c2ebb3c165cea33a041174b0cd0823b" title=" " alt="" coords="618,5,766,32"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="619,57,765,98"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="616,122,768,163"/>
+<area shape="rect" href="../../d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="411,119,568,145"/>
 </map>
 </div>
 
@@ -2820,14 +2821,12 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_a75c0e6f4913d7d5ba00b5732c217caa8_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a75c0e6f4913d7d5ba00b5732c217caa8_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_a75c0e6f4913d7d5ba00b5732c217caa8_cgraph" id="ad2/dd1/namespaceptof_a75c0e6f4913d7d5ba00b5732c217caa8_cgraph">
-<area shape="rect" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="5,125,136,166"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="372,109,515,150"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="187,5,312,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="184,107,315,133"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="363,191,524,233"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="205,208,294,235"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="191,157,307,184"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="364,5,523,32"/>
+<area shape="rect" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="5,31,149,73"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a8cc6b46536bb3ae60a8a72a3d5b1c2f9" title="Open file for reading." alt="" coords="197,9,308,36"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="202,64,303,91"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a6c2ebb3c165cea33a041174b0cd0823b" title=" " alt="" coords="358,5,506,32"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="359,57,505,98"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="356,122,508,163"/>
 </map>
 </div>
 <div class="dynheader">
@@ -2873,12 +2872,18 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_aac351f75a62fadba4267e352ab98a20d_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_aac351f75a62fadba4267e352ab98a20d_icgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_aac351f75a62fadba4267e352ab98a20d_icgraph" id="ad2/dd1/namespaceptof_aac351f75a62fadba4267e352ab98a20d_icgraph">
-<area shape="rect" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="291,166,445,193"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="63,5,185,47"/>
-<area shape="rect" href="../../d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#aadc9601e7257049379fc4082f59f6f40" title=" " alt="" coords="5,71,243,127"/>
-<area shape="rect" href="../../d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#a7f5e26ab84d70ba25ce96389867667bc" title=" " alt="" coords="36,151,212,207"/>
-<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a0592058f0ad82e7ccbab10d9c760d15d" title=" " alt="" coords="5,231,243,287"/>
-<area shape="rect" href="../../d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#a18927fe7916e0182c1d46ea452768ba1" title=" " alt="" coords="5,311,243,367"/>
+<area shape="rect" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="557,370,728,397"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="311,5,445,47"/>
+<area shape="rect" href="../../d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#abad23964e94331d483b4e7158b3f7708" title=" " alt="" coords="247,71,509,127"/>
+<area shape="rect" href="../../d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#a21141682c3efdc910170ef4c0c6da556" title=" " alt="" coords="281,151,475,207"/>
+<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a279c8b6b8122ffb2470504d26b52fd32" title=" " alt="" coords="247,231,509,287"/>
+<area shape="rect" href="../../d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#a4745fc80fb68e9db852acda3abbb8261" title=" " alt="" coords="247,311,509,367"/>
+<area shape="rect" href="../../d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#a880e7b83e09cffd0c25044cf706a0e1e" title=" " alt="" coords="247,392,509,463"/>
+<area shape="rect" href="../../d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#aab99a82906f32efb8199af4b89fe865d" title=" " alt="" coords="281,487,475,557"/>
+<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a1c76be00c10c6139c9ba8ca10eb5b445" title=" " alt="" coords="247,581,509,652"/>
+<area shape="rect" href="../../d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#aeaa0dcdb1b538e358ad2690399754c74" title=" " alt="" coords="247,676,509,747"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a607ed89b86fa2bc0881f8dfdd3ac63e0" title=" " alt="" coords="299,771,457,812"/>
+<area shape="rect" href="../../d0/d06/structptof_1_1_phase.html#aea0dd696f8cf71ff5e6bea8ca71224d8" title="Update phase field and velocity field." alt="" coords="5,771,199,812"/>
 </map>
 </div>
 
@@ -4284,13 +4289,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_afaa9a48640e0e9b7389f209471463290_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_afaa9a48640e0e9b7389f209471463290_icgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_afaa9a48640e0e9b7389f209471463290_icgraph" id="ad2/dd1/namespaceptof_afaa9a48640e0e9b7389f209471463290_icgraph">
-<area shape="rect" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="435,188,565,229"/>
-<area shape="rect" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a4151239be3e7489927b0abeee63fc554" title=" " alt="" coords="197,5,366,76"/>
-<area shape="rect" href="../../dd/d5e/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8f9bca151bdad048fb2d1ca638c7ff01" title=" " alt="" coords="193,101,369,157"/>
-<area shape="rect" href="../../dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aa118b2da381b234896ca9a15f88f5fb6" title=" " alt="" coords="176,181,387,237"/>
-<area shape="rect" href="../../d8/d17/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport_1_1_parameters.html#a442e0c5be335fb8749442417ddc967d5" title=" " alt="" coords="194,261,369,332"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="199,357,364,383"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="5,349,128,391"/>
+<area shape="rect" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="523,188,668,229"/>
+<area shape="rect" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a4151239be3e7489927b0abeee63fc554" title=" " alt="" coords="264,5,451,76"/>
+<area shape="rect" href="../../dd/d5e/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8f9bca151bdad048fb2d1ca638c7ff01" title=" " alt="" coords="262,101,453,157"/>
+<area shape="rect" href="../../dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aa118b2da381b234896ca9a15f88f5fb6" title=" " alt="" coords="240,181,475,237"/>
+<area shape="rect" href="../../d8/d17/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport_1_1_parameters.html#a442e0c5be335fb8749442417ddc967d5" title=" " alt="" coords="261,261,453,332"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="266,357,449,383"/>
+<area shape="rect" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8a12e645c6acfcb3a5aeb8af52b62040" title=" " alt="" coords="5,5,192,76"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="31,349,166,391"/>
 </map>
 </div>
 
@@ -5148,13 +5154,13 @@ template&lt;typename Info , typename Locator , typename Time  = useful::Empty, t
 
 </div>
 </div>
-<a id="abb1ff965576a54cbd3d9f56e0f0cc381"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb1ff965576a54cbd3d9f56e0f0cc381">&#9670;&nbsp;</a></span>makeLinearVelocityInterpolator() <span class="overload">[1/2]</span></h2>
+<a id="abe1b3eb8c34a82cc66ec361d9c13880b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe1b3eb8c34a82cc66ec361d9c13880b">&#9670;&nbsp;</a></span>makeLinearVelocityInterpolator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename Field , typename TransportParameters &gt; </div>
+template&lt;typename Geometry , typename Field &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto ptof::makeLinearVelocityInterpolator </td>
@@ -5166,13 +5172,7 @@ template&lt;typename Geometry , typename Field , typename TransportParameters &g
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Field &amp;&amp;&#160;</td>
-          <td class="paramname"><em>field</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TransportParameters &amp;&#160;</td>
-          <td class="paramname"><em>params_transport</em>&#160;</td>
+          <td class="paramname"><em>field</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -5194,34 +5194,38 @@ template&lt;typename Geometry , typename Field , typename TransportParameters &g
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_cgraph" alt=""/></div>
-<map name="ad2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_cgraph" id="ad2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_cgraph">
-<area shape="rect" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="5,5,172,47"/>
-<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aaffa63f78d1b987cef0ffcc88799f01d" title=" " alt="" coords="220,5,385,47"/>
+<div class="center"><img src="../../d2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_cgraph" alt=""/></div>
+<map name="ad2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_cgraph" id="ad2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_cgraph">
+<area shape="rect" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="5,5,188,47"/>
+<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aaffa63f78d1b987cef0ffcc88799f01d" title=" " alt="" coords="236,5,419,47"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_icgraph" alt=""/></div>
-<map name="ad2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_icgraph" id="ad2/dd1/namespaceptof_abb1ff965576a54cbd3d9f56e0f0cc381_icgraph">
-<area shape="rect" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="291,133,457,174"/>
-<area shape="rect" href="../../d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#aadc9601e7257049379fc4082f59f6f40" title=" " alt="" coords="5,5,243,61"/>
-<area shape="rect" href="../../d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#a7f5e26ab84d70ba25ce96389867667bc" title=" " alt="" coords="36,85,212,141"/>
-<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a0592058f0ad82e7ccbab10d9c760d15d" title=" " alt="" coords="5,165,243,221"/>
-<area shape="rect" href="../../d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#a18927fe7916e0182c1d46ea452768ba1" title=" " alt="" coords="5,245,243,301"/>
+<div class="center"><img src="../../d2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_icgraph" alt=""/></div>
+<map name="ad2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_icgraph" id="ad2/dd1/namespaceptof_abe1b3eb8c34a82cc66ec361d9c13880b_icgraph">
+<area shape="rect" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="316,297,499,338"/>
+<area shape="rect" href="../../d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#abad23964e94331d483b4e7158b3f7708" title=" " alt="" coords="5,5,268,61"/>
+<area shape="rect" href="../../d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#a21141682c3efdc910170ef4c0c6da556" title=" " alt="" coords="39,85,234,141"/>
+<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a279c8b6b8122ffb2470504d26b52fd32" title=" " alt="" coords="5,165,268,221"/>
+<area shape="rect" href="../../d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#a4745fc80fb68e9db852acda3abbb8261" title=" " alt="" coords="5,245,268,301"/>
+<area shape="rect" href="../../d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#a880e7b83e09cffd0c25044cf706a0e1e" title=" " alt="" coords="5,326,268,397"/>
+<area shape="rect" href="../../d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#aab99a82906f32efb8199af4b89fe865d" title=" " alt="" coords="39,421,234,491"/>
+<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a1c76be00c10c6139c9ba8ca10eb5b445" title=" " alt="" coords="5,515,268,586"/>
+<area shape="rect" href="../../d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#aeaa0dcdb1b538e358ad2690399754c74" title=" " alt="" coords="5,610,268,681"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a9a987025004d45e9e31782cd7af5e857"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a987025004d45e9e31782cd7af5e857">&#9670;&nbsp;</a></span>makeLinearVelocityInterpolator() <span class="overload">[2/2]</span></h2>
+<a id="ac03d0655b6bd26d853407674412842f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac03d0655b6bd26d853407674412842f6">&#9670;&nbsp;</a></span>makeLinearVelocityInterpolator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Geometry , typename Field , typename Uninterpolated , typename TransportParameters &gt; </div>
+template&lt;typename Geometry , typename Field , typename Uninterpolated &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto ptof::makeLinearVelocityInterpolator </td>
@@ -5239,13 +5243,7 @@ template&lt;typename Geometry , typename Field , typename Uninterpolated , typen
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Uninterpolated &amp;&amp;&#160;</td>
-          <td class="paramname"><em>uninterpolated</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TransportParameters &amp;&#160;</td>
-          <td class="paramname"><em>params_transport</em>&#160;</td>
+          <td class="paramname"><em>uninterpolated</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -5268,10 +5266,10 @@ template&lt;typename Geometry , typename Field , typename Uninterpolated , typen
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd1/namespaceptof_a9a987025004d45e9e31782cd7af5e857_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a9a987025004d45e9e31782cd7af5e857_cgraph" alt=""/></div>
-<map name="ad2/dd1/namespaceptof_a9a987025004d45e9e31782cd7af5e857_cgraph" id="ad2/dd1/namespaceptof_a9a987025004d45e9e31782cd7af5e857_cgraph">
-<area shape="rect" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="5,5,172,47"/>
-<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aaffa63f78d1b987cef0ffcc88799f01d" title=" " alt="" coords="220,5,385,47"/>
+<div class="center"><img src="../../d2/dd1/namespaceptof_ac03d0655b6bd26d853407674412842f6_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_ac03d0655b6bd26d853407674412842f6_cgraph" alt=""/></div>
+<map name="ad2/dd1/namespaceptof_ac03d0655b6bd26d853407674412842f6_cgraph" id="ad2/dd1/namespaceptof_ac03d0655b6bd26d853407674412842f6_cgraph">
+<area shape="rect" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="5,5,188,47"/>
+<area shape="rect" href="../../d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aaffa63f78d1b987cef0ffcc88799f01d" title=" " alt="" coords="236,5,419,47"/>
 </map>
 </div>
 
@@ -8001,7 +7999,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d2/dd1/namespaceptof_aef85c49552eddb04174dfee310ac0f89_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_aef85c49552eddb04174dfee310ac0f89_cgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_aef85c49552eddb04174dfee310ac0f89_cgraph" id="ad2/dd1/namespaceptof_aef85c49552eddb04174dfee310ac0f89_cgraph">
 <area shape="rect" title="Handle help options for main executable." alt="" coords="5,5,144,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a9841786a963aafc9f91ef1e615f85171" title="Check command line options for help flags." alt="" coords="192,5,391,32"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a558473aa4d9a1ca34e47867a797ce477" title="Check command line options for help flags." alt="" coords="192,5,363,32"/>
 </map>
 </div>
 
@@ -8469,29 +8467,31 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_a771b932077b91dda298c2ba0aa8b5959_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a771b932077b91dda298c2ba0aa8b5959_icgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_a771b932077b91dda298c2ba0aa8b5959_icgraph" id="ad2/dd1/namespaceptof_a771b932077b91dda298c2ba0aa8b5959_icgraph">
-<area shape="rect" title="Return whether cell is outside mesh." alt="" coords="829,522,924,549"/>
-<area shape="rect" href="../../d2/dfa/namespacegeom.html#a6481318770b8eda6dba996c19038f39a" title=" " alt="" coords="603,5,769,47"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#aa2fad201b2f8b51b988ef084139fdae2" title=" " alt="" coords="617,71,755,112"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#ab292ea279bbaf58427c1603cbb72a7b5" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="617,136,755,177"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a0ac94a1e899ca8c02cfd64bcda246f92" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="617,201,755,243"/>
-<area shape="rect" href="../../d9/ddf/structptof_1_1_initial_condition___point.html#a9dda26c0f134a5ae6bd421ac9379291f" title=" " alt="" coords="591,267,781,308"/>
-<area shape="rect" href="../../d7/dc5/structptof_1_1_initial_condition___distributed_position.html#aeb4b1dc2c01b6dae100a0c23e32d368f" title="Make a single position according to prescribed initial condition." alt="" coords="605,333,767,389"/>
-<area shape="rect" href="../../dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#acd34396fef150ad2a4eaab7db13247e6" title="Make a single position along with location hint." alt="" coords="601,413,771,469"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a3d498a9cdbd48b48069de0fc69f9845b" title=" " alt="" coords="644,493,728,519"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5" title="Small offset backward." alt="" coords="612,544,760,585"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a1ac1eb7cdfb814fb2a4e8137917bec26" title="Small offset backward from a point on a face." alt="" coords="612,609,760,651"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a7673f1a07f55cb10bfe6bc1ffc851d5a" title="Small offset forward." alt="" coords="619,675,753,716"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="619,740,753,781"/>
-<area shape="rect" href="../../da/de0/structptof_1_1_measurer_time__position__in__regions.html#aa88d7f9a86c7b99f596594147e7c5904" title="Make measurement and output or store, given current time time." alt="" coords="616,806,756,862"/>
-<area shape="rect" href="../../d9/d35/structptof_1_1_measurer_time__tensor__field.html#af7e9fc40b95bc2ecff94591926e29a2d" title="Make measurement and output or store, given current time time." alt="" coords="607,887,765,928"/>
-<area shape="rect" href="../../dd/d75/structptof_1_1_measurer_time__position__in__regions__periodic.html#ac865e764e936828882f7363688116de9" title="Make measurement and output or store, given current time time." alt="" coords="616,953,756,1009"/>
-<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3" title="Check if position is out of bounds." alt="" coords="610,1033,762,1075"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#ac7024364e76842305fdea9fe67706e3b" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="400,136,533,177"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a7e3e43ceb8c6053f3d420fe91b5e296b" title=" " alt="" coords="205,110,310,137"/>
-<area shape="rect" href="../../de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a10d4026a54940b39ddc144c9807697af" title=" " alt="" coords="172,161,343,217"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a145dbf20bf4a1f003017891798092c1f" title=" " alt="" coords="5,110,124,137"/>
-<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b" title="Find next intersection with a boundary." alt="" coords="391,740,543,781"/>
-<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title="Check if next intersection is beyond final position." alt="" coords="181,733,333,789"/>
+<area shape="rect" title="Return whether cell is outside mesh." alt="" coords="885,551,988,578"/>
+<area shape="rect" href="../../d2/dfa/namespacegeom.html#a6481318770b8eda6dba996c19038f39a" title=" " alt="" coords="639,5,826,47"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aa2fad201b2f8b51b988ef084139fdae2" title=" " alt="" coords="657,71,809,112"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#ab292ea279bbaf58427c1603cbb72a7b5" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="658,136,807,177"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a0ac94a1e899ca8c02cfd64bcda246f92" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="658,201,807,243"/>
+<area shape="rect" href="../../d9/ddf/structptof_1_1_initial_condition___point.html#a9dda26c0f134a5ae6bd421ac9379291f" title=" " alt="" coords="628,267,837,308"/>
+<area shape="rect" href="../../d7/dc5/structptof_1_1_initial_condition___distributed_position.html#aeb4b1dc2c01b6dae100a0c23e32d368f" title="Make a single position according to prescribed initial condition." alt="" coords="643,333,823,389"/>
+<area shape="rect" href="../../dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#acd34396fef150ad2a4eaab7db13247e6" title="Make a single position along with location hint." alt="" coords="639,413,827,469"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a3d498a9cdbd48b48069de0fc69f9845b" title=" " alt="" coords="687,493,778,519"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5" title="Small offset backward." alt="" coords="651,544,814,585"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a1ac1eb7cdfb814fb2a4e8137917bec26" title="Small offset backward from a point on a face." alt="" coords="651,609,814,651"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a7673f1a07f55cb10bfe6bc1ffc851d5a" title="Small offset forward." alt="" coords="658,675,807,716"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="658,740,807,781"/>
+<area shape="rect" href="../../da/de0/structptof_1_1_measurer_time__position__in__regions.html#aa88d7f9a86c7b99f596594147e7c5904" title="Make measurement and output or store, given current time time." alt="" coords="655,806,810,862"/>
+<area shape="rect" href="../../d9/d35/structptof_1_1_measurer_time__tensor__field.html#af7e9fc40b95bc2ecff94591926e29a2d" title="Make measurement and output or store, given current time time." alt="" coords="643,887,822,928"/>
+<area shape="rect" href="../../dd/d75/structptof_1_1_measurer_time__position__in__regions__periodic.html#ac865e764e936828882f7363688116de9" title="Make measurement and output or store, given current time time." alt="" coords="655,953,810,1009"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#ac937bda5d9d28b8cd3bd348e748625b2" title=" " alt="" coords="665,1033,800,1075"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3" title="Check if position is out of bounds." alt="" coords="651,1099,814,1140"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#ac7024364e76842305fdea9fe67706e3b" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="425,136,572,177"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a7e3e43ceb8c6053f3d420fe91b5e296b" title=" " alt="" coords="218,110,333,137"/>
+<area shape="rect" href="../../de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a10d4026a54940b39ddc144c9807697af" title=" " alt="" coords="181,161,369,217"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a145dbf20bf4a1f003017891798092c1f" title=" " alt="" coords="5,110,133,137"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b" title="Find next intersection with a boundary." alt="" coords="417,740,580,781"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title="Check if next intersection is beyond final position." alt="" coords="194,733,357,789"/>
+<area shape="rect" href="../../d0/d4f/structptof_1_1_locator___cell.html#af928498223c8a67410d020a00aa570f5" title=" " alt="" coords="431,1033,566,1075"/>
 </map>
 </div>
 
@@ -9954,10 +9954,10 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_aa5987770261695eb69ab41fdb7bbbe96_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_aa5987770261695eb69ab41fdb7bbbe96_icgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_aa5987770261695eb69ab41fdb7bbbe96_icgraph" id="ad2/dd1/namespaceptof_aa5987770261695eb69ab41fdb7bbbe96_icgraph">
-<area shape="rect" title="Get time units factor." alt="" coords="601,46,747,73"/>
-<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="327,5,553,47"/>
-<area shape="rect" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a0848d553603c736972932094c5dd7364" title="Read initial condition info from input stream." alt="" coords="330,71,550,112"/>
-<area shape="rect" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2" title=" " alt="" coords="5,71,279,112"/>
+<area shape="rect" title="Get time units factor." alt="" coords="637,46,800,73"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="349,5,589,47"/>
+<area shape="rect" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a96079ed4219946dff4a8d420286f8b54" title="Read initial condition info from input stream." alt="" coords="348,71,589,112"/>
+<area shape="rect" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2" title=" " alt="" coords="5,71,300,112"/>
 </map>
 </div>
 
@@ -10158,9 +10158,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d2/dd1/namespaceptof_aa7f7acb9ce3a22408902565db798402b_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_aa7f7acb9ce3a22408902565db798402b_icgraph" alt=""/></div>
 <map name="ad2/dd1/namespaceptof_aa7f7acb9ce3a22408902565db798402b_icgraph" id="ad2/dd1/namespaceptof_aa7f7acb9ce3a22408902565db798402b_icgraph">
-<area shape="rect" title="Append homogeneous surface concentrations over patch faces to map." alt="" coords="227,60,356,101"/>
-<area shape="rect" href="../../d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#aaf17f3d4f89ac21b43cfc9d0d9acb43c" title=" " alt="" coords="5,5,179,76"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a1b9c4cd8c5757b9bbe7e9b434704332f" title=" " alt="" coords="27,100,157,141"/>
+<area shape="rect" title="Append homogeneous surface concentrations over patch faces to map." alt="" coords="241,60,385,101"/>
+<area shape="rect" href="../../d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#a3473245cf3639c5861ac3af630fc13fd" title=" " alt="" coords="5,5,193,76"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a1b9c4cd8c5757b9bbe7e9b434704332f" title=" " alt="" coords="27,100,171,141"/>
 </map>
 </div>
 
@@ -10299,6 +10299,68 @@ Here is the caller graph for this function:</div>
 <map name="ad2/dd1/namespaceptof_abf0aa3876390d4bac9c2877bfc88100b_icgraph" id="ad2/dd1/namespaceptof_abf0aa3876390d4bac9c2877bfc88100b_icgraph">
 <area shape="rect" title="Unit normal at boundary face, pointing outward." alt="" coords="180,5,373,32"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#aa3001150c0a019905f023f5d5a60ff61" title="Small offset along face normal (outward)." alt="" coords="5,5,132,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a607ed89b86fa2bc0881f8dfdd3ac63e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a607ed89b86fa2bc0881f8dfdd3ac63e0">&#9670;&nbsp;</a></span>update_velocity_field()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VelocityField , typename Geometry , typename TransportParameters &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ptof::update_velocity_field </td>
+          <td>(</td>
+          <td class="paramtype">VelocityField &amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Geometry const &amp;&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TransportParameters const &amp;&#160;</td>
+          <td class="paramname"><em>params_transport</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_cgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_cgraph" alt=""/></div>
+<map name="ad2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_cgraph" id="ad2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,164,47"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="212,13,383,39"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_icgraph.png" border="0" usemap="#ad2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_icgraph" alt=""/></div>
+<map name="ad2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_icgraph" id="ad2/dd1/namespaceptof_a607ed89b86fa2bc0881f8dfdd3ac63e0_icgraph">
+<area shape="rect" title=" " alt="" coords="247,5,405,47"/>
+<area shape="rect" href="../../d0/d06/structptof_1_1_phase.html#aea0dd696f8cf71ff5e6bea8ca71224d8" title="Update phase field and velocity field." alt="" coords="5,5,199,47"/>
 </map>
 </div>
 

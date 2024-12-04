@@ -1,6 +1,6 @@
 var structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters =
 [
-    [ "Parameters", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aea29329700b65a6fb4246071af53a287", null ],
+    [ "Parameters", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#af1efc545706c65a80cee44242ca15a5f", null ],
     [ "info", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#a9edce2ad8e8ad9f86c853c91bbf0747e", null ],
     [ "rescale", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aa118b2da381b234896ca9a15f88f5fb6", null ],
     [ "advection_time", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#a77a3454c98c6f355226c02779bd120e9", null ],
@@ -13,6 +13,5 @@ var structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_
     [ "peclet", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aefb2d8031da06135d0ce8e41666f50ea", null ],
     [ "peclet_option", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aa2dc2cae91b0f49d89c6578f3bded12b", null ],
     [ "primitive_cell_boundaries", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#a42fc24ba6dbe2210b8bcb2bf9336dd9c", null ],
-    [ "primitive_cell_location_option", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#a7f4d7a54da626841a4927006117006e3", null ],
     [ "velocity_rescaling_factor", "dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#af641928217dd50200451c9905a9cbc2a", null ]
 ];

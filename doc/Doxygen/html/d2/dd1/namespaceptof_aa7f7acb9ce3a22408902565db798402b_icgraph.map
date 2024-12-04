@@ -1,5 +1,5 @@
 <map id="ptof::uniform_solid_reactant" name="ptof::uniform_solid_reactant">
-<area shape="rect" id="node1" title="Append homogeneous surface concentrations over patch faces to map." alt="" coords="227,60,356,101"/>
-<area shape="rect" id="node2" href="$d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#aaf17f3d4f89ac21b43cfc9d0d9acb43c" title=" " alt="" coords="5,5,179,76"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a1b9c4cd8c5757b9bbe7e9b434704332f" title=" " alt="" coords="27,100,157,141"/>
+<area shape="rect" id="node1" title="Append homogeneous surface concentrations over patch faces to map." alt="" coords="241,60,385,101"/>
+<area shape="rect" id="node2" href="$d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#a3473245cf3639c5861ac3af630fc13fd" title=" " alt="" coords="5,5,193,76"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a1b9c4cd8c5757b9bbe7e9b434704332f" title=" " alt="" coords="27,100,171,141"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="ptof::apply_mask_patch_faces" name="ptof::apply_mask_patch_faces">
-<area shape="rect" id="node1" title="Remove face indices if mask is below threshold." alt="" coords="5,5,167,47"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="215,5,376,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="424,13,573,39"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="621,13,756,39"/>
+<area shape="rect" id="node1" title="Remove face indices if mask is below threshold." alt="" coords="5,5,183,47"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="231,5,408,47"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="456,13,619,39"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="667,13,813,39"/>
 </map>

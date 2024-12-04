@@ -5,6 +5,6 @@ var structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction =
     [ "SurfaceReaction", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a5b3b78393804179978fa5ce54b0589de", null ],
     [ "Reaction", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a0db6d0d2276f407c9b2184069a532daa", null ],
     [ "info", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#aa41be012b3639b6dd85a00fcac8f692a", null ],
-    [ "makeBulkReaction", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a4eb4321fbde218c12b7f365556a7de33", null ],
-    [ "makeSurfaceReaction", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a1d534fdfb8e5cc610f7ca994454dc10d", null ]
+    [ "makeBulkReaction", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a30ab1591ac74a1a2c68395deb9a15f64", null ],
+    [ "makeSurfaceReaction", "d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#aa4d46e96fd624950c750cc42424b16f0", null ]
 ];

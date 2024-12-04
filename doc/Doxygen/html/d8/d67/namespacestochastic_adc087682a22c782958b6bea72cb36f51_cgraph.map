@@ -1,8 +1,8 @@
 <map id="stochastic::cdf" name="stochastic::cdf">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,113,83"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a8ed4db1a55642f21c8023a2b81167557" title=" " alt="" coords="161,5,320,32"/>
-<area shape="rect" id="node3" href="$d6/d48/namespacerange.html#a6d49becb249d5ac7411499cdf0dff276" title=" " alt="" coords="185,56,296,83"/>
-<area shape="rect" id="node4" href="$d6/d48/namespacerange.html#a182433bea7304096a75a1f167f74fa1b" title=" " alt="" coords="183,107,298,133"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a623debf04cb078b74ebf69fc2f78218f" title="Element&#45;wise power." alt="" coords="368,107,436,133"/>
-<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#ae6a67a2f6fbe1651795472b9fd76e5bd" title="Element&#45;wise power." alt="" coords="484,107,552,133"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,121,83"/>
+<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#a42ab94f140b3004de41d74e1078637c9" title=" " alt="" coords="169,5,317,32"/>
+<area shape="rect" id="node3" href="$d6/d48/namespacerange.html#a6d49becb249d5ac7411499cdf0dff276" title=" " alt="" coords="183,56,304,83"/>
+<area shape="rect" id="node4" href="$d6/d48/namespacerange.html#a182433bea7304096a75a1f167f74fa1b" title=" " alt="" coords="181,107,306,133"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a623debf04cb078b74ebf69fc2f78218f" title="Element&#45;wise power." alt="" coords="365,107,439,133"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#ae6a67a2f6fbe1651795472b9fd76e5bd" title="Element&#45;wise power." alt="" coords="487,107,560,133"/>
 </map>

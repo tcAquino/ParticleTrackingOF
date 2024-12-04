@@ -1,6 +1,6 @@
 <map id="ptof::apply_mask_cells" name="ptof::apply_mask_cells">
-<area shape="rect" id="node1" title="Remove face indices if mask is below threshold." alt="" coords="5,13,161,39"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="209,5,365,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="413,13,563,39"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="611,13,745,39"/>
+<area shape="rect" id="node1" title="Remove face indices if mask is below threshold." alt="" coords="5,13,176,39"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="224,5,395,47"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a6c616ae38bd66ff22aa47e0c1e165a5c" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="443,13,605,39"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="653,13,800,39"/>
 </map>

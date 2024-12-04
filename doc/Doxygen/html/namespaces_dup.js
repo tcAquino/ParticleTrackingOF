@@ -15,6 +15,7 @@ var namespaces_dup =
     ] ],
     [ "ctrw", "d8/d34/namespacectrw.html", "d8/d34/namespacectrw" ],
     [ "geom", "d2/dfa/namespacegeom.html", "d2/dfa/namespacegeom" ],
+    [ "io", "d1/d96/namespaceio.html", "d1/d96/namespaceio" ],
     [ "meta", "d8/db6/namespacemeta.html", "d8/db6/namespacemeta" ],
     [ "modular", "da/d32/namespacemodular.html", [
       [ "circMinus", "da/d32/namespacemodular.html#a643d0959ac1436296d4bf1801c946d18", null ],
@@ -137,5 +138,6 @@ var namespaces_dup =
       [ "range", "d6/d48/namespacerange.html#a312e0ec2d2454c724a258383c23f5f48", null ]
     ] ],
     [ "stochastic", "d8/d67/namespacestochastic.html", "d8/d67/namespacestochastic" ],
-    [ "useful", "df/d1d/namespaceuseful.html", "df/d1d/namespaceuseful" ]
+    [ "useful", "df/d1d/namespaceuseful.html", "df/d1d/namespaceuseful" ],
+    [ "Utilities", "de/dc7/namespace_utilities.html", null ]
 ];

@@ -95,9 +95,9 @@ $(document).ready(function(){initNavTree('dc/d3a/structptof_1_1model__advection_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a03788ec372f6aefb5072b0eab3e4a5d9"><td class="memTemplParams" colspan="2">template&lt;typename Geometry &gt; </td></tr>
-<tr class="memitem:a03788ec372f6aefb5072b0eab3e4a5d9"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a03788ec372f6aefb5072b0eab3e4a5d9">Parameters</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;parameter_set_name, <a class="el" href="../../d8/d25/structptof_1_1model__advection__diffusion__2d_1_1_definitions.html#a3467e0bf95aa24c1790bb2096e6cd8cf">Geometry</a> const &amp;geometry)</td></tr>
-<tr class="separator:a03788ec372f6aefb5072b0eab3e4a5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a12e645c6acfcb3a5aeb8af52b62040"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename VelocityField &gt; </td></tr>
+<tr class="memitem:a8a12e645c6acfcb3a5aeb8af52b62040"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8a12e645c6acfcb3a5aeb8af52b62040">Parameters</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;parameter_set_name, <a class="el" href="../../d8/d25/structptof_1_1model__advection__diffusion__2d_1_1_definitions.html#a3467e0bf95aa24c1790bb2096e6cd8cf">Geometry</a> const &amp;geometry, VelocityField &amp;velocity_field)</td></tr>
+<tr class="separator:a8a12e645c6acfcb3a5aeb8af52b62040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4151239be3e7489927b0abeee63fc554"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mesh &gt; </td></tr>
 <tr class="memitem:a4151239be3e7489927b0abeee63fc554"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a4151239be3e7489927b0abeee63fc554">rescale</a> (VelocityField &amp;velocity_field, Mesh const &amp;mesh)</td></tr>
 <tr class="separator:a4151239be3e7489927b0abeee63fc554"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,15 +129,15 @@ Data Fields</h2></td></tr>
 <tr class="separator:a71bda53758d024a91958bb194f2af88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a03788ec372f6aefb5072b0eab3e4a5d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03788ec372f6aefb5072b0eab3e4a5d9">&#9670;&nbsp;</a></span>Parameters()</h2>
+<a id="a8a12e645c6acfcb3a5aeb8af52b62040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a12e645c6acfcb3a5aeb8af52b62040">&#9670;&nbsp;</a></span>Parameters()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename ParallelOption &gt; </div>
 <div class="memtemplate">
-template&lt;typename Geometry &gt; </div>
+template&lt;typename Geometry , typename VelocityField &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -158,7 +158,13 @@ template&lt;typename Geometry &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="../../d8/d25/structptof_1_1model__advection__diffusion__2d_1_1_definitions.html#a3467e0bf95aa24c1790bb2096e6cd8cf">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">VelocityField &amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -175,14 +181,20 @@ template&lt;typename Geometry &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a03788ec372f6aefb5072b0eab3e4a5d9_cgraph.png" border="0" usemap="#adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a03788ec372f6aefb5072b0eab3e4a5d9_cgraph" alt=""/></div>
-<map name="adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a03788ec372f6aefb5072b0eab3e4a5d9_cgraph" id="adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a03788ec372f6aefb5072b0eab3e4a5d9_cgraph">
-<area shape="rect" title=" " alt="" coords="5,17,175,87"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="223,9,348,36"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="227,64,343,91"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="397,5,556,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="405,57,548,98"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="396,122,557,163"/>
+<div class="center"><img src="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a8a12e645c6acfcb3a5aeb8af52b62040_cgraph.png" border="0" usemap="#adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a8a12e645c6acfcb3a5aeb8af52b62040_cgraph" alt=""/></div>
+<map name="adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a8a12e645c6acfcb3a5aeb8af52b62040_cgraph" id="adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a8a12e645c6acfcb3a5aeb8af52b62040_cgraph">
+<area shape="rect" title=" " alt="" coords="5,100,192,171"/>
+<area shape="rect" href="../../da/dd3/structptof_1_1_geometry___generic.html#a6f68203cfb554ac8f0b07b3449ea03ca" title=" " alt="" coords="245,5,422,47"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a8cc6b46536bb3ae60a8a72a3d5b1c2f9" title="Open file for reading." alt="" coords="278,71,389,98"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a07f168349a7ec4b83432f5d55456ed65" title="Read next value from file." alt="" coords="298,122,369,149"/>
+<area shape="rect" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a4151239be3e7489927b0abeee63fc554" title=" " alt="" coords="240,173,427,244"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="283,269,384,295"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5" title="Get number of current parallel thread." alt="" coords="475,13,632,39"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a6c2ebb3c165cea33a041174b0cd0823b" title=" " alt="" coords="479,71,627,98"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="481,188,626,229"/>
+<area shape="rect" href="../../db/dd7/namespaceop.html#a485607aaf9ab1b22a1d50af086a2628b" title="Sum of elements." alt="" coords="680,195,755,222"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="480,257,627,299"/>
+<area shape="rect" href="../../d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="477,323,629,364"/>
 </map>
 </div>
 
@@ -272,6 +284,15 @@ Here is the call graph for this function:</div>
 <area shape="rect" title=" " alt="" coords="5,5,175,76"/>
 <area shape="rect" href="../../d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="223,20,353,61"/>
 <area shape="rect" href="../../db/dd7/namespaceop.html#a485607aaf9ab1b22a1d50af086a2628b" title="Sum of elements." alt="" coords="401,27,471,54"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a4151239be3e7489927b0abeee63fc554_icgraph.png" border="0" usemap="#adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a4151239be3e7489927b0abeee63fc554_icgraph" alt=""/></div>
+<map name="adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a4151239be3e7489927b0abeee63fc554_icgraph" id="adc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters_a4151239be3e7489927b0abeee63fc554_icgraph">
+<area shape="rect" title=" " alt="" coords="240,5,427,76"/>
+<area shape="rect" href="../../dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8a12e645c6acfcb3a5aeb8af52b62040" title=" " alt="" coords="5,5,192,76"/>
 </map>
 </div>
 
