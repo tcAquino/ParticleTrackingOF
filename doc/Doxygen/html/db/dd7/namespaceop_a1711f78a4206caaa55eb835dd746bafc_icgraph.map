@@ -1,7 +1,7 @@
 <map id="op::plus_inplace" name="op::plus_inplace">
 <area shape="rect" id="node1" title="Element&#45;wise sum." alt="" coords="509,320,625,347"/>
 <area shape="rect" id="node2" href="$d8/d10/classstochastic_1_1uniform__cylinder__distribution.html#a1453468b57ba62ae0ac0061bfc424347" title=" " alt="" coords="301,5,445,61"/>
-<area shape="rect" id="node3" href="$d5/d74/classstochastic_1_1uniform__paralleliped__distribution.html#a0a1a39ac09eebbf72fe4557a9c41339d" title=" " alt="" coords="291,85,455,141"/>
+<area shape="rect" id="node3" href="$d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution.html#a8b4eeb1b71675dba528067fb37012e4e" title=" " alt="" coords="285,85,460,141"/>
 <area shape="rect" id="node4" href="$d4/d94/classctrw_1_1_transitions___time___position.html#a2e3d1785d8407e6fc08db431bf716679" title=" " alt="" coords="295,166,450,207"/>
 <area shape="rect" id="node5" href="$db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#aa5ee0cb3571c747c48f3913e33c409ac" title=" " alt="" coords="284,232,461,288"/>
 <area shape="rect" id="node6" href="$d7/d1d/classctrw_1_1_transitions___position.html#aef5641c7816a79df7a62375d7b5327fd" title=" " alt="" coords="286,313,459,354"/>

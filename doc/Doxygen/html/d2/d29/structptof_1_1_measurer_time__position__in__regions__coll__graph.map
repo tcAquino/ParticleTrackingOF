@@ -1,7 +1,4 @@
 <map id="ptof::MeasurerTime_position_in_regions&lt; Subject, Geometry, Mask &gt;" name="ptof::MeasurerTime_position_in_regions&lt; Subject, Geometry, Mask &gt;">
-<area shape="rect" id="node1" title="Output time, tags, positions, and masses within regions specified by masks." alt="" coords="1191,5,1353,76"/>
-<area shape="rect" id="node2" href="$dc/d05/structptof_1_1_measurer_time.html" title="Polymorphic output handler for outputting time and some quantity." alt="" coords="968,20,1141,61"/>
-<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="313,13,528,69"/>
-<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="651,55,863,96"/>
-<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,13,216,69"/>
+<area shape="rect" id="node1" title="Output time, tags, positions, and masses within regions specified by masks." alt="" coords="10,95,155,165"/>
+<area shape="rect" id="node2" href="$dc/d05/structptof_1_1_measurer_time.html" title="Abstract polymorphic output handler for outputting time and some quantity." alt="" coords="5,5,160,47"/>
 </map>

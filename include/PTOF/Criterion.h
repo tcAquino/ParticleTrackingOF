@@ -1,7 +1,8 @@
-/**C
- \file PTOF/Criterion.h
- \author Tomás Aquino
- \date 07/03/2022
+/**
+   \file PTOF/Criterion.h
+   \author Tomás Aquino
+   \date 07/03/2022
+   \brief Criteria to check for features.
 */
 
 #ifndef PTOF_CRITERION_H
@@ -13,9 +14,10 @@
 #include <string>
 
 namespace ptof {
-/** \class Criterion PTOF/Criterion.h "PTOF/Criterion.h"
- * \brief  Polymorphic functor to implement criteria
- \note To be used only through derived classes. */
+/**
+   \class Criterion PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Abstract polymorphic functor to implement criteria.
+*/
 template <typename Subject> struct Criterion {
   virtual ~Criterion() {}
 
@@ -27,8 +29,10 @@ protected:
   Subject const &_subject;
 };
 
-/** \class Criterion_time PTOF/Criterion.h "PTOF/Criterion.h
- *  \brief Check if time is greater than value. */
+/**
+   \class Criterion_time PTOF/Criterion.h "PTOF/Criterion.h
+   \brief Check if time is greater than value.
+*/
 template <typename Subject> struct Criterion_time final : Criterion<Subject> {
   Criterion_time(Subject const &subject, double end_value)
       : Criterion<Subject>(subject), end_value{end_value} {}
@@ -38,8 +42,10 @@ template <typename Subject> struct Criterion_time final : Criterion<Subject> {
   double end_value;
 };
 
-/** \class Criterion_mass_below PTOF/Criterion.h "PTOF/Criterion.h"
- *  \brief Check if mass is less than or equal to value. */
+/**
+   \class Criterion_mass_below PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if mass is less than or equal to value.
+*/
 template <typename Subject>
 struct Criterion_mass_below final : Criterion<Subject> {
   Criterion_mass_below(Subject const &subject, double end_value)
@@ -52,8 +58,10 @@ struct Criterion_mass_below final : Criterion<Subject> {
   double end_value;
 };
 
-/** \class Criterion_mass_above PTOF/Criterion.h "PTOF/Criterion.h"
- *  \brief Check if mass is greater than or equal to value. */
+/**
+   \class Criterion_mass_above PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if mass is greater than or equal to value.
+*/
 template <typename Subject>
 struct Criterion_mass_above final : Criterion<Subject> {
   Criterion_mass_above(Subject const &subject, double end_value)
@@ -66,8 +74,10 @@ struct Criterion_mass_above final : Criterion<Subject> {
   double end_value;
 };
 
-/** \class Criterion_all_absorbed PTOF/Criterion.h "PTOF/Criterion.h"
- * \brief Check if all particles have been absorbed. */
+/**
+   \class Criterion_all_absorbed PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if all particles have been absorbed.
+*/
 template <typename Subject>
 struct Criterion_all_absorbed final : Criterion<Subject> {
   Criterion_all_absorbed(Subject const &subject)
@@ -79,8 +89,10 @@ struct Criterion_all_absorbed final : Criterion<Subject> {
   }
 };
 
-/** \class Criterion_one_absorbed PTOF/Criterion.h "PTOF/Criterion.h"
- *  \brief Check if at least one particle has been absorbed. */
+/**
+   \class Criterion_one_absorbed PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if at least one particle has been absorbed.
+*/
 template <typename Subject>
 struct Criterion_one_absorbed final : Criterion<Subject> {
   Criterion_one_absorbed(Subject const &subject)
@@ -91,9 +103,11 @@ struct Criterion_one_absorbed final : Criterion<Subject> {
   }
 };
 
-/** \class Criterion_fraction_not_absorbed PTOF/Criterion.h "PTOF/Criterion.h"
- *  \brief Check if the fraction of particles that have not been absorbed is at
- * most a certain value. */
+/**
+   \class Criterion_fraction_not_absorbed PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if the fraction of particles that have not been absorbed is at
+   most a certain value.
+*/
 template <typename Subject>
 struct Criterion_fraction_not_absorbed final : Criterion<Subject> {
   Criterion_fraction_not_absorbed(Subject const &subject, double end_value)
@@ -108,8 +122,10 @@ struct Criterion_fraction_not_absorbed final : Criterion<Subject> {
   double end_value;
 };
 
-/** \struct EndCriterion PTOF/Criterion.h "PTOF/Criterion.h"
- * \brief Keep track of names and types of end criteria. */
+/**
+   \struct EndCriterion PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Keep track of names and types of end criteria.
+*/
 struct EndCriterion {
   /** \enum Type
    *  \brief Implemented types. */

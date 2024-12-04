@@ -1,703 +1,817 @@
 /**
- \file PTOF/InitialCondition.h
- \author Tomás Aquino
- \date 29/09/2024
+   \file PTOF/InitialCondition.h
+   \author Tomás Aquino
+   \date 29/09/2024
+   \brief Objects to create particles according to initial condition.
 */
 
 #ifndef PTOF_INITIALCONDITION_H
 #define PTOF_INITIALCONDITION_H
 
 #include "CTRW/Meta.h"
-#include "General/Useful.h"
+#include "General/IO.h"
+#include "PTOF/Useful.h"
+#include "Stochastic/Random.h"
+#include "fvMesh.H"
+#include <cmath>
 #include <cstddef>
 #include <fieldTypes.H>
+#include <fstream>
 #include <map>
 #include <point.H>
 #include <random>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 namespace ptof {
-/** \brief Remove cell/face indices if mask is above threshold.
- \param cell_or_face_ids Container with mesh cell or face indices.
- \param mask Scalar field assigning values to mesh cell indices through
- operator[]. \param threshold Threshold for the mask, such that cells where the
- mask is above the threshold are considered. */
-template <typename Container, typename Mask>
-void apply_mask_in_place(Container &cell_or_face_ids, Mask const &mask,
-                         double threshold = 0.) {
-  useful::swap_erase_if(cell_or_face_ids, [&mask, threshold](auto ii) {
-    return mask[ii] > threshold;
-  });
-}
-
-/** \brief Remove cell/face indices if mask is above threshold.
-\param cell_or_face_ids Container with mesh cell or face indices.
-\param mask Scalar field assigning values to mesh cell indices through
-operator[]. \param threshold Threshold for the mask, such that cells where the
-mask is above the threshold are considered. \return \p cell_or_face_ids with
-indices of elements where mask is above threshold removed. */
-template <typename Container, typename Mask>
-auto apply_mask(Container const &cell_or_face_ids, Mask const &mask,
-                double threshold = 0.) {
-  auto masked_ids = cell_or_face_ids;
-  apply_mask_in_place(masked_ids, mask, threshold);
-
-  return masked_ids;
-}
-
-/** \brief Make particles distributed randomly uniformly over given cells.
- \details Place particles at cell centers.
- \param nr_particles Number of particles to make.
- \param cell_ids Mesh cell indices.
- \param mesh Mesh object.
- \param rng Random number param.
- \generator particle_maker Functor to make a particle given a position.
- \return Container with particles. */
-template <typename Container, typename Mesh, typename RNG,
-          typename ParticleMaker>
-auto uniform_cells(std::size_t nr_particles, Container const &cell_ids,
-                   Mesh const &mesh, RNG &rng, ParticleMaker &particle_maker) {
-  if (cell_ids.size() == 0 && nr_particles != 0)
-    throw std::runtime_error{"No available cells to place particles"};
-
-  // Weigh probabilities with cell volumes.
-  std::vector<double> weights;
-  weights.reserve(cell_ids.size());
-  for (auto cell : cell_ids)
-    weights.push_back(cell_volume(cell, mesh));
-  std::discrete_distribution<Foam::label> dist{weights.begin(), weights.end()};
-
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp)
-    particles.push_back(particle_maker(cell_center(cell_ids[dist(rng)], mesh)));
-  return particles;
-}
-
-/** \brief Make particles distributed over given cells with probability
-proportional to local velocity magnitude. \details Place particles at cell
-centers. \param nr_particles Number of particles to make. \param cell_ids Mesh
-cell indices. \param velocity_field Velocity field as a function of state.
-\param mesh Mesh object.
-\param rng Random number generator.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles. */
-template <typename Container, typename VelocityField, typename Mesh,
-          typename RNG, typename ParticleMaker>
-auto fluxweighted_cells(std::size_t nr_particles, Container const &cell_ids,
-                        VelocityField const &velocity_field, Mesh const &mesh,
-                        RNG &rng, ParticleMaker &particle_maker) {
-  // Weigh probabilities with cell volumes
-  // and velocity magnitudes at center.
-  if (cell_ids.size() == 0 && nr_particles != 0)
-    throw std::runtime_error{"No available cells to place particles"};
-
-  std::vector<double> weights;
-  weights.reserve(cell_ids.size());
-  for (auto cell : cell_ids)
-    weights.push_back(cell_volume(cell, mesh) *
-                      Foam::mag(velocity_field(cell_center(cell, mesh), cell)));
-  std::discrete_distribution<Foam::label> dist{weights.begin(), weights.end()};
-
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp)
-    particles.push_back(particle_maker(cell_center(cell_ids[dist(rng)], mesh)));
-  return particles;
-}
-
-/** \brief Make particles distributed randomly uniformly over given mesh cell
-faces. \details Place particles at face centers. \param nr_particles Number of
-particles to make. \param face_ids Mesh face indices. \param locator Object to
-locate positions in mesh. \param rng Random number generator. \param
-particle_maker Functor to make a particle given a position. \return Container
-with particles. */
-template <typename Container, typename Locator, typename RNG,
-          typename ParticleMaker>
-auto uniform_faces(std::size_t nr_particles, Container const &face_ids,
-                   Locator const &locator, RNG &rng,
-                   ParticleMaker &particle_maker) {
-  if (face_ids.size() == 0 && nr_particles != 0)
-    throw std::runtime_error{"No available faces to place particles"};
-
-  auto const &mesh = locator.mesh();
-
-  std::vector<double> weights;
-  weights.reserve(face_ids.size());
-  for (auto face : face_ids)
-    weights.push_back(face_area(face, mesh));
-  std::discrete_distribution<Foam::label> dist{weights.begin(), weights.end()};
-
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
-    auto face = face_ids[dist(rng)];
-    particles.push_back(particle_maker(
-        adjusted_face_center(face, locator, mesh.faceOwner()[face])));
-  }
-  return particles;
-}
-
-/** \brief Make particles distributed over given cell faces with probability
-proportional to local velocity magnitude. \details Place particles at face
-centers. \param nr_particles Number of particles to make. \param face_ids Mesh
-face indices. \param velocity_field Velocity field as a function of state.
-\param locator Object to locate positions in mesh.
-\param rng Random number generator.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles. */
-template <typename Container, typename VelocityField, typename Locator,
-          typename RNG, typename ParticleMaker>
-auto fluxweighted_faces(std::size_t nr_particles, Container const &face_ids,
-                        VelocityField const &velocity_field,
-                        Locator const &locator, RNG &rng,
-                        ParticleMaker &particle_maker) {
-  if (face_ids.size() == 0 && nr_particles != 0)
-    throw std::runtime_error{"No available faces to place particles"};
-
-  auto const &mesh = locator.mesh();
-
-  std::vector<double> weights;
-  weights.reserve(face_ids.size());
-  for (auto face : face_ids)
-    weights.push_back(face_area(face, mesh) *
-                      Foam::mag(velocity_field(adjusted_face_center(
-                          face, locator, mesh.faceOwner()[face]))));
-  std::discrete_distribution<Foam::label> dist{weights.begin(), weights.end()};
-
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
-    auto face = face_ids[dist(rng)];
-    particles.push_back(particle_maker(
-        adjusted_face_center(face, locator, mesh.faceOwner()[face])));
-  }
-  return particles;
-}
-
-/** Make particles randomly uniformly
- *  at given distance to given mesh cell face centers. */
-/** \brief Make particles distributed randomly uniformly near given cell face
-centers. \param nr_particles Number of particles to make. \param face_ids Mesh
-face indices. \param distance Distance from face centers. \param locator Object
-to locate positions in mesh. \param rng Random number generator. \param
-particle_maker Functor to make a particle given a position. \return Container
-with particles. */
-template <typename Container, typename Locator, typename RNG,
-          typename ParticleMaker>
-auto uniform_near_boundary_faces(std::size_t nr_particles,
-                                 Container const &face_ids, double distance,
-                                 Locator const &locator, RNG &rng,
-                                 ParticleMaker &particle_maker) {
-  if (face_ids.size() == 0 && nr_particles != 0)
-    throw std::runtime_error{"No available faces to place particles"};
-
-  auto const &mesh = locator.mesh();
-
-  std::vector<double> weights;
-  weights.reserve(face_ids.size());
-  for (auto face : face_ids)
-    weights.push_back(face_area(face, mesh));
-  std::discrete_distribution<Foam::label> dist{weights.begin(), weights.end()};
-
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
-    auto rand = dist(rng);
-    auto unit_normal = unit_normal_inward(face_ids[rand], mesh);
-    auto position = face_center(face_ids[rand], mesh);
-    +distance *unit_normal;
-    if (outside(locator.mesh_search().findCell(position)) ||
-        locator.mesh_search().findNearestBoundaryFace(position) !=
-            face_ids[rand])
-      continue;
-    particles.push_back(particle_maker(position));
-  }
-  return particles;
-}
-
-/** \brief Make particles distributed randomly uniformly over all mesh cells.
-\details Place particles at cell centers.
-\param nr_particles Number of particles to make.
-\param mesh Mesh object.
-\param rng Random number generator.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles. */
-template <typename Mesh, typename RNG, typename ParticleMaker>
-auto uniform(std::size_t nr_particles, Mesh const &mesh, RNG &rng,
-             ParticleMaker &particle_maker) {
-  return uniform_cells(nr_particles, all_cell_ids(mesh), mesh, rng,
-                       particle_maker);
-}
-
-/** \brief Make particles distributed randomly uniformly over mesh cells where
- mask is above threshold.
- \details Place particles at cell centers.
- \param nr_particles Number of particles to make.
- \param mesh Mesh object.
- \param rng Random number generator.
- \param particle_maker Functor to make a particle given a position.
- \param mask Scalar field assigning values to mesh cell indices through
- operator[].
- \param threshold Threshold for the mask, such that cells where the
- mask is above the threshold are considered.
- \return Container with particles.
- */
-template <typename Mesh, typename RNG, typename ParticleMaker, typename Mask>
-auto uniform(std::size_t nr_particles, Mesh const &mesh, RNG &rng,
-             ParticleMaker &particle_maker, Mask const &mask,
-             double threshold = 0.) {
-  return uniform_cells(nr_particles,
-                       apply_mask(all_cell_ids(mesh), mask, threshold), mesh,
-                       rng, particle_maker);
-}
-
-/** \brief Make particles distributed with probability proportional to local
-velocity magnitude over all mesh cells. \details Place particles at cell
-centers. \param nr_particles Number of particles to make. \param velocity_field
-Velocity field as a function of state. \param mesh Mesh object. \param rng
-Random number generator. \param particle_maker Functor to make a particle given
-a position. \return Container with particles. */
-template <typename VelocityField, typename Mesh, typename RNG,
-          typename ParticleMaker>
-auto fluxweighted(std::size_t nr_particles, VelocityField const &velocity_field,
-                  Mesh const &mesh, RNG &rng, ParticleMaker &particle_maker) {
-  return fluxweighted_cells(nr_particles, all_cell_ids(mesh), velocity_field,
-                            mesh, rng, particle_maker);
-}
-
-/** \brief Make particles distributed with probability proportional to local
-velocity magnitude over mesh cells where mask is above threshold. \details Place
-particles at cell centers. \param nr_particles Number of particles to make.
-\param velocity_field Velocity field as a function of state.
-\param mesh Mesh object.
-\param rng Random number generator.
-\param particle_maker Functor to make a particle given a position.
-\param mask Scalar field assigning values to mesh cell indices through
-operator[].
-\param threshold Threshold for the mask, such that cells where the
-mask is above the threshold are considered.
-\return Container with particles. */
-template <typename VelocityField, typename Mesh, typename RNG,
-          typename ParticleMaker, typename Mask>
-auto fluxweighted(std::size_t nr_particles, VelocityField const &velocity_field,
-                  Mesh const &mesh, RNG &rng, ParticleMaker &particle_maker,
-                  Mask const &mask, double threshold = 0.) {
-  return fluxweighted_cells(nr_particles,
-                            apply_mask(all_cell_ids(mesh), mask, threshold),
-                            velocity_field, mesh, rng, particle_maker);
-}
-
-/** \brief Make particles distributed randomly uniformly over cell faces in
-given patches. \details Place particles at face centers. \param nr_particles
-Number of particles to make. \param patch_names Names of patches. \param locator
-Object to locate positions in mesh. \param rng Random number generator. \param
-particle_maker Functor to make a particle given a position. \return Container
-with particles. */
-template <typename Locator, typename RNG, typename ParticleMaker>
-auto uniform_patches(std::size_t nr_particles,
-                     std::vector<std::string> const &patch_names,
-                     Locator const &locator, RNG &rng,
-                     ParticleMaker &particle_maker) {
-  return uniform_faces(nr_particles,
-                       patches_face_ids(locator.mesh(), patch_names), locator,
-                       rng, particle_maker);
-}
-
-/** \brief Make particles distributed randomly uniformly over cell faces in
-given patches where mask is above threshold. \details Place particles at face
-centers. \param nr_particles Number of particles to make. \param patch_names
-Names of patches. \param locator Object to locate positions in mesh. \param rng
-Random number generator. \param particle_maker Functor to make a particle given
-a position. \param mask Scalar field assigning values to mesh cell indices
-through operator[]. \param threshold Threshold for the mask, such that cells
-where the mask is above the threshold are considered. \return Container with
-particles. */
-template <typename Locator, typename RNG, typename ParticleMaker, typename Mask>
-auto uniform_patches(std::size_t nr_particles,
-                     std::vector<std::string> const &patch_names,
-                     Locator const &locator, RNG &rng,
-                     ParticleMaker &particle_maker, Mask const &mask,
-                     double threshold = 0.) {
-  return uniform_faces(nr_particles,
-                       apply_mask(patches_face_ids(locator.mesh(), patch_names),
-                                  mask, threshold),
-                       locator, rng, particle_maker);
-}
-
-/** \brief Make particles distributed with probability proportional to local
-velocity magnitude over cell faces in given patches. \details Place particles at
-face centers. \param nr_particles Number of particles to make. \param
-patch_names Names of patches. \param velocity_field Velocity field as a function
-of state. \param locator Object to locate positions in mesh. \param rng Random
-number generator. \param particle_maker Functor to make a particle given a
-position. \return Container with particles. */
-template <typename VelocityField, typename Locator, typename RNG,
-          typename ParticleMaker>
-auto fluxweighted_patches(std::size_t nr_particles,
-                          std::vector<std::string> const &patch_names,
-                          VelocityField const &velocity_field,
-                          Locator const &locator, RNG &rng,
-                          ParticleMaker &particle_maker) {
-  return fluxweighted_faces(nr_particles,
-                            patches_face_ids(locator.mesh(), patch_names),
-                            velocity_field, locator, rng, particle_maker);
-}
-
-/** \brief Make particles distributed with probability proportional to local
-velocity magnitude over cell faces in given patches where mask is above
-threshold. \details Place particles at face centers. \param nr_particles Number
-of particles to make. \param patch_names Names of patches. \param velocity_field
-Velocity field as a function of state. \param locator Object to locate positions
-in mesh. \param rng Random number generator. \param particle_maker Functor to
-make a particle given a position. \param mask Scalar field assigning values to
-mesh cell indices through operator[]. \param threshold Threshold for the mask,
-such that cells where the mask is above the threshold are considered. \return
-Container with particles. */
-template <typename VelocityField, typename Locator, typename RNG,
-          typename ParticleMaker, typename Mask>
-auto fluxweighted_patches(std::size_t nr_particles,
-                          std::vector<std::string> const &patch_names,
-                          VelocityField const &velocity_field,
-                          Locator const &locator, RNG &rng,
-                          ParticleMaker &particle_maker, Mask const &mask,
-                          double threshold = 0.) {
-  return fluxweighted_faces(
-      nr_particles,
-      apply_mask(patches_face_ids(locator.mesh(), patch_names), mask,
-                 threshold),
-      velocity_field, locator, rng, particle_maker);
-}
-
-/** \brief Make particles distributed randomly uniformly near cell faces in
-given patches. \param nr_particles Number of particles to make. \param
-patch_names Names of patches. \param distance Distance from face centers. \param
-locator Object to locate positions in mesh. \param rng Random number generator.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles. */
-template <typename Locator, typename RNG, typename ParticleMaker>
-auto uniform_near_boundary_patches(std::size_t nr_particles,
-                                   std::vector<std::string> const &patch_names,
-                                   double distance, Locator const &locator,
-                                   RNG &rng, ParticleMaker particle_maker) {
-  return uniform_near_boundary_faces(
-      nr_particles, patches_face_ids(locator.mesh(), patch_names), distance,
-      locator, rng, particle_maker);
-}
-
-/** \brief Make particles distributed randomly uniformly near cell faces in
-given patches where mask is above threshold. \param nr_particles Number of
-particles to make. \param patch_names Names of patches. \param distance Distance
-from face centers. \param locator Object to locate positions in mesh. \param rng
-Random number generator. \param particle_maker Functor to make a particle given
-a position. \param mask Scalar field assigning values to mesh cell indices
-through operator[]. \param threshold Threshold for the mask, such that cells
-where the mask is above the threshold are considered. \return Container with
-particles. */
-template <typename Locator, typename RNG, typename ParticleMaker, typename Mask>
-auto uniform_near_boundary_patches(std::size_t nr_particles,
-                                   std::vector<std::string> const &patch_names,
-                                   double distance, Locator const &locator,
-                                   RNG &rng, ParticleMaker particle_maker,
-                                   Mask const &mask, double threshold = 0.) {
-  return uniform_near_boundary_faces(
-      nr_particles,
-      apply_mask(patches_face_ids(locator.mesh(), patch_names), mask,
-                 threshold),
-      distance, locator, rng, particle_maker);
-}
-
-/** \brief Maker particles over a time window according to given pulse
-properties. \details All particles are made at once but with different initial
-times. Particles are injected at times ii \c time_step with ii from 0 to
-((time_max - time_min)/time_step - 1). \param pulse Functor that returns a
-vector of particles given number of particles and particle maker to make a
-particle given position. \param nr_particles Number of particles to make. \param
-time_min Injection start time. \param time_step Injection discretization time
-step. \param time_max Injection stop time. \param particle_maker Functor to make
-a particle given a position. \return Container with particles. */
-template <typename Pulse, typename ParticleMaker>
-auto continuous_injection(Pulse const &pulse, std::size_t nr_particles,
-                          double time_min, double time_step, double time_max,
-                          ParticleMaker &particle_maker) {
-  std::size_t nr_injections = (time_max - time_min) / time_step;
-
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(nr_injections * nr_particles);
-
-  for (std::size_t ii = 0; ii < nr_injections; ++ii) {
-    particle_maker.time = ii * time_step;
-    for (auto const &part : pulse(nr_particles, particle_maker))
-      particles.push_back(part);
-  }
-
-  return particles;
-}
-
-/** \param position_data Container of position vectors for each particle
- \param particle_maker Functor to make a particle given a position.
- \return Container with particles. */
-template <typename Positions, typename ParticleMaker>
-auto prescribed_positions(Positions const &position_data,
-                          ParticleMaker &particle_maker) {
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(position_data.size());
-  for (std::size_t pp = 0; pp < position_data.size(); ++pp)
-    particles.push_back(particle_maker(make_point(position_data[pp])));
-
-  return particles;
-}
-
-/** \param nr_particles Number of particles to make.
-\param filename_position_data Name of file with one position per line; the first
-\c nr_particles positions are used.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles.
-\note
-- Empty lines are ignored.
-- Unspecified position components are set to zero. */
-template <typename ParticleMaker>
-auto prescribed_positions(std::size_t nr_particles,
-                          std::string const &filename_data,
-                          ParticleMaker &particle_maker) {
-  auto input = useful::open_read(filename_data);
-  std::vector<std::vector<double>> position_data;
-  position_data.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
-    auto split_line = useful::split_line(input);
-    if (split_line.empty())
-      continue;
-    position_data.emplace_back();
-    position_data.back().reserve(split_line.size());
-    for (auto const &position_component : split_line)
-      position_data.back().push_back(std::stod(position_component));
-  }
-  input.close();
-
-  return prescribed_positions(position_data, particle_maker);
-}
 
 /**
-\param filename_data Name of file with one position per line.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles.
-\note
-- Empty lines are ignored.
-- Unspecified position components are set to zero. */
-template <typename ParticleMaker>
-auto prescribed_positions(std::string const &filename_data,
-                          ParticleMaker &particle_maker) {
-  auto input = useful::open_read(filename_data);
-  std::vector<std::vector<double>> position_data;
-  std::vector<std::string> split_line;
-  while (useful::split_line(input, split_line)) {
-    if (split_line.empty())
-      continue;
-    position_data.emplace_back();
-    position_data.back().reserve(split_line.size());
-    for (auto const &position_component : split_line)
-      position_data.back().push_back(std::stod(position_component));
-    split_line.clear();
-  }
-  input.close();
+   \class InitialCondition PTOF/InitialCondition.h "CTRW/InitialCondition.h"
+   \brief Make particles and positions according to prescribed rules.
+   \tparam ParticleMaker Abstract object to make a particle given a position.
+   \tparam Geometry Object handling domain geometry information.
+*/
+template <typename ParticleMaker, typename Geometry> struct InitialCondition {
+  using Particle = typename std::remove_reference_t<ParticleMaker>::Particle;
+  using Position = typename Particle::State::Position;
+  struct PositionAndHint {
+    Position position;
+    Foam::label hint{-1};
+  };
+  using ParticleContainer = std::vector<Particle>;
+  using PositionContainer = std::vector<Position>;
 
-  return prescribed_positions(position_data, particle_maker);
-}
+  InitialCondition(ParticleMaker &&particle_maker, Geometry &&geometry)
+      : _particle_maker{std::forward<ParticleMaker>(particle_maker)},
+        _geometry{std::forward<Geometry>(geometry)} {}
 
-/** \param position_data Container of position vectors for each particle
-    \param mass_data Container of masses for each particle
-    \param particle_maker Functor to make a particle given a position.
-    \return Container with particles. */
-template <typename Positions, typename Masses, typename ParticleMaker>
-auto prescribed_positions_masses(Positions const &position_data,
-                                 Masses const &mass_data,
-                                 ParticleMaker &particle_maker) {
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(position_data.size());
-  for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
-    particles.push_back(particle_maker(make_point(position_data[pp])));
-    if constexpr (meta::has_mass_v<ParticleMaker>)
-      particle_maker.mass = mass_data[pp];
-    else
-      throw std::runtime_error{
-          "prescribed_positions_masses : ParticleMaker does not define mass"};
+  virtual ~InitialCondition() = default;
+
+  /**
+     \brief Make particles.
+     \param nr_particles Number of particles to make.
+     \return Container with particles.
+  */
+  ParticleContainer operator()(std::size_t nr_particles) {
+    return make_particles(nr_particles);
   }
 
-  return particles;
-}
-
-/** \param nr_particles Number of particles to make.
-\param filename_data Name of file with one position and one mass per line; the
-first \c nr_particles lines are used.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles.
-\note
-- Empty lines are ignored.
-- Unspecified position components are set to zero. */
-template <typename ParticleMaker>
-auto prescribed_positions_masses(std::size_t nr_particles,
-                                 std::string const &filename_position_mass_data,
-                                 ParticleMaker &particle_maker) {
-  auto input = useful::open_read(filename_position_mass_data);
-  std::vector<std::vector<double>> position_data;
-  position_data.reserve(nr_particles);
-  std::vector<double> mass_data;
-  mass_data.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
-    auto split_line = useful::split_line(input);
-    if (split_line.empty())
-      continue;
-    position_data.emplace_back();
-    position_data.back().reserve(split_line.size());
-    for (std::size_t ii = 0; ii < split_line.size() - 1; ++ii)
-      position_data.back().push_back(std::stod(split_line[ii]));
-    mass_data.push_back(std::stod(split_line.back()));
+  /**
+     \brief Make a single particle.
+     \return Particle.
+  */
+  virtual Particle make_particle() {
+    auto [position, hint] = make_position_and_hint();
+    return _particle_maker(position, hint);
   }
-  input.close();
 
-  return prescribed_positions_masses(position_data, mass_data, particle_maker);
-}
+  /**
+     \brief Make a single position.
+     \return Position.
+  */
+  virtual Position make_position() { return make_position_and_hint().position; }
+
+  /**
+     \brief Make a single position along with location hint.
+     \param nr_positions Number of positions to make
+     \return Position.
+  */
+  virtual PositionAndHint make_position_and_hint() = 0;
+
+  virtual ParticleContainer make_particles(std::size_t nr_particles) {
+    ParticleContainer particles;
+    particles.reserve(nr_particles);
+    for (std::size_t pp = 0; pp < nr_particles; ++pp)
+      particles.emplace_back(make_particle());
+
+    return particles;
+  };
+
+  virtual PositionContainer make_positions(std::size_t nr_positions) {
+    PositionContainer positions;
+    positions.reserve(nr_positions);
+    for (std::size_t pp = 0; pp < nr_positions; ++pp)
+      positions.emplace_back(make_position());
+
+    return positions;
+  };
+
+protected:
+  ParticleMaker _particle_maker;
+  Geometry _geometry;
+};
+template <typename ParticleMaker, typename Geometry>
+InitialCondition(ParticleMaker &&, Geometry &&)
+    -> InitialCondition<ParticleMaker, Geometry>;
 
 /**
-\param filename_data Name of file with one position and one mass per line.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles.
-\note
-- Empty lines are ignored.
-- Unspecified position components are set to zero. */
-template <typename ParticleMaker>
-auto prescribed_positions_masses(std::string const &filename_data,
-                                 ParticleMaker &particle_maker) {
-  auto input = useful::open_read(filename_data);
-  std::vector<std::vector<double>> position_data;
-  std::vector<double> mass_data;
-  std::vector<std::string> split_line;
-  while (useful::split_line(input, split_line)) {
-    if (split_line.empty())
-      continue;
-    position_data.emplace_back();
-    position_data.back().reserve(split_line.size());
-    for (std::size_t ii = 0; ii < split_line.size() - 1; ++ii)
-      position_data.back().push_back(std::stod(split_line[ii]));
-    mass_data.push_back(std::stod(split_line.back()));
-    split_line.clear();
-  }
-  input.close();
+   \class InitialCondition_Continuous PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h" \brief Continuous injection from a series of
+   pulses. \tparam InitialCondition InitalCondition object to handle each pulse.
+*/
+template <typename InitialCondition>
+struct InitialCondition_Continuous : public InitialCondition {
+private:
+  using IC = InitialCondition;
 
-  return prescribed_positions_masses(position_data, mass_data, particle_maker);
-}
+public:
+  InitialCondition_Continuous(InitialCondition &&initial_condition,
+                              double injection_time, double injection_time_end,
+                              double injection_time_step)
+      : IC{std::forward<IC>(initial_condition)},
+        _injection_time{injection_time},
+        _injection_time_end{injection_time_end}, _injection_time_step{
+                                                     injection_time_step} {}
 
-/** \param position_data Container of position vectors for each particle
-    \param mass_data Container of masses for each particle
-    \param tag_data Container of tags (non-negative integer identifiers) for
-   each particle \param particle_maker Functor to make a particle given a
-   position. \return Container with particles. */
-template <typename Positions, typename Masses, typename Tags,
-          typename ParticleMaker>
-auto prescribed_positions_masses_tags(Positions const &position_data,
-                                      Masses const &mass_data,
-                                      Tags const &tag_data,
-                                      ParticleMaker &particle_maker) {
-  using Particle = decltype(particle_maker(Foam::point{}));
-  std::vector<Particle> particles;
-  particles.reserve(position_data.size());
-  for (std::size_t pp = 0; pp < position_data.size(); ++pp) {
-    particles.push_back(particle_maker(make_point(position_data[pp])));
-    if constexpr (meta::has_mass_v<ParticleMaker>)
-      particle_maker.mass = mass_data[pp];
-    else
-      throw std::runtime_error{"Failed to prescribe mass because "
-                               "ParticleMaker does not define mass"};
-    if constexpr (meta::has_tag_v<ParticleMaker>)
-      particle_maker.tag = tag_data[pp];
-    else
-      throw std::runtime_error{"Failed to prescribe tag because "
-                               "ParticleMaker does not define tag"};
+  virtual typename IC::ParticleContainer
+  make_particles(std::size_t nr_particles) override {
+    typename IC::ParticleContainer particles;
+    std::size_t nr_injections = std::ceil(
+        (_injection_time_end - _injection_time) / _injection_time_step);
+    particles.reserve(nr_injections * nr_particles);
+
+    for (double time = _injection_time; time < _injection_time_end;
+         time += _injection_time_step) {
+      this->_particle_maker.time = time;
+      particles.push_back(IC::make_particle());
+    }
+
+    return particles;
+  };
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    throw std::runtime_error{"Making positions is not allowed for continuous "
+                             "injections"};
   }
 
-  return particles;
-}
-
-/** \param nr_particles Number of particles to make.
-\param filename_data Name of file with one position, one mass, and one tag per
-line; the first \c nr_particles lines are used. \param particle_maker Functor to
-make a particle given a position. \return Container with particles. */
-template <typename ParticleMaker>
-auto prescribed_positions_masses_tags(
-    std::size_t nr_particles, std::string const &filename_position_mass_data,
-    ParticleMaker &particle_maker) {
-  auto input = useful::open_read(filename_position_mass_data);
-  std::vector<std::vector<double>> position_data;
-  position_data.reserve(nr_particles);
-  std::vector<double> mass_data;
-  mass_data.reserve(nr_particles);
-  std::vector<std::size_t> tag_data;
-  tag_data.reserve(nr_particles);
-  for (std::size_t pp = 0; pp < nr_particles; ++pp) {
-    auto split_line = useful::split_line(input);
-    if (split_line.empty())
-      continue;
-    if (split_line.size() < 2)
-      throw std::runtime_error{
-          std::string{"Could not parse prescribed tag for "} +
-          useful::ordinal(pp + 1) + " particle"};
-    position_data.emplace_back();
-    position_data.back().reserve(split_line.size());
-    for (std::size_t ii = 0; ii < split_line.size() - 2; ++ii)
-      position_data.back().push_back(std::stod(split_line[ii]));
-    mass_data.push_back(std::stod(split_line[split_line.size() - 2]));
-    tag_data.push_back(std::stod(split_line.back()));
+  virtual typename IC::Particle make_particle() override {
+    throw std::runtime_error{
+        "Making single particles is not allowed for continuous "
+        "injections"};
   }
-  input.close();
 
-  return prescribed_positions_masses(position_data, mass_data, particle_maker);
-}
+  virtual typename IC::Position make_position() override {
+    throw std::runtime_error{"Making positions is not allowed for continuous "
+                             "injections"};
+  }
+
+protected:
+  double _injection_time;
+  double _injection_time_end;
+  double _injection_time_step;
+};
+template <typename InitialCondition>
+InitialCondition_Continuous(InitialCondition &&, double, double, double)
+    -> InitialCondition_Continuous<InitialCondition>;
 
 /**
-\param filename_data Name of file with one position, one mass, and one tag per
-line.
-\param particle_maker Functor to make a particle given a position.
-\return Container with particles.
-\note
-- Empty lines are ignored.
-- Unspecified position components are set to zero. */
-template <typename ParticleMaker>
-auto prescribed_positions_masses_tags(std::string const &filename_data,
-                                      ParticleMaker &particle_maker) {
-  auto input = useful::open_read(filename_data);
-  std::vector<std::vector<double>> position_data;
-  std::vector<double> mass_data;
-  std::vector<std::size_t> tag_data;
-  std::vector<std::string> split_line;
-  while (useful::split_line(input, split_line)) {
-    if (split_line.empty())
-      continue;
-    if (split_line.size() < 2)
-      throw std::runtime_error{
-          std::string{"Could not parse prescribed tag for "} +
-          useful::ordinal(position_data.size() + 1) + " particle"};
-    position_data.emplace_back();
-    position_data.back().reserve(split_line.size());
-    for (std::size_t ii = 0; ii < split_line.size() - 2; ++ii)
-      position_data.back().push_back(std::stod(split_line[ii]));
-    mass_data.push_back(std::stod(split_line[split_line.size() - 2]));
-    tag_data.push_back(std::stod(split_line.back()));
-    split_line.clear();
-  }
-  input.close();
+   \class InitialCondition_Point PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at a point.
+*/
+template <typename ParticleMaker, typename Geometry>
+struct InitialCondition_Point
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
 
-  return prescribed_positions_masses(position_data, mass_data, particle_maker);
-}
+public:
+  InitialCondition_Point(ParticleMaker &&particle_maker, Geometry &&geometry,
+                         typename IC::Position position)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        _position{position} {
+    if (outside(_cell_id))
+      throw std::runtime_error{
+          "Point initial condition position is outside mesh"};
+  }
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    return {_position, _cell_id};
+  }
+
+protected:
+  stochastic::RNGThreaded<
+      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      _rng;
+  typename IC::Position _position;
+  Foam::label _cell_id{this->_geometry.locator(_position)};
+};
+template <typename ParticleMaker, typename Geometry>
+InitialCondition_Point(
+    ParticleMaker &&, Geometry &&,
+    typename InitialCondition<ParticleMaker, Geometry>::Position)
+    -> InitialCondition_Point<ParticleMaker, Geometry>;
+
+/**
+   \class InitialCondition_DistributedPosition PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition with randomly distributed positions.
+   \tparam Distribution Object that takes an RNG and produces a (random)
+   position.
+*/
+template <typename ParticleMaker, typename Geometry, typename Distribution>
+struct InitialCondition_DistributedPosition
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_DistributedPosition(ParticleMaker &&particle_maker,
+                                       Geometry &&geometry, Distribution &&dist,
+                                       std::size_t nr_tries)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        _dist{std::forward<Distribution>(dist)}, _nr_tries{nr_tries} {}
+
+  /** \brief Make a single position according to prescribed initial condition.
+  \param nr_positions Number of positions to make
+  \return Position.  */
+  typename IC::PositionAndHint make_position_and_hint() override {
+    for (std::size_t ii = 0; ii < _nr_tries; ++ii) {
+      auto position = IC::Particle::State::make_position(_dist(_rng));
+      auto cell_id = this->_geometry.locator(position);
+      if (!ptof::outside(cell_id))
+        return {position, cell_id};
+    }
+
+    throw std::runtime_error{"Failed to make position inside mesh after " +
+                             std::to_string(_nr_tries) + " tries"};
+  }
+
+protected:
+  stochastic::RNGThreaded<
+      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      _rng;
+  Distribution _dist;
+  std::size_t _nr_tries;
+};
+template <typename ParticleMaker, typename Geometry, typename Distribution>
+InitialCondition_DistributedPosition(ParticleMaker &&, Geometry &&,
+                                     Distribution &&, std::size_t)
+    -> InitialCondition_DistributedPosition<ParticleMaker, Geometry,
+                                            Distribution>;
+
+/**
+   \class InitialCondition_DistributedCellCenters PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at randomly distributed cell centers.
+   \tparam CellIdContainer Container of cell indices.
+   \tparam Distribution Object that takes an RNG and produces a (random)
+   cell index.
+*/
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer,
+          typename Distribution>
+struct InitialCondition_DistributedCellCenters
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_DistributedCellCenters(ParticleMaker &&particle_maker,
+                                          Geometry &&geometry,
+                                          CellIdContainer &&cell_ids,
+                                          Distribution &&dist)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        _cell_ids{std::forward<CellIdContainer>(cell_ids)},
+        _dist{std::forward<Distribution>(dist)} {
+    if (_cell_ids.size() == 0)
+      throw std::runtime_error{"No cells provided for initial condition"};
+  }
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    auto cell_id = _cell_ids[_dist(_rng)];
+    return {IC::Particle::State::make_position(
+                cell_center(cell_id, this->_geometry.mesh())),
+            cell_id};
+  }
+
+protected:
+  stochastic::RNGThreaded<
+      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      _rng;
+  CellIdContainer _cell_ids;
+  Distribution _dist;
+};
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer,
+          typename Distribution>
+InitialCondition_DistributedCellCenters(ParticleMaker &&, Geometry &&,
+                                        CellIdContainer &&, Distribution &&)
+    -> InitialCondition_DistributedCellCenters<ParticleMaker, Geometry,
+                                               CellIdContainer, Distribution>;
+
+/**
+   \class InitialCondition_DistributedFaceCenters PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at randomly distributed face centers.
+   \tparam CellIdContainer Container of face indices.
+   \tparam Distribution Object that takes an RNG and produces a (random)
+   face index.
+*/
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
+          typename Distribution>
+struct InitialCondition_DistributedFaceCenters
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_DistributedFaceCenters(ParticleMaker &&particle_maker,
+                                          Geometry &&geometry,
+                                          FaceIdContainer &&face_ids,
+                                          Distribution &&dist)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        _face_ids{std::forward<FaceIdContainer>(face_ids)},
+        _dist{std::forward<Distribution>(dist)} {
+    if (_face_ids.size() == 0)
+      throw std::runtime_error{"No faces provided for initial condition"};
+  }
+
+  /** \note If face center is not in owner cell, position is placed at cell
+   * center.*/
+  typename IC::PositionAndHint make_position_and_hint() override {
+    auto const &mesh = this->_geometry.mesh();
+    auto face_id = _face_ids[_dist(_rng)];
+    return {IC::Particle::State::make_position(
+                adjusted_face_center(face_id, this->_geometry.locator)),
+            mesh.faceOwner()[face_id]};
+  }
+
+protected:
+  stochastic::RNGThreaded<
+      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      _rng;
+  FaceIdContainer _face_ids;
+  Distribution _dist;
+};
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
+          typename Distribution>
+InitialCondition_DistributedFaceCenters(ParticleMaker &&, Geometry &&,
+                                        FaceIdContainer &&, Distribution &&)
+    -> InitialCondition_DistributedFaceCenters<ParticleMaker, Geometry,
+                                               FaceIdContainer, Distribution>;
+
+/**
+   \class InitialCondition_UniformCellCenters PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at uniformly randomly distributed cell centers
+   (weighted by cell volume).
+   \tparam CellIdContainer Container of cell indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
+struct InitialCondition_UniformCellCenters
+    : public InitialCondition_DistributedCellCenters<
+          ParticleMaker, Geometry, CellIdContainer,
+          std::discrete_distribution<std::size_t>> {
+private:
+  using IC = InitialCondition_DistributedCellCenters<
+      ParticleMaker, Geometry, CellIdContainer,
+      std::discrete_distribution<std::size_t>>;
+
+public:
+  InitialCondition_UniformCellCenters(ParticleMaker &&particle_maker,
+                                      Geometry &&geometry,
+                                      CellIdContainer &&cell_ids)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry),
+           std::forward<CellIdContainer>(cell_ids),
+           uniform_cell_distribution(cell_ids, geometry.mesh())} {}
+};
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
+InitialCondition_UniformCellCenters(ParticleMaker &&, Geometry &&,
+                                    CellIdContainer &&)
+    -> InitialCondition_UniformCellCenters<ParticleMaker, Geometry,
+                                           CellIdContainer>;
+
+/**
+   \class InitialCondition_UniformFaceCenters PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at uniformly randomly distributed face centers
+   (weighted by face area).
+   \tparam FaceIdContainer Container of face indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
+struct InitialCondition_UniformFaceCenters
+    : public InitialCondition_DistributedFaceCenters<
+          ParticleMaker, Geometry, FaceIdContainer,
+          std::discrete_distribution<std::size_t>> {
+private:
+  using IC = InitialCondition_DistributedFaceCenters<
+      ParticleMaker, Geometry, FaceIdContainer,
+      std::discrete_distribution<std::size_t>>;
+
+public:
+  InitialCondition_UniformFaceCenters(ParticleMaker &&particle_maker,
+                                      Geometry &&geometry,
+                                      FaceIdContainer &&face_ids)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry),
+           std::forward<FaceIdContainer>(face_ids),
+           uniform_face_distribution(face_ids, geometry.mesh())} {}
+};
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
+InitialCondition_UniformFaceCenters(ParticleMaker &&, Geometry &&,
+                                    CellIdContainer &&)
+    -> InitialCondition_UniformFaceCenters<ParticleMaker, Geometry,
+                                           CellIdContainer>;
+
+/**
+   \class InitialCondition_FluxweightedCellCenters PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at flux-weighted randomly distributed cell centers.
+   \tparam CellIdContainer Container of cell indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
+struct InitialCondition_FluxweightedCellCenters
+    : public InitialCondition_DistributedCellCenters<
+          ParticleMaker, Geometry, CellIdContainer,
+          std::discrete_distribution<std::size_t>> {
+private:
+  using IC = InitialCondition_DistributedCellCenters<
+      ParticleMaker, Geometry, CellIdContainer,
+      std::discrete_distribution<std::size_t>>;
+
+public:
+  template <typename VelocityField>
+  InitialCondition_FluxweightedCellCenters(ParticleMaker &&particle_maker,
+                                           Geometry &&geometry,
+                                           CellIdContainer &&cell_ids,
+                                           VelocityField const &velocity_field)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry),
+           std::forward<CellIdContainer>(cell_ids),
+           fluxweighted_cell_distribution(cell_ids, velocity_field,
+                                          geometry.mesh())} {}
+};
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer,
+          typename VelocityField>
+InitialCondition_FluxweightedCellCenters(ParticleMaker &&, Geometry &&,
+                                         CellIdContainer &&,
+                                         VelocityField const &)
+    -> InitialCondition_FluxweightedCellCenters<ParticleMaker, Geometry,
+                                                CellIdContainer>;
+
+/**
+   \class InitialCondition_FluxweightedCellCenters PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at flux-weighted randomly distributed face centers.
+   \tparam FaceIdContainer Container of face indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
+struct InitialCondition_FluxweightedFaceCenters
+    : public InitialCondition_DistributedFaceCenters<
+          ParticleMaker, Geometry, FaceIdContainer,
+          std::discrete_distribution<std::size_t>> {
+private:
+  using IC = InitialCondition_DistributedFaceCenters<
+      ParticleMaker, Geometry, FaceIdContainer,
+      std::discrete_distribution<std::size_t>>;
+
+public:
+  template <typename VelocityField>
+  InitialCondition_FluxweightedFaceCenters(ParticleMaker &&particle_maker,
+                                           Geometry &&geometry,
+                                           FaceIdContainer &&face_ids,
+                                           VelocityField const &velocity_field)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry),
+           std::forward<FaceIdContainer>(face_ids),
+           fluxweighted_face_distribution(face_ids, velocity_field,
+                                          geometry.locator)} {}
+};
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
+          typename VelocityField>
+InitialCondition_FluxweightedFaceCenters(ParticleMaker &&, Geometry &&,
+                                         FaceIdContainer &&,
+                                         VelocityField const &)
+    -> InitialCondition_FluxweightedFaceCenters<ParticleMaker, Geometry,
+                                                FaceIdContainer>;
+
+/**
+   \class InitialCondition_PrescribedPositions PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at prescribed positions read from a file.
+   \details File should contain particle positions, one particle per line.
+*/
+template <typename ParticleMaker, typename Geometry>
+struct InitialCondition_PrescribedPositions
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_PrescribedPositions(ParticleMaker &&particle_maker,
+                                       Geometry &&geometry,
+                                       std::string filename)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        filename{filename} {}
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    auto split_line = io::split_line(input);
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim)
+      throw std::runtime_error{"Could not parse particle position in file " +
+                               filename};
+    Foam::point position;
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+      position[dd] = std::stod(split_line[dd]);
+
+    return {IC::Particle::State::make_position(position), -1};
+  }
+
+protected:
+  std::string filename;
+  std::ifstream input{io::open_read(filename)};
+};
+template <typename ParticleMaker, typename Geometry>
+InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string)
+    -> InitialCondition_PrescribedPositions<ParticleMaker, Geometry>;
+
+/**
+   \class InitialCondition_PrescribedPositionsMasses PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at prescribed positions and masses read from a file.
+   \details File should contain particle positions and masses, one particle per
+   line.
+*/
+template <typename ParticleMaker, typename Geometry>
+struct InitialCondition_PrescribedPositionsMasses
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_PrescribedPositionsMasses(ParticleMaker &&particle_maker,
+                                             Geometry &&geometry,
+                                             std::string filename)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        filename{filename} {}
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    auto split_line = io::split_line(input);
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1)
+      throw std::runtime_error{
+          "Could not parse particle position and mass in file " + filename};
+    Foam::point position;
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+      position[dd] = std::stod(split_line[dd]);
+    this->_particle_maker.mass =
+        std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
+
+    return {IC::Particle::State::make_position(position), -1};
+  }
+
+protected:
+  std::string filename;
+  std::ifstream input{io::open_read(filename)};
+};
+template <typename ParticleMaker, typename Geometry>
+InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
+                                           std::string)
+    -> InitialCondition_PrescribedPositionsMasses<ParticleMaker, Geometry>;
+
+/**
+   \class InitialCondition_PrescribedPositionsMassesTags PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition at prescribed positions, masses, and tags, read from
+   a file.
+   \details File should contain particle positions, masses, and tags, one
+   particle per line.
+*/
+template <typename ParticleMaker, typename Geometry>
+struct InitialCondition_PrescribedPositionsMassesTags
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&particle_maker,
+                                                 Geometry &&geometry,
+                                                 std::string filename)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        filename{filename} {}
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    auto split_line = io::split_line(input);
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2)
+      throw std::runtime_error{
+          "Could not parse particle position and mass in file " + filename};
+    Foam::point position;
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+      position[dd] = std::stod(split_line[dd]);
+    this->_particle_maker.mass =
+        std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
+    this->_particle_maker.tag =
+        std::stoul(split_line[std::remove_reference_t<Geometry>::dim + 1]);
+
+    return {IC::Particle::State::make_position(position), -1};
+  }
+
+protected:
+  std::string filename;
+  std::ifstream input{io::open_read(filename)};
+};
+template <typename ParticleMaker, typename Geometry>
+InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&, Geometry &&,
+                                               std::string)
+    -> InitialCondition_PrescribedPositionsMassesTags<ParticleMaker, Geometry>;
+
+/**
+   \class InitialCondition_PrescribedPositionsMassesTagsTimes
+   PTOF/InitialCondition.h "CTRW/InitialCondition.h"
+   \brief Initial condition at
+   prescribed positions, masses, tags, and times, read from a file.
+   \details File should contain particle positions, masses, tags, and times, one
+   particle per line.
+*/
+template <typename ParticleMaker, typename Geometry>
+struct InitialCondition_PrescribedPositionsMassesTagsTimes
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_PrescribedPositionsMassesTagsTimes(
+      ParticleMaker &&particle_maker, Geometry &&geometry, std::string filename)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        filename{filename} {}
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    auto split_line = io::split_line(input);
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 3)
+      throw std::runtime_error{
+          "Could not parse particle position and mass in file " + filename};
+    Foam::point position;
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+      position[dd] = std::stod(split_line[dd]);
+    this->_particle_maker.mass =
+        std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
+    this->_particle_maker.tag =
+        std::stoul(split_line[std::remove_reference_t<Geometry>::dim + 1]);
+    this->_particle_maker.time =
+        std::stod(split_line[std::remove_reference_t<Geometry>::dim + 2]);
+
+    return {IC::Particle::State::make_position(position), -1};
+  }
+
+protected:
+  std::string filename;
+  std::ifstream input{io::open_read(filename)};
+};
+template <typename ParticleMaker, typename Geometry>
+InitialCondition_PrescribedPositionsMassesTagsTimes(ParticleMaker &&,
+                                                    Geometry &&, std::string)
+    -> InitialCondition_PrescribedPositionsMassesTagsTimes<ParticleMaker,
+                                                           Geometry>;
+
+/**
+   \class InitialCondition_DistributedNearFaces PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition randomly distributed near boundary faces.
+   \tparam FaceIdContainer Container of face indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
+          typename Distribution>
+struct InitialCondition_DistributedNearFaces
+    : public InitialCondition<ParticleMaker, Geometry> {
+private:
+  using IC = InitialCondition<ParticleMaker, Geometry>;
+
+public:
+  InitialCondition_DistributedNearFaces(ParticleMaker &&particle_maker,
+                                        Geometry &&geometry,
+                                        FaceIdContainer &&face_ids,
+                                        Distribution &&dist, double distance,
+                                        std::size_t nr_tries)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry)},
+        _face_ids{std::forward<FaceIdContainer>(face_ids)},
+        _dist{std::forward<Distribution>(dist)}, _distance{distance},
+        _nr_tries{nr_tries} {
+    if (_face_ids.size() == 0)
+      throw std::runtime_error{"No faces provided for initial condition"};
+  }
+
+  typename IC::PositionAndHint make_position_and_hint() override {
+    for (std::size_t ii = 0; ii < _nr_tries; ++ii) {
+      auto const &locator = this->_geometry.locator;
+      auto const &mesh = locator.mesh();
+      auto face_id = _face_ids[_dist(_rng)];
+      auto position = face_center(face_id, mesh) +
+                      _distance * unit_normal_inward(face_id, mesh);
+      auto owner_cell = mesh.faceOwner()[face_id];
+      auto cell_id = locator(position, owner_cell);
+      if (outside(cell_id))
+        continue;
+      auto nearest_face_id =
+          locator.mesh_search().findNearestBoundaryFace(position, face_id);
+      if (nearest_face_id == face_id)
+        return {IC::Particle::State::make_position(position), cell_id};
+    }
+
+    throw std::runtime_error{"Failed to make position inside mesh and nearest "
+                             "to a selected face after " +
+                             std::to_string(_nr_tries) + " tries"};
+  }
+
+protected:
+  stochastic::RNGThreaded<
+      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      _rng;
+  FaceIdContainer _face_ids;
+  Distribution _dist;
+  double _distance;
+  std::size_t _nr_tries;
+};
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
+          typename Distribution>
+InitialCondition_DistributedNearFaces(ParticleMaker &&, Geometry &&,
+                                      FaceIdContainer &&, Distribution &&,
+                                      double, std::size_t)
+    -> InitialCondition_DistributedNearFaces<ParticleMaker, Geometry,
+                                             FaceIdContainer, Distribution>;
+
+/**
+   \class InitialCondition_DistributedNearFaces PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition uniformly randomly distributed near boundary faces.
+   \tparam FaceIdContainer Container of face indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
+struct InitialCondition_UniformNearFaces
+    : public InitialCondition_DistributedNearFaces<
+          ParticleMaker, Geometry, FaceIdContainer,
+          std::discrete_distribution<std::size_t>> {
+private:
+  using IC = InitialCondition_DistributedNearFaces<
+      ParticleMaker, Geometry, FaceIdContainer,
+      std::discrete_distribution<std::size_t>>;
+
+public:
+  InitialCondition_UniformNearFaces(ParticleMaker &&particle_maker,
+                                    Geometry &&geometry,
+                                    FaceIdContainer &&face_ids, double distance,
+                                    std::size_t nr_tries)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry),
+           std::forward<FaceIdContainer>(face_ids),
+           uniform_face_distribution(face_ids, geometry.mesh()),
+           distance,
+           nr_tries} {}
+};
+template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
+InitialCondition_UniformNearFaces(ParticleMaker &&, Geometry &&,
+                                  CellIdContainer &&)
+    -> InitialCondition_UniformNearFaces<ParticleMaker, Geometry,
+                                         CellIdContainer>;
+
+/**
+   \class InitialCondition_DistributedNearFaces PTOF/InitialCondition.h
+   "CTRW/InitialCondition.h"
+   \brief Initial condition flux-weighted randomly distributed near boundary
+   faces.
+   \tparam FaceIdContainer Container of face indices.
+*/
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
+struct InitialCondition_FluxweightedNearFaces
+    : public InitialCondition_DistributedNearFaces<
+          ParticleMaker, Geometry, FaceIdContainer,
+          std::discrete_distribution<std::size_t>> {
+private:
+  using IC = InitialCondition_DistributedNearFaces<
+      ParticleMaker, Geometry, FaceIdContainer,
+      std::discrete_distribution<std::size_t>>;
+
+public:
+  template <typename VelocityField>
+  InitialCondition_FluxweightedNearFaces(ParticleMaker &&particle_maker,
+                                         Geometry &&geometry,
+                                         FaceIdContainer &&face_ids,
+                                         VelocityField const &velocity_field,
+                                         double distance, std::size_t nr_tries)
+      : IC{std::forward<ParticleMaker>(particle_maker),
+           std::forward<Geometry>(geometry),
+           std::forward<FaceIdContainer>(face_ids),
+           fluxweighted_face_distribution(face_ids, velocity_field,
+                                          geometry.locator),
+           distance,
+           nr_tries} {}
+};
+template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
+          typename VelocityField>
+InitialCondition_FluxweightedNearFaces(ParticleMaker &&, Geometry &&,
+                                       FaceIdContainer &&,
+                                       VelocityField const &, double,
+                                       std::size_t)
+    -> InitialCondition_FluxweightedNearFaces<ParticleMaker, Geometry,
+                                              FaceIdContainer>;
 } // namespace ptof
-
 #endif /* PTOF_INITIALCONDITION_H */

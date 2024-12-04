@@ -1,20 +1,23 @@
 /**
- \file Geometry/Shape.h
- \author Tomás Aquino
- \date 07/04/2020
+   \file Geometry/Shape.h
+   \author Tomás Aquino
+   \date 07/04/2020
+   \brief Geometric shapes.
 */
 
-#ifndef Shape_h
-#define Shape_h
+#ifndef GEOMETRY_SHAPE_H
+#define GEOMETRY_SHAPE_H
 
 #include "General/Operations.h"
 #include <cmath>
 #include <vector>
 
-/** \namespace geom Miscallaneous geometry-related objects and utilities. */
+/** \namespace geom Geometry-related objects and utilities. */
 namespace geom {
-/** \struct Parallelepiped  Geometry/Shape.h "Geometry/Shape.h"
- \brief Rectangle in any dimension, aligned with Cartesian axes. */
+/**
+   \class Parallelepiped  Geometry/Shape.h "Geometry/Shape.h"
+   \brief Rectangle in any dimension, aligned with Cartesian axes.
+*/
 template <typename Position_t = std::vector<double>> struct Parallelepiped {
   using Position = Position_t; /**> Type of coordinate container. */
 
@@ -25,15 +28,18 @@ template <typename Position_t = std::vector<double>> struct Parallelepiped {
   \note Object with unassigned properties. */
   Parallelepiped() {}
 
-  /** Constructor.
-   \param corner Lower left corner.
-   \param dimensions Side sizes.
+  /**
+     \brief Constructor.
+     \param corner Lower left corner.
+     \param dimensions Side sizes.
   */
   Parallelepiped(Position corner, Position dimensions)
       : corner{corner}, dimensions{dimensions} {}
 
-  /** Spatial dimension of rectangle.
-  \note: Zero if side sizes have not been assigned. */
+  /**
+     \return Spatial dimension of rectangle.
+     \note Zero if side sizes have not been assigned.
+  */
   std::size_t dim() const { return dimensions.size(); }
 
   /** \return \c true if \p position is inside rectangle, \c false otherwise. */
@@ -57,24 +63,32 @@ template <typename Position_t = std::vector<double>> struct Parallelepiped {
   };
 };
 
-/** \struct Sphere  Geometry/Shape.h "Geometry/Shape.h"
-\brief Sphere in any dimension. */
+/** 
+   \class Sphere Geometry/Shape.h "Geometry/Shape.h"
+   \brief Sphere in any dimension.
+*/
 template <typename Position_t = std::vector<double>> struct Sphere {
   using Position = Position_t; /**< Type of center position. */
   Position center;             /**< Sphere center position. */
   double radius;               /**< Sphere radius. */
 
-  /** Constructor.
-  \note Object with unassigned properties. */
+  /**
+     \brief Constructor.
+     \brief Empty object.
+  */
   Sphere() {}
 
-  /** Constructor.
-   \param center Sphere center.
-   \param radius Sphere radius. */
+  /**
+     \brief Constructor.
+     \param center Sphere center.
+     \param radius Sphere radius.
+  */
   Sphere(Position center, double radius) : center{center}, radius{radius} {}
 
-  /** Spatial dimension of sphere.
-  \note: Zero if center has not been assigned. */
+  /**
+     \return Spatial dimension of sphere.
+     \note Zero if center has not been assigned.
+  */
   std::size_t dim() const { return center.size(); }
 
   /** \return Position of sphere center. */
@@ -89,8 +103,10 @@ template <typename Position_t = std::vector<double>> struct Sphere {
   }
 };
 
-/** \return \c true if any \p ctrw particle is outside \p domain, \c false
- * otherwise. */
+/**
+   \return \c true if any \p ctrw particle is outside \p domain, \c false
+   otherwise.
+*/
 template <typename CTRW, typename Domain>
 bool out_of_bounds(CTRW const &ctrw, Domain const &domain) {
   for (auto const &part : ctrw.particles())
@@ -99,22 +115,30 @@ bool out_of_bounds(CTRW const &ctrw, Domain const &domain) {
   return 0;
 }
 
-/** Domain with arbitrary shape, with rectangular and/or spherical inclusions in
- * any spatial dimension. */
+/**
+   \class DomainShape Geometry/Shape.h "Geometry/Shape.h"
+   \brief Domain with arbitrary shape, with rectangular and/or spherical
+   inclusions in any spatial dimension. */
 template <typename Shape> struct Domain {
   using DomainShape = Shape; /**< Bounding domain shape. */
 
-  /** Constructor. */
+  /**
+     \brief Constructor.
+  */
   Domain() {}
 
-  /** Constructor.
-   \param box Domain shape. */
+  /**
+     \brief Constructor.
+     \param box Domain shape.
+  */
   Domain(DomainShape box) : box{box} {}
 
-  /** Constructor.
-  \param box Domain shape.
-  \param parallelepipeds Rectangular inclusions.
-  \param spheres Spherical inclusions. */
+  /**
+     \brief Constructor.
+     \param box Domain shape.
+     \param parallelepipeds Rectangular inclusions.
+     \param spheres Spherical inclusions.
+  */
   Domain(DomainShape box, std::vector<Parallelepiped<>> parallelepipeds,
          std::vector<Sphere<>> spheres)
       : box{box}, parallelepipeds{parallelepipeds}, spheres{spheres} {}
@@ -147,14 +171,15 @@ template <typename Shape> struct Domain {
   }
 };
 
-/** \brief Reflect off sphere exterior (in any dimension).
- \param position_new Position inside sphere.
- \param position_old Position outside sphere.
- \param sphere Sphere to reflect off.
- \param reflected Resulting reflected position, computed here.
- \param contact_point Resulting contact point with sphere, computed here.
- \note - It is safe to pass the same containers for inputs and outputs.
- - Output vectors must be passed with correct size.
+/**
+   \brief Reflect off sphere exterior (in any dimension).
+   \param position_new Position inside sphere.
+   \param position_old Position outside sphere.
+   \param sphere Sphere to reflect off.
+   \param reflected Resulting reflected position, computed here.
+   \param contact_point Resulting contact point with sphere, computed here.
+   \note - It is safe to pass the same containers for inputs and outputs.
+   - Output vectors must be passed with correct size.
  */
 template <typename Position, typename Sphere>
 void reflectOffSphere_outsideToInside(Position const &position_new,
@@ -191,13 +216,16 @@ void reflectOffSphere_outsideToInside(Position const &position_new,
                reflected);
 }
 
-/** \brief Reflect off sphere exterior (in any dimension).
-\param position_new Position inside sphere.
-\param position_old Position outside sphere.
-\param sphere Sphere to reflect off.
-\param reflected Resulting reflected position, computed here.
-\note - It is safe to pass the same containers for inputs and outputs.
- - Output vectors must be passed with correct size. */
+/**
+   \brief Reflect off sphere exterior (in any dimension).
+   \param position_new Position inside sphere.
+   \param position_old Position outside sphere.
+   \param sphere Sphere to reflect off.
+   \param reflected Resulting reflected position, computed here.
+   \note
+   - It is safe to pass the same containers for inputs and outputs.
+   - Output vectors must be passed with correct size.
+*/
 template <typename Position, typename Sphere>
 void reflectOffSphere_outsideToInside(Position const &position_new,
                                       Position const &position_old,
@@ -208,23 +236,25 @@ void reflectOffSphere_outsideToInside(Position const &position_new,
                                    reflected, contact_point);
 }
 
-/** \brief Reflect off sphere exterior (in any dimension).
- \details Trajectory is approximated as a straight line.
- \param position_new Position inside sphere.
- \param position_old Position outside sphere.
- \param velocity_old Velocity at \c position_old.
- \param sphere Sphere to reflect off.
- \param position_reflected Resulting reflected position, computed here.
- \param velocity_reflected Resulting reflected velocity, computed here.
- \param contact_point Resulting contact point with sphere, computed here.
- \param contact_velocity Resulting velocity at contact point with sphere,
- computed here. \param time_to_contact Resulting time until contact, computed
- here. \param time_step Time step. \param acceleration Acceleration vector.
- \param restitution_coeff_norm Fraction of normal velocity convserved in
- collision. \param restitution_coeff_tang Fraction of tangential velocity
- convserved in collision. \param radius Particle radius. \note - It is safe to
- pass the same containers for inputs and outputs.
- - Output vectors must be passed with correct size.
+/**
+   \brief Reflect off sphere exterior (in any dimension).
+   \details Trajectory is approximated as a straight line.
+   \param position_new Position inside sphere.
+   \param position_old Position outside sphere.
+   \param velocity_old Velocity at \c position_old.
+   \param sphere Sphere to reflect off.
+   \param position_reflected Resulting reflected position, computed here.
+   \param velocity_reflected Resulting reflected velocity, computed here.
+   \param contact_point Resulting contact point with sphere, computed here.
+   \param contact_velocity Resulting velocity at contact point with sphere,
+   computed here. \param time_to_contact Resulting time until contact, computed
+   here. \param time_step Time step. \param acceleration Acceleration vector.
+   \param restitution_coeff_norm Fraction of normal velocity convserved in
+   collision. \param restitution_coeff_tang Fraction of tangential velocity
+   convserved in collision. \param radius Particle radius.
+   \note
+   - It is safe to pass the same containers for inputs and outputs.
+   - Output vectors must be passed with correct size.
 */
 template <typename Position, typename Sphere>
 void reflectOffSphere_velocity_outsideToInside(
@@ -283,20 +313,21 @@ void reflectOffSphere_velocity_outsideToInside(
                velocity_reflected);
 }
 
-/** \brief Reflect off sphere exterior (in any dimension).
- \details Trajectory is approximated as a straight line.
- \param position_new Position inside sphere.
- \param position_old Position outside sphere.
- \param velocity_old Velocity at \c position_old.
- \param sphere Sphere to reflect off.
- \param position_reflected Resulting reflected position, computed here.
- \param velocity_reflected Resulting reflected velocity, computed here.
- \param time_step Time step.
- \param acceleration Acceleration vector.
- \param restitution_coeff Fraction of velocity convserved in collision.
- \param radius Particle radius.
- \note - It is safe to pass the same containers for inputs and outputs.
- - Output vectors must be passed with correct size.
+/**
+   \brief Reflect off sphere exterior (in any dimension).
+   \details Trajectory is approximated as a straight line.
+   \param position_new Position inside sphere.
+   \param position_old Position outside sphere.
+   \param velocity_old Velocity at \c position_old.
+   \param sphere Sphere to reflect off.
+   \param position_reflected Resulting reflected position, computed here.
+   \param velocity_reflected Resulting reflected velocity, computed here.
+   \param time_step Time step.
+   \param acceleration Acceleration vector.
+   \param restitution_coeff Fraction of velocity convserved in collision.
+   \param radius Particle radius.
+   \note - It is safe to pass the same containers for inputs and outputs.
+   - Output vectors must be passed with correct size.
 */
 template <typename Position, typename Sphere, typename State,
           typename Acceleration>
@@ -316,4 +347,4 @@ void reflectOffSphere_velocity_outsideToInside(
 }
 } // namespace geom
 
-#endif /* Shape_h */
+#endif /* GEOMETRY_SHAPE_H */

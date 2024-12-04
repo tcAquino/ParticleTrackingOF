@@ -107,8 +107,10 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a11fc5d730d3d3b0d4a0017cf3986d59a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d09/classstochastic_1_1lomax__distribution.html#a11fc5d730d3d3b0d4a0017cf3986d59a">lomax_distribution</a> (Value_type <a class="el" href="../../d5/d09/classstochastic_1_1lomax__distribution.html#a33482797fa3ca3522716710d51cfa346">alpha</a>, Value_type <a class="el" href="../../d5/d09/classstochastic_1_1lomax__distribution.html#a2d1dd0cd220a24b540f80880aeb3a566">scale</a>)</td></tr>
+<tr class="memdesc:a11fc5d730d3d3b0d4a0017cf3986d59a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/d09/classstochastic_1_1lomax__distribution.html#a11fc5d730d3d3b0d4a0017cf3986d59a">More...</a><br /></td></tr>
 <tr class="separator:a11fc5d730d3d3b0d4a0017cf3986d59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3305806968c6666f4e72e6fa2ea19a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d09/classstochastic_1_1lomax__distribution.html#af3305806968c6666f4e72e6fa2ea19a0">lomax_distribution</a> (<a class="el" href="../../d5/d09/classstochastic_1_1lomax__distribution.html#ab2e55a189dd3bc8d873f39ae64932a5e">param_type</a> const &amp;params)</td></tr>
+<tr class="memdesc:af3305806968c6666f4e72e6fa2ea19a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/d09/classstochastic_1_1lomax__distribution.html#af3305806968c6666f4e72e6fa2ea19a0">More...</a><br /></td></tr>
 <tr class="separator:af3305806968c6666f4e72e6fa2ea19a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52ec578aed3e0cb2f8ad537a42ba80c2"><td class="memTemplParams" colspan="2">template&lt;typename Generator &gt; </td></tr>
 <tr class="memitem:a52ec578aed3e0cb2f8ad537a42ba80c2"><td class="memTemplItemLeft" align="right" valign="top">Value_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d09/classstochastic_1_1lomax__distribution.html#a52ec578aed3e0cb2f8ad537a42ba80c2">operator()</a> (Generator &amp;rng)</td></tr>
@@ -202,6 +204,15 @@ template&lt;typename Value_type  = double&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">alpha</td><td>Tailing exponent, PDF <code>x^{-1-alpha}</code>. </td></tr>
+    <tr><td class="paramname">scale</td><td>Scale parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="af3305806968c6666f4e72e6fa2ea19a0"></a>
@@ -229,6 +240,19 @@ template&lt;typename Value_type  = double&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">params</td><td><code>param[0] = alpha</code>, <code>param[1] = scale</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>alpha: Tailing exponent, <code>PDF ~ x^{-1-alpha}<code>.</code></code></li>
+<li><code><code>scale: Scale parameter. </code></code></li>
+</ul>
+</dd></dl>
 
 </div>
 </div>

@@ -1,13 +1,12 @@
 /**
- \file General/Modular.h
- \author Tomás Aquino
- \date 08/06/2019
-
- \brief Modular arithmetic, basis change, and similar operations
+   \file General/Modular.h
+   \author Tomás Aquino
+   \date 08/06/2019
+   \brief Modular arithmetic, basis change, and similar operations
 */
 
-#ifndef Modular_h
-#define Modular_h
+#ifndef GENERAL_MODULAR_H
+#define GENERAL_MODULAR_H
 
 #include <cmath>
 #include <cstdlib>
@@ -37,11 +36,12 @@ inline std::size_t circMinus(std::size_t number, std::size_t cc,
 }
 
 /**
- \param to_convert Number given as a container of integer digits.
- \param basis Basis of the number given.
- \return Number converted to base ten.
- \note
- - Units digit in \p to_convert[0]. */
+   \param to_convert Number given as a container of integer digits.
+   \param basis Basis of the number given.
+   \return Number converted to base ten.
+   \note
+   - Units digit in <tt>to_convert[0]</tt>.
+*/
 template <typename Container>
 auto convert(Container const &to_convert, std::size_t basis) {
   typename Container::value_type converted = 0;
@@ -55,10 +55,12 @@ auto convert(Container const &to_convert, std::size_t basis) {
 }
 
 /**
-\param to_convert Base-10 integer.
-\param basis Basis to convert to.
-\param converted Result of conversion, given as a container of integer digits.
-\note Units digit in \p converted[0]. */
+   \param to_convert Base-10 integer.
+   \param basis Basis to convert to.
+   \param converted Result of conversion, given as a container of integer
+   digits.
+   \note Units digit in <tt>converted[0]</tt>.
+*/
 template <typename Container, typename Integer_Type>
 void convert(Integer_Type to_convert, Integer_Type basis,
              Container &converted) {
@@ -70,8 +72,11 @@ void convert(Integer_Type to_convert, Integer_Type basis,
   }
 }
 
-/** \return Base \p basis representation of base-10 integer \p to_convert as a
-string of digits. \note Units digit in  \p to_convert[0]. */
+/**
+   \return Base \p basis representation of base-10 integer \p to_convert as a
+   string of digits.
+   \note Units digit in <tt>to_convert[0]</tt>.
+*/
 template <typename Integer_Type>
 std::vector<Integer_Type> convert(Integer_Type to_convert, Integer_Type basis) {
   std::vector<Integer_Type> converted(std::size_t(std::log2(to_convert) + 1));
@@ -80,11 +85,14 @@ std::vector<Integer_Type> convert(Integer_Type to_convert, Integer_Type basis) {
   return converted;
 }
 
-/** \return Base \p basis representation of base-10 integer \p to_convert as a
- string of digits. \details The total number of digits is \p nr_digits, which
- must be at least the number of digits needed to represent the number.  If
- bigger, the result is padded with zeros on the left. \note Units digit in \p
- to_convert[0]. */
+/**
+   \return Base \p basis representation of base-10 integer \p to_convert as a
+   std::ring of digits.
+   \details The total number of digits is \p nr_digits, which must be at least
+   the number of digits needed to represent the number. If bigger, the result is
+   padded with zeros on the left.
+   \note Units digit in <tt>to_convert[0]</tt>.
+*/
 template <typename Integer_Type>
 std::vector<std::size_t> convert(Integer_Type to_convert, Integer_Type basis,
                                  std::size_t nr_digits) {
@@ -99,10 +107,13 @@ std::vector<std::size_t> convert(Integer_Type to_convert, Integer_Type basis,
   return converted;
 }
 
-/** \brief  Given 1d index \p idx, convert to position (x_idx,y_idx,...) in a
-regular grid; output in \p position. \details \p idx goes through every x for
-each value of y, every y for each value of z, etc, in ascending order \note: \p
-position container must be passed with the correct size. */
+/**
+   \brief Given 1d index \p idx, convert to position <tt>(x_idx, y_idx,
+   ...)</tt> in a regular grid; output in \p position.
+   \details \p idx goes through every x for each value of y, every y for each
+   value of z, etc, in ascending order.
+   \note: \p position container must be passed with the correct size.
+*/
 template <typename Container, typename IntegerType = std::size_t>
 void indexToPosition(IntegerType idx, Container const &nr_points,
                      Container &position) {
@@ -112,9 +123,11 @@ void indexToPosition(IntegerType idx, Container const &nr_points,
   }
 }
 
-/** \return Position (x_idx,y_idx,...) in a regular grid, given 1d index \p idx.
-\details \p idx goes through every x for each value of y, every y for each value
-of z, etc, in ascending order */
+/**
+   \return Position <tt>(x_idx, y_idx, ...)</tt> in a regular grid, given 1d
+   index \p idx. \details \p idx goes through every x for each value of y, every
+   y for each value of z, etc, in ascending order.
+*/
 template <typename Container, typename IntegerType = std::size_t>
 auto indexToPosition(IntegerType idx, Container const &nr_points) {
   std::vector<IntegerType> position;
@@ -127,9 +140,12 @@ auto indexToPosition(IntegerType idx, Container const &nr_points) {
   return position;
 }
 
-/** \retval idx 1d index corresponding to position (x_idx,y_idx,...) in a
-regular grid. \details \p idx goes through every x for each value of y, every y
-for each value of z, etc, in ascending order */
+/**
+   \retval idx 1d index corresponding to position <tt>(x_idx, y_idx, ...)</tt>
+   in a regular grid.
+   \details \p idx goes through every x for each value of y, every y for each
+   value of z, etc, in ascending order.
+*/
 template <typename Container>
 auto positionToIndex(Container const &position, Container const &nr_points) {
   typename Container::value_type idx = 0;
@@ -142,10 +158,12 @@ auto positionToIndex(Container const &position, Container const &nr_points) {
   return idx;
 }
 
-/** \brief \p num are the digits of a basis \p basis number.  Increment it by 1.
- \note
- - Units digit in \p num[0].
- - Maximum value wraps to 00....0.*/
+/**
+   \brief \p num are the digits of a basis \p basis number. Increment it by 1.
+   \note
+   - Units digit in <tt>num[0]</tt>.
+   - Maximum value wraps to <tt>00...0</tt>.
+*/
 template <typename Container, typename IntegerType>
 void increment(Container &num, IntegerType basis) {
   bool carry;
@@ -157,10 +175,13 @@ void increment(Container &num, IntegerType basis) {
   }
 }
 
-/** \brief \p num are the digits of a number such that each digit ranges from 0
- to \p basis[dig] - 1. Increment it by 1. \note
- - Units digit in \p num[0].
- - Maximum value wraps to 00....0. */
+/**
+   \brief \p num are the digits of a number such that each digit ranges from 0
+   to <tt>basis[dig] - 1</tt>. Increment it by 1.
+   \note
+   - Units digit in <tt>num[0]</tt>.
+   - Maximum value wraps to <tt>00...0</tt>.
+*/
 template <typename Container>
 void increment(Container &num, Container const &basis) {
   bool carry;
@@ -172,10 +193,14 @@ void increment(Container &num, Container const &basis) {
   }
 }
 
-/** \brief \p num are the digits of a number such that each digit ranges from 0
-to \p basis[dig] - 1. Increment it by \p inc. \note
-- Units digit in \p num[0].
-- Maximum value wraps to 00....0. */
+/**
+   \brief \p num are the digits of a number such that each digit ranges from 0
+   to \<tt>basis[dig] - 1</tt>.
+   Increment it by \p inc.
+   \note
+   - Units digit in <tt>num[0]<tt>.
+   - Maximum value wraps to <tt>00...0</tt>.
+*/
 template <typename Container>
 void increment(Container &num, Container const &basis, std::size_t inc) {
   for (std::size_t ii = 0; ii < inc; ++ii)
@@ -183,4 +208,4 @@ void increment(Container &num, Container const &basis, std::size_t inc) {
 }
 } // namespace modular
 
-#endif /* Modular_h */
+#endif /* GENERAL_MODULAR_H */

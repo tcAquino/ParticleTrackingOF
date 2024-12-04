@@ -6,7 +6,7 @@ var structptof_1_1_measurer_time__first__crossing__time =
     [ "MeasurerTime_first_crossing_time", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#af67e27b00dafea484543b20a18a5735b", null ],
     [ "crossing_times_masses", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a827cf2f309cb0f50ca49c6f2603f18f0", null ],
     [ "open_write", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#abc72cf9a84deffff2ecc4b95bd22787c", null ],
-    [ "operator()", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#aaf8ad59aa00f4681626aa70818bf5bf8", null ],
+    [ "operator()", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a28842337778688146493f5bc5dff9eb1", null ],
     [ "print", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a0c1182ca35515972e1dc5a7116118248", null ],
     [ "update", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a004d1d5b4eb8b6ef9b50c970179716ec", null ],
     [ "_column_widths", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#adfeb3c4244bed2189267feccb1f78353", null ],

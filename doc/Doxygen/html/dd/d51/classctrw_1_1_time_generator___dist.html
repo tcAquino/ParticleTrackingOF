@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::TimeGenerator_Dist&lt; Dist, RNG &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ctrw::TimeGenerator_Dist&lt; Dist, ParallelOption, RNG &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('dd/d51/classctrw_1_1_time_generator___
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::TimeGenerator_Dist&lt; Dist, RNG &gt; Class Template Reference</div>  </div>
+<div class="title">ctrw::TimeGenerator_Dist&lt; Dist, ParallelOption, RNG &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -95,43 +95,52 @@ $(document).ready(function(){initNavTree('dd/d51/classctrw_1_1_time_generator___
  <a href="../../dd/d51/classctrw_1_1_time_generator___dist.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d0/dd6/_time_generator_8h_source.html">CTRW/TimeGenerator.h</a>&quot;</code></p>
+<div class="dynheader">
+Collaboration diagram for ctrw::TimeGenerator_Dist&lt; Dist, ParallelOption, RNG &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d9/d5a/classctrw_1_1_time_generator___dist__coll__graph.png" border="0" usemap="#actrw_1_1_time_generator___dist_3_01_dist_00_01_parallel_option_00_01_r_n_g_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="actrw_1_1_time_generator___dist_3_01_dist_00_01_parallel_option_00_01_r_n_g_01_4_coll__map" id="actrw_1_1_time_generator___dist_3_01_dist_00_01_parallel_option_00_01_r_n_g_01_4_coll__map">
+<area shape="rect" title="Time step according to a given distribution." alt="" coords="5,124,188,180"/>
+<area shape="rect" href="../../d3/d90/structstochastic_1_1_r_n_g_threaded.html" title=" " alt="" coords="9,5,184,61"/>
+</map>
+<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a87890a4bcf9e1a844a668bd9364347b5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a87890a4bcf9e1a844a668bd9364347b5">value_type</a> = decltype(dist(<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#ab0bd459da197be9b45ffbcb06c7c6568">_rng</a>))</td></tr>
-<tr class="separator:a87890a4bcf9e1a844a668bd9364347b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df7618e3418d81e196590cc5f6b61b4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a8df7618e3418d81e196590cc5f6b61b4">value_type</a> = decltype(dist(<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#aa841565c9b0f66f98ef9f078ed0d95f3">_rng</a>))</td></tr>
+<tr class="separator:a8df7618e3418d81e196590cc5f6b61b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0784274a2645d05e8f230d52dde3a186"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a0784274a2645d05e8f230d52dde3a186">TimeGenerator_Dist</a> (Dist dist)</td></tr>
-<tr class="separator:a0784274a2645d05e8f230d52dde3a186"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34d7ff4f92f87396b851905c578ceac8"><td class="memTemplParams" colspan="2">template&lt;typename State  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a34d7ff4f92f87396b851905c578ceac8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a34d7ff4f92f87396b851905c578ceac8">operator()</a> (State const &amp;={})</td></tr>
-<tr class="separator:a34d7ff4f92f87396b851905c578ceac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b87c3368ebf3b68b8e82ab8a709983a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a9b87c3368ebf3b68b8e82ab8a709983a">TimeGenerator_Dist</a> (Dist dist)</td></tr>
+<tr class="separator:a9b87c3368ebf3b68b8e82ab8a709983a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfc9bfa2dcf68424db4bb9d114990f3e"><td class="memTemplParams" colspan="2">template&lt;typename State  = useful::Empty&gt; </td></tr>
+<tr class="memitem:acfc9bfa2dcf68424db4bb9d114990f3e"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#acfc9bfa2dcf68424db4bb9d114990f3e">operator()</a> (State const &amp;={})</td></tr>
+<tr class="separator:acfc9bfa2dcf68424db4bb9d114990f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a5e8ab7731076a5b65efbddda5ef9f2a9"><td class="memItemLeft" align="right" valign="top">Dist&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a5e8ab7731076a5b65efbddda5ef9f2a9">_dist</a></td></tr>
-<tr class="separator:a5e8ab7731076a5b65efbddda5ef9f2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0bd459da197be9b45ffbcb06c7c6568"><td class="memItemLeft" align="right" valign="top">RNG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#ab0bd459da197be9b45ffbcb06c7c6568">_rng</a> {std::random_device{}()}</td></tr>
-<tr class="separator:ab0bd459da197be9b45ffbcb06c7c6568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac24f365e6133165d478bed5d580f22f2"><td class="memItemLeft" align="right" valign="top">Dist&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#ac24f365e6133165d478bed5d580f22f2">_dist</a></td></tr>
+<tr class="separator:ac24f365e6133165d478bed5d580f22f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa841565c9b0f66f98ef9f078ed0d95f3"><td class="memItemLeft" align="right" valign="top">RNG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#aa841565c9b0f66f98ef9f078ed0d95f3">_rng</a> {std::random_device{}()}</td></tr>
+<tr class="separator:aa841565c9b0f66f98ef9f078ed0d95f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Dist, typename RNG = std::mt19937&gt;<br />
-class ctrw::TimeGenerator_Dist&lt; Dist, RNG &gt;</h3>
+<div class="textblock"><h3>template&lt;typename Dist, typename ParallelOption = par::ParallelOptions::Serial, typename RNG = stochastic::RNGThreaded&lt;ParallelOption, std::mt19937&gt;&gt;<br />
+class ctrw::TimeGenerator_Dist&lt; Dist, ParallelOption, RNG &gt;</h3>
 
 <p>Time step according to a given distribution. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a87890a4bcf9e1a844a668bd9364347b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87890a4bcf9e1a844a668bd9364347b5">&#9670;&nbsp;</a></span>value_type</h2>
+<a id="a8df7618e3418d81e196590cc5f6b61b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8df7618e3418d81e196590cc5f6b61b4">&#9670;&nbsp;</a></span>value_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
+template&lt;typename Dist , typename ParallelOption  = par::ParallelOptions::Serial, typename RNG  = stochastic::RNGThreaded&lt;ParallelOption, std::mt19937&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, RNG &gt;::<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a87890a4bcf9e1a844a668bd9364347b5">value_type</a> =  decltype(dist(<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#ab0bd459da197be9b45ffbcb06c7c6568">_rng</a>))</td>
+          <td class="memname">using <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, ParallelOption, RNG &gt;::<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#a8df7618e3418d81e196590cc5f6b61b4">value_type</a> =  decltype(dist(<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html#aa841565c9b0f66f98ef9f078ed0d95f3">_rng</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -139,19 +148,19 @@ template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0784274a2645d05e8f230d52dde3a186"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0784274a2645d05e8f230d52dde3a186">&#9670;&nbsp;</a></span>TimeGenerator_Dist()</h2>
+<a id="a9b87c3368ebf3b68b8e82ab8a709983a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b87c3368ebf3b68b8e82ab8a709983a">&#9670;&nbsp;</a></span>TimeGenerator_Dist()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
+template&lt;typename Dist , typename ParallelOption  = par::ParallelOptions::Serial, typename RNG  = stochastic::RNGThreaded&lt;ParallelOption, std::mt19937&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, RNG &gt;::<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">TimeGenerator_Dist</a> </td>
+          <td class="memname"><a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, ParallelOption, RNG &gt;::<a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">TimeGenerator_Dist</a> </td>
           <td>(</td>
           <td class="paramtype">Dist&#160;</td>
           <td class="paramname"><em>dist</em></td><td>)</td>
@@ -168,13 +177,13 @@ template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a34d7ff4f92f87396b851905c578ceac8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34d7ff4f92f87396b851905c578ceac8">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="acfc9bfa2dcf68424db4bb9d114990f3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfc9bfa2dcf68424db4bb9d114990f3e">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
+template&lt;typename Dist , typename ParallelOption  = par::ParallelOptions::Serial, typename RNG  = stochastic::RNGThreaded&lt;ParallelOption, std::mt19937&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;typename State  = useful::Empty&gt; </div>
 <table class="mlabels">
@@ -182,7 +191,7 @@ template&lt;typename State  = useful::Empty&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, RNG &gt;::operator() </td>
+          <td class="memname">auto <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, ParallelOption, RNG &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">State const &amp;&#160;</td>
           <td class="paramname"> = <code>{}</code></td><td>)</td>
@@ -199,19 +208,19 @@ template&lt;typename State  = useful::Empty&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a5e8ab7731076a5b65efbddda5ef9f2a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e8ab7731076a5b65efbddda5ef9f2a9">&#9670;&nbsp;</a></span>_dist</h2>
+<a id="ac24f365e6133165d478bed5d580f22f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac24f365e6133165d478bed5d580f22f2">&#9670;&nbsp;</a></span>_dist</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
+template&lt;typename Dist , typename ParallelOption  = par::ParallelOptions::Serial, typename RNG  = stochastic::RNGThreaded&lt;ParallelOption, std::mt19937&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Dist <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, RNG &gt;::_dist</td>
+          <td class="memname">Dist <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, ParallelOption, RNG &gt;::_dist</td>
         </tr>
       </table>
   </td>
@@ -223,19 +232,19 @@ template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
 
 </div>
 </div>
-<a id="ab0bd459da197be9b45ffbcb06c7c6568"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0bd459da197be9b45ffbcb06c7c6568">&#9670;&nbsp;</a></span>_rng</h2>
+<a id="aa841565c9b0f66f98ef9f078ed0d95f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa841565c9b0f66f98ef9f078ed0d95f3">&#9670;&nbsp;</a></span>_rng</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dist , typename RNG  = std::mt19937&gt; </div>
+template&lt;typename Dist , typename ParallelOption  = par::ParallelOptions::Serial, typename RNG  = stochastic::RNGThreaded&lt;ParallelOption, std::mt19937&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">RNG <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, RNG &gt;::_rng {std::random_device{}()}</td>
+          <td class="memname">RNG <a class="el" href="../../dd/d51/classctrw_1_1_time_generator___dist.html">ctrw::TimeGenerator_Dist</a>&lt; Dist, ParallelOption, RNG &gt;::_rng {std::random_device{}()}</td>
         </tr>
       </table>
   </td>

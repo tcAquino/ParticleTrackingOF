@@ -128,10 +128,10 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html">Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodic boundaries along each symmetry plane with information about where position would be outside domain.  <a href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/df2/structgeom_1_1_parallelepiped.html">Parallelepiped</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/df2/structgeom_1_1_parallelepiped.html">Parallelepiped</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rectangle in any dimension, aligned with Cartesian axes.  <a href="../../dd/df2/structgeom_1_1_parallelepiped.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html">Sphere</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html">Sphere</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> in any dimension.  <a href="../../d0/da4/structgeom_1_1_sphere.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d91/structgeom_1_1_domain.html">Domain</a></td></tr>
@@ -236,7 +236,7 @@ Functions</h2></td></tr>
 <tr class="separator:a09e0461dcffe26ab99642b88f5474bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Miscallaneous geometry-related objects and utilities. </p>
+<div class="textblock"><p>Geometry-related objects and utilities. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a09e0461dcffe26ab99642b88f5474bfa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a09e0461dcffe26ab99642b88f5474bfa">&#9670;&nbsp;</a></span>add_periodic_images()</h2>
@@ -279,10 +279,10 @@ template&lt;typename Points  = std::vector&lt;std::vector&lt;double&gt;&gt;, typ
 </div><div class="memdoc">
 
 <p>Add periodic velocity point images outside domain. </p>
-<p>If the projection of a point is within a given fraction of the boundary along each symmetry plane, add an image along that plane.</p><dl class="params"><dt>Parameters</dt><dd>
+<p>If the projection of a point is within a given fraction of the boundary along each symmetry plane, add an image along that plane. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">points</td><td>Point positions, to add new points.</td></tr>
-    <tr><td class="paramname">velocities</td><td>Velocity values, to add new velocities.</td></tr>
+    <tr><td class="paramname">points</td><td>Point positions, to add new points. </td></tr>
+    <tr><td class="paramname">velocities</td><td>Velocity values, to add new velocities. </td></tr>
     <tr><td class="paramname">fraction</td><td>Fraction of original points to add. </td></tr>
     <tr><td class="paramname">boundary_periodic</td><td>Object to enforce periodic boundary conditions. </td></tr>
   </table>
@@ -1052,9 +1052,9 @@ template&lt;typename Position , typename SymmetryPlanes &gt; </div>
 <p>Compute component of projection along basis vectors of symmetry planes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>Position to project.</td></tr>
-    <tr><td class="paramname">symmetry_planes</td><td>Symmetry planes defining the periodic unit cell.</td></tr>
-    <tr><td class="paramname">dd</td><td>Component of project to compute.</td></tr>
+    <tr><td class="paramname">position</td><td>Position to project. </td></tr>
+    <tr><td class="paramname">symmetry_planes</td><td>Symmetry planes defining the periodic unit cell. </td></tr>
+    <tr><td class="paramname">dd</td><td>Component of project to compute. </td></tr>
     <tr><td class="paramname">scale</td><td>Scale factor. </td></tr>
   </table>
   </dd>
@@ -1131,10 +1131,10 @@ template&lt;typename Position , typename SymmetryPlanes , typename Origin &gt; <
 <p>Compute component of projection along basis vectors of symmetry planes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>Position to project.</td></tr>
-    <tr><td class="paramname">symmetry_planes</td><td>Symmetry planes defining the periodic unit cell.</td></tr>
-    <tr><td class="paramname">dd</td><td>Component of project to compute.</td></tr>
-    <tr><td class="paramname">scale</td><td>Scale factor.</td></tr>
+    <tr><td class="paramname">position</td><td>Position to project. </td></tr>
+    <tr><td class="paramname">symmetry_planes</td><td>Symmetry planes defining the periodic unit cell. </td></tr>
+    <tr><td class="paramname">dd</td><td>Component of project to compute. </td></tr>
+    <tr><td class="paramname">scale</td><td>Scale factor. </td></tr>
     <tr><td class="paramname">origin</td><td>Coordinate system origin. </td></tr>
   </table>
   </dd>
@@ -1203,7 +1203,8 @@ template&lt;typename Position , typename Sphere &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>- It is safe to pass the same containers for inputs and outputs.<ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>It is safe to pass the same containers for inputs and outputs.</li>
 <li>Output vectors must be passed with correct size. </li>
 </ul>
 </dd></dl>
@@ -1560,7 +1561,8 @@ template&lt;typename Position , typename Sphere &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>- It is safe to pass the same containers for inputs and outputs.<ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>It is safe to pass the same containers for inputs and outputs.</li>
 <li>Output vectors must be passed with correct size. </li>
 </ul>
 </dd></dl>

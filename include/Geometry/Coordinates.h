@@ -1,18 +1,22 @@
 /**
- \file Geometry/Coordinates.h
- \author Tomás Aquino
- \date 17/11/2020
+   \file Geometry/Coordinates.h
+   \author Tomás Aquino
+   \date 17/11/2020
+   \brief Coordinate changes.
 */
 
-#ifndef Coordinates_h
-#define Coordinates_h
+#ifndef GEOMETRY_COORDINATES_H
+#define GEOMETRY_COORDINATES_H
 
 #include "General/Operations.h"
 #include <cmath>
 #include <vector>
 
 namespace geom {
-/** \brief Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta (elevation)). */
+/**
+   \brief Covert cartesian (x, y, z) to spherical (r, phi (azimuthal), theta
+   (elevation)).
+*/
 template <typename Container = std::vector<double>>
 Container cartesian2spherical(Container const &cartesian) {
   double abs = op::abs(cartesian);
@@ -20,14 +24,19 @@ Container cartesian2spherical(Container const &cartesian) {
           std::acos(cartesian[2] / abs)};
 }
 
-/** \brief Get spherical angles (phi (azimuthal), theta (elevation)) from cartesian (x, y, z). */
+/**
+   \brief Get spherical angles (phi (azimuthal), theta (elevation)) from
+   cartesian (x, y, z).
+*/
 template <typename Container = std::vector<double>>
 Container cartesian2spherical_angles(Container const &cartesian) {
   return {std::atan2(cartesian[1], cartesian[0]),
           std::acos(cartesian[2] / abs)};
 }
 
-/** \brief Covert spherical (r, phi (azimuthal), theta (elevation)) to cartesian (x, y, z). */
+/**
+   \brief Covert spherical (r, phi (azimuthal), theta (elevation)) to cartesian
+   (x, y, z). */
 template <typename Container = std::vector<double>>
 Container spherical2cartesian(Container const &spherical) {
   double sintheta = std::sin(spherical[2]);
@@ -55,4 +64,4 @@ Container polar2cartesian(Container const &polar) {
 }
 } // namespace geom
 
-#endif /* Coordinates_h */
+#endif /* GEOMETRY_COORDINATES_H */

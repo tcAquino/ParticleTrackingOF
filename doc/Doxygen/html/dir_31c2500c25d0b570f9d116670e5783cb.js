@@ -9,6 +9,5 @@ var dir_31c2500c25d0b570f9d116670e5783cb =
     [ "Operations.h", "d7/d14/_operations_8h.html", "d7/d14/_operations_8h" ],
     [ "Parallel.h", "d9/d4c/_parallel_8h.html", "d9/d4c/_parallel_8h" ],
     [ "Ranges.h", "d9/d02/_ranges_8h.html", "d9/d02/_ranges_8h" ],
-    [ "Serial.h", "d7/d9a/_serial_8h.html", "d7/d9a/_serial_8h" ],
     [ "Useful.h", "d9/d18/_general_2_useful_8h.html", "d9/d18/_general_2_useful_8h" ]
 ];

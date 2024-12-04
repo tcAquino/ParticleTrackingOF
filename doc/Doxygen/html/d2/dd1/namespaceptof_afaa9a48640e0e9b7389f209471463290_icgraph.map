@@ -1,9 +1,9 @@
 <map id="ptof::magnitude_of_average" name="ptof::magnitude_of_average">
-<area shape="rect" id="node1" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="460,173,605,214"/>
-<area shape="rect" id="node2" href="$dc/d6a/structptof_1_1model__advection__diffusion__2d_1_1_transport_1_1_parameters.html#a7460cc25bcc8867575f6907f8575dc74" title=" " alt="" coords="212,5,388,61"/>
-<area shape="rect" id="node3" href="$d8/d0b/structptof_1_1model__advection__2d_1_1_transport_1_1_parameters.html#ae228f4c806c1cee1eb76402a79d42ffb" title=" " alt="" coords="203,85,397,141"/>
-<area shape="rect" id="node4" href="$d4/d16/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport_1_1_parameters.html#a111fe45f2a69ed4fb27e5c57ede87e33" title=" " alt="" coords="188,165,412,221"/>
-<area shape="rect" id="node5" href="$db/d87/structptof_1_1model__bcc__cartesian__advection_1_1_transport_1_1_parameters.html#a918ad61a73a353863fdf1bded888b801" title=" " alt="" coords="204,245,396,301"/>
-<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="209,325,391,352"/>
-<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="5,318,140,359"/>
+<area shape="rect" id="node1" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="435,188,565,229"/>
+<area shape="rect" id="node2" href="$dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a4151239be3e7489927b0abeee63fc554" title=" " alt="" coords="197,5,366,76"/>
+<area shape="rect" id="node3" href="$dd/d5e/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8f9bca151bdad048fb2d1ca638c7ff01" title=" " alt="" coords="193,101,369,157"/>
+<area shape="rect" id="node4" href="$dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#aa118b2da381b234896ca9a15f88f5fb6" title=" " alt="" coords="176,181,387,237"/>
+<area shape="rect" id="node5" href="$d8/d17/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport_1_1_parameters.html#a442e0c5be335fb8749442417ddc967d5" title=" " alt="" coords="194,261,369,332"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="199,357,364,383"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="5,349,128,391"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="modular::increment" name="modular::increment">
-<area shape="rect" id="node1" title="num are the digits of a number such that each digit ranges from 0 to basis[dig] &#45; 1...." alt="" coords="5,5,156,32"/>
-<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="204,5,355,32"/>
+<area shape="rect" id="node1" title="num are the digits of a number such that each digit ranges from 0 to &lt;tt&gt;basis[dig] &#45; 1...." alt="" coords="5,5,139,32"/>
+<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="187,5,320,32"/>
 </map>

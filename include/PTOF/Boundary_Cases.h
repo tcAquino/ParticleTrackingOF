@@ -1,7 +1,8 @@
 /**
-\file PTOF/Boundary_Cases.h
-\author Tomás Aquino
-\date 17/02/2022
+   \file PTOF/Boundary_Cases.h
+   \author Tomás Aquino
+   \date 17/02/2022
+   \brief Enforce different types of boundary condition depending on patch.
 */
 
 #ifndef PTOF_BOUNDARY_CASES_H
@@ -17,6 +18,7 @@
 #include <cstddef>
 #include <fieldTypes.H>
 #include <iomanip>
+#include <ios>
 #include <map>
 #include <point.H>
 #include <stdexcept>
@@ -24,9 +26,10 @@
 #include <utility>
 
 namespace ptof {
-/** \class Boundary_Cases PTOF/Boundary_Cases.h
- * "PTOF/Boundary_Cases.h" \brief Boundary object to handle implemented
- * boundary types. */
+/**
+   \class Boundary_Cases PTOF/Boundary_Cases.h "PTOF/Boundary_Cases.h"
+   \brief Boundary object to handle implemented boundary types.
+*/
 template <typename Locator, typename Store_Info, typename Boundary_Periodic,
           typename Boundary_Custom, typename SurfaceReaction>
 class Boundary_Cases {
@@ -34,15 +37,16 @@ public:
   /** \brief Container type to hold patch names and associated bc type names. */
   using BCs = std::map<std::string, std::string>;
 
-  /** Constructor
-   \param boundary_conditions Patch names and associated  boundary condition
-   types.
-   \param locator Object to locate positions in mesh.
-   \param store_info Object to handle storing of information upon boundary
-   hitting. \param boundary_periodic Periodic boundary condition enforcer.
-   \param boundary_custom Custom boundary condition enforcer.
-   \param surface_reaction
-   Surface Reaction.
+  /**
+     \brief Constructor
+     \param boundary_conditions Patch names and associated boundary condition
+     types.
+     \param locator Object to locate positions in mesh.
+     \param store_info Object to handle storing of information upon hitting a
+     boundary.
+     \param boundary_periodic Periodic boundary condition enforcer.
+     \param boundary_custom Custom boundary condition enforcer.
+     \param surface_reaction Surface Reaction.
   */
   Boundary_Cases(
       BCs boundary_conditions, Locator &&locator, Store_Info &&store_info,
@@ -61,9 +65,9 @@ public:
   }
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check.
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check.
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
@@ -72,12 +76,12 @@ public:
   }
 
   /**
-   \brief Enforce boundary conditions if necessary by choosing appropriate
-   types.
-   \param state Current particle state to apply BCs if needed (possibly
-   out of bounds).
-   \param state_old Previous particle state (should be in bounds).
-   \return \c true if some boundary had an effect, \c false otherwise.
+     \brief Enforce boundary conditions if necessary by choosing appropriate
+     types.
+     \param state Current particle state to apply BCs if needed (possibly out of
+     bounds)
+     \param state_old Previous particle state (should be in bounds).
+     \return \c true if some boundary had an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) {
@@ -165,9 +169,9 @@ public:
         break;
       }
       case BoundaryConditionList::Type::periodic: {
-        _store_info(
-            state, state_old, intersection, _boundary_condition_types,
-            meta::Selector<BoundaryConditionList::Type, BoundaryConditionList::Type::periodic>{});
+        _store_info(state, state_old, intersection, _boundary_condition_types,
+                    meta::Selector<BoundaryConditionList::Type,
+                                   BoundaryConditionList::Type::periodic>{});
         had_effect += _boundary_periodic(state, intersection);
         break;
       }
@@ -175,14 +179,14 @@ public:
         _store_info(state, state_old, intersection, _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
-        boundary_absorbing(state, intersection.point());
+        state.set_position(intersection.point());
         had_effect = 1;
         break;
       }
       case BoundaryConditionList::Type::custom: {
-        _store_info(
-            state, state_old, intersection, _boundary_condition_types,
-            meta::Selector<BoundaryConditionList::Type, BoundaryConditionList::Type::custom>{});
+        _store_info(state, state_old, intersection, _boundary_condition_types,
+                    meta::Selector<BoundaryConditionList::Type,
+                                   BoundaryConditionList::Type::custom>{});
         had_effect += _boundary_custom(state, state_old, intersection);
         break;
       }
@@ -223,8 +227,12 @@ public:
     return had_effect;
   }
 
-  /** \brief Output information about current object. */
+  /**
+     \brief Output information about current object.
+     \param output Output stream.
+  */
   template <typename OStream> void info_runtime(OStream &output) const {
+    io::StreamScopeFormat guard{output};
     output
         << "--------------------------------------------------------------\n"
            "Boundary conditions\n"
@@ -235,29 +243,30 @@ public:
           << "--------------------------------------------------------------\n";
       return;
     }
-    int width_patch =
-        int(std::max_element(_boundary_conditions.begin(),
-                             _boundary_conditions.end(),
-                             [](auto const &aa, auto const &bb) {
-                               return aa.first.length() < bb.first.length();
-                             })
-                ->first.length()) +
-        1;
-    int width_bc =
-        int(std::max_element(_boundary_conditions.begin(),
-                             _boundary_conditions.end(),
-                             [](auto const &aa, auto const &bb) {
-                               return aa.second.length() < bb.second.length();
-                             })
-                ->second.length()) +
-        1;
-    width_bc = std::max(width_bc, int(_boundary_custom.name().length()));
+    std::size_t width_patch =
+        std::max_element(_boundary_conditions.begin(),
+                         _boundary_conditions.end(),
+                         [](auto const &aa, auto const &bb) {
+                           return aa.first.length() < bb.first.length();
+                         })
+            ->first.length() +
+        2;
+    std::size_t width_bc =
+        std::max_element(_boundary_conditions.begin(),
+                         _boundary_conditions.end(),
+                         [](auto const &aa, auto const &bb) {
+                           return aa.second.length() < bb.second.length();
+                         })
+            ->second.length() +
+        2;
+    width_bc = std::max(width_bc, _boundary_custom.name().length());
+    output << std::left;
     for (auto const &bc : _boundary_conditions) {
-      output << std::left << std::setw(width_patch) << bc.first;
+      output << std::setw(width_patch) << bc.first;
       if (bc.second == "custom")
-        output << std::left << std::setw(width_bc) << _boundary_custom.name();
+        output << std::setw(width_bc) << _boundary_custom.name();
       else
-        output << std::left << std::setw(width_bc) << bc.second;
+        output << std::setw(width_bc) << bc.second;
       output << "\n";
     }
     output
@@ -286,24 +295,28 @@ private:
   auto patch_names() const { return _locator.mesh().boundaryMesh().names(); }
 
   /**
-   \param patch Index of patch in mesh.
-   \return Name of patch. */
+     \param patch Index of patch in mesh.
+     \return Name of patch.
+  */
   auto patch_name(std::size_t patch) const { return patch_names()[patch]; }
 
   /**
-   \param face Face index.
-   \return Inward normal to face (used for reflection). */
+     \param face Face index.
+     \return Inward normal to face (used for reflection).
+  */
   auto reflection_normal(Foam::label face) const {
     return unit_normal_inward(face, _locator.mesh());
   }
 
-  /** \brief Find next intersection with a boundary.
-   \details Find the next intersection, if any, along straight line from
-   previous intersection to endpoint.
-   \param intersection previous_intersection.
-   \param end Endpoint.
-   \param cell Cell index for previous intersection.
-   \return Next intersection. */
+  /**
+     \brief Find next intersection with a boundary.
+     \details Find the next intersection, if any, along straight line from
+     previous intersection to endpoint.
+     \param intersection Previous intersection.
+     \param end Endpoint.
+     \param cell Cell index for previous intersection.
+     \return Next intersection.
+  */
   template <typename Intersection>
   auto next_intersection(Intersection const &intersection,
                          Foam::point const &end) const {
@@ -314,6 +327,15 @@ private:
         end);
   }
 
+  /**
+     \brief Check if next intersection is beyond final position.
+     \details Find the next intersection, if any, along straight line from
+     previous intersection to endpoint.
+     \param next_intersection Next intersection.
+     \param old_intersection_point Position of previous intersection.
+     \param state Final state before new intersection.
+     \return \c true if beyond final position, \c false otherwise.
+  */
   template <typename Intersection, typename State>
   auto next_intersection_is_beyond_final_point(
       Intersection const &next_intersection,
@@ -325,36 +347,34 @@ private:
 };
 template <typename Locator, typename Store_Info, typename Boundary_Periodic,
           typename Boundary_Custom, typename Surface_Reaction>
-Boundary_Cases(
-    typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                                     Boundary_Custom, Surface_Reaction>::BCs,
-    Locator &&, Store_Info &&, Boundary_Periodic &&, Boundary_Custom &&,
-    Surface_Reaction &&)
-    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                               Boundary_Custom, Surface_Reaction>;
+Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
+                                       Boundary_Custom, Surface_Reaction>::BCs,
+               Locator &&, Store_Info &&, Boundary_Periodic &&,
+               Boundary_Custom &&, Surface_Reaction &&)
+    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic, Boundary_Custom,
+                      Surface_Reaction>;
 template <typename Locator, typename Store_Info, typename Boundary_Periodic,
           typename Boundary_Custom>
-Boundary_Cases(typename Boundary_Cases<
-                            Locator, Store_Info, Boundary_Periodic,
+Boundary_Cases(
+    typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
                             Boundary_Custom, SurfaceReaction_DoNothing>::BCs,
-                        Locator &&, Store_Info &&, Boundary_Periodic &&,
-                        Boundary_Custom &&)
-    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                               Boundary_Custom, SurfaceReaction_DoNothing>;
+    Locator &&, Store_Info &&, Boundary_Periodic &&, Boundary_Custom &&)
+    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic, Boundary_Custom,
+                      SurfaceReaction_DoNothing>;
 template <typename Locator, typename Store_Info, typename Boundary_Periodic>
-Boundary_Cases(typename Boundary_Cases<
-                            Locator, Store_Info, Boundary_Periodic,
+Boundary_Cases(
+    typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
                             Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
-                        Locator &&, Store_Info &&, Boundary_Periodic &&)
+    Locator &&, Store_Info &&, Boundary_Periodic &&)
     -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                               Boundary_DoNothing, SurfaceReaction_DoNothing>;
+                      Boundary_DoNothing, SurfaceReaction_DoNothing>;
 template <typename Locator, typename Store_Info>
-Boundary_Cases(typename Boundary_Cases<
-                            Locator, Store_Info, Boundary_DoNothing,
+Boundary_Cases(
+    typename Boundary_Cases<Locator, Store_Info, Boundary_DoNothing,
                             Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
-                        Locator &&, Store_Info &&)
+    Locator &&, Store_Info &&)
     -> Boundary_Cases<Locator, Store_Info, Boundary_DoNothing,
-                               Boundary_DoNothing, SurfaceReaction_DoNothing>;
+                      Boundary_DoNothing, SurfaceReaction_DoNothing>;
 } // namespace ptof
 
 #endif /* PTOF_BOUNDARYCONDITION_CASES_H */

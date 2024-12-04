@@ -1,11 +1,13 @@
 var classctrw_1_1_orientation_generator___gradient__1d =
 [
-    [ "OrientationGenerator_Gradient_1d", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a61bc9e21ce0bb07c98f1a60fd7b590c0", null ],
-    [ "operator()", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a566198533660764b49db4151cfdec48c", null ],
-    [ "_concentration", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a8dae2fe5e1ddd63878e2e68fcffe0b49", null ],
-    [ "_dist", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a511c73c7fd40033d8c9419eda814dab7", null ],
-    [ "_gradient", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a2870dd93c63340e76858a44f8adc5433", null ],
-    [ "_rng", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ab80ee549cce4a43dee684c4c3c56a0e8", null ],
-    [ "preferred_concentration", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ae63e6b468301d3781577c6680cfaf6b5", null ],
-    [ "variance", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a56723e78b9ec911d81a72e6914528fea", null ]
+    [ "OrientationGenerator_Gradient_1d", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a3496b083477ce676cc57bb7cb87405c5", null ],
+    [ "OrientationGenerator_Gradient_1d", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a963827af7b18e080368465c2bed57f03", null ],
+    [ "OrientationGenerator_Gradient_1d", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#af6e60a0b99d777e943bb1e912f888c74", null ],
+    [ "operator()", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ae266b85764060a9b6e5c0493ae8a72ba", null ],
+    [ "_concentration", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a6e806093ea101e48d35ba063886668e9", null ],
+    [ "_dist", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a957d9deb5fc8379b9887f6c495b76567", null ],
+    [ "_gradient", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a2af24e4b1796895f4132448cddd9ed84", null ],
+    [ "_rng", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a4316f0855d629fe6529bb1938693bdd5", null ],
+    [ "preferred_concentration", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#aa89fa92574db19b57e403252475ced39", null ],
+    [ "variance", "d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a340e6792cf08bd951076aa7963bed7d6", null ]
 ];

@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('da/d9d/structptof_1_1_geometry___bcc.h
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for periodic representation of a body centered cubic beadpack.  
+<p>Geometry class for periodic representation of a body centered cubic beadpack.  
  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d1/d4e/_geometry_8h_source.html">PTOF/Geometry.h</a>&quot;</code></p>
@@ -127,10 +127,10 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a9382f4ffa2bce52e6e09943e65fc5e90">Geometry_Bcc</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
-<tr class="memdesc:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use mesh from specified OpenFOAM case time.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a9382f4ffa2bce52e6e09943e65fc5e90">More...</a><br /></td></tr>
+<tr class="memdesc:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a9382f4ffa2bce52e6e09943e65fc5e90">More...</a><br /></td></tr>
 <tr class="separator:a9382f4ffa2bce52e6e09943e65fc5e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, InitialCondition &amp;&amp;initial_condition={}) const</td></tr>
+<tr class="memitem:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;initial_condition={}) const</td></tr>
 <tr class="memdesc:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics and periodicity.  <a href="../../da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">More...</a><br /></td></tr>
 <tr class="separator:a0d8442b4a277f4cd8651a78d0055d9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a799701ed7db1f7f22f6046875755c49d"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
@@ -187,7 +187,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><h3>template&lt;typename ParallelOption_t, Periodicity::Type periodicity = Periodicity::Type::cartesian, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption = SearchOptions::SecondNeighborPrecheck&gt;<br />
 class ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</h3>
 
-<p><a class="el" href="../../dc/d30/structptof_1_1_geometry.html" title="Basic geometry class.">Geometry</a> class for periodic representation of a body centered cubic beadpack. </p>
+<p>Geometry class for periodic representation of a body centered cubic beadpack. </p>
 <p>Holds spatial dimension info, mesh, mesh search objects, and periodic boundary to enforce periodicity. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a12077697b4cc1a1c93c7c8910c3cf5e5"></a>
@@ -329,8 +329,8 @@ template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodic
 </table>
 </div><div class="memdoc">
 
-<p>Use mesh from specified OpenFOAM case time. </p>
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor. </p>
+<p>Use mesh from specified OpenFOAM case time. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">directories_of</td><td>OpenFOAM case directory information. </td></tr>
     <tr><td class="paramname">directories</td><td>Current case directory information. </td></tr>
@@ -541,14 +541,14 @@ template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodic
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Mesh search tools for parallel searches </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Mesh search tools for parallel searches. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph" alt=""/></div>
 <map name="ada/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a4f2cc907cf130a3861ad794ba456d0c5_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,180,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7" title=" " alt="" coords="228,13,411,39"/>
+<area shape="rect" title=" " alt="" coords="5,5,167,47"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b" title="Get total number of parallel threads." alt="" coords="215,13,363,39"/>
 </map>
 </div>
 
@@ -585,14 +585,14 @@ template&lt;typename ParallelOption_t , Periodicity::Type periodicity = Periodic
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Mesh copies for parallel searches </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Mesh copies for parallel searches. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph" alt=""/></div>
 <map name="ada/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_aaafcdabdc6cecd422e448ae69e2c01da_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,156,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7" title=" " alt="" coords="204,13,387,39"/>
+<area shape="rect" title=" " alt="" coords="5,5,144,47"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b" title="Get total number of parallel threads." alt="" coords="192,13,340,39"/>
 </map>
 </div>
 
@@ -644,7 +644,7 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">InitialCondition &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>initial_condition</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -709,8 +709,8 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph" alt=""/></div>
 <map name="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,156,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="204,13,380,39"/>
+<area shape="rect" title=" " alt="" coords="5,5,144,47"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5" title="Get number of current parallel thread." alt="" coords="192,13,333,39"/>
 </map>
 </div>
 <div class="dynheader">
@@ -718,8 +718,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph" alt=""/></div>
 <map name="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph" id="ada/d9d/structptof_1_1_geometry___bcc_a14399f9a69fb99b5d5159cb7dc386121_icgraph">
-<area shape="rect" title=" " alt="" coords="277,13,428,54"/>
-<area shape="rect" href="../../d2/da7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport.html#ab1cf7c7c22b6c0ac25b0aae66d84db70" title=" " alt="" coords="5,5,229,61"/>
+<area shape="rect" title=" " alt="" coords="291,13,429,54"/>
+<area shape="rect" href="../../d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a0592058f0ad82e7ccbab10d9c760d15d" title=" " alt="" coords="5,5,243,61"/>
 </map>
 </div>
 
@@ -755,8 +755,8 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../da/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph.png" border="0" usemap="#ada/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph" alt=""/></div>
 <map name="ada/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph" id="ada/d9d/structptof_1_1_geometry___bcc_ad15ff3b9fa35cb26dbe3129d084242d8_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,156,47"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005" title=" " alt="" coords="204,13,380,39"/>
+<area shape="rect" title=" " alt="" coords="5,5,144,47"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5" title="Get number of current parallel thread." alt="" coords="192,13,333,39"/>
 </map>
 </div>
 

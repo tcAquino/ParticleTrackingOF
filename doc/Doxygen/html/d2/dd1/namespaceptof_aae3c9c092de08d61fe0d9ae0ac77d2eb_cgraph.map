@@ -1,0 +1,5 @@
+<map id="ptof::apply_mask_patch_faces_inplace" name="ptof::apply_mask_patch_faces_inplace">
+<area shape="rect" id="node1" title="Remove face indices if mask is below threshold." alt="" coords="5,5,167,47"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="215,13,364,39"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="412,13,547,39"/>
+</map>

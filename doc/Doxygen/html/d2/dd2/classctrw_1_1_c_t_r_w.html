@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ctrw::CTRW&lt; State_t &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ctrw::CTRW&lt; State_t, ParallelOption_t &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('d2/dd2/classctrw_1_1_c_t_r_w.html','..
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ctrw::CTRW&lt; State_t &gt; Class Template Reference</div>  </div>
+<div class="title">ctrw::CTRW&lt; State_t, ParallelOption_t &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -106,136 +106,140 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ae4cb54d29d4a85b8a2603dbbe2e9fe02"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae4cb54d29d4a85b8a2603dbbe2e9fe02">State</a> = State_t</td></tr>
-<tr class="separator:ae4cb54d29d4a85b8a2603dbbe2e9fe02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5522af2c0822081b2065acad4e5e1cb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> = <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html">ctrw::Particle</a>&lt; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae4cb54d29d4a85b8a2603dbbe2e9fe02">State</a> &gt;</td></tr>
-<tr class="separator:ac5522af2c0822081b2065acad4e5e1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0108214d8a48c04a07c05ed63c399615"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> = std::vector&lt; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> &gt;</td></tr>
-<tr class="separator:a0108214d8a48c04a07c05ed63c399615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c2e6254a28a01da57fc00b6f70c19fb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0c2e6254a28a01da57fc00b6f70c19fb">State</a> = State_t</td></tr>
+<tr class="separator:a0c2e6254a28a01da57fc00b6f70c19fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a318e2f679f0f92cc6c04e52d7414120f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> = <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html">ctrw::Particle</a>&lt; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0c2e6254a28a01da57fc00b6f70c19fb">State</a> &gt;</td></tr>
+<tr class="separator:a318e2f679f0f92cc6c04e52d7414120f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a976b59890e255289c8e09a3ed3e430f8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> = std::vector&lt; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> &gt;</td></tr>
+<tr class="separator:a976b59890e255289c8e09a3ed3e430f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c81cf42617a9ed9084305a4924401bd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a8c81cf42617a9ed9084305a4924401bd">ParallelOption</a> = ParallelOption_t</td></tr>
+<tr class="separator:a8c81cf42617a9ed9084305a4924401bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4e9915ed150d419c34f0ae589e828b69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4e9915ed150d419c34f0ae589e828b69">CTRW</a> ()</td></tr>
-<tr class="memdesc:a4e9915ed150d419c34f0ae589e828b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">No particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4e9915ed150d419c34f0ae589e828b69">More...</a><br /></td></tr>
-<tr class="separator:a4e9915ed150d419c34f0ae589e828b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a065554521a182f6d2206be2ada273668"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a065554521a182f6d2206be2ada273668">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c">particles</a>)</td></tr>
-<tr class="separator:a065554521a182f6d2206be2ada273668"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cbe59b262587e798c88728190347caf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a1cbe59b262587e798c88728190347caf">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c">particles</a>, <a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html">Tag</a>)</td></tr>
-<tr class="memdesc:a1cbe59b262587e798c88728190347caf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a1cbe59b262587e798c88728190347caf">More...</a><br /></td></tr>
-<tr class="separator:a1cbe59b262587e798c88728190347caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a725813bb1b7cf3621249f357ea6e06c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a725813bb1b7cf3621249f357ea6e06c2">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c">particles</a>, std::size_t max_nr_particles)</td></tr>
-<tr class="memdesc:a725813bb1b7cf3621249f357ea6e06c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserve space for maximum number of particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a725813bb1b7cf3621249f357ea6e06c2">More...</a><br /></td></tr>
-<tr class="separator:a725813bb1b7cf3621249f357ea6e06c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafc464e30a38847e0f4fa155347258cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aafc464e30a38847e0f4fa155347258cc">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c">particles</a>, std::size_t max_nr_particles, <a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html">Tag</a>)</td></tr>
-<tr class="memdesc:aafc464e30a38847e0f4fa155347258cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order reserve space for maximum number of particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aafc464e30a38847e0f4fa155347258cc">More...</a><br /></td></tr>
-<tr class="separator:aafc464e30a38847e0f4fa155347258cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c55b79c86f8e09e0f0737562e51d4c"><td class="memTemplParams" colspan="2">template&lt;typename StateMaker &gt; </td></tr>
-<tr class="memitem:a70c55b79c86f8e09e0f0737562e51d4c"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a70c55b79c86f8e09e0f0737562e51d4c">CTRW</a> (std::size_t nr_particles, StateMaker &amp;&amp;state_maker)</td></tr>
-<tr class="separator:a70c55b79c86f8e09e0f0737562e51d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0426613cc4288d72fc5c3c4be8a8d5ba"><td class="memTemplParams" colspan="2">template&lt;typename StateMaker &gt; </td></tr>
-<tr class="memitem:a0426613cc4288d72fc5c3c4be8a8d5ba"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0426613cc4288d72fc5c3c4be8a8d5ba">push_back</a> (std::size_t nr_particles, StateMaker &amp;&amp;state_maker)</td></tr>
-<tr class="memdesc:a0426613cc4288d72fc5c3c4be8a8d5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0426613cc4288d72fc5c3c4be8a8d5ba">More...</a><br /></td></tr>
-<tr class="separator:a0426613cc4288d72fc5c3c4be8a8d5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addc1c11632656ea169ee04fd56c9a9c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#addc1c11632656ea169ee04fd56c9a9c4">push_back</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> const &amp;particle)</td></tr>
-<tr class="memdesc:addc1c11632656ea169ee04fd56c9a9c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a particle.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#addc1c11632656ea169ee04fd56c9a9c4">More...</a><br /></td></tr>
-<tr class="separator:addc1c11632656ea169ee04fd56c9a9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a318de61fa3d3cf85c83be03b1ae954"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a2a318de61fa3d3cf85c83be03b1ae954">push_back</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> const &amp;<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c">particles</a>)</td></tr>
-<tr class="memdesc:a2a318de61fa3d3cf85c83be03b1ae954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a2a318de61fa3d3cf85c83be03b1ae954">More...</a><br /></td></tr>
-<tr class="separator:a2a318de61fa3d3cf85c83be03b1ae954"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15c6ff845db1666b8f974bc779f524ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a15c6ff845db1666b8f974bc779f524ee">reserve</a> (std::size_t nr_particles)</td></tr>
-<tr class="memdesc:a15c6ff845db1666b8f974bc779f524ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserve space for particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a15c6ff845db1666b8f974bc779f524ee">More...</a><br /></td></tr>
-<tr class="separator:a15c6ff845db1666b8f974bc779f524ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a633524d45d3c71f99308b57bf890e9f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a633524d45d3c71f99308b57bf890e9f3">retag</a> ()</td></tr>
-<tr class="memdesc:a633524d45d3c71f99308b57bf890e9f3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in order of container.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a633524d45d3c71f99308b57bf890e9f3">More...</a><br /></td></tr>
-<tr class="separator:a633524d45d3c71f99308b57bf890e9f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d2f69ff6a005c210c39ea179689c7a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d2f69ff6a005c210c39ea179689c7a9">set</a> (std::size_t part, <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae4cb54d29d4a85b8a2603dbbe2e9fe02">State</a> const &amp;state)</td></tr>
-<tr class="memdesc:a5d2f69ff6a005c210c39ea179689c7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set particle's new and old state.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d2f69ff6a005c210c39ea179689c7a9">More...</a><br /></td></tr>
-<tr class="separator:a5d2f69ff6a005c210c39ea179689c7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a476f9f1c0d5ae0f079a38bfc2ee24e19"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
-<tr class="memitem:a476f9f1c0d5ae0f079a38bfc2ee24e19"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a476f9f1c0d5ae0f079a38bfc2ee24e19">transform</a> (Transformation &amp;&amp;transformation, std::size_t part)</td></tr>
-<tr class="memdesc:a476f9f1c0d5ae0f079a38bfc2ee24e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply transformation to a particle's state(s).  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a476f9f1c0d5ae0f079a38bfc2ee24e19">More...</a><br /></td></tr>
-<tr class="separator:a476f9f1c0d5ae0f079a38bfc2ee24e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f652b4b000291d20ad1ae3883a0fb02"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
-<tr class="memitem:a8f652b4b000291d20ad1ae3883a0fb02"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a8f652b4b000291d20ad1ae3883a0fb02">transform</a> (Transformation &amp;&amp;transformation)</td></tr>
-<tr class="memdesc:a8f652b4b000291d20ad1ae3883a0fb02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply transformation to all particles' state(s).  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a8f652b4b000291d20ad1ae3883a0fb02">More...</a><br /></td></tr>
-<tr class="separator:a8f652b4b000291d20ad1ae3883a0fb02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e36e881738cef7249a1bb7b9f2aceef"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
-<tr class="memitem:a5e36e881738cef7249a1bb7b9f2aceef"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5e36e881738cef7249a1bb7b9f2aceef">transform_both</a> (Transformation &amp;&amp;transformation, std::size_t part)</td></tr>
-<tr class="memdesc:a5e36e881738cef7249a1bb7b9f2aceef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply same transformation to both states of a particle.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5e36e881738cef7249a1bb7b9f2aceef">More...</a><br /></td></tr>
-<tr class="separator:a5e36e881738cef7249a1bb7b9f2aceef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a234a513ca440e0ecc931b0c3bb7f2f51"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
-<tr class="memitem:a234a513ca440e0ecc931b0c3bb7f2f51"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a234a513ca440e0ecc931b0c3bb7f2f51">transform_both</a> (Transformation &amp;&amp;transformation)</td></tr>
-<tr class="memdesc:a234a513ca440e0ecc931b0c3bb7f2f51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply same transformation to both states of all particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a234a513ca440e0ecc931b0c3bb7f2f51">More...</a><br /></td></tr>
-<tr class="separator:a234a513ca440e0ecc931b0c3bb7f2f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d5750cabf670629c97f37bf897845cf"><td class="memTemplParams" colspan="2">template&lt;typename Criterion &gt; </td></tr>
-<tr class="memitem:a5d5750cabf670629c97f37bf897845cf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d5750cabf670629c97f37bf897845cf">remove</a> (Criterion &amp;&amp;criterion)</td></tr>
-<tr class="memdesc:a5d5750cabf670629c97f37bf897845cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particles satisfying a criterion.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d5750cabf670629c97f37bf897845cf">More...</a><br /></td></tr>
-<tr class="separator:a5d5750cabf670629c97f37bf897845cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2b9e66f226983bf3d2695e0b850596e"><td class="memTemplParams" colspan="2">template&lt;typename IntegerType &gt; </td></tr>
-<tr class="memitem:aa2b9e66f226983bf3d2695e0b850596e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa2b9e66f226983bf3d2695e0b850596e">remove</a> (std::list&lt; IntegerType &gt; &amp;list)</td></tr>
-<tr class="memdesc:aa2b9e66f226983bf3d2695e0b850596e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particles at given indices.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa2b9e66f226983bf3d2695e0b850596e">More...</a><br /></td></tr>
-<tr class="separator:aa2b9e66f226983bf3d2695e0b850596e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfd79ad95e9ba3ccfb5de3b869556967"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#adfd79ad95e9ba3ccfb5de3b869556967">clear</a> ()</td></tr>
-<tr class="memdesc:adfd79ad95e9ba3ccfb5de3b869556967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#adfd79ad95e9ba3ccfb5de3b869556967">More...</a><br /></td></tr>
-<tr class="separator:adfd79ad95e9ba3ccfb5de3b869556967"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0915b7f10eb7b090bdd488d073db6af"><td class="memTemplParams" colspan="2">template&lt;typename Transitions &gt; </td></tr>
-<tr class="memitem:af0915b7f10eb7b090bdd488d073db6af"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af0915b7f10eb7b090bdd488d073db6af">evolve_time</a> (double time_to, Transitions &amp;&amp;transitions)</td></tr>
-<tr class="memdesc:af0915b7f10eb7b090bdd488d073db6af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve particle states in time.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af0915b7f10eb7b090bdd488d073db6af">More...</a><br /></td></tr>
-<tr class="separator:af0915b7f10eb7b090bdd488d073db6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0581ce1a57f95f4c48e5ad381339dbf8"><td class="memTemplParams" colspan="2">template&lt;typename Transitions &gt; </td></tr>
-<tr class="memitem:a0581ce1a57f95f4c48e5ad381339dbf8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0581ce1a57f95f4c48e5ad381339dbf8">evolve_space</a> (double length_to, Transitions &amp;&amp;transitions)</td></tr>
-<tr class="memdesc:a0581ce1a57f95f4c48e5ad381339dbf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve particle states in space in 1D.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0581ce1a57f95f4c48e5ad381339dbf8">More...</a><br /></td></tr>
-<tr class="separator:a0581ce1a57f95f4c48e5ad381339dbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7505b770e19bff34914d51b8c9e89cf0"><td class="memTemplParams" colspan="2">template&lt;typename Transitions , typename Criterion &gt; </td></tr>
-<tr class="memitem:a7505b770e19bff34914d51b8c9e89cf0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a7505b770e19bff34914d51b8c9e89cf0">evolve</a> (Criterion &amp;&amp;criterion, Transitions &amp;&amp;transitions)</td></tr>
-<tr class="memdesc:a7505b770e19bff34914d51b8c9e89cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve each particle until a given criterion is met.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a7505b770e19bff34914d51b8c9e89cf0">More...</a><br /></td></tr>
-<tr class="separator:a7505b770e19bff34914d51b8c9e89cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b122dcd0a602628cdc83471db0ebc81"><td class="memTemplParams" colspan="2">template&lt;typename Transitions &gt; </td></tr>
-<tr class="memitem:a9b122dcd0a602628cdc83471db0ebc81"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a9b122dcd0a602628cdc83471db0ebc81">step</a> (Transitions &amp;&amp;transitions)</td></tr>
-<tr class="memdesc:a9b122dcd0a602628cdc83471db0ebc81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve each particle one step.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a9b122dcd0a602628cdc83471db0ebc81">More...</a><br /></td></tr>
-<tr class="separator:a9b122dcd0a602628cdc83471db0ebc81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0abe103876db3be2733e5731c534c8b"><td class="memTemplParams" colspan="2">template&lt;typename Transitions , typename Criterion &gt; </td></tr>
-<tr class="memitem:ab0abe103876db3be2733e5731c534c8b"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab0abe103876db3be2733e5731c534c8b">step</a> (Criterion &amp;&amp;criterion, Transitions &amp;&amp;transitions)</td></tr>
-<tr class="memdesc:ab0abe103876db3be2733e5731c534c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve each particle that satisfies a criterion one step.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab0abe103876db3be2733e5731c534c8b">More...</a><br /></td></tr>
-<tr class="separator:ab0abe103876db3be2733e5731c534c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49655f1a2766a8159be411215f38b49c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c">particles</a> () const</td></tr>
-<tr class="separator:a49655f1a2766a8159be411215f38b49c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1bf8552fe6ac8bba761001ae791131b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af1bf8552fe6ac8bba761001ae791131b">particles</a> (std::size_t part) const</td></tr>
-<tr class="separator:af1bf8552fe6ac8bba761001ae791131b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3c3e346ae273e685f7741a29aa6c8b8"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa3c3e346ae273e685f7741a29aa6c8b8">size</a> () const</td></tr>
-<tr class="separator:aa3c3e346ae273e685f7741a29aa6c8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a125d278faa62e92119fec8166e593f68"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a125d278faa62e92119fec8166e593f68">cbegin</a> () const</td></tr>
-<tr class="separator:a125d278faa62e92119fec8166e593f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc24023c251b2405e35c92bc2e1b04e4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#acc24023c251b2405e35c92bc2e1b04e4">cend</a> () const</td></tr>
-<tr class="separator:acc24023c251b2405e35c92bc2e1b04e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41f019a9d2cf24b0e189066b01e9cb66"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a41f019a9d2cf24b0e189066b01e9cb66">begin</a> () const</td></tr>
-<tr class="separator:a41f019a9d2cf24b0e189066b01e9cb66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9df433c5c2cf00be5271f38c2d8c4571"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a9df433c5c2cf00be5271f38c2d8c4571">end</a> () const</td></tr>
-<tr class="separator:a9df433c5c2cf00be5271f38c2d8c4571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f4df2754c62abbebdd4dd4598170afc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0f4df2754c62abbebdd4dd4598170afc">CTRW</a> ()</td></tr>
+<tr class="memdesc:a0f4df2754c62abbebdd4dd4598170afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0f4df2754c62abbebdd4dd4598170afc">More...</a><br /></td></tr>
+<tr class="separator:a0f4df2754c62abbebdd4dd4598170afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd6cdc8960dfe356e647b664f1b4358a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#abd6cdc8960dfe356e647b664f1b4358a">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431">particles</a>)</td></tr>
+<tr class="memdesc:abd6cdc8960dfe356e647b664f1b4358a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#abd6cdc8960dfe356e647b664f1b4358a">More...</a><br /></td></tr>
+<tr class="separator:abd6cdc8960dfe356e647b664f1b4358a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae252adcd56dedb6854775f62fdc181b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae252adcd56dedb6854775f62fdc181b7">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431">particles</a>, <a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html">Tag</a>)</td></tr>
+<tr class="memdesc:ae252adcd56dedb6854775f62fdc181b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae252adcd56dedb6854775f62fdc181b7">More...</a><br /></td></tr>
+<tr class="separator:ae252adcd56dedb6854775f62fdc181b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61202a77cce164d742d99aac512cea4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a61202a77cce164d742d99aac512cea4d">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431">particles</a>, std::size_t max_nr_particles)</td></tr>
+<tr class="memdesc:a61202a77cce164d742d99aac512cea4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a61202a77cce164d742d99aac512cea4d">More...</a><br /></td></tr>
+<tr class="separator:a61202a77cce164d742d99aac512cea4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae097365b444575212afa851a82e13b8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae097365b444575212afa851a82e13b8a">CTRW</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431">particles</a>, std::size_t max_nr_particles, <a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html">Tag</a>)</td></tr>
+<tr class="memdesc:ae097365b444575212afa851a82e13b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae097365b444575212afa851a82e13b8a">More...</a><br /></td></tr>
+<tr class="separator:ae097365b444575212afa851a82e13b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4856b9f917b766896a063c0fe94961dc"><td class="memTemplParams" colspan="2">template&lt;typename StateMaker &gt; </td></tr>
+<tr class="memitem:a4856b9f917b766896a063c0fe94961dc"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4856b9f917b766896a063c0fe94961dc">CTRW</a> (std::size_t nr_particles, StateMaker &amp;&amp;state_maker)</td></tr>
+<tr class="separator:a4856b9f917b766896a063c0fe94961dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0868fa16ccc36d583cd25b173fd3e681"><td class="memTemplParams" colspan="2">template&lt;typename StateMaker &gt; </td></tr>
+<tr class="memitem:a0868fa16ccc36d583cd25b173fd3e681"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0868fa16ccc36d583cd25b173fd3e681">push_back</a> (std::size_t nr_particles, StateMaker &amp;&amp;state_maker)</td></tr>
+<tr class="memdesc:a0868fa16ccc36d583cd25b173fd3e681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0868fa16ccc36d583cd25b173fd3e681">More...</a><br /></td></tr>
+<tr class="separator:a0868fa16ccc36d583cd25b173fd3e681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac539993065e121f8dfe73d907e76fa2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac539993065e121f8dfe73d907e76fa2d">push_back</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> const &amp;particle)</td></tr>
+<tr class="memdesc:ac539993065e121f8dfe73d907e76fa2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a particle.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac539993065e121f8dfe73d907e76fa2d">More...</a><br /></td></tr>
+<tr class="separator:ac539993065e121f8dfe73d907e76fa2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab118be6673bb6985d3b58527412e8fd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab118be6673bb6985d3b58527412e8fd7">push_back</a> (<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> const &amp;<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431">particles</a>)</td></tr>
+<tr class="memdesc:ab118be6673bb6985d3b58527412e8fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab118be6673bb6985d3b58527412e8fd7">More...</a><br /></td></tr>
+<tr class="separator:ab118be6673bb6985d3b58527412e8fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25078bc51e39e260873f310593eb2391"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a25078bc51e39e260873f310593eb2391">reserve</a> (std::size_t nr_particles)</td></tr>
+<tr class="memdesc:a25078bc51e39e260873f310593eb2391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserve space for particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a25078bc51e39e260873f310593eb2391">More...</a><br /></td></tr>
+<tr class="separator:a25078bc51e39e260873f310593eb2391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a329a54384a17d3845a7ee5730199d8f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a329a54384a17d3845a7ee5730199d8f5">retag</a> ()</td></tr>
+<tr class="memdesc:a329a54384a17d3845a7ee5730199d8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in order of container.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a329a54384a17d3845a7ee5730199d8f5">More...</a><br /></td></tr>
+<tr class="separator:a329a54384a17d3845a7ee5730199d8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71ad9c9ca2dde8e19398e33cfe96b319"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a71ad9c9ca2dde8e19398e33cfe96b319">set</a> (std::size_t part, <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0c2e6254a28a01da57fc00b6f70c19fb">State</a> const &amp;state)</td></tr>
+<tr class="memdesc:a71ad9c9ca2dde8e19398e33cfe96b319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set particle's new and old state.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a71ad9c9ca2dde8e19398e33cfe96b319">More...</a><br /></td></tr>
+<tr class="separator:a71ad9c9ca2dde8e19398e33cfe96b319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac3c66f109c6032b2e241327a2b0188"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
+<tr class="memitem:a6ac3c66f109c6032b2e241327a2b0188"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a6ac3c66f109c6032b2e241327a2b0188">transform</a> (Transformation &amp;&amp;transformation, std::size_t part)</td></tr>
+<tr class="memdesc:a6ac3c66f109c6032b2e241327a2b0188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply transformation to a particle's state(s).  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a6ac3c66f109c6032b2e241327a2b0188">More...</a><br /></td></tr>
+<tr class="separator:a6ac3c66f109c6032b2e241327a2b0188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aada31ea20c5c4a3928da8fe87f4c9cc6"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
+<tr class="memitem:aada31ea20c5c4a3928da8fe87f4c9cc6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aada31ea20c5c4a3928da8fe87f4c9cc6">transform</a> (Transformation &amp;&amp;transformation)</td></tr>
+<tr class="memdesc:aada31ea20c5c4a3928da8fe87f4c9cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply transformation to all particles' state(s).  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aada31ea20c5c4a3928da8fe87f4c9cc6">More...</a><br /></td></tr>
+<tr class="separator:aada31ea20c5c4a3928da8fe87f4c9cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5416880048d544de7e9547a1a7d6461"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
+<tr class="memitem:ac5416880048d544de7e9547a1a7d6461"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5416880048d544de7e9547a1a7d6461">transform_both</a> (Transformation &amp;&amp;transformation, std::size_t part)</td></tr>
+<tr class="memdesc:ac5416880048d544de7e9547a1a7d6461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply same transformation to both states of a particle.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5416880048d544de7e9547a1a7d6461">More...</a><br /></td></tr>
+<tr class="separator:ac5416880048d544de7e9547a1a7d6461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a950823e8db0cdff1846ad420034d4fab"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
+<tr class="memitem:a950823e8db0cdff1846ad420034d4fab"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a950823e8db0cdff1846ad420034d4fab">transform_both</a> (Transformation &amp;&amp;transformation)</td></tr>
+<tr class="memdesc:a950823e8db0cdff1846ad420034d4fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply same transformation to both states of all particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a950823e8db0cdff1846ad420034d4fab">More...</a><br /></td></tr>
+<tr class="separator:a950823e8db0cdff1846ad420034d4fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f9690d60f971e8f4b88542a2f7a4461"><td class="memTemplParams" colspan="2">template&lt;typename Criterion &gt; </td></tr>
+<tr class="memitem:a4f9690d60f971e8f4b88542a2f7a4461"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4f9690d60f971e8f4b88542a2f7a4461">remove</a> (Criterion &amp;&amp;criterion)</td></tr>
+<tr class="memdesc:a4f9690d60f971e8f4b88542a2f7a4461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particles satisfying a criterion.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4f9690d60f971e8f4b88542a2f7a4461">More...</a><br /></td></tr>
+<tr class="separator:a4f9690d60f971e8f4b88542a2f7a4461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a315fa83b94aa168c726e9c312c3d6f25"><td class="memTemplParams" colspan="2">template&lt;typename IntegerType &gt; </td></tr>
+<tr class="memitem:a315fa83b94aa168c726e9c312c3d6f25"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a315fa83b94aa168c726e9c312c3d6f25">remove</a> (std::list&lt; IntegerType &gt; &amp;list)</td></tr>
+<tr class="memdesc:a315fa83b94aa168c726e9c312c3d6f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particles at given indices.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a315fa83b94aa168c726e9c312c3d6f25">More...</a><br /></td></tr>
+<tr class="separator:a315fa83b94aa168c726e9c312c3d6f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f199b7055985dff2df22fa01498a7f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a7f199b7055985dff2df22fa01498a7f7">clear</a> ()</td></tr>
+<tr class="memdesc:a7f199b7055985dff2df22fa01498a7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all particles.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a7f199b7055985dff2df22fa01498a7f7">More...</a><br /></td></tr>
+<tr class="separator:a7f199b7055985dff2df22fa01498a7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22b886dde54e916e7672f48460151742"><td class="memTemplParams" colspan="2">template&lt;typename Transitions &gt; </td></tr>
+<tr class="memitem:a22b886dde54e916e7672f48460151742"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a22b886dde54e916e7672f48460151742">evolve_time</a> (double time_to, Transitions &amp;&amp;transitions)</td></tr>
+<tr class="memdesc:a22b886dde54e916e7672f48460151742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve particle states in time.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a22b886dde54e916e7672f48460151742">More...</a><br /></td></tr>
+<tr class="separator:a22b886dde54e916e7672f48460151742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dffd6b1ed436f173964201a438948d8"><td class="memTemplParams" colspan="2">template&lt;typename Transitions &gt; </td></tr>
+<tr class="memitem:a5dffd6b1ed436f173964201a438948d8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5dffd6b1ed436f173964201a438948d8">evolve_space</a> (double length_to, Transitions &amp;&amp;transitions)</td></tr>
+<tr class="memdesc:a5dffd6b1ed436f173964201a438948d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve particle states in space in 1D.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5dffd6b1ed436f173964201a438948d8">More...</a><br /></td></tr>
+<tr class="separator:a5dffd6b1ed436f173964201a438948d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee3adfd07c6f6a51af3fa45e4e71c280"><td class="memTemplParams" colspan="2">template&lt;typename Transitions , typename Criterion &gt; </td></tr>
+<tr class="memitem:aee3adfd07c6f6a51af3fa45e4e71c280"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aee3adfd07c6f6a51af3fa45e4e71c280">evolve</a> (Criterion &amp;&amp;criterion, Transitions &amp;&amp;transitions)</td></tr>
+<tr class="memdesc:aee3adfd07c6f6a51af3fa45e4e71c280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve each particle until a given criterion is met.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aee3adfd07c6f6a51af3fa45e4e71c280">More...</a><br /></td></tr>
+<tr class="separator:aee3adfd07c6f6a51af3fa45e4e71c280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d91ba4396507608cf30518bf6e37f27"><td class="memTemplParams" colspan="2">template&lt;typename Transitions &gt; </td></tr>
+<tr class="memitem:a1d91ba4396507608cf30518bf6e37f27"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a1d91ba4396507608cf30518bf6e37f27">step</a> (Transitions &amp;&amp;transitions)</td></tr>
+<tr class="memdesc:a1d91ba4396507608cf30518bf6e37f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve each particle one step.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a1d91ba4396507608cf30518bf6e37f27">More...</a><br /></td></tr>
+<tr class="separator:a1d91ba4396507608cf30518bf6e37f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63f3082a545bc392685205c5bffe4a4"><td class="memTemplParams" colspan="2">template&lt;typename Transitions , typename Criterion &gt; </td></tr>
+<tr class="memitem:ab63f3082a545bc392685205c5bffe4a4"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab63f3082a545bc392685205c5bffe4a4">step</a> (Criterion &amp;&amp;criterion, Transitions &amp;&amp;transitions)</td></tr>
+<tr class="memdesc:ab63f3082a545bc392685205c5bffe4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evolve each particle that satisfies a criterion one step.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab63f3082a545bc392685205c5bffe4a4">More...</a><br /></td></tr>
+<tr class="separator:ab63f3082a545bc392685205c5bffe4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39273570e0dbf0453ab9eaa10094c431"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431">particles</a> () const</td></tr>
+<tr class="separator:a39273570e0dbf0453ab9eaa10094c431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a547b8da1eba2a8ab4442d4428fa5d059"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a547b8da1eba2a8ab4442d4428fa5d059">particles</a> (std::size_t part) const</td></tr>
+<tr class="separator:a547b8da1eba2a8ab4442d4428fa5d059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfc7789ba54c4c56c50d64a06c40ce51"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#adfc7789ba54c4c56c50d64a06c40ce51">size</a> () const</td></tr>
+<tr class="separator:adfc7789ba54c4c56c50d64a06c40ce51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6aa1d466e7d6dceebbedc17403166ef"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae6aa1d466e7d6dceebbedc17403166ef">cbegin</a> () const</td></tr>
+<tr class="separator:ae6aa1d466e7d6dceebbedc17403166ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada277323aaa568dcb019e718bde61455"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ada277323aaa568dcb019e718bde61455">cend</a> () const</td></tr>
+<tr class="separator:ada277323aaa568dcb019e718bde61455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a633681443cdb68d6e39f7a1a1e9cc92f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a633681443cdb68d6e39f7a1a1e9cc92f">begin</a> () const</td></tr>
+<tr class="separator:a633681443cdb68d6e39f7a1a1e9cc92f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae395413fa74be2eb6e067ffe137ec963"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae395413fa74be2eb6e067ffe137ec963">end</a> () const</td></tr>
+<tr class="separator:ae395413fa74be2eb6e067ffe137ec963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:af5f6a66b2d6ac06ea7bde6a6ceb4fff0"><td class="memTemplParams" colspan="2">template&lt;typename Criterion &gt; </td></tr>
-<tr class="memitem:af5f6a66b2d6ac06ea7bde6a6ceb4fff0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af5f6a66b2d6ac06ea7bde6a6ceb4fff0">remove</a> (std::size_t part, Criterion &amp;&amp;criterion)</td></tr>
-<tr class="memdesc:af5f6a66b2d6ac06ea7bde6a6ceb4fff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particle if criterion is met.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af5f6a66b2d6ac06ea7bde6a6ceb4fff0">More...</a><br /></td></tr>
-<tr class="separator:af5f6a66b2d6ac06ea7bde6a6ceb4fff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38e185fd2d853e4e6a2a7ea762c16289"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a38e185fd2d853e4e6a2a7ea762c16289">remove</a> (std::size_t part)</td></tr>
-<tr class="memdesc:a38e185fd2d853e4e6a2a7ea762c16289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particle.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a38e185fd2d853e4e6a2a7ea762c16289">More...</a><br /></td></tr>
-<tr class="separator:a38e185fd2d853e4e6a2a7ea762c16289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae43d145899d4bc6cb647e1572110b489"><td class="memTemplParams" colspan="2">template&lt;typename Criterion &gt; </td></tr>
+<tr class="memitem:ae43d145899d4bc6cb647e1572110b489"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae43d145899d4bc6cb647e1572110b489">remove</a> (std::size_t part, Criterion &amp;&amp;criterion)</td></tr>
+<tr class="memdesc:ae43d145899d4bc6cb647e1572110b489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particle if criterion is met.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae43d145899d4bc6cb647e1572110b489">More...</a><br /></td></tr>
+<tr class="separator:ae43d145899d4bc6cb647e1572110b489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec2a1a80e0676090ff9180db384ccf5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aec2a1a80e0676090ff9180db384ccf5c">remove</a> (std::size_t part)</td></tr>
+<tr class="memdesc:aec2a1a80e0676090ff9180db384ccf5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove particle.  <a href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aec2a1a80e0676090ff9180db384ccf5c">More...</a><br /></td></tr>
+<tr class="separator:aec2a1a80e0676090ff9180db384ccf5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a95b7281087cf53bfc2abe579671e7825"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a95b7281087cf53bfc2abe579671e7825">_particles</a></td></tr>
-<tr class="separator:a95b7281087cf53bfc2abe579671e7825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b7f82efd58957f80686edd4f4fb1605"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a6b7f82efd58957f80686edd4f4fb1605">_particles</a></td></tr>
+<tr class="separator:a6b7f82efd58957f80686edd4f4fb1605"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename State_t&gt;<br />
-class ctrw::CTRW&lt; State_t &gt;</h3>
+<div class="textblock"><h3>template&lt;typename State_t, typename ParallelOption_t = par::ParallelOptions::Serial&gt;<br />
+class ctrw::CTRW&lt; State_t, ParallelOption_t &gt;</h3>
 
 <p>Handles a set of particles characterized by a state. </p>
 <p>Particles undergo transitions handled by a separate class passed to the evolution methods. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">State_t</td><td>Characterizes a particle's state. </td></tr>
+    <tr><td class="paramname">ParallelOption_t</td><td>To choose serial or parallel implementations. </td></tr>
   </table>
   </dd>
 </dl>
@@ -245,16 +249,16 @@ class ctrw::CTRW&lt; State_t &gt;</h3>
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a0108214d8a48c04a07c05ed63c399615"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0108214d8a48c04a07c05ed63c399615">&#9670;&nbsp;</a></span>Container</h2>
+<a id="a976b59890e255289c8e09a3ed3e430f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a976b59890e255289c8e09a3ed3e430f8">&#9670;&nbsp;</a></span>Container</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> =  std::vector&lt;<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a>&gt;</td>
+          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> =  std::vector&lt;<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -262,16 +266,32 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="ac5522af2c0822081b2065acad4e5e1cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5522af2c0822081b2065acad4e5e1cb">&#9670;&nbsp;</a></span>Particle</h2>
+<a id="a8c81cf42617a9ed9084305a4924401bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c81cf42617a9ed9084305a4924401bd">&#9670;&nbsp;</a></span>ParallelOption</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> =  <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html">ctrw::Particle</a>&lt;<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae4cb54d29d4a85b8a2603dbbe2e9fe02">State</a>&gt;</td>
+          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a8c81cf42617a9ed9084305a4924401bd">ParallelOption</a> =  ParallelOption_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a318e2f679f0f92cc6c04e52d7414120f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a318e2f679f0f92cc6c04e52d7414120f">&#9670;&nbsp;</a></span>Particle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> =  <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html">ctrw::Particle</a>&lt;<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0c2e6254a28a01da57fc00b6f70c19fb">State</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -280,16 +300,16 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="ae4cb54d29d4a85b8a2603dbbe2e9fe02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4cb54d29d4a85b8a2603dbbe2e9fe02">&#9670;&nbsp;</a></span>State</h2>
+<a id="a0c2e6254a28a01da57fc00b6f70c19fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c2e6254a28a01da57fc00b6f70c19fb">&#9670;&nbsp;</a></span>State</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae4cb54d29d4a85b8a2603dbbe2e9fe02">State</a> =  State_t</td>
+          <td class="memname">using <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0c2e6254a28a01da57fc00b6f70c19fb">State</a> =  State_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -299,19 +319,19 @@ template&lt;typename State_t &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4e9915ed150d419c34f0ae589e828b69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e9915ed150d419c34f0ae589e828b69">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[1/6]</span></h2>
+<a id="a0f4df2754c62abbebdd4dd4598170afc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f4df2754c62abbebdd4dd4598170afc">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -324,26 +344,26 @@ template&lt;typename State_t &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>No particles. </p>
 <p>Constructor. </p>
+<p>No particles. </p>
 
 </div>
 </div>
-<a id="a065554521a182f6d2206be2ada273668"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a065554521a182f6d2206be2ada273668">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[2/6]</span></h2>
+<a id="abd6cdc8960dfe356e647b664f1b4358a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd6cdc8960dfe356e647b664f1b4358a">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a>&#160;</td>
           <td class="paramname"><em>particles</em></td><td>)</td>
           <td></td>
         </tr>
@@ -354,7 +374,9 @@ template&lt;typename State_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">particles</td><td>Container with particles. </td></tr>
   </table>
@@ -363,21 +385,21 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a1cbe59b262587e798c88728190347caf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cbe59b262587e798c88728190347caf">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[3/6]</span></h2>
+<a id="ae252adcd56dedb6854775f62fdc181b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae252adcd56dedb6854775f62fdc181b7">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a>&#160;</td>
           <td class="paramname"><em>particles</em>, </td>
         </tr>
         <tr>
@@ -399,44 +421,44 @@ template&lt;typename State_t &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order. </p>
-<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>State must define:<ul>
-<li><code>tag</code> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor. </p>
+<p><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">particles</td><td>Container with particles. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>tag</code> </li>
+</ul>
+</dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a1cbe59b262587e798c88728190347caf_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a1cbe59b262587e798c88728190347caf_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a1cbe59b262587e798c88728190347caf_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a1cbe59b262587e798c88728190347caf_cgraph">
-<area shape="rect" title="Tag particles in ascending order." alt="" coords="5,5,148,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a633524d45d3c71f99308b57bf890e9f3" title="Tag particles in order of container." alt="" coords="196,5,333,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_ae252adcd56dedb6854775f62fdc181b7_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_ae252adcd56dedb6854775f62fdc181b7_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_ae252adcd56dedb6854775f62fdc181b7_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_ae252adcd56dedb6854775f62fdc181b7_cgraph">
+<area shape="rect" title="Constructor." alt="" coords="5,5,148,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a329a54384a17d3845a7ee5730199d8f5" title="Tag particles in order of container." alt="" coords="196,5,328,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a725813bb1b7cf3621249f357ea6e06c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a725813bb1b7cf3621249f357ea6e06c2">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[4/6]</span></h2>
+<a id="a61202a77cce164d742d99aac512cea4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61202a77cce164d742d99aac512cea4d">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a>&#160;</td>
           <td class="paramname"><em>particles</em>, </td>
         </tr>
         <tr>
@@ -458,8 +480,8 @@ template&lt;typename State_t &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reserve space for maximum number of particles. </p>
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor. </p>
+<p>Reserve space for maximum number of particles. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">particles</td><td>Container with particles. </td></tr>
     <tr><td class="paramname">max_nr_particles</td><td>Number of particles to reserve space for. </td></tr>
@@ -469,30 +491,30 @@ template&lt;typename State_t &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a725813bb1b7cf3621249f357ea6e06c2_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a725813bb1b7cf3621249f357ea6e06c2_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a725813bb1b7cf3621249f357ea6e06c2_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a725813bb1b7cf3621249f357ea6e06c2_cgraph">
-<area shape="rect" title="Reserve space for maximum number of particles." alt="" coords="5,5,148,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c" title=" " alt="" coords="196,5,355,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a61202a77cce164d742d99aac512cea4d_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a61202a77cce164d742d99aac512cea4d_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a61202a77cce164d742d99aac512cea4d_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a61202a77cce164d742d99aac512cea4d_cgraph">
+<area shape="rect" title="Constructor." alt="" coords="5,5,148,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431" title=" " alt="" coords="196,5,348,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aafc464e30a38847e0f4fa155347258cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafc464e30a38847e0f4fa155347258cc">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[5/6]</span></h2>
+<a id="ae097365b444575212afa851a82e13b8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae097365b444575212afa851a82e13b8a">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a>&#160;</td>
           <td class="paramname"><em>particles</em>, </td>
         </tr>
         <tr>
@@ -520,37 +542,37 @@ template&lt;typename State_t &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order reserve space for maximum number of particles. </p>
-<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>State must define:<ul>
-<li><code>tag</code> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor. </p>
+<p><a class="el" href="../../d8/dbf/structctrw_1_1_c_t_r_w_1_1_tag.html" title="To select constructors that tag particles.">Tag</a> particles in ascending order reserve space for maximum number of particles. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">particles</td><td>Container with particles. </td></tr>
     <tr><td class="paramname">max_nr_particles</td><td>Number of particles to reserve space for. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>tag</code> </li>
+</ul>
+</dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_aafc464e30a38847e0f4fa155347258cc_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_aafc464e30a38847e0f4fa155347258cc_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_aafc464e30a38847e0f4fa155347258cc_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_aafc464e30a38847e0f4fa155347258cc_cgraph">
-<area shape="rect" title="Tag particles in ascending order reserve space for maximum number of particles." alt="" coords="5,5,148,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a633524d45d3c71f99308b57bf890e9f3" title="Tag particles in order of container." alt="" coords="196,5,333,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_ae097365b444575212afa851a82e13b8a_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_ae097365b444575212afa851a82e13b8a_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_ae097365b444575212afa851a82e13b8a_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_ae097365b444575212afa851a82e13b8a_cgraph">
+<area shape="rect" title="Constructor." alt="" coords="5,5,148,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a329a54384a17d3845a7ee5730199d8f5" title="Tag particles in order of container." alt="" coords="196,5,328,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a70c55b79c86f8e09e0f0737562e51d4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70c55b79c86f8e09e0f0737562e51d4c">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[6/6]</span></h2>
+<a id="a4856b9f917b766896a063c0fe94961dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4856b9f917b766896a063c0fe94961dc">&#9670;&nbsp;</a></span>CTRW() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename StateMaker &gt; </div>
 <table class="mlabels">
@@ -558,7 +580,7 @@ template&lt;typename StateMaker &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::<a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">CTRW</a> </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>nr_particles</em>, </td>
@@ -591,29 +613,29 @@ template&lt;typename StateMaker &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a70c55b79c86f8e09e0f0737562e51d4c_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a70c55b79c86f8e09e0f0737562e51d4c_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a70c55b79c86f8e09e0f0737562e51d4c_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a70c55b79c86f8e09e0f0737562e51d4c_cgraph">
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a4856b9f917b766896a063c0fe94961dc_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a4856b9f917b766896a063c0fe94961dc_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a4856b9f917b766896a063c0fe94961dc_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a4856b9f917b766896a063c0fe94961dc_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,148,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0426613cc4288d72fc5c3c4be8a8d5ba" title="Add particles." alt="" coords="196,5,368,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0868fa16ccc36d583cd25b173fd3e681" title="Add particles." alt="" coords="196,5,363,32"/>
 </map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a41f019a9d2cf24b0e189066b01e9cb66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41f019a9d2cf24b0e189066b01e9cb66">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="a633681443cdb68d6e39f7a1a1e9cc92f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a633681443cdb68d6e39f7a1a1e9cc92f">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::begin </td>
+          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -629,19 +651,19 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a125d278faa62e92119fec8166e593f68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a125d278faa62e92119fec8166e593f68">&#9670;&nbsp;</a></span>cbegin()</h2>
+<a id="ae6aa1d466e7d6dceebbedc17403166ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6aa1d466e7d6dceebbedc17403166ef">&#9670;&nbsp;</a></span>cbegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::cbegin </td>
+          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::cbegin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -657,19 +679,19 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="acc24023c251b2405e35c92bc2e1b04e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc24023c251b2405e35c92bc2e1b04e4">&#9670;&nbsp;</a></span>cend()</h2>
+<a id="ada277323aaa568dcb019e718bde61455"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada277323aaa568dcb019e718bde61455">&#9670;&nbsp;</a></span>cend()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::cend </td>
+          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::cend </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -685,19 +707,19 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="adfd79ad95e9ba3ccfb5de3b869556967"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfd79ad95e9ba3ccfb5de3b869556967">&#9670;&nbsp;</a></span>clear()</h2>
+<a id="a7f199b7055985dff2df22fa01498a7f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f199b7055985dff2df22fa01498a7f7">&#9670;&nbsp;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::clear </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -714,19 +736,19 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a9df433c5c2cf00be5271f38c2d8c4571"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9df433c5c2cf00be5271f38c2d8c4571">&#9670;&nbsp;</a></span>end()</h2>
+<a id="ae395413fa74be2eb6e067ffe137ec963"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae395413fa74be2eb6e067ffe137ec963">&#9670;&nbsp;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::end </td>
+          <td class="memname">auto <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -742,13 +764,13 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a7505b770e19bff34914d51b8c9e89cf0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7505b770e19bff34914d51b8c9e89cf0">&#9670;&nbsp;</a></span>evolve()</h2>
+<a id="aee3adfd07c6f6a51af3fa45e4e71c280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee3adfd07c6f6a51af3fa45e4e71c280">&#9670;&nbsp;</a></span>evolve()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transitions , typename Criterion &gt; </div>
 <table class="mlabels">
@@ -756,7 +778,7 @@ template&lt;typename Transitions , typename Criterion &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::evolve </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::evolve </td>
           <td>(</td>
           <td class="paramtype">Criterion &amp;&amp;&#160;</td>
           <td class="paramname"><em>criterion</em>, </td>
@@ -788,26 +810,27 @@ template&lt;typename Transitions , typename Criterion &gt; </div>
   </table>
   </dd>
 </dl>
+<p>_OPENMP</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a7505b770e19bff34914d51b8c9e89cf0_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a7505b770e19bff34914d51b8c9e89cf0_icgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a7505b770e19bff34914d51b8c9e89cf0_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a7505b770e19bff34914d51b8c9e89cf0_icgraph">
-<area shape="rect" title="Evolve each particle until a given criterion is met." alt="" coords="237,42,384,69"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0581ce1a57f95f4c48e5ad381339dbf8" title="Evolve particle states in space in 1D." alt="" coords="24,5,171,47"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af0915b7f10eb7b090bdd488d073db6af" title="Evolve particle states in time." alt="" coords="5,71,189,98"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_aee3adfd07c6f6a51af3fa45e4e71c280_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_aee3adfd07c6f6a51af3fa45e4e71c280_icgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_aee3adfd07c6f6a51af3fa45e4e71c280_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_aee3adfd07c6f6a51af3fa45e4e71c280_icgraph">
+<area shape="rect" title="Evolve each particle until a given criterion is met." alt="" coords="227,42,368,69"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5dffd6b1ed436f173964201a438948d8" title="Evolve particle states in space in 1D." alt="" coords="21,5,163,47"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a22b886dde54e916e7672f48460151742" title="Evolve particle states in time." alt="" coords="5,71,179,98"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a0581ce1a57f95f4c48e5ad381339dbf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0581ce1a57f95f4c48e5ad381339dbf8">&#9670;&nbsp;</a></span>evolve_space()</h2>
+<a id="a5dffd6b1ed436f173964201a438948d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dffd6b1ed436f173964201a438948d8">&#9670;&nbsp;</a></span>evolve_space()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transitions &gt; </div>
 <table class="mlabels">
@@ -815,7 +838,7 @@ template&lt;typename Transitions &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::evolve_space </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::evolve_space </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>length_to</em>, </td>
@@ -846,7 +869,7 @@ template&lt;typename Transitions &gt; </div>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">length_to</td><td>Particles make transitions until their position is &gt;= length_to.</td></tr>
+    <tr><td class="paramname">length_to</td><td>Particles make transitions until their position is &gt;= length_to. </td></tr>
     <tr><td class="paramname">transitions</td><td>Handle changes to particle states in each step. </td></tr>
   </table>
   </dd>
@@ -854,23 +877,23 @@ template&lt;typename Transitions &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a0581ce1a57f95f4c48e5ad381339dbf8_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a0581ce1a57f95f4c48e5ad381339dbf8_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a0581ce1a57f95f4c48e5ad381339dbf8_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a0581ce1a57f95f4c48e5ad381339dbf8_cgraph">
-<area shape="rect" title="Evolve particle states in space in 1D." alt="" coords="5,23,152,65"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a7505b770e19bff34914d51b8c9e89cf0" title="Evolve each particle until a given criterion is met." alt="" coords="217,5,363,32"/>
-<area shape="rect" href="../../d5/d4b/classctrw_1_1_particle.html#a7cf0f69716b28ad3dd0fabd70dac7126" title=" " alt="" coords="200,56,380,83"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a5dffd6b1ed436f173964201a438948d8_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a5dffd6b1ed436f173964201a438948d8_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a5dffd6b1ed436f173964201a438948d8_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a5dffd6b1ed436f173964201a438948d8_cgraph">
+<area shape="rect" title="Evolve particle states in space in 1D." alt="" coords="5,23,147,65"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aee3adfd07c6f6a51af3fa45e4e71c280" title="Evolve each particle until a given criterion is met." alt="" coords="207,5,349,32"/>
+<area shape="rect" href="../../d5/d4b/classctrw_1_1_particle.html#a7cf0f69716b28ad3dd0fabd70dac7126" title=" " alt="" coords="195,56,361,83"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="af0915b7f10eb7b090bdd488d073db6af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0915b7f10eb7b090bdd488d073db6af">&#9670;&nbsp;</a></span>evolve_time()</h2>
+<a id="a22b886dde54e916e7672f48460151742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22b886dde54e916e7672f48460151742">&#9670;&nbsp;</a></span>evolve_time()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transitions &gt; </div>
 <table class="mlabels">
@@ -878,7 +901,7 @@ template&lt;typename Transitions &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::evolve_time </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::evolve_time </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time_to</em>, </td>
@@ -917,29 +940,29 @@ template&lt;typename Transitions &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_af0915b7f10eb7b090bdd488d073db6af_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_af0915b7f10eb7b090bdd488d073db6af_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_af0915b7f10eb7b090bdd488d073db6af_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_af0915b7f10eb7b090bdd488d073db6af_cgraph">
-<area shape="rect" title="Evolve particle states in time." alt="" coords="5,31,189,57"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a7505b770e19bff34914d51b8c9e89cf0" title="Evolve each particle until a given criterion is met." alt="" coords="254,5,401,32"/>
-<area shape="rect" href="../../d5/d4b/classctrw_1_1_particle.html#a7cf0f69716b28ad3dd0fabd70dac7126" title=" " alt="" coords="237,56,417,83"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a22b886dde54e916e7672f48460151742_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a22b886dde54e916e7672f48460151742_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a22b886dde54e916e7672f48460151742_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a22b886dde54e916e7672f48460151742_cgraph">
+<area shape="rect" title="Evolve particle states in time." alt="" coords="5,31,179,57"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aee3adfd07c6f6a51af3fa45e4e71c280" title="Evolve each particle until a given criterion is met." alt="" coords="239,5,381,32"/>
+<area shape="rect" href="../../d5/d4b/classctrw_1_1_particle.html#a7cf0f69716b28ad3dd0fabd70dac7126" title=" " alt="" coords="227,56,393,83"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a49655f1a2766a8159be411215f38b49c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49655f1a2766a8159be411215f38b49c">&#9670;&nbsp;</a></span>particles() <span class="overload">[1/2]</span></h2>
+<a id="a39273570e0dbf0453ab9eaa10094c431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39273570e0dbf0453ab9eaa10094c431">&#9670;&nbsp;</a></span>particles() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> const&amp; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::particles </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> const&amp; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::particles </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -951,34 +974,33 @@ template&lt;typename State_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> container. <br  />
- </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> container. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a49655f1a2766a8159be411215f38b49c_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a49655f1a2766a8159be411215f38b49c_icgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a49655f1a2766a8159be411215f38b49c_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a49655f1a2766a8159be411215f38b49c_icgraph">
-<area shape="rect" title=" " alt="" coords="225,31,384,57"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a725813bb1b7cf3621249f357ea6e06c2" title="Reserve space for maximum number of particles." alt="" coords="20,5,163,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a2a318de61fa3d3cf85c83be03b1ae954" title="Add particles." alt="" coords="5,56,177,83"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a39273570e0dbf0453ab9eaa10094c431_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a39273570e0dbf0453ab9eaa10094c431_icgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a39273570e0dbf0453ab9eaa10094c431_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a39273570e0dbf0453ab9eaa10094c431_icgraph">
+<area shape="rect" title=" " alt="" coords="220,31,372,57"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a61202a77cce164d742d99aac512cea4d" title="Constructor." alt="" coords="17,5,160,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ab118be6673bb6985d3b58527412e8fd7" title="Add particles." alt="" coords="5,56,172,83"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="af1bf8552fe6ac8bba761001ae791131b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1bf8552fe6ac8bba761001ae791131b">&#9670;&nbsp;</a></span>particles() <span class="overload">[2/2]</span></h2>
+<a id="a547b8da1eba2a8ab4442d4428fa5d059"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a547b8da1eba2a8ab4442d4428fa5d059">&#9670;&nbsp;</a></span>particles() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> const&amp; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::particles </td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> const&amp; <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::particles </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>part</em></td><td>)</td>
@@ -1001,21 +1023,21 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a2a318de61fa3d3cf85c83be03b1ae954"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a318de61fa3d3cf85c83be03b1ae954">&#9670;&nbsp;</a></span>push_back() <span class="overload">[1/3]</span></h2>
+<a id="ab118be6673bb6985d3b58527412e8fd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab118be6673bb6985d3b58527412e8fd7">&#9670;&nbsp;</a></span>push_back() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::push_back </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::push_back </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> const &amp;&#160;</td>
           <td class="paramname"><em>particles</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1037,30 +1059,30 @@ template&lt;typename State_t &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a2a318de61fa3d3cf85c83be03b1ae954_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a2a318de61fa3d3cf85c83be03b1ae954_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a2a318de61fa3d3cf85c83be03b1ae954_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a2a318de61fa3d3cf85c83be03b1ae954_cgraph">
-<area shape="rect" title="Add particles." alt="" coords="5,5,177,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a49655f1a2766a8159be411215f38b49c" title=" " alt="" coords="225,5,384,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_ab118be6673bb6985d3b58527412e8fd7_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_ab118be6673bb6985d3b58527412e8fd7_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_ab118be6673bb6985d3b58527412e8fd7_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_ab118be6673bb6985d3b58527412e8fd7_cgraph">
+<area shape="rect" title="Add particles." alt="" coords="5,5,172,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a39273570e0dbf0453ab9eaa10094c431" title=" " alt="" coords="220,5,372,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="addc1c11632656ea169ee04fd56c9a9c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addc1c11632656ea169ee04fd56c9a9c4">&#9670;&nbsp;</a></span>push_back() <span class="overload">[2/3]</span></h2>
+<a id="ac539993065e121f8dfe73d907e76fa2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac539993065e121f8dfe73d907e76fa2d">&#9670;&nbsp;</a></span>push_back() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::push_back </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::push_back </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ac5522af2c0822081b2065acad4e5e1cb">Particle</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a318e2f679f0f92cc6c04e52d7414120f">Particle</a> const &amp;&#160;</td>
           <td class="paramname"><em>particle</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1082,13 +1104,13 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a0426613cc4288d72fc5c3c4be8a8d5ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0426613cc4288d72fc5c3c4be8a8d5ba">&#9670;&nbsp;</a></span>push_back() <span class="overload">[3/3]</span></h2>
+<a id="a0868fa16ccc36d583cd25b173fd3e681"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0868fa16ccc36d583cd25b173fd3e681">&#9670;&nbsp;</a></span>push_back() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename StateMaker &gt; </div>
 <table class="mlabels">
@@ -1096,7 +1118,7 @@ template&lt;typename StateMaker &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::push_back </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::push_back </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>nr_particles</em>, </td>
@@ -1131,22 +1153,22 @@ template&lt;typename StateMaker &gt; </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a0426613cc4288d72fc5c3c4be8a8d5ba_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a0426613cc4288d72fc5c3c4be8a8d5ba_icgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a0426613cc4288d72fc5c3c4be8a8d5ba_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a0426613cc4288d72fc5c3c4be8a8d5ba_icgraph">
-<area shape="rect" title="Add particles." alt="" coords="196,5,368,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a70c55b79c86f8e09e0f0737562e51d4c" title=" " alt="" coords="5,5,148,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a0868fa16ccc36d583cd25b173fd3e681_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a0868fa16ccc36d583cd25b173fd3e681_icgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a0868fa16ccc36d583cd25b173fd3e681_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a0868fa16ccc36d583cd25b173fd3e681_icgraph">
+<area shape="rect" title="Add particles." alt="" coords="196,5,363,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4856b9f917b766896a063c0fe94961dc" title=" " alt="" coords="5,5,148,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a5d5750cabf670629c97f37bf897845cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d5750cabf670629c97f37bf897845cf">&#9670;&nbsp;</a></span>remove() <span class="overload">[1/4]</span></h2>
+<a id="a4f9690d60f971e8f4b88542a2f7a4461"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f9690d60f971e8f4b88542a2f7a4461">&#9670;&nbsp;</a></span>remove() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Criterion &gt; </div>
 <table class="mlabels">
@@ -1154,7 +1176,7 @@ template&lt;typename Criterion &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::remove </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::remove </td>
           <td>(</td>
           <td class="paramtype">Criterion &amp;&amp;&#160;</td>
           <td class="paramname"><em>criterion</em></td><td>)</td>
@@ -1178,31 +1200,31 @@ template&lt;typename Criterion &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_cgraph">
-<area shape="rect" title="Remove particles satisfying a criterion." alt="" coords="5,5,159,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa3c3e346ae273e685f7741a29aa6c8b8" title=" " alt="" coords="207,5,336,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_cgraph">
+<area shape="rect" title="Remove particles satisfying a criterion." alt="" coords="5,5,152,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#adfc7789ba54c4c56c50d64a06c40ce51" title=" " alt="" coords="200,5,327,32"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_icgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a5d5750cabf670629c97f37bf897845cf_icgraph">
-<area shape="rect" title="Remove particles satisfying a criterion." alt="" coords="207,5,360,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa2b9e66f226983bf3d2695e0b850596e" title="Remove particles at given indices." alt="" coords="5,5,159,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_icgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a4f9690d60f971e8f4b88542a2f7a4461_icgraph">
+<area shape="rect" title="Remove particles satisfying a criterion." alt="" coords="200,5,347,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a315fa83b94aa168c726e9c312c3d6f25" title="Remove particles at given indices." alt="" coords="5,5,152,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aa2b9e66f226983bf3d2695e0b850596e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2b9e66f226983bf3d2695e0b850596e">&#9670;&nbsp;</a></span>remove() <span class="overload">[2/4]</span></h2>
+<a id="a315fa83b94aa168c726e9c312c3d6f25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a315fa83b94aa168c726e9c312c3d6f25">&#9670;&nbsp;</a></span>remove() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename IntegerType &gt; </div>
 <table class="mlabels">
@@ -1210,7 +1232,7 @@ template&lt;typename IntegerType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::remove </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::remove </td>
           <td>(</td>
           <td class="paramtype">std::list&lt; IntegerType &gt; &amp;&#160;</td>
           <td class="paramname"><em>list</em></td><td>)</td>
@@ -1234,29 +1256,29 @@ template&lt;typename IntegerType &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_aa2b9e66f226983bf3d2695e0b850596e_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_aa2b9e66f226983bf3d2695e0b850596e_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_aa2b9e66f226983bf3d2695e0b850596e_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_aa2b9e66f226983bf3d2695e0b850596e_cgraph">
-<area shape="rect" title="Remove particles at given indices." alt="" coords="5,5,159,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d5750cabf670629c97f37bf897845cf" title="Remove particles satisfying a criterion." alt="" coords="207,5,360,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa3c3e346ae273e685f7741a29aa6c8b8" title=" " alt="" coords="408,5,537,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a315fa83b94aa168c726e9c312c3d6f25_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a315fa83b94aa168c726e9c312c3d6f25_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a315fa83b94aa168c726e9c312c3d6f25_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a315fa83b94aa168c726e9c312c3d6f25_cgraph">
+<area shape="rect" title="Remove particles at given indices." alt="" coords="5,5,152,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4f9690d60f971e8f4b88542a2f7a4461" title="Remove particles satisfying a criterion." alt="" coords="200,5,347,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#adfc7789ba54c4c56c50d64a06c40ce51" title=" " alt="" coords="395,5,521,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a38e185fd2d853e4e6a2a7ea762c16289"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38e185fd2d853e4e6a2a7ea762c16289">&#9670;&nbsp;</a></span>remove() <span class="overload">[3/4]</span></h2>
+<a id="aec2a1a80e0676090ff9180db384ccf5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec2a1a80e0676090ff9180db384ccf5c">&#9670;&nbsp;</a></span>remove() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::remove </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::remove </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>part</em></td><td>)</td>
@@ -1280,22 +1302,22 @@ template&lt;typename State_t &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a38e185fd2d853e4e6a2a7ea762c16289_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a38e185fd2d853e4e6a2a7ea762c16289_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a38e185fd2d853e4e6a2a7ea762c16289_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a38e185fd2d853e4e6a2a7ea762c16289_cgraph">
-<area shape="rect" title="Remove particle." alt="" coords="5,5,159,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="207,5,353,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_aec2a1a80e0676090ff9180db384ccf5c_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_aec2a1a80e0676090ff9180db384ccf5c_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_aec2a1a80e0676090ff9180db384ccf5c_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_aec2a1a80e0676090ff9180db384ccf5c_cgraph">
+<area shape="rect" title="Remove particle." alt="" coords="5,5,152,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="200,5,335,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="af5f6a66b2d6ac06ea7bde6a6ceb4fff0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5f6a66b2d6ac06ea7bde6a6ceb4fff0">&#9670;&nbsp;</a></span>remove() <span class="overload">[4/4]</span></h2>
+<a id="ae43d145899d4bc6cb647e1572110b489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae43d145899d4bc6cb647e1572110b489">&#9670;&nbsp;</a></span>remove() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Criterion &gt; </div>
 <table class="mlabels">
@@ -1303,7 +1325,7 @@ template&lt;typename Criterion &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::remove </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::remove </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>part</em>, </td>
@@ -1338,29 +1360,29 @@ template&lt;typename Criterion &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_af5f6a66b2d6ac06ea7bde6a6ceb4fff0_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_af5f6a66b2d6ac06ea7bde6a6ceb4fff0_cgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_af5f6a66b2d6ac06ea7bde6a6ceb4fff0_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_af5f6a66b2d6ac06ea7bde6a6ceb4fff0_cgraph">
-<area shape="rect" title="Remove particle if criterion is met." alt="" coords="5,5,159,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d5750cabf670629c97f37bf897845cf" title="Remove particles satisfying a criterion." alt="" coords="207,5,360,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa3c3e346ae273e685f7741a29aa6c8b8" title=" " alt="" coords="408,5,537,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_ae43d145899d4bc6cb647e1572110b489_cgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_ae43d145899d4bc6cb647e1572110b489_cgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_ae43d145899d4bc6cb647e1572110b489_cgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_ae43d145899d4bc6cb647e1572110b489_cgraph">
+<area shape="rect" title="Remove particle if criterion is met." alt="" coords="5,5,152,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4f9690d60f971e8f4b88542a2f7a4461" title="Remove particles satisfying a criterion." alt="" coords="200,5,347,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#adfc7789ba54c4c56c50d64a06c40ce51" title=" " alt="" coords="395,5,521,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a15c6ff845db1666b8f974bc779f524ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15c6ff845db1666b8f974bc779f524ee">&#9670;&nbsp;</a></span>reserve()</h2>
+<a id="a25078bc51e39e260873f310593eb2391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25078bc51e39e260873f310593eb2391">&#9670;&nbsp;</a></span>reserve()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::reserve </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::reserve </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>nr_particles</em></td><td>)</td>
@@ -1384,19 +1406,19 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="a633524d45d3c71f99308b57bf890e9f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a633524d45d3c71f99308b57bf890e9f3">&#9670;&nbsp;</a></span>retag()</h2>
+<a id="a329a54384a17d3845a7ee5730199d8f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a329a54384a17d3845a7ee5730199d8f5">&#9670;&nbsp;</a></span>retag()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::retag </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::retag </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1413,28 +1435,28 @@ template&lt;typename State_t &gt; </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a633524d45d3c71f99308b57bf890e9f3_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a633524d45d3c71f99308b57bf890e9f3_icgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a633524d45d3c71f99308b57bf890e9f3_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a633524d45d3c71f99308b57bf890e9f3_icgraph">
-<area shape="rect" title="Tag particles in order of container." alt="" coords="196,5,333,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a1cbe59b262587e798c88728190347caf" title="Tag particles in ascending order." alt="" coords="5,5,148,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_a329a54384a17d3845a7ee5730199d8f5_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_a329a54384a17d3845a7ee5730199d8f5_icgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_a329a54384a17d3845a7ee5730199d8f5_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_a329a54384a17d3845a7ee5730199d8f5_icgraph">
+<area shape="rect" title="Tag particles in order of container." alt="" coords="196,5,328,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae252adcd56dedb6854775f62fdc181b7" title="Constructor." alt="" coords="5,5,148,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a5d2f69ff6a005c210c39ea179689c7a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d2f69ff6a005c210c39ea179689c7a9">&#9670;&nbsp;</a></span>set()</h2>
+<a id="a71ad9c9ca2dde8e19398e33cfe96b319"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71ad9c9ca2dde8e19398e33cfe96b319">&#9670;&nbsp;</a></span>set()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::set </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::set </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>part</em>, </td>
@@ -1442,7 +1464,7 @@ template&lt;typename State_t &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#ae4cb54d29d4a85b8a2603dbbe2e9fe02">State</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0c2e6254a28a01da57fc00b6f70c19fb">State</a> const &amp;&#160;</td>
           <td class="paramname"><em>state</em>&#160;</td>
         </tr>
         <tr>
@@ -1469,19 +1491,19 @@ template&lt;typename State_t &gt; </div>
 
 </div>
 </div>
-<a id="aa3c3e346ae273e685f7741a29aa6c8b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3c3e346ae273e685f7741a29aa6c8b8">&#9670;&nbsp;</a></span>size()</h2>
+<a id="adfc7789ba54c4c56c50d64a06c40ce51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfc7789ba54c4c56c50d64a06c40ce51">&#9670;&nbsp;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::size </td>
+          <td class="memname">std::size_t <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1497,23 +1519,23 @@ template&lt;typename State_t &gt; </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_aa3c3e346ae273e685f7741a29aa6c8b8_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_aa3c3e346ae273e685f7741a29aa6c8b8_icgraph" alt=""/></div>
-<map name="ad2/dd2/classctrw_1_1_c_t_r_w_aa3c3e346ae273e685f7741a29aa6c8b8_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_aa3c3e346ae273e685f7741a29aa6c8b8_icgraph">
-<area shape="rect" title=" " alt="" coords="408,5,537,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5d5750cabf670629c97f37bf897845cf" title="Remove particles satisfying a criterion." alt="" coords="207,5,360,32"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#aa2b9e66f226983bf3d2695e0b850596e" title="Remove particles at given indices." alt="" coords="5,5,159,32"/>
+<div class="center"><img src="../../d2/dd2/classctrw_1_1_c_t_r_w_adfc7789ba54c4c56c50d64a06c40ce51_icgraph.png" border="0" usemap="#ad2/dd2/classctrw_1_1_c_t_r_w_adfc7789ba54c4c56c50d64a06c40ce51_icgraph" alt=""/></div>
+<map name="ad2/dd2/classctrw_1_1_c_t_r_w_adfc7789ba54c4c56c50d64a06c40ce51_icgraph" id="ad2/dd2/classctrw_1_1_c_t_r_w_adfc7789ba54c4c56c50d64a06c40ce51_icgraph">
+<area shape="rect" title=" " alt="" coords="395,5,521,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a4f9690d60f971e8f4b88542a2f7a4461" title="Remove particles satisfying a criterion." alt="" coords="200,5,347,32"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a315fa83b94aa168c726e9c312c3d6f25" title="Remove particles at given indices." alt="" coords="5,5,152,32"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ab0abe103876db3be2733e5731c534c8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0abe103876db3be2733e5731c534c8b">&#9670;&nbsp;</a></span>step() <span class="overload">[1/2]</span></h2>
+<a id="ab63f3082a545bc392685205c5bffe4a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab63f3082a545bc392685205c5bffe4a4">&#9670;&nbsp;</a></span>step() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transitions , typename Criterion &gt; </div>
 <table class="mlabels">
@@ -1521,7 +1543,7 @@ template&lt;typename Transitions , typename Criterion &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::step </td>
+          <td class="memname">std::size_t <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::step </td>
           <td>(</td>
           <td class="paramtype">Criterion &amp;&amp;&#160;</td>
           <td class="paramname"><em>criterion</em>, </td>
@@ -1553,16 +1575,17 @@ template&lt;typename Transitions , typename Criterion &gt; </div>
   </table>
   </dd>
 </dl>
+<p>_OPENMP</p>
 
 </div>
 </div>
-<a id="a9b122dcd0a602628cdc83471db0ebc81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b122dcd0a602628cdc83471db0ebc81">&#9670;&nbsp;</a></span>step() <span class="overload">[2/2]</span></h2>
+<a id="a1d91ba4396507608cf30518bf6e37f27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d91ba4396507608cf30518bf6e37f27">&#9670;&nbsp;</a></span>step() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transitions &gt; </div>
 <table class="mlabels">
@@ -1570,7 +1593,7 @@ template&lt;typename Transitions &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::step </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::step </td>
           <td>(</td>
           <td class="paramtype">Transitions &amp;&amp;&#160;</td>
           <td class="paramname"><em>transitions</em></td><td>)</td>
@@ -1591,16 +1614,17 @@ template&lt;typename Transitions &gt; </div>
   </table>
   </dd>
 </dl>
+<p>_OPENMP</p>
 
 </div>
 </div>
-<a id="a8f652b4b000291d20ad1ae3883a0fb02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f652b4b000291d20ad1ae3883a0fb02">&#9670;&nbsp;</a></span>transform() <span class="overload">[1/2]</span></h2>
+<a id="aada31ea20c5c4a3928da8fe87f4c9cc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aada31ea20c5c4a3928da8fe87f4c9cc6">&#9670;&nbsp;</a></span>transform() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transformation &gt; </div>
 <table class="mlabels">
@@ -1608,7 +1632,7 @@ template&lt;typename Transformation &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::transform </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::transform </td>
           <td>(</td>
           <td class="paramtype">Transformation &amp;&amp;&#160;</td>
           <td class="paramname"><em>transformation</em></td><td>)</td>
@@ -1632,13 +1656,13 @@ template&lt;typename Transformation &gt; </div>
 
 </div>
 </div>
-<a id="a476f9f1c0d5ae0f079a38bfc2ee24e19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a476f9f1c0d5ae0f079a38bfc2ee24e19">&#9670;&nbsp;</a></span>transform() <span class="overload">[2/2]</span></h2>
+<a id="a6ac3c66f109c6032b2e241327a2b0188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac3c66f109c6032b2e241327a2b0188">&#9670;&nbsp;</a></span>transform() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transformation &gt; </div>
 <table class="mlabels">
@@ -1646,7 +1670,7 @@ template&lt;typename Transformation &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::transform </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::transform </td>
           <td>(</td>
           <td class="paramtype">Transformation &amp;&amp;&#160;</td>
           <td class="paramname"><em>transformation</em>, </td>
@@ -1681,13 +1705,13 @@ template&lt;typename Transformation &gt; </div>
 
 </div>
 </div>
-<a id="a234a513ca440e0ecc931b0c3bb7f2f51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a234a513ca440e0ecc931b0c3bb7f2f51">&#9670;&nbsp;</a></span>transform_both() <span class="overload">[1/2]</span></h2>
+<a id="a950823e8db0cdff1846ad420034d4fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a950823e8db0cdff1846ad420034d4fab">&#9670;&nbsp;</a></span>transform_both() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transformation &gt; </div>
 <table class="mlabels">
@@ -1695,7 +1719,7 @@ template&lt;typename Transformation &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::transform_both </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::transform_both </td>
           <td>(</td>
           <td class="paramtype">Transformation &amp;&amp;&#160;</td>
           <td class="paramname"><em>transformation</em></td><td>)</td>
@@ -1719,13 +1743,13 @@ template&lt;typename Transformation &gt; </div>
 
 </div>
 </div>
-<a id="a5e36e881738cef7249a1bb7b9f2aceef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e36e881738cef7249a1bb7b9f2aceef">&#9670;&nbsp;</a></span>transform_both() <span class="overload">[2/2]</span></h2>
+<a id="ac5416880048d544de7e9547a1a7d6461"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5416880048d544de7e9547a1a7d6461">&#9670;&nbsp;</a></span>transform_both() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <div class="memtemplate">
 template&lt;typename Transformation &gt; </div>
 <table class="mlabels">
@@ -1733,7 +1757,7 @@ template&lt;typename Transformation &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::transform_both </td>
+          <td class="memname">void <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::transform_both </td>
           <td>(</td>
           <td class="paramtype">Transformation &amp;&amp;&#160;</td>
           <td class="paramname"><em>transformation</em>, </td>
@@ -1769,19 +1793,19 @@ template&lt;typename Transformation &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a95b7281087cf53bfc2abe579671e7825"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95b7281087cf53bfc2abe579671e7825">&#9670;&nbsp;</a></span>_particles</h2>
+<a id="a6b7f82efd58957f80686edd4f4fb1605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b7f82efd58957f80686edd4f4fb1605">&#9670;&nbsp;</a></span>_particles</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename State_t &gt; </div>
+template&lt;typename State_t , typename ParallelOption_t  = par::ParallelOptions::Serial&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0108214d8a48c04a07c05ed63c399615">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t &gt;::_particles</td>
+          <td class="memname"><a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a976b59890e255289c8e09a3ed3e430f8">Container</a> <a class="el" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html">ctrw::CTRW</a>&lt; State_t, ParallelOption_t &gt;::_particles</td>
         </tr>
       </table>
   </td>

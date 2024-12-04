@@ -90,72 +90,89 @@ $(document).ready(function(){initNavTree('d3/df6/_initial_condition___cases_8h.h
 <div class="title">InitialCondition_Cases.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Create particles according to different initial conditions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d2/d84/_c_t_r_w_2_meta_8h_source.html">CTRW/Meta.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../dd/d1b/_general_2_meta_8h_source.html">General/Meta.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d7/d14/_operations_8h_source.html">General/Operations.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/d18/_general_2_useful_8h_source.html">General/Useful.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../dd/da3/_p_t_o_f_2_boundary_8h_source.html">PTOF/Boundary.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d6/d44/_initial_condition_8h_source.html">PTOF/InitialCondition.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d6/d5d/_initial_condition_list_8h_source.html">PTOF/InitialConditionList.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../da/d16/_particle_maker_8h_source.html">PTOF/ParticleMaker.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../db/d69/_time_units_8h_source.html">PTOF/TimeUnits.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d0/df6/_p_t_o_f_2_useful_8h_source.html">PTOF/Useful.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d0/d80/_random_8h_source.html">Stochastic/Random.h</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;fieldTypes.H&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;point.H&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for InitialCondition_Cases.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/d8f/_initial_condition___cases_8h__incl.png" border="0" usemap="#a_p_t_o_f_2_initial_condition___cases_8h" alt=""/></div>
 <map name="a_p_t_o_f_2_initial_condition___cases_8h" id="a_p_t_o_f_2_initial_condition___cases_8h">
-<area shape="rect" title=" " alt="" coords="2315,5,2462,47"/>
-<area shape="rect" href="../../d2/d84/_c_t_r_w_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="1204,393,1311,420"/>
-<area shape="rect" title=" " alt="" coords="1966,617,2024,644"/>
-<area shape="rect" title=" " alt="" coords="1284,617,1367,644"/>
-<area shape="rect" href="../../d9/d18/_general_2_useful_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="838,468,958,495"/>
-<area shape="rect" title=" " alt="" coords="306,543,380,569"/>
-<area shape="rect" title=" " alt="" coords="24,543,89,569"/>
-<area shape="rect" title=" " alt="" coords="2130,543,2209,569"/>
-<area shape="rect" title=" " alt="" coords="2392,543,2446,569"/>
-<area shape="rect" title=" " alt="" coords="2108,617,2167,644"/>
-<area shape="rect" href="../../dd/da3/_p_t_o_f_2_boundary_8h.html" title=" " alt="" coords="1424,95,1550,121"/>
-<area shape="rect" href="../../d0/df6/_p_t_o_f_2_useful_8h.html" title=" " alt="" coords="1481,319,1592,345"/>
-<area shape="rect" title=" " alt="" coords="1970,393,2065,420"/>
-<area shape="rect" title=" " alt="" coords="2685,393,2732,420"/>
-<area shape="rect" title=" " alt="" coords="2191,393,2255,420"/>
-<area shape="rect" href="../../d6/d44/_initial_condition_8h.html" title=" " alt="" coords="2293,319,2452,345"/>
-<area shape="rect" title=" " alt="" coords="2756,393,2821,420"/>
-<area shape="rect" href="../../d6/d5d/_initial_condition_list_8h.html" title=" " alt="" coords="2882,319,3060,345"/>
-<area shape="rect" href="../../dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="1437,543,1548,569"/>
-<area shape="rect" title=" " alt="" coords="151,617,204,644"/>
-<area shape="rect" title=" " alt="" coords="1157,617,1236,644"/>
-<area shape="rect" title=" " alt="" coords="1456,617,1528,644"/>
-<area shape="rect" title=" " alt="" coords="455,543,516,569"/>
-<area shape="rect" title=" " alt="" coords="1656,617,1716,644"/>
-<area shape="rect" title=" " alt="" coords="215,543,282,569"/>
-<area shape="rect" title=" " alt="" coords="540,543,607,569"/>
-<area shape="rect" title=" " alt="" coords="632,543,670,569"/>
-<area shape="rect" title=" " alt="" coords="694,543,733,569"/>
-<area shape="rect" title=" " alt="" coords="757,543,812,569"/>
-<area shape="rect" title=" " alt="" coords="836,543,906,569"/>
-<area shape="rect" href="../../d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="1538,468,1684,495"/>
-<area shape="rect" href="../../d6/d77/_directories_8h.html" title=" " alt="" coords="674,393,809,420"/>
-<area shape="rect" href="../../de/ddd/_reaction_8h.html" title=" " alt="" coords="1914,169,2038,196"/>
-<area shape="rect" title=" " alt="" coords="1414,169,1477,196"/>
-<area shape="rect" title=" " alt="" coords="1502,169,1555,196"/>
-<area shape="rect" href="../../db/d5a/_modular_8h.html" title="Modular arithmetic, basis change, and similar operations." alt="" coords="1725,543,1852,569"/>
-<area shape="rect" title=" " alt="" coords="573,468,638,495"/>
-<area shape="rect" href="../../db/d51/_constants_8h.html" title=" " alt="" coords="2056,244,2198,271"/>
-<area shape="rect" href="../../db/dcf/_locator_8h.html" title=" " alt="" coords="1630,244,1744,271"/>
-<area shape="rect" title=" " alt="" coords="1921,244,2032,271"/>
-<area shape="rect" title=" " alt="" coords="1690,393,1780,420"/>
-<area shape="rect" title=" " alt="" coords="1804,393,1844,420"/>
-<area shape="rect" href="../../dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="986,393,1129,420"/>
-<area shape="rect" href="../../d9/d02/_ranges_8h.html" title=" " alt="" coords="1708,468,1834,495"/>
+<area shape="rect" title="Create particles according to different initial conditions." alt="" coords="2713,5,2860,47"/>
+<area shape="rect" href="../../d2/d84/_c_t_r_w_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="499,319,605,345"/>
+<area shape="rect" href="../../dd/d1b/_general_2_meta_8h.html" title="Template metamagic utilities." alt="" coords="1009,468,1119,495"/>
+<area shape="rect" title=" " alt="" coords="2263,543,2321,569"/>
+<area shape="rect" title=" " alt="" coords="624,543,707,569"/>
+<area shape="rect" title=" " alt="" coords="283,543,336,569"/>
+<area shape="rect" href="../../d9/d18/_general_2_useful_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="1488,393,1608,420"/>
+<area shape="rect" title=" " alt="" coords="3444,468,3519,495"/>
+<area shape="rect" title=" " alt="" coords="3303,468,3369,495"/>
+<area shape="rect" title=" " alt="" coords="2533,468,2611,495"/>
+<area shape="rect" title=" " alt="" coords="3917,468,3971,495"/>
+<area shape="rect" title=" " alt="" coords="3377,543,3436,569"/>
+<area shape="rect" href="../../d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="2017,393,2162,420"/>
+<area shape="rect" href="../../dd/da3/_p_t_o_f_2_boundary_8h.html" title="Objects and utilities to enforce boundary conditions." alt="" coords="2384,95,2509,121"/>
+<area shape="rect" href="../../d0/df6/_p_t_o_f_2_useful_8h.html" title="Miscelaneous objects and utilities." alt="" coords="1619,244,1730,271"/>
+<area shape="rect" title=" " alt="" coords="921,319,1015,345"/>
+<area shape="rect" title=" " alt="" coords="3982,319,4029,345"/>
+<area shape="rect" title=" " alt="" coords="781,319,845,345"/>
+<area shape="rect" title=" " alt="" coords="1945,319,2010,345"/>
+<area shape="rect" title=" " alt="" coords="3811,169,3864,196"/>
+<area shape="rect" href="../../d6/d44/_initial_condition_8h.html" title="Objects to create particles according to initial condition." alt="" coords="1609,169,1767,196"/>
+<area shape="rect" href="../../d0/d80/_random_8h.html" title="Probability and random number generation." alt="" coords="2373,244,2521,271"/>
+<area shape="rect" href="../../d6/d5d/_initial_condition_list_8h.html" title="Initial condition types." alt="" coords="4197,244,4376,271"/>
+<area shape="rect" href="../../da/d16/_particle_maker_8h.html" title="Objects to make particles." alt="" coords="209,95,359,121"/>
+<area shape="rect" href="../../db/d69/_time_units_8h.html" title="Time unit types." alt="" coords="3990,244,4122,271"/>
+<area shape="rect" title=" " alt="" coords="4653,95,4723,121"/>
+<area shape="rect" title=" " alt="" coords="1631,543,1710,569"/>
+<area shape="rect" title=" " alt="" coords="1028,543,1100,569"/>
+<area shape="rect" title=" " alt="" coords="1195,468,1256,495"/>
+<area shape="rect" title=" " alt="" coords="1947,543,2007,569"/>
+<area shape="rect" title=" " alt="" coords="664,468,731,495"/>
+<area shape="rect" title=" " alt="" coords="1280,468,1347,495"/>
+<area shape="rect" title=" " alt="" coords="1371,468,1410,495"/>
+<area shape="rect" title=" " alt="" coords="1810,468,1849,495"/>
+<area shape="rect" title=" " alt="" coords="1434,468,1489,495"/>
+<area shape="rect" title=" " alt="" coords="1513,468,1583,495"/>
+<area shape="rect" href="../../db/d5a/_modular_8h.html" title="Modular arithmetic, basis change, and similar operations." alt="" coords="2127,468,2254,495"/>
+<area shape="rect" href="../../d6/d77/_directories_8h.html" title="Handle input and output directories." alt="" coords="2643,319,2778,345"/>
+<area shape="rect" href="../../de/ddd/_reaction_8h.html" title="Objects and utilities for surface and bulk reactions." alt="" coords="3114,169,3238,196"/>
+<area shape="rect" title=" " alt="" coords="2183,169,2246,196"/>
+<area shape="rect" href="../../db/d51/_constants_8h.html" title="Mathematical and physical constants." alt="" coords="3105,319,3247,345"/>
+<area shape="rect" href="../../dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="1459,319,1602,345"/>
+<area shape="rect" href="../../d9/d02/_ranges_8h.html" title=" " alt="" coords="2238,393,2365,420"/>
+<area shape="rect" title=" " alt="" coords="1141,319,1232,345"/>
+<area shape="rect" title=" " alt="" coords="1627,319,1667,345"/>
+<area shape="rect" title=" " alt="" coords="1347,244,1426,271"/>
+<area shape="rect" href="../../d6/d02/_algebra_8h.html" title="Linear algebra algorithms." alt="" coords="2803,319,2928,345"/>
+<area shape="rect" href="../../d9/d4c/_parallel_8h.html" title="Definitions and algorithms for serial and parallel implementations." alt="" coords="3072,393,3197,420"/>
+<area shape="rect" href="../../d5/d03/_p_t_o_f_2_state_8h.html" title="Particle states." alt="" coords="1106,169,1209,196"/>
+<area shape="rect" title=" " alt="" coords="195,169,258,196"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -163,9 +180,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dc/d00/_initial_condition___cases_8h__dep__incl.png" border="0" usemap="#a_p_t_o_f_2_initial_condition___cases_8hdep" alt=""/></div>
 <map name="a_p_t_o_f_2_initial_condition___cases_8hdep" id="a_p_t_o_f_2_initial_condition___cases_8hdep">
-<area shape="rect" title=" " alt="" coords="14,5,161,47"/>
-<area shape="rect" href="../../d3/d74/_models_8h.html" title=" " alt="" coords="30,95,145,121"/>
-<area shape="rect" href="../../d0/dee/_models___parallel_8h.html" title=" " alt="" coords="5,169,169,196"/>
+<area shape="rect" title="Create particles according to different initial conditions." alt="" coords="5,5,152,47"/>
+<area shape="rect" href="../../d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="21,169,136,196"/>
+<area shape="rect" href="../../d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="59,95,215,121"/>
 </map>
 </div>
 </div>
@@ -176,10 +193,40 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html">ptof::InitialConditionParameters_Cases</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial condition condition parameters to handle all initial condition types in <code><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html" title="InitialCondition object to handle implemented initial condition types.">InitialCondition_Cases</a></code>.  <a href="../../dd/d20/structptof_1_1_initial_condition_parameters___cases.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">InitialCondition object to handle implemented initial condition types.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/db8/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters.html">ptof::InitialConditionParameters_Cases::SpecificParameters</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dab/structptof_1_1_initial_condition___cases_1_1_position_maker.html">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;::PositionMaker</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d95/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___patches.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Patches</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df3/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___position.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Position</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___patches___distance.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Patches_Distance</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8b/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___filename.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Filename</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dbc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___boundaries.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Boundaries</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___cylinder.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Cylinder</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d57/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___parallelipiped.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Parallelipiped</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d3f/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___sphere.html">ptof::InitialConditionParameters_Cases::SpecificParameters_Sphere</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d34/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters.html">ptof::InitialConditionParameters_Cases::InjectionParameters</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d29/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___pulse_no_mass.html">ptof::InitialConditionParameters_Cases::InjectionParameters_PulseNoMass</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d99/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___pulse.html">ptof::InitialConditionParameters_Cases::InjectionParameters_Pulse</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___continuous_no_mass.html">ptof::InitialConditionParameters_Cases::InjectionParameters_ContinuousNoMass</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___continuous.html">ptof::InitialConditionParameters_Cases::InjectionParameters_Continuous</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dfb/classptof_1_1_initial_condition___cases.html">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html" title="Make particles and positions according to prescribed rules.">InitialCondition</a> object to handle implemented initial condition types.  <a href="../../db/dfb/classptof_1_1_initial_condition___cases.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc3/structptof_1_1_initial_condition___cases_1_1_b_p.html">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;::BP&lt; TT, periodic &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d50/structptof_1_1_initial_condition___cases_1_1_b_p_3_01_t_t_00_01true_01_4.html">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;::BP&lt; TT, true &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -189,12 +236,19 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a72d340d91d88076525ba8c2a85f9e797"><td class="memTemplParams" colspan="2">template&lt;typename Geometry , typename VelocityField , typename ParticleMaker , typename Parameters , typename Mask &gt; </td></tr>
-<tr class="memitem:a72d340d91d88076525ba8c2a85f9e797"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a72d340d91d88076525ba8c2a85f9e797">ptof::InitialCondition_Cases</a> (Geometry const &amp;, VelocityField const &amp;, ParticleMaker, std::size_t, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> const &amp;, Mask &amp;&amp;, double) -&gt; InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</td></tr>
-<tr class="separator:a72d340d91d88076525ba8c2a85f9e797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562548c07b7c9bde7177f1007daeb4cf"><td class="memTemplParams" colspan="2">template&lt;typename Particle , typename Geometry , typename VelocityField , typename Mask &gt; </td></tr>
+<tr class="memitem:a562548c07b7c9bde7177f1007daeb4cf"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#a562548c07b7c9bde7177f1007daeb4cf">ptof::InitialCondition_Cases</a> (<a class="el" href="../../da/d51/structmeta_1_1_selector__t.html">meta::Selector_t</a>&lt; Particle &gt;, Geometry const &amp;, VelocityField const &amp;, std::size_t nr_particles, InitialConditionParameters_Cases const &amp;, Mask const &amp;, double) -&gt; InitialCondition_Cases&lt; Particle, Geometry &gt;</td></tr>
+<tr class="separator:a562548c07b7c9bde7177f1007daeb4cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac13cc684f5200d13c170e0840d0cfc0f"><td class="memTemplParams" colspan="2">template&lt;typename Particle , typename Geometry , typename VelocityField , typename Mask &gt; </td></tr>
+<tr class="memitem:ac13cc684f5200d13c170e0840d0cfc0f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#ac13cc684f5200d13c170e0840d0cfc0f">ptof::InitialCondition_Cases</a> (<a class="el" href="../../da/d51/structmeta_1_1_selector__t.html">meta::Selector_t</a>&lt; Particle &gt;, Geometry const &amp;, VelocityField const &amp;, InitialConditionParameters_Cases const &amp;, Mask const &amp;) -&gt; InitialCondition_Cases&lt; Particle, Geometry &gt;</td></tr>
+<tr class="separator:ac13cc684f5200d13c170e0840d0cfc0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8954635b34bbe5480d97fa1f6608638"><td class="memTemplParams" colspan="2">template&lt;typename Particle , typename Geometry , typename VelocityField &gt; </td></tr>
+<tr class="memitem:ae8954635b34bbe5480d97fa1f6608638"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/dd1/namespaceptof.html#ae8954635b34bbe5480d97fa1f6608638">ptof::InitialCondition_Cases</a> (<a class="el" href="../../da/d51/structmeta_1_1_selector__t.html">meta::Selector_t</a>&lt; Particle &gt;, Geometry const &amp;, VelocityField const &amp;, std::size_t nr_particles, InitialConditionParameters_Cases const &amp;) -&gt; InitialCondition_Cases&lt; Particle, Geometry &gt;</td></tr>
+<tr class="separator:ae8954635b34bbe5480d97fa1f6608638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>
+<div class="textblock"><p>Create particles according to different initial conditions. </p>
+<dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>24/02/2022 </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

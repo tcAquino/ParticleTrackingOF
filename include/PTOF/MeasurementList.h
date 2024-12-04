@@ -1,7 +1,8 @@
 /**
- \file PTOF/MeasurementList.h
- \author Tomás Aquino
- \date 07/03/2022
+   \file PTOF/MeasurementList.h
+   \author Tomás Aquino
+   \date 07/03/2022
+   \brief Measurement types.
 */
 
 #ifndef PTOF_MEASUREMENTLIST_H
@@ -10,11 +11,15 @@
 #include <map>
 #include <string>
 
-/** \struct MeasurementList PTOF/MeasurementList.h "PTOF/MeasurementList.h"
- * \brief Names and types of measurements. */
+/**
+   \struct MeasurementList PTOF/MeasurementList.h "PTOF/MeasurementList.h"
+   \brief Names and types of measurements.
+*/
 struct MeasurementList {
-  /** \enum Type
-   *  \brief Implemented types. */
+  /**
+     \enum Type
+     \brief Implemented types.
+  */
   enum class Type {
     position,               /**< Time, particle tags, positions, and masses. */
     position_in_regions,    /**< Time, particle tags, positions, and masses in
@@ -60,14 +65,26 @@ struct MeasurementList {
                        dynamics. */
   };
 
-  /** \return Type from name. */
+  /**
+     \brief Type from name.
+     \param name Boundary condition name.
+     \return Boundary condition type.
+  */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
-  /** \return Name from type. */
+  /**
+     \brief Name from type.
+     \param type Boundary condition type.
+     \return Boundary condition name.
+  */
   static auto name(Type type) { return type_to_name.at(type); }
 
-  /** Check if name exists. */
-  static auto contains(std::string const &name) {
+  /**
+     \brief Check if name exists.
+     \param name condition name.
+     \return \c true if name exists, \c false otherwise.
+  */
+  static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }
 

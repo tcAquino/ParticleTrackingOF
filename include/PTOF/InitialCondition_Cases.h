@@ -1,421 +1,1037 @@
 /**
- \file PTOF/InitialCondition_Cases.h
- \author Tomás Aquino
- \date 24/02/2022
+   \file PTOF/InitialCondition_Cases.h
+   \author Tomás Aquino
+   \date 24/02/2022
+   \brief Create particles according to different initial conditions.
 */
 
 #ifndef PTOF_INITIALCONDITION_CASES_H
 #define PTOF_INITIALCONDITION_CASES_H
 
 #include "CTRW/Meta.h"
+#include "General/IO.h"
+#include "General/Meta.h"
+#include "General/Operations.h"
 #include "General/Useful.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/InitialCondition.h"
 #include "PTOF/InitialConditionList.h"
+#include "PTOF/ParticleMaker.h"
+#include "PTOF/TimeUnits.h"
 #include "PTOF/Useful.h"
+#include "Stochastic/Random.h"
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <fieldTypes.H>
+#include <limits>
 #include <map>
+#include <memory>
 #include <point.H>
 #include <random>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 namespace ptof {
-/** \class InitialConditionParameters_Cases PTOF/InitialCondition_Cases.h
- * "PTOF/InitialCondition_Cases.h" \brief Initial condition condition parameters
- * to handle all initial condition types in \c InitialCondition_Cases. */
+/**
+   \class InitialConditionParameters_Cases PTOF/InitialCondition_Cases.h
+   "PTOF/InitialCondition_Cases.h"
+   \brief Initial condition condition parameters to handle all initial condition
+   types in \c InitialCondition_Cases.
+*/
 struct InitialConditionParameters_Cases {
 public:
+  std::string name;
   InitialConditionList::Type type;
-  double distance_wall;
-  std::vector<std::pair<double, double>> region_boundaries;
-  std::string filename_data;
-  double initial_mass;
-  double time_min;
-  double time_step_accuracy_adv;
-  double time_step_accuracy_diff;
-  double time_step_accuracy_react;
-  double time_max;
-  double time_step;
+  std::string continuity;
+
+  struct SpecificParameters {
+    virtual ~SpecificParameters() {}
+  };
+
+  struct SpecificParameters_Patches : public SpecificParameters {
+    std::vector<std::string> patch_names;
+
+    SpecificParameters_Patches(std::vector<std::string> patch_names)
+        : patch_names{patch_names} {}
+  };
+
+  struct SpecificParameters_Position : public SpecificParameters {
+    std::vector<double> position;
+
+    SpecificParameters_Position(std::vector<double> position)
+        : position{position} {}
+  };
+
+  struct SpecificParameters_Patches_Distance
+      : public SpecificParameters_Patches {
+    double distance;
+    std::size_t nr_tries;
+
+    SpecificParameters_Patches_Distance(std::vector<std::string> patch_names,
+                                        double distance, std::size_t nr_tries)
+        : SpecificParameters_Patches{patch_names}, distance{distance},
+          nr_tries{nr_tries} {
+      if (distance < 0.)
+        throw std::runtime_error{"Negative distance to patches"};
+    }
+  };
+
+  struct SpecificParameters_Filename : public SpecificParameters {
+    std::string filename;
+
+    SpecificParameters_Filename(std::string filename) : filename{filename} {}
+  };
+
+  struct SpecificParameters_Boundaries : public SpecificParameters {
+    std::vector<std::pair<double, double>> region_boundaries;
+
+    SpecificParameters_Boundaries(
+        std::vector<std::pair<double, double>> region_boundaries)
+        : region_boundaries{region_boundaries} {
+      for (auto const &bounds : region_boundaries)
+        if (bounds.second < bounds.first)
+          throw std::runtime_error{
+              "Cartesian region upper bounds smaller than lower bounds"};
+    }
+  };
+
+  struct SpecificParameters_Cylinder : public SpecificParameters {
+    std::vector<double> center_1;
+    std::vector<double> center_2;
+    double radius;
+    std::size_t nr_tries;
+    double inner_radius{0.};
+
+    SpecificParameters_Cylinder(std::vector<double> center_1,
+                                std::vector<double> center_2, double radius,
+                                std::size_t nr_tries, double inner_radius = 0.)
+        : center_1{center_1}, center_2{center_2}, radius{radius},
+          nr_tries{nr_tries}, inner_radius{inner_radius} {
+      if (inner_radius >= radius)
+        throw std::runtime_error{"Inner radius not smaller than radius"};
+    }
+  };
+
+  struct SpecificParameters_Parallelipiped : public SpecificParameters {
+    std::vector<double> corner;
+    std::vector<std::vector<double>> sides;
+    std::size_t nr_tries;
+
+    SpecificParameters_Parallelipiped(std::vector<double> corner,
+                                      std::vector<std::vector<double>> sides,
+                                      std::size_t nr_tries)
+        : corner{corner}, sides{sides}, nr_tries{nr_tries} {}
+  };
+
+  struct SpecificParameters_Sphere : public SpecificParameters {
+    std::vector<double> center;
+    double radius;
+    std::size_t nr_tries;
+    double inner_radius{0.};
+
+    SpecificParameters_Sphere(std::vector<double> center, double radius,
+                              std::size_t nr_tries, double inner_radius = 0.)
+        : center{center}, radius{radius}, nr_tries{nr_tries},
+          inner_radius{inner_radius} {
+      if (inner_radius >= radius)
+        throw std::runtime_error{"Inner radius not smaller than radius"};
+    }
+  };
+
+  struct InjectionParameters {
+    virtual ~InjectionParameters() {}
+  };
+
+  struct InjectionParameters_PulseNoMass : public InjectionParameters {
+    double time;
+
+    InjectionParameters_PulseNoMass(double time) : time{time} {}
+  };
+
+  struct InjectionParameters_Pulse : public InjectionParameters_PulseNoMass {
+    double mass;
+
+    InjectionParameters_Pulse(double time, double mass)
+        : InjectionParameters_PulseNoMass{time}, mass{mass} {}
+
+    InjectionParameters_Pulse(
+        InjectionParameters_PulseNoMass const &specific_parameters_pulse,
+        double mass)
+        : InjectionParameters_Pulse{specific_parameters_pulse.time, mass} {}
+  };
+
+  struct InjectionParameters_ContinuousNoMass
+      : public InjectionParameters_PulseNoMass {
+    double time_end;
+    double time_step;
+
+    InjectionParameters_ContinuousNoMass(double time_start, double time_end,
+                                         double time_step)
+        : InjectionParameters_PulseNoMass{time_start}, time_end{time_end},
+          time_step{time_step} {
+      if (time_end <= time_start)
+        throw std::runtime_error{
+            "Injection end time not larger than injection start time"};
+      if (time_step <= 0)
+        throw std::runtime_error{"Injection time step not positive"};
+    }
+
+    InjectionParameters_ContinuousNoMass(
+        InjectionParameters_PulseNoMass const &specific_parameters_pulse,
+        double time_end, double time_step)
+        : InjectionParameters_ContinuousNoMass{specific_parameters_pulse.time,
+                                               time_end, time_step} {}
+  };
+
+  struct InjectionParameters_Continuous
+      : public InjectionParameters_ContinuousNoMass {
+    double mass_per_time_step;
+
+    InjectionParameters_Continuous(double time_start, double time_end,
+                                   double time_step, double mass_per_time_step)
+        : InjectionParameters_ContinuousNoMass{time_start, time_end, time_step},
+          mass_per_time_step{mass_per_time_step} {}
+
+    InjectionParameters_Continuous(
+        InjectionParameters_ContinuousNoMass const &specific_parameters_pulse,
+        double time_end, double time_step, double mass_per_time_step)
+        : InjectionParameters_ContinuousNoMass{specific_parameters_pulse.time,
+                                               time_end, time_step},
+          mass_per_time_step{mass_per_time_step} {}
+
+    InjectionParameters_Continuous(
+        InjectionParameters_PulseNoMass const &specific_parameters_pulse,
+        double time_end, double time_step, double mass_per_time_step)
+        : InjectionParameters_Continuous{specific_parameters_pulse.time,
+                                         time_end, time_step,
+                                         mass_per_time_step} {}
+
+    InjectionParameters_Continuous(
+        InjectionParameters_Pulse const &specific_parameters_pulse,
+        double time_end, double time_step)
+        : InjectionParameters_Continuous{specific_parameters_pulse.time,
+                                         time_end, time_step,
+                                         specific_parameters_pulse.mass} {}
+  };
+
+  std::unique_ptr<SpecificParameters> specific_parameters;
+  std::unique_ptr<InjectionParameters> injection_parameters;
 
   template <typename Geometry, typename TransportParameters,
             typename ReactionParameters>
   InitialConditionParameters_Cases(Directories const &directories,
-                                   std::string const &name,
+                                   std::string const &parameter_set_name,
                                    Geometry const &geometry,
                                    TransportParameters const &params_transport,
                                    ReactionParameters const &params_reaction) {
-    std::string ic_name;
-    auto input =
-        useful::open_read(directories.dir_parameters +
-                          "/parameters_initial_condition_" + name + ".dat");
-    useful::read_first_from_line(ic_name, input);
-    if (!InitialConditionList{}.contains(ic_name))
-      throw std::runtime_error{"Initial condition type " + ic_name +
-                               " not supported"};
-    type = InitialConditionList::type(ic_name);
-    if (type == InitialConditionList::Type::uniform_near_solid)
-      useful::read_first_from_line(distance_wall, input);
-    if (type == InitialConditionList::Type::uniform_region_cartesian ||
-        type == InitialConditionList::Type::fluxweighted_region_cartesian) {
-      auto split_line = useful::split_line(input);
-      if (split_line.size() % 2 != 0)
-        std::runtime_error{
-            "Initial condition region boundaries must come in pairs"};
-      for (std::size_t ii = 0; ii < split_line.size(); ii += 2) {
-        region_boundaries.push_back(
-            {std::stod(split_line[ii]), std::stod(split_line[ii + 1])});
-      }
-    }
-    if (type == InitialConditionList::Type::prescribed_positions) {
-      useful::read_first_from_line(filename_data, input);
-      useful::expand_env_in_place(
-          useful::expand_home_dir_in_place(filename_data));
-    }
-    if (type != InitialConditionList::Type::prescribed_positions_masses &&
-        type == InitialConditionList::Type::prescribed_positions_masses_tags)
-      useful::read_first_from_line(initial_mass, input);
-    useful::read_first_from_line(time_min, input);
-    if (type == InitialConditionList::Type::uniform_inlet_continuous ||
-        type == InitialConditionList::Type::fluxweighted_inlet_continuous) {
-      useful::read_first_from_line(time_max, input);
-      useful::read_first_from_line(time_step_accuracy_adv, input);
-      useful::read_first_from_line(time_step_accuracy_diff, input);
-      useful::read_first_from_line(time_step_accuracy_react, input);
-      time_step =
-          std::min({time_step_accuracy_adv * params_transport.advection_time,
-                    time_step_accuracy_diff * params_transport.diffusion_time,
-                    time_step_accuracy_react * params_reaction.reaction_time});
-    }
+    std::string filename = directories.dir_parameters +
+                           "/parameters_initial_condition_" +
+                           parameter_set_name + ".dat";
+    auto input = io::open_read(filename);
+    specific_parameters =
+        set_specific_parameters(input, filename, directories, geometry,
+                                params_transport, params_reaction);
+    injection_parameters = set_injection_parameters(
+        input, filename, params_transport, params_reaction);
   }
 
+  /**
+     \brief Output generic information about object.
+     \param output Output stream.
+  */
   template <typename OStream> static void info(OStream &output) {
     output
         << "--------------------------------------------------------------\n"
            "Initial condition parameters\n"
            "--------------------------------------------------------------\n"
            "- Initial condition type:\n"
-           "\tuniform: Homogeneous throughout the domain\n"
-           "\tfluxweighted: Flux-weighted throughout the domain\n"
-           "\tuniform_inlet: Homogeneous at the inlet\n"
-           "\tfluxweighted_inlet: Flux-weighted at the inlet\n"
-           "\tuniform_solid: Homogeneous at the solid surface\n"
-           "\tuniform_near_solid: Homogeneous at a fixed distance to the\n"
-           "\t                    solid interface\n"
-           "\tuniform_region_cartesian: Homogeneous in a prescribed\n"
-           "\t                          cartesian region\n"
-           "\tfluxweighted_region_cartesian: Flux-weighted in a prescribed\n"
-           "\t                               cartesian region\n"
-           "\tprescribed_positions: Prescribed particle positions\n"
-           "\tprescribed_positions_masses: Prescribed particle positions and\n"
-           "                               masses\n"
-           "\tprescribed_positions_masses_tags: Prescribed particle\n"
-           "                                    positions, masses, and tags\n"
-           "\tuniform_inlet_continuous: Continuous injection homogeneous at\n"
-           "\t                          the inlet\n"
-           "\tfluxweighted_inlet_continuous: Continuous injection\n"
-           "\t                               flux-weighted at the inlet\n"
-           "- Initial distance from solid phase (pass only for type\n"
-           "  uniform_near_solid)\n"
-           "- Region boundaries (pass only for types uniform_region_cartesian\n"
-           "  or fluxweighted_region_cartesian)\n"
-           "- Filename (with full path) for prescribed positions, positions\n"
-           "  and masses, or positions, masses, and tags (pass only for type\n"
-           "  prescribed_positions, prescribed_position_masses, or\n"
-           "  prescribed_positions_masses_tags, respectively)\n"
-           "- Total injected mass in each injection step (pass for all types\n"
-           "  except prescribed_position_masses and\n"
-           "  prescribed_positions_masses_tags)\n"
-           "- Initial injection time\n"
-           "- Final injection time (pass only for types\n"
-           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-           "- Maximum timestep for continuous injection discretization in\n"
-           "  units of advection time (pass only for types\n"
-           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-           "- Maximum timestep for continuous injection discretization in\n"
-           "  units of diffusion time (pass only for types\n"
-           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
-           "- Maximum timestep for continuous injection discretization in\n"
-           "  units of reaction times (pass only for types\n"
-           "  uniform_inlet_continuous or fluxweighted_inlet_continuous)\n"
+           "  - point\n"
+           "    - All particles at specified position\n"
+           "    - Pass on same line:\n"
+           "      - position\n"
+           "  - uniform_all_cells\n"
+           "    - Homogeneous over cell centers throughout the domain\n"
+           "  - fluxweighted_all_cells\n"
+           "    - Flux-weighted over cell centers throughout the domain\n"
+           "  - uniform_patch_faces\n"
+           "    - Homogeneous over specified boundary patch face centers\n"
+           "    - Pass on same line:\n"
+           "      - Patch name(s)\n"
+           "  - fluxweighted_patch_faces\n"
+           "    - Flux-weighted over specified boundary patch face centers\n"
+           "    - Pass on same line:\n"
+           "      - Patch name(s)\n"
+           "  - uniform_near_patch\n"
+           "    - Homogeneous at a fixed distance from specified boundary\n"
+           "      patch faces\n"
+           "    - Pass on same line:\n"
+           "      - Number of tries to place each particle in valid position\n"
+           "      - Distance to patch\n"
+           "      - Patch name(s)\n"
+           "  - fluxweighted_near_patch\n"
+           "    - Flux-weighted at a fixed distance from specified boundary\n"
+           "      patch faces\n"
+           "    - Pass on same line:\n"
+           "      - Number of tries to place each particle in valid position\n"
+           "      - Distance to patch\n"
+           "      - Patch name(s)\n"
+           "  - uniform_cartesian_cells\n"
+           "    - Homogeneous over cell centers within a Cartesian region\n"
+           "    - Pass on same line:\n"
+           "      - Number of tries to place each particle in valid position\n"
+           "  - fluxweighted_cartesian_cells\n"
+           "    - Pass on same line:\n"
+           "      - Lower and upper region boundaries along each Cartesian\n"
+           "        dimension\n"
+           "  - prescribed_positions_masses\n"
+           "    - Prescribed particle positions\n"
+           "    - Pass on same line:\n"
+           "      - Name of file with positions (one particle per line)\n"
+           "      - Path to file (optional [Parameters directory])\n"
+           "  - prescribed_positions_masses\n"
+           "    - Prescribed particle positions and masses\n"
+           "    - Pass on same line:\n"
+           "      - Name of file with positions and masses (one particle per\n"
+           "        line)\n"
+           "      - Path to file (optional [Parameters directory])\n"
+           "  - prescribed_positions_masses_tags\n"
+           "    - Prescribed particle positions and masses\n"
+           "    - Pass on same line:\n"
+           "      - Name of file with particle positions, masses, and tags\n"
+           "        (one particle per line)\n"
+           "        per line\n"
+           "      - Path to file (optional [Parameters directory])\n"
+           "  - prescribed_positions_masses_tags_times\n"
+           "    - Prescribed particle positions and masses\n"
+           "    - Pass on same line:\n"
+           "      - File name for file with particle positions, masses, tags,\n"
+           "        and times (one particle per line)\n"
+           "      - Path to file (optional [Parameters directory])\n"
+           "  - uniform_cylinder\n"
+           "    - Homogeneous inside cylinder\n"
+           "    - Pass on same line:\n"
+           "      - Number of tries to place each particle in valid position\n"
+           "      - Base centers\n"
+           "      - Radius\n"
+           "      - Excluded inner radius (optional [0.])\n"
+           "  - uniform_parallelipiped\n"
+           "    - Homogeneous inside parallelipiped\n"
+           "    - Pass on same line:\n"
+           "      - Number of tries to place each particle in valid position\n"
+           "      - Corner (side vector origin)\n"
+           "      - Side vectors (up to one per spatial dimension, degenerate\n"
+           "        if fewer)\n"
+           "  - uniform_sphere\n"
+           "    - Homogeneous inside sphere\n"
+           "    - Pass on same line:\n"
+           "      - Number of tries to place each particle in valid position\n"
+           "      - Centers\n"
+           "      - Radius\n"
+           "      - Excluded inner radius (optional [0.])\n"
+           "- Injection continuity type:\n"
+           "  (Note:\n"
+           "    - Line ignored if initial condition type prescribes times\n"
+           "    - Total injected mass ignored if initial condition type\n"
+           "      prescribes masses)\n"
+           "  - pulse\n"
+           "    - Instantaneous pulse injection\n"
+           "    - Pass on same line:\n"
+           "      - Time units for injection time:\n"
+           "        - diffusion\n"
+           "          - Diffusion time units\n"
+           "        - advection\n"
+           "          - Advection time units\n"
+           "        - reaction\n"
+           "          - Reaction time units\n"
+           "        - arbitrary\n"
+           "          - Arbitary units (no rescaling)\n"
+           "      - Injection time\n"
+           "      - Total injected mass\n"
+           "  - continuous\n"
+           "    - Continuous injection\n"
+           "    - Pass on same line:\n"
+           "      - Time units for injection-related times:\n"
+           "        - diffusion\n"
+           "          - Diffusion time units\n"
+           "        - advection\n"
+           "          - Advection time units\n"
+           "        - reaction\n"
+           "          - Reaction time units\n"
+           "        - arbitrary\n"
+           "          - Arbitary units (no rescaling)\n"
+           "      - Injection start time\n"
+           "      - Injection end time\n"
+           "      - Injection discretization option:\n"
+           "        - time_step\n"
+           "          - Prescribed injection time step\n"
+           "          - Pass on same line:\n"
+           "            - Injection time step\n"
+           "        - accuracy\n"
+           "          - Choose the minimum time step based on prescribed\n"
+           "            accuracies\n"
+           "          - Pass on same line:\n"
+           "            - Injection time step accuracy with respect to\n"
+           "              advection time\n"
+           "            - Injection time step accuracy with respect to\n"
+           "              diffusion time\n"
+           "            - Injection time step accuracy with respect to\n"
+           "              reaction time\n"
+           "      - Total injected mass per injection time step\n"
            "--------------------------------------------------------------\n";
+  }
+
+private:
+  /** \brief Read initial condition type and specific parameters. */
+  template <typename Geometry, typename TransportParameters,
+            typename ReactionParameters, typename IStream>
+  std::unique_ptr<SpecificParameters>
+  set_specific_parameters(IStream &input, std::string const &filename,
+                          Directories const &directories,
+                          Geometry const &geometry,
+                          TransportParameters const &params_transport,
+                          ReactionParameters const &params_reaction) {
+    std::string in_file = std::string{"In file "} + filename + " : ";
+    auto split_line = io::split_line(input);
+    std::size_t param_index = 0;
+    io::read(split_line, param_index,
+             in_file + "Could not parse initial condition type", name);
+    if (!InitialConditionList{}.contains(name))
+      throw std::runtime_error{"Initial condition type " + name +
+                               " not supported"};
+    type = InitialConditionList::type(name);
+    std::string for_initial_condition_type =
+        "Initial condition type " + name + " : ";
+    switch (type) {
+    case (InitialConditionList::Type::point): {
+      return std::make_unique<SpecificParameters_Position>(io::read<double>(
+          split_line, param_index, Geometry::dim,
+          in_file + for_initial_condition_type + "Could not parse position"));
+    }
+    case (InitialConditionList::Type::uniform_patch_faces):
+    case (InitialConditionList::Type::fluxweighted_patch_faces): {
+      std::size_t nr_patches = split_line.size() - param_index;
+      if (nr_patches == 0)
+        throw std::runtime_error{
+            in_file + for_initial_condition_type +
+            "Could not parse patch names(s) : At least one patch required"};
+      return std::make_unique<SpecificParameters_Patches>(io::read<std::string>(
+          split_line, param_index, split_line.size() - param_index,
+          in_file + for_initial_condition_type +
+              "Could not parse patch names"));
+    }
+    case (InitialConditionList::Type::uniform_near_patch):
+    case (InitialConditionList::Type::fluxweighted_near_patch): {
+      auto nr_tries =
+          io::read<std::size_t>(split_line, param_index,
+                                in_file + for_initial_condition_type +
+                                    "Could not parse number of tries");
+      auto distance = io::read<double>(split_line, param_index,
+                                       in_file + for_initial_condition_type +
+                                           "Could not parse distance to patch");
+      std::size_t nr_patches = split_line.size() - param_index;
+      if (nr_patches == 0)
+        throw std::runtime_error{
+            in_file + for_initial_condition_type +
+            "Could not parse patch names(s) : At least one patch required"};
+      auto patch_names =
+          io::read<std::string>(split_line, param_index, nr_patches,
+                                in_file + for_initial_condition_type +
+                                    "Could not parse patch name(s)");
+      return std::make_unique<SpecificParameters_Patches_Distance>(
+          patch_names, distance, nr_tries);
+    }
+    case (InitialConditionList::Type::uniform_cartesian_cells):
+    case (InitialConditionList::Type::fluxweighted_cartesian_cells): {
+      return std::make_unique<SpecificParameters_Boundaries>(
+          io::read<std::pair<double, double>>(
+              split_line, param_index, Geometry::dim,
+              in_file + for_initial_condition_type +
+                  "Could not parse region boundaries"));
+    }
+    case (InitialConditionList::Type::prescribed_positions):
+    case (InitialConditionList::Type::prescribed_positions_masses):
+    case (InitialConditionList::Type::prescribed_positions_masses_tags):
+    case (InitialConditionList::Type::prescribed_positions_masses_tags_times): {
+      auto filename_data = io::read<std::string>(
+          split_line, param_index,
+          in_file + for_initial_condition_type + "Could not parse file name");
+      auto dir = param_index < split_line.size()
+                     ? io::expand_env(io::expand_home_dir(io::read<std::string>(
+                           split_line, param_index,
+                           in_file + for_initial_condition_type +
+                               "Could not file directory")))
+                     : directories.dir_parameters;
+      return std::make_unique<SpecificParameters_Filename>(dir + "/" +
+                                                           filename_data);
+    }
+    case (InitialConditionList::Type::uniform_cylinder): {
+      auto nr_tries =
+          io::read<std::size_t>(split_line, param_index,
+                                in_file + for_initial_condition_type +
+                                    "Could not parse number of tries");
+      std::vector<std::vector<double>> centers;
+      centers.reserve(Geometry::dim);
+      for (std::size_t ii = 0; ii < Geometry::dim; ++ii)
+        centers.push_back(io::read<double>(
+            split_line, param_index, Geometry::dim,
+            in_file + for_initial_condition_type + "Could not parse " +
+                io::ordinal(ii) + " center position"));
+      auto radius = io::read<double>(split_line, param_index,
+                                     in_file + for_initial_condition_type +
+                                         "Could not parse radius");
+      auto inner_radius =
+          param_index < split_line.size()
+              ? io::read<double>(split_line, param_index,
+                                 in_file + for_initial_condition_type +
+                                     "Could not parse inner radius")
+              : 0.;
+      return std::make_unique<SpecificParameters_Cylinder>(
+          centers[0], centers[1], radius, nr_tries, inner_radius);
+    }
+    case (InitialConditionList::Type::uniform_parallelipiped): {
+      auto nr_tries =
+          io::read<std::size_t>(split_line, param_index,
+                                in_file + for_initial_condition_type +
+                                    "Could not parse number of tries");
+      auto corner = io::read<double>(split_line, param_index, Geometry::dim,
+                                     in_file + for_initial_condition_type +
+                                         "Could not parse corner");
+      std::vector<std::vector<double>> sides;
+      sides.reserve(Geometry::dim);
+      for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+        sides.push_back(io::read<double>(split_line, param_index, Geometry::dim,
+                                         in_file + for_initial_condition_type +
+                                             "Could not parse " +
+                                             io::ordinal(dd) + " side"));
+      return std::make_unique<SpecificParameters_Parallelipiped>(corner, sides,
+                                                                 nr_tries);
+    }
+    case (InitialConditionList::Type::uniform_sphere): {
+      auto nr_tries =
+          io::read<std::size_t>(split_line, param_index,
+                                in_file + for_initial_condition_type +
+                                    "Could not parse number of tries");
+      auto center = io::read<double>(split_line, param_index, Geometry::dim,
+                                     in_file + for_initial_condition_type +
+                                         "Could not parse center");
+      auto radius = io::read<double>(split_line, param_index,
+                                     in_file + for_initial_condition_type +
+                                         " : "
+                                         "Could not parse radius");
+      auto inner_radius =
+          param_index < split_line.size()
+              ? io::read<double>(split_line, param_index,
+                                 in_file + for_initial_condition_type +
+                                     "Could not parse inner radius")
+              : 0.;
+      return std::make_unique<SpecificParameters_Sphere>(
+          center, radius, nr_tries, inner_radius);
+    }
+    default:
+      return std::make_unique<SpecificParameters>();
+    }
+  }
+
+  /** \brief Read initial condition info from input stream. */
+  template <typename IStream, typename TransportParameters,
+            typename ReactionParameters>
+  std::unique_ptr<InjectionParameters>
+  set_injection_parameters(IStream &input, std::string const &filename,
+                           TransportParameters const &params_transport,
+                           ReactionParameters const &params_reaction) {
+    if (type ==
+        InitialConditionList::Type::prescribed_positions_masses_tags_times) {
+      continuity = "prescribed";
+      return std::make_unique<InjectionParameters>();
+    }
+
+    std::string in_file = std::string{"In file "} + filename + " : ";
+    auto split_line = io::split_line(input);
+    std::size_t param_index = 0;
+    io::read(split_line, param_index,
+             std::string{"In file "} + filename +
+                 " : "
+                 "Could not parse injection continuity type",
+             continuity);
+    std::string for_injection_continuity_type =
+        std::string{"Injection continuity type "} + continuity + " : ";
+
+    auto time_units =
+        io::read<std::string>(split_line, param_index,
+                              in_file + for_injection_continuity_type +
+                                  "Could not parse injection time units");
+    if (!TimeUnits{}.contains(time_units))
+      throw std::runtime_error{in_file + for_injection_continuity_type +
+                               "Time units " + time_units + " not supported"};
+    double time_unit_factor =
+        ptof::time_unit_factor(time_units, params_transport, params_reaction);
+
+    auto injection_time_start =
+        io::read<double>(split_line, param_index,
+                         in_file + for_injection_continuity_type +
+                             "Could not parse injection start time");
+    injection_time_start *= time_unit_factor;
+
+    if (continuity == "pulse") {
+      if (type != InitialConditionList::Type::prescribed_positions_masses &&
+          type !=
+              InitialConditionList::Type::prescribed_positions_masses_tags) {
+        return std::make_unique<InjectionParameters_Pulse>(
+            injection_time_start,
+            io::read<double>(split_line, param_index,
+                             in_file + for_injection_continuity_type +
+                                 "Could not parse total mass"));
+      }
+      return std::make_unique<InjectionParameters_PulseNoMass>(
+          injection_time_start);
+    } else if (continuity == "continuous") {
+      auto injection_time_end =
+          io::read<double>(split_line, param_index,
+                           in_file + for_injection_continuity_type +
+                               "Could not parse injection end time");
+      injection_time_end *= time_unit_factor;
+      auto discretization_option = io::read<std::string>(
+          split_line, param_index,
+          in_file + for_injection_continuity_type +
+              "Could not parse time discretization option");
+      double injection_time_step;
+      if (discretization_option == "time_step") {
+        io::read(split_line, param_index,
+                 in_file + for_injection_continuity_type +
+                     "Could not parse discretization time step",
+                 injection_time_step);
+        injection_time_step *= time_unit_factor;
+      } else if (discretization_option == "accuracy") {
+        double time_step_adv, time_step_diff, time_step_react;
+        io::read(split_line, param_index,
+                 in_file + for_injection_continuity_type +
+                     "Could not parse time step in units of advective, "
+                     "diffusive, and reactive time",
+                 time_step_adv, time_step_diff, time_step_react);
+        injection_time_step =
+            std::min({time_step_adv * params_transport.advection_time,
+                      time_step_diff * params_transport.diffusion_time,
+                      time_step_react * params_reaction.reaction_time});
+      } else {
+        throw std::runtime_error{std::string{"Injection continuity type "} +
+                                 continuity + " not supported"};
+      }
+
+      if (type != InitialConditionList::Type::prescribed_positions_masses &&
+          type !=
+              InitialConditionList::Type::prescribed_positions_masses_tags) {
+        return std::make_unique<InjectionParameters_Continuous>(
+            injection_time_start, injection_time_end, injection_time_step,
+            io::read<double>(
+                split_line, param_index,
+                in_file + for_injection_continuity_type +
+                    "Could not parse total mass per discretization time step"));
+      }
+      return std::make_unique<InjectionParameters_ContinuousNoMass>(
+          injection_time_start, injection_time_end, injection_time_step);
+    } else {
+      throw std::runtime_error{std::string{"Injection continuity type "} +
+                               continuity + " not supported"};
+    }
   }
 };
 
-/** \class InitialCondition_Cases PTOF/InitialCondition_Cases.h
- * "PTOF/InitialCondition_Cases.h" \brief InitialCondition object to handle
- * implemented initial condition types. */
-template <typename Geometry, typename VelocityField, typename ParticleMaker,
-          typename Mask = useful::Empty>
-class InitialCondition_Cases {
+/**
+   \class InitialCondition_Cases PTOF/InitialCondition_Cases.h
+   "PTOF/InitialCondition_Cases.h"
+   \brief InitialCondition object to handle implemented initial condition types.
+*/
+template <typename Particle, typename Geometry> class InitialCondition_Cases {
 public:
   using Parameters =
       InitialConditionParameters_Cases; /**< Initial condition parameters.*/
-  Parameters const &parameters;         /**< Initial condition parameters. */
 
-private:
-  typename Geometry::Locator const &_locator; /**< Object to search mesh. */
-  VelocityField const &_velocity_field; /**< Underlying flow field.       */
-  ParticleMaker _particle_maker; /**< Makes a particle given a position.*/
-  std::size_t _nr_particles;     /**< Number of particles per injection step. */
-  std::mt19937 _rng{std::random_device{}()}; /**< Random number generator. */
-  Mask _mask{};          /**< Mask to disallow cells/faces        */
-  double _threshold{0.}; /**< Threshold for mask        */
+  std::size_t const
+      nr_particles; /**< Number of particles per injection step. */
+  InitialConditionList::Type type; /**< Type of initial condition. */
 
-  struct PositionMaker {
-    double time = 0.;
-    auto operator()(Foam::point const &position) { return position; }
-  } _position_maker; /** Functor to forward positions and hold time value.*/
-
-public:
-  /** Constructor.
-   \param geometry Domain geometry info and utilities.
-   \param velocity_field Velocity field as a function of state.
-   \param particle_maker Functor to make a particle given a position.
-   \param nr_particles Number of particles per injection step.
-   \param parameters Output parameters. */
+  /**
+     \brief Constructor.
+     \param geometry Domain geometry info and utilities.
+     \param velocity_field Velocity field as a function of state.
+     \param particle_maker Functor to make a particle given a position.
+     \param parameters Output parameters.
+     \param mask Scalar field.
+     \param threshold Threshold for the mask, such that cells where the mask is
+     above or equal to the threshold are considered.
+  */
+  template <typename VelocityField = useful::Empty,
+            typename Mask = useful::Empty>
   InitialCondition_Cases(Geometry const &geometry,
                          VelocityField const &velocity_field,
-                         ParticleMaker particle_maker, std::size_t nr_particles,
-                         Parameters const &parameters)
-      : parameters{parameters}, _locator{geometry.locator},
-        _velocity_field{velocity_field}, _particle_maker{particle_maker},
-        _nr_particles{nr_particles} {}
+                         std::size_t nr_particles, Parameters const &parameters,
+                         Mask const &mask = {}, double threshold = 0.)
+      : nr_particles{nr_particles}, type{parameters.type},
+        _particle_maker{make_particle_maker(geometry, parameters)},
+        _initial_condition{
+            set_type(geometry, velocity_field, parameters, mask, threshold)} {}
 
-  InitialCondition_Cases(Geometry &&, VelocityField const &, ParticleMaker,
-                         std::size_t, Parameters const &) = delete;
+  template <typename VelocityField = useful::Empty,
+            typename Mask = useful::Empty>
+  InitialCondition_Cases(Geometry &&, VelocityField const &, std::size_t,
+                         Parameters const &, Mask const & = {},
+                         double = 0.) = delete;
 
-  InitialCondition_Cases(Geometry const &, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters const &) = delete;
-
-  InitialCondition_Cases(Geometry const &, VelocityField const &, ParticleMaker,
-                         std::size_t, Parameters &&) = delete;
-
-  InitialCondition_Cases(Geometry &&, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters const &) = delete;
-
-  InitialCondition_Cases(Geometry const &, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters &&) = delete;
-
-  InitialCondition_Cases(Geometry &&, VelocityField const &, ParticleMaker,
-                         std::size_t, Parameters &&) = delete;
-
-  InitialCondition_Cases(Geometry &&, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters &&) = delete;
-
-  /** Constructor.
-  \param geometry Domain geometry info and utilities.
-  \param velocity_field Velocity field as a function of state.
-  \param particle_maker Functor to make a particle given a position.
-  \param nr_particles Number of particles per injection step.
-  \param parameters Output parameters.
-  \param mask Scalar field assigning values to mesh cell indices through
-  operator[]. \param threshold Threshold for the mask, such that cells where the
-  mask is above the threshold are considered. */
-  InitialCondition_Cases(Geometry const &geometry,
+  template <typename VelocityField = useful::Empty,
+            typename Mask = useful::Empty>
+  InitialCondition_Cases(meta::Selector_t<Particle>, Geometry const &geometry,
                          VelocityField const &velocity_field,
-                         ParticleMaker particle_maker, std::size_t nr_particles,
-                         Parameters const &parameters, Mask &&mask,
-                         double threshold = 0.)
-      : parameters{parameters}, _locator{geometry.locator},
-        _velocity_field{velocity_field}, _particle_maker{particle_maker},
-        _nr_particles{nr_particles}, _mask{std::forward<Mask>(mask)},
-        _threshold{threshold} {}
+                         std::size_t nr_particles, Parameters const &parameters,
+                         Mask const &mask = {}, double threshold = 0.)
+      : nr_particles{nr_particles}, type{parameters.type},
+        _particle_maker{make_particle_maker(geometry, parameters)},
+        _initial_condition{
+            set_type(geometry, velocity_field, parameters, mask, threshold)} {}
 
-  InitialCondition_Cases(Geometry &&, VelocityField const &, ParticleMaker,
-                         std::size_t, Parameters const &, Mask &&,
-                         double = 0.) = delete;
+  template <typename VelocityField = useful::Empty,
+            typename Mask = useful::Empty>
+  InitialCondition_Cases(meta::Selector_t<Particle>, Geometry &&,
+                         VelocityField const &, std::size_t, Parameters const &,
+                         Mask const & = {}, double = 0.) = delete;
 
-  InitialCondition_Cases(Geometry const &, VelocityField &&_field,
-                         ParticleMaker, std::size_t, Parameters const &,
-                         Mask &&, double = 0.) = delete;
+  /**
+     \brief Make particles according to prescribed initial condition and
+     particle maker, with \c nr_particles particles as specified in \c
+     parameters.
+     \return Container with particles.
+  */
+  auto operator()() { return make_particles(nr_particles); }
 
-  InitialCondition_Cases(Geometry const &, VelocityField const &, ParticleMaker,
-                         std::size_t, Parameters &&, Mask &&,
-                         double = 0.) = delete;
-
-  InitialCondition_Cases(Geometry &&, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters const &, Mask &&,
-                         double = 0.) = delete;
-
-  InitialCondition_Cases(Geometry const &, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters &&, Mask &&,
-                         double = 0.) = delete;
-
-  InitialCondition_Cases(Geometry &&, VelocityField const &, ParticleMaker,
-                         std::size_t, Parameters &&, Mask &&,
-                         double = 0.) = delete;
-
-  InitialCondition_Cases(Geometry &&, VelocityField &&, ParticleMaker,
-                         std::size_t, Parameters &&, Mask &&,
-                         double = 0.) = delete;
-
-  /** \brief Make particles according to prescribed initial condition and
-   particle maker. \param nr_particles Number of particles to make \return
-   Container with particles.  */
+  /**
+     \brief Make particles.
+     \param nr_particles Number of particles to make.
+     \return Container with particles.
+  */
   auto operator()(std::size_t nr_particles) {
-    return make_particles(nr_particles, parameters.type, _particle_maker);
+    return make_particles(nr_particles);
   }
 
-  /** \brief Make particles according to prescribed initial condition and
-  particle maker, with \c nr_particles particles as specified in \c parameters.
-  \return Container with particles.  */
-  auto operator()() { return this->operator()(_nr_particles); }
+  /** \brief Make a single particle. \return One particle.  */
+  auto make_particle() { return _initial_condition->make_particle(); }
 
-  /** \brief Make a single particle according to prescribed initial condition
-  and particle maker. \return One particle.  */
-  auto make_particle() { return this->operator()(1)[0]; }
+  /**
+     \brief Make a single position.
+     \return Position.
+  */
+  auto make_position() { return _initial_condition->make_position(); }
 
-  /** \brief Make positions according to prescribed initial condition.
-  \param nr_positions Number of positions to make
-  \return Container with position.  */
+  /**
+     \brief Make a single position along with location hint.
+     \param nr_positions Number of positions to make
+     \return Position.
+  */
+  auto make_position_and_hint() {
+    return _initial_condition->make_position_and_hint();
+  }
+
+  auto make_particles(std::size_t nr_particles) {
+    return _initial_condition->make_particles(nr_particles);
+  };
+
   auto make_positions(std::size_t nr_positions) {
-    // This works by slightly abusing make_particles with a position maker
-    // instead of a particle maker, in order to produce only positions instead
-    // of particles, but according to the same prescription as for producing
-    // particles.
-    return make_particles(nr_positions, parameters.type, _position_maker);
-  }
-
-  /** \brief Make a single position according to prescribed initial condition
-  and particle maker. \return One position.  */
-  auto make_position() { return make_positions(1)[0]; }
+    return _initial_condition->make_positions(nr_particles);
+  };
 
 private:
-  /** \brief Make given number of particles.
-   \param nr_particles Number of particles to make.
-   \param type Initial condition type.
-   \param particle_maker Functor to make a particle given a position.
-   \return Container with particles.
-   */
-  template <typename ParticleMakerOther>
-  auto make_particles(std::size_t nr_particles, InitialConditionList::Type type,
-                      ParticleMakerOther &particle_maker) {
+  template <typename TT, bool periodic = false> struct BP {
+    using type = useful::Empty;
+  };
+
+  template <typename TT> struct BP<TT, true> {
+    using type = typename TT::BoundaryPeriodic;
+  };
+
+  static constexpr bool periodic =
+      meta::has_periodicity_v<typename Particle::State>;
+
+  using BoundaryPeriodic =
+      typename std::conditional_t<periodic, BP<Geometry, true>,
+                                  BP<Geometry, false>>::type;
+
+  using ParticleMaker = std::conditional_t<
+      periodic,
+      ParticleMaker_Periodic<Particle, typename Geometry::Locator const &,
+                             BoundaryPeriodic const &>,
+      ParticleMaker_Generic<Particle, typename Geometry::Locator const &>>;
+  using IC = InitialCondition<ParticleMaker &, Geometry const &>;
+
+  ParticleMaker _particle_maker;
+  std::unique_ptr<IC>
+      _initial_condition; /**< Pointer to initial condition object. */
+
+  ParticleMaker make_particle_maker(Geometry const &geometry,
+                                    Parameters const &parameters) {
+    double initial_particle_mass = 0.;
+    double initial_time = 0.;
+    if (parameters.continuity == "pulse" &&
+        type != InitialConditionList::Type::prescribed_positions_masses &&
+        type != InitialConditionList::Type::prescribed_positions_masses_tags) {
+      using InjectionParameters = Parameters::InjectionParameters_Pulse;
+      InjectionParameters *injection_parameters =
+          cast_injection<InjectionParameters>(parameters);
+      initial_particle_mass = injection_parameters->mass / nr_particles;
+      initial_time = injection_parameters->time;
+    }
+    if constexpr (periodic)
+      return ParticleMaker{meta::Selector_t<Particle>{}, geometry.locator,
+                           geometry.boundary_periodic, initial_time,
+                           initial_particle_mass};
+    else
+      return ParticleMaker{meta::Selector_t<Particle>{}, geometry.locator,
+                           initial_time, initial_particle_mass};
+  }
+
+  template <typename VelocityField, typename Mask = useful::Empty>
+  std::unique_ptr<IC> set_type(Geometry const &geometry,
+                               VelocityField const &velocity_field,
+                               Parameters const &parameters,
+                               Mask const &mask = {}, double threshold = 0.) {
     switch (type) {
-    case InitialConditionList::Type::uniform:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return uniform(nr_particles, _locator.mesh(), _rng, particle_maker);
+    case InitialConditionList::Type::point: {
+      using InitialCondition =
+          InitialCondition_Point<ParticleMaker &, Geometry const &>;
+      using SpecificParameters = Parameters::SpecificParameters_Position;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(InitialCondition{_particle_maker, geometry,
+                                            ParticleMaker::State::make_position(
+                                                specific_parameters->position)},
+                           parameters);
+    }
+    case InitialConditionList::Type::uniform_all_cells: {
+      using InitialCondition =
+          InitialCondition_UniformCellCenters<ParticleMaker &, Geometry const &,
+                                              std::vector<Foam::label>>;
+      return set_injection(
+          InitialCondition{_particle_maker, geometry,
+                           cell_ids_masked(all_cell_ids(geometry.mesh()),
+                                           geometry, mask, threshold)},
+          parameters);
+    }
+    case InitialConditionList::Type::fluxweighted_all_cells: {
+      using InitialCondition = InitialCondition_FluxweightedCellCenters<
+          ParticleMaker &, Geometry const &, std::vector<Foam::label>>;
+      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        return set_injection(
+            InitialCondition{_particle_maker, geometry,
+                             cell_ids_masked(all_cell_ids(geometry.mesh()),
+                                             geometry, mask, threshold),
+                             velocity_field},
+            parameters);
       else
-        return uniform(nr_particles, _locator.mesh(), _rng, particle_maker,
-                       _mask, _threshold);
-    case InitialConditionList::Type::fluxweighted:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return fluxweighted(nr_particles, _velocity_field, _locator.mesh(),
-                            _rng, particle_maker);
+        throw std::runtime_error{std::string("Initial condition type ") +
+                                 InitialConditionList::name(type) + ": " +
+                                 "Velocity field not provided"};
+    }
+    case InitialConditionList::Type::uniform_patch_faces: {
+      using InitialCondition =
+          InitialCondition_UniformFaceCenters<ParticleMaker &, Geometry const &,
+                                              std::vector<Foam::label>>;
+      using SpecificParameters = Parameters::SpecificParameters_Patches;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(
+          InitialCondition{
+              _particle_maker, geometry,
+              patch_face_ids_masked(specific_parameters->patch_names, geometry,
+                                    mask, threshold)},
+          parameters);
+    }
+    case InitialConditionList::Type::fluxweighted_patch_faces: {
+      using InitialCondition = InitialCondition_FluxweightedFaceCenters<
+          ParticleMaker &, Geometry const &, std::vector<Foam::label>>;
+      using SpecificParameters = Parameters::SpecificParameters_Patches;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        return set_injection(
+            InitialCondition{
+                _particle_maker, geometry,
+                patch_face_ids_masked(specific_parameters->patch_names,
+                                      geometry, mask, threshold),
+                velocity_field},
+            parameters);
       else
-        return fluxweighted(nr_particles, _velocity_field, _locator.mesh(),
-                            _rng, particle_maker, _mask, _threshold);
-    case InitialConditionList::Type::uniform_inlet:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return uniform_patches(nr_particles, {"inlet"}, _locator, _rng,
-                               particle_maker);
+        throw std::runtime_error{std::string("Initial condition type ") +
+                                 InitialConditionList::name(type) + ": " +
+                                 "Velocity field not provided"};
+    }
+    case InitialConditionList::Type::uniform_near_patch: {
+      using InitialCondition =
+          InitialCondition_UniformNearFaces<ParticleMaker &, Geometry const &,
+                                            std::vector<Foam::label>>;
+      using SpecificParameters =
+          Parameters::SpecificParameters_Patches_Distance;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(
+          InitialCondition{
+              _particle_maker, geometry,
+              patch_face_ids_masked(specific_parameters->patch_names, geometry,
+                                    mask, threshold),
+              specific_parameters->distance, specific_parameters->nr_tries},
+          parameters);
+    }
+    case InitialConditionList::Type::fluxweighted_near_patch: {
+      using InitialCondition = InitialCondition_FluxweightedNearFaces<
+          ParticleMaker &, Geometry const &, std::vector<Foam::label>>;
+      using SpecificParameters =
+          Parameters::SpecificParameters_Patches_Distance;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        return set_injection(
+            InitialCondition{
+                _particle_maker, geometry,
+                patch_face_ids_masked(specific_parameters->patch_names,
+                                      geometry, mask, threshold),
+                velocity_field, specific_parameters->distance,
+                specific_parameters->nr_tries},
+            parameters);
       else
-        return uniform_patches(nr_particles, {"inlet"}, _locator, _rng,
-                               particle_maker, _mask, _threshold);
-    case InitialConditionList::Type::fluxweighted_inlet:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return fluxweighted_patches(nr_particles, {"inlet"}, _velocity_field,
-                                    _locator, _rng, particle_maker);
+        throw std::runtime_error{std::string("Initial condition type ") +
+                                 InitialConditionList::name(type) + ": " +
+                                 "Velocity field not provided"};
+    }
+    case InitialConditionList::Type::uniform_cartesian_cells: {
+      using InitialCondition =
+          InitialCondition_UniformCellCenters<ParticleMaker &, Geometry const &,
+                                              std::vector<Foam::label>>;
+      using SpecificParameters = Parameters::SpecificParameters_Boundaries;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(
+          InitialCondition{
+              _particle_maker, geometry,
+              cell_ids_masked(
+                  cell_ids_region_cartesian(
+                      specific_parameters->region_boundaries, geometry.locator),
+                  geometry, mask, threshold)},
+          parameters);
+    }
+    case InitialConditionList::Type::fluxweighted_cartesian_cells: {
+      using InitialCondition = InitialCondition_FluxweightedCellCenters<
+          ParticleMaker &, Geometry const &, std::vector<Foam::label>>;
+      using SpecificParameters = Parameters::SpecificParameters_Boundaries;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        return set_injection(
+            InitialCondition{
+                _particle_maker, geometry,
+                cell_ids_masked(cell_ids_region_cartesian(
+                                    specific_parameters->region_boundaries,
+                                    geometry.locator),
+                                geometry, mask, threshold),
+                velocity_field},
+            parameters);
       else
-        return fluxweighted_patches(nr_particles, {"inlet"}, _velocity_field,
-                                    _locator, _rng, particle_maker, _mask,
-                                    _threshold);
-    case InitialConditionList::Type::uniform_solid:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return uniform_patches(nr_particles, {"wallFluidSolid"}, _locator, _rng,
-                               particle_maker);
-      else
-        return uniform_patches(nr_particles, {"wallFluidSolid"}, _locator, _rng,
-                               particle_maker, _mask, _threshold);
-    case InitialConditionList::Type::uniform_near_solid:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return uniform_near_boundary_patches(nr_particles, {"wallFluidSolid"},
-                                             parameters.distance_wall, _locator,
-                                             _rng, particle_maker);
-      else
-        return uniform_near_boundary_patches(
-            nr_particles, {"wallFluidSolid"}, parameters.distance_wall,
-            _locator, _rng, particle_maker, _mask, _threshold);
-    case InitialConditionList::Type::uniform_region_cartesian:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return uniform_cells(
-            nr_particles,
-            cell_ids_region_cartesian(parameters.region_boundaries, _locator),
-            _locator.mesh(), _rng, particle_maker);
-      else
-        return uniform_cells(
-            nr_particles,
-            apply_mask(cell_ids_region_cartesian(parameters.region_boundaries,
-                                                 _locator),
-                       _mask, _threshold),
-            _locator.mesh(), _rng, particle_maker);
-    case InitialConditionList::Type::fluxweighted_region_cartesian:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return fluxweighted_cells(
-            nr_particles,
-            cell_ids_region_cartesian(parameters.region_boundaries, _locator),
-            _velocity_field, _locator.mesh(), _rng, particle_maker);
-      else
-        return fluxweighted_cells(
-            nr_particles,
-            apply_mask(cell_ids_region_cartesian(parameters.region_boundaries,
-                                                 _locator),
-                       _mask, _threshold),
-            _velocity_field, _locator.mesh(), _rng, particle_maker);
-    case InitialConditionList::Type::prescribed_positions:
-      return prescribed_positions(nr_particles, parameters.filename_data,
-                                  particle_maker);
-    case InitialConditionList::Type::prescribed_positions_masses:
-      return prescribed_positions_masses(nr_particles, parameters.filename_data,
-                                         particle_maker);
-    case InitialConditionList::Type::prescribed_positions_masses_tags:
-      return prescribed_positions_masses_tags(
-          nr_particles, parameters.filename_data, particle_maker);
-    case InitialConditionList::Type::uniform_inlet_continuous:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return continuous_injection(
-            [this](std::size_t nr_particles,
-                   ParticleMakerOther &particle_maker) {
-              return uniform_patches(nr_particles, {"inlet"}, _locator, _rng,
-                                     particle_maker);
-            },
-            nr_particles, parameters.time_min, parameters.time_max,
-            parameters.time_step, particle_maker);
-      else
-        return continuous_injection(
-            [this](std::size_t nr_particles,
-                   ParticleMakerOther &particle_maker) {
-              return uniform_patches(nr_particles, {"inlet"}, _locator, _rng,
-                                     particle_maker, _mask, _threshold);
-            },
-            nr_particles, parameters.time_min, parameters.time_max,
-            parameters.time_step, particle_maker);
-    case InitialConditionList::Type::fluxweighted_inlet_continuous:
-      if constexpr (std::is_same_v<Mask, useful::Empty>)
-        return continuous_injection(
-            [this](std::size_t nr_particles,
-                   ParticleMakerOther &particle_maker) {
-              return fluxweighted_patches(nr_particles, {"inlet"},
-                                          _velocity_field, _locator, _rng,
-                                          particle_maker);
-            },
-            nr_particles, parameters.time_min, parameters.time_max,
-            parameters.time_step, particle_maker);
-      else
-        return continuous_injection(
-            [this](std::size_t nr_particles,
-                   ParticleMakerOther &particle_maker) {
-              return fluxweighted_patches(nr_particles, {"inlet"},
-                                          _velocity_field, _locator, _rng,
-                                          particle_maker, _mask, _threshold);
-            },
-            nr_particles, parameters.time_min, parameters.time_max,
-            parameters.time_step, particle_maker);
+        throw std::runtime_error{std::string("Initial condition type ") +
+                                 InitialConditionList::name(type) + ": " +
+                                 "Velocity field not provided"};
+    }
+    case InitialConditionList::Type::prescribed_positions: {
+      using InitialCondition =
+          InitialCondition_PrescribedPositions<ParticleMaker &,
+                                               Geometry const &>;
+      using SpecificParameters = Parameters::SpecificParameters_Filename;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(InitialCondition{_particle_maker, geometry,
+                                            specific_parameters->filename},
+                           parameters);
+    }
+    case InitialConditionList::Type::prescribed_positions_masses: {
+      using InitialCondition =
+          InitialCondition_PrescribedPositionsMasses<ParticleMaker &,
+                                                     Geometry const &>;
+      using SpecificParameters = Parameters::SpecificParameters_Filename;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(InitialCondition{_particle_maker, geometry,
+                                            specific_parameters->filename},
+                           parameters);
+    }
+    case InitialConditionList::Type::prescribed_positions_masses_tags: {
+      using InitialCondition =
+          InitialCondition_PrescribedPositionsMassesTags<ParticleMaker &,
+                                                         Geometry const &>;
+      using SpecificParameters = Parameters::SpecificParameters_Filename;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(InitialCondition{_particle_maker, geometry,
+                                            specific_parameters->filename},
+                           parameters);
+    }
+    case InitialConditionList::Type::prescribed_positions_masses_tags_times: {
+      using InitialCondition =
+          InitialCondition_PrescribedPositionsMassesTagsTimes<ParticleMaker &,
+                                                              Geometry const &>;
+      using SpecificParameters = Parameters::SpecificParameters_Filename;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(InitialCondition{_particle_maker, geometry,
+                                            specific_parameters->filename},
+                           parameters);
+    }
+    case InitialConditionList::Type::uniform_cylinder: {
+      using Distribution = stochastic::uniform_cylinder_distribution;
+      using InitialCondition =
+          InitialCondition_DistributedPosition<ParticleMaker &,
+                                               Geometry const &, Distribution>;
+      using SpecificParameters = Parameters::SpecificParameters_Cylinder;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(
+          InitialCondition{_particle_maker, geometry,
+                           Distribution{specific_parameters->center_1,
+                                        specific_parameters->center_2,
+                                        specific_parameters->radius,
+                                        specific_parameters->inner_radius},
+                           specific_parameters->nr_tries},
+          parameters);
+    }
+    case InitialConditionList::Type::uniform_parallelipiped: {
+      using Distribution = stochastic::uniform_parallelipiped_distribution;
+      using InitialCondition =
+          InitialCondition_DistributedPosition<ParticleMaker &,
+                                               Geometry const &, Distribution>;
+      using SpecificParameters = Parameters::SpecificParameters_Parallelipiped;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(
+          InitialCondition{_particle_maker, geometry,
+                           Distribution{specific_parameters->corner,
+                                        specific_parameters->sides},
+                           specific_parameters->nr_tries},
+          parameters);
+    }
+    case InitialConditionList::Type::uniform_sphere: {
+      using Distribution = stochastic::uniform_sphere_distribution;
+      using InitialCondition =
+          InitialCondition_DistributedPosition<ParticleMaker &,
+                                               Geometry const &, Distribution>;
+      using SpecificParameters = Parameters::SpecificParameters_Sphere;
+      SpecificParameters *specific_parameters =
+          cast<SpecificParameters>(parameters);
+      return set_injection(
+          InitialCondition{_particle_maker, geometry,
+                           Distribution{specific_parameters->center,
+                                        specific_parameters->radius,
+                                        specific_parameters->inner_radius},
+                           specific_parameters->nr_tries},
+          parameters);
+    }
+
     default:
       throw std::runtime_error{std::string{"Initial condition type "} +
                                InitialConditionList::name(parameters.type) +
@@ -423,23 +1039,92 @@ private:
     }
   }
 
+  template <typename Container, typename Mask = useful::Empty>
+  auto cell_ids_masked(Container cell_ids, Geometry const &geometry,
+                       Mask const &mask = {}, double threshold = 0.) {
+    if constexpr (!std::is_same_v<Mask, useful::Empty>)
+      apply_mask_cells_inplace(cell_ids, mask, threshold);
+    return cell_ids;
+  }
+
+  template <typename Container, typename Mask = useful::Empty>
+  auto patch_face_ids_masked(Container face_ids, Geometry const &geometry,
+                             Mask const &mask = {}, double threshold = 0.) {
+    if constexpr (!std::is_same_v<Mask, useful::Empty>)
+      apply_mask_patch_faces_inplace(face_ids, geometry.mesh(), mask,
+                                     threshold);
+    return face_ids;
+  }
+
+  template <typename Mask = useful::Empty>
+  auto patch_face_ids_masked(std::vector<std::string> const &patch_names,
+                             Geometry const &geometry, Mask const &mask = {},
+                             double threshold = 0.) {
+    return patch_face_ids_masked(patch_face_ids(patch_names, geometry.mesh()),
+                                 geometry);
+  }
+
+  template <typename InitialCondition>
+  std::unique_ptr<IC> set_injection(InitialCondition ic,
+                                    Parameters const &parameters) {
+    if (parameters.continuity == "continuous") {
+      using InjectionParameters =
+          Parameters::InjectionParameters_ContinuousNoMass;
+      InjectionParameters *injection_parameters =
+          cast_injection<InjectionParameters>(parameters);
+      return std::make_unique<InitialCondition_Continuous<InitialCondition>>(
+          std::move(ic), injection_parameters->time,
+          injection_parameters->time_end, injection_parameters->time_step);
+    }
+    return std::make_unique<InitialCondition>(std::move(ic));
+  }
+
+  template <typename SpecificParameters>
+  SpecificParameters *cast(Parameters const &parameters) {
+    return dynamic_cast<SpecificParameters *>(
+        parameters.specific_parameters.get());
+  }
+
+  template <typename InjectionParameters>
+  InjectionParameters *cast_injection(Parameters const &parameters) {
+    return dynamic_cast<InjectionParameters *>(
+        parameters.injection_parameters.get());
+  }
+
 public:
-  /** \brief Output information about current object. */
+  /**
+     \brief Output information about current object.
+     \param output Output stream.
+  */
   template <typename OStream> void info_runtime(OStream &output) const {
-    output
-        << "--------------------------------------------------------------\n"
-           "Initial condition\n"
-           "--------------------------------------------------------------\n"
-           "Type: " +
-               InitialConditionList::name(parameters.type) + "\n"
-        << "--------------------------------------------------------------\n";
+    output << "------------------------------------------------------------"
+              "--\n"
+              "Initial condition\n"
+              "------------------------------------------------------------"
+              "--\n"
+              "Type: " +
+                  InitialConditionList::name(type) + "\n"
+           << "------------------------------------------------------------"
+              "--\n";
   }
 };
-template <typename Geometry, typename VelocityField, typename ParticleMaker,
-          typename Parameters, typename Mask>
-InitialCondition_Cases(Geometry const &, VelocityField const &, ParticleMaker,
-                       std::size_t, Parameters const &, Mask &&, double)
-    -> InitialCondition_Cases<Geometry, VelocityField, ParticleMaker, Mask>;
+template <typename Particle, typename Geometry, typename VelocityField,
+          typename Mask>
+InitialCondition_Cases(meta::Selector_t<Particle>, Geometry const &,
+                       VelocityField const &, std::size_t nr_particles,
+                       InitialConditionParameters_Cases const &, Mask const &,
+                       double) -> InitialCondition_Cases<Particle, Geometry>;
+template <typename Particle, typename Geometry, typename VelocityField,
+          typename Mask>
+InitialCondition_Cases(meta::Selector_t<Particle>, Geometry const &,
+                       VelocityField const &,
+                       InitialConditionParameters_Cases const &, Mask const &)
+    -> InitialCondition_Cases<Particle, Geometry>;
+template <typename Particle, typename Geometry, typename VelocityField>
+InitialCondition_Cases(meta::Selector_t<Particle>, Geometry const &,
+                       VelocityField const &, std::size_t nr_particles,
+                       InitialConditionParameters_Cases const &)
+    -> InitialCondition_Cases<Particle, Geometry>;
 } // namespace ptof
 
 #endif /* PTOF_INITIALCONDITION_CASES_H */

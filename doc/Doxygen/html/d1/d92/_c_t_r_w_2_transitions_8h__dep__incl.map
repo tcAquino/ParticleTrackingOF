@@ -1,6 +1,5 @@
 <map id="CTRW/Transitions.h" name="CTRW/Transitions.h">
-<area shape="rect" id="node1" title="Objects to handle state transitions in particle tracking." alt="" coords="19,5,166,32"/>
-<area shape="rect" id="node2" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="21,80,164,107"/>
-<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title=" " alt="" coords="33,155,152,181"/>
-<area shape="rect" id="node4" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="5,229,180,256"/>
+<area shape="rect" id="node1" title="Objects to handle state transitions in particle tracking." alt="" coords="5,5,147,32"/>
+<area shape="rect" id="node2" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="8,80,144,107"/>
+<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="19,155,133,181"/>
 </map>

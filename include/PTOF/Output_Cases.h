@@ -1,24 +1,28 @@
 /**
- \file PTOF/Output_Cases.h
- \author Tomás Aquino
- \date 07/03/2022
+   \file PTOF/Output_Cases.h
+   \author Tomás Aquino
+   \date 07/03/2022
+   \brief Handle different types of measurements and output.
 */
 
 #ifndef PTOF_OUTPUT_CASES_H
 #define PTOF_OUTPUT_CASES_H
 
 #include "CTRW/Meta.h"
+#include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Useful.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Criterion.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Field.h"
+#include "PTOF/InitialCondition_Cases.h"
 #include "PTOF/MeasurementList.h"
 #include "PTOF/MeasurementSpacing.h"
 #include "PTOF/Measurer.h"
 #include "PTOF/MeasurerTime.h"
 #include "PTOF/NextMeasurement.h"
+#include "PTOF/TimeUnits.h"
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
@@ -26,15 +30,20 @@
 #include <functional>
 #include <fvcGrad.H>
 #include <initializer_list>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
+#include <typeinfo>
 #include <vector>
 
 namespace ptof {
-/** \struct OutputParameters_Cases_Cases PTOF/Output_Cases.h
- * "PTOF/Output_Cases.h" \brief Parameters for output. */
+/**
+   \struct OutputParameters_Cases_Cases PTOF/Output_Cases.h
+   "PTOF/Output_Cases.h"
+   \brief Parameters for output.
+*/
 struct OutputParameters_Cases {
 public:
   std::string time_units;
@@ -57,12 +66,12 @@ public:
 
     template <typename OStream> void info_runtime(OStream &output) const {
       output << name;
-      output << "\tPrecision: " << precision;
+      output << "  Precision: " << precision;
     }
   };
 
-  struct Measurement_field : public Measurement {
-    Measurement_field(std::string name, std::string field_name,
+  struct Measurement_Field : public Measurement {
+    Measurement_Field(std::string name, std::string field_name,
                       int precision = 8)
         : Measurement{name, precision}, field_name{field_name} {}
 
@@ -70,39 +79,39 @@ public:
 
     template <typename OStream> void info_runtime(OStream &output) const {
       Measurement::info_runtime(output);
-      output << "\tField: " << field_name;
+      output << "  Field: " << field_name;
     }
   };
 
-  struct Measurement_dim_position : public Measurement {
-    Measurement_dim_position(std::string name, std::size_t dim, double position,
+  struct Measurement_Dim_Position : public Measurement {
+    Measurement_Dim_Position(std::string name, std::size_t dim, double position,
                              int precision = 8)
         : Measurement{name, precision}, dim{dim}, position{position} {}
 
-    std::size_t dim{dim};
-    double position{position};
+    std::size_t dim;
+    double position;
 
     template <typename OStream> void info(OStream &output) const {
       Measurement::info_runtime(output);
-      output << "\tDimension: " << dim << "\t"
-             << "\tPosition: " << position << "\t";
+      output << "  Dimension: " << dim << "  "
+             << "  Position: " << position;
     }
   };
 
-  struct Measurement_order : public Measurement {
-    Measurement_order(std::string name, double order, int precision = 8)
+  struct Measurement_Order : public Measurement {
+    Measurement_Order(std::string name, double order, int precision = 8)
         : Measurement{name, precision}, order{order} {}
 
     double order;
 
     template <typename OStream> void info_runtime(OStream &output) const {
       Measurement::info_runtime(output);
-      output << "\tOrder: " << order;
+      output << "  Order: " << order;
     }
   };
 
-  struct Measurement_orders : public Measurement {
-    Measurement_orders(std::string name, std::vector<double> orders,
+  struct Measurement_Orders : public Measurement {
+    Measurement_Orders(std::string name, std::vector<double> orders,
                        int precision = 8)
         : Measurement{name, precision}, orders{orders} {}
 
@@ -110,33 +119,46 @@ public:
 
     template <typename OStream> void info_runtime(OStream &output) const {
       Measurement::info_runtime(output);
-      output << "\tOrders: ";
-      useful::print(output, orders, false, " ");
+      output << "  Orders: ";
+      io::print(output, orders, false, " ");
     }
   };
 
   std::vector<std::unique_ptr<Measurement>> measurements;
 
-  /** Constructor.
-   \param directories Current case directory information.
-   \param name Name of parameter set.
-   \param params_transport Transport parameters.
-   \param params_reaction Reaction parameters.
-   \param params_solvers Solver parameters. */
+  /**
+     \brief Constructor.
+     \param directories Current case directory information.
+     \param parameter_set_name Name of parameter set.
+     \param params_transport Transport parameters.
+     \param params_reaction Reaction parameters.
+     \param params_solvers Solver parameters.
+  */
   template <typename Geometry, typename TransportParameters,
             typename ReactionParameters, typename SolverParameters>
   OutputParameters_Cases(Directories const &directories,
-                         std::string const &name, Geometry const &geometry,
+                         std::string const &parameter_set_name,
+                         Geometry const &geometry,
                          TransportParameters const &params_transport,
                          ReactionParameters const &params_reaction,
                          SolverParameters const &params_solvers) {
-    auto input = useful::open_read(directories.dir_parameters +
-                                   "/parameters_output_" + name + ".dat");
-    read_time_units(input, params_transport, params_reaction);
-    read_end_criterion(input);
-    read_measurement_spacing(input, params_transport, params_reaction);
-    read_measurement_types<Geometry>(input);
-    input.close();
+    std::string filename = directories.dir_parameters + "/parameters_output_" +
+                           parameter_set_name + ".dat";
+    auto input = io::open_read(filename);
+    std::string in_file = std::string{"In file "} + filename + " : ";
+
+    auto split_line = io::split_line(input);
+    std::size_t param_index = 0;
+    io::read(split_line, param_index, in_file + "Could not parse time units",
+             time_units);
+    if (!TimeUnits{}.contains(time_units))
+      throw std::runtime_error{in_file + "Not supported"};
+    time_unit_factor =
+        ptof::time_unit_factor(time_units, params_transport, params_reaction);
+    read_end_criterion(input, filename);
+    read_measurement_spacing(input, filename, params_transport,
+                             params_reaction);
+    read_measurement_types(input, filename, geometry);
   }
 
   /** \brief Output generic information about object. */
@@ -147,116 +169,184 @@ public:
            "Output parameters\n"
            "--------------------------------------------------------------"
            "\n"
-           "- Time units to rescale measurement times:\n"
-           "\tdiffusion: Rescale by diffusion time\n"
-           "\tadvection: Rescale by advection time\n"
-           "\treaction: Rescale by reaction time\n"
-           "\tarbitrary: Do not rescale\n"
+           "- Time units for measurement times:\n"
+           "  - diffusion\n"
+           "    - Diffusion time units\n"
+           "  - advection\n"
+           "    - Advection time units\n"
+           "  - reaction\n"
+           "    - Reaction time units\n"
+           "  - arbitrary\n"
+           "    - Arbitary units (no rescaling)\n"
            "- End criterion to finish dynamics:\n"
-           "\ttime: Specified time\n"
-           "\ttime_max: Maximum output time\n"
-           "\tmass_below: Total mass below value\n"
-           "\tmass_above: Total mass above value\n"
-           "\tall_absorbed: All particles absorbed\n"
-           "\tone_absorbed: One particle absorbed\n"
-           "\tfraction_not_absorbed: Fraction of particles not absorbed\n"
-           "\t                       below value\n"
-           "- End value, if required by end criterion\n"
+           "  - time\n"
+           "    - Specified time\n"
+           "    - Pass on same line:\n"
+           "      - End time\n"
+           "  - time_max\n"
+           "    - Maximum output time\n"
+           "  - mass_below\n"
+           "    - Total mass below or equal to value\n"
+           "    - Pass on same line:\n"
+           "      - Threshold mass\n"
+           "  - mass_above\n"
+           "    - Total mass above or equal to value\n"
+           "    - Pass on same line:\n"
+           "      - Threshold mass\n"
+           "  - all_absorbed\n"
+           "    - All particles absorbed\n"
+           "  - one_absorbed\n"
+           "    - One particle absorbed\n"
+           "  - fraction_not_absorbed\n"
+           "    - Fraction of particles not absorbed below or equal to value\n"
+           "    - Pass on same line:\n"
+           "      - Threshold fraction\n"
            "- Measurement spacing:\n"
-           "\tstep: Linear spacing, specified time step (no maximum time)\n"
-           "\tlinear: Linear spacing, specified maximum time and number\n"
-           "\t        of measurements\n"
-           "\tlog: Log spacing, specified maximum time and number of\n"
-           "\t     measurements\n"
-           "- Minimum measurement time\n"
-           "- Measurement time increment, if required by measure spacing\n"
-           "- Maximum measurement time, if required by measure spacing\n"
-           "- Number of measurements, if required by measure spacing\n"
-           "- Measurement types (any number, can pass precision [8] at the\n"
-           "  end of line):\n"
-           "\tposition: Time, particle tags, particle positions, and\n"
-           "\t          particle masses\n"
-           "\tposition_in_regions: Time, particle tags, particle\n"
-           "\t                     positions, and particle masses within\n"
-           "\t                     regions specified by masks\n"
-           "\tposition_mean: Time and mean position\n"
-           "\tposition_second_moment: Time and position second moment\n"
-           "\tposition_nth_moment: Time and position nth moment\n"
-           "\tposition__moment: Time and position moment with orders\n"
-           "\t                  specified along each dimension\n"
-           "\tposition_variance: Time and position variance\n"
-           "\tmass: Time and total mass\n"
-           "\tmass_in_regions: Time and total mass within regions "
-           "\t                 specified by masks\n"
-           "\tvelocity: Time, particle tags, and local velocities\n"
-           "\tvelocity: Time and mean of velocity field over particles\n"
-           "\tvelocity_gradient: Time, particle tags, and local velocity\n"
-           "\tvelocity_gradient_mean: Time and mean of velocity gradient\n"
-           "\t                        field over particles\n"
-           "\tscalar_field: Time, particle tags, and local scalar field\n"
-           "\t              values (specify field name on same line;\n"
-           "\t              field to be read from OF file)\n"
-           "\tvector_field: Time, particle tags, and local vector field\n"
-           "\t              values (specify field name on same line;\n"
-           "\t              field to be read from OF file)\n"
-           "\ttensor_field: Time, particle tags, and local tensor field\n"
-           "\t              values (specify field name on same line; "
-           "\t              field to be read from OF file)\n"
-           "\tscalar_field_mean: Time and mean of scalar field over\n"
-           "\t                   particles (specify field name on same line;\n"
-           "\t                   field to be read from OF file)\n"
-           "\tvector_field_mean: Time and mean of vector field over\n"
-           "\t                   particles (specify field name on same line;\n"
-           "\t                   field to be read from OF file)\n"
-           "\ttensor_field_mean: Time and mean of tensor field over\n"
-           "\t                   particles (specify field name on same line;\n"
-           "\t                   field to be read from OF file)\n"
-           "\tposition_periodic: Time, particle tags, true positions\n"
-           "\t                   accounting for periodicity, and masses\n"
-           "\tposition_in_regions_periodic: Time, particle tags, true\n"
-           "\t                              positions accounting for\n"
-           "\t                              periodicity, and masses in\n"
-           "\t                              regions specified by masks\n"
-           "\tposition_mean_periodic: Time and true mean position\n"
-           "\t                        accounting for periodicity\n"
-           "\tposition_second_moment_periodic: Time and true position\n"
-           "\t                                 second moment accounting for\n"
-           "\t                                 periodicity\n"
-           "\tposition_nth_moment_periodic: Time and true position nth\n"
-           "\t                              moment accounting for\n"
-           "\t                              periodicity\n"
-           "\tposition_moment: Time and true position moment with orders\n"
-           "\t                 specified along each dimension accounting\n"
-           "\t                 for periodicity\n"
-           "\tposition_variance_periodic: Time and true position variance\n"
-           "\t                            accounting for periodicity\n"
-           "\tfirst_crossing_time: Crossing times, particle tags, and\n"
-           "\t                     particle masses at end of dynamics\n"
-           "\t                     (specify dimension and crossing\n"
-           "\t                     position along dimension on same line)\n"
-           "\tabsorption_time: Particle absorption times, particle tags,\n"
-           "\t                 and particle masses at end of dynamics\n"
+           "  - linear\n"
+           "    - Linear spacing, specified maximum time and number of\n"
+           "      measurements\n"
+           "    - Pass on same line:\n"
+           "      - Minimum measurement time\n"
+           "      - Maximum measurement time\n"
+           "      - Number of measurements\n"
+           "  - linear_step\n"
+           "    - Linear spacing, specified time step (no maximum time)\n"
+           "    - Pass on same line:\n"
+           "      - Minimum measurement time\n"
+           "      - Measurement time step\n"
+           "  - log\n"
+           "    - Log spacing, specified maximum time and number of\n"
+           "      measurements\n"
+           "    - Pass on same line:\n"
+           "      - Minimum measurement time\n"
+           "      - Maximum measurement time\n"
+           "      - Number of measurements\n"
+           "  - log_step\n"
+           "    - Log spacing, specified time step factor (no maximum time)\n"
+           "    - Pass on same line:\n"
+           "      - Minimum measurement time\n"
+           "      - Measurement time step factor\n"
+           "- Measurement types:\n"
+           "  (Note:\n"
+           "    - Pass any number, one per line\n"
+           "    - Precision [8] can be passed at end of line\n"
+           "    - Masks are passed on construction of output handler; the\n"
+           "      same masks are used for all measurements involving masks\n"
+           "  - position\n"
+           "    - Time, particle tags, particle positions, and particle\n"
+           "      masses\n"
+           "  - position_in_regions\n"
+           "    - Time, particle tags, particle positions, and particle\n"
+           "      masses within regions specified by masks\n"
+           "  - position_mean\n"
+           "    - Time and mean position\n"
+           "  - position_second_moment\n"
+           "    - Time and position second moment\n"
+           "  - position_nth_moment\n"
+           "    - Time and position nth moment\n"
+           "  - position_moment\n"
+           "    - Time and position moment with orders specified along each\n"
+           "      dimension\n"
+           "  - position_variance\n"
+           "    - Time and position variance\n"
+           "  - mass\n"
+           "    - Time and total mass\n"
+           "  - mass_in_regions\n"
+           "    - Time and total mass within regions specified by masks\n"
+           "  - velocity\n"
+           "    - Time, particle tags, local velocities, and particle masses\n"
+           "  - velocity_mean\n"
+           "    - Time and mean of velocity field over particles\n"
+           "  - velocity_gradient\n"
+           "    - Time, particle tags, local velocity gradient, and particle\n"
+           "      masses\n"
+           "  - velocity_gradient_mean\n"
+           "    - Time and mean of velocity gradient field over particles\n"
+           "  - scalar_field\n"
+           "    - Time, particle tags, local scalar field values, and\n"
+           "      particle masses\n"
+           "    - Pass on same line:\n"
+           "      - Name of field to be read from OF file\n"
+           "  - scalar_field_mean\n"
+           "    - Time and mean of scalar field over particles\n"
+           "    - Pass on same line:\n"
+           "      - Name of field to be read from OF file\n"
+           "  - vector_field\n"
+           "    - Time, particle tags, local vector field value, and particle\n"
+           "      masses\n"
+           "    - Pass on same line:\n"
+           "      - Name of field to be read from OF file\n"
+           "  - vector_field_mean\n"
+           "    - Time and mean of vector field over particles\n"
+           "    - Pass on same line:\n"
+           "      - Name of field to be read from OF file\n"
+           "  - tensor_field\n"
+           "    - Time, particle tags, local tensor field values, and\n"
+           "      particle masses\n"
+           "    - Pass on same line:\n"
+           "      - Name of field to be read from OF file\n"
+           "  - tensor_field_mean\n"
+           "    - Time and mean of tensor field over particles\n"
+           "    - Pass on same line:\n"
+           "      - Name of field to be read from OF file\n"
+           "  - position_periodic\n"
+           "    - Time, particle tags, true positions accounting for\n"
+           "      periodicity, and masses\n"
+           "  - position_in_regions_periodic\n"
+           "    - Time, particle tags, true positions accounting for\n"
+           "      periodicity, and masses, in regions specified by masks\n"
+           "  - position_mean_periodic\n"
+           "    - Time and true mean position accounting for periodicity\n"
+           "  - position_second_moment_periodic\n"
+           "    - Time and true position second moment accounting for\n"
+           "      periodicity\n"
+           "  - position_nth_moment_periodic\n"
+           "    - Time and true position nth moment accounting for\n"
+           "      periodicity\n"
+           "  - position_moment_periodic\n"
+           "    - Time and true position moment with orders specified along\n"
+           "      each dimension accountin for periodicity\n"
+           "  - position_variance_periodic\n"
+           "    - Time and true position variance accounting for periodicity\n"
+           "  - first_crossing_time\n"
+           "    - Crossing times, particle tags, and particle masses at end\n"
+           "      of dynamics\n"
+           "    - Pass on same line:\n"
+           "      - Dimension\n"
+           "      - Crossing position along dimension\n"
+           "  - absorption_time\n"
+           "    - Particle absorption times, particle tags and particle\n"
+           "      masses at end of dynamics\n"
            "--------------------------------------------------------------"
            "\n";
   }
 
   /** \brief Read end criterion from input stream. */
-  template <typename IStream> void read_end_criterion(IStream &input) {
-    useful::read_first_from_line(end_criterion, input);
+  template <typename IStream>
+  void read_end_criterion(IStream &input, std::string const &filename) {
+    std::string in_file = std::string{"In file "} + filename + " : ";
+    auto split_line = io::split_line(input);
+    std::size_t param_index = 0;
+    io::read(split_line, param_index, in_file + "Could not parse end criterion",
+             end_criterion);
+    std::string for_end_criterion =
+        std::string{"End criterion "} + end_criterion + " : ";
+
     switch (EndCriterion::type(end_criterion)) {
     case EndCriterion::Type::time: {
-      useful::read_first_from_line(end_value, input);
+      io::read(split_line, param_index,
+               in_file + for_end_criterion + "Could not parse end time",
+               end_value);
       end_value *= time_unit_factor;
       break;
     }
     case EndCriterion::Type::time_max:
       break;
-    case EndCriterion::Type::mass_below: {
-      useful::read_first_from_line(end_value, input);
-      break;
-    }
+    case EndCriterion::Type::mass_below:
     case EndCriterion::Type::mass_above: {
-      useful::read_first_from_line(end_value, input);
+      io::read(split_line, param_index,
+               in_file + for_end_criterion + "Could not parse mass threshold",
+               end_value);
       break;
     }
     case EndCriterion::Type::all_absorbed:
@@ -264,315 +354,285 @@ public:
     case EndCriterion::Type::one_absorbed:
       break;
     case EndCriterion::Type::fraction_not_absorbed: {
-      useful::read_first_from_line(end_value, input);
+      io::read(split_line, param_index,
+               in_file + for_end_criterion +
+                   "Could not parse absorbed fraction threshold",
+               end_value);
       break;
     }
     default:
-      throw std::runtime_error{std::string("End criterion ") + end_criterion +
+      throw std::runtime_error{std::string{"End criterion "} + end_criterion +
                                " not supported"};
     }
   }
 
-  /** \brief Read measure spacing time units from input stream. */
+  /** \brief Read measurement spacing type from input stream. */
   template <typename IStream, typename TransportParameters,
             typename ReactionParameters>
-  void read_time_units(IStream &input,
-                       TransportParameters const &params_transport,
-                       ReactionParameters const &params_reaction) {
-    useful::read_first_from_line(time_units, input);
-    switch (MeasurementSpacingUnits::type(time_units)) {
-    case MeasurementSpacingUnits::Type::diffusion: {
-      time_unit_factor = params_transport.diffusion_time;
-      break;
-    }
-    case MeasurementSpacingUnits::Type::advection: {
-      time_unit_factor = params_transport.advection_time;
-      break;
-    }
-    case MeasurementSpacingUnits::Type::reaction: {
-      time_unit_factor = params_reaction.reaction_time;
-      break;
-    }
-    case MeasurementSpacingUnits::Type::arbitrary: {
-      time_unit_factor = 1.;
-      break;
-    }
-    default:
-      throw std::runtime_error{std::string("Measurement spacing units ") +
-                               time_units + " not supported"};
-    }
-  }
-
-  /** \brief Read measure spacing type from input stream. */
-  template <typename IStream, typename TransportParameters,
-            typename ReactionParameters>
-  void read_measurement_spacing(IStream &input,
+  void read_measurement_spacing(IStream &input, std::string const &filename,
                                 TransportParameters const &params_transport,
                                 ReactionParameters const &params_reaction) {
-    useful::read_first_from_line(measurement_spacing, input);
-    useful::read_first_from_line(time_min, input);
+    std::string in_file = std::string{"In file "} + filename + " : ";
+    auto split_line = io::split_line(input);
+    std::size_t param_index = 0;
+    io::read(split_line, param_index,
+             in_file + "Could not parse measurement spacing",
+             measurement_spacing);
+    std::string for_measurement_spacing =
+        std::string{"Measurement spacing "} + measurement_spacing + " : ";
+
+    io::read(split_line, param_index,
+             in_file + for_measurement_spacing +
+                 "Could not parse minimum measurement time",
+             time_min);
     time_min *= time_unit_factor;
     switch (MeasurementSpacing::type(measurement_spacing)) {
-    case MeasurementSpacing::Type::step: {
-      useful::read_first_from_line(time_increment, input);
+    case MeasurementSpacing::Type::linear_step: {
+      io::read(split_line, param_index, in_file + "Could not parse time step",
+               time_increment);
       time_increment *= time_unit_factor;
       time_max = std::numeric_limits<double>::infinity();
       if (!(time_increment > 0.))
-        throw std::runtime_error{
-            std::string("Non-positive time increment for ") +
-            measurement_spacing + " measurement spacing"};
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Non-positive time increment"};
+      break;
+    }
+    case MeasurementSpacing::Type::log_step: {
+      io::read(split_line, param_index,
+               in_file + for_measurement_spacing +
+                   "Could not parse time step factor",
+               time_increment);
+      time_max = std::numeric_limits<double>::infinity();
+      if (!(time_increment > 1.))
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Time increment factor not greater than one"};
       break;
     }
     case MeasurementSpacing::Type::linear: {
-      useful::read_first_from_line(time_max, input);
+      std::size_t nr_measurements;
+      io::read(split_line, param_index,
+               in_file + for_measurement_spacing +
+                   "Could not parse maximum time and number of measurements",
+               time_max, nr_measurements);
       time_max *= time_unit_factor;
-      std::size_t nr_measures;
-      useful::read_first_from_line(nr_measures, input);
-      if (nr_measures < 2)
-        throw std::runtime_error{
-            std::string("Minimum of two measurements required for ") +
-            measurement_spacing + " measurement spacing"};
-      time_increment = (time_max - time_min) / (nr_measures - 1);
+      if (nr_measurements < 2)
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Number of measurements not greater than one"};
+      time_increment = (time_max - time_min) / (nr_measurements - 1);
       if (!(time_increment > 0.))
-        throw std::runtime_error{
-            std::string("Non-positive time increment for ") +
-            measurement_spacing + " measurement spacing"};
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Non-positive time increment"};
       break;
     }
     case MeasurementSpacing::Type::log: {
       if (!(time_min > 0.))
-        throw std::runtime_error{
-            std::string("Non-positive minimum measurement time for ") +
-            measurement_spacing + " measurement spacing"};
-      useful::read_first_from_line(time_max, input);
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Non-positive minimum measurement time"};
+      std::size_t nr_measurements;
+      io::read(split_line, param_index,
+               in_file + for_measurement_spacing +
+                   "Could not parse maximum time and number of measurements",
+               time_max, nr_measurements);
       time_max *= time_unit_factor;
-      std::size_t nr_measures;
-      useful::read_first_from_line(nr_measures, input);
-      if (nr_measures < 2)
-        throw std::runtime_error{
-            std::string("Minimum of two measurements required for ") +
-            measurement_spacing + " measurement spacing"};
-      time_increment = std::pow(time_max / time_min, 1. / (nr_measures - 1));
+      if (nr_measurements < 2)
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Number of measurements not greater than one"};
+      time_increment =
+          std::pow(time_max / time_min, 1. / (nr_measurements - 1));
       if (!(time_increment > 1.))
-        throw std::runtime_error{
-            std::string("Non-positive time increment for ") +
-            measurement_spacing + " measurement spacing"};
+        throw std::runtime_error{in_file + for_measurement_spacing +
+                                 "Time increment factor not greater than one"};
       break;
     }
     default:
-      throw std::runtime_error{std::string("Measurement spacing ") +
-                               measurement_spacing + " not supported"};
+      throw std::runtime_error{in_file + for_measurement_spacing +
+                               "Not supported"};
     }
   }
 
-  /** \brief Read measure spacing type from input stream. */
-  template <typename Geometry, typename IStream>
-  void read_measurement_types(IStream &input) {
-    std::vector<std::string> split_line;
-    while (useful::split_line(input, split_line)) {
-      if (split_line.empty())
-        continue;
-      std::size_t required_size = 1;
-      if (split_line.size() < required_size)
-        throw std::runtime_error{"Could not parse measurement type"};
-      std::string const &name = split_line[0];
+  /** \brief Read measurement type from input stream. */
+  template <typename IStream, typename Geometry>
+  void read_measurement_types(IStream &input, std::string const &filename,
+                              Geometry const &geometry) {
+    std::string in_file = std::string{"In file "} + filename + " : ";
+    for (std::vector<std::string> split_line; io::split_line(input, split_line);
+         split_line.clear()) {
+      std::size_t param_index = 0;
+      auto name =
+          io::read<std::string>(split_line, param_index,
+                                in_file + "Could not parse measurement type");
+      std::string for_measurement_type =
+          std::string{"Measurement type "} + name + " : ";
       if (!MeasurementList{}.contains(name))
         throw std::runtime_error{"Output type " + name + " not supported"};
-      if (name == "scalar_field" || name == "vector_field" ||
-          name == "tensor_field") {
-        required_size = 2;
-        if (split_line.size() < required_size)
-          throw std::runtime_error{std::string("Measurement type ") + name +
-                                   ": "
-                                   "Could not parse field name"};
+
+      switch (MeasurementList::type(name)) {
+      case (MeasurementList::Type::scalar_field):
+      case (MeasurementList::Type::vector_field):
+      case (MeasurementList::Type::tensor_field): {
+        auto field_name = io::read<std::string>(
+            split_line, param_index,
+            in_file + for_measurement_type + "Could not parse field name");
         measurements.emplace_back(
-            std::make_unique<Measurement_field>(name, split_line[1]));
-      } else if (name == "first_crossing_time") {
-        required_size = 3;
-        if (split_line.size() < required_size)
-          throw std::runtime_error{
-              std::string("Measurement type ") + name +
-              ": "
-              "Could not parse crossing dimension and position"};
-        std::size_t dim = std::stoul(split_line[1]);
+            std::make_unique<Measurement_Field>(name, field_name));
+        break;
+      }
+      case (MeasurementList::Type::first_crossing_time): {
+        auto dim = io::read<double>(split_line, param_index,
+                                    in_file + for_measurement_type +
+                                        "Could not parse crossing dimension");
+        auto position =
+            io::read<double>(split_line, param_index,
+                             in_file + for_measurement_type +
+                                 "Could not parse crossing position");
         if (dim >= Geometry::dim)
           throw std::runtime_error{
-              std::string("Measurement type ") + name +
-              ": "
+              in_file + for_measurement_type +
               "Crossing dimension higher than simulation dimension"};
-        measurements.emplace_back(std::make_unique<Measurement_dim_position>(
-            name, dim, std::stod(split_line[2])));
-      } else if (name == "position_nth_moment" ||
-                 name == "position_nth_moment_periodic") {
-        required_size = 2;
-        if (split_line.size() < required_size)
-          throw std::runtime_error{std::string("Measurement type ") + name +
-                                   ": "
-                                   "Could not parse moment order"};
-        measurements.emplace_back(std::make_unique<Measurement_order>(
-            name, std::stod(split_line[1])));
-      } else if (name == "position_moment" ||
-                 name == "position_moment_periodic") {
-        required_size = Geometry::dim + 1;
-        if (split_line.size() < required_size)
-          throw std::runtime_error{
-              std::string("Measurement type ") + name +
-              ": "
-              "Could not parse coordinate moment orders along each dimension"};
-        std::vector<double> orders;
-        orders.reserve(Geometry::dim);
-        for (std::size_t ii = 1; ii < Geometry::dim + 1; ++ii)
-          orders.push_back(std::stod(split_line[ii]));
         measurements.emplace_back(
-            std::make_unique<Measurement_orders>(name, orders));
-      } else {
+            std::make_unique<Measurement_Dim_Position>(name, dim, position));
+        break;
+      }
+      case (MeasurementList::Type::position_nth_moment):
+      case (MeasurementList::Type::position_nth_moment_periodic): {
+        auto order = io::read<double>(split_line, param_index,
+                                      in_file + for_measurement_type +
+                                          "Could not parse moment order");
+        measurements.emplace_back(
+            std::make_unique<Measurement_Order>(name, order));
+        break;
+      }
+      case (MeasurementList::Type::position_moment):
+      case (MeasurementList::Type::position_moment_periodic): {
+        auto orders = io::read<double>(split_line, param_index, Geometry::dim,
+                                       in_file + for_measurement_type +
+                                           "Could not parse moment coordinate "
+                                           "orders along each dimension");
+        measurements.emplace_back(
+            std::make_unique<Measurement_Orders>(name, orders));
+        break;
+      }
+      default:
         measurements.emplace_back(std::make_unique<Measurement>(name));
       }
-      if (split_line.size() > required_size)
-        measurements.back()->precision = std::stod(split_line.back());
+
+      if (param_index < split_line.size())
+        io::read(split_line, param_index,
+                 in_file + for_measurement_type + "Could not parse precision",
+                 measurements.back()->precision);
     }
   }
 };
 
-/** \class Output_Cases PTOF/Output_Cases.h "PTOF/Output_Cases.h"
- * \brief Output object to handle implemented output options. */
-template <typename Subject, typename Geometry> class Output_Cases {
+/**
+   \class Output_Cases PTOF/Output_Cases.h "PTOF/Output_Cases.h"
+   \brief Output object to handle implemented output options.
+*/
+template <typename Subject, typename Geometry, typename Parameters>
+class Output_Cases {
 public:
-  using Parameters = OutputParameters_Cases; /**< Output parameters. */
-  Parameters const &parameters;              /**< Output parameters .*/
+  Parameters parameters; /**< Output parameters .*/
 
-  /** Constructor.
-   \param subject CTRW object to measure.
-   \param velocity_field Velocity field as a function of state.
-   \param geometry Domain geometry info and utilities.
-   \param directories Current case directory information.
-   \param parameters Output parameters.
-   \param identifier String to include in names of output files.
-   \param masks Container of mask reference wrappers. Masks are scalar
-   fields assigned values to mesh cells through operator[]. \param
-   thresholds Vector of thresholds for each mask, such that cells where a
-   mask is above the threshold are considered.
+  /**
+     \brief Constructor.
+     \param subject CTRW object to measure.
+     \param velocity_field Velocity field as a function of state.
+     \param geometry Domain geometry info and utilities.
+     \param directories Current case directory information.
+     \param params_output Output parameters.
+     \param identifier String to include in names of output files.
+     \param masks Scalar fields reference wrappers.
+     \param thresholds Thresholds for each mask, such that cells where a mask is
+     above or equal to the threshold are considered.
   */
-  template <typename VelocityField, typename Mask = useful::Empty>
+  template <typename VelocityField = useful::Empty,
+            typename Mask = useful::Empty>
   Output_Cases(Subject const &subject, VelocityField const &velocity_field,
                Geometry const &geometry, Directories const &directories,
-               Parameters const &parameters, std::string const &identifier,
+               Parameters &&params_output, std::string const &identifier,
                std::vector<std::reference_wrapper<const Mask>> masks = {},
                std::vector<double> thresholds = {})
-      : parameters{parameters} {
+      : parameters{std::forward<Parameters>(params_output)} {
     set_measurement_types(subject, geometry, directories, identifier,
                           velocity_field, masks, thresholds);
     set_end_criterion(subject);
     set_next_measurement_time();
   }
 
-  template <typename VelocityField, typename Mask = useful::Empty>
-  Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-               Directories const &, Parameters &&, std::string const &,
-               std::vector<std::reference_wrapper<const Mask>> = {},
-               std::vector<double> = {}) = delete;
-
-  /** Constructor.
-   \brief Overload for initializer list arguments.
+  /**
+     \brief Constructor.
+     \details Overload for initializer list arguments.
   */
-  template <typename VelocityField, typename Mask>
+  template <typename VelocityField = useful::Empty, typename Mask>
   Output_Cases(Subject const &subject, VelocityField const &velocity_field,
                Geometry const &geometry, Directories const &directories,
-               Parameters const &parameters, std::string const &identifier,
+               Parameters &&params_output, std::string const &identifier,
                std::initializer_list<std::reference_wrapper<const Mask>> masks,
                std::initializer_list<double> thresholds = {})
-      : Output_Cases(subject, velocity_field, geometry, directories, parameters,
-                     identifier,
+      : Output_Cases(subject, velocity_field, geometry, directories,
+                     std::forward<Parameters>(params_output), identifier,
                      std::vector<std::reference_wrapper<const Mask>>{masks},
                      std::vector<double>{thresholds}) {}
 
-  /** Constructor.
-   \brief Overload for initializer list arguments.
+  /**
+     \brief Constructor.
+     \details Overload for initializer list arguments.
   */
-  template <typename VelocityField, typename Mask>
-  Output_Cases(Subject const &subject, VelocityField const &velocity_field,
+  template <typename VelocityField = useful::Empty, typename Mask>
+  Output_Cases(Subject const &subject, VelocityField &&velocity_field,
                Geometry const &geometry, Directories const &directories,
-               Parameters const &parameters, std::string const &identifier,
+               Parameters &&params_output, std::string const &identifier,
                std::vector<std::reference_wrapper<const Mask>> masks,
                std::initializer_list<double> thresholds = {})
-      : Output_Cases(subject, velocity_field, geometry, directories, parameters,
-                     identifier, masks, std::vector<double>{thresholds}) {}
-
-  /** Constructor.
-   \brief Overload without velocity field
-  */
-  template <typename Mask = useful::Empty>
-  Output_Cases(Subject const &subject, Geometry const &geometry,
-               Directories const &directories, Parameters const &parameters,
-               std::string const &identifier,
-               std::vector<std::reference_wrapper<const Mask>> masks = {},
-               std::vector<double> thresholds = {})
-      : Output_Cases(subject, useful::Empty{}, geometry, directories,
-                     parameters, identifier, masks, thresholds) {
-    set_measurement_types(directories, identifier, useful::Empty{}, masks,
-                          thresholds);
-    set_end_criterion();
-    set_next_measurement_time();
-  }
-
-  /** Constructor.
-   \brief Overload for initializer list arguments.
-  */
-  template <typename VelocityField, typename Mask>
-  Output_Cases(Subject const &subject, Geometry const &geometry,
-               Directories const &directories, Parameters const &parameters,
-               std::string const &identifier,
-               std::initializer_list<std::reference_wrapper<const Mask>> masks,
-               std::initializer_list<double> thresholds = {})
-      : Output_Cases(subject, geometry, directories, parameters, identifier,
-                     std::vector<std::reference_wrapper<const Mask>>{masks},
+      : Output_Cases(subject, velocity_field, geometry, directories,
+                     std::forward<Parameters>(params_output), identifier, masks,
                      std::vector<double>{thresholds}) {}
 
-  /** Constructor.
-   \brief Overload for initializer list arguments.
+  /**
+     \brief Constructor.
+     \details Overload for initializer list arguments.
   */
-  template <typename VelocityField, typename Mask>
-  Output_Cases(Subject const &subject, Geometry const &geometry,
-               Directories const &directories, Parameters const &parameters,
-               std::string const &identifier,
-               std::vector<std::reference_wrapper<const Mask>> masks,
-               std::initializer_list<double> thresholds = {})
-      : Output_Cases(subject, geometry, directories, parameters, identifier,
-                     masks, std::vector<double>{thresholds}) {}
-
-  /** Constructor.
-   \brief Overload for initializer list arguments.
-  */
-  template <typename VelocityField, typename Mask>
-  Output_Cases(Subject const &subject, Geometry const &geometry,
-               Directories const &directories, Parameters const &parameters,
-               std::string const &identifier,
+  template <typename VelocityField = useful::Empty, typename Mask>
+  Output_Cases(Subject const &subject, VelocityField &&velocity_field,
+               Geometry const &geometry, Directories const &directories,
+               Parameters &&params_output, std::string const &identifier,
                std::initializer_list<std::reference_wrapper<const Mask>> masks,
                std::vector<double> thresholds = {})
-      : Output_Cases(subject, geometry, directories, parameters, identifier,
-                     std::vector<std::reference_wrapper<const Mask>>{masks},
-                     thresholds) {}
+      : Output_Cases(subject, velocity_field, geometry, directories,
+                     std::forward<Parameters>(params_output), identifier, masks,
+                     std::vector<double>{thresholds}) {}
 
-  /** \return \c true  if end simulation criterion is satisfied, \c false
-   * otherwise. */
+  /**
+     \return \c true  if end simulation criterion is satisfied, \c false
+     otherwise.
+  */
   bool done(double time) const { return _end_criterion->operator()(time); }
 
   /** \brief Set time of next measurement. */
   void set_next_measurement_time() {
     switch (MeasurementSpacing::type(parameters.measurement_spacing)) {
-    case MeasurementSpacing::Type::step: {
-      _next_measurement =
-          std::make_unique<NextMeasurementTime_step<Parameters>>(parameters);
+    case MeasurementSpacing::Type::linear_step: {
+      _next_measurement = std::make_unique<
+          NextMeasurementTime_linear_step<std::remove_reference_t<Parameters>>>(
+          parameters);
+      break;
+    }
+    case MeasurementSpacing::Type::log_step: {
+      _next_measurement = std::make_unique<
+          NextMeasurementTime_log_step<std::remove_reference_t<Parameters>>>(
+          parameters);
       break;
     }
     case MeasurementSpacing::Type::linear: {
-      _next_measurement =
-          std::make_unique<NextMeasurementTime_linear<Parameters>>(parameters);
+      _next_measurement = std::make_unique<
+          NextMeasurementTime_linear<std::remove_reference_t<Parameters>>>(
+          parameters);
       break;
     }
     case MeasurementSpacing::Type::log: {
-      _next_measurement =
-          std::make_unique<NextMeasurementTime_log<Parameters>>(parameters);
+      _next_measurement = std::make_unique<
+          NextMeasurementTime_log<std::remove_reference_t<Parameters>>>(
+          parameters);
       break;
     }
     default:
@@ -585,8 +645,10 @@ public:
   /** \return Time of next measurement. */
   double next_measurement_time() const { return _next_measurement->time(); }
 
-  /** \brief Output requested measurements at given time and advance to next
-   * measurement. */
+  /**
+     \brief Output requested measurements at given time and advance to next
+     measurement.
+  */
   void operator()(double time) {
     for (auto const &output : _output_time)
       output->operator()(time);
@@ -636,8 +698,10 @@ public:
                 "- Maximum measurement time: ";
     if (EndCriterion::type(parameters.end_criterion) ==
             EndCriterion::Type::time &&
-        MeasurementSpacing::type(parameters.measurement_spacing) ==
-            MeasurementSpacing::Type::step)
+        (MeasurementSpacing::type(parameters.measurement_spacing) ==
+             MeasurementSpacing::Type::linear_step ||
+         MeasurementSpacing::type(parameters.measurement_spacing) ==
+             MeasurementSpacing::Type::log_step))
       output << parameters.end_value << "\n";
     else
       output << parameters.time_max << "\n";
@@ -656,25 +720,26 @@ private:
       return;
     }
     for (auto const &measurement : parameters.measurements) {
-      output << "\t";
+      output << "  - ";
       measurement->info_runtime(output);
       output << "\n";
     }
   }
 
-  /** \brief Set up output streams for requested output types.
-   \param directories Current case directory information.
-   \param identifier String to include in names of output files.
-   \param masks Container of mask reference wrappers. Masks are scalar
-   fields assigned values to mesh cells through operator[]. \param
-   thresholds Vector of thresholds for each mask, such that cells where a
-   mask is above the threshold are considered. */
+  /**
+     \brief Set up output streams for requested output types.
+     \param directories Current case directory information.
+     \param identifier String to include in names of output files.
+     \param masks Scalar field reference wrappers.
+     \param thresholds Thresholds for each mask, such that cells where a mask is
+     above or equal to the threshold are considered.
+  */
   template <typename VelocityField = useful::Empty,
             typename Mask = useful::Empty>
   void set_measurement_types(
       Subject const &subject, Geometry const &geometry,
       Directories const &directories, std::string const &identifier,
-      VelocityField const &velocity_field = {},
+      VelocityField &&velocity_field = {},
       std::vector<std::reference_wrapper<const Mask>> masks = {},
       std::vector<double> thresholds = {}) {
     for (auto const &measurement : parameters.measurements) {
@@ -694,9 +759,9 @@ private:
                   subject, geometry, directories, identifier, masks, thresholds,
                   measurement->precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
+          throw std::runtime_error{std::string{"Measurement type "} +
                                    measurement->name +
-                                   ": "
+                                   " : "
                                    "Region masks not provided"};
         break;
       }
@@ -716,13 +781,13 @@ private:
         break;
       }
       case MeasurementList::Type::position_nth_moment: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_order *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Order;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         if (measurement_derived->order == 0)
-          throw std::runtime_error{std::string("Measurement type ") +
+          throw std::runtime_error{std::string{"Measurement type "} +
                                    measurement->name +
-                                   ": "
+                                   " : "
                                    "Moment order not provided"};
         _output_time.emplace_back(
             std::make_unique<
@@ -732,9 +797,9 @@ private:
         break;
       }
       case MeasurementList::Type::position_moment: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_orders *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Orders;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_position_moment<Subject, Geometry>>(
                 subject, measurement_derived->orders, geometry, directories,
@@ -763,9 +828,9 @@ private:
                   subject, geometry, directories, identifier, masks, thresholds,
                   measurement->precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
+          throw std::runtime_error{std::string{"Measurement type "} +
                                    measurement->name +
-                                   ": "
+                                   " : "
                                    "Region masks not provided"};
         break;
       }
@@ -774,11 +839,12 @@ private:
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_vector_field<
                   Subject, Geometry, VelocityField const &>>(
-                  subject, velocity_field, geometry, directories, identifier,
-                  "U", measurement->precision));
+                  subject, std::forward<VelocityField>(velocity_field),
+                  geometry, directories, identifier, "U",
+                  measurement->precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement->name + ": " +
+          throw std::runtime_error{std::string{"Measurement type "} +
+                                   measurement->name + " : " +
                                    "Velocity field not provided"};
         break;
       }
@@ -787,11 +853,12 @@ private:
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_vector_field_mean<
                   Subject, Geometry, VelocityField const &>>(
-                  subject, velocity_field, geometry, directories, identifier,
-                  "U", measurement->precision));
+                  subject, std::forward<VelocityField>(velocity_field),
+                  geometry, directories, identifier, "U",
+                  measurement->precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement->name + ": " +
+          throw std::runtime_error{std::string{"Measurement type "} +
+                                   measurement->name + " : " +
                                    "Velocity field not provided"};
         break;
       }
@@ -802,8 +869,8 @@ private:
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
                   directories, identifier, "gradU", measurement->precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement->name + ": " +
+          throw std::runtime_error{std::string{"Measurement type "} +
+                                   measurement->name + " : " +
                                    "Velocity field not provided"};
         break;
       }
@@ -815,15 +882,15 @@ private:
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
                   directories, identifier, "gradU", measurement->precision));
         else
-          throw std::runtime_error{std::string("Measurement type ") +
-                                   measurement->name + ": " +
+          throw std::runtime_error{std::string{"Measurement type "} +
+                                   measurement->name + " : " +
                                    "Velocity field not provided"};
         break;
       }
       case MeasurementList::Type::scalar_field: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_field *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Field;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_scalar_field<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -831,9 +898,9 @@ private:
         break;
       }
       case MeasurementList::Type::vector_field: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_field *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Field;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_vector_field<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -841,9 +908,9 @@ private:
         break;
       }
       case MeasurementList::Type::tensor_field: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_field *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Field;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_tensor_field<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -851,9 +918,9 @@ private:
         break;
       }
       case MeasurementList::Type::scalar_field_mean: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_field *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Field;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_scalar_field_mean<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -861,9 +928,9 @@ private:
         break;
       }
       case MeasurementList::Type::vector_field_mean: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_field *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Field;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_vector_field_mean<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -871,9 +938,9 @@ private:
         break;
       }
       case MeasurementList::Type::tensor_field_mean: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_field *>(
-                measurement.get());
+        using Measurement =
+            typename std::remove_reference_t<Parameters>::Measurement_Field;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_tensor_field_mean<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
@@ -890,8 +957,8 @@ private:
                   measurement->precision));
         else
           throw std::runtime_error{
-              std::string("Measurement type ") + measurement->name +
-              ": "
+              std::string{"Measurement type "} + measurement->name +
+              " : "
               "Particle state does not define periodicity"};
         break;
       }
@@ -908,12 +975,12 @@ private:
           if constexpr (!meta::has_periodicity_v<
                             typename Subject::Particle::State>)
             throw std::runtime_error{
-                std::string("Measurement type ") + measurement->name +
-                ": "
+                std::string{"Measurement type "} + measurement->name +
+                " : "
                 "Particle state does not define periodicity"};
-          throw std::runtime_error{std::string("Measurement type ") +
+          throw std::runtime_error{std::string{"Measurement type "} +
                                    measurement->name +
-                                   ": "
+                                   " : "
                                    "Region masks not provided"};
         }
         break;
@@ -928,8 +995,8 @@ private:
                   measurement->precision));
         else
           throw std::runtime_error{
-              std::string("Measurement type ") + measurement->name +
-              ": "
+              std::string{"Measurement type "} + measurement->name +
+              " : "
               "Particle state does not define periodicity"};
         break;
       }
@@ -942,8 +1009,8 @@ private:
                                       identifier, measurement->precision));
         else
           throw std::runtime_error{
-              std::string("Measurement type ") + measurement->name +
-              ": "
+              std::string{"Measurement type "} + measurement->name +
+              " : "
               "Particle state does not define periodicity"};
         break;
       }
@@ -957,17 +1024,17 @@ private:
                   measurement->precision));
         else
           throw std::runtime_error{
-              std::string("Measurement type ") + measurement->name +
-              ": "
+              std::string{"Measurement type "} + measurement->name +
+              " : "
               "Particle state does not define periodicity"};
         break;
       }
       case MeasurementList::Type::position_nth_moment_periodic: {
         if constexpr (meta::has_periodicity_v<
                           typename Subject::Particle::State>) {
-          auto measurement_derived =
-              dynamic_cast<OutputParameters_Cases::Measurement_order *>(
-                  measurement.get());
+          using Measurement =
+              typename std::remove_reference_t<Parameters>::Measurement_Order;
+          Measurement *measurement_derived = cast<Measurement>(measurement);
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_nth_moment_periodic<Subject, Geometry>>(
@@ -975,17 +1042,17 @@ private:
                   identifier, measurement->precision));
         } else
           throw std::runtime_error{
-              std::string("Measurement type ") + measurement->name +
-              ": "
+              std::string{"Measurement type "} + measurement->name +
+              " : "
               "Particle state does not define periodicity"};
         break;
       }
       case MeasurementList::Type::position_moment_periodic: {
         if constexpr (meta::has_periodicity_v<
                           typename Subject::Particle::State>) {
-          auto measurement_derived =
-              dynamic_cast<OutputParameters_Cases::Measurement_orders *>(
-                  measurement.get());
+          using Measurement =
+              typename std::remove_reference_t<Parameters>::Measurement_Orders;
+          Measurement *measurement_derived = cast<Measurement>(measurement);
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_moment_periodic<Subject, Geometry>>(
@@ -993,15 +1060,15 @@ private:
                   identifier, measurement->precision));
         } else
           throw std::runtime_error{
-              std::string("Measurement type ") + measurement->name +
-              ": "
+              std::string{"Measurement type "} + measurement->name +
+              " : "
               "Particle state does not define periodicity"};
         break;
       }
       case MeasurementList::Type::first_crossing_time: {
-        auto measurement_derived =
-            dynamic_cast<OutputParameters_Cases::Measurement_dim_position *>(
-                measurement.get());
+        using Measurement = typename std::remove_reference_t<
+            Parameters>::Measurement_Dim_Position;
+        Measurement *measurement_derived = cast<Measurement>(measurement);
         _output_time.emplace_back(
             std::make_unique<
                 MeasurerTime_first_crossing_time<Subject, Geometry>>(
@@ -1018,7 +1085,7 @@ private:
         break;
       }
       default:
-        throw std::runtime_error{std::string("Measurement type ") +
+        throw std::runtime_error{std::string{"Measurement type "} +
                                  measurement->name +
                                  " "
                                  "not supported"};
@@ -1026,7 +1093,7 @@ private:
     }
   }
 
-  /** Set end criterion. */
+  /** \brief Set end criterion. */
   void set_end_criterion(Subject const &subject) {
     // Note: The non-standard control flow structure of the if statements is
     // needed to deal with the quirks of if constexpr
@@ -1039,7 +1106,7 @@ private:
     case EndCriterion::Type::time_max: {
       if (parameters.time_max == std::numeric_limits<double>::infinity()) {
         throw std::runtime_error{
-            std::string("Infinite maximum time with end criterion ") +
+            std::string{"Infinite maximum time with end criterion "} +
             parameters.end_criterion};
       }
       _end_criterion = std::make_unique<Criterion_time<Subject>>(
@@ -1073,20 +1140,71 @@ private:
       break;
     }
     default:
-      throw std::runtime_error{std::string("End criterion ") +
+      throw std::runtime_error{std::string{"End criterion "} +
                                parameters.end_criterion + " not supported"};
     }
   }
 
+  template <typename SpecificMeasurement>
+  SpecificMeasurement *cast(
+      std::unique_ptr<OutputParameters_Cases::Measurement> const &measurement) {
+    return dynamic_cast<SpecificMeasurement *>(measurement.get());
+  }
+
   std::unique_ptr<Criterion<Subject>>
       _end_criterion; /**< To check if end criterion is met. */
-  std::unique_ptr<NextMeasurementTime<Parameters>>
-      _next_measurement; /**< Handle next measure time. */
+  std::unique_ptr<NextMeasurementTime<std::remove_reference_t<Parameters>>>
+      _next_measurement; /**< Handle next measurement time. */
   std::vector<std::unique_ptr<MeasurerTime<Subject, Geometry>>>
       _output_time; /**< Handle each output type given time. */
   std::vector<std::unique_ptr<Measurer<Subject, Geometry>>>
       _output; /**< Handle each output type given nothing. */
 };
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField, typename Mask>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &,
+             std::vector<std::reference_wrapper<const Mask>>,
+             std::vector<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField, typename Mask>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &,
+             std::vector<std::reference_wrapper<const Mask>>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &)
+    -> Output_Cases<Subject, Geometry, Parameters>;
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField, typename Mask>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &,
+             std::initializer_list<std::reference_wrapper<const Mask>>,
+             std::initializer_list<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField, typename Mask>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &,
+             std::initializer_list<std::reference_wrapper<const Mask>>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField, typename Mask>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &,
+             std::vector<std::reference_wrapper<const Mask>>,
+             std::initializer_list<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
+template <typename Subject, typename Geometry, typename Parameters,
+          typename VelocityField, typename Mask>
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Directories const &, Parameters &&, std::string const &,
+             std::initializer_list<std::reference_wrapper<const Mask>>,
+             std::vector<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
 } // namespace ptof
 
 #endif /* PTOF_OUTPUT_CASES_H */

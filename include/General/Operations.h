@@ -1,14 +1,14 @@
 /**
- \file General/Operations.h
- \author Tomás Aquino
- \date 08/06/2019
+   \file General/Operations.h
+   \author Tomás Aquino
+   \date 08/06/2019
 
-\brief  Miscelaneous operations on containers.
+   \brief  Miscelaneous operations on containers.
 
- \note
- - Many methods assume containers with consistent sizes are passed in.
- - Some methods require random access with operator[].
- - In most cases, the return value type is the type of the first container.
+   \note
+   - Many methods assume containers with consistent sizes are passed in.
+   - Some methods require random access with operator[].
+   - In most cases, the return value type is the type of the first container.
 */
 
 #ifndef GENERAL_OPERATIONS_H
@@ -740,9 +740,12 @@ template <typename Container> auto diff(Container const &input) {
   return output;
 }
 
-/** \brief Compute widths of bins having given \p values as midpoints and given
- \p minimum (left edge). \details Widths are computed sequentially as twice the
- distance between the next midpoint and the current left edge. */
+/**
+   \brief Compute widths of bins having given \p values as midpoints and given
+   \p minimum (left edge).
+   \details Widths are computed sequentially as twice the distance between the
+   next midpoint and the current left edge.
+*/
 template <template <typename...> typename Container = std::vector,
           typename Scalar = double, typename... Args>
 auto bin_widths(Container<Scalar, Args...> const &values, Scalar minimum) {
@@ -772,13 +775,14 @@ auto bin_widths(Container<Scalar, Args...> const &values, Scalar minimum) {
   return widths;
 }
 
-/** \brief Compute widths of bins having given \p values as midpoints.
- \details
- - Leftmost bin edge is the minimum value minus half the width of the
- first bin.
-
- - Widths are computed sequentially as twice the distance between the next
- midpoint and the current left edge. */
+/**
+   \brief Compute widths of bins having given \p values as midpoints.
+   \details
+   - Leftmost bin edge is the minimum value minus half the width of the
+   first bin.
+   - Widths are computed sequentially as twice the distance between the next
+   midpoint and the current left edge.
+*/
 template <typename Container = std::vector<double>>
 auto bin_widths(Container const &values) {
   if (values.size() < 2)
@@ -808,8 +812,10 @@ inline auto dot(std::size_t input_1, std::size_t input_2) {
   return input_1 * input_2;
 }
 
-/** \brief Container of containers dotted into container, \c
- * =sum_j(\input_1)_{ij}(input_2)_j. */
+/**
+   \brief Container of containers dotted into container, <tt> output_i =
+   sum_j(input_1)_{ij}(input_2)_j. </tt>.
+*/
 template <typename Container_outer, typename Container_inner>
 auto &dot(Container_outer const &input_1, Container_inner const &input_2,
           Container_inner &output) {
@@ -819,8 +825,10 @@ auto &dot(Container_outer const &input_1, Container_inner const &input_2,
   return output;
 }
 
-/** \brief Container of containers dotted into container, \c
- * =sum_j(input_1)_{ij}(input_2)_j. */
+/**
+   \brief Container of containers dotted into container, <tt> output_i =
+   sum_j(input_1)_{ij}(input_2)_j. </tt>.
+*/
 template <typename Container_outer, typename Container_inner>
 auto dot(Container_outer const &input_1, Container_inner const &input_2) {
   if constexpr (meta::has_begin_v<decltype(input_1[0])>) {
@@ -930,7 +938,8 @@ template <> inline auto project<0, double>(double const &val) { return val; }
 /** \brief Get component overload to get number itself from an \c int. */
 template <> inline auto project<0, int>(int const &val) { return val; }
 
-/** \brief Get component overload to get number itself from a \c size_t. */
+/** \brief Get component overload to get number itself from an \c std::size_t.
+ */
 template <> inline auto project<0, std::size_t>(std::size_t const &val) {
   return val;
 }
@@ -951,20 +960,10 @@ template <> inline auto project<int>(int const &val, std::size_t) {
   return val;
 }
 
-/** \brief Get component overload to get number itself from a \c size_t. */
+/** \brief Get component overload to get number itself from an \c std::size_t.
+ */
 template <>
 inline auto project<std::size_t>(std::size_t const &val, std::size_t) {
-  return val;
-}
-
-/** \brief Get component overload to get number itself from a \c double. */
-template <> inline auto project<double>(double const &val, int) { return val; }
-
-/** \brief Get component overload to get number itself from an \c int. */
-template <> inline auto project<int>(int const &val, int) { return val; }
-
-/** \brief Get component overload to get number itself from a \c size_t. */
-template <> inline auto project<std::size_t>(std::size_t const &val, int) {
   return val;
 }
 
@@ -975,7 +974,7 @@ inline std::size_t factorial(std::size_t nn) {
   return nn * factorial(nn - 1);
 }
 
-/** \return \c nn(nn-1)...(nn-mm). */
+/** \return <tt>nn(nn-1)...(nn-mm)</tt>. */
 inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
   std::size_t result = 1.;
   ++nn;
@@ -987,8 +986,7 @@ inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
 /** \return Sign of \c val. */
 template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
-/** \return Cartesian power of \c set, <tt>set^{power} = set \times \ldots
- * set<tt>*/
+/** \return Cartesian power of \c set, <tt>set^{power} = set x ... x set<tt>. */
 template <typename Set>
 std::vector<std::vector<typename Set::value_type>>
 cartesian_power(Set const &set, std::size_t power) {
@@ -1008,17 +1006,17 @@ cartesian_power(Set const &set, std::size_t power) {
   return result;
 };
 
+/** \return Outer product, <tt>output_{ij} = (input_1)_i (input_2)_j</tt>. */
 template <typename Container1, typename Container2>
 std::vector<std::vector<double>> outer_product(Container1 const &input_1,
                                                Container2 const &input_2) {
   std::vector<std::vector<double>> output;
-  (input_1.size(), std::vector<double>(input_2.size()));
-  output.reserve(input_2.size());
-  for (auto row_val : input_1) {
-    input_1.emplace_back();
-    input_1.back().reserve(input_2.size());
-    for (auto col_val : input_2)
-      output.push_back(row_val * col_val);
+  output.reserve(input_1.size());
+  for (auto const &row_val : input_1) {
+    output.emplace_back();
+    output.back().reserve(input_2.size());
+    for (auto const &col_val : input_2)
+      output.back().push_back(row_val * col_val);
   }
 
   return output;

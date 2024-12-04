@@ -68,10 +68,10 @@ var _general_2_useful_8h =
     [ "split_line", "d9/d18/_general_2_useful_8h.html#a994a0f0e643e141fe392c7e9cde8c5d3", null ],
     [ "split_line", "d9/d18/_general_2_useful_8h.html#a0339f1ab1d7b2aa0fd56796fa384f626", null ],
     [ "stob", "d9/d18/_general_2_useful_8h.html#abef9d705105d16af05ed41c6deb725ad", null ],
-    [ "swap_delete", "d9/d18/_general_2_useful_8h.html#ad33ea72f16de8fbab27866fc642ce4a4", null ],
-    [ "swap_delete", "d9/d18/_general_2_useful_8h.html#a8601248d39541a2b46801ef541b5252a", null ],
+    [ "swap_delete", "d9/d18/_general_2_useful_8h.html#a0ad70883bf06193c57f7ce141d331f80", null ],
+    [ "swap_delete", "d9/d18/_general_2_useful_8h.html#a62bdd9f21db7c46301dce0c4dccb79a1", null ],
     [ "swap_delete_if", "d9/d18/_general_2_useful_8h.html#a8573608831495b592369321795a29766", null ],
-    [ "swap_erase", "d9/d18/_general_2_useful_8h.html#ae75c29524211aee343178d7688b9729f", null ],
-    [ "swap_erase", "d9/d18/_general_2_useful_8h.html#a74ccfcb5a5df435382150f915c399e20", null ],
+    [ "swap_erase", "d9/d18/_general_2_useful_8h.html#ab59555a666082ea75e4d8d39009f6be9", null ],
+    [ "swap_erase", "d9/d18/_general_2_useful_8h.html#aca6d5245d3d448bb65d0d951c12ee1bd", null ],
     [ "swap_erase_if", "d9/d18/_general_2_useful_8h.html#a3c5a3b87490b0d427bfd0143f8a5b4cd", null ]
 ];

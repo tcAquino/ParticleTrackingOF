@@ -90,28 +90,44 @@ $(document).ready(function(){initNavTree('d9/d4c/_parallel_8h_source.html','../.
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef GENERAL_PARALLEL_H</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define GENERAL_PARALLEL_H</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../dd/d1b/_general_2_meta_8h.html">General/Meta.h</a>&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;omp.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../df/d1d/namespaceuseful.html">useful</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005">   15</a></span>&#160;<span class="keyword">inline</span> std::size_t <a class="code" href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005">get_thread_num</a>(<a class="code" href="../../df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html">meta::ParallelOptions::Parallel</a>) {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordflow">return</span> omp_get_thread_num();</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7">   19</a></span>&#160;<span class="keyword">inline</span> std::size_t <a class="code" href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7">get_num_threads</a>(<a class="code" href="../../df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html">meta::ParallelOptions::Parallel</a>) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  std::size_t num_threads = 1;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#pragma omp parallel</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  { num_threads = omp_get_num_threads(); }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">return</span> num_threads;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;} <span class="comment">// namespace useful</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* GENERAL_PARALLEL_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="a_general_2_meta_8h_html"><div class="ttname"><a href="../../dd/d1b/_general_2_meta_8h.html">Meta.h</a></div><div class="ttdoc">Template metamagic utilities.</div></div>
-<div class="ttc" id="anamespaceuseful_html"><div class="ttname"><a href="../../df/d1d/namespaceuseful.html">useful</a></div></div>
-<div class="ttc" id="anamespaceuseful_html_ad41e73bae828b109438f4102b3df63a7"><div class="ttname"><a href="../../df/d1d/namespaceuseful.html#ad41e73bae828b109438f4102b3df63a7">useful::get_num_threads</a></div><div class="ttdeci">std::size_t get_num_threads(meta::ParallelOptions::Parallel)</div><div class="ttdef"><b>Definition:</b> Parallel.h:19</div></div>
-<div class="ttc" id="anamespaceuseful_html_ae85511007ec9cef251d95f3dfc54c005"><div class="ttname"><a href="../../df/d1d/namespaceuseful.html#ae85511007ec9cef251d95f3dfc54c005">useful::get_thread_num</a></div><div class="ttdeci">std::size_t get_thread_num(meta::ParallelOptions::Parallel)</div><div class="ttdef"><b>Definition:</b> Parallel.h:15</div></div>
-<div class="ttc" id="astructmeta_1_1_parallel_options_1_1_parallel_html"><div class="ttname"><a href="../../df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html">meta::ParallelOptions::Parallel</a></div><div class="ttdef"><b>Definition:</b> Meta.h:413</div></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#if __has_include(&lt;omp.h&gt;)</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;omp.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __has_include(&lt;omp.h&gt;) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d4/df4/namespacepar.html">par</a> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../de/d50/structpar_1_1_parallel_options.html">   26</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../de/d50/structpar_1_1_parallel_options.html">ParallelOptions</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="../../d4/dfb/structpar_1_1_parallel_options_1_1_serial.html">   31</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="../../d4/dfb/structpar_1_1_parallel_options_1_1_serial.html">Serial</a> {};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../d0/d55/structpar_1_1_parallel_options_1_1_parallel.html">   37</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="../../d0/d55/structpar_1_1_parallel_options_1_1_parallel.html">Parallel</a> {};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;};</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5">   46</a></span>&#160;<span class="keyword">inline</span> std::size_t <a class="code" href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5">get_thread_num</a>(<a class="code" href="../../d4/dfb/structpar_1_1_parallel_options_1_1_serial.html">ParallelOptions::Serial</a>) { <span class="keywordflow">return</span> 0; }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b">   54</a></span>&#160;<span class="keyword">inline</span> std::size_t <a class="code" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b">get_num_threads</a>(<a class="code" href="../../d4/dfb/structpar_1_1_parallel_options_1_1_serial.html">ParallelOptions::Serial</a>) { <span class="keywordflow">return</span> 1; }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="../../d4/df4/namespacepar.html#a5bcb8750b38a6b5da7661c4d3e966eff">   62</a></span>&#160;<span class="keyword">inline</span> std::size_t <a class="code" href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5">get_thread_num</a>(<a class="code" href="../../d0/d55/structpar_1_1_parallel_options_1_1_parallel.html">ParallelOptions::Parallel</a>) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">return</span> omp_get_thread_num();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="../../d4/df4/namespacepar.html#aaf33b35908ce8c406c82ff39ce86c826">   72</a></span>&#160;<span class="keyword">inline</span> std::size_t <a class="code" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b">get_num_threads</a>(<a class="code" href="../../d0/d55/structpar_1_1_parallel_options_1_1_parallel.html">ParallelOptions::Parallel</a>) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  std::size_t num_threads = 1;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#ifdef _OPENMP</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#pragma omp parallel</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif </span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  num_threads = omp_get_num_threads();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">return</span> num_threads;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;} <span class="comment">// namespace par</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* GENERAL_PARALLEL_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="anamespacepar_html"><div class="ttname"><a href="../../d4/df4/namespacepar.html">par</a></div></div>
+<div class="ttc" id="anamespacepar_html_a81d7b5c97e52788b890728440d556ec5"><div class="ttname"><a href="../../d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5">par::get_thread_num</a></div><div class="ttdeci">std::size_t get_thread_num(ParallelOptions::Serial)</div><div class="ttdoc">Get number of current parallel thread.</div><div class="ttdef"><b>Definition:</b> Parallel.h:46</div></div>
+<div class="ttc" id="anamespacepar_html_ae1461c2908e354ed71f1e39415ba860b"><div class="ttname"><a href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b">par::get_num_threads</a></div><div class="ttdeci">std::size_t get_num_threads(ParallelOptions::Serial)</div><div class="ttdoc">Get total number of parallel threads.</div><div class="ttdef"><b>Definition:</b> Parallel.h:54</div></div>
+<div class="ttc" id="astructpar_1_1_parallel_options_1_1_parallel_html"><div class="ttname"><a href="../../d0/d55/structpar_1_1_parallel_options_1_1_parallel.html">par::ParallelOptions::Parallel</a></div><div class="ttdef"><b>Definition:</b> Parallel.h:37</div></div>
+<div class="ttc" id="astructpar_1_1_parallel_options_1_1_serial_html"><div class="ttname"><a href="../../d4/dfb/structpar_1_1_parallel_options_1_1_serial.html">par::ParallelOptions::Serial</a></div><div class="ttdef"><b>Definition:</b> Parallel.h:31</div></div>
+<div class="ttc" id="astructpar_1_1_parallel_options_html"><div class="ttname"><a href="../../de/d50/structpar_1_1_parallel_options.html">par::ParallelOptions</a></div><div class="ttdoc">Options to choose between serial and parallel implementations.</div><div class="ttdef"><b>Definition:</b> Parallel.h:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

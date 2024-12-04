@@ -2,12 +2,7 @@
 !.gitignore
 !ParticleTrackingOF.cpp
 !ParticleTrackingOF_TwoPhaseNonStationary.cpp
-!ParticleTrackingOF_Parallel.cpp
-!ParticleTrackingOF_TwoPhaseNonStationary_Parallel.cpp
 !Makefile
 !make.sh
 !make_all.sh
 !set_model.sh
-!make_parallel.sh
-!make_all_parallel.sh
-!set_model_parallel.sh

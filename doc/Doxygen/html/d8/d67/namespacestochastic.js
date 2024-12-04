@@ -2,6 +2,8 @@ var namespacestochastic =
 [
     [ "RNG", "d1/d7d/structstochastic_1_1_r_n_g.html", "d1/d7d/structstochastic_1_1_r_n_g" ],
     [ "RNG_shared_engine", "d6/d67/structstochastic_1_1_r_n_g__shared__engine.html", "d6/d67/structstochastic_1_1_r_n_g__shared__engine" ],
+    [ "RNGThreaded", "d3/d90/structstochastic_1_1_r_n_g_threaded.html", "d3/d90/structstochastic_1_1_r_n_g_threaded" ],
+    [ "RNGThreaded< par::ParallelOptions::Serial, Engine_t >", "d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4.html", "d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4" ],
     [ "skewedlevystable_distribution", "d7/db1/classstochastic_1_1skewedlevystable__distribution.html", "d7/db1/classstochastic_1_1skewedlevystable__distribution" ],
     [ "pareto_distribution", "d7/d85/classstochastic_1_1pareto__distribution.html", "d7/d85/classstochastic_1_1pareto__distribution" ],
     [ "lomax_distribution", "d5/d09/classstochastic_1_1lomax__distribution.html", "d5/d09/classstochastic_1_1lomax__distribution" ],
@@ -11,7 +13,7 @@ var namespacestochastic =
     [ "discrete_dist_distribution", "da/dd2/classstochastic_1_1discrete__dist__distribution.html", "da/dd2/classstochastic_1_1discrete__dist__distribution" ],
     [ "discrete_conditional_dist_distribution", "dc/d44/classstochastic_1_1discrete__conditional__dist__distribution.html", "dc/d44/classstochastic_1_1discrete__conditional__dist__distribution" ],
     [ "uniform_cylinder_distribution", "d8/d10/classstochastic_1_1uniform__cylinder__distribution.html", "d8/d10/classstochastic_1_1uniform__cylinder__distribution" ],
-    [ "uniform_paralleliped_distribution", "d5/d74/classstochastic_1_1uniform__paralleliped__distribution.html", "d5/d74/classstochastic_1_1uniform__paralleliped__distribution" ],
+    [ "uniform_parallelipiped_distribution", "d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution.html", "d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution" ],
     [ "Logspacing", "d7/d3c/structstochastic_1_1_logspacing.html", null ],
     [ "Linspacing", "dd/d19/structstochastic_1_1_linspacing.html", null ],
     [ "cdf", "d8/d67/namespacestochastic.html#adc087682a22c782958b6bea72cb36f51", null ],

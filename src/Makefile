@@ -22,6 +22,7 @@ INC = -I/usr/local/include -I$(PTH) -I$(PTHOFINC)/finiteVolume/lnInclude -I$(PTH
 CXXFLAGS = -std=c++17 -DOPENFOAM=$(WM_PROJECT_VERSION) -DWM_$(WM_PRECISION_OPTION) -DWM_LABEL_SIZE=$(WM_LABEL_SIZE) -DNoRepository $(OPT) $(WFLAGS)
 LFLAGS = -lPstream -lfiniteVolume -lmeshTools -lOpenFOAM -Wl,-undefined,dynamic_lookup
 LFLAGST = $(LFLAGS) -ltwoPhaseProperties
+
 DFLAGS.release =
 DFLAGS.debug = -ggdb3 -D_GLIBCXX_ASSERTIONS -fsanitize=address
 DFLAGS = $(DFLAGS.$(BUILD))
@@ -60,27 +61,33 @@ ParticleTrackingOF_TwoPhaseNonStationary : ParticleTrackingOF_TwoPhaseNonStation
 ParticleTrackingOF_TwoPhaseNonStationary.o : ParticleTrackingOF_TwoPhaseNonStationary.cpp
 	$(CXX) $(CXXFLAGS) $(DFLAGS) $(INC) -c $<
 
-ParticleTrackingOF_Parallel : ParticleTrackingOF_Parallel.o
-	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_Parallel ParticleTrackingOF_Parallel.o $(LFLAGS) $(PLFLAGS)
-	mv ParticleTrackingOF_Parallel $(PTHBIN)/ParticleTrackingOF_Parallel
-	rm ParticleTrackingOF_Parallel.o
+ParticleTrackingOF_parallel : ParticleTrackingOF_parallel.o
+	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_parallel ParticleTrackingOF_parallel.o $(LFLAGS) $(PLFLAGS)
+	mv ParticleTrackingOF_parallel $(PTHBIN)/ParticleTrackingOF_parallel
+	rm ParticleTrackingOF_parallel.o
 
-ParticleTrackingOF_Parallel.o : ParticleTrackingOF_Parallel.cpp
-	$(CXX) $(CXXFLAGS) $(DFLAGS) $(PFLAGS) $(INC) $(PINC) -c $<
+ParticleTrackingOF_parallel.o : ParticleTrackingOF.cpp
+	$(CXX) $(CXXFLAGS) $(DFLAGS) $(PFLAGS) $(INC) $(PINC) -o ParticleTrackingOF_parallel.o -c ParticleTrackingOF.cpp
 
-ParticleTrackingOF_TwoPhaseNonStationary_Parallel : ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
-	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_TwoPhaseNonStationary_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o $(LFLAGST) $(PLFLAGS)
-	mv ParticleTrackingOF_TwoPhaseNonStationary_Parallel $(PTHBIN)/ParticleTrackingOF_TwoPhaseNonStationary_Parallel
-	rm ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
+ParticleTrackingOF_TwoPhaseNonStationary_parallel : ParticleTrackingOF_TwoPhaseNonStationary_parallel.o
+	$(CXX) $(LIB) $(PLIB) $(WFLAGS) $(DFLAGS) $(OPT) -o ParticleTrackingOF_TwoPhaseNonStationary_parallel ParticleTrackingOF_TwoPhaseNonStationary_parallel.o $(LFLAGST) $(PLFLAGS)
+	mv ParticleTrackingOF_TwoPhaseNonStationary_parallel $(PTHBIN)/ParticleTrackingOF_TwoPhaseNonStationary_parallel
+	rm ParticleTrackingOF_TwoPhaseNonStationary_parallel.o
 
-ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o : ParticleTrackingOF_TwoPhaseNonStationary_Parallel.cpp
-	$(CXX) $(CXXFLAGS) $(DFLAGS) $(PFLAGS) $(INC) $(PINC) -c $< $(PFLAGS) 
+ParticleTrackingOF_TwoPhaseNonStationary_parallel.o : ParticleTrackingOF_TwoPhaseNonStationary.cpp
+	$(CXX) $(CXXFLAGS) $(DFLAGS) $(PFLAGS) $(INC) $(PINC) -o ParticleTrackingOF_TwoPhaseNonStationary_parallel.o -c ParticleTrackingOF_TwoPhaseNonStationary.cpp $(PFLAGS)
 
 
-all : ParticleTrackingOF ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel
+all : ParticleTrackingOF ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_parallel ParticleTrackingOF_TwoPhaseNonStationary_parallel
+
+serial : ParticleTrackingOF ParticleTrackingOF_TwoPhaseNonStationary
+
+parallel : ParticleTrackingOF_parallel ParticleTrackingOF_TwoPhaseNonStationary_parallel
 
 clean :
-	rm -f ParticleTrackingOF ParticleTrackingOF.o ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_TwoPhaseNonStationary.o ParticleTrackingOF_Parallel ParticleTrackingOF_Parallel.o ParticleTrackingOF_TwoPhaseNonStationary_Parallel ParticleTrackingOF_TwoPhaseNonStationary_Parallel.o
-	rm -f $(PTHBIN)/ParticleTrackingOF*
-	rm -rf $(PTHBIN)/dynamicCode
+	rm -f ParticleTrackingOF ParticleTrackingOF.o ParticleTrackingOF_TwoPhaseNonStationary ParticleTrackingOF_TwoPhaseNonStationary.o ParticleTrackingOF_parallel ParticleTrackingOF_parallel.o ParticleTrackingOF_TwoPhaseNonStationary_parallel ParticleTrackingOF_TwoPhaseNonStationary_parallel.o
+	rm -f $(PTHBIN.release)/ParticleTrackingOF*
+	rm -f $(PTHBIN.debug)/ParticleTrackingOF*
+	rm -rf $(PTHBIN.release)/dynamicCode
+	rm -rf $(PTHBIN.debug)/dynamicCode
 

@@ -1,48 +1,55 @@
 #!/bin/bash
-# Exit code: number of models that failed to compile
+# Parameters:
+# - Main cpp file name, without extension
+# - Model name
+# - Parallelization option (serial or parallel)
+# - Build mode (release or debug, release by default)
+# Exit codes:
+# 0 - Success
+# 1 - Failure
 
 GREEN='\033[1;32m'
 RED='\033[1;31m'
 NC='\033[0m'
 BUILD=release
-
-if [[ "$#" -eq 2 ]] ; then
-	if [[ "$2" != "debug" ]] && [[ "$2" != "release" ]] ; then
-		echo -e "${RED}Build mode should be release or debug, got $2.${NC}"
-		exit 3
-	fi
-	BUILD="$2"
-fi
-
 PTHBIN_BASE="../bin"
-if [[ "$#" -eq 1 ]] || [[ "$#" -eq 2 ]] ; then
-	err=0
-	
-	./set_model.sh $1
-	model_set=$?
 
-	echo -e "${GREEN}Making ParticleTrackingOF executable for model_$1 ($BUILD build)...${NC}"
-	[[ "$model_set" -ne 1 ]] && [[ "$model_set" -lt 3 ]] && make "BUILD=$BUILD" "PTHBIN_BASE=$PTHBIN_BASE" ParticleTrackingOF
-	if [[ $? -eq 0 ]] ; then
-		mv "$PTHBIN_BASE/$BUILD/ParticleTrackingOF" "$PTHBIN_BASE/$BUILD/ParticleTrackingOF_$1"
-		echo -e "${GREEN}Done.${NC}"
-	else
-		echo -e "${RED}Failed.${NC}"
-		((++err))
+if [[ "$#" -eq 4 ]] ; then
+	if [[ "$4" != "debug" ]] && [[ "$4" != "release" ]] ; then
+		echo -e "${RED}Build mode should be release or debug, got $4.${NC}"
+		exit 1
 	fi
-
-	echo -e "${GREEN}Making ParticleTrackingOF_TwoPhaseNonStationary executable for model_$1 ($BUILD build)...${NC}"
-	[[ "$model_set" -ne 2 ]] && [[ "$model_set" -lt 3 ]] && make "BUILD=$BUILD" "PTHBIN_BASE=$PTHBIN_BASE" ParticleTrackingOF_TwoPhaseNonStationary 
-	if [[ $? -eq 0 ]] ; then
-		mv "$PTHBIN_BASE/$BUILD/ParticleTrackingOF_TwoPhaseNonStationary" "$PTHBIN_BASE/$BUILD/ParticleTrackingOF_TwoPhaseNonStationary_$1"
-		echo -e "${GREEN}Done.${NC}"
-	else
-		echo -e "${RED}Failed.${NC}"
-		((++err))
-	fi
-   
-	exit "$err"
+	BUILD="$4"
 fi
 
-echo -e "${RED}Bad parameters.${NC}"
-exit 2
+if [[ "$#" -ne 3 ]] && [[ "$#" -ne 4 ]] ; then
+	echo -e "${RED}Bad parameters.${NC}"
+	exit 1
+fi
+
+./set_model.sh "${1}" "${2}" "${3}"  
+model_set=$?
+if [[ "${model_set}" -ne 0 ]] ; then
+	exit 1
+fi
+
+file_modifier="";
+if [[ ${3,,} = "parallel" ]] ; then
+	file_modifier="_parallel"
+fi
+
+echo -e "${GREEN}Making ${1} ${3,,} executable for model_${2} ($BUILD build)...${NC}"
+make "BUILD=$BUILD" "PTHBIN_BASE=$PTHBIN_BASE" "${1}${file_modifier}"
+if [[ $? -eq 0 ]] ; then
+	mv "$PTHBIN_BASE/$BUILD/${1}${file_modifier}" "$PTHBIN_BASE/$BUILD/${1}${file_modifier}_${2}"
+	if [[ "$?" -ne 0 ]] ; then
+		echo -e "${RED}Failed (compilation suceeded, but move failed).${NC}"
+		exit 1
+	fi
+	echo -e "${GREEN}Done.${NC}"
+else
+	echo -e "${RED}Failed.${NC}"
+	exit 1
+fi
+
+exit 0

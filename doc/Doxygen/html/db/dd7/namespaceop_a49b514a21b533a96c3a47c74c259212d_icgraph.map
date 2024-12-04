@@ -1,11 +1,11 @@
 <map id="op::div_scalar_inplace" name="op::div_scalar_inplace">
 <area shape="rect" id="node1" title="Element&#45;wise division by scalar." alt="" coords="445,111,596,137"/>
-<area shape="rect" id="node2" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title=" " alt="" coords="234,13,389,40"/>
+<area shape="rect" id="node2" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title="Orthogonal basis from Gram&#45;schmidt decomposition, given complete set of linearly&#45;independent vectors...." alt="" coords="234,13,389,40"/>
 <area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ad7c4eb6e5ab5e8e762b5eb631c42f89f" title=" " alt="" coords="237,75,385,101"/>
 <area shape="rect" id="node6" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="233,133,390,174"/>
 <area shape="rect" id="node8" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="225,198,397,239"/>
-<area shape="rect" id="node3" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title=" " alt="" coords="14,5,169,32"/>
-<area shape="rect" id="node5" href="$d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#a69748c8dbc47a9e1b54c6d43c8b95848" title=" " alt="" coords="10,56,173,112"/>
+<area shape="rect" id="node3" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title="Orthogonal basis from Gram&#45;Schmidt decomposition, preserving given direction." alt="" coords="14,5,169,32"/>
+<area shape="rect" id="node5" href="$d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#ac85f7d10094b5c2f6a50e055af09401f" title=" " alt="" coords="10,56,173,112"/>
 <area shape="rect" id="node7" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="13,137,170,178"/>
 <area shape="rect" id="node9" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,202,177,243"/>
 </map>

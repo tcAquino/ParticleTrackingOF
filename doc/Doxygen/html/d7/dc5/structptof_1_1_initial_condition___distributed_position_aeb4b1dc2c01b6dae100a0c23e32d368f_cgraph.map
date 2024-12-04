@@ -1,0 +1,4 @@
+<map id="ptof::InitialCondition_DistributedPosition::make_position_and_hint" name="ptof::InitialCondition_DistributedPosition::make_position_and_hint">
+<area shape="rect" id="node1" title="Make a single position according to prescribed initial condition." alt="" coords="5,5,168,61"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="216,20,311,47"/>
+</map>

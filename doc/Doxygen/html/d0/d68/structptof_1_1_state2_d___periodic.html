@@ -101,8 +101,8 @@ Collaboration diagram for ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag
 <div class="dyncontent">
 <div class="center"><img src="../../df/d1d/structptof_1_1_state2_d___periodic__coll__graph.png" border="0" usemap="#aptof_1_1_state2_d___periodic_3_01_info__t_00_01_time__t_00_01_mass__t_00_01_tag__t_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aptof_1_1_state2_d___periodic_3_01_info__t_00_01_time__t_00_01_mass__t_00_01_tag__t_01_4_coll__map" id="aptof_1_1_state2_d___periodic_3_01_info__t_00_01_time__t_00_01_mass__t_00_01_tag__t_01_4_coll__map">
-<area shape="rect" title="State for 2D positions with periodicity info." alt="" coords="5,124,175,180"/>
-<area shape="rect" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="34,5,146,32"/>
+<area shape="rect" title="State for 2D positions with periodicity info." alt="" coords="5,139,160,195"/>
+<area shape="rect" href="../../da/d86/structuseful_1_1_empty.html" title="Class holding nothing and doing nothing." alt="" coords="31,5,134,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -110,49 +110,64 @@ Collaboration diagram for ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag
 Public Types</h2></td></tr>
 <tr class="memitem:a021591e3b085b8d6a86961150bd238f7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> = Foam::Vector2D&lt; Foam::scalar &gt;</td></tr>
 <tr class="separator:a021591e3b085b8d6a86961150bd238f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbee260bad51ee205250b0048ba02eb6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acbee260bad51ee205250b0048ba02eb6">Periodicity</a> = std::vector&lt; int &gt;</td></tr>
-<tr class="separator:acbee260bad51ee205250b0048ba02eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fd62969f13c87af9718f6eab193a258"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a4fd62969f13c87af9718f6eab193a258">Index</a> = Foam::label</td></tr>
-<tr class="separator:a4fd62969f13c87af9718f6eab193a258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab54f4250053862469e95da918f31cbf6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab54f4250053862469e95da918f31cbf6">Periodicity</a> = std::array&lt; int, 2 &gt;</td></tr>
+<tr class="separator:ab54f4250053862469e95da918f31cbf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd6b94e42eeeda90af56f61a9f9b9f6f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afd6b94e42eeeda90af56f61a9f9b9f6f">Cell</a> = Foam::label</td></tr>
+<tr class="separator:afd6b94e42eeeda90af56f61a9f9b9f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c45420fae68d2ffb30a5802d5081252"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">Info</a> = Info_t</td></tr>
+<tr class="separator:a8c45420fae68d2ffb30a5802d5081252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acada828b34ced229ee4fc2bfdf01e38d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acada828b34ced229ee4fc2bfdf01e38d">Time</a> = Time_t</td></tr>
 <tr class="separator:acada828b34ced229ee4fc2bfdf01e38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93a381b0b9e71c17e63b9aea9f1d5243"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a93a381b0b9e71c17e63b9aea9f1d5243">Mass</a> = Mass_t</td></tr>
 <tr class="separator:a93a381b0b9e71c17e63b9aea9f1d5243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a776c7b330f3b5341836190942c561b1b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a776c7b330f3b5341836190942c561b1b">Tag</a> = Tag_t</td></tr>
 <tr class="separator:a776c7b330f3b5341836190942c561b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c45420fae68d2ffb30a5802d5081252"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">Info</a> = Info_t</td></tr>
-<tr class="separator:a8c45420fae68d2ffb30a5802d5081252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acc87b64eb9c32835a0fd00cfd85d04c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acc87b64eb9c32835a0fd00cfd85d04c4">set_position</a> (Foam::point const &amp;point)</td></tr>
-<tr class="memdesc:acc87b64eb9c32835a0fd00cfd85d04c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position from 3D position.  <a href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acc87b64eb9c32835a0fd00cfd85d04c4">More...</a><br /></td></tr>
+<tr class="memdesc:acc87b64eb9c32835a0fd00cfd85d04c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position from 3D point.  <a href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acc87b64eb9c32835a0fd00cfd85d04c4">More...</a><br /></td></tr>
 <tr class="separator:acc87b64eb9c32835a0fd00cfd85d04c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afae9bec49a6db05223a397cd7d02440b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afae9bec49a6db05223a397cd7d02440b">set_position</a> (<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> const &amp;<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a6c0b89cc7a3a12b07131393b2ade42c0">position</a>)</td></tr>
+<tr class="memdesc:afae9bec49a6db05223a397cd7d02440b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position.  <a href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afae9bec49a6db05223a397cd7d02440b">More...</a><br /></td></tr>
+<tr class="separator:afae9bec49a6db05223a397cd7d02440b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb01a0442ba7c3b9f820cce7be0a556d"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
+<tr class="memitem:aeb01a0442ba7c3b9f820cce7be0a556d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#aeb01a0442ba7c3b9f820cce7be0a556d">set_position</a> (<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> const &amp;<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a6c0b89cc7a3a12b07131393b2ade42c0">position</a>)</td></tr>
+<tr class="memdesc:aeb01a0442ba7c3b9f820cce7be0a556d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position.  <a href="../../d0/d68/structptof_1_1_state2_d___periodic.html#aeb01a0442ba7c3b9f820cce7be0a556d">More...</a><br /></td></tr>
+<tr class="separator:aeb01a0442ba7c3b9f820cce7be0a556d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f6668d1d6cae824260ceedb584f5a3"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
+<tr class="memitem:ad2f6668d1d6cae824260ceedb584f5a3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ad2f6668d1d6cae824260ceedb584f5a3">set_position</a> (<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> const &amp;<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a6c0b89cc7a3a12b07131393b2ade42c0">position</a>, <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afd6b94e42eeeda90af56f61a9f9b9f6f">Cell</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a91a713ab6fb7661f5a8a1b24078fb3f8">cell</a>)</td></tr>
+<tr class="memdesc:ad2f6668d1d6cae824260ceedb584f5a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position and cell.  <a href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ad2f6668d1d6cae824260ceedb584f5a3">More...</a><br /></td></tr>
+<tr class="separator:ad2f6668d1d6cae824260ceedb584f5a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af36c4b537028ff2499754729fbda43a5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#af36c4b537028ff2499754729fbda43a5">make_position</a> (Foam::point const &amp;point)</td></tr>
 <tr class="separator:af36c4b537028ff2499754729fbda43a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5391c7ac249d65b724975d677edfb202"><td class="memTemplParams" colspan="2">template&lt;typename PositionType &gt; </td></tr>
+<tr class="memitem:a5391c7ac249d65b724975d677edfb202"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a5391c7ac249d65b724975d677edfb202">make_position</a> (PositionType const &amp;<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a6c0b89cc7a3a12b07131393b2ade42c0">position</a>)</td></tr>
+<tr class="memdesc:a5391c7ac249d65b724975d677edfb202"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make position.  <a href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a5391c7ac249d65b724975d677edfb202">More...</a><br /></td></tr>
+<tr class="separator:a5391c7ac249d65b724975d677edfb202"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a6c0b89cc7a3a12b07131393b2ade42c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a6c0b89cc7a3a12b07131393b2ade42c0">position</a> {0., 0.}</td></tr>
 <tr class="separator:a6c0b89cc7a3a12b07131393b2ade42c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab158ad78d6470e93a1b7a1b9253805c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acbee260bad51ee205250b0048ba02eb6">Periodicity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab158ad78d6470e93a1b7a1b9253805c8">periodicity</a> {0, 0}</td></tr>
+<tr class="memitem:ab158ad78d6470e93a1b7a1b9253805c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab54f4250053862469e95da918f31cbf6">Periodicity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab158ad78d6470e93a1b7a1b9253805c8">periodicity</a> {}</td></tr>
 <tr class="separator:ab158ad78d6470e93a1b7a1b9253805c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ca9b495942817ce26fd2a365b1a6f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a4fd62969f13c87af9718f6eab193a258">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab2ca9b495942817ce26fd2a365b1a6f0">cell</a> {-1}</td></tr>
-<tr class="separator:ab2ca9b495942817ce26fd2a365b1a6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a713ab6fb7661f5a8a1b24078fb3f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afd6b94e42eeeda90af56f61a9f9b9f6f">Cell</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a91a713ab6fb7661f5a8a1b24078fb3f8">cell</a> {-1}</td></tr>
+<tr class="separator:a91a713ab6fb7661f5a8a1b24078fb3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a245dc617ea65b64e8a391c15afdbc946"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">Info</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a245dc617ea65b64e8a391c15afdbc946">info</a> {}</td></tr>
+<tr class="separator:a245dc617ea65b64e8a391c15afdbc946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7a9d5bc98cf6b0e176ca118d829d24f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acada828b34ced229ee4fc2bfdf01e38d">Time</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#af7a9d5bc98cf6b0e176ca118d829d24f">time</a> {}</td></tr>
 <tr class="separator:af7a9d5bc98cf6b0e176ca118d829d24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a792cf536c3a63bac108b4acce4088a6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a93a381b0b9e71c17e63b9aea9f1d5243">Mass</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a792cf536c3a63bac108b4acce4088a6b">mass</a> {}</td></tr>
 <tr class="separator:a792cf536c3a63bac108b4acce4088a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a560ca5fe8a155997e3ada92f8b6e6d55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a776c7b330f3b5341836190942c561b1b">Tag</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a560ca5fe8a155997e3ada92f8b6e6d55">tag</a> {}</td></tr>
 <tr class="separator:a560ca5fe8a155997e3ada92f8b6e6d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a245dc617ea65b64e8a391c15afdbc946"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">Info</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a245dc617ea65b64e8a391c15afdbc946">info</a> {}</td></tr>
-<tr class="separator:a245dc617ea65b64e8a391c15afdbc946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Info_t, typename Time_t = useful::Empty, typename Mass_t = useful::Empty, typename Tag_t = useful::Empty&gt;<br />
+<div class="textblock"><h3>template&lt;typename Info_t = useful::Empty, typename Time_t = useful::Empty, typename Mass_t = useful::Empty, typename Tag_t = useful::Empty&gt;<br />
 class ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</h3>
 
 <p>State for 2D positions with periodicity info. </p>
@@ -167,16 +182,16 @@ class ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</h3>
 <li><code>info</code> </li>
 </ul>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a4fd62969f13c87af9718f6eab193a258"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fd62969f13c87af9718f6eab193a258">&#9670;&nbsp;</a></span>Index</h2>
+<a id="afd6b94e42eeeda90af56f61a9f9b9f6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd6b94e42eeeda90af56f61a9f9b9f6f">&#9670;&nbsp;</a></span>Cell</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a4fd62969f13c87af9718f6eab193a258">Index</a> =  Foam::label</td>
+          <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afd6b94e42eeeda90af56f61a9f9b9f6f">Cell</a> =  Foam::label</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -189,7 +204,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">Info</a> =  Info_t</td>
@@ -205,7 +220,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a93a381b0b9e71c17e63b9aea9f1d5243">Mass</a> =  Mass_t</td>
@@ -215,16 +230,16 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 
 </div>
 </div>
-<a id="acbee260bad51ee205250b0048ba02eb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbee260bad51ee205250b0048ba02eb6">&#9670;&nbsp;</a></span>Periodicity</h2>
+<a id="ab54f4250053862469e95da918f31cbf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab54f4250053862469e95da918f31cbf6">&#9670;&nbsp;</a></span>Periodicity</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acbee260bad51ee205250b0048ba02eb6">Periodicity</a> =  std::vector&lt;int&gt;</td>
+          <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab54f4250053862469e95da918f31cbf6">Periodicity</a> =  std::array&lt;int, 2&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -237,7 +252,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> =  Foam::Vector2D&lt;Foam::scalar&gt;</td>
@@ -253,7 +268,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a776c7b330f3b5341836190942c561b1b">Tag</a> =  Tag_t</td>
@@ -269,7 +284,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::<a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acada828b34ced229ee4fc2bfdf01e38d">Time</a> =  Time_t</td>
@@ -281,12 +296,12 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="af36c4b537028ff2499754729fbda43a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af36c4b537028ff2499754729fbda43a5">&#9670;&nbsp;</a></span>make_position()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af36c4b537028ff2499754729fbda43a5">&#9670;&nbsp;</a></span>make_position() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -305,17 +320,58 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Position from 3D position. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Position from 3D point. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d68/structptof_1_1_state2_d___periodic_af36c4b537028ff2499754729fbda43a5_icgraph.png" border="0" usemap="#ad0/d68/structptof_1_1_state2_d___periodic_af36c4b537028ff2499754729fbda43a5_icgraph" alt=""/></div>
+<map name="ad0/d68/structptof_1_1_state2_d___periodic_af36c4b537028ff2499754729fbda43a5_icgraph" id="ad0/d68/structptof_1_1_state2_d___periodic_af36c4b537028ff2499754729fbda43a5_icgraph">
+<area shape="rect" title=" " alt="" coords="208,5,363,47"/>
+<area shape="rect" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#aeb01a0442ba7c3b9f820cce7be0a556d" title="Set position." alt="" coords="5,5,160,47"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="acc87b64eb9c32835a0fd00cfd85d04c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc87b64eb9c32835a0fd00cfd85d04c4">&#9670;&nbsp;</a></span>set_position()</h2>
+<a id="a5391c7ac249d65b724975d677edfb202"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5391c7ac249d65b724975d677edfb202">&#9670;&nbsp;</a></span>make_position() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+<div class="memtemplate">
+template&lt;typename PositionType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::make_position </td>
+          <td>(</td>
+          <td class="paramtype">PositionType const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make position. </p>
+
+</div>
+</div>
+<a id="acc87b64eb9c32835a0fd00cfd85d04c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc87b64eb9c32835a0fd00cfd85d04c4">&#9670;&nbsp;</a></span>set_position() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -335,21 +391,152 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 </table>
 </div><div class="memdoc">
 
-<p>Set position from 3D position. </p>
+<p>Set position from 3D point. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d68/structptof_1_1_state2_d___periodic_acc87b64eb9c32835a0fd00cfd85d04c4_icgraph.png" border="0" usemap="#ad0/d68/structptof_1_1_state2_d___periodic_acc87b64eb9c32835a0fd00cfd85d04c4_icgraph" alt=""/></div>
+<map name="ad0/d68/structptof_1_1_state2_d___periodic_acc87b64eb9c32835a0fd00cfd85d04c4_icgraph" id="ad0/d68/structptof_1_1_state2_d___periodic_acc87b64eb9c32835a0fd00cfd85d04c4_icgraph">
+<area shape="rect" title="Set position from 3D point." alt="" coords="208,5,363,47"/>
+<area shape="rect" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ad2f6668d1d6cae824260ceedb584f5a3" title="Set position and cell." alt="" coords="5,5,160,47"/>
+</map>
+</div>
 
 </div>
 </div>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="ab2ca9b495942817ce26fd2a365b1a6f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2ca9b495942817ce26fd2a365b1a6f0">&#9670;&nbsp;</a></span>cell</h2>
+<a id="afae9bec49a6db05223a397cd7d02440b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afae9bec49a6db05223a397cd7d02440b">&#9670;&nbsp;</a></span>set_position() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a4fd62969f13c87af9718f6eab193a258">Index</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::cell {-1}</td>
+          <td class="memname">void <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::set_position </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set position. </p>
+
+</div>
+</div>
+<a id="aeb01a0442ba7c3b9f820cce7be0a556d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb01a0442ba7c3b9f820cce7be0a556d">&#9670;&nbsp;</a></span>set_position() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+<div class="memtemplate">
+template&lt;typename Position &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::set_position </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set position. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d68/structptof_1_1_state2_d___periodic_aeb01a0442ba7c3b9f820cce7be0a556d_cgraph.png" border="0" usemap="#ad0/d68/structptof_1_1_state2_d___periodic_aeb01a0442ba7c3b9f820cce7be0a556d_cgraph" alt=""/></div>
+<map name="ad0/d68/structptof_1_1_state2_d___periodic_aeb01a0442ba7c3b9f820cce7be0a556d_cgraph" id="ad0/d68/structptof_1_1_state2_d___periodic_aeb01a0442ba7c3b9f820cce7be0a556d_cgraph">
+<area shape="rect" title="Set position." alt="" coords="5,5,160,47"/>
+<area shape="rect" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#af36c4b537028ff2499754729fbda43a5" title=" " alt="" coords="208,5,363,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad2f6668d1d6cae824260ceedb584f5a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2f6668d1d6cae824260ceedb584f5a3">&#9670;&nbsp;</a></span>set_position() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+<div class="memtemplate">
+template&lt;typename Position &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::set_position </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afd6b94e42eeeda90af56f61a9f9b9f6f">Cell</a>&#160;</td>
+          <td class="paramname"><em>cell</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set position and cell. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d68/structptof_1_1_state2_d___periodic_ad2f6668d1d6cae824260ceedb584f5a3_cgraph.png" border="0" usemap="#ad0/d68/structptof_1_1_state2_d___periodic_ad2f6668d1d6cae824260ceedb584f5a3_cgraph" alt=""/></div>
+<map name="ad0/d68/structptof_1_1_state2_d___periodic_ad2f6668d1d6cae824260ceedb584f5a3_cgraph" id="ad0/d68/structptof_1_1_state2_d___periodic_ad2f6668d1d6cae824260ceedb584f5a3_cgraph">
+<area shape="rect" title="Set position and cell." alt="" coords="5,5,160,47"/>
+<area shape="rect" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acc87b64eb9c32835a0fd00cfd85d04c4" title="Set position from 3D point." alt="" coords="208,5,363,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="a91a713ab6fb7661f5a8a1b24078fb3f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91a713ab6fb7661f5a8a1b24078fb3f8">&#9670;&nbsp;</a></span>cell</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#afd6b94e42eeeda90af56f61a9f9b9f6f">Cell</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::cell {-1}</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -362,7 +549,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a8c45420fae68d2ffb30a5802d5081252">Info</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::info {}</td>
@@ -378,7 +565,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a93a381b0b9e71c17e63b9aea9f1d5243">Mass</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::mass {}</td>
@@ -394,10 +581,10 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acbee260bad51ee205250b0048ba02eb6">Periodicity</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::periodicity {0, 0}</td>
+          <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#ab54f4250053862469e95da918f31cbf6">Periodicity</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::periodicity {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -410,7 +597,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a021591e3b085b8d6a86961150bd238f7">Position</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::position {0., 0.}</td>
@@ -426,7 +613,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#a776c7b330f3b5341836190942c561b1b">Tag</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::tag {}</td>
@@ -442,7 +629,7 @@ template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Info_t , typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
+template&lt;typename Info_t  = useful::Empty, typename Time_t  = useful::Empty, typename Mass_t  = useful::Empty, typename Tag_t  = useful::Empty&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html#acada828b34ced229ee4fc2bfdf01e38d">Time</a> <a class="el" href="../../d0/d68/structptof_1_1_state2_d___periodic.html">ptof::State2D_Periodic</a>&lt; Info_t, Time_t, Mass_t, Tag_t &gt;::time {}</td>

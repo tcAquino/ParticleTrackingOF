@@ -1,9 +1,9 @@
 <map id="ptof::Dynamics::name" name="ptof::Dynamics::name">
-<area shape="rect" id="node1" title="Get name from type." alt="" coords="236,181,401,208"/>
-<area shape="rect" id="node2" href="$d9/d9c/structptof_1_1_dynamics.html#a7ab6d7e83bd6d406002e618d908db1d3" title="Check if name exists." alt="" coords="5,5,188,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="25,57,169,98"/>
-<area shape="rect" id="node4" href="$dc/d30/structptof_1_1_geometry.html#a3a759d1aab24341312a551e53b7d8a8a" title="Output generic information about object." alt="" coords="21,123,173,149"/>
-<area shape="rect" id="node5" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ae357d88c346f1f8e3018cd8d1cbf08b3" title="Output generic information about object." alt="" coords="7,174,186,215"/>
-<area shape="rect" id="node6" href="$da/d9d/structptof_1_1_geometry___bcc.html#a8a071dd6fd14d6cd7cb10c2dc0ecdd2f" title="Output generic information about object." alt="" coords="21,239,172,281"/>
-<area shape="rect" id="node7" href="$d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="18,305,175,332"/>
+<area shape="rect" id="node1" title="Get name from type." alt="" coords="221,195,372,221"/>
+<area shape="rect" id="node2" href="$d9/d9c/structptof_1_1_dynamics.html#a7ab6d7e83bd6d406002e618d908db1d3" title="Check if name exists." alt="" coords="5,5,173,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="24,57,155,98"/>
+<area shape="rect" id="node4" href="$da/dd3/structptof_1_1_geometry___generic.html#a46251b7155c40c3a7881c783a230c4fb" title="Output generic information about object." alt="" coords="9,122,170,163"/>
+<area shape="rect" id="node5" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ae357d88c346f1f8e3018cd8d1cbf08b3" title="Output generic information about object." alt="" coords="8,187,171,229"/>
+<area shape="rect" id="node6" href="$da/d9d/structptof_1_1_geometry___bcc.html#a8a071dd6fd14d6cd7cb10c2dc0ecdd2f" title="Output generic information about object." alt="" coords="20,253,159,294"/>
+<area shape="rect" id="node7" href="$d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="17,319,161,345"/>
 </map>

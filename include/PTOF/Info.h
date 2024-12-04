@@ -1,7 +1,8 @@
 /**
-\file PTOF/Info.h
-\author Tomás Aquino
-\date 03/09/2022
+   \file PTOF/Info.h
+   \author Tomás Aquino
+   \date 03/09/2022
+   \brief Objects and utilities to store information in particle states.
 */
 
 #ifndef PTOF_INFO_H
@@ -27,8 +28,8 @@ void store_info_type(State &state, BC const &type) {
 
 /** \brief Store information about contact point. */
 template <typename State>
-void store_info_contact(State &state, Foam::point const &contact_point) {
-  state.info.set_position(contact_point);
+void store_info_contact_point(State &state, Foam::point const &contact_point) {
+  state.info.contact_point = contact_point;
 }
 
 /** \brief Store information about cell face.*/
@@ -47,23 +48,37 @@ template <typename State> void store_info_reinjections(State &state) {
   ++state.info.reinjections;
 }
 
-/** \struct Info_type PTOF/Info.h "PTOF/Info.h"
- * \brief Information about type.*/
+/**
+   \struct Info_Type PTOF/Info.h "PTOF/Info.h"
+   \brief Information about type.
+*/
 struct Info_Type {
-  std::string type{};
+  std::string type;
 };
 
-/** \struct Info_Absorbed PTOF/Info.h "PTOF/Info.h"
- * \brief Information about absorption.*/
+/**
+   \struct Info_Absorbed PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption.
+*/
 struct Info_Absorbed {
-  bool absorbed{0};
+  bool absorbed;
 };
 
-/** \struct Info_Absorbed_Reinjections PTOF/Info.h "PTOF/Info.h"
- * \brief Information about number of reinjections.*/
+/**
+   \struct Info_Absorbed_Reinjections PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption and number of reinjections.
+*/
 struct Info_Absorbed_Reinjections {
-  bool absorbed{0};
-  std::size_t reinjections{0};
+  bool absorbed;
+  std::size_t reinjections;
+};
+
+/**
+   \struct Info_Absorbed_Contact_Point PTOF/Info.h "PTOF/Info.h"
+   \brief Information about contact point.
+*/
+struct Info_Contact_Point {
+  Foam::point contact_point;
 };
 } // namespace ptof
 

@@ -8,6 +8,7 @@
 #ifndef GENERAL_META_H
 #define GENERAL_META_H
 
+#include <bits/utility.h>
 #include <cmath>
 #include <functional>
 #include <iostream>
@@ -18,13 +19,22 @@
 namespace meta {
 // The following has_ methods and associated machinery are based on:
 // https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat
-/** \class types General/Meta.h "General/Meta.h"
- \brief Bundle of types. */
+/**
+   \class types General/Meta.h "General/Meta.h"
+   \brief Bundle of types.
+*/
 template <typename...> struct types { using type = types; };
+
+/**
+   \class has_member_impl General/Meta.h "General/Meta.h"
+   \brief Implementation details for \c has_member.
+*/
 template <template <typename...> typename Z, typename types, typename = void>
 struct has_member_impl : std::false_type {};
-/** \class has_member_impl General/Meta.h "General/Meta.h"
- \brief Implementation details for \c has_member. */
+/**
+   \class has_member_impl General/Meta.h "General/Meta.h"
+   \brief Implementation details for \c has_member.
+*/
 template <template <typename...> typename Z, typename... Ts>
 struct has_member_impl<Z, types<Ts...>, std::void_t<Z<Ts...>>>
     : std::true_type {};
@@ -41,13 +51,17 @@ struct is_same {
 /** \brief Check if X<Y> is of void type. */
 template <template <typename> typename X, typename Y>
 using is_void = is_same<X, Y, void>;
-/** \class is_arithmetic General/Meta.h "General/Meta.h"
- \brief Check if X<Y> is of arithmetic type. */
+/**
+   \class is_arithmetic General/Meta.h "General/Meta.h"
+   \brief Check if X<Y> is of arithmetic type.
+*/
 template <template <typename> typename X, typename Y> struct is_arithmetic {
   static constexpr bool value = std::is_arithmetic_v<X<Y>>;
 };
-/** \class is_integral General/Meta.h "General/Meta.h"
- \brief Check if X<Y> is of integral type. */
+/**
+   \class is_integral General/Meta.h "General/Meta.h"
+   \brief Check if X<Y> is of integral type.
+*/
 template <template <typename> typename X, typename Y> struct is_integral {
   static constexpr bool value = std::is_integral_v<X<Y>>;
 };
@@ -94,19 +108,19 @@ template <typename X>
 inline constexpr bool has_push_back_v = has_push_back<X>::value;
 
 /**\brief Type of static method \c X::info(std::cout). */
-template <typename X>
-using static_info_result_t = decltype(X::info(std::cout));
+template <typename X> using static_info_result_t = decltype(X::info(std::cout));
 /** \brief Check if a class can call static method \c info(std::cout). */
-template <typename X> using has_static_info = has_member<static_info_result_t, X>;
+template <typename X>
+using has_static_info = has_member<static_info_result_t, X>;
 template <typename X>
 /** \brief Check if a class can call static method \c info(std::cout). */
 inline constexpr bool has_static_info_v = has_static_info<X>::value;
 
 /**\brief Type of member \c X::Parameters. */
-template <typename X>
-using parameters_type_t = typename X::Parameters;
+template <typename X> using parameters_type_t = typename X::Parameters;
 /** \brief Check if a class defines type \c Parameters. */
-template <typename X> using has_parameters_type = has_member<parameters_type_t, X>;
+template <typename X>
+using has_parameters_type = has_member<parameters_type_t, X>;
 template <typename X>
 /** \brief Check if a class defines type \c Parameters. */
 inline constexpr bool has_parameters_type_v = has_parameters_type<X>::value;
@@ -116,8 +130,10 @@ inline constexpr bool has_parameters_type_v = has_parameters_type<X>::value;
 template <typename = void, typename... Args>
 struct can_call_sqrt : std::false_type {};
 template <typename... Args>
-/** \class can_call_sqrt General/Meta.h "General/Meta.h"
- \brief Check whether class can call abs. */
+/**
+   \class can_call_sqrt General/Meta.h "General/Meta.h"
+   \brief Check whether class can call abs.
+*/
 struct can_call_sqrt<std::void_t<decltype(std::sqrt(std::declval<Args>()...))>,
                      Args...> : std::true_type {};
 /** \brief To check whether class can call sqrt. */
@@ -126,8 +142,10 @@ inline constexpr bool can_call_sqrt_v = can_call_sqrt<void, Args...>::value;
 
 template <typename = void, typename... Args>
 struct can_call_abs : std::false_type {};
-/** \class can_call_abs General/Meta.h "General/Meta.h"
- \brief Check whether class can call abs. */
+/**
+   \class can_call_abs General/Meta.h "General/Meta.h"
+   \brief Check whether class can call abs.
+*/
 template <typename... Args>
 struct can_call_abs<std::void_t<decltype(std::abs(std::declval<Args>()...))>,
                     Args...> : std::true_type {};
@@ -140,8 +158,7 @@ inline constexpr bool can_call_abs_v = can_call_abs<void, Args...>::value;
 // https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
 // .
 
-/** \class
- Check whether classes can be used with binary operator. */
+/** \brief Check whether classes can be used with binary operator. */
 template <typename X, typename Y, typename Op> struct op_valid {
   template <typename U, typename L, typename R>
   static auto test(int)
@@ -159,11 +176,11 @@ using op_valid_t = typename op_valid<X, Y, Op>::type;
 
 /** \namespace notstd Operators not in std. */
 namespace notstd {
-
-/** \struct left_shift General/Meta.h "General/Meta.h"
- \brief Left shift operator. */
+/**
+   \struct left_shift General/Meta.h "General/Meta.h"
+   \brief Left shift operator.
+*/
 struct left_shift {
-
   template <typename L, typename R>
   constexpr auto operator()(L &&l, R &&r) const
       noexcept(noexcept(std::forward<L>(l) << std::forward<R>(r)))
@@ -172,10 +189,11 @@ struct left_shift {
   }
 };
 
-/** \struct right_shift General/Meta.h "General/Meta.h"
-\brief Right shift operator. */
+/**
+   \struct right_shift General/Meta.h "General/Meta.h"
+   \brief Right shift operator.
+*/
 struct right_shift {
-
   template <typename L, typename R>
   constexpr auto operator()(L &&l, R &&r) const
       noexcept(noexcept(std::forward<L>(l) >> std::forward<R>(r)))
@@ -184,10 +202,11 @@ struct right_shift {
   }
 };
 
-/** \struct operator_and General/Meta.h "General/Meta.h"
-\brief And operator. */
+/**
+   \struct operator_and General/Meta.h "General/Meta.h"
+   \brief And operator.
+*/
 struct operator_and {
-
   template <typename L, typename R>
   constexpr auto operator()(L &&l, R &&r) const
       noexcept(noexcept(std::forward<L>(l) & std::forward<R>(r)))
@@ -195,7 +214,6 @@ struct operator_and {
     return std::forward<L>(l) & std::forward<R>(r);
   }
 };
-
 } // namespace notstd
 /** \brief Check whether classes can be used with equality operator. */
 template <typename X, typename Y>
@@ -215,12 +233,14 @@ using has_less_than = op_valid_t<X, Y, std::less<>>;
 /** \brief Check whether classes can be used with less than operator. */
 template <typename X, typename Y>
 inline constexpr bool has_less_than_v = has_less_than<X, Y>::value;
-/** \brief Check whether classes can be used with less than or equal operator.
- */
+/**
+   \brief Check whether classes can be used with less than or equal operator.
+*/
 template <typename X, typename Y>
 using has_less_equal = op_valid_t<X, Y, std::less_equal<>>;
-/** \brief Check whether classes can be used with less than or equal operator.
- */
+/**
+   \brief Check whether classes can be used with less than or equal operator.
+*/
 template <typename X, typename Y>
 inline constexpr bool has_less_equal_v = has_less_equal<X, Y>::value;
 /** \brief Check whether classes can be used with greater than operator. */
@@ -229,12 +249,14 @@ using has_greater_than = op_valid_t<X, Y, std::greater<>>;
 /** \brief Check whether classes can be used with greater than operator. */
 template <typename X, typename Y>
 inline constexpr bool has_greater_than_v = has_greater_than<X, Y>::value;
-/** \brief Check whether classes can be used with greater than or equal
- * operator. */
+/**
+   \brief Check whether classes can be used with greater than or equal operator.
+*/
 template <typename X, typename Y>
 using has_greater_equal = op_valid_t<X, Y, std::greater_equal<>>;
-/** \brief Check whether classes can be used with greater than or equal
- * operator. */
+/**
+   \brief Check whether classes can be used with greater than or equal operator.
+*/
 template <typename X, typename Y>
 inline constexpr bool has_greater_equal_v = has_greater_equal<X, Y>::value;
 /** \brief Check whether classes can be used with bit xor operator. */
@@ -292,8 +314,10 @@ using has_and = op_valid_t<X, Y, notstd::operator_and>;
 template <typename X, typename Y>
 inline constexpr bool has_and_v = has_and<X, Y>::value;
 
-/** \class is_constructible_from_size_impl General/Meta.h "General/Meta.h"
- \brief Check if \c X<Y>(size()) is viable. */
+/**
+   \class is_constructible_from_size_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c X<Y>(size()) is viable.
+*/
 template <typename X> struct is_constructible_from_size_impl {
   static constexpr bool value =
       std::is_constructible_v<X, decltype(std::declval<X>().size())>;
@@ -303,8 +327,10 @@ template <typename X>
 inline constexpr bool is_constructible_from_size_v =
     std::conjunction_v<has_size<X>, is_constructible_from_size_impl<X>>;
 
-/** \class is_convertible_from_times_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Z=X*Y is viable. */
+/**
+   \class is_convertible_from_times_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Z=X*Y is viable.
+*/
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_multiplies_impl {
   static constexpr bool value =
@@ -316,8 +342,10 @@ inline constexpr bool is_convertible_from_multiplies_v =
     std::conjunction_v<has_multiplies<X, Y>,
                        is_convertible_from_multiplies_impl<X, Y, Z>>;
 
-/** \class is_convertible_from_plus_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Z=X+Y is viable. */
+/**
+   \class is_convertible_from_plus_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Z=X+Y is viable.
+*/
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_plus_impl {
   static constexpr bool value =
@@ -328,8 +356,10 @@ template <typename X, typename Y, typename Z>
 inline constexpr bool is_convertible_from_plus_v =
     std::conjunction_v<has_plus<X, Y>, is_convertible_from_plus_impl<X, Y, Z>>;
 
-/** \class is_convertible_from_minus_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Z=X-Y is viable. */
+/**
+   \class is_convertible_from_minus_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Z=X-Y is viable.
+*/
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_minus_impl {
   static constexpr bool value =
@@ -341,8 +371,10 @@ inline constexpr bool is_convertible_from_minus_v =
     std::conjunction_v<has_minus<X, Y>,
                        is_convertible_from_minus_impl<X, Y, Z>>;
 
-/** \class is_convertible_from_divides_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Z=X/Y is viable. */
+/**
+   \class is_convertible_from_divides_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Z=X/Y is viable.
+*/
 template <typename X, typename Y, typename Z>
 struct is_convertible_from_divides_impl {
   static constexpr bool value =
@@ -354,8 +386,10 @@ inline constexpr bool is_convertible_from_divides_v =
     std::conjunction_v<has_divides<X, Y>,
                        is_convertible_from_divides_impl<X, Y, Z>>;
 
-/** \class is_convertible_from_abs_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Y=std::abs(X) is viable. */
+/**
+   \class is_convertible_from_abs_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Y=std::abs(X) is viable.
+*/
 template <typename X, typename Y> struct is_convertible_from_abs_impl {
   static constexpr bool value =
       std::is_convertible_v<decltype(std::abs(std::declval<X>())), Y>;
@@ -365,19 +399,24 @@ template <typename X, typename Y>
 inline constexpr bool is_convertible_from_abs_v =
     std::conjunction_v<can_call_abs<X>, is_convertible_from_abs_impl<X, Y>>;
 
-/** \class is_convertible_from_pow_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Z=std::pow(X,Y) is viable. */
-template <typename X, typename Y, typename Z> struct is_convertible_from_pow_impl {
-  static constexpr bool value =
-      std::is_convertible_v<decltype(std::pow(std::declval<X>(), std::declval<Y>())), Z>;
+/**
+   \class is_convertible_from_pow_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Z=std::pow(X,Y) is viable.
+*/
+template <typename X, typename Y, typename Z>
+struct is_convertible_from_pow_impl {
+  static constexpr bool value = std::is_convertible_v<
+      decltype(std::pow(std::declval<X>(), std::declval<Y>())), Z>;
 };
 /** \brief Check if \c Z=std::pow(X, Y) is viable. */
 template <typename X, typename Y, typename Z>
 inline constexpr bool is_convertible_from_pow_v =
     std::conjunction_v<can_call_abs<X>, is_convertible_from_pow_impl<X, Y, Z>>;
 
-/** \class is_convertible_from_sqrt_impl General/Meta.h "General/Meta.h"
- \brief Check if \c Y=std::sqrt(X) is viable. */
+/**
+   \class is_convertible_from_sqrt_impl General/Meta.h "General/Meta.h"
+   \brief Check if \c Y=std::sqrt(X) is viable.
+*/
 template <typename X, typename Y> struct is_convertible_from_sqrt_impl {
   static constexpr bool value =
       std::is_convertible_v<decltype(std::sqrt(std::declval<X>())), Y>;
@@ -387,31 +426,40 @@ template <typename X, typename Y>
 inline constexpr bool is_convertible_from_sqrt_v =
     std::conjunction_v<can_call_sqrt<X>, is_convertible_from_sqrt_impl<X, Y>>;
 
-/** \class indices General/Meta.h "General/Meta.h"
- \brief Indices for template metamagic. */
+/**
+   \class indices General/Meta.h "General/Meta.h"
+   \brief Indices for template metamagic.
+*/
 template <std::size_t... Indices> struct indices {
   using next = indices<Indices..., sizeof...(Indices)>;
 };
 
-/** \class Selector_t General/Meta.h "General/Meta.h"
- \brief Type for selecting function implementations at compile time. */
-template <typename TT> struct Selector_t {};
+/**
+   \class Selector_t General/Meta.h "General/Meta.h"
+   \brief Type for selecting function implementations at compile time.
+*/
+template <typename TT> struct Selector_t { using type = TT; };
 
-/** \class Selector General/Meta.h "General/Meta.h"
- \brief Type for selecting function implementations at compile time. */
-template <typename TT, TT val> struct Selector {};
+/**
+   \class Selector General/Meta.h "General/Meta.h"
+   \brief Type for selecting function implementations at compile time.
+*/
+template <typename TT, TT val> struct Selector { using type = TT; };
 
-/** \struct ParallelOptions General/Meta.h "General/Meta.h"
- \brief Options to choose between serial and parallel implementations. */
-struct ParallelOptions {
-  /** \struct ParallelOptions::Serial General/Meta.h "General/Meta.h"
-  \brief Serial implementations. */
-  struct Serial {};
+/** \brief Type-dependent expression that is always false. */
+template <typename> constexpr bool dependent_false_v = false;
 
-  /** \struct ParallelOptions::Parallel General/Meta.h "General/Meta.h"
-  \brief Parallel implementations. */
-  struct Parallel {};
-};
+/** \brief Type-dependent expression that is always true. */
+template <typename> constexpr bool dependent_true_v = true;
+
+/** \brief Check if type T is an instance of template type U with arbitrary
+ * template parameters. */
+template <typename T, template <typename...> typename U>
+inline constexpr bool is_instance_of_v = std::false_type{};
+
+/** \brief Check if type T is an instance of type U<Vs...>. */
+template <template <typename...> typename U, typename... Vs>
+inline constexpr bool is_instance_of_v<U<Vs...>, U> = std::true_type{};
 } // namespace meta
 
 #endif /* GENERAL_META_H */

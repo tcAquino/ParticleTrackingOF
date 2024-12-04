@@ -1,5 +1,5 @@
 <map id="ptof::Phase::Parameters::Parameters" name="ptof::Phase::Parameters::Parameters">
-<area shape="rect" id="node1" title=" " alt="" coords="5,70,169,111"/>
+<area shape="rect" id="node1" title="Constructor." alt="" coords="5,70,169,111"/>
 <area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="217,27,343,53"/>
 <area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a15d820b4096cdb22b03d681f6808a38c" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="221,99,339,141"/>
 <area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="391,5,549,32"/>

@@ -1,13 +1,14 @@
 /**
- \file PTOF/Measurer.h
- \author Tomás Aquino
- \date 07/03/2022
+   \file PTOF/Measurer.h
+   \author Tomás Aquino
+   \date 07/03/2022
+   \brief Objects to measure and output quantities.
 */
 
 #ifndef PTOF_MEASURER_H
 #define PTOF_MEASURER_H
 
-#include "General/Useful.h"
+#include "General/IO.h"
 #include "PTOF/Directories.h"
 #include <IOobject.H>
 #include <algorithm>
@@ -18,9 +19,10 @@
 #include <string>
 
 namespace ptof {
-/** \class Measurer PTOF/Measurer.h "PTOF/Measurer.h"
- \brief Polymorphic output handler for outputting some quantity.
- \note To be used only through derived classes. */
+/**
+   \class Measurer PTOF/Measurer.h "PTOF/Measurer.h"
+   \brief Abstract polymorphic output handler for outputting some quantity.
+*/
 template <typename Subject, typename Geometry> struct Measurer {
   virtual ~Measurer() = default;
 
@@ -28,14 +30,16 @@ template <typename Subject, typename Geometry> struct Measurer {
   virtual void print() = 0;
 
 protected:
-  /** Constructor.
-  \param subject CTRW object to measure.
-  \param geometry Domain geometry info and utilities.
-  \param directories Current case directory information.
-  \param output_name Name of output type.
-  \param identifier String to include in names of output files.
-  \param precision Number of digits after decimal point in output, in scientific
-  notation. */
+  /**
+     \brief Constructor.
+     \param subject CTRW object to measure.
+     \param geometry Domain geometry info and utilities.
+     \param directories Current case directory information.
+     \param output_name Name of output type.
+     \param identifier String to include in names of output files.
+     \param precision Number of digits after decimal point in output, in
+     scientific notation.
+  */
   Measurer(Subject const &subject, Geometry const &geometry,
            Directories const &directories, std::string const &output_name,
            std::string const &identifier, int precision = 8)
@@ -60,21 +64,24 @@ protected:
   std::ofstream _output; /**< Output stream. */
 
   /**
-  \param directories Current case directory information.
-  \param output_name Name of output type.
-  \param identifier String to include in names of output files.
-  \return Output stream. */
+     \param directories Current case directory information.
+     \param output_name Name of output type.
+     \param identifier String to include in names of output files.
+     \return Output stream.
+  */
   std::ofstream open_write(Directories const &directories,
                            std::string const &output_name,
                            std::string const &identifier) {
-    return useful::open_write(directories.dir_output + "/Data_" + output_name +
-                              (identifier.empty() ? "" : "_" + identifier) +
-                              ".dat");
+    return io::open_write(directories.dir_output + "/Data_" + output_name +
+                          (identifier.empty() ? "" : "_" + identifier) +
+                          ".dat");
   }
 };
 
-/** \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
- *  \brief  Output absorption times, tags, and masses of absorbed particles. */
+/**
+   \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
+   \brief  Output absorption times, tags, and masses of absorbed particles.
+*/
 template <typename Subject, typename Geometry>
 struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
   Measurer_absorption_time(Subject const &subject, Geometry const &geometry,

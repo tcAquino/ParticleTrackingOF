@@ -51,7 +51,7 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", "functions_vars" ],
-        [ "Typedefs", "functions_type.html", null ],
+        [ "Typedefs", "functions_type.html", "functions_type" ],
         [ "Enumerations", "functions_enum.html", null ]
       ] ]
     ] ],
@@ -64,20 +64,22 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d0/df6/_p_t_o_f_2_useful_8h.html#a3c85b81a804f529745e4f53c6b35ec53",
-"d2/da9/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_model.html#acc1aeb709d3ae97901d025651dbb9871",
-"d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc",
-"d4/d48/struct_phase_1_1_parameters.html",
-"d5/dd3/classctrw_1_1_transitions___reaction___position___conditional.html#a7ac405196dc0f19ef7a73941e73d1f9e",
-"d7/d14/_operations_8h.html",
-"d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a42d11a72617c19b54dd0662ff5faa41d",
-"d8/db6/namespacemeta.html#a106dc706e5fe09cbf706e6feb2295412",
-"d9/d35/structptof_1_1_measurer_time__tensor__field.html#a69b629d9d0c771c45f22e2f34ef5b195",
-"da/dd2/classstochastic_1_1discrete__dist__distribution.html#a9cdd2ac24a5359db7372d3ede91185cb",
-"db/dd7/namespaceop.html#ab244fd81ff098a085ecd83b6d68caae5",
-"dd/d1b/_general_2_meta_8h.html#a0d590866a18e68327c07936e827317d7",
-"de/d41/classstochastic_1_1inverse__gaussian__distribution.html#a0e60d73c1ab3186f6e2551410ebd7ea5",
-"df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#a1dfd58162b6755b732cfd8a26c935ec2"
+"d0/de5/structstochastic_1_1uniform__parallelipiped__distribution_1_1param__type.html",
+"d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#afa80b2432d08a27cd937865f0ccd4a23",
+"d2/dd2/classctrw_1_1_c_t_r_w.html#a315fa83b94aa168c726e9c312c3d6f25",
+"d4/d0b/structctrw_1_1_get__interp.html#a7117f12bcd7b9c488771c8229b65c7e2",
+"d5/d10/structctrw_1_1_get__time__interp__velocity.html#a47de61689900367106e9a5d3488c332c",
+"d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#a820034f1db236234ce548ad3e848790f",
+"d7/d14/_operations_8h.html#af08c065dfc16f73874bbfd717ae689fb",
+"d8/d17/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport_1_1_parameters.html#abda8223fd3f0538a28902f0a440e254c",
+"d8/db6/namespacemeta.html#aac4e2e3b576a68388f86cf20b47aa734",
+"d9/d62/structptof_1_1_initial_condition___prescribed_positions_masses.html#a75bf5cc0dc4e080d6345c896250c9d52",
+"da/d96/structptof_1_1model__advection__2d_1_1_definitions.html#a379f59c3a480bcea6b594c5c4af2cbef",
+"db/dc9/structctrw_1_1_state___velocity.html#a92e7b8dd61470128df916fe3faa7a536",
+"dc/d5e/structptof_1_1model__advection__diffusion__fpt__2d_1_1_definitions.html#ae1939ebabef02d09a64c910304eabccb",
+"dd/d50/structmeta_1_1is__convertible__from__plus__impl.html",
+"de/d93/structptof_1_1_phase_1_1_parameters.html#ac15b95e8f78607a9b0da78643cf19e78",
+"df/de9/structptof_1_1_state3_d.html#a8ea6a6bec7c2f768a52beb9e37a546d5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

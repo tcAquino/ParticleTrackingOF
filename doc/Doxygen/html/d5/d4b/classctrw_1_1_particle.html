@@ -104,13 +104,17 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b16a0bf324c21cb5424fb36d2e4905f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a8b16a0bf324c21cb5424fb36d2e4905f">Particle</a> (<a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a625072372af9768b7badce0322498734">State</a> const &amp;state)</td></tr>
+<tr class="memdesc:a8b16a0bf324c21cb5424fb36d2e4905f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/d4b/classctrw_1_1_particle.html#a8b16a0bf324c21cb5424fb36d2e4905f">More...</a><br /></td></tr>
 <tr class="separator:a8b16a0bf324c21cb5424fb36d2e4905f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bb9b0d580804c4bd285eccd800bc7aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a6bb9b0d580804c4bd285eccd800bc7aa">Particle</a> (<a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a625072372af9768b7badce0322498734">State</a> <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a7cf0f69716b28ad3dd0fabd70dac7126">state_new</a>, <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a625072372af9768b7badce0322498734">State</a> <a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a226449cce721df5ea4cf16700d62a4cc">state_old</a>)</td></tr>
+<tr class="memdesc:a6bb9b0d580804c4bd285eccd800bc7aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/d4b/classctrw_1_1_particle.html#a6bb9b0d580804c4bd285eccd800bc7aa">More...</a><br /></td></tr>
 <tr class="separator:a6bb9b0d580804c4bd285eccd800bc7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcf177d0e23c29affa5057884abcf847"><td class="memTemplParams" colspan="2">template&lt;typename Transition &gt; </td></tr>
 <tr class="memitem:abcf177d0e23c29affa5057884abcf847"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#abcf177d0e23c29affa5057884abcf847">transition</a> (Transition &amp;&amp;transition)</td></tr>
+<tr class="memdesc:abcf177d0e23c29affa5057884abcf847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update particle states.  <a href="../../d5/d4b/classctrw_1_1_particle.html#abcf177d0e23c29affa5057884abcf847">More...</a><br /></td></tr>
 <tr class="separator:abcf177d0e23c29affa5057884abcf847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69c34f5bb244f3dede15d37de5b22037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a69c34f5bb244f3dede15d37de5b22037">set</a> (<a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a625072372af9768b7badce0322498734">State</a> const &amp;state)</td></tr>
+<tr class="memdesc:a69c34f5bb244f3dede15d37de5b22037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new and old state to <code>state</code>.  <a href="../../d5/d4b/classctrw_1_1_particle.html#a69c34f5bb244f3dede15d37de5b22037">More...</a><br /></td></tr>
 <tr class="separator:a69c34f5bb244f3dede15d37de5b22037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b28825b27a039ec5c4178f95e7a2549"><td class="memTemplParams" colspan="2">template&lt;typename Transformation &gt; </td></tr>
 <tr class="memitem:a1b28825b27a039ec5c4178f95e7a2549"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html#a1b28825b27a039ec5c4178f95e7a2549">transform_both</a> (Transformation &amp;&amp;transformation)</td></tr>
@@ -135,14 +139,17 @@ Private Attributes</h2></td></tr>
 class ctrw::Particle&lt; State_t &gt;</h3>
 
 <p><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> class for ptrw/ctrw/tdrw methods. </p>
-<p>A particle has an old state and a new state. <br  />
- Transitions are handled by an external class that modifies the state. <br  />
- Upon a transition, the old state becomes the previous new state and the new state is obtained by applying the transition to the previous new state. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+<ul>
+<li>A particle has an old state and a new state.</li>
+<li>Transitions are handled by an external class that modifies the state.</li>
+<li>Upon a transition, the old state becomes the previous new state and the new state is obtained by applying the transition to the previous new state. <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">State_t</td><td>Object holding particle state information. </td></tr>
   </table>
   </dd>
 </dl>
+</li>
+</ul>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a625072372af9768b7badce0322498734"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a625072372af9768b7badce0322498734">&#9670;&nbsp;</a></span>State</h2>
@@ -187,7 +194,9 @@ template&lt;typename State_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> state, copied to set both old and new state. </td></tr>
   </table>
@@ -231,7 +240,9 @@ template&lt;typename State_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state_new</td><td>New particle state. </td></tr>
     <tr><td class="paramname">state_old</td><td>Old particle state. </td></tr>
@@ -267,12 +278,8 @@ template&lt;typename State_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">state</td><td>Set new and old state to a copy of this state. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Set new and old state to <code>state</code>. </p>
 
 </div>
 </div>
@@ -306,13 +313,11 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d5/d4b/classctrw_1_1_particle_a7cf0f69716b28ad3dd0fabd70dac7126_icgraph.png" border="0" usemap="#ad5/d4b/classctrw_1_1_particle_a7cf0f69716b28ad3dd0fabd70dac7126_icgraph" alt=""/></div>
 <map name="ad5/d4b/classctrw_1_1_particle_a7cf0f69716b28ad3dd0fabd70dac7126_icgraph" id="ad5/d4b/classctrw_1_1_particle_a7cf0f69716b28ad3dd0fabd70dac7126_icgraph">
-<area shape="rect" title=" " alt="" coords="237,166,417,193"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a0581ce1a57f95f4c48e5ad381339dbf8" title="Evolve particle states in space in 1D." alt="" coords="24,5,171,47"/>
-<area shape="rect" href="../../d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a404791df05d3be77bdaf4facde476a8b" title="Evolve particle states in space in 1D." alt="" coords="22,71,173,112"/>
-<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#af0915b7f10eb7b090bdd488d073db6af" title="Evolve particle states in time." alt="" coords="5,137,189,163"/>
-<area shape="rect" href="../../d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a229537ca25ec47734dc2d45164822490" title="Evolve particle states in time." alt="" coords="22,188,173,229"/>
-<area shape="rect" href="../../dc/d51/structctrw_1_1_get__new__from__particle.html#a1525c265f2345a8b45f0f1e2d9c9f50b" title=" " alt="" coords="21,253,173,295"/>
-<area shape="rect" href="../../dd/db1/structctrw_1_1_get__from__particle.html#a6dad21c4dfc315bb1e9779c0fac5790c" title=" " alt="" coords="10,319,185,360"/>
+<area shape="rect" title=" " alt="" coords="227,101,393,127"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a5dffd6b1ed436f173964201a438948d8" title="Evolve particle states in space in 1D." alt="" coords="21,5,163,47"/>
+<area shape="rect" href="../../d2/dd2/classctrw_1_1_c_t_r_w.html#a22b886dde54e916e7672f48460151742" title="Evolve particle states in time." alt="" coords="5,71,179,98"/>
+<area shape="rect" href="../../dc/d51/structctrw_1_1_get__new__from__particle.html#a1525c265f2345a8b45f0f1e2d9c9f50b" title=" " alt="" coords="22,123,162,164"/>
+<area shape="rect" href="../../dd/db1/structctrw_1_1_get__from__particle.html#a6dad21c4dfc315bb1e9779c0fac5790c" title=" " alt="" coords="13,188,171,229"/>
 </map>
 </div>
 
@@ -385,7 +390,7 @@ template&lt;typename Transformation &gt; </div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">transformation</td><td>Transformation to apply to both states simultaneously. </td></tr>
+    <tr><td class="paramname">transformation</td><td>Transformation that takes and may modify both new and old state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -455,9 +460,11 @@ template&lt;typename Transition &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+
+<p>Update particle states. </p>
+<p>Sets the old state to the new state and updates the new state. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">transition</td><td>Update particle states according to this object that modifies a state. </td></tr>
+    <tr><td class="paramname">transition</td><td>Object that modifies a state. </td></tr>
   </table>
   </dd>
 </dl>

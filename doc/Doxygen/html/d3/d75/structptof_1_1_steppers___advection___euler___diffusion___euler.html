@@ -99,9 +99,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a44f228d645b27704766e09bc7b6f3c0a"><td class="memTemplParams" colspan="2">template&lt;typename SolverParameters &gt; </td></tr>
 <tr class="memitem:a44f228d645b27704766e09bc7b6f3c0a"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a44f228d645b27704766e09bc7b6f3c0a">makeTimeGenerator</a> (SolverParameters const &amp;params_solvers)</td></tr>
 <tr class="separator:a44f228d645b27704766e09bc7b6f3c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a347af85f50a49855d3a44b903628567f"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </td></tr>
-<tr class="memitem:a347af85f50a49855d3a44b903628567f"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a347af85f50a49855d3a44b903628567f">makeJumpGenerator</a> (VelocityField &amp;&amp;velocity_field, Boundary &amp;&amp;boundary, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers, std::size_t dim)</td></tr>
-<tr class="separator:a347af85f50a49855d3a44b903628567f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a641a22cb1d47a29373ef54398cc4888c"><td class="memTemplParams" colspan="2">template&lt;typename ParallelOption , typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </td></tr>
+<tr class="memitem:a641a22cb1d47a29373ef54398cc4888c"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a641a22cb1d47a29373ef54398cc4888c">makeJumpGenerator</a> (VelocityField &amp;&amp;velocity_field, Boundary &amp;&amp;boundary, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers, std::size_t dim)</td></tr>
+<tr class="separator:a641a22cb1d47a29373ef54398cc4888c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3652201ca6ecc941d4d29c87ca1fa8d"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </td></tr>
 <tr class="memitem:ac3652201ca6ecc941d4d29c87ca1fa8d"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#ac3652201ca6ecc941d4d29c87ca1fa8d">makeJumpGenerator_Advection</a> (VelocityField &amp;&amp;velocity_field, Boundary &amp;&amp;boundary, TransportParameters const &amp;params_transport, SolverParameters const &amp;params_solvers, std::size_t dim)</td></tr>
 <tr class="separator:ac3652201ca6ecc941d4d29c87ca1fa8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,13 +110,13 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Time steppers for forward Euler advection and stochastic forward Euler diffusion. </p>
 <p>"PTOF/Steppers.h" </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a347af85f50a49855d3a44b903628567f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a347af85f50a49855d3a44b903628567f">&#9670;&nbsp;</a></span>makeJumpGenerator()</h2>
+<a id="a641a22cb1d47a29373ef54398cc4888c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a641a22cb1d47a29373ef54398cc4888c">&#9670;&nbsp;</a></span>makeJumpGenerator()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </div>
+template&lt;typename ParallelOption , typename VelocityField , typename Boundary , typename TransportParameters , typename SolverParameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -174,21 +174,20 @@ template&lt;typename VelocityField , typename Boundary , typename TransportParam
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Advection&ndash;diffusion JumpGenerator. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd><code>params_transport</code> must define:<ul>
-<li><code>diff_coeff</code> </li>
-</ul>
+<dl class="section note"><dt>Note</dt><dd>-<code>params_transport</code> must define:<ol type="1">
+<li><code>diff_coeff</code> -If <code>params_solvers</code> does not define <code>time_step</code>, the time step is initially set to zero. </li>
+</ol>
 </dd></dl>
-<p>If <code>params_solvers</code> does not define <code>time_step</code>, the time step is initially set to zero. </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a347af85f50a49855d3a44b903628567f_cgraph.png" border="0" usemap="#ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a347af85f50a49855d3a44b903628567f_cgraph" alt=""/></div>
-<map name="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a347af85f50a49855d3a44b903628567f_cgraph" id="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a347af85f50a49855d3a44b903628567f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,55,189,111"/>
-<area shape="rect" href="../../d3/d4c/classctrw_1_1_jump_generator___velocity.html#acb556481866d3c10951c2ccf70361d88" title=" " alt="" coords="240,29,395,71"/>
-<area shape="rect" href="../../df/d00/classctrw_1_1_jump_generator___diffusion.html#a75409748795a3af3cd4f3e987cd49776" title=" " alt="" coords="237,95,397,136"/>
-<area shape="rect" href="../../df/d00/classctrw_1_1_jump_generator___diffusion.html#a053d7b5d656032487c23dd474f34ef43" title=" " alt="" coords="448,61,603,103"/>
-<area shape="rect" href="../../df/d00/classctrw_1_1_jump_generator___diffusion.html#abcdaca15f4df53b5071b24a4d3a053b5" title=" " alt="" coords="445,127,605,168"/>
+<div class="center"><img src="../../d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a641a22cb1d47a29373ef54398cc4888c_cgraph.png" border="0" usemap="#ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a641a22cb1d47a29373ef54398cc4888c_cgraph" alt=""/></div>
+<map name="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a641a22cb1d47a29373ef54398cc4888c_cgraph" id="ad3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler_a641a22cb1d47a29373ef54398cc4888c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,175,111"/>
+<area shape="rect" href="../../d3/d4c/classctrw_1_1_jump_generator___velocity.html#acb556481866d3c10951c2ccf70361d88" title=" " alt="" coords="224,29,368,71"/>
+<area shape="rect" href="../../df/d00/classctrw_1_1_jump_generator___diffusion.html#ab864320fbb0ca645ea7c1fb9b5c3b3fd" title=" " alt="" coords="223,95,369,136"/>
+<area shape="rect" href="../../df/d00/classctrw_1_1_jump_generator___diffusion.html#a7179e6dff2b4ccc423ed633827dbc186" title=" " alt="" coords="419,61,563,103"/>
+<area shape="rect" href="../../df/d00/classctrw_1_1_jump_generator___diffusion.html#a28b7447b43a67e70f687aa61d4cc336e" title=" " alt="" coords="417,127,564,168"/>
 </map>
 </div>
 

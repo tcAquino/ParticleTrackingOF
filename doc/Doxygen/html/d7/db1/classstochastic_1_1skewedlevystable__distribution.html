@@ -223,13 +223,13 @@ template&lt;typename Value_type  = double&gt; </div>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">alpha</td><td>Exponent, pdf <code>~ t^{-1-alpha}<code>. </code></code></td></tr>
-    <tr><td class="paramname">sigma</td><td><code><code>Scale parameter. </code></code></td></tr>
-    <tr><td class="paramname">mu</td><td><code><code>location parameter. </code></code></td></tr>
+    <tr><td class="paramname">alpha</td><td>Exponent, pdf <code>x^{-1-alpha}</code>. </td></tr>
+    <tr><td class="paramname">sigma</td><td>Scale parameter. </td></tr>
+    <tr><td class="paramname">mu</td><td>location parameter. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd><code><code> Tail <code>~ -sigma^alpha * tan(alpha*pi/2) * t^{-1-\alpha}/Gamma(-alpha)</code>. </code></code></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Tail <code>~ -sigma^alpha * tan(alpha*pi/2) * x^{-1-\alpha}/Gamma(-alpha)</code>. </dd></dl>
 
 </div>
 </div>
@@ -262,14 +262,14 @@ template&lt;typename Value_type  = double&gt; </div>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">params</td><td><code>param[0] = alpha</code>, params <code>param[1] = sigma</code>, params <code>param[2] = mu</code>. </td></tr>
+    <tr><td class="paramname">params</td><td><code>param[0] = alpha</code>, <code>param[1] = sigma</code>, <code>param[2] = mu</code>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>Exponent, pdf <code>~ t^{-1-alpha}<code>.</code></code></li>
-<li><code><code>sigma Scale parameter.</code></code></li>
-<li><code><code>mu location parameter.</code></code></li>
+<li>alpha: Tailing exponent, <code>PDF ~ x^{-1-alpha}<code>.</code></code></li>
+<li><code><code>sigma: Scale parameter.</code></code></li>
+<li><code><code>mu: Location parameter.</code></code></li>
 <li><code><code>Tail <code>~ -sigma^alpha * tan(alpha*pi/2) * t^{-1-\alpha}/Gamma(-alpha)</code>. </code></code></li>
 </ul>
 </dd></dl>

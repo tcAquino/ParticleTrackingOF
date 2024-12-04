@@ -105,6 +105,8 @@ Public Types</h2></td></tr>
 <tr class="separator:a32ce6c927e29b6a0489b9bc7d0de6d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ed0e914c8a58388d3ecd0ea41a14f56"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#a3ed0e914c8a58388d3ecd0ea41a14f56">distribution_type</a> = Distribution_t</td></tr>
 <tr class="separator:a3ed0e914c8a58388d3ecd0ea41a14f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d94ec9c2dd4cdcdad3d32a1a7b036b7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#a8d94ec9c2dd4cdcdad3d32a1a7b036b7">Engine</a> = Engine_t</td></tr>
+<tr class="separator:a8d94ec9c2dd4cdcdad3d32a1a7b036b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -113,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1e2888405e99f078285069463d1b775c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1922a08c344d10a2a54d1255be7eff3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#ab1922a08c344d10a2a54d1255be7eff3">RNG</a> (Distribution_t <a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#aac01ae3a94512482e5cbabd2d0ca4b61">dist</a>)</td></tr>
 <tr class="separator:ab1922a08c344d10a2a54d1255be7eff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa42fd58475eae7ed4ec60a8052b07854"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#aa42fd58475eae7ed4ec60a8052b07854">RNG</a> (std::size_t seed)</td></tr>
+<tr class="separator:aa42fd58475eae7ed4ec60a8052b07854"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84466d456d2128e5f4c2d2d82aaa6622"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#a32ce6c927e29b6a0489b9bc7d0de6d45">result_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#a84466d456d2128e5f4c2d2d82aaa6622">operator()</a> ()</td></tr>
 <tr class="separator:a84466d456d2128e5f4c2d2d82aaa6622"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -142,6 +146,22 @@ template&lt;typename Distribution_t , typename Engine_t  = std::mt19937&gt; </di
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html">stochastic::RNG</a>&lt; Distribution_t, Engine_t &gt;::<a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#a3ed0e914c8a58388d3ecd0ea41a14f56">distribution_type</a> =  Distribution_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8d94ec9c2dd4cdcdad3d32a1a7b036b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d94ec9c2dd4cdcdad3d32a1a7b036b7">&#9670;&nbsp;</a></span>Engine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Distribution_t , typename Engine_t  = std::mt19937&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html">stochastic::RNG</a>&lt; Distribution_t, Engine_t &gt;::<a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html#a8d94ec9c2dd4cdcdad3d32a1a7b036b7">Engine</a> =  Engine_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -182,7 +202,7 @@ template&lt;typename Distribution_t , typename Engine_t  = std::mt19937&gt; </di
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1e2888405e99f078285069463d1b775c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e2888405e99f078285069463d1b775c">&#9670;&nbsp;</a></span>RNG() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e2888405e99f078285069463d1b775c">&#9670;&nbsp;</a></span>RNG() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,7 +232,7 @@ template&lt;typename param_t &gt; </div>
 </div>
 </div>
 <a id="ab1922a08c344d10a2a54d1255be7eff3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1922a08c344d10a2a54d1255be7eff3">&#9670;&nbsp;</a></span>RNG() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1922a08c344d10a2a54d1255be7eff3">&#9670;&nbsp;</a></span>RNG() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,6 +247,34 @@ template&lt;typename Distribution_t , typename Engine_t  = std::mt19937&gt; </di
           <td>(</td>
           <td class="paramtype">Distribution_t&#160;</td>
           <td class="paramname"><em>dist</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa42fd58475eae7ed4ec60a8052b07854"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa42fd58475eae7ed4ec60a8052b07854">&#9670;&nbsp;</a></span>RNG() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Distribution_t , typename Engine_t  = std::mt19937&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html">stochastic::RNG</a>&lt; Distribution_t, Engine_t &gt;::<a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html">RNG</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>seed</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

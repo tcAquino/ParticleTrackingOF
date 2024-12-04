@@ -1,0 +1,9 @@
+<map id="ptof::face_flux" name="ptof::face_flux">
+<area shape="rect" id="node1" title=" " alt="" coords="5,85,111,112"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ac7024364e76842305fdea9fe67706e3b" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="159,49,292,90"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="171,115,280,141"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="351,5,466,32"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="525,60,645,87"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#ab292ea279bbaf58427c1603cbb72a7b5" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="340,107,477,149"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="538,115,633,141"/>
+</map>

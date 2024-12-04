@@ -1,33 +1,35 @@
 <map id="General/Modular.h" name="General/Modular.h">
-<area shape="rect" id="node1" title="Modular arithmetic, basis change, and similar operations." alt="" coords="524,5,650,32"/>
-<area shape="rect" id="node2" href="$d1/dd1/_multi_array_8h.html" title=" " alt="" coords="435,80,574,107"/>
-<area shape="rect" id="node3" href="$d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="598,80,744,107"/>
-<area shape="rect" id="node4" href="$d6/d02/_algebra_8h.html" title="Miscelaneous linear algebra algorithms." alt="" coords="24,155,150,181"/>
-<area shape="rect" id="node5" href="$d0/d80/_random_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="13,229,161,256"/>
-<area shape="rect" id="node6" href="$d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="136,304,302,331"/>
-<area shape="rect" id="node7" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="568,379,710,405"/>
-<area shape="rect" id="node12" href="$d1/dde/_c_t_r_w_2_state_8h.html" title="States keep track of different quantities." alt="" coords="1002,155,1110,181"/>
-<area shape="rect" id="node13" href="$dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="836,155,978,181"/>
-<area shape="rect" id="node16" href="$d0/df6/_p_t_o_f_2_useful_8h.html" title=" " alt="" coords="818,229,929,256"/>
-<area shape="rect" id="node17" href="$dd/da3/_p_t_o_f_2_boundary_8h.html" title=" " alt="" coords="535,453,660,480"/>
-<area shape="rect" id="node28" href="$d8/dab/_geometry_2_boundary_8h.html" title="Boundary&#45;enforcing classes for particle tracking." alt="" coords="244,229,391,256"/>
-<area shape="rect" id="node29" href="$d9/d8b/_coordinates_8h.html" title=" " alt="" coords="174,155,338,181"/>
-<area shape="rect" id="node30" href="$da/d05/_shape_8h.html" title=" " alt="" coords="1135,155,1266,181"/>
-<area shape="rect" id="node31" href="$d2/d10/_symmetry_planes_8h.html" title="Symmetry planes to describe general symmetries." alt="" coords="414,155,608,181"/>
-<area shape="rect" id="node11" href="$d0/dd9/_steppers_8h.html" title=" " alt="" coords="53,617,177,644"/>
-<area shape="rect" id="node8" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="804,535,940,562"/>
-<area shape="rect" id="node9" href="$d3/d74/_models_8h.html" title=" " alt="" coords="730,692,844,719"/>
-<area shape="rect" id="node10" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="705,767,869,793"/>
-<area shape="rect" id="node14" href="$d4/de6/_measurer_time_8h.html" title=" " alt="" coords="1242,379,1396,405"/>
-<area shape="rect" id="node15" href="$d9/ddf/_output___cases_8h.html" title=" " alt="" coords="1085,453,1241,480"/>
-<area shape="rect" id="node18" href="$d7/d77/_boundary___cases_8h.html" title=" " alt="" coords="312,535,484,562"/>
-<area shape="rect" id="node19" href="$d1/d4e/_geometry_8h.html" title=" " alt="" coords="210,617,337,644"/>
-<area shape="rect" id="node20" href="$d3/df6/_initial_condition___cases_8h.html" title=" " alt="" coords="634,528,780,569"/>
-<area shape="rect" id="node21" href="$d0/d63/_criterion_8h.html" title=" " alt="" coords="988,304,1109,331"/>
-<area shape="rect" id="node22" href="$df/d96/_field_8h.html" title=" " alt="" coords="1133,304,1233,331"/>
-<area shape="rect" id="node24" href="$dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="786,453,958,480"/>
-<area shape="rect" id="node25" href="$db/dcf/_locator_8h.html" title=" " alt="" coords="427,304,542,331"/>
-<area shape="rect" id="node26" href="$de/ddd/_reaction_8h.html" title=" " alt="" coords="420,379,544,405"/>
-<area shape="rect" id="node27" href="$d5/d03/_p_t_o_f_2_state_8h.html" title=" " alt="" coords="977,617,1080,644"/>
-<area shape="rect" id="node23" href="$db/d50/_advection_8h.html" title=" " alt="" coords="1266,453,1396,480"/>
+<area shape="rect" id="node1" title="Modular arithmetic, basis change, and similar operations." alt="" coords="953,5,1079,32"/>
+<area shape="rect" id="node2" href="$d1/dd1/_multi_array_8h.html" title="Multidimensional array." alt="" coords="864,80,1003,107"/>
+<area shape="rect" id="node3" href="$d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="1027,80,1173,107"/>
+<area shape="rect" id="node4" href="$d6/d02/_algebra_8h.html" title="Linear algebra algorithms." alt="" coords="1197,155,1323,181"/>
+<area shape="rect" id="node5" href="$d0/d80/_random_8h.html" title="Probability and random number generation." alt="" coords="966,229,1114,256"/>
+<area shape="rect" id="node6" href="$d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="195,304,360,331"/>
+<area shape="rect" id="node7" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="343,379,484,405"/>
+<area shape="rect" id="node9" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="1165,692,1280,719"/>
+<area shape="rect" id="node13" href="$d3/df6/_initial_condition___cases_8h.html" title="Create particles according to different initial conditions." alt="" coords="1224,528,1371,569"/>
+<area shape="rect" id="node15" href="$d1/dde/_c_t_r_w_2_state_8h.html" title="Particle states." alt="" coords="2021,155,2129,181"/>
+<area shape="rect" id="node16" href="$dd/ddd/_state_getter_8h.html" title="Handlers to extract information from particles and particle states." alt="" coords="1398,155,1541,181"/>
+<area shape="rect" id="node18" href="$d0/df6/_p_t_o_f_2_useful_8h.html" title="Miscelaneous objects and utilities." alt="" coords="1305,229,1415,256"/>
+<area shape="rect" id="node19" href="$dd/da3/_p_t_o_f_2_boundary_8h.html" title="Objects and utilities to enforce boundary conditions." alt="" coords="863,453,988,480"/>
+<area shape="rect" id="node30" href="$d8/dab/_geometry_2_boundary_8h.html" title="Boundary&#45;enforcing classes for particle tracking." alt="" coords="96,229,243,256"/>
+<area shape="rect" id="node31" href="$d9/d8b/_coordinates_8h.html" title="Coordinate changes." alt="" coords="958,155,1122,181"/>
+<area shape="rect" id="node32" href="$da/d05/_shape_8h.html" title="Geometric shapes." alt="" coords="2153,155,2284,181"/>
+<area shape="rect" id="node33" href="$d2/d10/_symmetry_planes_8h.html" title="Symmetry planes to describe general symmetries." alt="" coords="96,155,291,181"/>
+<area shape="rect" id="node11" href="$d0/dd6/_time_generator_8h.html" title="Objects to generate time increments for particle tracking." alt="" coords="384,304,547,331"/>
+<area shape="rect" id="node12" href="$d6/d44/_initial_condition_8h.html" title="Objects to create particles according to initial condition." alt="" coords="1179,304,1338,331"/>
+<area shape="rect" id="node10" href="$d0/dd9/_steppers_8h.html" title="Objects and utilities to handle time stepping along advective and diffusive trajectories." alt="" coords="194,379,318,405"/>
+<area shape="rect" id="node8" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="1047,535,1183,562"/>
+<area shape="rect" id="node14" href="$d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="1733,617,1889,644"/>
+<area shape="rect" id="node17" href="$d4/de6/_measurer_time_8h.html" title="Objects to measure and output quantities given a measurement time." alt="" coords="1791,453,1945,480"/>
+<area shape="rect" id="node20" href="$d7/d77/_boundary___cases_8h.html" title="Enforce different types of boundary condition depending on patch." alt="" coords="463,535,635,562"/>
+<area shape="rect" id="node21" href="$d1/d4e/_geometry_8h.html" title="Objects to handle domain geometry and boundaries." alt="" coords="486,617,613,644"/>
+<area shape="rect" id="node22" href="$d0/d63/_criterion_8h.html" title="Criteria to check for features." alt="" coords="1741,535,1862,562"/>
+<area shape="rect" id="node23" href="$df/d96/_field_8h.html" title="Field objects with interpolation and other utilities." alt="" coords="1582,379,1682,405"/>
+<area shape="rect" id="node25" href="$dc/dba/_time_step_adaptor_8h.html" title="Objects for adaptive time stepping." alt="" coords="1013,453,1185,480"/>
+<area shape="rect" id="node26" href="$db/dcf/_locator_8h.html" title="Objects to locate positions in mesh." alt="" coords="773,304,888,331"/>
+<area shape="rect" id="node27" href="$de/ddd/_reaction_8h.html" title="Objects and utilities for surface and bulk reactions." alt="" coords="763,379,887,405"/>
+<area shape="rect" id="node28" href="$d5/d03/_p_t_o_f_2_state_8h.html" title="Particle states." alt="" coords="1437,379,1539,405"/>
+<area shape="rect" id="node24" href="$db/d50/_advection_8h.html" title="Utilities for handling velocity field." alt="" coords="1577,617,1708,644"/>
+<area shape="rect" id="node29" href="$da/d16/_particle_maker_8h.html" title="Objects to make particles." alt="" coords="1413,453,1563,480"/>
 </map>

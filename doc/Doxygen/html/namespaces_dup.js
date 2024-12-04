@@ -101,11 +101,8 @@ var namespaces_dup =
       [ "project< 0, double >", "db/dd7/namespaceop.html#a8c535b59b9190809e37ac22a607d6d43", null ],
       [ "project< 0, int >", "db/dd7/namespaceop.html#ad7a0ce19c74d35cfd623b0e42b55e353", null ],
       [ "project< 0, std::size_t >", "db/dd7/namespaceop.html#ab1610e896ef4b12806fc4150f22d8ed7", null ],
-      [ "project< double >", "db/dd7/namespaceop.html#a285e0936cac9fd84f97545b84d828298", null ],
       [ "project< double >", "db/dd7/namespaceop.html#a1106b20cd5d410335c8ede4453e500ca", null ],
-      [ "project< int >", "db/dd7/namespaceop.html#a21cca70fa06a582cff5a7319668e4c18", null ],
       [ "project< int >", "db/dd7/namespaceop.html#a243afb69e8fbf288be808a09b426c64b", null ],
-      [ "project< std::size_t >", "db/dd7/namespaceop.html#aba4d911c59fbd8d8d4e453693135bab5", null ],
       [ "project< std::size_t >", "db/dd7/namespaceop.html#a96a0a75d6e5c80b44029ffd1559188a6", null ],
       [ "rotate", "db/dd7/namespaceop.html#a34dece95d5d9514f2facd88c90dbbd6d", null ],
       [ "rotate", "db/dd7/namespaceop.html#a5715b216d8d722a6e169c653cd4db9fd", null ],
@@ -131,6 +128,7 @@ var namespaces_dup =
       [ "times_scalar", "db/dd7/namespaceop.html#aafe7f4a8472a74a5fdb2beb978d64df9", null ],
       [ "times_scalar_inplace", "db/dd7/namespaceop.html#adeae9eb6036c08b138c63493dea370fe", null ]
     ] ],
+    [ "par", "d4/df4/namespacepar.html", "d4/df4/namespacepar" ],
     [ "ptof", "d2/dd1/namespaceptof.html", "d2/dd1/namespaceptof" ],
     [ "range", "d6/d48/namespacerange.html", [
       [ "linspace", "d6/d48/namespacerange.html#a6d49becb249d5ac7411499cdf0dff276", null ],

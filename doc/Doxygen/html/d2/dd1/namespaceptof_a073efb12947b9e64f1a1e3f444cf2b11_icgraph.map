@@ -1,11 +1,8 @@
 <map id="ptof::cell_volume" name="ptof::cell_volume">
-<area shape="rect" id="node1" title="Volume of a cell." alt="" coords="988,81,1109,108"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a1483c85806e3e7a0f6210b180e7e1336" title="Make particles distributed over given cells with probability proportional to local velocity magnitude..." alt="" coords="813,45,938,86"/>
-<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#afd16d5d1c36b1d74113d120afdf3a221" title="Make particles distributed randomly uniformly over given cells." alt="" coords="811,111,940,137"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a90e9b957bb1654a8d03cff06c83b8d19" title="Make particles distributed with probability proportional to local velocity magnitude over all mesh ce..." alt="" coords="637,5,763,32"/>
-<area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a7fd67d3e7c0fa728c44f8e6bc2c566fe" title="Make given number of particles." alt="" coords="427,74,589,115"/>
-<area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="212,41,379,82"/>
-<area shape="rect" id="node7" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="226,106,365,147"/>
-<area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,41,164,82"/>
-<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#ae5ee084b0ca71e9c84072d8ffbd06a10" title="Make particles distributed randomly uniformly over all mesh cells." alt="" coords="653,157,747,184"/>
+<area shape="rect" id="node1" title="Volume of a cell." alt="" coords="525,42,647,69"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a67ae1ccdfc452d83b87bc00d30e4ff2f" title=" " alt="" coords="363,15,463,42"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a835bcfbed5028f991aaa8588ac282528" title=" " alt="" coords="349,67,477,94"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#ac48a62a8da22d90f7d66cb15e3540030" title=" " alt="" coords="183,13,297,39"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title=" " alt="" coords="5,5,131,47"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#ad0af76b5bce8ecfc693a8b65cbb4d58e" title=" " alt="" coords="179,64,301,105"/>
 </map>

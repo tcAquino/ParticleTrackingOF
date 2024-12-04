@@ -1,11 +1,11 @@
 <map id="PTOF/Reaction.h" name="PTOF/Reaction.h">
-<area shape="rect" id="node1" title=" " alt="" coords="228,5,352,32"/>
-<area shape="rect" id="node2" href="$dd/da3/_p_t_o_f_2_boundary_8h.html" title=" " alt="" coords="173,80,298,107"/>
-<area shape="rect" id="node3" href="$d7/d77/_boundary___cases_8h.html" title=" " alt="" coords="25,155,197,181"/>
-<area shape="rect" id="node5" href="$d3/d74/_models_8h.html" title=" " alt="" coords="227,319,342,345"/>
-<area shape="rect" id="node8" href="$dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="379,80,551,107"/>
-<area shape="rect" id="node7" href="$d3/df6/_initial_condition___cases_8h.html" title=" " alt="" coords="157,229,303,271"/>
-<area shape="rect" id="node4" href="$d1/d4e/_geometry_8h.html" title=" " alt="" coords="5,237,132,263"/>
-<area shape="rect" id="node6" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="203,393,367,420"/>
-<area shape="rect" id="node9" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="387,155,523,181"/>
+<area shape="rect" id="node1" title="Objects and utilities for surface and bulk reactions." alt="" coords="281,5,405,32"/>
+<area shape="rect" id="node2" href="$dd/da3/_p_t_o_f_2_boundary_8h.html" title="Objects and utilities to enforce boundary conditions." alt="" coords="223,80,349,107"/>
+<area shape="rect" id="node3" href="$d7/d77/_boundary___cases_8h.html" title="Enforce different types of boundary condition depending on patch." alt="" coords="16,162,188,189"/>
+<area shape="rect" id="node5" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="229,319,343,345"/>
+<area shape="rect" id="node8" href="$dc/dba/_time_step_adaptor_8h.html" title="Objects for adaptive time stepping." alt="" coords="440,80,612,107"/>
+<area shape="rect" id="node6" href="$d3/df6/_initial_condition___cases_8h.html" title="Create particles according to different initial conditions." alt="" coords="213,155,359,196"/>
+<area shape="rect" id="node4" href="$d1/d4e/_geometry_8h.html" title="Objects to handle domain geometry and boundaries." alt="" coords="5,244,132,271"/>
+<area shape="rect" id="node7" href="$d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="208,244,364,271"/>
+<area shape="rect" id="node9" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="445,244,581,271"/>
 </map>

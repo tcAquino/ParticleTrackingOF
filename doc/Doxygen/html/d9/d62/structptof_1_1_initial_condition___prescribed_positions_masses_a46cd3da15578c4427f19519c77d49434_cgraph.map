@@ -1,0 +1,6 @@
+<map id="ptof::InitialCondition_PrescribedPositionsMasses::make_position_and_hint" name="ptof::InitialCondition_PrescribedPositionsMasses::make_position_and_hint">
+<area shape="rect" id="node1" title="Make a single position along with location hint." alt="" coords="5,31,196,87"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="244,46,360,73"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="417,5,560,47"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="408,71,569,112"/>
+</map>

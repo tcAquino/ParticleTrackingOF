@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ptof::Boundary_Reinject&lt; InitialCondition &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -86,7 +86,7 @@ $(document).ready(function(){initNavTree('d4/d7b/structptof_1_1_boundary___reinj
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::Boundary_Reinject&lt; InitialCondition &gt; Class Template Reference</div>  </div>
+<div class="title">ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -94,47 +94,69 @@ $(document).ready(function(){initNavTree('d4/d7b/structptof_1_1_boundary___reinj
  <a href="../../d4/d7b/structptof_1_1_boundary___reinject.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../dd/da3/_p_t_o_f_2_boundary_8h_source.html">PTOF/Boundary.h</a>&quot;</code></p>
+<div class="dynheader">
+Collaboration diagram for ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../df/dde/structptof_1_1_boundary___reinject__coll__graph.png" border="0" usemap="#aptof_1_1_boundary___reinject_3_01_initial_condition_00_01_locator_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aptof_1_1_boundary___reinject_3_01_initial_condition_00_01_locator_01_4_coll__map" id="aptof_1_1_boundary___reinject_3_01_initial_condition_00_01_locator_01_4_coll__map">
+<area shape="rect" title="Boundary object that reinjects particles according to prescribed initial condition." alt="" coords="9,109,192,151"/>
+<area shape="rect" href="../../dd/d1e/structptof_1_1_initial_condition.html" title="Make particles and positions according to prescribed rules." alt="" coords="5,5,196,47"/>
+</map>
+<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1ec285a4ecbbf785a2a4702b8a4882c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a1ec285a4ecbbf785a2a4702b8a4882c7">Boundary_Reinject</a> (InitialCondition &amp;&amp;<a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a2e64406ba3ea143259a4f0542ec7b144">initial_condition</a>)</td></tr>
-<tr class="separator:a1ec285a4ecbbf785a2a4702b8a4882c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6b41eead69fd1b5f66b51fa04f190f6"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection &gt; </td></tr>
-<tr class="memitem:aa6b41eead69fd1b5f66b51fa04f190f6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#aa6b41eead69fd1b5f66b51fa04f190f6">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;state_old, Intersection const &amp;intersection) const</td></tr>
-<tr class="memdesc:aa6b41eead69fd1b5f66b51fa04f190f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../d4/d7b/structptof_1_1_boundary___reinject.html#aa6b41eead69fd1b5f66b51fa04f190f6">More...</a><br /></td></tr>
-<tr class="separator:aa6b41eead69fd1b5f66b51fa04f190f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad004b782f9319d9ffc8f6bd04831bc3e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#ad004b782f9319d9ffc8f6bd04831bc3e">name</a> () const</td></tr>
-<tr class="memdesc:ad004b782f9319d9ffc8f6bd04831bc3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of boundary condition type.  <a href="../../d4/d7b/structptof_1_1_boundary___reinject.html#ad004b782f9319d9ffc8f6bd04831bc3e">More...</a><br /></td></tr>
-<tr class="separator:ad004b782f9319d9ffc8f6bd04831bc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9388071297ae77d0f9a10aadb0a9b969"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a9388071297ae77d0f9a10aadb0a9b969">Boundary_Reinject</a> (<a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;<a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#ac7e0e9145e16f21110ff77db59e4b7fd">initial_condition</a>, Locator &amp;&amp;<a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a37ed78653d76d368edf6c26db87ebb30">locator</a>)</td></tr>
+<tr class="memdesc:a9388071297ae77d0f9a10aadb0a9b969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a9388071297ae77d0f9a10aadb0a9b969">More...</a><br /></td></tr>
+<tr class="separator:a9388071297ae77d0f9a10aadb0a9b969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a046e0387b90e6ec8e7be9b38e9951614"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection &gt; </td></tr>
+<tr class="memitem:a046e0387b90e6ec8e7be9b38e9951614"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a046e0387b90e6ec8e7be9b38e9951614">operator()</a> (State &amp;state, State const &amp;state_old, Intersection const &amp;intersection) const</td></tr>
+<tr class="memdesc:a046e0387b90e6ec8e7be9b38e9951614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition.  <a href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a046e0387b90e6ec8e7be9b38e9951614">More...</a><br /></td></tr>
+<tr class="separator:a046e0387b90e6ec8e7be9b38e9951614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46209f4c7cacc7c832fc59295e7f270f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a46209f4c7cacc7c832fc59295e7f270f">name</a> () const</td></tr>
+<tr class="memdesc:a46209f4c7cacc7c832fc59295e7f270f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of boundary condition type.  <a href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a46209f4c7cacc7c832fc59295e7f270f">More...</a><br /></td></tr>
+<tr class="separator:a46209f4c7cacc7c832fc59295e7f270f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2e64406ba3ea143259a4f0542ec7b144"><td class="memItemLeft" align="right" valign="top">InitialCondition&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a2e64406ba3ea143259a4f0542ec7b144">initial_condition</a></td></tr>
-<tr class="separator:a2e64406ba3ea143259a4f0542ec7b144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e0e9145e16f21110ff77db59e4b7fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#ac7e0e9145e16f21110ff77db59e4b7fd">initial_condition</a></td></tr>
+<tr class="separator:ac7e0e9145e16f21110ff77db59e4b7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ed78653d76d368edf6c26db87ebb30"><td class="memItemLeft" align="right" valign="top">Locator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html#a37ed78653d76d368edf6c26db87ebb30">locator</a></td></tr>
+<tr class="separator:a37ed78653d76d368edf6c26db87ebb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename InitialCondition&gt;<br />
-class ptof::Boundary_Reinject&lt; InitialCondition &gt;</h3>
+<div class="textblock"><h3>template&lt;typename InitialCondition, typename Locator&gt;<br />
+class ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt;</h3>
 
 <p>Boundary object that reinjects particles according to prescribed initial condition. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1ec285a4ecbbf785a2a4702b8a4882c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ec285a4ecbbf785a2a4702b8a4882c7">&#9670;&nbsp;</a></span>Boundary_Reinject()</h2>
+<a id="a9388071297ae77d0f9a10aadb0a9b969"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9388071297ae77d0f9a10aadb0a9b969">&#9670;&nbsp;</a></span>Boundary_Reinject()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename InitialCondition &gt; </div>
+template&lt;typename InitialCondition , typename Locator &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; InitialCondition &gt;::<a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">Boundary_Reinject</a> </td>
+          <td class="memname"><a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a>, Locator &gt;::<a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">Boundary_Reinject</a> </td>
           <td>(</td>
-          <td class="paramtype">InitialCondition &amp;&amp;&#160;</td>
-          <td class="paramname"><em>initial_condition</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>initial_condition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Locator &amp;&amp;&#160;</td>
+          <td class="paramname"><em>locator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -143,7 +165,9 @@ template&lt;typename InitialCondition &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">initial_condition</td><td>Initial condition object. </td></tr>
   </table>
@@ -153,19 +177,19 @@ template&lt;typename InitialCondition &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad004b782f9319d9ffc8f6bd04831bc3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad004b782f9319d9ffc8f6bd04831bc3e">&#9670;&nbsp;</a></span>name()</h2>
+<a id="a46209f4c7cacc7c832fc59295e7f270f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46209f4c7cacc7c832fc59295e7f270f">&#9670;&nbsp;</a></span>name()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename InitialCondition &gt; </div>
+template&lt;typename InitialCondition , typename Locator &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; InitialCondition &gt;::name </td>
+          <td class="memname">std::string <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a>, Locator &gt;::name </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -182,13 +206,13 @@ template&lt;typename InitialCondition &gt; </div>
 
 </div>
 </div>
-<a id="aa6b41eead69fd1b5f66b51fa04f190f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6b41eead69fd1b5f66b51fa04f190f6">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="a046e0387b90e6ec8e7be9b38e9951614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a046e0387b90e6ec8e7be9b38e9951614">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename InitialCondition &gt; </div>
+template&lt;typename InitialCondition , typename Locator &gt; </div>
 <div class="memtemplate">
 template&lt;typename State , typename Intersection &gt; </div>
 <table class="mlabels">
@@ -196,15 +220,15 @@ template&lt;typename State , typename Intersection &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; InitialCondition &gt;::operator() </td>
+          <td class="memname">bool <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a>, Locator &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;&#160;</td>
+          <td class="paramtype">State &amp;&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;&#160;</td>
+          <td class="paramtype">State const &amp;&#160;</td>
           <td class="paramname"><em>state_old</em>, </td>
         </tr>
         <tr>
@@ -236,24 +260,50 @@ template&lt;typename State , typename Intersection &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d7b/structptof_1_1_boundary___reinject_a046e0387b90e6ec8e7be9b38e9951614_cgraph.png" border="0" usemap="#ad4/d7b/structptof_1_1_boundary___reinject_a046e0387b90e6ec8e7be9b38e9951614_cgraph" alt=""/></div>
+<map name="ad4/d7b/structptof_1_1_boundary___reinject_a046e0387b90e6ec8e7be9b38e9951614_cgraph" id="ad4/d7b/structptof_1_1_boundary___reinject_a046e0387b90e6ec8e7be9b38e9951614_cgraph">
+<area shape="rect" title="Enforce boundary condition." alt="" coords="5,5,168,47"/>
+<area shape="rect" href="../../dd/d1e/structptof_1_1_initial_condition.html#a044fa3c95e5b81de5958f52bf153b88c" title="Make a single position along with location hint." alt="" coords="216,5,387,47"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a2e64406ba3ea143259a4f0542ec7b144"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e64406ba3ea143259a4f0542ec7b144">&#9670;&nbsp;</a></span>initial_condition</h2>
+<a id="ac7e0e9145e16f21110ff77db59e4b7fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7e0e9145e16f21110ff77db59e4b7fd">&#9670;&nbsp;</a></span>initial_condition</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename InitialCondition &gt; </div>
+template&lt;typename InitialCondition , typename Locator &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">InitialCondition <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; InitialCondition &gt;::initial_condition</td>
+          <td class="memname"><a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a>, Locator &gt;::initial_condition</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Initial condition according to which to reinject. </p>
+
+</div>
+</div>
+<a id="a37ed78653d76d368edf6c26db87ebb30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37ed78653d76d368edf6c26db87ebb30">&#9670;&nbsp;</a></span>locator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename InitialCondition , typename Locator &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Locator <a class="el" href="../../d4/d7b/structptof_1_1_boundary___reinject.html">ptof::Boundary_Reinject</a>&lt; <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a>, Locator &gt;::locator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Object to locate positions in mesh. </p>
 
 </div>
 </div>

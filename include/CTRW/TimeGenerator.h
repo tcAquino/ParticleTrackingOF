@@ -1,34 +1,39 @@
 /**
-  \file CTRW/TimeGenerator.h
-  \author Tomás Aquino
-  \date 10/23/2019
+   \file CTRW/TimeGenerator.h
+   \author Tomás Aquino
+   \date 10/23/2019
 
- \brief Objects to generate time increments for particle tracking.
+   \brief Objects to generate time increments for particle tracking.
 
- A TimeGenerator should implement the following minimal functionality:
+   \details
+   A TimeGenerator should implement the following minimal functionality:
 
-\code{.cpp}
-class TimeGenerator
-{
-  template <typename State>
-  val_type operator() (State const&)
-  {
-    // Return time increment, with val_type
-    // a scalar type (e.g. double)
-  }
-};
-\endcode
+   \code{.cpp}
+   class TimeGenerator
+   {
+   template <typename State>
+   val_type operator() (State const&)
+   {
+   // Return time increment, with val_type
+   // a scalar type (e.g. double)
+   }
+   };
+   \endcode
 */
 
 #ifndef CTRW_TIMEGENERATOR_H
 #define CTRW_TIMEGENERATOR_H
 
+#include "General/Parallel.h"
 #include "General/Useful.h"
+#include "Stochastic/Random.h"
 #include <random>
 
 namespace ctrw {
-/** \class TimeGenerator_Step CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
- *  \brief Deterministic time step. */
+/**
+   \class TimeGenerator_Step CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
+   \brief Deterministic time step.
+*/
 template <typename val_type = double> class TimeGenerator_Step {
   val_type _time_step;
 
@@ -47,9 +52,13 @@ public:
   }
 };
 
-/** \class TimeGenerator_Dist CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
- * \brief Time step according to a given distribution. */
-template <typename Dist, typename RNG = std::mt19937> class TimeGenerator_Dist {
+/**
+   \class TimeGenerator_Dist CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
+   \brief Time step according to a given distribution.
+*/
+template <typename Dist, typename ParallelOption = par::ParallelOptions::Serial,
+          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+class TimeGenerator_Dist {
   Dist _dist;
   RNG _rng{std::random_device{}()};
 

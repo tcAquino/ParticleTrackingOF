@@ -1,6 +1,5 @@
 <map id="PTOF/TimeStepAdaptor.h" name="PTOF/TimeStepAdaptor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,189,32"/>
-<area shape="rect" id="node2" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="26,80,169,107"/>
-<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title=" " alt="" coords="38,155,157,181"/>
-<area shape="rect" id="node4" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="10,229,185,256"/>
+<area shape="rect" id="node1" title="Objects for adaptive time stepping." alt="" coords="5,5,177,32"/>
+<area shape="rect" id="node2" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="23,80,159,107"/>
+<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="34,155,149,181"/>
 </map>

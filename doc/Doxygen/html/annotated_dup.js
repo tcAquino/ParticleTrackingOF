@@ -2,7 +2,6 @@ var annotated_dup =
 [
     [ "ctrw", "d8/d34/namespacectrw.html", [
       [ "CTRW", "d2/dd2/classctrw_1_1_c_t_r_w.html", "d2/dd2/classctrw_1_1_c_t_r_w" ],
-      [ "CTRW_Parallel", "d7/dfc/classctrw_1_1_c_t_r_w___parallel.html", "d7/dfc/classctrw_1_1_c_t_r_w___parallel" ],
       [ "JumpGenerator_Step", "d3/da3/classctrw_1_1_jump_generator___step.html", "d3/da3/classctrw_1_1_jump_generator___step" ],
       [ "JumpGenerator_Add", "d8/dd5/classctrw_1_1_jump_generator___add.html", "d8/dd5/classctrw_1_1_jump_generator___add" ],
       [ "JumpGenerator_Velocity", "d3/d4c/classctrw_1_1_jump_generator___velocity.html", "d3/d4c/classctrw_1_1_jump_generator___velocity" ],
@@ -36,6 +35,9 @@ var annotated_dup =
       [ "Get_mass", "de/d1b/structctrw_1_1_get__mass.html", "de/d1b/structctrw_1_1_get__mass" ],
       [ "Get_velocity", "d1/d4e/structctrw_1_1_get__velocity.html", "d1/d4e/structctrw_1_1_get__velocity" ],
       [ "Get_velocity_component", "de/d39/structctrw_1_1_get__velocity__component.html", "de/d39/structctrw_1_1_get__velocity__component" ],
+      [ "Get_property", "da/d9b/structctrw_1_1_get__property.html", "da/d9b/structctrw_1_1_get__property" ],
+      [ "Get_cell_property", "d1/d93/structctrw_1_1_get__cell__property.html", "d1/d93/structctrw_1_1_get__cell__property" ],
+      [ "Get_cell_arraystyleproperty", "d1/d9f/structctrw_1_1_get__cell__arraystyleproperty.html", "d1/d9f/structctrw_1_1_get__cell__arraystyleproperty" ],
       [ "Get_position_property", "d0/d9a/structctrw_1_1_get__position__property.html", "d0/d9a/structctrw_1_1_get__position__property" ],
       [ "Get_velocity_property", "d9/d1a/structctrw_1_1_get__velocity__property.html", "d9/d1a/structctrw_1_1_get__velocity__property" ],
       [ "Get_position_periodic_cartesian", "d7/dda/structctrw_1_1_get__position__periodic__cartesian.html", "d7/dda/structctrw_1_1_get__position__periodic__cartesian" ],
@@ -46,6 +48,7 @@ var annotated_dup =
       [ "Get_tag", "d5/daf/structctrw_1_1_get__tag.html", "d5/daf/structctrw_1_1_get__tag" ],
       [ "Get_new", "d0/dc3/structctrw_1_1_get__new.html", "d0/dc3/structctrw_1_1_get__new" ],
       [ "Get_old", "dd/d08/structctrw_1_1_get__old.html", "dd/d08/structctrw_1_1_get__old" ],
+      [ "Get_interp", "d4/d0b/structctrw_1_1_get__interp.html", "d4/d0b/structctrw_1_1_get__interp" ],
       [ "Get_position_interp_velocity", "d7/d1a/structctrw_1_1_get__position__interp__velocity.html", "d7/d1a/structctrw_1_1_get__position__interp__velocity" ],
       [ "Get_time_interp_velocity", "d5/d10/structctrw_1_1_get__time__interp__velocity.html", "d5/d10/structctrw_1_1_get__time__interp__velocity" ],
       [ "Get_time_interp", "d1/d4f/structctrw_1_1_get__time__interp.html", "d1/d4f/structctrw_1_1_get__time__interp" ],
@@ -113,167 +116,87 @@ var annotated_dup =
       [ "is_convertible_from_pow_impl", "d0/db9/structmeta_1_1is__convertible__from__pow__impl.html", "d0/db9/structmeta_1_1is__convertible__from__pow__impl" ],
       [ "is_convertible_from_sqrt_impl", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl.html", "d2/dfd/structmeta_1_1is__convertible__from__sqrt__impl" ],
       [ "indices", "d5/d37/structmeta_1_1indices.html", "d5/d37/structmeta_1_1indices" ],
-      [ "Selector_t", "da/d51/structmeta_1_1_selector__t.html", null ],
-      [ "Selector", "da/d34/structmeta_1_1_selector.html", null ],
-      [ "ParallelOptions", "dc/d3e/structmeta_1_1_parallel_options.html", [
-        [ "Parallel", "df/d7a/structmeta_1_1_parallel_options_1_1_parallel.html", null ],
-        [ "Serial", "de/dc2/structmeta_1_1_parallel_options_1_1_serial.html", null ]
+      [ "Selector_t", "da/d51/structmeta_1_1_selector__t.html", "da/d51/structmeta_1_1_selector__t" ],
+      [ "Selector", "da/d34/structmeta_1_1_selector.html", "da/d34/structmeta_1_1_selector" ]
+    ] ],
+    [ "par", "d4/df4/namespacepar.html", [
+      [ "ParallelOptions", "de/d50/structpar_1_1_parallel_options.html", [
+        [ "Parallel", "d0/d55/structpar_1_1_parallel_options_1_1_parallel.html", null ],
+        [ "Serial", "d4/dfb/structpar_1_1_parallel_options_1_1_serial.html", null ]
       ] ]
     ] ],
     [ "ptof", "d2/dd1/namespaceptof.html", [
       [ "model_advection_2d", "d6/d86/namespaceptof_1_1model__advection__2d.html", [
-        [ "Model", "d3/df2/structptof_1_1model__advection__2d_1_1_model.html", "d3/df2/structptof_1_1model__advection__2d_1_1_model" ],
-        [ "Solvers", "df/d8b/structptof_1_1model__advection__2d_1_1_solvers.html", "df/d8b/structptof_1_1model__advection__2d_1_1_solvers" ],
-        [ "Transport", "db/dc2/structptof_1_1model__advection__2d_1_1_transport.html", "db/dc2/structptof_1_1model__advection__2d_1_1_transport" ]
-      ] ],
-      [ "model_advection_2d_parallel", "da/d99/namespaceptof_1_1model__advection__2d__parallel.html", [
-        [ "Model", "d0/d0f/structptof_1_1model__advection__2d__parallel_1_1_model.html", "d0/d0f/structptof_1_1model__advection__2d__parallel_1_1_model" ]
+        [ "Definitions", "da/d96/structptof_1_1model__advection__2d_1_1_definitions.html", "da/d96/structptof_1_1model__advection__2d_1_1_definitions" ]
       ] ],
       [ "model_advection_3d", "d0/d5b/namespaceptof_1_1model__advection__3d.html", [
-        [ "Model", "dc/d30/structptof_1_1model__advection__3d_1_1_model.html", "dc/d30/structptof_1_1model__advection__3d_1_1_model" ]
-      ] ],
-      [ "model_advection_3d_parallel", "d2/d78/namespaceptof_1_1model__advection__3d__parallel.html", [
-        [ "Model", "d6/d50/structptof_1_1model__advection__3d__parallel_1_1_model.html", "d6/d50/structptof_1_1model__advection__3d__parallel_1_1_model" ]
+        [ "Definitions", "da/d3f/structptof_1_1model__advection__3d_1_1_definitions.html", "da/d3f/structptof_1_1model__advection__3d_1_1_definitions" ]
       ] ],
       [ "model_advection_diffusion_2d", "dc/d92/namespaceptof_1_1model__advection__diffusion__2d.html", [
-        [ "Model", "d8/d28/structptof_1_1model__advection__diffusion__2d_1_1_model.html", "d8/d28/structptof_1_1model__advection__diffusion__2d_1_1_model" ],
-        [ "Solvers", "d0/d22/structptof_1_1model__advection__diffusion__2d_1_1_solvers.html", "d0/d22/structptof_1_1model__advection__diffusion__2d_1_1_solvers" ],
-        [ "Transport", "da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html", "da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport" ],
-        [ "Reaction", "d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html", "d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction" ],
-        [ "InitialCondition", "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html", "df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition" ],
-        [ "Output", "d0/d89/structptof_1_1model__advection__diffusion__2d_1_1_output.html", "d0/d89/structptof_1_1model__advection__diffusion__2d_1_1_output" ]
-      ] ],
-      [ "model_advection_diffusion_2d_parallel", "d6/dff/namespaceptof_1_1model__advection__diffusion__2d__parallel.html", [
-        [ "Model", "d2/d0a/structptof_1_1model__advection__diffusion__2d__parallel_1_1_model.html", "d2/d0a/structptof_1_1model__advection__diffusion__2d__parallel_1_1_model" ]
+        [ "Definitions", "d8/d25/structptof_1_1model__advection__diffusion__2d_1_1_definitions.html", "d8/d25/structptof_1_1model__advection__diffusion__2d_1_1_definitions" ]
       ] ],
       [ "model_advection_diffusion_3d", "d3/d3b/namespaceptof_1_1model__advection__diffusion__3d.html", [
-        [ "Model", "d3/df7/structptof_1_1model__advection__diffusion__3d_1_1_model.html", "d3/df7/structptof_1_1model__advection__diffusion__3d_1_1_model" ]
-      ] ],
-      [ "model_advection_diffusion_3d_parallel", "d2/d56/namespaceptof_1_1model__advection__diffusion__3d__parallel.html", [
-        [ "Model", "d3/df6/structptof_1_1model__advection__diffusion__3d__parallel_1_1_model.html", "d3/df6/structptof_1_1model__advection__diffusion__3d__parallel_1_1_model" ]
+        [ "Definitions", "de/d4f/structptof_1_1model__advection__diffusion__3d_1_1_definitions.html", "de/d4f/structptof_1_1model__advection__diffusion__3d_1_1_definitions" ]
       ] ],
       [ "model_advection_diffusion_fpt_2d", "d2/dbc/namespaceptof_1_1model__advection__diffusion__fpt__2d.html", [
-        [ "Model", "db/d89/structptof_1_1model__advection__diffusion__fpt__2d_1_1_model.html", "db/d89/structptof_1_1model__advection__diffusion__fpt__2d_1_1_model" ]
-      ] ],
-      [ "model_advection_diffusion_fpt_2d_parallel", "da/dc9/namespaceptof_1_1model__advection__diffusion__fpt__2d__parallel.html", [
-        [ "Model", "d7/db8/structptof_1_1model__advection__diffusion__fpt__2d__parallel_1_1_model.html", "d7/db8/structptof_1_1model__advection__diffusion__fpt__2d__parallel_1_1_model" ]
+        [ "Definitions", "dc/d5e/structptof_1_1model__advection__diffusion__fpt__2d_1_1_definitions.html", "dc/d5e/structptof_1_1model__advection__diffusion__fpt__2d_1_1_definitions" ]
       ] ],
       [ "model_advection_diffusion_fpt_3d", "de/dbb/namespaceptof_1_1model__advection__diffusion__fpt__3d.html", [
-        [ "Model", "d8/d2a/structptof_1_1model__advection__diffusion__fpt__3d_1_1_model.html", "d8/d2a/structptof_1_1model__advection__diffusion__fpt__3d_1_1_model" ]
-      ] ],
-      [ "model_advection_diffusion_fpt_3d_parallel", "d2/dbe/namespaceptof_1_1model__advection__diffusion__fpt__3d__parallel.html", [
-        [ "Model", "dc/d6c/structptof_1_1model__advection__diffusion__fpt__3d__parallel_1_1_model.html", "dc/d6c/structptof_1_1model__advection__diffusion__fpt__3d__parallel_1_1_model" ]
+        [ "Definitions", "da/d2f/structptof_1_1model__advection__diffusion__fpt__3d_1_1_definitions.html", "da/d2f/structptof_1_1model__advection__diffusion__fpt__3d_1_1_definitions" ]
       ] ],
       [ "model_advection_diffusion_surface_decay_2d", "d0/de7/namespaceptof_1_1model__advection__diffusion__surface__decay__2d.html", [
-        [ "Model", "d0/da7/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_model.html", "d0/da7/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_model" ],
-        [ "Reaction", "d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html", "d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction" ]
-      ] ],
-      [ "model_advection_diffusion_surface_decay_2d_parallel", "d6/d56/namespaceptof_1_1model__advection__diffusion__surface__decay__2d__parallel.html", [
-        [ "Model", "db/da2/structptof_1_1model__advection__diffusion__surface__decay__2d__parallel_1_1_model.html", "db/da2/structptof_1_1model__advection__diffusion__surface__decay__2d__parallel_1_1_model" ]
+        [ "Definitions", "d0/ddc/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions.html", "d0/ddc/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions" ]
       ] ],
       [ "model_advection_diffusion_surface_decay_3d", "d0/d84/namespaceptof_1_1model__advection__diffusion__surface__decay__3d.html", [
-        [ "Model", "d6/d5a/structptof_1_1model__advection__diffusion__surface__decay__3d_1_1_model.html", "d6/d5a/structptof_1_1model__advection__diffusion__surface__decay__3d_1_1_model" ]
-      ] ],
-      [ "model_advection_diffusion_surface_decay_3d_parallel", "de/d40/namespaceptof_1_1model__advection__diffusion__surface__decay__3d__parallel.html", [
-        [ "Model", "d0/da6/structptof_1_1model__advection__diffusion__surface__decay__3d__parallel_1_1_model.html", "d0/da6/structptof_1_1model__advection__diffusion__surface__decay__3d__parallel_1_1_model" ]
+        [ "Definitions", "d6/d7c/structptof_1_1model__advection__diffusion__surface__decay__3d_1_1_definitions.html", "d6/d7c/structptof_1_1model__advection__diffusion__surface__decay__3d_1_1_definitions" ]
       ] ],
       [ "model_bcc_cartesian_advection", "df/d6c/namespaceptof_1_1model__bcc__cartesian__advection.html", [
-        [ "Model", "dd/d1b/structptof_1_1model__bcc__cartesian__advection_1_1_model.html", "dd/d1b/structptof_1_1model__bcc__cartesian__advection_1_1_model" ],
-        [ "Transport", "df/d88/structptof_1_1model__bcc__cartesian__advection_1_1_transport.html", "df/d88/structptof_1_1model__bcc__cartesian__advection_1_1_transport" ]
+        [ "Definitions", "df/d86/structptof_1_1model__bcc__cartesian__advection_1_1_definitions.html", "df/d86/structptof_1_1model__bcc__cartesian__advection_1_1_definitions" ]
       ] ],
       [ "model_bcc_cartesian_advection_diffusion", "df/dfd/namespaceptof_1_1model__bcc__cartesian__advection__diffusion.html", [
-        [ "Model", "d2/da9/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_model.html", "d2/da9/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_model" ],
-        [ "Transport", "d2/da7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport.html", "d2/da7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport" ]
+        [ "Definitions", "dc/dc7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions.html", "dc/dc7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions" ]
       ] ],
       [ "model_bcc_cartesian_advection_diffusion_fpt", "d4/d74/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__fpt.html", [
-        [ "Model", "db/d65/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt_1_1_model.html", "db/d65/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt_1_1_model" ]
-      ] ],
-      [ "model_bcc_cartesian_advection_diffusion_fpt_parallel", "de/d9e/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel.html", [
-        [ "Model", "d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model.html", "d6/d55/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt__parallel_1_1_model" ]
-      ] ],
-      [ "model_bcc_cartesian_advection_diffusion_parallel", "d7/db0/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__parallel.html", [
-        [ "Model", "df/d52/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_model.html", "df/d52/structptof_1_1model__bcc__cartesian__advection__diffusion__parallel_1_1_model" ]
+        [ "Definitions", "dc/d9b/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt_1_1_definitions.html", "dc/d9b/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt_1_1_definitions" ]
       ] ],
       [ "model_bcc_cartesian_advection_diffusion_surface_decay", "d5/d7d/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay.html", [
-        [ "Model", "d5/d44/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay_1_1_model.html", "d5/d44/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay_1_1_model" ]
-      ] ],
-      [ "model_bcc_cartesian_advection_diffusion_surface_decay_parallel", "da/d2d/namespaceptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay__parallel.html", [
-        [ "Model", "d6/dfa/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay__parallel_1_1_model.html", "d6/dfa/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay__parallel_1_1_model" ]
-      ] ],
-      [ "model_bcc_cartesian_advection_parallel", "d6/d13/namespaceptof_1_1model__bcc__cartesian__advection__parallel.html", [
-        [ "Model", "dc/d22/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_model.html", "dc/d22/structptof_1_1model__bcc__cartesian__advection__parallel_1_1_model" ]
+        [ "Definitions", "dd/d15/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay_1_1_definitions.html", "dd/d15/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay_1_1_definitions" ]
       ] ],
       [ "model_bcc_symmetryplanes_advection", "d4/de3/namespaceptof_1_1model__bcc__symmetryplanes__advection.html", [
-        [ "Model", "dd/d30/structptof_1_1model__bcc__symmetryplanes__advection_1_1_model.html", "dd/d30/structptof_1_1model__bcc__symmetryplanes__advection_1_1_model" ]
+        [ "Definitions", "de/d3e/structptof_1_1model__bcc__symmetryplanes__advection_1_1_definitions.html", "de/d3e/structptof_1_1model__bcc__symmetryplanes__advection_1_1_definitions" ]
       ] ],
       [ "model_bcc_symmetryplanes_advection_diffusion", "dd/d0b/namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion.html", [
-        [ "Model", "db/d17/structptof_1_1model__bcc__symmetryplanes__advection__diffusion_1_1_model.html", "db/d17/structptof_1_1model__bcc__symmetryplanes__advection__diffusion_1_1_model" ]
+        [ "Definitions", "d6/da8/structptof_1_1model__bcc__symmetryplanes__advection__diffusion_1_1_definitions.html", "d6/da8/structptof_1_1model__bcc__symmetryplanes__advection__diffusion_1_1_definitions" ]
       ] ],
       [ "model_bcc_symmetryplanes_advection_diffusion_fpt", "d6/d4d/namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt.html", [
-        [ "Model", "d8/d11/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt_1_1_model.html", "d8/d11/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt_1_1_model" ]
-      ] ],
-      [ "model_bcc_symmetryplanes_advection_diffusion_fpt_parallel", "d1/d9a/namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt__parallel.html", [
-        [ "Model", "d8/d8d/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt__parallel_1_1_model.html", "d8/d8d/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt__parallel_1_1_model" ]
-      ] ],
-      [ "model_bcc_symmetryplanes_advection_diffusion_parallel", "d0/d8a/namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion__parallel.html", [
-        [ "Model", "d8/d58/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__parallel_1_1_model.html", "d8/d58/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__parallel_1_1_model" ]
+        [ "Definitions", "d4/dc5/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt_1_1_definitions.html", "d4/dc5/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt_1_1_definitions" ]
       ] ],
       [ "model_bcc_symmetryplanes_advection_diffusion_surface_decay", "d2/d92/namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay.html", [
-        [ "Model", "d1/dd3/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay_1_1_model.html", "d1/dd3/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay_1_1_model" ]
-      ] ],
-      [ "model_bcc_symmetryplanes_advection_diffusion_surface_decay_parallel", "d4/d6b/namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay__parallel.html", [
-        [ "Model", "da/d03/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay__parallel_1_1_model.html", "da/d03/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay__parallel_1_1_model" ]
-      ] ],
-      [ "model_bcc_symmetryplanes_advection_parallel", "da/db2/namespaceptof_1_1model__bcc__symmetryplanes__advection__parallel.html", [
-        [ "Model", "d6/d83/structptof_1_1model__bcc__symmetryplanes__advection__parallel_1_1_model.html", "d6/d83/structptof_1_1model__bcc__symmetryplanes__advection__parallel_1_1_model" ]
+        [ "Definitions", "d0/d31/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay_1_1_definitions.html", "d0/d31/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_2d", "d8/d77/namespaceptof_1_1model__periodic__cartesian__advection__2d.html", [
-        [ "Model", "de/dd4/structptof_1_1model__periodic__cartesian__advection__2d_1_1_model.html", "de/dd4/structptof_1_1model__periodic__cartesian__advection__2d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_2d_parallel", "dd/dd0/namespaceptof_1_1model__periodic__cartesian__advection__2d__parallel.html", [
-        [ "Model", "d3/dd9/structptof_1_1model__periodic__cartesian__advection__2d__parallel_1_1_model.html", "d3/dd9/structptof_1_1model__periodic__cartesian__advection__2d__parallel_1_1_model" ]
+        [ "Definitions", "d5/d2e/structptof_1_1model__periodic__cartesian__advection__2d_1_1_definitions.html", "d5/d2e/structptof_1_1model__periodic__cartesian__advection__2d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_3d", "d1/dbd/namespaceptof_1_1model__periodic__cartesian__advection__3d.html", [
-        [ "Model", "d5/d4f/structptof_1_1model__periodic__cartesian__advection__3d_1_1_model.html", "d5/d4f/structptof_1_1model__periodic__cartesian__advection__3d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_3d_parallel", "d9/dff/namespaceptof_1_1model__periodic__cartesian__advection__3d__parallel.html", [
-        [ "Model", "d5/db1/structptof_1_1model__periodic__cartesian__advection__3d__parallel_1_1_model.html", "d5/db1/structptof_1_1model__periodic__cartesian__advection__3d__parallel_1_1_model" ]
+        [ "Definitions", "d9/dad/structptof_1_1model__periodic__cartesian__advection__3d_1_1_definitions.html", "d9/dad/structptof_1_1model__periodic__cartesian__advection__3d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_diffusion_2d", "d5/d6e/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__2d.html", [
-        [ "Model", "d3/da7/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_model.html", "d3/da7/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_diffusion_2d_parallel", "d1/de8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__2d__parallel.html", [
-        [ "Model", "da/d86/structptof_1_1model__periodic__cartesian__advection__diffusion__2d__parallel_1_1_model.html", "da/d86/structptof_1_1model__periodic__cartesian__advection__diffusion__2d__parallel_1_1_model" ]
+        [ "Definitions", "d3/d78/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_definitions.html", "d3/d78/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_diffusion_3d", "d8/d3c/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__3d.html", [
-        [ "Model", "d5/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_model.html", "d5/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_diffusion_3d_parallel", "d5/daf/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__3d__parallel.html", [
-        [ "Model", "d7/d62/structptof_1_1model__periodic__cartesian__advection__diffusion__3d__parallel_1_1_model.html", "d7/d62/structptof_1_1model__periodic__cartesian__advection__diffusion__3d__parallel_1_1_model" ]
+        [ "Definitions", "da/d6a/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_definitions.html", "da/d6a/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_diffusion_fpt_2d", "d3/d2e/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d.html", [
-        [ "Model", "dc/d39/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d_1_1_model.html", "dc/d39/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_diffusion_fpt_2d_parallel", "d2/d3e/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d__parallel.html", [
-        [ "Model", "d2/dcd/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d__parallel_1_1_model.html", "d2/dcd/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d__parallel_1_1_model" ]
+        [ "Definitions", "d0/d80/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d_1_1_definitions.html", "d0/d80/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_diffusion_fpt_3d", "d7/db8/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d.html", [
-        [ "Model", "dc/d32/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d_1_1_model.html", "dc/d32/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_diffusion_fpt_3d_parallel", "da/dca/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d__parallel.html", [
-        [ "Model", "d0/d77/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d__parallel_1_1_model.html", "d0/d77/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d__parallel_1_1_model" ]
+        [ "Definitions", "dc/d3c/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d_1_1_definitions.html", "dc/d3c/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_diffusion_surface_decay_2d", "d4/de5/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d.html", [
-        [ "Model", "de/dd0/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_model.html", "de/dd0/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_diffusion_surface_decay_2d_parallel", "d4/d44/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d__parallel.html", [
-        [ "Model", "df/d2e/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d__parallel_1_1_model.html", "df/d2e/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d__parallel_1_1_model" ]
+        [ "Definitions", "df/d86/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_definitions.html", "df/d86/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_definitions" ]
       ] ],
       [ "model_periodic_cartesian_advection_diffusion_surface_decay_3d", "d5/d8c/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d.html", [
-        [ "Model", "d1/d0c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_model.html", "d1/d0c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_model" ]
-      ] ],
-      [ "model_periodic_cartesian_advection_diffusion_surface_decay_3d_parallel", "d5/d71/namespaceptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d__parallel.html", [
-        [ "Model", "d1/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d__parallel_1_1_model.html", "d1/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d__parallel_1_1_model" ]
+        [ "Definitions", "d1/d4c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_definitions.html", "d1/d4c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_definitions" ]
       ] ],
       [ "Boundary_DoNothing", "d6/d3e/structptof_1_1_boundary___do_nothing.html", "d6/d3e/structptof_1_1_boundary___do_nothing" ],
       [ "Boundary_Periodic", "d3/dd9/structptof_1_1_boundary___periodic.html", "d3/dd9/structptof_1_1_boundary___periodic" ],
@@ -292,18 +215,35 @@ var annotated_dup =
       [ "DirectoriesOF", "d1/d82/structptof_1_1_directories_o_f.html", "d1/d82/structptof_1_1_directories_o_f" ],
       [ "VectorField_LinearInterpolation_OF", "d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html", "d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f" ],
       [ "ScalarField_LinearInterpolation_OF", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html", "d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f" ],
-      [ "Geometry", "dc/d30/structptof_1_1_geometry.html", "dc/d30/structptof_1_1_geometry" ],
+      [ "Geometry_Generic", "da/dd3/structptof_1_1_geometry___generic.html", "da/dd3/structptof_1_1_geometry___generic" ],
       [ "Geometry_Periodic_Cartesian", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html", "d2/d99/structptof_1_1_geometry___periodic___cartesian" ],
       [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ],
       [ "Info_Type", "d8/d13/structptof_1_1_info___type.html", "d8/d13/structptof_1_1_info___type" ],
       [ "Info_Absorbed", "d6/df0/structptof_1_1_info___absorbed.html", "d6/df0/structptof_1_1_info___absorbed" ],
       [ "Info_Absorbed_Reinjections", "dc/d06/structptof_1_1_info___absorbed___reinjections.html", "dc/d06/structptof_1_1_info___absorbed___reinjections" ],
+      [ "Info_Contact_Point", "d3/d28/structptof_1_1_info___contact___point.html", "d3/d28/structptof_1_1_info___contact___point" ],
+      [ "InitialCondition", "dd/d1e/structptof_1_1_initial_condition.html", "dd/d1e/structptof_1_1_initial_condition" ],
+      [ "InitialCondition_Continuous", "d5/d94/structptof_1_1_initial_condition___continuous.html", "d5/d94/structptof_1_1_initial_condition___continuous" ],
+      [ "InitialCondition_Point", "d9/ddf/structptof_1_1_initial_condition___point.html", "d9/ddf/structptof_1_1_initial_condition___point" ],
+      [ "InitialCondition_DistributedPosition", "d7/dc5/structptof_1_1_initial_condition___distributed_position.html", "d7/dc5/structptof_1_1_initial_condition___distributed_position" ],
+      [ "InitialCondition_DistributedCellCenters", "d7/d02/structptof_1_1_initial_condition___distributed_cell_centers.html", "d7/d02/structptof_1_1_initial_condition___distributed_cell_centers" ],
+      [ "InitialCondition_DistributedFaceCenters", "de/d10/structptof_1_1_initial_condition___distributed_face_centers.html", "de/d10/structptof_1_1_initial_condition___distributed_face_centers" ],
+      [ "InitialCondition_UniformCellCenters", "d3/df5/structptof_1_1_initial_condition___uniform_cell_centers.html", "d3/df5/structptof_1_1_initial_condition___uniform_cell_centers" ],
+      [ "InitialCondition_UniformFaceCenters", "de/d37/structptof_1_1_initial_condition___uniform_face_centers.html", "de/d37/structptof_1_1_initial_condition___uniform_face_centers" ],
+      [ "InitialCondition_FluxweightedCellCenters", "df/d2a/structptof_1_1_initial_condition___fluxweighted_cell_centers.html", "df/d2a/structptof_1_1_initial_condition___fluxweighted_cell_centers" ],
+      [ "InitialCondition_FluxweightedFaceCenters", "d8/d0c/structptof_1_1_initial_condition___fluxweighted_face_centers.html", "d8/d0c/structptof_1_1_initial_condition___fluxweighted_face_centers" ],
+      [ "InitialCondition_PrescribedPositions", "d7/db0/structptof_1_1_initial_condition___prescribed_positions.html", "d7/db0/structptof_1_1_initial_condition___prescribed_positions" ],
+      [ "InitialCondition_PrescribedPositionsMasses", "d9/d62/structptof_1_1_initial_condition___prescribed_positions_masses.html", "d9/d62/structptof_1_1_initial_condition___prescribed_positions_masses" ],
+      [ "InitialCondition_PrescribedPositionsMassesTags", "d4/da9/structptof_1_1_initial_condition___prescribed_positions_masses_tags.html", "d4/da9/structptof_1_1_initial_condition___prescribed_positions_masses_tags" ],
+      [ "InitialCondition_PrescribedPositionsMassesTagsTimes", "d0/d04/structptof_1_1_initial_condition___prescribed_positions_masses_tags_times.html", "d0/d04/structptof_1_1_initial_condition___prescribed_positions_masses_tags_times" ],
+      [ "InitialCondition_DistributedNearFaces", "dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html", "dc/d25/structptof_1_1_initial_condition___distributed_near_faces" ],
+      [ "InitialCondition_UniformNearFaces", "d5/dcd/structptof_1_1_initial_condition___uniform_near_faces.html", "d5/dcd/structptof_1_1_initial_condition___uniform_near_faces" ],
+      [ "InitialCondition_FluxweightedNearFaces", "dc/d67/structptof_1_1_initial_condition___fluxweighted_near_faces.html", "dc/d67/structptof_1_1_initial_condition___fluxweighted_near_faces" ],
       [ "InitialConditionParameters_Cases", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html", "dd/d20/structptof_1_1_initial_condition_parameters___cases" ],
       [ "InitialCondition_Cases", "db/dfb/classptof_1_1_initial_condition___cases.html", "db/dfb/classptof_1_1_initial_condition___cases" ],
       [ "InitialConditionList", "df/dfe/structptof_1_1_initial_condition_list.html", "df/dfe/structptof_1_1_initial_condition_list" ],
       [ "Locator_Cell", "d0/d4f/structptof_1_1_locator___cell.html", "d0/d4f/structptof_1_1_locator___cell" ],
       [ "MeasurementSpacing", "d3/da6/structptof_1_1_measurement_spacing.html", "d3/da6/structptof_1_1_measurement_spacing" ],
-      [ "MeasurementSpacingUnits", "d2/dfc/structptof_1_1_measurement_spacing_units.html", "d2/dfc/structptof_1_1_measurement_spacing_units" ],
       [ "Measurer", "db/d74/structptof_1_1_measurer.html", "db/d74/structptof_1_1_measurer" ],
       [ "Measurer_absorption_time", "d4/d33/structptof_1_1_measurer__absorption__time.html", "d4/d33/structptof_1_1_measurer__absorption__time" ],
       [ "MeasurerTime", "dc/d05/structptof_1_1_measurer_time.html", "dc/d05/structptof_1_1_measurer_time" ],
@@ -332,7 +272,7 @@ var annotated_dup =
       [ "MeasurerTime_first_crossing_time", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html", "dc/dd6/structptof_1_1_measurer_time__first__crossing__time" ],
       [ "OutputParameters_Cases", "d8/d12/structptof_1_1_output_parameters___cases.html", "d8/d12/structptof_1_1_output_parameters___cases" ],
       [ "Output_Cases", "d5/de8/classptof_1_1_output___cases.html", "d5/de8/classptof_1_1_output___cases" ],
-      [ "ParticleMaker", "da/dae/structptof_1_1_particle_maker.html", "da/dae/structptof_1_1_particle_maker" ],
+      [ "ParticleMaker_Generic", "d4/ddd/structptof_1_1_particle_maker___generic.html", "d4/ddd/structptof_1_1_particle_maker___generic" ],
       [ "ParticleMaker_Periodic", "d5/d84/structptof_1_1_particle_maker___periodic.html", "d5/d84/structptof_1_1_particle_maker___periodic" ],
       [ "Phase", "d0/d06/structptof_1_1_phase.html", "d0/d06/structptof_1_1_phase" ],
       [ "SurfaceReaction_AFluidPlusASolidtoASolid", "d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html", "d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid" ],
@@ -350,8 +290,8 @@ var annotated_dup =
       [ "Store_Nothing", "de/df6/structptof_1_1_store___nothing.html", "de/df6/structptof_1_1_store___nothing" ],
       [ "Store_Absorbed", "d6/dee/structptof_1_1_store___absorbed.html", "d6/dee/structptof_1_1_store___absorbed" ],
       [ "Store_Absorbed_Reinjections", "de/dbb/structptof_1_1_store___absorbed___reinjections.html", "de/dbb/structptof_1_1_store___absorbed___reinjections" ],
-      [ "Store_Info_Contact", "d0/d38/structptof_1_1_store___info___contact.html", "d0/d38/structptof_1_1_store___info___contact" ],
       [ "TimeStepAdaptor_CellSize_SurfaceReaction", "d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html", "d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction" ],
+      [ "TimeUnits", "df/d99/structptof_1_1_time_units.html", "df/d99/structptof_1_1_time_units" ],
       [ "CheckOptions", "d3/d06/structptof_1_1_check_options.html", [
         [ "Check", "d3/d51/structptof_1_1_check_options_1_1_check.html", null ],
         [ "NoCheck", "de/de1/structptof_1_1_check_options_1_1_no_check.html", null ],
@@ -364,6 +304,8 @@ var annotated_dup =
     [ "stochastic", "d8/d67/namespacestochastic.html", [
       [ "RNG", "d1/d7d/structstochastic_1_1_r_n_g.html", "d1/d7d/structstochastic_1_1_r_n_g" ],
       [ "RNG_shared_engine", "d6/d67/structstochastic_1_1_r_n_g__shared__engine.html", "d6/d67/structstochastic_1_1_r_n_g__shared__engine" ],
+      [ "RNGThreaded", "d3/d90/structstochastic_1_1_r_n_g_threaded.html", "d3/d90/structstochastic_1_1_r_n_g_threaded" ],
+      [ "RNGThreaded< par::ParallelOptions::Serial, Engine_t >", "d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4.html", "d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4" ],
       [ "skewedlevystable_distribution", "d7/db1/classstochastic_1_1skewedlevystable__distribution.html", "d7/db1/classstochastic_1_1skewedlevystable__distribution" ],
       [ "pareto_distribution", "d7/d85/classstochastic_1_1pareto__distribution.html", "d7/d85/classstochastic_1_1pareto__distribution" ],
       [ "lomax_distribution", "d5/d09/classstochastic_1_1lomax__distribution.html", "d5/d09/classstochastic_1_1lomax__distribution" ],
@@ -373,7 +315,7 @@ var annotated_dup =
       [ "discrete_dist_distribution", "da/dd2/classstochastic_1_1discrete__dist__distribution.html", "da/dd2/classstochastic_1_1discrete__dist__distribution" ],
       [ "discrete_conditional_dist_distribution", "dc/d44/classstochastic_1_1discrete__conditional__dist__distribution.html", "dc/d44/classstochastic_1_1discrete__conditional__dist__distribution" ],
       [ "uniform_cylinder_distribution", "d8/d10/classstochastic_1_1uniform__cylinder__distribution.html", "d8/d10/classstochastic_1_1uniform__cylinder__distribution" ],
-      [ "uniform_paralleliped_distribution", "d5/d74/classstochastic_1_1uniform__paralleliped__distribution.html", "d5/d74/classstochastic_1_1uniform__paralleliped__distribution" ],
+      [ "uniform_parallelipiped_distribution", "d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution.html", "d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution" ],
       [ "Logspacing", "d7/d3c/structstochastic_1_1_logspacing.html", null ],
       [ "Linspacing", "dd/d19/structstochastic_1_1_linspacing.html", null ]
     ] ],
@@ -394,22 +336,25 @@ var annotated_dup =
     ] ],
     [ "Check", "de/df2/class_check.html", null ],
     [ "Check", "d2/df7/struct_check_options_1_1_check.html", null ],
-    [ "Info_type", "d4/d6e/struct_info__type.html", null ],
+    [ "DomainShape", "d9/d78/class_domain_shape.html", null ],
+    [ "Get_cell_property_arrayop", "dd/de8/class_get__cell__property__arrayop.html", null ],
+    [ "Info_Absorbed_Contact_Point", "d4/d9f/struct_info___absorbed___contact___point.html", null ],
     [ "is_convertible_from_times_impl", "d2/dfa/classis__convertible__from__times__impl.html", null ],
     [ "MeasurementList", "d9/d22/struct_measurement_list.html", "d9/d22/struct_measurement_list" ],
     [ "MeasureSpacing", "d8/dc5/struct_measure_spacing.html", null ],
     [ "NeighborPrecheck", "d1/df9/class_search_options_1_1_neighbor_precheck.html", null ],
     [ "NextMeasurementTime", "d7/df2/struct_next_measurement_time.html", "d7/df2/struct_next_measurement_time" ],
     [ "NextMeasurementTime_linear", "da/d8b/struct_next_measurement_time__linear.html", "da/d8b/struct_next_measurement_time__linear" ],
+    [ "NextMeasurementTime_linear_step", "d9/dff/struct_next_measurement_time__linear__step.html", "d9/dff/struct_next_measurement_time__linear__step" ],
     [ "NextMeasurementTime_log", "da/d3d/struct_next_measurement_time__log.html", "da/d3d/struct_next_measurement_time__log" ],
     [ "NextMeasurementTime_log", "dc/de8/struct_output___cases_1_1_next_measurement_time__log.html", null ],
-    [ "NextMeasurementTime_step", "de/d69/struct_next_measurement_time__step.html", "de/d69/struct_next_measurement_time__step" ],
-    [ "NoChecl", "d5/d05/struct_check_options_1_1_no_checl.html", null ],
+    [ "NextMeasurementTime_log_step", "d7/db7/struct_next_measurement_time__log__step.html", "d7/db7/struct_next_measurement_time__log__step" ],
+    [ "NoCheck", "d2/da6/struct_check_options_1_1_no_check.html", null ],
     [ "OutputParameters_Cases_Cases", "d9/d8a/struct_output_parameters___cases___cases.html", null ],
     [ "Parallel", "d3/d1f/struct_parallel_options_1_1_parallel.html", null ],
     [ "Parameters", "d4/d48/struct_phase_1_1_parameters.html", null ],
     [ "Serial", "da/da3/struct_parallel_options_1_1_serial.html", null ],
-    [ "State_Position", "df/d93/struct_state___position.html", null ],
+    [ "State_Position", "d3/d28/class_state___position.html", null ],
     [ "TimeStepAdaptor_CellSize", "d9/da7/class_time_step_adaptor___cell_size.html", null ],
     [ "Transition_Time_Position", "d8/dc1/class_transition___time___position.html", null ],
     [ "Transitions_Positions", "d5/da5/class_transitions___positions.html", null ],

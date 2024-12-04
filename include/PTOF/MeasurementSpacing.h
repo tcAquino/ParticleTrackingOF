@@ -1,12 +1,14 @@
 /**
- \file PTOF/MeasurementSpacing.h
- \author Tomás Aquino
- \date 07/03/2022
+   \file PTOF/MeasurementSpacing.h
+   \author Tomás Aquino
+   \date 07/03/2022
+   \brief Measurement spacing types condition types.
 */
 
 #ifndef PTOF_MEASUREMENTSPACING_H
 #define PTOF_MEASUREMENTSPACING_H
 
+#include "General/Useful.h"
 #include <map>
 #include <string>
 
@@ -21,65 +23,47 @@ struct MeasurementSpacing {
                ending at specified  times */
     log,    /**< Fixed number of log-spaced measurements, starting and ending at
                specified times.      */
-    step    /**< At fixed time intervals, starting at specified time.    */
+    linear_step, /**< At fixed time intervals, starting at specified time.    */
+    log_step /**< With fixed factor between times, starting at specified time.
+              */
   };
 
-  /** \return Type from name. */
+  /**
+     \brief Type from name.
+     \param name Boundary condition name.
+     \return Boundary condition type.
+  */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
-  /** \return Name from type. */
+  /**
+     \brief Name from type.
+     \param type Boundary condition type.
+     \return Boundary condition name.
+  */
   static auto name(Type type) { return type_to_name.at(type); }
 
-  /** \return \c true if name exists, \c false otherwise. */
-  static bool exists(std::string const &name) {
+  /**
+     \brief Check if name exists.
+     \param name condition name.
+     \return \c true if name exists, \c false otherwise.
+  */
+  static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }
 
   /** Map of names to types. */
   inline static const std::map<std::string, Type> name_to_type{
-      {"linear", Type::linear}, {"log", Type::log}, {"step", Type::step}};
+      {"linear", Type::linear},
+      {"log", Type::log},
+      {"linear_step", Type::linear_step},
+      {"log_step", Type::linear_step}};
 
   /** Map of types to names. */
   inline static const std::map<Type, std::string> type_to_name{
-      {Type::linear, "linear"}, {Type::log, "log"}, {Type::step, "step"}};
-};
-
-/** \struct MeasurementSpacingUnits PTOF/MeasurementSpacing.h "PTOF/MeasurementSpacing.h"
- * \brief Keep track of names and types of measure spacing units (scaling) */
-struct MeasurementSpacingUnits {
-  /** \enum Type
-   *  \brief Implemented types. */
-  enum class Type {
-    diffusion, /**< Units of diffusion scale */
-    advection, /**< Units of advection scale */
-    reaction,  /**<  Units of reaction scale*/
-    arbitrary  /**< Arbitrary units*/
-  };
-
-  /** \return Type from name. */
-  static auto type(std::string const &name) { return name_to_type.at(name); }
-
-  /** \return Name from type. */
-  static auto name(Type type) { return type_to_name.at(type); }
-
-  /** \return \c true if criterion name exists, \c false otherwise. */
-  static bool exists(std::string const &name) {
-    return name_to_type.count(name);
-  }
-
-  /** Map of names to types. */
-  inline static const std::map<std::string, Type> name_to_type{
-      {"diffusion", Type::diffusion},
-      {"advection", Type::advection},
-      {"reaction", Type::reaction},
-      {"arbitrary", Type::arbitrary}};
-
-  /** Map of types to names. */
-  inline static const std::map<Type, std::string> type_to_name{
-      {Type::diffusion, "diffusion"},
-      {Type::advection, "advection"},
-      {Type::reaction, "reaction"},
-      {Type::arbitrary, "arbitrary"}};
+      {Type::linear, "linear"},
+      {Type::log, "log"},
+      {Type::linear_step, "linear_step"},
+      {Type::log_step, "logstep"}};
 };
 } // namespace ptof
 

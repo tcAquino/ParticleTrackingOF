@@ -1,11 +1,11 @@
 <map id="General/MultiArray.h" name="General/MultiArray.h">
-<area shape="rect" id="node1" title=" " alt="" coords="269,5,423,32"/>
-<area shape="rect" id="node2" href="$db/d5a/_modular_8h.html" title="Modular arithmetic, basis change, and similar operations." alt="" coords="49,80,190,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="191,155,253,181"/>
-<area shape="rect" id="node6" title=" " alt="" coords="265,80,334,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="359,80,429,107"/>
-<area shape="rect" id="node8" title=" " alt="" coords="453,80,540,107"/>
-<area shape="rect" id="node9" title=" " alt="" coords="565,80,639,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,68,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="92,155,157,181"/>
+<area shape="rect" id="node1" title="Multidimensional array." alt="" coords="260,5,399,32"/>
+<area shape="rect" id="node2" href="$db/d5a/_modular_8h.html" title="Modular arithmetic, basis change, and similar operations." alt="" coords="50,80,177,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="181,155,240,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="253,80,318,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="342,80,407,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="431,80,510,107"/>
+<area shape="rect" id="node9" title=" " alt="" coords="534,80,602,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,64,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="89,155,149,181"/>
 </map>

@@ -131,12 +131,17 @@ class ctrw::Transitions_Reaction_Position&lt; TimeGenerator, JumpGenerator, Reac
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>State must define:</li>
+</ul>
+<ol type="1">
 <li><code>position</code> </li>
 <li><code>time</code> </li>
+</ol>
+<ul>
+<li><code>jump_generator</code> should enforce any boundary conditions. </li>
 </ul>
 </dd></dl>
-<p><code>JumpGenerator</code> should enforce any boundary conditions. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="accee159eb06b39d28979f8a45d10342f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#accee159eb06b39d28979f8a45d10342f">&#9670;&nbsp;</a></span>Transitions_Reaction_Position()</h2>

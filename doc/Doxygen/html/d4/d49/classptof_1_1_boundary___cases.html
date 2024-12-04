@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('d4/d49/classptof_1_1_boundary___cases.
 <p>Boundary object to handle implemented boundary types.  
  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d7/d77/_boundary___cases_8h_source.html">Boundary_Cases.h</a>&gt;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d7/d77/_boundary___cases_8h_source.html">PTOF/Boundary_Cases.h</a>&quot;</code></p>
 <div class="dynheader">
 Collaboration diagram for ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;:</div>
 <div class="dyncontent">
@@ -117,13 +117,14 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91">Boundary_Cases</a> (<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">BCs</a> boundary_conditions, Locator &amp;&amp;locator, Store_Info &amp;&amp;store_info, <a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html">Boundary_Periodic</a> &amp;&amp;boundary_periodic=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, Boundary_Custom &amp;&amp;boundary_custom=<a class="el" href="../../d6/d3e/structptof_1_1_boundary___do_nothing.html">Boundary_DoNothing</a>{}, SurfaceReaction &amp;&amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#adfda84bee13c7821bc8ea6023884fa29">surface_reaction</a>=<a class="el" href="../../df/d31/classptof_1_1_surface_reaction___do_nothing.html">SurfaceReaction_DoNothing</a>{})</td></tr>
+<tr class="memdesc:ad9bdd6ddf16be8b23f678c6053793a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91">More...</a><br /></td></tr>
 <tr class="separator:ad9bdd6ddf16be8b23f678c6053793a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3">out_of_bounds</a> (Position const &amp;position) const</td></tr>
 <tr class="memdesc:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if position is out of bounds.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#ac67c7a57aff7a2afeb3cca488c7b6ce3">More...</a><br /></td></tr>
 <tr class="separator:ac67c7a57aff7a2afeb3cca488c7b6ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplParams" colspan="2">template&lt;typename State &gt; </td></tr>
-<tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;state, <a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;state_old={})</td></tr>
+<tr class="memitem:a0bb5e2c18e236af74c037be619467fba"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">operator()</a> (State &amp;state, State const &amp;state_old={})</td></tr>
 <tr class="memdesc:a0bb5e2c18e236af74c037be619467fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary conditions if necessary by choosing appropriate types.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#a0bb5e2c18e236af74c037be619467fba">More...</a><br /></td></tr>
 <tr class="separator:a0bb5e2c18e236af74c037be619467fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fe929a550b4e045bf95eb30961b2aa2"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
@@ -149,7 +150,8 @@ Private Member Functions</h2></td></tr>
 <tr class="memdesc:a9f192fafe57ca2389a520628b93d319b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next intersection with a boundary.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b">More...</a><br /></td></tr>
 <tr class="separator:a9f192fafe57ca2389a520628b93d319b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5af3482568bb10d456c261cc91acf16c"><td class="memTemplParams" colspan="2">template&lt;typename Intersection , typename State &gt; </td></tr>
-<tr class="memitem:a5af3482568bb10d456c261cc91acf16c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c">next_intersection_is_beyond_final_point</a> (Intersection const &amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b">next_intersection</a>, Foam::point const &amp;old_intersection_point, <a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;state)</td></tr>
+<tr class="memitem:a5af3482568bb10d456c261cc91acf16c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c">next_intersection_is_beyond_final_point</a> (Intersection const &amp;<a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b">next_intersection</a>, Foam::point const &amp;old_intersection_point, State const &amp;state)</td></tr>
+<tr class="memdesc:a5af3482568bb10d456c261cc91acf16c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if next intersection is beyond final position.  <a href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c">More...</a><br /></td></tr>
 <tr class="separator:a5af3482568bb10d456c261cc91acf16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -172,7 +174,6 @@ Private Attributes</h2></td></tr>
 class ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;</h3>
 
 <p>Boundary object to handle implemented boundary types. </p>
-<p>"PTOF/Boundary_Cases.h" </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="ab55af71b2fd58b7543ca9f7de527743f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab55af71b2fd58b7543ca9f7de527743f">&#9670;&nbsp;</a></span>BCs</h2>
@@ -252,11 +253,13 @@ template&lt;typename Locator , typename Store_Info , typename Boundary_Periodic 
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">boundary_conditions</td><td>Patch names and associated boundary condition types. </td></tr>
     <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
-    <tr><td class="paramname">store_info</td><td>Object to handle storing of information upon boundary hitting.</td></tr>
+    <tr><td class="paramname">store_info</td><td>Object to handle storing of information upon hitting a boundary. </td></tr>
     <tr><td class="paramname">boundary_periodic</td><td>Periodic boundary condition enforcer. </td></tr>
     <tr><td class="paramname">boundary_custom</td><td>Custom boundary condition enforcer. </td></tr>
     <tr><td class="paramname">surface_reaction</td><td>Surface Reaction. </td></tr>
@@ -296,6 +299,12 @@ template&lt;typename OStream &gt; </div>
 </div><div class="memdoc">
 
 <p>Output information about current object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">output</td><td>Output stream. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -340,7 +349,7 @@ template&lt;typename Intersection &gt; </div>
 <p>Find next intersection with a boundary. </p>
 <p>Find the next intersection, if any, along straight line from previous intersection to endpoint. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">intersection</td><td>previous_intersection. </td></tr>
+    <tr><td class="paramname">intersection</td><td>Previous intersection. </td></tr>
     <tr><td class="paramname">end</td><td>Endpoint. </td></tr>
     <tr><td class="paramname">cell</td><td>Cell index for previous intersection. </td></tr>
   </table>
@@ -365,8 +374,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/d49/classptof_1_1_boundary___cases_a9f192fafe57ca2389a520628b93d319b_icgraph.png" border="0" usemap="#ad4/d49/classptof_1_1_boundary___cases_a9f192fafe57ca2389a520628b93d319b_icgraph" alt=""/></div>
 <map name="ad4/d49/classptof_1_1_boundary___cases_a9f192fafe57ca2389a520628b93d319b_icgraph" id="ad4/d49/classptof_1_1_boundary___cases_a9f192fafe57ca2389a520628b93d319b_icgraph">
-<area shape="rect" title="Find next intersection with a boundary." alt="" coords="216,13,379,54"/>
-<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title=" " alt="" coords="5,5,168,61"/>
+<area shape="rect" title="Find next intersection with a boundary." alt="" coords="205,13,357,54"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a5af3482568bb10d456c261cc91acf16c" title="Check if next intersection is beyond final position." alt="" coords="5,5,157,61"/>
 </map>
 </div>
 
@@ -400,7 +409,7 @@ template&lt;typename Intersection , typename State &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;&#160;</td>
+          <td class="paramtype">State const &amp;&#160;</td>
           <td class="paramname"><em>state</em>&#160;</td>
         </tr>
         <tr>
@@ -415,19 +424,30 @@ template&lt;typename Intersection , typename State &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p><a class="el" href="../../de/df2/class_check.html">Check</a> if next intersection is beyond final position. </p>
+<p>Find the next intersection, if any, along straight line from previous intersection to endpoint. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">next_intersection</td><td>Next intersection. </td></tr>
+    <tr><td class="paramname">old_intersection_point</td><td>Position of previous intersection. </td></tr>
+    <tr><td class="paramname">state</td><td>Final state before new intersection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if beyond final position, <code>false</code> otherwise. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph.png" border="0" usemap="#ad4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph" alt=""/></div>
 <map name="ad4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph" id="ad4/d49/classptof_1_1_boundary___cases_a5af3482568bb10d456c261cc91acf16c_cgraph">
-<area shape="rect" title=" " alt="" coords="5,20,168,76"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="232,5,363,32"/>
-<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b" title="Find next intersection with a boundary." alt="" coords="216,57,379,98"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="427,57,576,98"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a5c1f93251005a76a298700d652da61b9" title="Small offset forward given current face and direction." alt="" coords="624,39,751,65"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="636,89,739,116"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="801,13,927,40"/>
-<area shape="rect" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="799,64,929,91"/>
+<area shape="rect" title="Check if next intersection is beyond final position." alt="" coords="5,20,157,76"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="222,5,341,32"/>
+<area shape="rect" href="../../d4/d49/classptof_1_1_boundary___cases.html#a9f192fafe57ca2389a520628b93d319b" title="Find next intersection with a boundary." alt="" coords="205,57,357,98"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a120e3e8989cc338634331c4cc77eb617" title="Small offset forward from a point on a face." alt="" coords="405,57,540,98"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a5c1f93251005a76a298700d652da61b9" title="Small offset forward given current face and direction." alt="" coords="588,39,705,65"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="599,89,694,116"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="756,13,871,40"/>
+<area shape="rect" href="../../d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="753,64,873,91"/>
 </map>
 </div>
 
@@ -449,13 +469,13 @@ template&lt;typename State &gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="../../d4/d49/classptof_1_1_boundary___cases.html">ptof::Boundary_Cases</a>&lt; Locator, Store_Info, <a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html">Boundary_Periodic</a>, Boundary_Custom, SurfaceReaction &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;&#160;</td>
+          <td class="paramtype">State &amp;&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> const &amp;&#160;</td>
+          <td class="paramtype">State const &amp;&#160;</td>
           <td class="paramname"><em>state_old</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -474,7 +494,7 @@ template&lt;typename State &gt; </div>
 <p>Enforce boundary conditions if necessary by choosing appropriate types. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">state</td><td>Current particle state to apply BCs if needed (possibly out of bounds). </td></tr>
+    <tr><td class="paramname">state</td><td>Current particle state to apply BCs if needed (possibly out of bounds) </td></tr>
     <tr><td class="paramname">state_old</td><td>Previous particle state (should be in bounds). </td></tr>
   </table>
   </dd>

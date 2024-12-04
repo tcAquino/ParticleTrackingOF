@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: geom::Sphere&lt; Position_t &gt; Struct Template Reference</title>
+<title>ParticleTrackingOF: geom::Sphere&lt; Position_t &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('d0/da4/structgeom_1_1_sphere.html','..
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">geom::Sphere&lt; Position_t &gt; Struct Template Reference</div>  </div>
+<div class="title">geom::Sphere&lt; Position_t &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -104,8 +104,10 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a40e3cf6ef163ce26b6d0c3b6e93d0f9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html#a40e3cf6ef163ce26b6d0c3b6e93d0f9e">Sphere</a> ()</td></tr>
+<tr class="memdesc:a40e3cf6ef163ce26b6d0c3b6e93d0f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d0/da4/structgeom_1_1_sphere.html#a40e3cf6ef163ce26b6d0c3b6e93d0f9e">More...</a><br /></td></tr>
 <tr class="separator:a40e3cf6ef163ce26b6d0c3b6e93d0f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabf266ebf20e697b51d7c82c97d7a591"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html#aabf266ebf20e697b51d7c82c97d7a591">Sphere</a> (<a class="el" href="../../d0/da4/structgeom_1_1_sphere.html#a1ec00615fb7c4f1a81dc686544c3d52a">Position</a> <a class="el" href="../../d0/da4/structgeom_1_1_sphere.html#ada4427efd74639f2f31a7f4fa24771e2">center</a>, double <a class="el" href="../../d0/da4/structgeom_1_1_sphere.html#ace0f5bb19178e0c2ce6e88d4d99a6a26">radius</a>)</td></tr>
+<tr class="memdesc:aabf266ebf20e697b51d7c82c97d7a591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d0/da4/structgeom_1_1_sphere.html#aabf266ebf20e697b51d7c82c97d7a591">More...</a><br /></td></tr>
 <tr class="separator:aabf266ebf20e697b51d7c82c97d7a591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1f034b06c668e946938751813a41643"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html#ac1f034b06c668e946938751813a41643">dim</a> () const</td></tr>
 <tr class="separator:ac1f034b06c668e946938751813a41643"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,7 +126,7 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Position_t = std::vector&lt;double&gt;&gt;<br />
-struct geom::Sphere&lt; Position_t &gt;</h3>
+class geom::Sphere&lt; Position_t &gt;</h3>
 
 <p><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> in any dimension. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
@@ -170,7 +172,9 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="section note"><dt>Note</dt><dd>Object with unassigned properties. </dd></dl>
+
+<p>Constructor. </p>
+<p>Empty object. </p>
 
 </div>
 </div>
@@ -209,7 +213,9 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">center</td><td><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> center. </td></tr>
     <tr><td class="paramname">radius</td><td><a class="el" href="../../d0/da4/structgeom_1_1_sphere.html" title="Sphere in any dimension.">Sphere</a> radius. </td></tr>
@@ -244,7 +250,8 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Spatial dimension of sphere. </p><dl class="section note"><dt>Note</dt><dd>: Zero if center has not been assigned. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Spatial dimension of sphere. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Zero if center has not been assigned. </dd></dl>
 
 </div>
 </div>
@@ -355,7 +362,7 @@ template&lt;typename Position_t  = std::vector&lt;double&gt;&gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Geometry/<a class="el" href="../../da/d05/_shape_8h_source.html">Shape.h</a></li>
 </ul>
 </div><!-- contents -->

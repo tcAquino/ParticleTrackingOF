@@ -141,11 +141,14 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a310edf1264764eddb61a5cbd91d4aa3f"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f">type</a> (std::string const &amp;<a class="el" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8">name</a>)</td></tr>
+<tr class="memdesc:a310edf1264764eddb61a5cbd91d4aa3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type from name.  <a href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f">More...</a><br /></td></tr>
 <tr class="separator:a310edf1264764eddb61a5cbd91d4aa3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a888c3d533b611c8ea66db99ef4c196b8"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8">name</a> (<a class="el" href="../../d9/d22/struct_measurement_list.html#a2ce06579d4bafd3d45fb71286c141619">Type</a> <a class="el" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f">type</a>)</td></tr>
+<tr class="memdesc:a888c3d533b611c8ea66db99ef4c196b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name from type.  <a href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8">More...</a><br /></td></tr>
 <tr class="separator:a888c3d533b611c8ea66db99ef4c196b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ff765413eab2f5095f5d24a8e0339cb"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d22/struct_measurement_list.html#a4ff765413eab2f5095f5d24a8e0339cb">contains</a> (std::string const &amp;<a class="el" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8">name</a>)</td></tr>
-<tr class="separator:a4ff765413eab2f5095f5d24a8e0339cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4a3d7c7bf660d39c249fa2351917c1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1">contains</a> (std::string const &amp;<a class="el" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8">name</a>)</td></tr>
+<tr class="memdesc:a4c4a3d7c7bf660d39c249fa2351917c1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if name exists.  <a href="../../d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1">More...</a><br /></td></tr>
+<tr class="separator:a4c4a3d7c7bf660d39c249fa2351917c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -240,8 +243,8 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4ff765413eab2f5095f5d24a8e0339cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ff765413eab2f5095f5d24a8e0339cb">&#9670;&nbsp;</a></span>contains()</h2>
+<a id="a4c4a3d7c7bf660d39c249fa2351917c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4a3d7c7bf660d39c249fa2351917c1">&#9670;&nbsp;</a></span>contains()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,7 +253,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static auto MeasurementList::contains </td>
+          <td class="memname">static bool MeasurementList::contains </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -263,24 +266,33 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if name exists. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>condition name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if name exists, <code>false</code> otherwise. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_cgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_cgraph" alt=""/></div>
-<map name="ad9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_cgraph" id="ad9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,184,32"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title=" " alt="" coords="232,5,395,32"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title=" " alt="" coords="443,5,597,32"/>
+<div class="center"><img src="../../d9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_cgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_cgraph" alt=""/></div>
+<map name="ad9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_cgraph" id="ad9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_cgraph">
+<area shape="rect" title="Check if name exists." alt="" coords="5,5,184,32"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title="Name from type." alt="" coords="232,5,395,32"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title="Type from name." alt="" coords="443,5,597,32"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_icgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_icgraph" alt=""/></div>
-<map name="ad9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_icgraph" id="ad9/d22/struct_measurement_list_a4ff765413eab2f5095f5d24a8e0339cb_icgraph">
-<area shape="rect" title=" " alt="" coords="279,13,457,39"/>
-<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a403eb897ccf6be7e1f968be2d64912eb" title="Read measure spacing type from input stream." alt="" coords="5,5,231,47"/>
+<div class="center"><img src="../../d9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_icgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_icgraph" alt=""/></div>
+<map name="ad9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_icgraph" id="ad9/d22/struct_measurement_list_a4c4a3d7c7bf660d39c249fa2351917c1_icgraph">
+<area shape="rect" title="Check if name exists." alt="" coords="553,13,732,39"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a40add8af1df753c49f1c9e453714dc5a" title="Read measurement type from input stream." alt="" coords="280,5,505,47"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,5,232,47"/>
 </map>
 </div>
 
@@ -309,14 +321,22 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Name from type. </dd></dl>
+
+<p>Name from type. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>Boundary condition type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boundary condition name. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_cgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_cgraph" alt=""/></div>
 <map name="ad9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_cgraph" id="ad9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,168,32"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title=" " alt="" coords="216,5,371,32"/>
+<area shape="rect" title="Name from type." alt="" coords="5,5,168,32"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title="Type from name." alt="" coords="216,5,371,32"/>
 </map>
 </div>
 <div class="dynheader">
@@ -324,10 +344,11 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_icgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_icgraph" alt=""/></div>
 <map name="ad9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_icgraph" id="ad9/d22/struct_measurement_list_a888c3d533b611c8ea66db99ef4c196b8_icgraph">
-<area shape="rect" title=" " alt="" coords="505,63,668,90"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a4ff765413eab2f5095f5d24a8e0339cb" title=" " alt="" coords="279,13,457,39"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title=" " alt="" coords="291,63,445,90"/>
-<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a403eb897ccf6be7e1f968be2d64912eb" title="Read measure spacing type from input stream." alt="" coords="5,5,231,47"/>
+<area shape="rect" title="Name from type." alt="" coords="780,56,943,83"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1" title="Check if name exists." alt="" coords="553,5,732,32"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title="Type from name." alt="" coords="565,56,720,83"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a40add8af1df753c49f1c9e453714dc5a" title="Read measurement type from input stream." alt="" coords="280,23,505,65"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,23,232,65"/>
 </map>
 </div>
 
@@ -356,14 +377,22 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Type from name. </dd></dl>
+
+<p>Type from name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Boundary condition name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boundary condition type. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_cgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_cgraph" alt=""/></div>
 <map name="ad9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_cgraph" id="ad9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,160,32"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title=" " alt="" coords="208,5,371,32"/>
+<area shape="rect" title="Type from name." alt="" coords="5,5,160,32"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title="Name from type." alt="" coords="208,5,371,32"/>
 </map>
 </div>
 <div class="dynheader">
@@ -371,10 +400,11 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_icgraph.png" border="0" usemap="#ad9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_icgraph" alt=""/></div>
 <map name="ad9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_icgraph" id="ad9/d22/struct_measurement_list_a310edf1264764eddb61a5cbd91d4aa3f_icgraph">
-<area shape="rect" title=" " alt="" coords="716,13,871,39"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title=" " alt="" coords="505,13,668,39"/>
-<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a4ff765413eab2f5095f5d24a8e0339cb" title=" " alt="" coords="279,13,457,39"/>
-<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a403eb897ccf6be7e1f968be2d64912eb" title="Read measure spacing type from input stream." alt="" coords="5,5,231,47"/>
+<area shape="rect" title="Type from name." alt="" coords="991,5,1145,32"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title="Name from type." alt="" coords="780,5,943,32"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a40add8af1df753c49f1c9e453714dc5a" title="Read measurement type from input stream." alt="" coords="280,23,505,65"/>
+<area shape="rect" href="../../d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1" title="Check if name exists." alt="" coords="553,5,732,32"/>
+<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,23,232,65"/>
 </map>
 </div>
 

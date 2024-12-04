@@ -1,14 +1,15 @@
 /**
- \file PTOF/MeasurerTime.h
- \author Tomás Aquino
- \date 07/03/2022
+   \file PTOF/MeasurerTime.h
+   \author Tomás Aquino
+   \date 07/03/2022
+   \brief Objects to measure and output quantities given a measurement time.
 */
 
 #ifndef PTOF_MEASURERTIME_H
 #define PTOF_MEASURERTIME_H
 
 #include "CTRW/StateGetter.h"
-#include "General/Useful.h"
+#include "General/IO.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Field.h"
 #include "PTOF/Useful.h"
@@ -29,15 +30,18 @@
 #include <volFieldsFwd.H>
 
 namespace ptof {
-/** \class MeasurerTime PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- \brief Polymorphic output handler for outputting time and some quantity.
- \note To be used only through derived classes. */
+/**
+   \class MeasurerTime PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief Abstract polymorphic output handler for outputting time and some
+   quantity.
+*/
 template <typename Subject, typename Geometry> struct MeasurerTime {
-  /** Destructor. */
+  /** \brief Destructor. */
   virtual ~MeasurerTime() = default;
 
-  /** \brief Make measurement and output or store, given current time \c time.
-   */
+  /**
+     \brief Make measurement and output or store, given current time \c time.
+  */
   virtual void operator()(double time) = 0;
 
   /** \brief Output stored information (do nothing if not overriden). */
@@ -47,14 +51,16 @@ template <typename Subject, typename Geometry> struct MeasurerTime {
   virtual void update(double time, double time_of_change) {}
 
 protected:
-  /** \brief Set up output streams for requested output types.
-  \param subject CTRW object to measure.
-  \param geometry Domain geometry info and utilities.
-  \param directories Current case directory information.
-  \param output_name Name of output type.
-  \param identifier String to include in names of output files.
-  \param precision Number of digits after decimal point in output, in scientific
-  notation. */
+  /**
+     \brief Set up output streams for requested output types.
+     \param subject CTRW object to measure.
+     \param geometry Domain geometry info and utilities.
+     \param directories Current case directory information.
+     \param output_name Name of output type.
+     \param identifier String to include in names of output files.
+     \param precision Number of digits after decimal point in output, in
+     scientific notation.
+  */
   MeasurerTime(Subject const &subject, Geometry const &geometry,
                Directories const &directories, std::string const &output_name,
                std::string const &identifier, int precision = 8)
@@ -78,22 +84,26 @@ protected:
       &_locator;         /**< Object to locate positions in mesh. */
   std::ofstream _output; /**< Output stream. */
 
-  /** \brief Open output file for a given output type.
-  \param directories Current case directory information.
-  \param output_name Name of output type.
-  \param identifier String to include in names of output files.
-  \return Output stream. */
+  /**
+     \brief Open output file for a given output type.
+     \param directories Current case directory information.
+     \param output_name Name of output type.
+     \param identifier String to include in names of output files.
+     \return Output stream.
+  */
   std::ofstream open_write(Directories const &directories,
                            std::string const &output_name,
                            std::string const &identifier) {
-    return useful::open_write(directories.dir_output + "/Data_" + output_name +
+    return io::open_write(directories.dir_output + "/Data_" + output_name +
                               (identifier.empty() ? "" : "_" + identifier) +
                               ".dat");
   }
 };
 
-/** \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief Output time, tags, positions, and masses. */
+/**
+   \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief Output time, tags, positions, and masses.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_position(Subject const &subject, Geometry const &geometry,
@@ -120,11 +130,17 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      if (!state.info.absorbed && part.state_old().time <= time) {
-        _output << std::setw(_column_widths[1]) << state.tag;
-        useful::print(_output, state.position, _column_widths[2]);
-        _output << std::setw(_column_widths[3]) << state.mass;
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time) {
+        _output << std::setw(_column_widths[1]) << state_old.tag;
+        io::print(
+            _output,
+            ctrw::Get_interp{time, ctrw::Get_position{}}(state_new, state_old),
+            _column_widths[2]);
+        _output << std::setw(_column_widths[3])
+                << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                            state_old);
       }
     }
     _output << "\n";
@@ -136,9 +152,12 @@ private:
   std::array<int, 4> _column_widths;
 };
 
-/** \class MeasurerTime_position_in_regions PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time, tags, positions, and masses within regions specified by
- * masks. */
+/**
+   \class MeasurerTime_position_in_regions PTOF/MeasurerTime.h
+  "PTOF/MeasurerTime.h"
+  \brief Output time, tags, positions, and masses within regions specified by
+  masks.
+*/
 template <typename Subject, typename Geometry, typename Mask>
 struct MeasurerTime_position_in_regions final
     : MeasurerTime<Subject, Geometry> {
@@ -164,9 +183,10 @@ struct MeasurerTime_position_in_regions final
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
     _output << std::setw(_column_widths[3]) << "Mass";
-    for (std::size_t ii = 0; ii < _masks.size(); ++ii)
-      _output << std::setw(_column_widths[4])
-              << "In_region_" + std::to_string(ii);
+    if (_masks.size() > 1)
+      for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+        _output << std::setw(_column_widths[4])
+                << "In_region_" + std::to_string(ii);
     _output << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
@@ -175,19 +195,29 @@ struct MeasurerTime_position_in_regions final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      _output << std::setw(_column_widths[1]) << state.tag;
-      if (!state.info.absorbed && part.state_old().time <= time &&
-          !outside(state.cell)) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      auto cell_new = state_new.cell;
+      auto cell_old = state_old.cell;
+      if (!outside(cell_new) && !outside(cell_old) && state_new.time >= time &&
+          state_old.time <= time) {
         std::vector<int> in_region(_masks.size(), 0);
         for (std::size_t ii = 0; ii < _masks.size(); ++ii)
-          if (_masks[ii].get()[state.cell] > _thresholds[ii])
+          if (_masks[ii].get()[cell_new] >= _thresholds[ii] &&
+              _masks[ii].get()[cell_old] >= _thresholds[ii])
             in_region[ii] = 1;
         if (std::any_of(in_region.begin(), in_region.end(),
                         [](int ii) { return ii > 0; })) {
-          useful::print(_output, state.position, _column_widths[2]);
-          _output << std::setw(_column_widths[3]) << state.mass;
-          useful::print(_output, in_region, _column_widths[4]);
+          _output << std::setw(_column_widths[1]) << state_old.tag;
+          io::print(_output,
+                        ctrw::Get_interp{time, ctrw::Get_position{}}(state_new,
+                                                                     state_old),
+                        _column_widths[2]);
+          _output << std::setw(_column_widths[3])
+                  << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                              state_old);
+          if (_masks.size() > 1)
+            io::print(_output, in_region, _column_widths[4]);
         }
       }
     }
@@ -202,8 +232,10 @@ private:
   std::array<int, 5> _column_widths;
 };
 
-/** \class MeasurerTime_position_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and mean position (weighted by mass). */
+/**
+   \class MeasurerTime_position_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief  Output time and mean position (weighted by mass).
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_position_mean(Subject const &subject, Geometry const &geometry,
@@ -224,7 +256,7 @@ struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_mean(_subject, time), _column_widths[1]);
+    io::print(_output, position_mean(_subject, time), _column_widths[1]);
     _output << "\n";
   }
 
@@ -234,8 +266,11 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_second_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and second moment of position (weighted by mass). */
+/**
+   \class MeasurerTime_position_second_moment PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and second moment of position (weighted by mass).
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_second_moment final
     : MeasurerTime<Subject, Geometry> {
@@ -261,7 +296,7 @@ struct MeasurerTime_position_second_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_second_moment(_subject, time),
+    io::print(_output, position_second_moment(_subject, time),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -272,8 +307,11 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_nth_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and nth moment of position (weighted by mass). */
+/**
+   \class MeasurerTime_position_nth_moment PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and nth moment of position (weighted by mass).
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_nth_moment final
     : MeasurerTime<Subject, Geometry> {
@@ -298,7 +336,7 @@ struct MeasurerTime_position_nth_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_moment(_subject, _nn, time),
+    io::print(_output, position_moment(_subject, _nn, time),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -317,9 +355,11 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and moment of position with specified exponents for each
- * coordinate (weighted by mass). */
+/**
+   \class MeasurerTime_position_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief  Output time and moment of position with specified exponents for each
+   coordinate (weighted by mass).
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_position_moment(Subject const &subject,
@@ -347,7 +387,7 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_moment(_subject, _exponents, time),
+    io::print(_output, position_moment(_subject, _exponents, time),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -367,8 +407,11 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_variance PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and position variance (weighted by mass). */
+/**
+   \class MeasurerTime_position_variance PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and position variance (weighted by mass).
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_position_variance(Subject const &subject,
@@ -392,7 +435,7 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_variance(_subject, time),
+    io::print(_output, position_variance(_subject, time),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -431,8 +474,9 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass_in_regions PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and total mass in regions specified by maks. */
+/** \class MeasurerTime_mass_in_regions PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief  Output time and total mass in regions specified
+ * by maks. */
 template <typename Subject, typename Geometry, typename Mask>
 struct MeasurerTime_mass_in_regions final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_mass_in_regions(
@@ -451,14 +495,14 @@ struct MeasurerTime_mass_in_regions final : MeasurerTime<Subject, Geometry> {
     _thresholds.resize(masks.size(), 0.);
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t ii = 0; ii < masks.size(); ++ii)
-      _output << std::setw(_column_widths[4])
+      _output << std::setw(_column_widths[1])
               << "Mass_region_" + std::to_string(ii);
     _output << "\n";
   }
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, mass(_subject, time, _locator, _masks, _thresholds),
+    io::print(_output, mass(_subject, time, _masks, _thresholds),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -497,10 +541,12 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + (field_name + "_").length()))} {
+            std::max(9 + precision, int(2 + (field_name + "_").length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << field_name
+            << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
@@ -529,10 +575,16 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      if (!state.info.absorbed && part.state_old().time <= time)
-        _output << std::setw(_column_widths[1]) << state.tag
-                << std::setw(_column_widths[2]) << _field(state);
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time) {
+        _output << std::setw(_column_widths[1]) << state_old.tag
+                << std::setw(_column_widths[2])
+                << ctrw::Get_interp{time, ctrw::Get_property{_field}}(state_new,
+                                                                      state_old)
+                << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                            state_old);
+      }
     }
     _output << "\n";
   }
@@ -553,7 +605,7 @@ private:
   using MeasurerTime<Subject, Geometry>::_geometry;
   std::string _field_name;
   Field _field;
-  std::array<int, 3> _column_widths;
+  std::array<int, 4> _column_widths;
 };
 template <typename Subject, typename Geometry, typename Field>
 MeasurerTime_scalar_field(Subject const &, Field &&, Geometry const &,
@@ -607,13 +659,15 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + (field_name + "_").length()))} {
+            std::max(9 + precision, int(2 + (field_name + "_").length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[2])
               << field_name + "_" + std::to_string(dd);
-    _output << std::setw(_column_widths[1]) << "Tag"
+    _output << std::setw(_column_widths[3]) << "Mass"
+            << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
   }
@@ -641,10 +695,16 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      if (!state.info.absorbed && part.state_old().time <= time) {
-        _output << std::setw(_column_widths[1]) << state.tag;
-        useful::print(_output, _field(state), _column_widths[2]);
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time) {
+        _output << std::setw(_column_widths[1]) << state_old.tag;
+        io::print(_output,
+                      ctrw::Get_interp{time, ctrw::Get_property{_field}}(
+                          state_new, state_old),
+                      _column_widths[2]);
+        _output << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                            state_old);
       }
     }
     _output << "\n";
@@ -666,7 +726,7 @@ private:
   using MeasurerTime<Subject, Geometry>::_geometry;
   std::string _field_name;
   Field _field;
-  std::array<int, 3> _column_widths;
+  std::array<int, 4> _column_widths;
 };
 template <typename Subject, typename Geometry, typename Field>
 MeasurerTime_vector_field(Subject const &, Field &&, Geometry const &,
@@ -718,14 +778,16 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(3 + (field_name + "_").length()))} {
+            std::max(9 + precision, int(3 + (field_name + "_").length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
     for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
       for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
         _output << std::setw(_column_widths[2])
                 << field_name + "_" + std::to_string(dd1) + std::to_string(dd2);
-    _output << std::setw(_column_widths[1]) << "Tag"
+    _output << std::setw(_column_widths[3]) << "Mass"
+            << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
   }
@@ -750,18 +812,25 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      if (!state.info.absorbed && part.state_old().time <= time) {
-        _output << std::setw(_column_widths[1]) << state.tag;
-        if (outside(state.cell))
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time) {
+        _output << std::setw(_column_widths[1]) << state_old.tag;
+        if (outside(state_new.cell || outside(state_old.cell)))
           for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
-            useful::print(_output, std::vector<double>(Geometry::dim, 0.),
+            io::print(_output, std::vector<double>(Geometry::dim, 0.),
                           _column_widths[2]);
         else
           for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
-            for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
+            for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
+              auto field_value =
+                  ctrw::Get_interp{time, ctrw::Get_cell_arraystyleproperty{
+                                             _field}}(state_new, state_old);
               _output << std::setw(_column_widths[2])
-                      << _field[state.cell].row(dd1)[dd2];
+                      << field_value.row(dd1)[dd2];
+            }
+        _output << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                            state_old);
       }
     }
     _output << "\n";
@@ -783,7 +852,7 @@ private:
   using MeasurerTime<Subject, Geometry>::_geometry;
   std::string _field_name;
   Field _field;
-  std::array<int, 3> _column_widths;
+  std::array<int, 4> _column_widths;
 };
 template <typename Subject, typename Geometry, typename Field>
 MeasurerTime_tensor_field(Subject const &, Field &&, Geometry const &,
@@ -807,8 +876,9 @@ MeasurerTime_tensor_field(Subject const &, Geometry const &,
     -> MeasurerTime_tensor_field<Subject, Geometry, Foam::volTensorField>;
 
 /**
-\class MeasurerTime_scalar_field_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-\brief Output time and mean of scalar field over particles.
+   \class MeasurerTime_scalar_field_mean PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and mean of scalar field over particles.
 */
 template <typename Subject, typename Geometry,
           typename Field = ScalarField_LinearInterpolation_OF<
@@ -912,8 +982,9 @@ MeasurerTime_scalar_field_mean(Subject const &, Geometry const &,
                                            typename Geometry::Locator const &,
                                            CheckOptions::Check>>;
 
-/** \class MeasurerTime_vector_field_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and mean of vector field over particles. */
+/** \class MeasurerTime_vector_field_mean PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief  Output time and mean of vector field over
+ * particles. */
 template <typename Subject, typename Geometry,
           typename Field = VectorField_LinearInterpolation_OF<
               Foam::volVectorField, typename Geometry::Locator const &,
@@ -967,7 +1038,7 @@ struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, mean(_subject, time, _field), _column_widths[1]);
+    io::print(_output, mean(_subject, time, _field), _column_widths[1]);
     _output << "\n";
   }
 
@@ -1018,8 +1089,11 @@ MeasurerTime_vector_field_mean(Subject const &, Geometry const &,
                                            typename Geometry::Locator const &,
                                            CheckOptions::Check>>;
 
-/** \class MeasurerTime_tensor_field_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and mean of tensor field over particles. */
+/**
+   \class MeasurerTime_tensor_field_mean PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and mean of tensor field over particles.
+*/
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
 struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
@@ -1071,9 +1145,8 @@ struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    auto field_mean = mean(_subject, time, [this](State const &state) {
-      return this->_field[state.cell];
-    });
+    auto field_mean =
+        mean(_subject, time, ctrw::Get_cell_arraystyleproperty{_field});
     for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
       for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
         _output << std::setw(_column_widths[1]) << field_mean.row(dd1)[dd2];
@@ -1121,9 +1194,12 @@ MeasurerTime_tensor_field_mean(Subject const &, Geometry const &,
                                std::string const &)
     -> MeasurerTime_tensor_field_mean<Subject, Geometry, Foam::volTensorField>;
 
-/** \class MeasurerTime_position_periodic PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time, tags, positions, and masses, with positions accounting
- * for periodicity. */
+/**
+   \class MeasurerTime_position_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time, tags, positions, and masses, with positions accounting
+   for periodicity.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_position_periodic(Subject const &subject,
@@ -1154,11 +1230,17 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      if (!state.info.absorbed && part.state_old().time <= time) {
-        _output << std::setw(_column_widths[1]) << state.tag;
-        useful::print(_output, _getter_position(state), _column_widths[2]);
-        _output << std::setw(_column_widths[3]) << state.mass;
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time) {
+        _output << std::setw(_column_widths[1]) << state_old.tag;
+        io::print(
+            _output,
+            ctrw::Get_interp{time, ctrw::Get_position{}}(state_new, state_old),
+            _column_widths[2]);
+        _output << std::setw(_column_widths[3])
+                << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                            state_old);
       }
     }
     _output << "\n";
@@ -1173,9 +1255,12 @@ private:
   std::array<int, 4> _column_widths;
 };
 
-/** \class MeasurerTime_position_in_regions_periodic PTOF/MeasurerTime.h
- * "PTOF/MeasurerTime.h" \brief  Output time, tags, positions, and masses within
- * regions specified by masks. */
+/**
+   \class MeasurerTime_position_in_regions_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time, tags, positions, and masses within
+   regions specified by masks.
+*/
 template <typename Subject, typename Geometry, typename Mask>
 struct MeasurerTime_position_in_regions_periodic final
     : MeasurerTime<Subject, Geometry> {
@@ -1205,9 +1290,10 @@ struct MeasurerTime_position_in_regions_periodic final
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
     _output << std::setw(_column_widths[3]) << "Mass";
-    for (std::size_t ii = 0; ii < _masks.size(); ++ii)
-      _output << std::setw(_column_widths[4])
-              << "In_region_" + std::to_string(ii);
+    if (_masks.size() > 1)
+      for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+        _output << std::setw(_column_widths[4])
+                << "In_region_" + std::to_string(ii);
     _output << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
@@ -1216,19 +1302,29 @@ struct MeasurerTime_position_in_regions_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
-      _output << std::setw(_column_widths[1]) << state.tag;
-      if (!state.info.absorbed && part.state_old().time <= time &&
-          !outside(state.cell)) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      auto cell_new = state_new.cell;
+      auto cell_old = state_old.cell;
+      if (!outside(cell_new) && !outside(cell_old) && state_new.time >= time &&
+          state_old.time <= time) {
         std::vector<int> in_region(_masks.size(), 0);
         for (std::size_t ii = 0; ii < _masks.size(); ++ii)
-          if (_masks[ii].get()[state.cell] > _thresholds[ii])
+          if (_masks[ii].get()[cell_new] >= _thresholds[ii] &&
+              _masks[ii].get()[cell_old] >= _thresholds[ii])
             in_region[ii] = 1;
         if (std::any_of(in_region.begin(), in_region.end(),
                         [](int ii) { return ii > 0; })) {
-          useful::print(_output, _getter_position(state), _column_widths[2]);
-          _output << std::setw(_column_widths[3]) << state.mass;
-          useful::print(_output, in_region, _column_widths[4]);
+          _output << std::setw(_column_widths[1]) << state_old.tag;
+          io::print(_output,
+                        ctrw::Get_interp{time, ctrw::Get_position{}}(state_new,
+                                                                     state_old),
+                        _column_widths[2]);
+          _output << std::setw(_column_widths[3])
+                  << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                              state_old);
+          if (_masks.size() > 1)
+            io::print(_output, in_region, _column_widths[4]);
         }
       }
     }
@@ -1246,9 +1342,12 @@ private:
   std::array<int, 5> _column_widths;
 };
 
-/** \class MeasurerTime_position_mean_periodic PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief Output time and mean position (weighted by mass), with positions
- * accounting for periodicity. */
+/**
+   \class MeasurerTime_position_mean_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and mean position (weighted by mass), with positions
+   accounting for periodicity.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_mean_periodic final
     : MeasurerTime<Subject, Geometry> {
@@ -1273,7 +1372,7 @@ struct MeasurerTime_position_mean_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_mean(_subject, time, getter_position),
+    io::print(_output, position_mean(_subject, time, getter_position),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -1287,9 +1386,12 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_second_moment_periodic PTOF/MeasurerTime.h
- * "PTOF/MeasurerTime.h" \brief  Output time and second moment of position (weighted
- * by mass), with position accounting for periodicity. */
+/**
+   \class MeasurerTime_position_second_moment_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and second moment of position (weighted by mass), with
+   position accounting for periodicity.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_second_moment_periodic final
     : MeasurerTime<Subject, Geometry> {
@@ -1319,7 +1421,7 @@ struct MeasurerTime_position_second_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output,
+    io::print(_output,
                   position_second_moment(_subject, time, getter_position),
                   _column_widths[1]);
     _output << "\n";
@@ -1334,9 +1436,12 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_nth_moment_periodic PTOF/MeasurerTime.h
- * "PTOF/MeasurerTime.h" \brief  Output time and nth moment of position (weighted
- * by mass), with position accounting for periodicity. */
+/**
+   \class MeasurerTime_position_nth_moment_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and nth moment of position (weighted by mass), with
+   position accounting for periodicity.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_nth_moment_periodic final
     : MeasurerTime<Subject, Geometry> {
@@ -1361,7 +1466,7 @@ struct MeasurerTime_position_nth_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output,
+    io::print(_output,
                   position_moment(_subject, _nn, time, getter_position),
                   _column_widths[1]);
     _output << "\n";
@@ -1386,10 +1491,12 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_moment_periodic PTOF/MeasurerTime.h
- * "PTOF/MeasurerTime.h" \brief  Output time and moment of position with specified
- * exponents for each coordinate (weighted by mass), with position accounting
- * for periodicity. */
+/**
+   \class MeasurerTime_position_moment_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and moment of position with specified exponents for each
+   coordinate (weighted by mass), with position accounting for periodicity.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_moment_periodic final
     : MeasurerTime<Subject, Geometry> {
@@ -1418,7 +1525,7 @@ struct MeasurerTime_position_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output,
+    io::print(_output,
                   position_moment(_subject, _exponents, time, getter_position),
                   _column_widths[1]);
     _output << "\n";
@@ -1442,9 +1549,9 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_position_variance_periodic PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and position variance (weighted by mass), with position
- * accounting for periodicity. */
+/** \class MeasurerTime_position_variance_periodic PTOF/MeasurerTime.h
+ * "PTOF/MeasurerTime.h" \brief Output time and position variance (weighted by
+ * mass), with position accounting for periodicity. */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_variance_periodic final
     : MeasurerTime<Subject, Geometry> {
@@ -1473,7 +1580,7 @@ struct MeasurerTime_position_variance_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    useful::print(_output, position_variance(_subject, time, getter_position),
+    io::print(_output, position_variance(_subject, time, getter_position),
                   _column_widths[1]);
     _output << "\n";
   }
@@ -1487,8 +1594,11 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_first_crossing_time PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output first crossing times, tags, and masses. */
+/**
+   \class MeasurerTime_first_crossing_time PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output first crossing times, tags, and masses.
+*/
 template <typename Subject, typename Geometry>
 struct MeasurerTime_first_crossing_time final
     : MeasurerTime<Subject, Geometry> {
@@ -1517,24 +1627,20 @@ struct MeasurerTime_first_crossing_time final
             << "\n";
   }
 
-  void operator()(double time) override {
+  void operator()(double) override {
     for (auto const &part : _subject.particles()) {
-      auto const &state = part.state_new();
+      auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
-      if (!state.info.absorbed && part.state_old().time <= time) {
-        auto pos = ctrw::Get_position_component_arg{dimension}(state);
-        auto pos_old = ctrw::Get_position_component_arg{dimension}(state_old);
-        if ((pos - position) * (pos_old - position) <= 0.) {
-          Time crossing_time = ctrw::Get_time_interp{
-              position,
-              ctrw::Get_position_component_arg{dimension}}(state, state_old);
-          Mass crossing_mass =
-              state_old.mass + (state.mass - state_old.mass) /
-                                   (state.time - state_old.time) *
-                                   (time - state_old.time);
-          _crossing_times_masses.insert(std::pair<Tag, std::pair<Time, Mass>>{
-              state.tag, {crossing_time, crossing_mass}});
-        }
+      auto pos_new = ctrw::Get_position_component_arg{dimension}(state_new);
+      auto pos_old = ctrw::Get_position_component_arg{dimension}(state_old);
+      if ((pos_new - position) * (pos_old - position) <= 0.) {
+        Time crossing_time = ctrw::Get_time_interp{
+            position,
+            ctrw::Get_position_component_arg{dimension}}(state_new, state_old);
+        Mass crossing_mass = ctrw::Get_interp{crossing_time, ctrw::Get_mass{}}(
+            state_new, state_old);
+        _crossing_times_masses.insert(std::pair<Tag, std::pair<Time, Mass>>{
+            state_old.tag, {crossing_time, crossing_mass}});
       }
     }
   }

@@ -152,14 +152,20 @@ class ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, 
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>State must define:</li>
+</ul>
+<ol type="1">
 <li><code>position</code> </li>
 <li><code>time</code> </li>
-</ul>
-</dd></dl>
-<p>Velocity field may be passed to constructor or velocities may be obtained from jump_generator if JumpGenerator defines:</p><ul>
+</ol>
+<ul>
+<li>Velocity field may be passed to constructor, or velocities may be obtained from <code>jump_generator</code> if <code>JumpGenerator</code> defines:<ul>
 <li><code>velocity(State const&amp;)</code> </li>
 </ul>
+</li>
+</ul>
+</dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3196707bd69e3fd8e38f95c6fe52d5ce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3196707bd69e3fd8e38f95c6fe52d5ce">&#9670;&nbsp;</a></span>Transitions_Position_VelocityStep() <span class="overload">[1/2]</span></h2>

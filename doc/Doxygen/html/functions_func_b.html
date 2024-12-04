@@ -86,16 +86,15 @@ $(document).ready(function(){initNavTree('functions_func_b.html',''); initResiza
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>begin()
-: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a41f019a9d2cf24b0e189066b01e9cb66">ctrw::CTRW&lt; State_t &gt;</a>
-, <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a16fef53a9b0846853e4a439c269d2957">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
+: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a633681443cdb68d6e39f7a1a1e9cc92f">ctrw::CTRW&lt; State_t, ParallelOption_t &gt;</a>
 , <a class="el" href="dc/d1a/classuseful_1_1_multi_array.html#ad9b7485fe934635c59a2e20a5d36c9f2">useful::MultiArray&lt; value_t &gt;</a>
 </li>
 <li>boundary()
 : <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4e98c4bbe8cb9b9349899dc05aa596ed">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
 , <a class="el" href="d7/d1d/classctrw_1_1_transitions___position.html#a46be90c9f99d73678c7397f105629a24">ctrw::Transitions_Position&lt; JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="de/de9/classctrw_1_1_transitions___position___velocity_step.html#a1e58d39439a1c701c0757c3a4818fd03">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;</a>
-, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a1a4d0ef765172889525b8d38b7a72051">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, RNG &gt;</a>
-, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#af2572ebdc76f62ec3e4bf890c4187d9f">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a4ff600d61b4d9b2ab435b8152f29fd3a">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a64e814e6440342002f373d0a444b24e6">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 , <a class="el" href="da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#abe3789c0e569215a319f020bbc688f27">ctrw::Transitions_RunAndTumble_PTRW&lt; Boundary, StateSwitcher, JumpGenerator, OrientationGenerator, OrientationGenerator_Wall &gt;</a>
 , <a class="el" href="d4/d94/classctrw_1_1_transitions___time___position.html#a13e39dff48e8645550b3d948e328d719">ctrw::Transitions_Time_Position&lt; TimeGenerator, JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#a0bfbe615bcfc74cb2cb1c93a400da49d">ctrw::Transitions_Velocity_Acceleration&lt; Acceleration, Boundary &gt;</a>
@@ -138,7 +137,15 @@ $(document).ready(function(){initNavTree('functions_func_b.html',''); initResiza
 : <a class="el" href="de/dc7/classgeom_1_1_boundary___reflecting___dim.html#aae20cb8f3f45a6089f2bc4917cef03df">geom::Boundary_Reflecting_Dim&lt; dd &gt;</a>
 </li>
 <li>Boundary_Reinject()
-: <a class="el" href="d4/d7b/structptof_1_1_boundary___reinject.html#a1ec285a4ecbbf785a2a4702b8a4882c7">ptof::Boundary_Reinject&lt; InitialCondition &gt;</a>
+: <a class="el" href="d4/d7b/structptof_1_1_boundary___reinject.html#a9388071297ae77d0f9a10aadb0a9b969">ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt;</a>
+</li>
+<li>boundaryField()
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#afcbcca574753ba7f5d19021ab868c79f">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a7ea0773add51f847562c63a729137c56">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+</li>
+<li>boundaryFieldRef()
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#af9e5724c0a95ffe8f8ea1d70ef2b3fc8">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a887a04523702dea034cb45980a46d14f">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

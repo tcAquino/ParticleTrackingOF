@@ -1,4 +1,4 @@
 <map id="NextMeasurementTime&lt; Parameters &gt;" name="NextMeasurementTime&lt; Parameters &gt;">
-<area shape="rect" id="node1" title="Polymorphic object to handle setting up the next measurement time." alt="" coords="5,95,164,136"/>
+<area shape="rect" id="node1" title="Abstract polymorphic object to handle setting up the next measurement time." alt="" coords="5,95,164,136"/>
 <area shape="rect" id="node2" href="$d4/d48/struct_phase_1_1_parameters.html" title="Parameters for phase&#45;related quantities." alt="" coords="40,5,129,32"/>
 </map>

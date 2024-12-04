@@ -87,13 +87,15 @@ $(document).ready(function(){initNavTree('db/dbe/class_transitions___run_tumble.
 </div><!--header-->
 <div class="contents">
 
-<p>Update position and time when in run state and orientation and time when not in run state. Flip run state at each update. returned by a TimeGenerator given state. Position and time are then update only if no reaction occured.  
+<p>Update position and time when in run state and orientation and time when not in run state.  
  <a href="../../db/dbe/class_transitions___run_tumble.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">CTRW/Transitions.h</a>&quot;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Update position and time when in run state and orientation and time when not in run state. Flip run state at each update. returned by a TimeGenerator given state. Position and time are then update only if no reaction occured. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<div class="textblock"><p>Update position and time when in run state and orientation and time when not in run state. </p>
+<ul>
+<li>Flip run state at each update.</li>
+<li>Position and time are then update only if no reaction occured. <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TimeGenerator_run</td><td>Object to return time increment when in run mode, given state. </td></tr>
     <tr><td class="paramname">TimeGenerator_tumble</td><td>Object to return time increment when not run mode, given state. </td></tr>
@@ -102,14 +104,16 @@ $(document).ready(function(){initNavTree('db/dbe/class_transitions___run_tumble.
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+</li>
+<li>State must define:</li>
+</ul>
+<ol type="1">
 <li><code>position</code> </li>
 <li><code>time</code> </li>
 <li><code>orientation</code> </li>
-<li><code>run</code> </li>
-</ul>
-</dd></dl>
-<p><code>JumpGenerator</code> should enforce any boundary conditions. </p>
+<li><code>run</code> -<code>jump_generator</code> should enforce any boundary conditions. </li>
+</ol>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>CTRW/<a class="el" href="../../d6/d95/_c_t_r_w_2_transitions_8h_source.html">Transitions.h</a></li>
 </ul>

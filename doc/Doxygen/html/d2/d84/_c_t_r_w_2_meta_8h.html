@@ -133,15 +133,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <map name="a_c_t_r_w_2_meta_8hdep" id="a_c_t_r_w_2_meta_8hdep">
 <area shape="rect" title="Template metamagic utilities." alt="" coords="394,5,501,32"/>
 <area shape="rect" href="../../d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="47,80,213,107"/>
-<area shape="rect" href="../../d3/d74/_models_8h.html" title=" " alt="" coords="390,319,505,345"/>
-<area shape="rect" href="../../d0/dd9/_steppers_8h.html" title=" " alt="" coords="5,162,129,189"/>
-<area shape="rect" href="../../d6/d44/_initial_condition_8h.html" title=" " alt="" coords="536,80,695,107"/>
-<area shape="rect" href="../../d3/df6/_initial_condition___cases_8h.html" title=" " alt="" coords="485,155,631,196"/>
-<area shape="rect" href="../../d9/ddf/_output___cases_8h.html" title=" " alt="" coords="609,244,765,271"/>
-<area shape="rect" href="../../dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="237,80,409,107"/>
+<area shape="rect" href="../../d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="390,319,505,345"/>
+<area shape="rect" href="../../d0/dd9/_steppers_8h.html" title="Objects and utilities to handle time stepping along advective and diffusive trajectories." alt="" coords="5,162,129,189"/>
+<area shape="rect" href="../../d6/d44/_initial_condition_8h.html" title="Objects to create particles according to initial condition." alt="" coords="536,80,695,107"/>
+<area shape="rect" href="../../d3/df6/_initial_condition___cases_8h.html" title="Create particles according to different initial conditions." alt="" coords="513,155,659,196"/>
+<area shape="rect" href="../../d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="536,244,692,271"/>
+<area shape="rect" href="../../dc/dba/_time_step_adaptor_8h.html" title="Objects for adaptive time stepping." alt="" coords="237,80,409,107"/>
 <area shape="rect" href="../../d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="154,162,295,189"/>
-<area shape="rect" href="../../de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="265,244,401,271"/>
-<area shape="rect" href="../../d0/dee/_models___parallel_8h.html" title=" " alt="" coords="365,393,529,420"/>
+<area shape="rect" href="../../de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="265,244,401,271"/>
 </map>
 </div>
 </div>
@@ -157,17 +156,23 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:df/d1d/namespaceuseful"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d1d/namespaceuseful.html">useful</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:d8/db6/namespacemeta"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html">meta</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a690e890772152607100660d24911ce4b"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
-<tr class="memitem:a690e890772152607100660d24911ce4b"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a690e890772152607100660d24911ce4b">meta::time_step_setter_result_t</a> = decltype(std::declval&lt; X &gt;().time_step(std::declval&lt; double &gt;()))</td></tr>
-<tr class="memdesc:a690e890772152607100660d24911ce4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::time_step(double)</code>.  <a href="../../d8/db6/namespacemeta.html#a690e890772152607100660d24911ce4b">More...</a><br /></td></tr>
-<tr class="separator:a690e890772152607100660d24911ce4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a102893ae1922a71f7bc6e30700f9f26d"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a102893ae1922a71f7bc6e30700f9f26d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a102893ae1922a71f7bc6e30700f9f26d">meta::time_step_setter_double_result_t</a> = decltype(std::declval&lt; X &gt;().time_step(std::declval&lt; double &gt;()))</td></tr>
+<tr class="memdesc:a102893ae1922a71f7bc6e30700f9f26d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::time_step(double)</code>.  <a href="../../d8/db6/namespacemeta.html#a102893ae1922a71f7bc6e30700f9f26d">More...</a><br /></td></tr>
+<tr class="separator:a102893ae1922a71f7bc6e30700f9f26d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a7073a5c47acc3466657d829779cf01"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a4a7073a5c47acc3466657d829779cf01"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a4a7073a5c47acc3466657d829779cf01">meta::time_step_setter_int_result_t</a> = decltype(std::declval&lt; X &gt;().time_step(std::declval&lt; int &gt;()))</td></tr>
+<tr class="memdesc:a4a7073a5c47acc3466657d829779cf01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::time_step(int)</code>.  <a href="../../d8/db6/namespacemeta.html#a4a7073a5c47acc3466657d829779cf01">More...</a><br /></td></tr>
+<tr class="separator:a4a7073a5c47acc3466657d829779cf01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a967a82905e56fe74d6d8188e5077b1ff"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a967a82905e56fe74d6d8188e5077b1ff"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a967a82905e56fe74d6d8188e5077b1ff">meta::time_step_setter_uint_result_t</a> = decltype(std::declval&lt; X &gt;().time_step(std::declval&lt; std::size_t &gt;()))</td></tr>
+<tr class="memdesc:a967a82905e56fe74d6d8188e5077b1ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::time_step(std::size_t)</code>.  <a href="../../d8/db6/namespacemeta.html#a967a82905e56fe74d6d8188e5077b1ff">More...</a><br /></td></tr>
+<tr class="separator:a967a82905e56fe74d6d8188e5077b1ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a704f5d9e045850a35691508a1b019878"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
 <tr class="memitem:a704f5d9e045850a35691508a1b019878"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a704f5d9e045850a35691508a1b019878">meta::time_step_getter_result_t</a> = decltype(std::declval&lt; X &gt;().time_step())</td></tr>
 <tr class="memdesc:a704f5d9e045850a35691508a1b019878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::time_step()</code>.  <a href="../../d8/db6/namespacemeta.html#a704f5d9e045850a35691508a1b019878">More...</a><br /></td></tr>
@@ -192,6 +197,10 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a22377f857d790e82d9bf37e70468ed48"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a22377f857d790e82d9bf37e70468ed48">meta::tag_t</a> = decltype(std::declval&lt; X &gt;().tag)</td></tr>
 <tr class="memdesc:a22377f857d790e82d9bf37e70468ed48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::tag</code>.  <a href="../../d8/db6/namespacemeta.html#a22377f857d790e82d9bf37e70468ed48">More...</a><br /></td></tr>
 <tr class="separator:a22377f857d790e82d9bf37e70468ed48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c7e0a5ec1eda7934e5e4f28a83d383c"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a7c7e0a5ec1eda7934e5e4f28a83d383c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a7c7e0a5ec1eda7934e5e4f28a83d383c">meta::time_t</a> = decltype(std::declval&lt; X &gt;().time)</td></tr>
+<tr class="memdesc:a7c7e0a5ec1eda7934e5e4f28a83d383c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::time</code>.  <a href="../../d8/db6/namespacemeta.html#a7c7e0a5ec1eda7934e5e4f28a83d383c">More...</a><br /></td></tr>
+<tr class="separator:a7c7e0a5ec1eda7934e5e4f28a83d383c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa321678cd9ae66e4037e23d0aecdac30"><td class="memTemplParams" colspan="2">template&lt;bool condition, typename T &gt; </td></tr>
 <tr class="memitem:aa321678cd9ae66e4037e23d0aecdac30"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#aa321678cd9ae66e4037e23d0aecdac30">meta::Parameters_or_empty_t</a> = typename Parameters_or_empty&lt; condition, T &gt;::type</td></tr>
 <tr class="separator:aa321678cd9ae66e4037e23d0aecdac30"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,7 +209,7 @@ Typedefs</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:adefc014e5bf9f74f35675d0f1ea8317f"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
 <tr class="memitem:adefc014e5bf9f74f35675d0f1ea8317f"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#adefc014e5bf9f74f35675d0f1ea8317f">meta::has_time_step_setter_v</a></td></tr>
-<tr class="memdesc:adefc014e5bf9f74f35675d0f1ea8317f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has method <code>void time_step(double)</code>.  <a href="../../d8/db6/namespacemeta.html#adefc014e5bf9f74f35675d0f1ea8317f">More...</a><br /></td></tr>
+<tr class="memdesc:adefc014e5bf9f74f35675d0f1ea8317f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has method <code>void time_step([double, int, or std::size_t])</code>.  <a href="../../d8/db6/namespacemeta.html#adefc014e5bf9f74f35675d0f1ea8317f">More...</a><br /></td></tr>
 <tr class="separator:adefc014e5bf9f74f35675d0f1ea8317f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb2d13955b83b49f6a352a66e8076472"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
 <tr class="memitem:adb2d13955b83b49f6a352a66e8076472"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#adb2d13955b83b49f6a352a66e8076472">meta::has_time_step_getter_v</a></td></tr>
@@ -211,8 +220,8 @@ Variables</h2></td></tr>
 <tr class="memdesc:a477fa5ad6977ace261a812d7123f4181"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>Type time_step()</code>, where <code>Type</code> is an arithmetic type.  <a href="../../d8/db6/namespacemeta.html#a477fa5ad6977ace261a812d7123f4181">More...</a><br /></td></tr>
 <tr class="separator:a477fa5ad6977ace261a812d7123f4181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab79e8357d04767ad475502bb5969d1dd"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
-<tr class="memitem:ab79e8357d04767ad475502bb5969d1dd"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#ab79e8357d04767ad475502bb5969d1dd">meta::has_periodicity_v</a></td></tr>
-<tr class="memdesc:ab79e8357d04767ad475502bb5969d1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>std::vector&lt;int&gt; periodicity</code>.  <a href="../../d8/db6/namespacemeta.html#ab79e8357d04767ad475502bb5969d1dd">More...</a><br /></td></tr>
+<tr class="memitem:ab79e8357d04767ad475502bb5969d1dd"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#ab79e8357d04767ad475502bb5969d1dd">meta::has_periodicity_v</a> = has_member&lt;periodicity_t, X&gt;::value</td></tr>
+<tr class="memdesc:ab79e8357d04767ad475502bb5969d1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>periodicity</code>.  <a href="../../d8/db6/namespacemeta.html#ab79e8357d04767ad475502bb5969d1dd">More...</a><br /></td></tr>
 <tr class="separator:ab79e8357d04767ad475502bb5969d1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9945f580ee439cbe43c0238f37bf44f4"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
 <tr class="memitem:a9945f580ee439cbe43c0238f37bf44f4"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a9945f580ee439cbe43c0238f37bf44f4">meta::has_cell_v</a></td></tr>
@@ -226,6 +235,10 @@ Variables</h2></td></tr>
 <tr class="memitem:a457e53a37dc72629ad32fb6c84cf9c46"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a457e53a37dc72629ad32fb6c84cf9c46">meta::has_tag_v</a></td></tr>
 <tr class="memdesc:a457e53a37dc72629ad32fb6c84cf9c46"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>integral_type tag</code>.  <a href="../../d8/db6/namespacemeta.html#a457e53a37dc72629ad32fb6c84cf9c46">More...</a><br /></td></tr>
 <tr class="separator:a457e53a37dc72629ad32fb6c84cf9c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6dd8be59bf19e52fd2cc7beaf1af96"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a0c6dd8be59bf19e52fd2cc7beaf1af96"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a0c6dd8be59bf19e52fd2cc7beaf1af96">meta::has_time_v</a> = has_member&lt;time_t, X&gt;::value</td></tr>
+<tr class="memdesc:a0c6dd8be59bf19e52fd2cc7beaf1af96"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>time</code>.  <a href="../../d8/db6/namespacemeta.html#a0c6dd8be59bf19e52fd2cc7beaf1af96">More...</a><br /></td></tr>
+<tr class="separator:a0c6dd8be59bf19e52fd2cc7beaf1af96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Template metamagic utilities. </p>

@@ -1,4 +1,4 @@
 <map id="ptof::Measurer&lt; Subject, Geometry &gt;" name="ptof::Measurer&lt; Subject, Geometry &gt;">
-<area shape="rect" id="node1" title="Polymorphic output handler for outputting some quantity." alt="" coords="15,5,182,47"/>
+<area shape="rect" id="node1" title="Abstract polymorphic output handler for outputting some quantity." alt="" coords="15,5,182,47"/>
 <area shape="rect" id="node2" href="$d4/d33/structptof_1_1_measurer__absorption__time.html" title="Output absorption times, tags, and masses of absorbed particles." alt="" coords="5,95,192,136"/>
 </map>

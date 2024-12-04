@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('df/dcd/classctrw_1_1_jump_generator___
 <p>Jump according to a velocity field and time step, using RK4 scheme.  
  <a href="../../df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d3/dba/_jump_generator_8h_source.html">JumpGenerator.h</a>&gt;</code></p>
+<p><code>#include &quot;<a class="el" href="../../d3/dba/_jump_generator_8h_source.html">CTRW/JumpGenerator.h</a>&quot;</code></p>
 <div class="dynheader">
 Collaboration diagram for ctrw::JumpGenerator_Velocity_RK4&lt; VelocityField, Boundary &gt;:</div>
 <div class="dyncontent">
@@ -107,6 +107,7 @@ Collaboration diagram for ctrw::JumpGenerator_Velocity_RK4&lt; VelocityField, Bo
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a97f7af85555552cdacc1d43d67db1508"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#a97f7af85555552cdacc1d43d67db1508">JumpGenerator_Velocity_RK4</a> (VelocityField &amp;&amp;velocity_field, double <a class="el" href="../../df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#a514b3afe61fb65989be5d6487b55c50c">time_step</a>, Boundary &amp;&amp;boundary={})</td></tr>
+<tr class="memdesc:a97f7af85555552cdacc1d43d67db1508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#a97f7af85555552cdacc1d43d67db1508">More...</a><br /></td></tr>
 <tr class="separator:a97f7af85555552cdacc1d43d67db1508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a514b3afe61fb65989be5d6487b55c50c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#a514b3afe61fb65989be5d6487b55c50c">time_step</a> (double time_step)</td></tr>
 <tr class="separator:a514b3afe61fb65989be5d6487b55c50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,7 +136,6 @@ Private Attributes</h2></td></tr>
 class ctrw::JumpGenerator_Velocity_RK4&lt; VelocityField, Boundary &gt;</h3>
 
 <p>Jump according to a velocity field and time step, using RK4 scheme. </p>
-<p>"CTRW/JumpGenerator.h"</p>
 <p>Boundary conditions are enforced in predictor-corrector steps. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="../../d5/d4b/classctrw_1_1_particle.html" title="Particle class for ptrw/ctrw/tdrw methods.">Particle</a> state must define:<ul>
 <li><code>position</code> </li>
 </ul>
@@ -182,10 +182,12 @@ template&lt;typename VelocityField , typename Boundary  = geom::Boundary_DoNothi
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">velocity_field</td><td>the time step, and the boundary to enforce boundary conditions.</td></tr>
-    <tr><td class="paramname">time_step</td><td>Time step.</td></tr>
+    <tr><td class="paramname">velocity_field</td><td>the time step, and the boundary to enforce boundary conditions. </td></tr>
+    <tr><td class="paramname">time_step</td><td>Time step. </td></tr>
     <tr><td class="paramname">boundary</td><td>Object to apply boundary conditions to current state given current state and previous state. </td></tr>
   </table>
   </dd>
@@ -344,9 +346,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/dcd/classctrw_1_1_jump_generator___velocity___r_k4_a514b3afe61fb65989be5d6487b55c50c_icgraph.png" border="0" usemap="#adf/dcd/classctrw_1_1_jump_generator___velocity___r_k4_a514b3afe61fb65989be5d6487b55c50c_icgraph" alt=""/></div>
 <map name="adf/dcd/classctrw_1_1_jump_generator___velocity___r_k4_a514b3afe61fb65989be5d6487b55c50c_icgraph" id="adf/dcd/classctrw_1_1_jump_generator___velocity___r_k4_a514b3afe61fb65989be5d6487b55c50c_icgraph">
-<area shape="rect" title=" " alt="" coords="291,53,477,94"/>
-<area shape="rect" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a373e95071e591811bf8456a4a5e5fc68" title=" " alt="" coords="5,5,243,61"/>
-<area shape="rect" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a3617473840cdd4ace60ad4fd9451014e" title=" " alt="" coords="5,85,243,141"/>
+<area shape="rect" title=" " alt="" coords="276,53,451,94"/>
+<area shape="rect" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a8e517eb97a46e883753b19dbf13f1e8e" title=" " alt="" coords="5,5,228,61"/>
+<area shape="rect" href="../../d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a3617473840cdd4ace60ad4fd9451014e" title=" " alt="" coords="5,85,228,141"/>
 </map>
 </div>
 

@@ -1,11 +1,8 @@
 <map id="ptof::InitialConditionList::name" name="ptof::InitialConditionList::name">
-<area shape="rect" id="node1" title=" " alt="" coords="744,136,903,177"/>
-<area shape="rect" id="node2" href="$df/dfe/structptof_1_1_initial_condition_list.html#ad44c94bc32cbf9bdd15d741868800696" title=" " alt="" coords="535,5,694,47"/>
-<area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a12af326efbe388ed5595039042fa6563" title="Output information about current object." alt="" coords="541,71,688,112"/>
-<area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a7fd67d3e7c0fa728c44f8e6bc2c566fe" title="Make given number of particles." alt="" coords="533,201,696,243"/>
-<area shape="rect" id="node9" href="$df/dfe/structptof_1_1_initial_condition_list.html#a38a3f40dfd9d650dc71da2daf8c30207" title=" " alt="" coords="535,136,694,177"/>
-<area shape="rect" id="node3" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#ae480cbfa1ec2b8a2dbd6f108b7124d3d" title=" " alt="" coords="212,55,485,96"/>
-<area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="265,168,432,209"/>
-<area shape="rect" id="node8" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="279,233,418,275"/>
-<area shape="rect" id="node7" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,168,164,209"/>
+<area shape="rect" id="node1" title="Name from type." alt="" coords="799,104,957,145"/>
+<area shape="rect" id="node2" href="$df/dfe/structptof_1_1_initial_condition_list.html#a32fcb10d0409e2d50adb902ea57752d9" title="Check if name exists." alt="" coords="592,5,751,47"/>
+<area shape="rect" id="node5" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a833b5c63ba1b81e1784312edccd44e39" title="Output information about current object." alt="" coords="598,71,745,112"/>
+<area shape="rect" id="node6" href="$df/dfe/structptof_1_1_initial_condition_list.html#a38a3f40dfd9d650dc71da2daf8c30207" title="Type from name." alt="" coords="592,136,751,177"/>
+<area shape="rect" id="node3" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a6f86cd69ac30b01cecf08b991d04de50" title="Read initial condition type and specific parameters." alt="" coords="327,71,544,112"/>
+<area shape="rect" id="node4" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2" title=" " alt="" coords="5,71,279,112"/>
 </map>

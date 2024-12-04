@@ -1,8 +1,8 @@
 /**
- \file Stochastic/Random.h
- \author Tomás Aquino
- \date 02/07/2015
- \brief Miscelaneous collection of useful objects and algorithms
+   \file Stochastic/Random.h
+   \author Tomás Aquino
+   \date 02/07/2015
+   \brief Probability and random number generation.
 */
 
 #ifndef STOCHASTIC_RANDOM_H
@@ -10,7 +10,9 @@
 
 #include "Algebra/Algebra.h"
 #include "General/Constants.h"
+#include "General/IO.h"
 #include "General/Operations.h"
+#include "General/Parallel.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
 #include "Geometry/Coordinates.h"
@@ -18,25 +20,35 @@
 #include <array>
 #include <cmath>
 #include <complex>
+#include <cstddef>
 #include <list>
 #include <random>
 #include <stdexcept>
 #include <utility>
 #include <vector>
 
+/**
+   \namespace ctrw Objects and methods related to probability and random number
+   generation.
+*/
 namespace stochastic {
-/** \class RNG Stochastic/Random.h "Stochastic/Random.h"
- *  \brief Wrapper for random number generation with own RNG engine. */
+/**
+   \class RNG Stochastic/Random.h "Stochastic/Random.h"
+   \brief Wrapper for random number generation with own RNG engine.
+*/
 template <typename Distribution_t, typename Engine_t = std::mt19937>
 struct RNG {
   using param_type = typename Distribution_t::param_type;
   using result_type = typename Distribution_t::result_type;
   using distribution_type = Distribution_t;
+  using Engine = Engine_t;
 
   template <typename param_t>
   RNG(param_t const &params) : dist{param_type(params)} {}
 
   RNG(Distribution_t dist) : dist{dist} {}
+
+  RNG(std::size_t seed) : _rng{seed} {}
 
   result_type operator()() { return dist(_rng); }
 
@@ -46,13 +58,16 @@ private:
   Engine_t _rng{std::random_device{}()};
 };
 
-/** \class RNG_shared_engine Stochastic/Random.h "Stochastic/Random.h"
- *  \brief Wrapper for random number generation with shared RNG engine. */
+/**
+   \class RNG_shared_engine Stochastic/Random.h "Stochastic/Random.h"
+   \brief Wrapper for random number generation with shared RNG engine.
+*/
 template <typename Distribution_t, typename Engine_t = std::mt19937>
 struct RNG_shared_engine {
   using param_type = typename Distribution_t::param_type;
   using result_type = typename Distribution_t::result_type;
   using distribution_type = Distribution_t;
+  using Engine = Engine_t;
 
   template <typename param_t>
   RNG_shared_engine(param_t const &params, Engine_t &rng)
@@ -69,8 +84,58 @@ private:
   Engine_t &_rng;
 };
 
-/** \class skewedlevystable_distribution Stochastic/Random.h
- * "Stochastic/Random.h" \brief Skewed Lévy stable distribution */
+/**
+   \class RNGThreaded Stochastic/Random.h "Stochastic/Random.h"
+   \brief Set of RNGs for thread-safe random number generation.
+*/
+template <typename ParallelOption, typename Engine_t> struct RNGThreaded {
+  using Engine = Engine_t;
+
+  RNGThreaded() {
+    std::size_t num_threads = get_num_threads(ParallelOption{});
+    _rngs.reserve(num_threads);
+    for (std::size_t ii = 0; ii < num_threads; ++ii)
+      _rngs.emplace_back(std::random_device{}());
+  }
+
+  /** \brief Constructor.
+      \details Ignored seed constructor to ensure compatibility with standard
+      RNGs. */
+  RNGThreaded(std::size_t) : RNGThreaded{} {}
+
+  auto operator()() { return _rngs[get_thread_num(ParallelOption{})](); }
+
+  auto min() { return Engine_t::min(); }
+
+  auto max() { return Engine_t::max(); }
+
+private:
+  std::vector<Engine_t> _rngs;
+};
+
+template <typename Engine_t>
+struct RNGThreaded<par::ParallelOptions::Serial, Engine_t> {
+  using Engine = Engine_t;
+
+  RNGThreaded() : _rng{std::random_device{}()} {}
+
+  RNGThreaded(std::size_t seed) : _rng{seed} {}
+
+  auto operator()() { return _rng(); }
+
+  auto min() { return Engine_t::min(); }
+
+  auto max() { return Engine_t::max(); }
+
+private:
+  Engine_t _rng;
+};
+
+/**
+   \class skewedlevystable_distribution Stochastic/Random.h
+   "Stochastic/Random.h"
+   \brief Skewed Lévy stable distribution.
+*/
 template <typename Value_type = double> class skewedlevystable_distribution {
 public:
   using param_type = std::array<Value_type, 3>;
@@ -84,25 +149,28 @@ public:
   const double xi{std::atan(zeta) / alpha};
   const double vv{std::pow(1. + zeta * zeta, 0.5 / alpha)};
 
-  /** \brief Constructor.
-   \param alpha Exponent, pdf <tt>~ t^{-1-alpha}<tt>.
-   \param sigma Scale parameter.
-   \param mu location parameter.
-   \note Tail <tt>~ -sigma^alpha * tan(alpha*pi/2) *
-   t^{-1-\alpha}/Gamma(-alpha)</tt>.
+  /**
+     \brief Constructor.
+     \param alpha Exponent, pdf <tt>x^{-1-alpha}</tt>.
+     \param sigma Scale parameter.
+     \param mu location parameter.
+     \note Tail <tt>~ -sigma^alpha * tan(alpha*pi/2) *
+     x^{-1-\alpha}/Gamma(-alpha)</tt>.
   */
   skewedlevystable_distribution(Value_type alpha, Value_type sigma = 1.,
                                 Value_type mu = 0.)
       : alpha(alpha), sigma(sigma), mu(mu) {}
 
-  /** \brief Constructor.
-     \param params <tt>param[0] = alpha</tt>, params <tt>param[1] = sigma</tt>,
-   params <tt>param[2] = mu</tt>.   \note
-     - Exponent, pdf <tt>~ t^{-1-alpha}<tt>.
-     - sigma Scale parameter.
-     - mu location parameter.
-     - Tail <tt>~ -sigma^alpha * tan(alpha*pi/2) *
-   t^{-1-\alpha}/Gamma(-alpha)</tt>.
+  /**
+     \brief Constructor.
+     \param params <tt>param[0] = alpha</tt>, <tt>param[1] = sigma</tt>,
+     <tt>param[2] = mu</tt>.
+     \note
+      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}<tt>.
+      - sigma: Scale parameter.
+      - mu: Location parameter.
+      - Tail <tt>~ -sigma^alpha * tan(alpha*pi/2) *
+      t^{-1-\alpha}/Gamma(-alpha)</tt>.
   */
   skewedlevystable_distribution(param_type const &params)
       : alpha(params[0]), sigma(params[1]), mu(params[2]) {}
@@ -123,9 +191,10 @@ private:
   std::exponential_distribution<double> _exponential_dist{1.};
 };
 
-/** \class pareto_distribution Stochastic/Random.h "Stochastic/Random.h"
-    \brief Pareto distribution
-    \note PDF <tt>alpha/xm (x/min)^{-alpha-1} for x >= min</tt>.
+/**
+   \class pareto_distribution Stochastic/Random.h "Stochastic/Random.h"
+   \brief Pareto distribution.
+   \note PDF <tt>(x/min)^{-alpha-1}</tt> for <tt>x >= min</tt>.
 */
 template <typename Value_type = double> class pareto_distribution {
 public:
@@ -135,9 +204,21 @@ public:
   const Value_type alpha;
   const Value_type min;
 
+  /**
+     \brief Constructor.
+     \param alpha Tailing exponent, PDF <tt>x^{-1-alpha}</tt>.
+     \param min Minimum value.
+  */
   pareto_distribution(Value_type alpha, Value_type min)
       : alpha(alpha), min(min) {}
 
+  /**
+     \brief Constructor.
+     \param params <tt>param[0] = alpha</tt>, <tt>param[1] = min</tt>.
+     \note
+      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}<tt>.
+      - min: Minimum value.
+  */
   pareto_distribution(param_type const &params)
       : alpha(params[0]), min(params[1]) {}
 
@@ -149,9 +230,10 @@ private:
   std::exponential_distribution<double> _exponential_dist{1.};
 };
 
-/** \class lomax_distribution Stochastic/Random.h "Stochastic/Random.h"
-  \brief Pareto lomax distribution
-  \note PDF <tt>alpha/scale (1+x/scale)^{-alpha-1}</tt>. */
+/**
+   \class lomax_distribution Stochastic/Random.h "Stochastic/Random.h"
+   \brief Pareto lomax distribution
+   \note PDF <tt>alpha/scale (1+x/scale)^{-alpha-1}</tt>. */
 template <typename Value_type = double> class lomax_distribution {
 public:
   using param_type = std::array<Value_type, 2>;
@@ -160,9 +242,21 @@ public:
   const Value_type alpha;
   const Value_type scale;
 
+  /**
+     \brief Constructor.
+     \param alpha Tailing exponent, PDF <tt>x^{-1-alpha}</tt>.
+     \param scale Scale parameter.
+  */
   lomax_distribution(Value_type alpha, Value_type scale)
       : alpha{alpha}, scale{scale} {}
 
+  /**
+     \brief Constructor.
+     \param params <tt>param[0] = alpha</tt>, <tt>param[1] = scale</tt>.
+     \note
+      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}<tt>.
+      - scale: Scale parameter.
+  */
   lomax_distribution(param_type const &params)
       : alpha(params[0]), scale(params[1]) {}
 
@@ -174,8 +268,11 @@ private:
   std::uniform_real_distribution<double> _uniform_dist{};
 };
 
-/** \class inverse_gaussian_distribution Stochastic/Random.h
-   "Stochastic/Random.h" \brief Inverse Gaussian distribution */
+/**
+   \class inverse_gaussian_distribution Stochastic/Random.h
+   "Stochastic/Random.h"
+   \brief Inverse Gaussian distribution.
+*/
 template <typename Value_type = double> class inverse_gaussian_distribution {
 public:
   using param_type = std::array<Value_type, 2>;
@@ -206,21 +303,21 @@ private:
   double _ratio{0.5 * var / (mean * mean)};
 };
 
-/** \class isotropic_unit_vector_distribution Stochastic/Random.h
-   "Stochastic/Random.h" \brief Distribution for unit vectors in arbitrary
-   dimension with uniformly random orientation
+/**
+   \class isotropic_unit_vector_distribution Stochastic/Random.h
+   "Stochastic/Random.h"
+   \brief Distribution for unit vectors in arbitrary dimension with uniformly
+   random orientation.
 */
-template <typename Value_type = std::vector<double>>
 class isotropic_unit_vector_distribution {
 public:
   using param_type = std::size_t;
-  using result_type = Value_type;
+  using result_type = std::vector<double>;
 
   isotropic_unit_vector_distribution(std::size_t dim) : _dim{dim} {}
 
-  template <typename Generator> Value_type operator()(Generator &rng) {
+  template <typename Generator> result_type operator()(Generator &rng) {
     result_type val;
-
     for (std::size_t dd = 0; dd < _dim; ++dd)
       val.push_back(_normal_dist(rng));
     op::normalize_inplace(val);
@@ -232,39 +329,43 @@ private:
   std::normal_distribution<double> _normal_dist{};
 };
 
-/** \class isotropic_unit_vector_distribution Stochastic/Random.h
-   "Stochastic/Random.h" \brief Uniform distribution inside hypersphere
+/**
+   \class isotropic_unit_vector_distribution Stochastic/Random.h
+   "Stochastic/Random.h"
+   \brief Uniform distribution inside hypersphere.
 */
-template <typename Value_type = std::vector<double>>
 class uniform_sphere_distribution {
 public:
   struct param_type {
-    std::size_t dim;
+    std::vector<double> center;
     double radius;
     double inner_radius{0.};
   } const params;
-  using result_type = Value_type;
+  using result_type = std::vector<double>;
 
   uniform_sphere_distribution(param_type params) : params{params} {}
 
-  uniform_sphere_distribution(std::size_t dim, double radius,
+  uniform_sphere_distribution(std::vector<double> const &center, double radius,
                               double inner_radius = 0.)
-      : uniform_sphere_distribution{param_type{dim, radius, inner_radius}} {}
+      : uniform_sphere_distribution{param_type{center, radius, inner_radius}} {}
 
-  template <typename Generator> Value_type operator()(Generator &rng) {
-    return op::times_scalar(_uniform_dist(rng), _isotropic_dist(rng));
+  template <typename Generator> result_type operator()(Generator &rng) {
+    return op::plus(params.center,
+                    op::times_scalar(_uniform_dist(rng), _isotropic_dist(rng)));
   }
 
 private:
-  isotropic_unit_vector_distribution<result_type> _isotropic_dist{params.dim};
+  isotropic_unit_vector_distribution _isotropic_dist{params.center.size()};
   std::uniform_real_distribution<> _uniform_dist{params.inner_radius,
                                                  params.radius};
 };
 
-/** \class discrete_dist_distribution Stochastic/Random.h "Stochastic/Random.h"
-   \brief  Discrete distribution over given set of values
-   \tparam Discrete_dist A cdf or pdf object implementing \c
-   bin_probability(std::size_t) and \c value(Scalar) */
+/**
+   \class discrete_dist_distribution Stochastic/Random.h "Stochastic/Random.h"
+   \brief Discrete distribution over given set of values.
+   \tparam Discrete_dist A cdf or pdf object implementing
+   <tt>bin_probability(std::size_t)</tt> and <tt>value(Scalar)</tt>.
+*/
 template <typename Discrete_dist> class discrete_dist_distribution {
 public:
   using param_type = std::remove_reference_t<Discrete_dist>;
@@ -298,12 +399,15 @@ template <typename Discrete_dist>
 discrete_dist_distribution(Discrete_dist &&)
     -> discrete_dist_distribution<Discrete_dist>;
 
-/** \class discrete_conditional_dist_distribution Stochastic/Random.h
-   "Stochastic/Random.h" \brief Discrete conditional distribution over given set
-   of values \tparam Discrete_dist  Distribution  conditioned on a given value
-   can be a cdf or pdf implementing <tt>bin_probability(std::size_t,
-   std::size_t)</tt> and <tt>value(Scalar, std::size_t)</tt>, where the second
-   argument refers to the value being conditioned on */
+/**
+   \class discrete_conditional_dist_distribution Stochastic/Random.h
+   "Stochastic/Random.h"
+   \brief Discrete conditional distribution over given set of values.
+   \tparam Discrete_dist Distribution conditioned on a given value. Can be a
+   cdf or pdf implementing <tt>bin_probability(std::size_t, std::size_t)</tt>
+   and <tt>value(Scalar, std::size_t)</tt>, where the second argument refers to
+   the value being conditioned on.
+*/
 template <typename Discrete_conditional_dist>
 class discrete_conditional_dist_distribution {
 public:
@@ -344,9 +448,11 @@ template <typename Discrete_conditional_dist>
 discrete_conditional_dist_distribution(Discrete_conditional_dist &&)
     -> discrete_conditional_dist_distribution<Discrete_conditional_dist>;
 
-/** \class uniform_cylinder_distribution Stochastic/Random.h
-   "Stochastic/Random.h" \brief Uniformly random distribution inside cylinder.
- */
+/**
+   \class uniform_cylinder_distribution Stochastic/Random.h
+   "Stochastic/Random.h"
+   \brief Uniformly random distribution inside cylinder.
+*/
 class uniform_cylinder_distribution {
 public:
   struct param_type {
@@ -387,10 +493,12 @@ private:
 };
 
 /** \class uniform_rectangle_distribution Stochastic/Random.h
-   "Stochastic/Random.h" \brief Uniformly random distribution inside
-   parallelipiped in arbitrary dimension
- */
-class uniform_paralleliped_distribution {
+    "Stochastic/Random.h"
+    \brief Uniformly random distribution inside parallelipiped in arbitrary
+    dimension.
+    \note Parallelepiped can be degenerate (sides can be the zero vector).
+*/
+class uniform_parallelipiped_distribution {
 public:
   struct param_type {
     std::vector<double> corner;
@@ -398,18 +506,19 @@ public:
   } const params;
   using result_type = std::vector<double>;
 
-  uniform_paralleliped_distribution(param_type params) : params{params} {}
+  uniform_parallelipiped_distribution(param_type params) : params{params} {}
 
-  uniform_paralleliped_distribution(
+  uniform_parallelipiped_distribution(
       std::vector<double> const &corner,
       std::vector<std::vector<double>> const &sides)
-      : uniform_paralleliped_distribution{param_type{corner, sides}} {}
+      : uniform_parallelipiped_distribution{param_type{corner, sides}} {}
 
   template <typename Generator> result_type operator()(Generator &rng) {
-    std::vector<double> result;
+    result_type result;
     result.reserve(params.corner.size());
-    for (std::size_t dd = 0; dd < params.sides.size(); ++dd)
-      result.push_back(op::times_scalar(_uniform_dist(rng), params.sides[dd]));
+    for (std::size_t dd = 0; dd < params.corner.size(); ++dd)
+      op::plus_inplace(result,
+                       op::times_scalar(_uniform_dist(rng), params.sides[dd]));
     op::plus_inplace(result, params.corner);
     return result;
   }
@@ -418,10 +527,14 @@ private:
   std::uniform_real_distribution<> _uniform_dist{};
 };
 
-/** \return PDF of given set of values, normalized to integral equal to number
-   of samples. \note - Output bin values are bin centers.
-    - Data smaller than leftmost edge and larger than rightmost edge are
-   included in leftmost and rightmost bins, respectively. */
+/**
+   \return PDF of given set of values, normalized to integral equal to number of
+   samples.
+   \note
+   - Output bin values are bin centers.
+   - Data smaller than leftmost edge and larger than rightmost edge are included
+   in leftmost and rightmost bins, respectively.
+*/
 template <typename Container>
 std::vector<std::pair<double, double>> pdf(std::vector<double> const &bin_edges,
                                            Container const &data) {
@@ -449,10 +562,13 @@ std::vector<std::pair<double, double>> pdf(std::vector<double> const &bin_edges,
   return pdf;
 }
 
-/** \brief Pick an event.
- \param probs Cumulative probabilities (not necessarily normalized), <tt>p(0),
- p(0)+p(1), ...</tt>. \param rng Random number generator. \return Event index \c
- i with probability \c p(i). */
+/**
+   \brief Pick an event.
+   \param probs Cumulative probabilities (not necessarily normalized), <tt>p(0),
+   p(0)+p(1), ...</tt>.
+   \param rng Random number generator.
+   \return Event index \c i with probability \<tt>p(i)</tt>.
+*/
 template <typename Container, typename Engine_t = std::mt19937>
 std::size_t pick(Container const &probs, Engine_t &rng) {
   typename Container::value_type rnd =
@@ -465,8 +581,10 @@ std::size_t pick(Container const &probs, Engine_t &rng) {
   throw std::runtime_error("Nothing picked!");
 }
 
-/** \brief Generate a random non-repeating sequence of \c subset.size() elements
- * out of <tt>{0, 1, ..., total-1}</tt>. */
+/**
+   \brief Generate a random non-repeating sequence of <tt>subset.size()</tt>
+   elements out of <tt>{0, 1, ..., total-1}</tt>.
+*/
 template <typename Engine_t = std::mt19937>
 void randSubset(std::size_t total, std::vector<std::size_t> &subset,
                 Engine_t &rng) {
@@ -483,8 +601,10 @@ void randSubset(std::size_t total, std::vector<std::size_t> &subset,
   }
 }
 
-/** \return Random non-repeating sequence of \c subset_size() elements
- * out of <tt>{0, 1, ..., total-1}</tt>. */
+/**
+   \return Random non-repeating sequence of <tt>subset_size</tt> elements out of
+   <tt>{0, 1, ..., total-1}</tt>.
+*/
 template <typename Engine_t = std::mt19937>
 std::vector<std::size_t> randSubset(std::size_t total, std::size_t subset_size,
                                     Engine_t &rng) {
@@ -494,11 +614,16 @@ std::vector<std::size_t> randSubset(std::size_t total, std::size_t subset_size,
   return subset;
 }
 
-/** \struct Logspacing Stochastic/Random.h "Stochastic/Random.h"
- \brief Type helper to represent logarithmic spacing.*/
+/**
+   \struct Logspacing Stochastic/Random.h "Stochastic/Random.h"
+   \brief Type helper to represent logarithmic spacing.
+*/
 struct Logspacing {};
-/** \struct Linspacing Stochastic/Random.h "Stochastic/Random.h"
- \brief Type helper to represent linear spacing.*/
+
+/**
+   \struct Linspacing Stochastic/Random.h "Stochastic/Random.h"
+   \brief Type helper to represent linear spacing.
+*/
 struct Linspacing {};
 
 /** \return CDF of samples. */
@@ -516,7 +641,7 @@ auto cdf(Container &samples, double min_edge, double max_edge,
   else if constexpr (std::is_same<Spacing, Logspacing>::value)
     edges = range::linspace(min_edge, max_edge, nr_bins + 1);
   else
-    throw useful::bad_parameters();
+    throw io::bad_parameters();
 
   for (std::size_t ii = 1; ii < edges.size(); ++ii)
     cdf.first.push_back(edges[ii] + edges[ii - 1] / 2.);
@@ -534,9 +659,10 @@ auto cdf(Container &samples, double min_edge, double max_edge,
   return cdf;
 }
 
-/** \return CDF of samples.
-    \note First and last bin edges determined by a factor of min and max of
-   data. */
+/**
+   \return CDF of samples.
+   \note First and last bin edges determined by a factor of min and max of data.
+*/
 template <typename Spacing, typename Container>
 auto cdf(Container &samples, std::size_t nr_bins, double min_factor = 0.9,
          double max_factor = 1.1) {
@@ -563,7 +689,7 @@ auto cdf(Container &samples, std::size_t nr_bins, double min_factor = 0.9,
   else if constexpr (std::is_same<Spacing, Linspacing>::value)
     edges = range::linspace(min_edge, max_edge, nr_bins + 1);
   else
-    throw useful::bad_parameters();
+    throw io::bad_parameters();
 
   for (std::size_t ii = 1; ii < edges.size(); ++ii)
     cdf.first.push_back((edges[ii] + edges[ii - 1]) / 2.);
@@ -581,7 +707,7 @@ auto cdf(Container &samples, std::size_t nr_bins, double min_factor = 0.9,
   return cdf;
 }
 
-/** \return Tail CDF of samples, 1 - CDF. */
+/** \return Tail CDF of samples, <tt>1 - CDF</tt>. */
 template <typename Spacing, typename Container>
 auto cdf_tail(Container &samples, double min_edge, double max_edge,
               std::size_t nr_bins) {
@@ -591,9 +717,10 @@ auto cdf_tail(Container &samples, double min_edge, double max_edge,
   return cdf_tail;
 }
 
-/** \return Tail CDF of samples, 1 - CDF.
+/** \return Tail CDF of samples, <tt>1 - CDF</tt>.
     \note First and last bin edges determined by a factor of min and max of
-   data. */
+   data.
+*/
 template <typename Spacing, typename Container>
 auto cdf_tail(Container &samples, std::size_t nr_bins, double min_factor = 0.9,
               double max_factor = 1.1) {

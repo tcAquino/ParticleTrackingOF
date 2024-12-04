@@ -1,24 +1,25 @@
 /**
- \file CTRW/JumpGenerator.h
- \author Tomás Aquino
- \date 20/01/2018
+   \file CTRW/JumpGenerator.h
+   \author Tomás Aquino
+   \date 20/01/2018
 
- \brief Jump generators for particle tracking.
+   \brief Jump generators for particle tracking.
 
-  A JumpGenerator should implement the following minimal functionality:
+   \details
+   A JumpGenerator should implement the following minimal functionality:
 
- \code{.cpp}
-  class JumpGenerator
-  {
-    // Return the jump increment
-    // with type of state element to be incremented
-    //   template <typename State>
-    //   auto operator() (State const& state)
-    {
-      // Return the jump increment
-    }
-  };
- \endcode
+   \code{.cpp}
+   class JumpGenerator
+   {
+   // Return the jump increment
+   // with type of state element to be incremented
+   //   template <typename State>
+   //   auto operator() (State const& state)
+   {
+   // Return the jump increment
+   }
+   };
+   \endcode
 */
 
 #ifndef CTRW_JUMPGENERATOR_H
@@ -26,9 +27,12 @@
 
 #include "CTRW/Meta.h"
 #include "General/Constants.h"
+#include "General/Meta.h"
 #include "General/Operations.h"
+#include "General/Parallel.h"
 #include "General/Useful.h"
 #include "Geometry/Boundary.h"
+#include "Stochastic/Random.h"
 #include <algorithm>
 #include <cmath>
 #include <random>
@@ -36,25 +40,28 @@
 #include <utility>
 
 namespace ctrw {
-/** \class JumpGenerator_Step CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
- * \brief Jump a fixed step. */
+/**
+   \class JumpGenerator_Step CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Jump a fixed step.
+*/
 template <typename Step = double> class JumpGenerator_Step {
 public:
-  /** Constructor.
-   \param step Fixed jump step.
+  /**
+     \brief Constructor.
+     \param step Fixed jump step.
   */
   JumpGenerator_Step(Step step) : step{step} {}
 
   /**
-   \param state Particle state (unused).
-   \return Jump increment.
+     \param state Particle state (unused).
+     \return Jump increment.
   */
   template <typename State = useful::Empty>
   auto operator()(State const &state = {}) {
     return step;
   }
 
-  const Step step; /**< The fixed step to jump. */
+  const Step step; /**< Step size. */
 };
 
 /** \class JumpGenerator_Add CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
@@ -62,9 +69,10 @@ public:
 template <typename JumpGenerator_1, typename JumpGenerator_2>
 class JumpGenerator_Add {
 public:
-  /** Constructor.
-   \param jump_generator_1 First jump generator.
-   \param jump_generator_2 Second jump generator.
+  /**
+     \bried Constructor.
+     \param jump_generator_1 First jump generator.
+     \param jump_generator_2 Second jump generator.
   */
   JumpGenerator_Add(JumpGenerator_1 jump_generator_1,
                     JumpGenerator_2 jump_generator_2)
@@ -72,8 +80,8 @@ public:
                                                  jump_generator_2} {}
 
   /**
-   \param state Particle state (unused).
-   \return Jump increment.
+     \param state Particle state (unused).
+     \return Jump increment.
   */
   template <typename State = useful::Empty>
   auto operator()(State const &state = {}) {
@@ -99,14 +107,16 @@ private:
   JumpGenerator_2 _jump_generator_2; /**< Second jump generator. */
 };
 
-/** \class JumpGenerator_Velocity CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
-  \brief Jump according to a velocity field and time step (forward Euler).
+/**
+   \class JumpGenerator_Velocity CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Jump according to a velocity field and time step (forward Euler).
 */
 template <typename VelocityField> class JumpGenerator_Velocity {
 public:
-  /** Constructor.
-    \param velocity_field Velocity field (as a function of state)
-    \param time_step Time step.
+  /**
+     \brief Constructor.
+     \param velocity_field Velocity field (as a function of state)
+     \param time_step Time step.
   */
   JumpGenerator_Velocity(VelocityField &&velocity_field, double time_step)
       : _velocity_field{std::forward<VelocityField>(velocity_field)},
@@ -119,16 +129,16 @@ public:
   double time_step() const { return _time_step; }
 
   /**
-   \param state Particle state.
-   \return Jump increment.
+     \param state Particle state.
+     \return Jump increment.
   */
   template <typename State> auto operator()(State const &state) {
     return op::times_scalar(_time_step, velocity(state));
   }
 
   /**
-   \param state Particle state.
-   \return Velocity value.
+     \param state Particle state.
+     \return Velocity value.
   */
   template <typename State> auto velocity(State const &state) const {
     return _velocity_field(state);
@@ -145,19 +155,24 @@ template <typename VelocityField>
 JumpGenerator_Velocity(VelocityField &&, double)
     -> JumpGenerator_Velocity<VelocityField>;
 
-/** \class JumpGenerator_Velocity_RK4 CTRW/JumpGenerator.h
-  "CTRW/JumpGenerator.h" \brief Jump according to a velocity field and time
-  step, using RK4 scheme. \details Boundary conditions are enforced in
-  predictor-corrector steps. \note Particle state must define:
-    - \c position */
+/**
+   \class JumpGenerator_Velocity_RK4 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Jump according to a velocity field and time step, using RK4 scheme.
+   \details Boundary conditions are enforced in predictor-corrector steps.
+   \note Particle state must define:
+   - \c position
+*/
 template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
 class JumpGenerator_Velocity_RK4 {
 public:
-  /** Constructor.
-   \param velocity_field the time step, and the boundary to enforce boundary
-   conditions. \param time_step Time step. \param boundary Object to apply
-   boundary conditions to current state given current state and previous state.
-   */
+  /**
+     \brief Constructor.
+     \param velocity_field the time step, and the boundary to enforce boundary
+     conditions.
+     \param time_step Time step.
+     \param boundary Object to apply boundary conditions to current state given
+     current state and previous state.
+  */
   JumpGenerator_Velocity_RK4(VelocityField &&velocity_field, double time_step,
                              Boundary &&boundary = {})
       : _velocity_field{std::forward<VelocityField>(velocity_field)},
@@ -170,8 +185,8 @@ public:
   double time_step() const { return _time_step; }
 
   /**
-   \param state Particle state.
-   \return Jump increment.
+     \param state Particle state.
+     \return Jump increment.
   */
   template <typename State> auto operator()(State const &state) {
     auto state_intermediate = state;
@@ -200,8 +215,8 @@ public:
   }
 
   /**
-   \param state Particle state.
-   \return Velocity value.
+     \param state Particle state.
+     \return Velocity value.
   */
   template <typename State> auto velocity(State const &state) const {
     return _velocity_field(state);
@@ -219,10 +234,13 @@ template <typename VelocityField, typename Boundary>
 JumpGenerator_Velocity_RK4(VelocityField &&, double, Boundary &&)
     -> JumpGenerator_Velocity_RK4<VelocityField, Boundary>;
 
-/** \class JumpGenerator_Diffusion_1d CTRW/JumpGenerator.h
- * "CTRW/JumpGenerator.h" \brief One dimensional diffusion jumps using Gaussian
- * distribution. */
-template <typename RNG = std::mt19937> class JumpGenerator_Diffusion_1d {
+/**
+   \class JumpGenerator_Diffusion_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief One dimensional diffusion jumps using Gaussian distribution.
+*/
+template <typename ParallelOption = par::ParallelOptions::Serial,
+          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+class JumpGenerator_Diffusion_1d {
   double _time_step;  /**< Time step.            */
   double _diff_coeff; /**< Diffusion coefficient.*/
 
@@ -233,9 +251,10 @@ template <typename RNG = std::mt19937> class JumpGenerator_Diffusion_1d {
       0., 1.}; /**< Unit normal distribution.*/
 
 public:
-  /** Constructor.
-   \param diff_coeff Diffusion coefficient.
-   \param time_step Diffusion coefficient.
+  /**
+     \brief Constructor.
+     \param diff_coeff Diffusion coefficient.
+     \param time_step Diffusion coefficient.
   */
   JumpGenerator_Diffusion_1d(double diff_coeff, double time_step)
       : _time_step{time_step}, _diff_coeff{diff_coeff} {}
@@ -259,8 +278,8 @@ public:
   double diff() const { return _diff_coeff; }
 
   /**
-   \param state Particle state (unused).
-   \return Jump increment.
+     \param state Particle state (unused).
+     \return Jump increment.
   */
   template <typename State = useful::Empty>
   double operator()(State const &state = {}) {
@@ -268,13 +287,18 @@ public:
   }
 };
 
-/** \class JumpGenerator_Diffusion CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
- * \brief Diffusion jumps along each dimension using Gaussian distributions. */
+/**
+   \class JumpGenerator_Diffusion CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Diffusion jumps along each dimension using Gaussian distributions.
+*/
+template <typename ParallelOption = par::ParallelOptions::Serial,
+          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
 class JumpGenerator_Diffusion {
 public:
-  /** Constructor.
-   \param diff_coeffs Diffusion coefficients for each dimension.
-   \param time_step Diffusion coefficient.
+  /**
+     \brief Constructor.
+     \param diff_coeffs Diffusion coefficients for each dimension.
+     \param time_step Diffusion coefficient.
   */
   JumpGenerator_Diffusion(std::vector<double> const &diff_coeffs,
                           double time_step) {
@@ -283,10 +307,11 @@ public:
       _jump_generator.emplace_back(diff_coeff, time_step);
   }
 
-  /** Constructor.
-   \param diff_coeff Diffusion coefficient (same for all dimensions).
-   \param time_step Diffusion coefficient.
-   \param dim Number of dimensions.
+  /**
+     \brief Constructor.
+     \param diff_coeff Diffusion coefficient (same for all dimensions).
+     \param time_step Diffusion coefficient.
+     \param dim Number of dimensions.
   */
   JumpGenerator_Diffusion(double diff_coeff, double time_step,
                           std::size_t dim) {
@@ -301,8 +326,9 @@ public:
       _jump_generator[dd].time_step(time_step);
   }
 
-  /** \param diff_coeff Diffusion coefficient to set (same for all dimensions).
-   */
+  /**
+     \param diff_coeff Diffusion coefficient to set (same for all dimensions).
+  */
   void diff(double diff_coeff) {
     for (std::size_t dd = 0; dd < dim(); ++dd)
       _jump_generator[dd].diff(diff_coeff);
@@ -318,16 +344,17 @@ public:
   double time_step() const { return _jump_generator[0].time_step(); }
 
   /**
-   \param dd Dimension.
-   \return Diffusion coefficient along dimension. */
+     \param dd Dimension.
+     \return Diffusion coefficient along dimension.
+  */
   double diff(std::size_t dd) const { return _jump_generator[dd].diff(); }
 
   /** \return Number of spatial dimensions. */
   std::size_t dim() const { return _jump_generator.size(); }
 
   /**
-   \param state Particle state (unused).
-   \return Jump increment.
+     \param state Particle state (unused).
+     \return Jump increment.
   */
   template <typename State = useful::Empty>
   auto operator()(State const &state = {}) {
@@ -339,14 +366,18 @@ public:
   }
 
 private:
-  std::vector<JumpGenerator_Diffusion_1d<>>
+  std::vector<JumpGenerator_Diffusion_1d<ParallelOption, RNG>>
       _jump_generator; /**< Diffusion jump generators along each dimension.*/
 };
 
-/** \class JumpGenerator_RW_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
- * \brief One-dimensional random walk jumps with fixed step sizes to left or
- * right. */
-template <typename Distance_type = double, typename RNG = std::mt19937>
+/**
+   \class JumpGenerator_RW_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief One-dimensional random walk jumps with fixed step sizes to left or
+   right.
+*/
+template <typename Distance_type = double,
+          typename ParallelOption = par::ParallelOptions::Serial,
+          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
 class JumpGenerator_RW_1d {
   const Distance_type _jump_size;   /**< Fixed jump size. */
   const double _prob_right;         /**< Probability to jump right. */
@@ -355,16 +386,17 @@ class JumpGenerator_RW_1d {
       _prob_right}; /**< Bernoulli distribution. */
 
 public:
-  /** Constructor.
-   \param jump_size Fixed jump size.
-   \param prob_right Probability of jumping to the right.
+  /**
+     \brief Constructor.
+     \param jump_size Fixed jump size.
+     \param prob_right Probability of jumping to the right.
   */
   JumpGenerator_RW_1d(Distance_type jump_size = 1, double prob_right = 0.5)
       : _jump_size{jump_size}, _prob_right{prob_right} {}
 
   /**
-   \param state Particle state (unused).
-   \return Jump increment.
+     \param state Particle state (unused).
+     \return Jump increment.
   */
   template <typename State = useful::Empty>
   double operator()(State const &state = {}) {
@@ -372,52 +404,61 @@ public:
   }
 };
 
-/** \class JumpGenerator_Uniform_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
- * \brief One-dimensional random walk jumps with uniformly-distributed step
- * sizes. */
-template <typename RNG = std::mt19937> class JumpGenerator_Uniform_1d {
+/**
+   \class JumpGenerator_Uniform_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief One-dimensional random walk jumps with uniformly-distributed step
+   sizes.
+*/
+template <typename DistanceType = double,
+          typename ParallelOption = par::ParallelOptions::Serial,
+          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+class JumpGenerator_Uniform_1d {
 public:
-  const double max_jump_size; /**< Jumps uniformly distributed between this
-                                 maximum size and its negative. */
+  const DistanceType max_jump_size; /**< Jumps uniformly distributed between
+                                       this maximum size and its negative. */
 
-  /** Constructor.
-   \param max_jump_size Maximum jump size.
-   */
-  JumpGenerator_Uniform_1d(double max_jump_size)
+  /**
+     \brief Constructor.
+     \param max_jump_size Maximum jump size.
+  */
+  JumpGenerator_Uniform_1d(DistanceType max_jump_size)
       : max_jump_size{max_jump_size} {}
 
   /**
-   \param state Particle state (unused).
-   \return Jump increment.
+     \param state Particle state (unused).
+     \return Jump increment.
   */
   template <typename State = useful::Empty>
-  double operator()(State const &state = {}) {
+  DistanceType operator()(State const &state = {}) {
     return max_jump_size * (2. * _dist(_rng) - 1.);
   }
 
 private:
   RNG _rng{std::random_device{}()}; /**< Random number generator.   */
-  std::uniform_real_distribution<double>
+  std::uniform_real_distribution<DistanceType>
       _dist{}; /**< Unit uniform distribution. */
 };
 
-/** \class JumpGenerator_JumpAngle_2d CTRW/JumpGenerator.h
-  "CTRW/JumpGenerator.h" \brief Random walk jumps along current orientation with
-  fixed step size. \note Particle state must define:
-  -  \c orientation [scalar]
- */
+/**
+   \class JumpGenerator_JumpAngle_2d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Random walk jumps along current orientation with fixed step size.
+   \note Particle state must define:
+   -  \c orientation [Scalar]
+*/
+
 class JumpGenerator_JumpAngle_2d {
 public:
   const double jump_size; /**< Fixed jump size. */
 
-  /** Constructor.
-   \param jump_size Fixed jump size
-   */
+  /**
+     \brief Constructor.
+     \param jump_size Fixed jump size.
+  */
   JumpGenerator_JumpAngle_2d(double jump_size) : jump_size{jump_size} {}
 
   /**
-   \param state Particle state.
-   \return Orientation increment.
+     \param state Particle state.
+     \return Orientation increment.
   */
   template <typename State> std::vector<double> operator()(State const &state) {
     return {jump_size * std::cos(state.orientation),
@@ -425,22 +466,28 @@ public:
   }
 };
 
-/** \class OrientationGenerator_Gradient_1d CTRW/JumpGenerator.h
-  "CTRW/JumpGenerator.h" \brief Gaussian-distributed angle jumps around local
-  gradient towards preferred concentration value. \note State must define:
-  - \c orientation [scalar] */
+/**
+   \class OrientationGenerator_Gradient_1d CTRW/JumpGenerator.h
+   "CTRW/JumpGenerator.h"
+   \brief Gaussian-distributed angle jumps around local gradient towards
+   preferred concentration value.
+   \note State must define:
+   - \c orientation [Scalar]
+*/
 template <typename Concentration, typename Gradient,
-          typename RNG = std::mt19937>
+          typename ParallelOption = par::ParallelOptions::Serial,
+          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
 class OrientationGenerator_Gradient_1d {
 public:
   double variance; /**< Variance of jumps around local gradient.*/
   double preferred_concentration; /**< Concentration to jump towards. */
 
-  /** Constructor
-   \param concentration Concentration as a function of state,
-   \param gradient Concentration gradient as a function of state,
-   \param variance Variance of jumps around local gradient.
-   \param preferred_concentration Preferred concentration to seek.
+  /**
+     \brief Constructor.
+     \param concentration Concentration as a function of state.
+     \param gradient Concentration gradient as a function of state.
+     \param variance Variance of jumps around local gradient.
+     \param preferred_concentration Preferred concentration to seek.
   */
   OrientationGenerator_Gradient_1d(Concentration &&concentration,
                                    Gradient &&gradient, double variance,
@@ -450,8 +497,43 @@ public:
         _gradient{std::forward<Gradient>(gradient)} {}
 
   /**
-   \param state Particle state.
-   \return Orientation increment.
+     \brief Constructor.
+     \param parallel_selector To select parallel option based on type.
+     \param concentration Concentration as a function of state.
+     \param gradient Concentration gradient as a function of state.
+     \param variance Variance of jumps around local gradient.
+     \param preferred_concentration Preferred concentration to seek.
+  */
+  OrientationGenerator_Gradient_1d(
+      meta::Selector_t<ParallelOption> parallel_selector,
+      Concentration &&concentration, Gradient &&gradient, double variance,
+      double preferred_concentration)
+      : OrientationGenerator_Gradient_1d{
+            std::forward<Concentration>(concentration),
+            std::forward<Gradient>(gradient), variance,
+            preferred_concentration} {}
+
+  /**
+     \brief Constructor.
+     \param parallel_selector To select parallel option based on type.
+     \param rng_selector To select RNG based on type.
+     \param concentration Concentration as a function of state.
+     \param gradient Concentration gradient as a function of state.
+     \param variance Variance of jumps around local gradient.
+     \param preferred_concentration Preferred concentration to seek.
+  */
+  OrientationGenerator_Gradient_1d(
+      meta::Selector_t<ParallelOption> parallel_selector,
+      meta::Selector_t<RNG> rng_selector, Concentration &&concentration,
+      Gradient &&gradient, double variance, double preferred_concentration)
+      : OrientationGenerator_Gradient_1d{
+            std::forward<Concentration>(concentration),
+            std::forward<Gradient>(gradient), variance,
+            preferred_concentration} {}
+
+  /**
+     \param state Particle state.
+     \return Orientation increment.
   */
   template <typename State> double operator()(State const &state) {
     double concentration_val = _concentration(state);
@@ -483,16 +565,30 @@ private:
   Gradient _gradient;           /**< Gradient as a function of state. */
 };
 template <typename Concentration, typename Gradient>
-OrientationGenerator_Gradient_1d(Concentration, Gradient, double, double)
-    -> OrientationGenerator_Gradient_1d<Concentration, Gradient, std::mt19937>;
+OrientationGenerator_Gradient_1d(Concentration &&, Gradient &&, double, double)
+    -> OrientationGenerator_Gradient_1d<Concentration, Gradient>;
+template <typename Concentration, typename Gradient, typename ParallelOption>
+OrientationGenerator_Gradient_1d(meta::Selector_t<ParallelOption>,
+                                 Concentration &&, Gradient &&, double, double)
+    -> OrientationGenerator_Gradient_1d<Concentration, Gradient,
+                                        ParallelOption>;
+template <typename Concentration, typename Gradient, typename ParallelOption,
+          typename RNG>
+OrientationGenerator_Gradient_1d(meta::Selector_t<ParallelOption>,
+                                 meta::Selector_t<RNG>, Concentration &&,
+                                 Gradient &&, double, double)
+    -> OrientationGenerator_Gradient_1d<Concentration, Gradient, ParallelOption,
+                                        RNG>;
 
-/** \class OrientationGenerator_Flip CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
- * \brief Flip orientation angle. */
+/**
+   \class OrientationGenerator_Flip CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Flip orientation angle.
+*/
 class OrientationGenerator_Flip {
 public:
   /**
-   \param state Particle state (unused).
-   \return Orientation increment.
+     \param state Particle state (unused).
+     \return Orientation increment.
   */
   template <typename State = useful::Empty>
   double operator()(State const &state = {}) {

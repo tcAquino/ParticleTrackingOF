@@ -13,5 +13,7 @@ var _jump_generator_8h =
     [ "OrientationGenerator_Flip", "d0/d3d/classctrw_1_1_orientation_generator___flip.html", "d0/d3d/classctrw_1_1_orientation_generator___flip" ],
     [ "JumpGenerator_Velocity", "d3/dba/_jump_generator_8h.html#a4590e73dfdbae2ce8c7a7d7187db8a72", null ],
     [ "JumpGenerator_Velocity_RK4", "d3/dba/_jump_generator_8h.html#af9065dd417afe54deaa28c5d24be2708", null ],
-    [ "OrientationGenerator_Gradient_1d", "d3/dba/_jump_generator_8h.html#a62654bad6a12e4de35e3caca8ab62925", null ]
+    [ "OrientationGenerator_Gradient_1d", "d3/dba/_jump_generator_8h.html#a4c48c877831b38d53d2d76c3cae25194", null ],
+    [ "OrientationGenerator_Gradient_1d", "d3/dba/_jump_generator_8h.html#a270901889e63301c51fde08a2291c4ed", null ],
+    [ "OrientationGenerator_Gradient_1d", "d3/dba/_jump_generator_8h.html#a305d964c8ab9878474322f0c2003fe48", null ]
 ];

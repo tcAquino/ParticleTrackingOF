@@ -1,0 +1,7 @@
+<map id="ptof::face_center_is_in_cell" name="ptof::face_center_is_in_cell">
+<area shape="rect" id="node1" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="572,31,709,73"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ac7024364e76842305fdea9fe67706e3b" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="391,31,524,73"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a7e3e43ceb8c6053f3d420fe91b5e296b" title=" " alt="" coords="205,5,310,32"/>
+<area shape="rect" id="node5" href="$de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a10d4026a54940b39ddc144c9807697af" title=" " alt="" coords="172,56,343,112"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a145dbf20bf4a1f003017891798092c1f" title=" " alt="" coords="5,5,124,32"/>
+</map>

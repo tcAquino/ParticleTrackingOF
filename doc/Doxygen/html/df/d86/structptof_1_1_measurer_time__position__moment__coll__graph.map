@@ -1,7 +1,4 @@
 <map id="ptof::MeasurerTime_position_moment&lt; Subject, Geometry &gt;" name="ptof::MeasurerTime_position_moment&lt; Subject, Geometry &gt;">
-<area shape="rect" id="node1" title="Output time and moment of position with specified exponents for each coordinate (weighted by mass)." alt="" coords="1191,5,1401,61"/>
-<area shape="rect" id="node2" href="$dc/d05/structptof_1_1_measurer_time.html" title="Polymorphic output handler for outputting time and some quantity." alt="" coords="968,13,1141,54"/>
-<area shape="rect" id="node3" href="$dc/d30/structptof_1_1_geometry.html" title="Basic geometry class." alt="" coords="313,5,528,61"/>
-<area shape="rect" id="node5" href="$d0/d4f/structptof_1_1_locator___cell.html" title="Object to locate positions or states in mesh." alt="" coords="651,47,863,89"/>
-<area shape="rect" id="node4" href="$d0/d4f/structptof_1_1_locator___cell.html" title=" " alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node1" title="Output time and moment of position with specified exponents for each coordinate (weighted by mass)." alt="" coords="5,95,193,151"/>
+<area shape="rect" id="node2" href="$dc/d05/structptof_1_1_measurer_time.html" title="Abstract polymorphic output handler for outputting time and some quantity." alt="" coords="22,5,177,47"/>
 </map>

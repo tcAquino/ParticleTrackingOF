@@ -1,41 +1,44 @@
 /**
- \file PTOF/Directories.h
- \author Tomás Aquino
- \date 22/02/2022
+   \file PTOF/Directories.h
+   \author Tomás Aquino
+   \date 22/02/2022
+   \brief Handle input and output directories.
 */
 
 #ifndef PTOF_DIRECTORIES_H
 #define PTOF_DIRECTORIES_H
 
-#include "General/Useful.h"
+#include "General/IO.h"
 #include <Time.H>
 #include <string>
 
 namespace ptof {
 
-/** \struct Directories PTOF/Directories.h "PTOF/Directories.h"
- *  \brief Object to handle simulation case directories.*/
+/**
+   \struct Directories PTOF/Directories.h "PTOF/Directories.h"
+   \brief Object to handle simulation case directories.
+*/
 struct Directories {
   std::string dir_case;               /**< Case directory.                */
   std::string dir_output;             /**<  Output directory.              */
   std::string dir_parameters;         /**< Parameters directory.          */
   std::string dir_boundaryconditions; /**< Boundary conditions directory. */
 
-  /** Constructor.
-  \param dir Path to current case directory.
-  \param case_name Current case directory relative to \p dir.
-  \param dir_output Output directory relative to \p dir.
+  /**
+     \brief Constructor.
+     \param dir Path to current case directory.
+     \param case_name Current case directory relative to \p dir.
+     \param dir_output Output directory relative to \p dir.
   */
   Directories(std::string const &dir, std::string const &case_name,
               std::string const &dir_output)
-      : dir_case{(useful::is_empty(dir)
+      : dir_case{(io::is_empty(dir)
                       ? "../cases"
-                      : useful::expand_env(useful::expand_home_dir(dir))) +
+                      : io::expand_env(io::expand_home_dir(dir))) +
                  "/" + case_name},
-        dir_output{
-            useful::is_empty(dir_output)
-                ? dir_case + "/output"
-                : useful::expand_env(useful::expand_home_dir(dir_output))},
+        dir_output{io::is_empty(dir_output)
+                       ? dir_case + "/output"
+                       : io::expand_env(io::expand_home_dir(dir_output))},
         dir_parameters{dir_case + "/parameters"},
         dir_boundaryconditions{dir_case + "/boundary_conditions"} {}
 
@@ -45,45 +48,52 @@ struct Directories {
         << "--------------------------------------------------------------\n"
            "Directories\n"
            "--------------------------------------------------------------\n"
-           "Case directory                : " +
+           "Case: " +
                dir_case +
                "\n"
-               "Parameters directory          : " +
+               "Parameters: " +
                dir_parameters +
                "\n"
-               "Boundary conditions directory : " +
+               "Boundary conditions: " +
                dir_boundaryconditions +
                "\n"
-               "Output directory              : " +
+               "Output: " +
                dir_output + "\n"
         << "--------------------------------------------------------------\n";
   }
 };
 
-/** \struct DirectoriesOF PTOF/Directories.h "PTOF/Directories.h"
- *  \brief Object to handle OpenFOAM case directories.*/
+/**
+   \struct DirectoriesOF PTOF/Directories.h "PTOF/Directories.h"
+   \brief Object to handle OpenFOAM case directories.
+*/
 struct DirectoriesOF {
-  std::string _time_name_input; /**< Information about time directory. */
+  std::string _time_name; /**< Information about time directory. */
 
 public:
   std::string case_name; /**< OpenFOAM case name.       */
   std::string dir_case;  /**< OpenFOAM case directory.  */
   Foam::Time time;       /**< OpenFOAM case time.       */
 
-  /** Constructor
-   \param directories Current case directory information.*/
+  /**
+     \brief Constructor.
+     \param directories Current case directory information.
+  */
   DirectoriesOF(Directories const &directories)
       : time{makeRunTime(directories)} {
-    if (useful::is_empty(_time_name_input))
+    if (io::is_empty(_time_name))
       time.setTime(time.times().last(), 0);
     else
-      time.setTime(Foam::instant(std::stod(_time_name_input)), 0);
+      time.setTime(Foam::instant(std::stod(_time_name)), 0);
   }
 
   /** \brief Deleted copy constructor. */
   DirectoriesOF(DirectoriesOF const &) = delete;
 
-  /** \brief Construct given Directories information. */
+  /**
+     \brief Output generic information about object.
+     \param output Output stream.
+  */
   template <typename OStream> static void info(OStream &output) {
     output
         << "--------------------------------------------------------------\n"
@@ -95,36 +105,55 @@ public:
            "--------------------------------------------------------------\n";
   }
 
-  /** \brief Output information about current object. */
+  /**
+     \brief Output information about current object.
+     \param output Output stream.
+  */
   template <typename OStream> void info_runtime(OStream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "OpenFOAM directories\n"
            "--------------------------------------------------------------\n"
-           "Case directory: " +
+           "Case: " +
                dir_case +
                "\n"
-               "Time directory: " +
+               "Time: " +
                time.timeName() + "\n"
         << "--------------------------------------------------------------\n";
   }
 
+private:
   /**
-   \param directories Current case directory information.
-   \return OpenFOAM runTime instance given Directories information. */
+     \param directories Current case directory information.
+     \return OpenFOAM runTime instance given Directories information.
+  */
   Foam::Time makeRunTime(Directories const &directories) {
-    auto input = useful::open_read(directories.dir_parameters + "/of.dat");
-    auto dir =
-        useful::read_first_from_line<std::string>(input);
-    useful::read_first_from_line(case_name, input);
-    useful::read_first_from_line(_time_name_input, input);
-    input.close();
+    // openFOAM makes modifications to std::cout when a runTime object is
+    // constructed; this restricts them to the local scope
+    io::StreamScopeFormat guard{std::cout};
 
-    if (useful::is_empty(dir))
+    std::string filename = directories.dir_parameters + "/of.dat";
+    auto input = io::open_read(filename);
+    std::string in_file = std::string{"In file "} + filename + " : ";
+
+    auto split_line = io::split_line(input);
+    std::size_t param_index = 0;
+    auto dir = io::read<std::string>(split_line, param_index,
+                                     in_file + "Could not parse directory");
+    if (io::is_empty(dir))
       dir = "${FOAM_RUN}";
-    useful::expand_env_in_place(useful::expand_home_dir_in_place(dir));
+    io::expand_env_in_place(io::expand_home_dir_in_place(dir));
 
+    split_line = io::split_line(input);
+    param_index = 0;
+    io::read(split_line, param_index, in_file + "Could not parse case name",
+             case_name);
     dir_case = dir + "/" + case_name;
+
+    split_line = io::split_line(input);
+    param_index = 0;
+    io::read(split_line, param_index, in_file + "Could not parse time name",
+             _time_name);
 
     return {Foam::Time::controlDictName, dir, case_name};
   }

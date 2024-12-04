@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a4e634b7e71b1226acd7bc892e17113bc">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
 </li>
 <li>make_diff_generators()
-: <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#ad8245a100d5c00114e70064695919c23">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+: <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#adf50392fcb3b7015c8df5c237b9c86f0">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 </li>
 <li>make_dimensions()
 : <a class="el" href="d8/d1f/classgeom_1_1_boundary___periodic.html#a94fad46a7113c3c3395ae57f4e26505a">geom::Boundary_Periodic</a>
@@ -102,13 +102,13 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="dc/d44/classstochastic_1_1discrete__conditional__dist__distribution.html#a8b29d1c8b7a86e748231352f09ac049b">stochastic::discrete_conditional_dist_distribution&lt; Discrete_conditional_dist &gt;</a>
 </li>
 <li>make_mesh_searches()
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#ac84a02b7887fec44e897ad89c03f4b9b">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a4f2cc907cf130a3861ad794ba456d0c5">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a4f2cc907cf130a3861ad794ba456d0c5">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#a594c21c0e7f24ee16f0bb3ba57b038b7">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7f70b4f50234b2ad967acb4fa995da16">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>make_meshes()
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a9e433b2b7b1530c7f8e624057a6ecb6d">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#aaafcdabdc6cecd422e448ae69e2c01da">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#aaafcdabdc6cecd422e448ae69e2c01da">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#a3eab8fc8934c22c92699196f8676c0e9">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7616c42e165109a462b26f7ed6d720c9">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>make_name()
@@ -118,83 +118,111 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 , <a class="el" href="d2/d1c/structptof_1_1_measurer_time__position__nth__moment__periodic.html#a3b6d799956ab0a9373dd26428e4a8537">ptof::MeasurerTime_position_nth_moment_periodic&lt; Subject, Geometry &gt;</a>
 </li>
 <li>make_particle()
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a17e389aa5912f5a2999558a4c0c70c9a">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#af64a61a66ccf6dd64061a8db654b049a">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#ad77cc3facb1a7ec6f594f94325f636b0">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
+, <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#ab2f6c151acef9370c80993aa200e494b">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
+</li>
+<li>make_particle_maker()
+: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#af2c35721ae727a6f99e05fc1a5b9b9b0">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
 </li>
 <li>make_particles()
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a7fd67d3e7c0fa728c44f8e6bc2c566fe">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#a455df9e200782d7f209605417c2013bf">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#afc52570fd68fc0284b9b2dee4236b3c0">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
+, <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#a952fd31d043b007ad40174fc4af71e0e">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
 </li>
 <li>make_position()
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#a3bc5c42ece5578a6591c9c0b37f42c01">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#aac150770f5c6a618e1842699075eef7c">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
+, <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#adf06c359fb9494d71e38f72d55508f38">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
 , <a class="el" href="d9/daf/structptof_1_1_state1_d.html#a91f7e940a62cf8bd796533e94b98dce5">ptof::State1D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="d0/d12/structptof_1_1_state1_d___periodic.html#a93a1b92ee3ccd42de71d87720c326cd6">ptof::State1D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="d1/d58/structptof_1_1_state2_d.html#a80fe77261bf313f0a726778167321735">ptof::State2D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="d0/d68/structptof_1_1_state2_d___periodic.html#af36c4b537028ff2499754729fbda43a5">ptof::State2D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
-, <a class="el" href="df/de9/structptof_1_1_state3_d.html#a3eac9a8a88ad4d7d11f769c147a2ce29">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
+, <a class="el" href="df/de9/structptof_1_1_state3_d.html#ab5ea5f9fa8783cea2d22fad644c5f777">ptof::State3D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#a72e51e56263da56a5f917f1842fa4ba9">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
+<li>make_position_and_hint()
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#a044fa3c95e5b81de5958f52bf153b88c">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a62146ddadc38d2ad4bdd9944949d1b0f">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
+, <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#ab202b79246f8f6fe90c2f5de3aa72352">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
+, <a class="el" href="d7/d02/structptof_1_1_initial_condition___distributed_cell_centers.html#a29926d22a9261a54673bf0fa9edddccd">ptof::InitialCondition_DistributedCellCenters&lt; ParticleMaker, Geometry, CellIdContainer, Distribution &gt;</a>
+, <a class="el" href="de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a10d4026a54940b39ddc144c9807697af">ptof::InitialCondition_DistributedFaceCenters&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#acd34396fef150ad2a4eaab7db13247e6">ptof::InitialCondition_DistributedNearFaces&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="d7/dc5/structptof_1_1_initial_condition___distributed_position.html#aeb4b1dc2c01b6dae100a0c23e32d368f">ptof::InitialCondition_DistributedPosition&lt; ParticleMaker, Geometry, Distribution &gt;</a>
+, <a class="el" href="d9/ddf/structptof_1_1_initial_condition___point.html#a8862bedf2525550c46c4b87526513418">ptof::InitialCondition_Point&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d7/db0/structptof_1_1_initial_condition___prescribed_positions.html#ab4c2d354acb567fee6c7bd374877b740">ptof::InitialCondition_PrescribedPositions&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d9/d62/structptof_1_1_initial_condition___prescribed_positions_masses.html#a46cd3da15578c4427f19519c77d49434">ptof::InitialCondition_PrescribedPositionsMasses&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d4/da9/structptof_1_1_initial_condition___prescribed_positions_masses_tags.html#a6aa3fdc3c5f6a8dbd4b4e192cbc21ea0">ptof::InitialCondition_PrescribedPositionsMassesTags&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d0/d04/structptof_1_1_initial_condition___prescribed_positions_masses_tags_times.html#ab1d498809cb64a323394c9685edd704b">ptof::InitialCondition_PrescribedPositionsMassesTagsTimes&lt; ParticleMaker, Geometry &gt;</a>
+</li>
 <li>make_positions()
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#a65d0032f8bd7e61713149a05ae1f1ec3">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a92eaac3672d7b77e265608dad1d15d5f">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
 </li>
 <li>makeBoundary()
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a58393cea54bf089f2a15406c4c523df4">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#ab2d05f0b8761362ca08e454824898502">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7b123acc6ffc5bd7db39fdf547c70ce1">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>makeBulkReaction()
-: <a class="el" href="d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html#a37dc1ae402c35f2fe235b8673ec459b9">ptof::model_advection_diffusion_2d::Reaction</a>
-, <a class="el" href="d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a4b3d9121bf49c0b866189d70ae33d122">ptof::model_advection_diffusion_surface_decay_2d::Reaction</a>
+: <a class="el" href="d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a4eb4321fbde218c12b7f365556a7de33">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Reaction</a>
+, <a class="el" href="d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#a9ff8854616b3bbc25ea70ad97d0f94e7">ptof::model_advection_diffusion_surface_decay_2d::Definitions&lt; ParallelOption &gt;::Reaction</a>
 </li>
 <li>makeInitialCondition()
-: <a class="el" href="df/d07/structptof_1_1model__advection__diffusion__2d_1_1_initial_condition.html#abd0bfd4f80fd00f76df2cea90f257866">ptof::model_advection_diffusion_2d::InitialCondition</a>
+: <a class="el" href="dd/d47/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_initial_condition.html#ac0fec257e9848424d68b53d5cd991910">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::InitialCondition</a>
 </li>
 <li>makeJumpGenerator()
-: <a class="el" href="d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a347af85f50a49855d3a44b903628567f">ptof::Steppers_Advection_Euler_Diffusion_Euler</a>
-, <a class="el" href="d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a373e95071e591811bf8456a4a5e5fc68">ptof::Steppers_Advection_RK4_Diffusion_Euler</a>
+: <a class="el" href="d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a641a22cb1d47a29373ef54398cc4888c">ptof::Steppers_Advection_Euler_Diffusion_Euler</a>
+, <a class="el" href="d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a8e517eb97a46e883753b19dbf13f1e8e">ptof::Steppers_Advection_RK4_Diffusion_Euler</a>
 </li>
 <li>makeJumpGenerator_Advection()
 : <a class="el" href="d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#ac3652201ca6ecc941d4d29c87ca1fa8d">ptof::Steppers_Advection_Euler_Diffusion_Euler</a>
 , <a class="el" href="d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a3617473840cdd4ace60ad4fd9451014e">ptof::Steppers_Advection_RK4_Diffusion_Euler</a>
 </li>
 <li>makeOutput()
-: <a class="el" href="d0/d89/structptof_1_1model__advection__diffusion__2d_1_1_output.html#a504bac5d95fff9b119418addcbd6a394">ptof::model_advection_diffusion_2d::Output</a>
+: <a class="el" href="d3/d6f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_output.html#a790a639e61ace5ad38b1c508731d7761">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Output</a>
 </li>
 <li>makeRunTime()
 : <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900">ptof::DirectoriesOF</a>
 </li>
 <li>makeSurfaceReaction()
-: <a class="el" href="d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html#aa38063218b87d8dbbe4df722439630d1">ptof::model_advection_diffusion_2d::Reaction</a>
-, <a class="el" href="d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a7384c98d2beb12756f61b520c5ea6c92">ptof::model_advection_diffusion_surface_decay_2d::Reaction</a>
+: <a class="el" href="d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a1d534fdfb8e5cc610f7ca994454dc10d">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Reaction</a>
+, <a class="el" href="d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#aaf17f3d4f89ac21b43cfc9d0d9acb43c">ptof::model_advection_diffusion_surface_decay_2d::Definitions&lt; ParallelOption &gt;::Reaction</a>
 </li>
 <li>makeTimeGenerator()
 : <a class="el" href="d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a44f228d645b27704766e09bc7b6f3c0a">ptof::Steppers_Advection_Euler_Diffusion_Euler</a>
 , <a class="el" href="d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#ad9ffe0fac558d6b02a8ace6a097561ed">ptof::Steppers_Advection_RK4_Diffusion_Euler</a>
 </li>
 <li>makeTransitions()
-: <a class="el" href="db/dc2/structptof_1_1model__advection__2d_1_1_transport.html#a7fe2df50e6443cfb35d02e2474408aa8">ptof::model_advection_2d::Transport</a>
-, <a class="el" href="da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a75fac0ba4a72c73e42ee22bf10006c24">ptof::model_advection_diffusion_2d::Transport</a>
-, <a class="el" href="df/d88/structptof_1_1model__bcc__cartesian__advection_1_1_transport.html#a9f409f94864757b6c8f4b227160bacfa">ptof::model_bcc_cartesian_advection::Transport</a>
-, <a class="el" href="d2/da7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport.html#acba02c91a583503194bd399a47e7e4e4">ptof::model_bcc_cartesian_advection_diffusion::Transport</a>
+: <a class="el" href="d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#ae27467e9dc60c0ce56df37e4a8a03d29">ptof::model_advection_2d::Definitions&lt; ParallelOption &gt;::Transport</a>
+, <a class="el" href="d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#aff6ab78d0e31aac66ccb32db67a31cae">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Transport</a>
+, <a class="el" href="d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#a6879eb23314e89295a30592c46654e24">ptof::model_bcc_cartesian_advection::Definitions&lt; ParallelOption &gt;::Transport</a>
+, <a class="el" href="d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#adf4f07c6e9dde57541aa301a688f6eea">ptof::model_bcc_cartesian_advection_diffusion::Definitions&lt; ParallelOption &gt;::Transport</a>
 </li>
 <li>makeVelocityInterpolator()
-: <a class="el" href="db/dc2/structptof_1_1model__advection__2d_1_1_transport.html#a7f287b19f173b5115e79b7f33b6f079e">ptof::model_advection_2d::Transport</a>
-, <a class="el" href="da/d36/structptof_1_1model__advection__diffusion__2d_1_1_transport.html#a0dc66e9c3f8f77f86f7569a53553dea0">ptof::model_advection_diffusion_2d::Transport</a>
-, <a class="el" href="df/d88/structptof_1_1model__bcc__cartesian__advection_1_1_transport.html#ae7cc94b13508804ef764874d157ce0f7">ptof::model_bcc_cartesian_advection::Transport</a>
-, <a class="el" href="d2/da7/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_transport.html#ab1cf7c7c22b6c0ac25b0aae66d84db70">ptof::model_bcc_cartesian_advection_diffusion::Transport</a>
+: <a class="el" href="d2/d70/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport.html#a7f5e26ab84d70ba25ce96389867667bc">ptof::model_advection_2d::Definitions&lt; ParallelOption &gt;::Transport</a>
+, <a class="el" href="d3/ddd/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport.html#aadc9601e7257049379fc4082f59f6f40">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Transport</a>
+, <a class="el" href="d4/d43/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport.html#a4f42a523315fb2c312a694cb4ea97128">ptof::model_bcc_cartesian_advection::Definitions&lt; ParallelOption &gt;::Transport</a>
+, <a class="el" href="d5/def/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport.html#a0592058f0ad82e7ccbab10d9c760d15d">ptof::model_bcc_cartesian_advection_diffusion::Definitions&lt; ParallelOption &gt;::Transport</a>
+</li>
+<li>max()
+: <a class="el" href="d3/d90/structstochastic_1_1_r_n_g_threaded.html#a2c3ccdad2e3b5f450ef246d7c3f9712d">stochastic::RNGThreaded&lt; ParallelOption, Engine_t &gt;</a>
+, <a class="el" href="d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4.html#a81e2f7f14331e050944e179b3e6e937c">stochastic::RNGThreaded&lt; par::ParallelOptions::Serial, Engine_t &gt;</a>
 </li>
 <li>Measurement()
 : <a class="el" href="df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html#a2d6965778cf2fcf351685314af2dc6d2">ptof::OutputParameters_Cases::Measurement</a>
 </li>
-<li>Measurement_dim_position()
-: <a class="el" href="d6/dd8/structptof_1_1_output_parameters___cases_1_1_measurement__dim__position.html#a44d52909ef0b83795d2b48707cb12dc5">ptof::OutputParameters_Cases::Measurement_dim_position</a>
+<li>Measurement_Dim_Position()
+: <a class="el" href="db/d78/structptof_1_1_output_parameters___cases_1_1_measurement___dim___position.html#a08b0a54be9f1520edadc01b68a6bad30">ptof::OutputParameters_Cases::Measurement_Dim_Position</a>
 </li>
-<li>Measurement_field()
-: <a class="el" href="de/de8/structptof_1_1_output_parameters___cases_1_1_measurement__field.html#a9c9ca3acbf4122e74ef078bb4d72ca69">ptof::OutputParameters_Cases::Measurement_field</a>
+<li>Measurement_Field()
+: <a class="el" href="d8/d72/structptof_1_1_output_parameters___cases_1_1_measurement___field.html#a2347d4ff8bd7bd89f6e4f5b0902291d1">ptof::OutputParameters_Cases::Measurement_Field</a>
 </li>
-<li>Measurement_order()
-: <a class="el" href="d7/dc5/structptof_1_1_output_parameters___cases_1_1_measurement__order.html#ae7f209e1e7715dc37145726c560db86e">ptof::OutputParameters_Cases::Measurement_order</a>
+<li>Measurement_Order()
+: <a class="el" href="d8/d21/structptof_1_1_output_parameters___cases_1_1_measurement___order.html#adef538876e6c709bff2f07e42daacd9c">ptof::OutputParameters_Cases::Measurement_Order</a>
 </li>
-<li>Measurement_orders()
-: <a class="el" href="d4/d2b/structptof_1_1_output_parameters___cases_1_1_measurement__orders.html#acd68d8183899f7393b2c995fc91dc570">ptof::OutputParameters_Cases::Measurement_orders</a>
+<li>Measurement_Orders()
+: <a class="el" href="d4/dc7/structptof_1_1_output_parameters___cases_1_1_measurement___orders.html#afb3ff0db6c81ac827658d65b26c80bb5">ptof::OutputParameters_Cases::Measurement_Orders</a>
 </li>
 <li>Measurer()
 : <a class="el" href="db/d74/structptof_1_1_measurer.html#aea5c09c7e20e6f79400fb7c0104a3ecb">ptof::Measurer&lt; Subject, Geometry &gt;</a>
@@ -203,7 +231,7 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="d4/d33/structptof_1_1_measurer__absorption__time.html#a9886fe684ec6108f3a93900beb419126">ptof::Measurer_absorption_time&lt; Subject, Geometry &gt;</a>
 </li>
 <li>MeasurerTime()
-: <a class="el" href="dc/d05/structptof_1_1_measurer_time.html#a9196c00f812225a0b479ccc5a4af58b2">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>
+: <a class="el" href="dc/d05/structptof_1_1_measurer_time.html#a649f495497af40c306b91ed0e5289101">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>
 </li>
 <li>MeasurerTime_first_crossing_time()
 : <a class="el" href="dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#af67e27b00dafea484543b20a18a5735b">ptof::MeasurerTime_first_crossing_time&lt; Subject, Geometry &gt;</a>
@@ -275,42 +303,46 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="d5/d79/structptof_1_1_measurer_time__vector__field__mean.html#a9eb957641d12672a895a15526c33227e">ptof::MeasurerTime_vector_field_mean&lt; Subject, Geometry, Field &gt;</a>
 </li>
 <li>mesh()
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a4ea5f7080fef183d2b7da599ebc431b0">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a14399f9a69fb99b5d5159cb7dc386121">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a14399f9a69fb99b5d5159cb7dc386121">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#a6f68203cfb554ac8f0b07b3449ea03ca">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#abfc1cde95019aa6a91c532deb6e6f3c4">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a019fcb55e2bfa45e1c708c108b274871">ptof::Locator_Cell&lt; Geometry, SearchOption &gt;</a>
 </li>
 <li>mesh_search()
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a9360118bee65295c474e83bfb4c37dbb">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ad15ff3b9fa35cb26dbe3129d084242d8">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ad15ff3b9fa35cb26dbe3129d084242d8">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#ab1fa942929d45a2f3b2a8b5b8907587f">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a2967903f397cc2f07d0278cfe634255a">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a03fff3efc1d491aa1c22b83002675f9b">ptof::Locator_Cell&lt; Geometry, SearchOption &gt;</a>
 </li>
+<li>min()
+: <a class="el" href="d3/d90/structstochastic_1_1_r_n_g_threaded.html#a096800dc336ef79ca9744f8d4c5047c0">stochastic::RNGThreaded&lt; ParallelOption, Engine_t &gt;</a>
+, <a class="el" href="d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4.html#a394221d552ea73d1c7a74a4f4aadcfba">stochastic::RNGThreaded&lt; par::ParallelOptions::Serial, Engine_t &gt;</a>
+</li>
 <li>Model()
-: <a class="el" href="d3/df2/structptof_1_1model__advection__2d_1_1_model.html#a859a2b2d2c0daa0b0a155ceb84838c71">ptof::model_advection_2d::Model</a>
-, <a class="el" href="dc/d30/structptof_1_1model__advection__3d_1_1_model.html#accb35ca08a5a992a5e0af50451c76313">ptof::model_advection_3d::Model</a>
-, <a class="el" href="d8/d28/structptof_1_1model__advection__diffusion__2d_1_1_model.html#a7c24b304fc1ac73fa2f741ceaf67e386">ptof::model_advection_diffusion_2d::Model</a>
-, <a class="el" href="d3/df7/structptof_1_1model__advection__diffusion__3d_1_1_model.html#a012180f8da3988d78910d0f0d02e07db">ptof::model_advection_diffusion_3d::Model</a>
-, <a class="el" href="db/d89/structptof_1_1model__advection__diffusion__fpt__2d_1_1_model.html#ab4bec1392eb2c39f212f057b91be6708">ptof::model_advection_diffusion_fpt_2d::Model</a>
-, <a class="el" href="d8/d2a/structptof_1_1model__advection__diffusion__fpt__3d_1_1_model.html#aa81fbafc3e416b3057fe4fbaf3e35507">ptof::model_advection_diffusion_fpt_3d::Model</a>
-, <a class="el" href="d0/da7/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_model.html#af066951c4bfe0ad3dd45e455cdf8d1e2">ptof::model_advection_diffusion_surface_decay_2d::Model</a>
-, <a class="el" href="d6/d5a/structptof_1_1model__advection__diffusion__surface__decay__3d_1_1_model.html#a0838ef6dab2fcacf5c8eab7b19f5128f">ptof::model_advection_diffusion_surface_decay_3d::Model</a>
-, <a class="el" href="dd/d1b/structptof_1_1model__bcc__cartesian__advection_1_1_model.html#afbe3afecb2a6b762a3058a7e5140e992">ptof::model_bcc_cartesian_advection::Model</a>
-, <a class="el" href="d2/da9/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_model.html#acc1aeb709d3ae97901d025651dbb9871">ptof::model_bcc_cartesian_advection_diffusion::Model</a>
-, <a class="el" href="db/d65/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt_1_1_model.html#a91b141c6eaff988ff7bde0560855d8a2">ptof::model_bcc_cartesian_advection_diffusion_fpt::Model</a>
-, <a class="el" href="d5/d44/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay_1_1_model.html#ae8155f17d863948c27d06db36d28e8e5">ptof::model_bcc_cartesian_advection_diffusion_surface_decay::Model</a>
-, <a class="el" href="dd/d30/structptof_1_1model__bcc__symmetryplanes__advection_1_1_model.html#aea5e5be5eceb47fc75400abb89691392">ptof::model_bcc_symmetryplanes_advection::Model</a>
-, <a class="el" href="db/d17/structptof_1_1model__bcc__symmetryplanes__advection__diffusion_1_1_model.html#aa76cefa8a137e60e8398ab544d7ed808">ptof::model_bcc_symmetryplanes_advection_diffusion::Model</a>
-, <a class="el" href="d8/d11/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt_1_1_model.html#ac1b6f4cbaff9e2683b5914e15a85d389">ptof::model_bcc_symmetryplanes_advection_diffusion_fpt::Model</a>
-, <a class="el" href="d1/dd3/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay_1_1_model.html#ab246c952772a7b8b01a0e5f995150d05">ptof::model_bcc_symmetryplanes_advection_diffusion_surface_decay::Model</a>
-, <a class="el" href="de/dd4/structptof_1_1model__periodic__cartesian__advection__2d_1_1_model.html#a682f7f52db82250e68c7024e3fcd6966">ptof::model_periodic_cartesian_advection_2d::Model</a>
-, <a class="el" href="d5/d4f/structptof_1_1model__periodic__cartesian__advection__3d_1_1_model.html#ad21b27829256f3f5f3bb04f5dcaa1f92">ptof::model_periodic_cartesian_advection_3d::Model</a>
-, <a class="el" href="d3/da7/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_model.html#adb65f56daf590e31e5482e48db28ea04">ptof::model_periodic_cartesian_advection_diffusion_2d::Model</a>
-, <a class="el" href="d5/d26/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_model.html#a181faf985157d89566c59fd569bd261e">ptof::model_periodic_cartesian_advection_diffusion_3d::Model</a>
-, <a class="el" href="dc/d39/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d_1_1_model.html#a4ea61cccf31055e59c6a67066a1cecb9">ptof::model_periodic_cartesian_advection_diffusion_fpt_2d::Model</a>
-, <a class="el" href="dc/d32/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d_1_1_model.html#a0562c8e5ea5797c1e569f90f974d4eef">ptof::model_periodic_cartesian_advection_diffusion_fpt_3d::Model</a>
-, <a class="el" href="de/dd0/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_model.html#a79c92f27f29a04e1576eb781d9fb5524">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d::Model</a>
-, <a class="el" href="d1/d0c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_model.html#af6bb6c4f31b38d71a0030b27e34c55d9">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_3d::Model</a>
+: <a class="el" href="d9/d5d/structptof_1_1model__advection__2d_1_1_definitions_1_1_model.html#af66f916010836cb667ef2ff2a8203d36">ptof::model_advection_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d2/d90/structptof_1_1model__advection__3d_1_1_definitions_1_1_model.html#acaefc9b61625ebb11cde31ebf663c259">ptof::model_advection_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="dd/d44/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_model.html#ade224f04dc606e89aee3b76786c2b8c9">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="dc/d5d/structptof_1_1model__advection__diffusion__3d_1_1_definitions_1_1_model.html#afd55cf26ab22af32698b4b6bc854411b">ptof::model_advection_diffusion_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="db/d96/structptof_1_1model__advection__diffusion__fpt__2d_1_1_definitions_1_1_model.html#ade070674f7a54e0e84f70935f7572293">ptof::model_advection_diffusion_fpt_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d8/de2/structptof_1_1model__advection__diffusion__fpt__3d_1_1_definitions_1_1_model.html#a2be123be6362c1900d205102e966ec75">ptof::model_advection_diffusion_fpt_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d7/d47/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_model.html#aa16bae9072e2581462c40a20b0875949">ptof::model_advection_diffusion_surface_decay_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d2/de9/structptof_1_1model__advection__diffusion__surface__decay__3d_1_1_definitions_1_1_model.html#a55744e8a3c7235ae573309e1d2d51b7a">ptof::model_advection_diffusion_surface_decay_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d6/d0d/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_model.html#aa5488200be14170e8903da3c10c5e0b8">ptof::model_bcc_cartesian_advection::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="de/d3c/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_model.html#a69c25e7abb4e13247df541014a265a98">ptof::model_bcc_cartesian_advection_diffusion::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="de/de5/structptof_1_1model__bcc__cartesian__advection__diffusion__fpt_1_1_definitions_1_1_model.html#a75fd11d8972b76be2f1ffb5cfb861b5f">ptof::model_bcc_cartesian_advection_diffusion_fpt::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="db/da7/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay_1_1_definitions_1_1_model.html#a08c41eca494f2811187dc964cb29f7a2">ptof::model_bcc_cartesian_advection_diffusion_surface_decay::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d0/d2d/structptof_1_1model__bcc__symmetryplanes__advection_1_1_definitions_1_1_model.html#a5bb08136d6d3d84885951a2ef51ea3c7">ptof::model_bcc_symmetryplanes_advection::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="db/d94/structptof_1_1model__bcc__symmetryplanes__advection__diffusion_1_1_definitions_1_1_model.html#a3788bb21eaf97ab8ed3254d05599e878">ptof::model_bcc_symmetryplanes_advection_diffusion::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d0/ddd/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__fpt_1_1_definitions_1_1_model.html#ac7e6e790958025c644b81d7490b7f316">ptof::model_bcc_symmetryplanes_advection_diffusion_fpt::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d5/dcc/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay_1_1_definitions_1_1_model.html#adf9d7b50ed8da8f9db8e3822c0d5c33b">ptof::model_bcc_symmetryplanes_advection_diffusion_surface_decay::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d3/d3d/structptof_1_1model__periodic__cartesian__advection__2d_1_1_definitions_1_1_model.html#ac739d7f127c283a150cba0b7faf55d56">ptof::model_periodic_cartesian_advection_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="df/d23/structptof_1_1model__periodic__cartesian__advection__3d_1_1_definitions_1_1_model.html#a4cd68dff197c6281cd94cdec28304232">ptof::model_periodic_cartesian_advection_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d2/df9/structptof_1_1model__periodic__cartesian__advection__diffusion__2d_1_1_definitions_1_1_model.html#ad800fac096a77e201df958a0b58de972">ptof::model_periodic_cartesian_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d3/d0b/structptof_1_1model__periodic__cartesian__advection__diffusion__3d_1_1_definitions_1_1_model.html#acbbc54b15f4becae9f9b76a64016f954">ptof::model_periodic_cartesian_advection_diffusion_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d8/d92/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__2d_1_1_definitions_1_1_model.html#a6584913a1945ece664eb344b00531499">ptof::model_periodic_cartesian_advection_diffusion_fpt_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d1/ddd/structptof_1_1model__periodic__cartesian__advection__diffusion__fpt__3d_1_1_definitions_1_1_model.html#a87fac96f0c3861462130e176b8d20054">ptof::model_periodic_cartesian_advection_diffusion_fpt_3d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d8/dcd/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_model.html#a236589c4369189709bf3cc5568cad50e">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d::Definitions&lt; ParallelOption &gt;::Model</a>
+, <a class="el" href="d8/d6d/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_definitions_1_1_model.html#a3cd5a04a8afe9d0ded39c34588a8aef7">ptof::model_periodic_cartesian_advection_diffusion_surface_decay_3d::Definitions&lt; ParallelOption &gt;::Model</a>
 </li>
 <li>MultiArray()
 : <a class="el" href="dc/d1a/classuseful_1_1_multi_array.html#a49290e77670da969af293aa6e82b8df4">useful::MultiArray&lt; value_t &gt;</a>

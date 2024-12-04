@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['diffusion_2350',['diffusion',['../d2/dfc/structptof_1_1_measurement_spacing_units.html#a268261ebac8c35864a5de93e764342e0aa12e8d6288da27af8921e6378a917573',1,'ptof::MeasurementSpacingUnits']]]
+  ['diffusion_2521',['diffusion',['../df/d99/structptof_1_1_time_units.html#a48dbd88c8f96ce6130521f4d169cae53aa12e8d6288da27af8921e6378a917573',1,'ptof::TimeUnits']]]
 ];

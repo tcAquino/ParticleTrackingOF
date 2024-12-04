@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('d8/d1f/classgeom_1_1_boundary___period
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a082d0e7c7c10579b50933e4da4a81540"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d1f/classgeom_1_1_boundary___periodic.html#a082d0e7c7c10579b50933e4da4a81540">Boundary_Periodic</a> (std::vector&lt; std::pair&lt; double, double &gt;&gt; <a class="el" href="../../d8/d1f/classgeom_1_1_boundary___periodic.html#ae052d37ea47d2f155f2fb4b78c536686">boundaries</a>)</td></tr>
+<tr class="memdesc:a082d0e7c7c10579b50933e4da4a81540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d8/d1f/classgeom_1_1_boundary___periodic.html#a082d0e7c7c10579b50933e4da4a81540">More...</a><br /></td></tr>
 <tr class="separator:a082d0e7c7c10579b50933e4da4a81540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa310d32760ff8f64d2d514faefc226c6"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:aa310d32760ff8f64d2d514faefc226c6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d1f/classgeom_1_1_boundary___periodic.html#aa310d32760ff8f64d2d514faefc226c6">out_of_bounds</a> (Position const &amp;position) const</td></tr>
@@ -128,7 +129,7 @@ Private Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Periodic boundaries along each dimension. </p>
 <dl class="section note"><dt>Note</dt><dd>State must define:<ul>
-<li><code>position</code> [container] </li>
+<li><code>position</code> [Container] </li>
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -155,7 +156,9 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension. </td></tr>
   </table>

@@ -1,33 +1,34 @@
 /**
- \file Geometry/Boundary.h
- \author Tomás Aquino
- \date 08/02/2019
+   \file Geometry/Boundary.h
+   \author Tomás Aquino
+   \date 08/02/2019
 
- \brief Boundary-enforcing classes for particle tracking.
+   \brief Boundary-enforcing classes for particle tracking.
 
-A Boundary class should implement the following basic functionality:
+   \details
+   A Boundary class should implement the following basic functionality:
 
-\code{.cpp}
-class Example_Boundary
-{
-public:
+   \code{.cpp}
+   class Example_Boundary
+   {
+   public:
 
    // Check if position is out of bounds
    template <typename Position>
    bool out_of_bounds(Position const& position) const
    {
-     // Return true if boundary condition is to be applied, false otherwise
+   // Return true if boundary condition is to be applied, false otherwise
    }
 
    // Enforce boundary condition
    template <typename State>
    bool operator()(State& state, State const& state_old) const
    {
-     // Apply the boundary condition given current and previous state
-     // Return true if anything was done, false otherwise
+   // Apply the boundary condition given current and previous state
+   // Return true if anything was done, false otherwise
    }
-};
-\endcode
+   };
+   \endcode
 */
 
 #ifndef GEOMETRY_BOUNDARY_H
@@ -43,10 +44,11 @@ public:
 
 namespace geom {
 /**
- \param position 1D position.
- \param boundaries Pair of lower and upper boundary location.
- \return Displacement to be added to \p position to place it within periodic
- boundaries. */
+   \param position 1D position.
+   \param boundaries Pair of lower and upper boundary location.
+   \return Displacement to be added to \p position to place it within periodic
+   boundaries.
+*/
 double boundary_periodic(double position,
                          std::pair<double, double> const &boundaries) {
   double box_size = boundaries.second - boundaries.first;
@@ -55,11 +57,12 @@ double boundary_periodic(double position,
 }
 
 /**
- \param position 1D position .
- \param boundaries Pair of lower and upper boundary location.
- \return Pair of displacement to be added to \p position and the associated
- signed number of domain displacements out
- * to place it within periodic boundaries. */
+   \param position 1D position .
+   \param boundaries Pair of lower and upper boundary location.
+   \return Pair of displacement to be added to \p position and the associated
+   signed number of domain displacements out to place it within periodic
+   boundaries.
+*/
 std::pair<double, int> boundary_periodic_with_outside_info(
     double position, std::pair<double, double> const &boundaries) {
   double box_size = boundaries.second - boundaries.first;
@@ -69,10 +72,11 @@ std::pair<double, int> boundary_periodic_with_outside_info(
 }
 
 /**
-\param position 1D position.
-\param boundaries Pair of lower and upper boundary location.
-\return Displacement to be added to 1D \p position to place it within reflecting
-boundaries. */
+   \param position 1D position.
+   \param boundaries Pair of lower and upper boundary location.
+   \return Displacement to be added to 1D \p position to place it within
+   reflecting boundaries.
+*/
 double boundary_reflecting(double position,
                            std::pair<double, double> const &boundaries) {
   double box_size = boundaries.second - boundaries.first;
@@ -85,19 +89,20 @@ double boundary_reflecting(double position,
 }
 
 /**
-\param position 1D position.
-\param boundaries Pair of lower and upper boundary location.
-\return \c true if \p position is out of bounds, \c false otherwise. */
+   \param position 1D position.
+   \param boundaries Pair of lower and upper boundary location.
+   \return \c true if \p position is out of bounds, \c false otherwise.
+*/
 bool out_of_bounds_box(double position,
                        std::pair<double, double> const &boundaries) {
   return position < boundaries.first || position > boundaries.second;
 }
 
 /**
-\param position position container.
-\param boundaries Container of pairs of lower and upper boundary locations along
-each dimension. \return \c true if \p position is out of bounds, \c false
-otherwise. */
+   \param position position container.
+   \param boundaries Container of pairs of lower and upper boundary locations
+   along each dimension.
+   \return \c true if \p position is out of bounds, \c false otherwise. */
 template <typename Position = std::vector<double>,
           typename Boundaries = std::vector<std::pair<double, double>>>
 bool out_of_bounds_box(Position const &position, Boundaries const &boundaries) {
@@ -108,21 +113,26 @@ bool out_of_bounds_box(Position const &position, Boundaries const &boundaries) {
   return false;
 }
 
-/** \class Boundary_DoNothing Geometry/Boundary.h "Geometry/Boundary.h"
- *  \brief Boundary with no effect. */
+/**
+   \class Boundary_DoNothing Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Boundary with no effect.
+*/
 class Boundary_DoNothing {
 public:
-  /** \brief Check if \p position is out of bounds
-   \return \c false (always in bounds). */
+  /**
+     \brief Check if \p position is out of bounds.
+     \return \c false (always in bounds).
+  */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return false;
   }
 
-  /** \brief Enforce boundary condition
-  \param state Particle state to apply BC.
-  \param state_old Previous particle state (unused).
-  \return \c false (no effect).
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC.
+     \param state_old Previous particle state (unused).
+     \return \c false (no effect).
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -130,34 +140,38 @@ public:
   }
 };
 
-/** \class Boundary_Periodic_1d Geometry/Boundary.h "Geometry/Boundary.h"
- * \brief Periodic boundary in 1d./
- *
- * \note State must define:
- * - \c position [scalar] */
+/**
+   \class Boundary_Periodic_1d Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Periodic boundary in 1d./
+   \note State must define:
+   - \c position [Scalar]
+*/
 class Boundary_Periodic_1d {
 public:
   const std::pair<double, double>
       boundaries; /**< Lower and upper boundary location. */
 
-  /** Constructor.
-   \param boundaries Pair of lower and upper boundary location. */
+  /**
+     \brief Constructor.
+     \param boundaries Pair of lower and upper boundary location.
+  */
   Boundary_Periodic_1d(std::pair<double, double> boundaries)
       : boundaries{boundaries} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position> bool out_of_bounds(Position position) const {
     return OutOfBounds_Box(position, boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -167,9 +181,10 @@ public:
     return true;
   }
 
-  /** \brief Translate a position according to projection in periodic cell.
-  \param position Position to translate.
-  \param projection Position within periodic cell.
+  /**
+     \brief Translate a position according to projection in periodic cell.
+     \param position Position to translate.
+     \param projection Position within periodic cell.
   */
   template <typename Position, typename Projection = double>
   void translate(Position &position, Projection projection) const {
@@ -178,11 +193,12 @@ public:
   }
 };
 
-/** \class Boundary_Periodic Geometry/Boundary.h "Geometry/Boundary.h"
- * \brief  Periodic boundaries along each dimension.
- *
- * \note State must define:
- * - \c position [container] */
+/**
+   \class Boundary_Periodic Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief  Periodic boundaries along each dimension.
+   \note State must define:
+   - \c position [Container]
+*/
 class Boundary_Periodic {
 public:
   const std::vector<std::pair<double, double>>
@@ -191,27 +207,29 @@ public:
   const std::vector<double>
       domain_dimensions; /**< Size of domain along each dimension. */
 
-  /** Constructor.
-   \param boundaries Container of pairs of lower and upper boundary locations
-   along each dimension. */
+  /**
+     \brief Constructor.
+     \param boundaries Container of pairs of lower and upper boundary locations
+     along each dimension. */
   Boundary_Periodic(std::vector<std::pair<double, double>> boundaries)
       : boundaries{boundaries}, domain_dimensions{make_dimensions(boundaries)} {
   }
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return out_of_bounds_box(position, boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -223,9 +241,10 @@ public:
     return true;
   }
 
-  /** \brief Translate a position according to projection in periodic cell.
-  \param position Position to translate.
-  \param projections Projection components in periodic cell.
+  /**
+     \brief Translate a position according to projection in periodic cell.
+     \param position Position to translate.
+     \param projections Projection components in periodic cell.
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
@@ -236,9 +255,10 @@ public:
 
 private:
   /**
-  \param boundaries Container of pairs of lower and upper boundary locations
-  along each dimension. \return Domain dimensions.
-   */
+     \param boundaries Container of pairs of lower and upper boundary locations
+     along each dimension.
+     \return Domain dimensions.
+  */
   std::vector<double> make_dimensions(
       std::vector<std::pair<double, double>> const &boundaries) const {
     std::vector<double> dimensions;
@@ -249,11 +269,12 @@ private:
   }
 };
 
-/** \class Boundary_Periodic_Dim Geometry/Boundary.h "Geometry/Boundary.h"
- * \brief Periodic boundary along dimension dd.
- *
- * \note State must define:
- * - \c position [container] */
+/**
+   \class Boundary_Periodic_Dim Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Periodic boundary along dimension dd.
+   \note State must define:
+   - \c position [Container]
+*/
 template <std::size_t dd> class Boundary_Periodic_Dim {
 public:
   const std::pair<double, double>
@@ -262,30 +283,35 @@ public:
   static const std::size_t dim =
       dd; /**< Cartesian dimension along which BC holds. */
 
-  /** Constructor.
-  \param half_width Half-size of boundary, centered at zero. */
+  /**
+     \brief Constructor.
+     \param half_width Half-size of boundary, centered at zero.
+  */
   Boundary_Periodic_Dim(double half_width)
       : boundaries{-half_width, half_width} {}
 
-  /** Constructor.
-  \param boundaries Pair of lower and upper boundary location. */
+  /**
+     \brief Constructor.
+     \param boundaries Pair of lower and upper boundary location.
+  */
   Boundary_Periodic_Dim(std::pair<double, double> boundaries)
       : boundaries{boundaries} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return out_of_bounds_box(position[dd], boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -296,14 +322,16 @@ public:
   }
 };
 
-/** \class Boundary_Periodic_WithOutsideInfo Geometry/Boundary.h
- * "Geometry/Boundary.h" \brief Periodic boundaries along each dimension with
- * information about where position would be outside domain.
- *
- * \note State must define:
- * - \c position [container]
- * - \c periodicity [container of signed integers] (counting how many domains
- * have been traveled along each dimension) */
+/**
+   \class Boundary_Periodic_WithOutsideInfo Geometry/Boundary.h
+   "Geometry/Boundary.h"
+   \brief Periodic boundaries along each dimension with information about where
+   position would be outside domain.
+   \note State must define:
+   - \c position [Container]
+   - \c periodicity [Container of signed integers] (counting how many domains
+   have been traveled along each dimension)
+*/
 class Boundary_Periodic_WithOutsideInfo {
 public:
   const std::vector<std::pair<double, double>>
@@ -311,28 +339,30 @@ public:
   const std::vector<double>
       domain_dimensions; /**< Size of domain along each dimension. */
 
-  /** Constructor.
-  \param boundaries Container of pairs of lower and upper boundary locations
-  along each dimension. */
+  /**
+     \brief Constructor.
+     \param boundaries Container of pairs of lower and upper boundary locations
+     along each dimension. */
   Boundary_Periodic_WithOutsideInfo(
       std::vector<std::pair<double, double>> boundaries)
       : boundaries{boundaries}, domain_dimensions{make_dimensions(boundaries)} {
   }
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check.
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return out_of_bounds_box(position, boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -347,9 +377,10 @@ public:
     return true;
   }
 
-  /** \brief Translate a position according to projection in periodic cell.
-  \param position Position to translate.
-  \param projections Projection components in periodic cell.
+  /**
+     \brief Translate a position according to projection in periodic cell.
+     \param position Position to translate.
+     \param projections Projection components in periodic cell.
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
@@ -360,9 +391,10 @@ public:
 
 private:
   /**
-  \param boundaries Container of pairs of lower and upper boundary locations
-  along each dimension. \return Domain dimensions.
-   */
+     \param boundaries Container of pairs of lower and upper boundary locations
+     along each dimension.
+     \return Domain dimensions.
+  */
   std::vector<double> make_dimensions(
       std::vector<std::pair<double, double>> const &boundaries) const {
     std::vector<double> dimensions;
@@ -373,35 +405,39 @@ private:
   }
 };
 
-/** \class Boundary_Reflecting_1d Geometry/Boundary.h "Geometry/Boundary.h"
- * \brief Reflecting boundary in one dimension.
- *
- * \note State must define:
- * - \c position [scalar] */
+/**
+   \class Boundary_Reflecting_1d Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Reflecting boundary in one dimension.
+   \note State must define:
+   - \c position [Scalar]
+*/
 class Boundary_Reflecting_1d {
 public:
   const std::pair<double, double>
       boundaries; /**< Lower and upper boundaries. */
 
-  /** Constructor.
-  \param boundaries Pairs of lower and upper boundary location. */
+  /**
+     \brief Constructor.
+     \param boundaries Pairs of lower and upper boundary location.
+  */
   Boundary_Reflecting_1d(std::pair<double, double> boundaries)
       : boundaries{boundaries} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return out_of_bounds_box(position, boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -412,36 +448,40 @@ public:
   }
 };
 
-/** \class Boundary_Reflecting Geometry/Boundary.h "Geometry/Boundary.h"
- * \brief Reflecting boundaries along along each dimension.
- *
- * \note State must define:
- * - \c position [container] */
+/**
+   \class Boundary_Reflecting Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Reflecting boundaries along along each dimension.
+   \note State must define:
+   - \c position [Container]
+*/
 class Boundary_Reflecting {
 public:
   const std::vector<std::pair<double, double>>
       boundaries; /**< Lower and upper boundaries along each dimension. */
 
-  /** Constructor.
-  \param boundaries Container of pairs of lower and upper boundary locations
-  along each dimension. */
+  /**
+     \brief Constructor.
+     \param boundaries Container of pairs of lower and upper boundary locations
+     along each dimension.
+  */
   Boundary_Reflecting(std::vector<std::pair<double, double>> boundaries)
       : boundaries{boundaries} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return out_of_bounds_box(position, boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -454,11 +494,12 @@ public:
   }
 };
 
-/** \class Boundary_Reflecting_Dim Geometry/Boundary.h "Geometry/Boundary.h"
- * \brief Reflecting boundary along dimension dd.
- *
- * \note State must define:
- * - \c position [container] */
+/**
+   \class Boundary_Reflecting_Dim Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Reflecting boundary along dimension dd.
+   \note State must define:
+   - \c position [Container]
+*/
 template <std::size_t dd> class Boundary_Reflecting_Dim {
 public:
   const std::pair<double, double>
@@ -476,19 +517,20 @@ public:
       : boundaries{boundaries} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return out_of_bounds_box(position[dd], boundaries);
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -499,33 +541,37 @@ public:
   }
 };
 
-/** \class Boundary_RadialReflecting_2d Geometry/Boundary.h
- * "Geometry/Boundary.h" \brief Reflecting boundaries on the inside of a circle.
- *
- * \note State must define:
- * - \c position [container] */
+/**
+   \class Boundary_RadialReflecting_2d Geometry/Boundary.h "Geometry/Boundary.h"
+   \brief Reflecting boundaries on the inside of a circle.
+   \note State must define:
+   - \c position [Container]
+*/
 class Boundary_RadialReflecting_2d {
 public:
   const double radius;
 
-  /** Constructor.
-   \param radius Domain radius. */
+  /**
+     \brief Constructor.
+     \param radius Domain radius.
+  */
   Boundary_RadialReflecting_2d(double radius) : radius{radius} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return op::abs_sq(position) > _radius_sq;
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state.
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state.
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old) const {
@@ -585,13 +631,13 @@ private:
   const double _radius_sq{radius * radius}; /**< Domain radius squared. */
 };
 
-/** \class Boundary_Open_RadialReflecting_3d "Geometry/Boundary.h"
- \brief Reflecting boundaries on the inside of an infinite cylinder in 3d.
-
- Cylinder longitudinal axis is dd_open, which may be 0 or 2.
-
- \note State must define:
- - \c position [container] */
+/**
+   \class Boundary_Open_RadialReflecting_3d "Geometry/Boundary.h"
+   \brief Reflecting boundaries on the inside of an infinite cylinder in 3d.
+   \tparam dd_open Cylinder longitudinal axis, must be 0 or 2.
+   \note State must define:
+   - \c position [Container]
+*/
 template <std::size_t dd_open = 0> class Boundary_Open_RadialReflecting_3d {
   static_assert(dd_open == 0 || dd_open == 2,
                 "Cylinder axis dimension must be 0 or 2");
@@ -599,14 +645,16 @@ template <std::size_t dd_open = 0> class Boundary_Open_RadialReflecting_3d {
 public:
   const double radius; /**< Domain radius along reflecting dimensions. */
 
-  /** Constructor.
-  \param radius Domain radius along reflecting dimensions. */
+  /**
+     \brief Constructor.
+     \param radius Domain radius along reflecting dimensions.
+  */
   Boundary_Open_RadialReflecting_3d(double radius) : radius{radius} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
@@ -617,10 +665,11 @@ public:
     return radial_pos_sq > _radius_sq;
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state.
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state.
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old) const {
@@ -703,11 +752,13 @@ private:
       dd_open == 0 ? 1 : 0}; /** First reflecting dimension. */
 };
 
-/** \class Boundary_Periodic_SymmetryPlanes Geometry/Boundary.h
- * "Geometry/Boundary.h" \brief Periodic boundaries along each symmetry plane.
- *
- * \note State must define:
- * - \c position [container] */
+/**
+   \class Boundary_Periodic_SymmetryPlanes Geometry/Boundary.h
+   "Geometry/Boundary.h"
+   \brief Periodic boundaries along each symmetry plane.
+   \note State must define:
+   - \c position [Container]
+*/
 template <typename SymmetryPlanes> class Boundary_Periodic_SymmetryPlanes {
 public:
   const SymmetryPlanes
@@ -716,10 +767,13 @@ public:
   const double scale;  /**> Scale factor. */
   const std::vector<double> origin; /**> Coordinate origin. */
 
-  /** Constructor.
-   \param symmetry_planes Object describing domain symmetry planes (see
-   Geometry/SymmetryPlanes.h). \param scale Scale factor. \param origin
-   Coordinate origin. */
+  /**
+     \brief Constructor.
+     \param symmetry_planes Object describing domain symmetry planes (see
+     "Geometry/SymmetryPlanes.h").
+     \param scale Scale factor.
+     \param origin Coordinate origin.
+  */
   Boundary_Periodic_SymmetryPlanes(SymmetryPlanes symmetry_planes,
                                    double scale = 1.,
                                    std::vector<double> origin = {})
@@ -728,10 +782,12 @@ public:
                    ? std::vector<double>(symmetry_planes.dim, 0.)
                    : origin} {}
 
-  /** Constructor.
-  \brief Use default-constructed domain symmetry planes.
-  \param scale Scale factor.
-  \param origin Coordinate origin. */
+  /**
+     \brief Constructor.
+     \brief Use default-constructed domain symmetry planes.
+     \param scale Scale factor.
+     \param origin Coordinate origin.
+  */
   Boundary_Periodic_SymmetryPlanes(double scale = 1.,
                                    std::vector<double> origin = {})
       : symmetry_planes{}, scale{scale}, origin{
@@ -741,9 +797,9 @@ public:
                                                  : origin} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check.
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
@@ -754,10 +810,11 @@ public:
     return 0;
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -771,9 +828,10 @@ public:
     return 0;
   }
 
-  /** \brief Translate a position according to projection in periodic cell.
-  \param position Position to translate.
-  \param projections Projection components in periodic cell.
+  /**
+     \brief Translate a position according to projection in periodic cell.
+     \param position Position to translate.
+     \param projections Projection components in periodic cell.
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
@@ -781,14 +839,16 @@ public:
   }
 };
 
-/** \class Boundary_Periodic_SymmetryPlanes_WithOutsideInfo Geometry/Boundary.h
- * "Geometry/Boundary.h" \brief Periodic boundaries along each symmetry plane
- * with information about where position would be outside domain.
- *
- * \note State must define:
- * - \c position [container]
- * - \c periodicity [container of signed integers] (counting how many domains
- * have been traveled along each dimension) */
+/**
+   \class Boundary_Periodic_SymmetryPlanes_WithOutsideInfo Geometry/Boundary.h
+   "Geometry/Boundary.h"
+   \brief Periodic boundaries along each symmetry plane with information about
+   where position would be outside domain.
+   \note State must define:
+   - \c position [Container]
+   - \c periodicity [Container of signed integers] (counting how many domains
+   have been traveled along each dimension)
+*/
 template <typename SymmetryPlanes>
 class Boundary_Periodic_SymmetryPlanes_WithOutsideInfo {
 public:
@@ -798,10 +858,12 @@ public:
   const double scale;  /**> Scale factor. */
   const std::vector<double> origin; /**> Coordinate origin. */
 
-  /** Constructor.
-  \param symmetry_planes Object describing domain symmetry planes.
-  \param scale Scale factor.
-  \param origin Coordinate origin. */
+  /**
+     \brief Constructor.
+     \param symmetry_planes Object describing domain symmetry planes.
+     \param scale Scale factor.
+     \param origin Coordinate origin.
+  */
   Boundary_Periodic_SymmetryPlanes_WithOutsideInfo(
       SymmetryPlanes symmetry_planes, double scale = 1.,
       std::vector<double> origin = {})
@@ -810,10 +872,12 @@ public:
                    ? std::vector<double>(symmetry_planes.dim, 0.)
                    : origin} {}
 
-  /** Constructor.
-  \brief Use default-constructed domain symmetry planes.
-  \param scale Scale factor.
-  \param origin Coordinate origin. */
+  /**
+     \brief Constructor.
+     \brief Use default-constructed domain symmetry planes.
+     \param scale Scale factor.
+     \param origin Coordinate origin.
+  */
   Boundary_Periodic_SymmetryPlanes_WithOutsideInfo(
       double scale = 1., std::vector<double> origin = {})
       : symmetry_planes{}, scale{scale}, origin{
@@ -823,9 +887,9 @@ public:
                                                  : origin} {}
 
   /**
-   \brief Check if position is out of bounds.
-   \param position Position to check
-   \return \c true if out of bounds, \c false otherwise.
+     \brief Check if position is out of bounds.
+     \param position Position to check
+     \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
@@ -836,10 +900,11 @@ public:
     return 0;
   }
 
-  /** \brief Enforce boundary condition.
-  \param state Particle state to apply BC to.
-  \param state_old Previous particle state (unused).
-  \return \c true if there was an effect, \c false otherwise.
+  /**
+     \brief Enforce boundary condition.
+     \param state Particle state to apply BC to.
+     \param state_old Previous particle state (unused).
+     \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
@@ -854,9 +919,10 @@ public:
     return 0;
   }
 
-  /** \brief Translate a position according to projection in periodic cell.
-  \param position Position to translate.
-  \param projections Projection components in periodic cell.
+  /**
+     \brief Translate a position according to projection in periodic cell.
+     \param position Position to translate.
+     \param projections Projection components in periodic cell.
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {

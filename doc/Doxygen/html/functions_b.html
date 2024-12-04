@@ -89,9 +89,8 @@ $(document).ready(function(){initNavTree('functions_b.html',''); initResizable()
 : <a class="el" href="d4/d49/classptof_1_1_boundary___cases.html#ab55af71b2fd58b7543ca9f7de527743f">ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;</a>
 </li>
 <li>begin()
-: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a41f019a9d2cf24b0e189066b01e9cb66">ctrw::CTRW&lt; State_t &gt;</a>
-, <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a16fef53a9b0846853e4a439c269d2957">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
-, <a class="el" href="dc/d1a/classuseful_1_1_multi_array.html#ad9b7485fe934635c59a2e20a5d36c9f2">useful::MultiArray&lt; value_t &gt;</a>
+: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a633681443cdb68d6e39f7a1a1e9cc92f">ctrw::CTRW&lt; State_t, ParallelOption_t &gt;</a>
+, <a class="el" href="dc/d1a/classuseful_1_1_multi_array.html#a10b4539391c6e5ae7987c02d181e54ee">useful::MultiArray&lt; value_t &gt;</a>
 </li>
 <li>boundaries
 : <a class="el" href="d8/d1f/classgeom_1_1_boundary___periodic.html#ae052d37ea47d2f155f2fb4b78c536686">geom::Boundary_Periodic</a>
@@ -106,8 +105,8 @@ $(document).ready(function(){initNavTree('functions_b.html',''); initResizable()
 : <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4e98c4bbe8cb9b9349899dc05aa596ed">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
 , <a class="el" href="d7/d1d/classctrw_1_1_transitions___position.html#a46be90c9f99d73678c7397f105629a24">ctrw::Transitions_Position&lt; JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="de/de9/classctrw_1_1_transitions___position___velocity_step.html#a1e58d39439a1c701c0757c3a4818fd03">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;</a>
-, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a1a4d0ef765172889525b8d38b7a72051">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, RNG &gt;</a>
-, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#af2572ebdc76f62ec3e4bf890c4187d9f">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a4ff600d61b4d9b2ab435b8152f29fd3a">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a64e814e6440342002f373d0a444b24e6">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 , <a class="el" href="da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#abe3789c0e569215a319f020bbc688f27">ctrw::Transitions_RunAndTumble_PTRW&lt; Boundary, StateSwitcher, JumpGenerator, OrientationGenerator, OrientationGenerator_Wall &gt;</a>
 , <a class="el" href="d4/d94/classctrw_1_1_transitions___time___position.html#a13e39dff48e8645550b3d948e328d719">ctrw::Transitions_Time_Position&lt; TimeGenerator, JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#a0bfbe615bcfc74cb2cb1c93a400da49d">ctrw::Transitions_Velocity_Acceleration&lt; Acceleration, Boundary &gt;</a>
@@ -122,7 +121,7 @@ $(document).ready(function(){initNavTree('functions_b.html',''); initResizable()
 , <a class="el" href="d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#a5e2e1c276a42f005a38614d5731264bd">ptof::MeasurerTime_position_variance_periodic&lt; Subject, Geometry &gt;</a>
 </li>
 <li>boundary
-: <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#ab19c872b5eaa70ac529dd448d86ce23d">ptof::ParticleMaker_Periodic&lt; Particle, Locator, Boundary &gt;</a>
+: <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#afca6aa60babb9f3fa43489f1c47e3b22">ptof::ParticleMaker_Periodic&lt; Particle_t, Locator, Boundary &gt;</a>
 </li>
 <li>Boundary_Cases()
 : <a class="el" href="d4/d49/classptof_1_1_boundary___cases.html#ad9bdd6ddf16be8b23f678c6053793a91">ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;</a>
@@ -132,15 +131,11 @@ $(document).ready(function(){initNavTree('functions_b.html',''); initResizable()
 </li>
 <li>Boundary_Periodic()
 : <a class="el" href="d8/d1f/classgeom_1_1_boundary___periodic.html#a082d0e7c7c10579b50933e4da4a81540">geom::Boundary_Periodic</a>
+, <a class="el" href="d3/dd9/structptof_1_1_boundary___periodic.html#ab50443db85848b4c04e21656817cf96c">ptof::Boundary_Periodic&lt; Boundary, Locator &gt;</a>
 </li>
 <li>boundary_periodic
 : <a class="el" href="d3/dd9/structptof_1_1_boundary___periodic.html#a7c99ede23a632129ba9845a920976ce0">ptof::Boundary_Periodic&lt; Boundary, Locator &gt;</a>
-</li>
-<li>Boundary_Periodic()
-: <a class="el" href="d3/dd9/structptof_1_1_boundary___periodic.html#ab50443db85848b4c04e21656817cf96c">ptof::Boundary_Periodic&lt; Boundary, Locator &gt;</a>
-</li>
-<li>boundary_periodic
-: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a32964751c7016aff21ea02b6f11469e0">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a32964751c7016aff21ea02b6f11469e0">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7a6d6e33bc1dedda2bd9d3af0717c50d">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>Boundary_Periodic_1d()
@@ -168,26 +163,35 @@ $(document).ready(function(){initNavTree('functions_b.html',''); initResizable()
 : <a class="el" href="d6/d53/classgeom_1_1_boundary___reflecting__1d.html#aa2da9c30ec39d14d2e0d433c29528072">geom::Boundary_Reflecting_1d</a>
 </li>
 <li>Boundary_Reflecting_Dim()
-: <a class="el" href="de/dc7/classgeom_1_1_boundary___reflecting___dim.html#aae20cb8f3f45a6089f2bc4917cef03df">geom::Boundary_Reflecting_Dim&lt; dd &gt;</a>
+: <a class="el" href="de/dc7/classgeom_1_1_boundary___reflecting___dim.html#a3d86dae170cac23ed9c53dde636e635f">geom::Boundary_Reflecting_Dim&lt; dd &gt;</a>
 </li>
 <li>Boundary_Reinject()
-: <a class="el" href="d4/d7b/structptof_1_1_boundary___reinject.html#a1ec285a4ecbbf785a2a4702b8a4882c7">ptof::Boundary_Reinject&lt; InitialCondition &gt;</a>
+: <a class="el" href="d4/d7b/structptof_1_1_boundary___reinject.html#a9388071297ae77d0f9a10aadb0a9b969">ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt;</a>
+</li>
+<li>boundaryField()
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#afcbcca574753ba7f5d19021ab868c79f">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a7ea0773add51f847562c63a729137c56">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+</li>
+<li>boundaryFieldRef()
+: <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#af9e5724c0a95ffe8f8ea1d70ef2b3fc8">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
+, <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a887a04523702dea034cb45980a46d14f">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>BoundaryInfo
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a95366b47742dbaa2231b1905d99a9f79">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a12077697b4cc1a1c93c7c8910c3cf5e5">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a12077697b4cc1a1c93c7c8910c3cf5e5">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#a1ba866db33325704774b48cd555e9213">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a2f81794ef8c51ccb89940c24a764ca53">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>BoundaryPeriodic
 : <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ab582250774a3e7ea2226e0f5ad3679e1">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a8471d8c1aa57b4e426020e16a5c3383b">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a2585c4d94b7e5de62af776e5cc1f9863">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
 </li>
 <li>box
 : <a class="el" href="d6/d91/structgeom_1_1_domain.html#ad7d513fd7dea6fafe0918c6013acbe11">geom::Domain&lt; Shape &gt;</a>
 </li>
 <li>BulkReaction
-: <a class="el" href="d4/d50/structptof_1_1model__advection__diffusion__2d_1_1_reaction.html#a67fed94c7e9fe91a614de00ab5543fca">ptof::model_advection_diffusion_2d::Reaction</a>
-, <a class="el" href="d2/dcb/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction.html#a9335d09de311ee27e1fec4a156364e3c">ptof::model_advection_diffusion_surface_decay_2d::Reaction</a>
+: <a class="el" href="d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#a9df9fcdc2bdf2ea74418cc19c356c6dc">ptof::model_advection_diffusion_2d::Definitions&lt; ParallelOption &gt;::Reaction</a>
+, <a class="el" href="d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#a012699903e139fc71cf91a6cefae7319">ptof::model_advection_diffusion_surface_decay_2d::Definitions&lt; ParallelOption &gt;::Reaction</a>
 </li>
 </ul>
 </div><!-- contents -->

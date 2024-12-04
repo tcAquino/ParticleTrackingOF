@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('d6/d02/_algebra_8h.html','../../'); in
 </div><!--header-->
 <div class="contents">
 
-<p>Miscelaneous linear algebra algorithms.  
+<p>Linear algebra algorithms.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d7/d14/_operations_8h_source.html">General/Operations.h</a>&quot;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
@@ -100,7 +100,7 @@ Include dependency graph for Algebra.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/dc5/_algebra_8h__incl.png" border="0" usemap="#a_algebra_2_algebra_8h" alt=""/></div>
 <map name="a_algebra_2_algebra_8h" id="a_algebra_2_algebra_8h">
-<area shape="rect" title="Miscelaneous linear algebra algorithms." alt="" coords="425,5,551,32"/>
+<area shape="rect" title="Linear algebra algorithms." alt="" coords="425,5,551,32"/>
 <area shape="rect" href="../../d7/d14/_operations_8h.html" title="Miscelaneous operations on containers." alt="" coords="283,80,429,107"/>
 <area shape="rect" title=" " alt="" coords="445,229,504,256"/>
 <area shape="rect" title=" " alt="" coords="661,229,720,256"/>
@@ -119,8 +119,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../db/d7d/_algebra_8h__dep__incl.png" border="0" usemap="#a_algebra_2_algebra_8hdep" alt=""/></div>
 <map name="a_algebra_2_algebra_8hdep" id="a_algebra_2_algebra_8hdep">
-<area shape="rect" title="Miscelaneous linear algebra algorithms." alt="" coords="17,5,142,32"/>
-<area shape="rect" href="../../d0/d80/_random_8h.html" title="Miscelaneous collection of useful objects and algorithms." alt="" coords="5,80,153,107"/>
+<area shape="rect" title="Linear algebra algorithms." alt="" coords="231,5,357,32"/>
+<area shape="rect" href="../../d0/d80/_random_8h.html" title="Probability and random number generation." alt="" coords="220,80,368,107"/>
+<area shape="rect" href="../../d3/dba/_jump_generator_8h.html" title="Jump generators for particle tracking." alt="" coords="211,155,377,181"/>
+<area shape="rect" href="../../d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="51,237,193,263"/>
+<area shape="rect" href="../../d0/dd6/_time_generator_8h.html" title="Objects to generate time increments for particle tracking." alt="" coords="25,155,187,181"/>
+<area shape="rect" href="../../d6/d44/_initial_condition_8h.html" title="Objects to create particles according to initial condition." alt="" coords="401,155,560,181"/>
+<area shape="rect" href="../../d3/df6/_initial_condition___cases_8h.html" title="Create particles according to different initial conditions." alt="" coords="406,229,553,271"/>
+<area shape="rect" href="../../d0/dd9/_steppers_8h.html" title="Objects and utilities to handle time stepping along advective and diffusive trajectories." alt="" coords="232,237,356,263"/>
+<area shape="rect" href="../../de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="97,319,233,345"/>
+<area shape="rect" href="../../d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="263,393,378,420"/>
+<area shape="rect" href="../../d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="392,319,548,345"/>
 </map>
 </div>
 </div>
@@ -136,21 +145,26 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a2bf2157e25f2d2b41a4c845e3d477772"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772">algebra::gram_schmidt</a> (std::vector&lt; std::vector&lt; double &gt;&gt; const &amp;input)</td></tr>
+<tr class="memdesc:a2bf2157e25f2d2b41a4c845e3d477772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orthogonal basis from Gram-schmidt decomposition, given complete set of linearly-independent vectors. First vector is kept after normalization.  <a href="../../d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772">More...</a><br /></td></tr>
 <tr class="separator:a2bf2157e25f2d2b41a4c845e3d477772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbe262d995baa5be16da6b8d78a96a3d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d">algebra::gram_schmidt</a> (std::vector&lt; double &gt; const &amp;input)</td></tr>
+<tr class="memdesc:adbe262d995baa5be16da6b8d78a96a3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orthogonal basis from Gram-Schmidt decomposition, preserving given direction.  <a href="../../d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d">More...</a><br /></td></tr>
 <tr class="separator:adbe262d995baa5be16da6b8d78a96a3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5dc0e9a4621dad75881e990cbe801ea"><td class="memTemplParams" colspan="2">template&lt;typename Container1  = std::vector&lt;double&gt;, typename Container2  = Container1&gt; </td></tr>
 <tr class="memitem:aa5dc0e9a4621dad75881e990cbe801ea"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d6/da5/namespacealgebra.html#aa5dc0e9a4621dad75881e990cbe801ea">algebra::rotation_matrix_align</a> (Container1 const &amp;to_align, Container2 const &amp;align_with)</td></tr>
 <tr class="separator:aa5dc0e9a4621dad75881e990cbe801ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d70ec4eda308f08faceff2e368934f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/da5/namespacealgebra.html#a1d70ec4eda308f08faceff2e368934f7">algebra::solve_tridiag</a> (std::vector&lt; double &gt; const &amp;l_diag, std::vector&lt; double &gt; const &amp;diag, std::vector&lt; double &gt; const &amp;u_diag, std::vector&lt; double &gt; const &amp;ind, std::vector&lt; double &gt; &amp;sol)</td></tr>
+<tr class="memdesc:a1d70ec4eda308f08faceff2e368934f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thomas Algorithm for tridiagonal systems.  <a href="../../d6/da5/namespacealgebra.html#a1d70ec4eda308f08faceff2e368934f7">More...</a><br /></td></tr>
 <tr class="separator:a1d70ec4eda308f08faceff2e368934f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa061908e40aed9555525608514133a6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/da5/namespacealgebra.html#aa061908e40aed9555525608514133a6b">algebra::solve_cyclic_tridiag</a> (double alpha, double beta, std::vector&lt; double &gt; const &amp;l_diag, std::vector&lt; double &gt; const &amp;diag, std::vector&lt; double &gt; const &amp;u_diag, std::vector&lt; double &gt; const &amp;ind, std::vector&lt; double &gt; &amp;sol)</td></tr>
+<tr class="memdesc:aa061908e40aed9555525608514133a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses Sherman-Morrison and the Thomas Algorithm (see <a class="el" href="../../d6/da5/namespacealgebra.html#a1d70ec4eda308f08faceff2e368934f7" title="Thomas Algorithm for tridiagonal systems.">solve_tridiag()</a>) to solve a cyclic tridiagonal system <code>Ax = ind</code>, with <code>alpha = A_{ n-1, 0 }, beta = A_{ 0, n-1 }</code>.  <a href="../../d6/da5/namespacealgebra.html#aa061908e40aed9555525608514133a6b">More...</a><br /></td></tr>
 <tr class="separator:aa061908e40aed9555525608514133a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40ff8458abe906709fe1cca660ec1701"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/da5/namespacealgebra.html#a40ff8458abe906709fe1cca660ec1701">algebra::det_tridiag</a> (std::vector&lt; double &gt; const &amp;l_diag, std::vector&lt; double &gt; const &amp;diag, std::vector&lt; double &gt; const &amp;u_diag)</td></tr>
+<tr class="memdesc:a40ff8458abe906709fe1cca660ec1701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the determinant of a tridiagonal matrix using the continuant recurrence relation.  <a href="../../d6/da5/namespacealgebra.html#a40ff8458abe906709fe1cca660ec1701">More...</a><br /></td></tr>
 <tr class="separator:a40ff8458abe906709fe1cca660ec1701"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Miscelaneous linear algebra algorithms. </p>
+<div class="textblock"><p>Linear algebra algorithms. </p>
 <dl class="section author"><dt>Author</dt><dd>Tomás Aquino </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>08/06/2019 </dd></dl>
 </div></div><!-- contents -->

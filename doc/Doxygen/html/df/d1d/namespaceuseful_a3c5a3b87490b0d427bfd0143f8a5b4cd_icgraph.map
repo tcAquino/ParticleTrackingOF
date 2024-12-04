@@ -1,14 +1,7 @@
 <map id="useful::swap_erase_if" name="useful::swap_erase_if">
-<area shape="rect" id="node1" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="995,159,1144,185"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a42b0ae8508d0fe2d62c5311583c263e2" title="Remove cell/face indices if mask is above threshold." alt="" coords="808,151,947,193"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a144ea961ac35c92d159391d22955c059" title="Remove cell/face indices if mask is above threshold." alt="" coords="637,159,760,185"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a6168f463d364c29a1a240af19744386e" title="Make particles distributed with probability proportional to local velocity magnitude over mesh cells ..." alt="" coords="445,5,571,32"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#ad8750bde84a1829ea2c35cf848d4e678" title="Make particles distributed with probability proportional to local velocity magnitude over cell faces ..." alt="" coords="445,57,571,98"/>
-<area shape="rect" id="node6" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a7fd67d3e7c0fa728c44f8e6bc2c566fe" title="Make given number of particles." alt="" coords="427,122,589,163"/>
-<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#aea5e83b8187769c291b52fa11286b151" title="Make particles distributed randomly uniformly over mesh cells where mask is above threshold." alt="" coords="461,188,555,215"/>
-<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a2b7942e06d28beedaf6877994c7bf9f6" title="Make particles distributed randomly uniformly near cell faces in given patches where mask is above th..." alt="" coords="441,239,575,281"/>
-<area shape="rect" id="node12" href="$d2/dd1/namespaceptof.html#ace97194c7af839c1587a7f048af022a7" title="Make particles distributed randomly uniformly over cell faces in given patches where mask is above th..." alt="" coords="434,305,582,332"/>
-<area shape="rect" id="node7" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="212,90,379,131"/>
-<area shape="rect" id="node9" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="226,155,365,197"/>
-<area shape="rect" id="node8" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,90,164,131"/>
+<area shape="rect" id="node1" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="424,46,573,73"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="217,5,373,47"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="215,71,376,112"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a9362b0932b5dcc38c21c7a5cd2821349" title="Remove face indices if mask is below threshold." alt="" coords="8,13,164,39"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a407151a1ede68422b8f8bed2fb09bd4f" title="Remove face indices if mask is below threshold." alt="" coords="5,71,167,112"/>
 </map>

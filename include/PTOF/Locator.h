@@ -1,7 +1,8 @@
 /**
- \file PTOF/Locator.h
- \author Tomás Aquino
- \date 09/03/2022
+   \file PTOF/Locator.h
+   \author Tomás Aquino
+   \date 09/03/2022
+   \brief Objects to locate positions in mesh.
 */
 
 #ifndef PTOF_LOCATOR_H
@@ -14,8 +15,10 @@
 #include <set>
 
 namespace ptof {
-/** \class Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
- * \brief Object to locate positions or states in mesh. */
+/**
+   \class Locator_Cell PTOF/Locator.h "PTOF/Locator.h"
+   \brief Object to locate positions or states in mesh.
+*/
 template <typename Geometry,
           typename SearchOption = SearchOptions::FirstNeighborPrecheck>
 struct Locator_Cell {
@@ -27,8 +30,10 @@ struct Locator_Cell {
   using MeshSearch =
       typename Geometry::MeshSearch; /**< Mesh searching tools. */
 
-  /** Constructor.
-   \param mesh_search Mesh searching object. */
+  /**
+     \brief Constructor.
+     \param mesh_search Mesh searching object.
+  */
   Locator_Cell(Geometry const &geometry) : _geometry{geometry} {}
 
   /** \return Mesh search object. */
@@ -38,11 +43,12 @@ struct Locator_Cell {
   Mesh const &mesh() const { return _geometry.mesh(); }
 
   /**
-  \param position Position to locate.
-  \param hint Mesh cell index hint.
-  \return Mesh cell index. */
+     \param position Position to locate.
+     \param hint Mesh cell index hint.
+     \return Mesh cell index.
+  */
   auto operator()(Point const &position, Index hint = -1) const {
-    if (hint != -1) {
+    if (!outside(hint)) {
       if constexpr (SearchOption::neighbor_check_level >= 0)
         if (mesh().pointInCell(position, hint))
           return hint;
@@ -67,61 +73,68 @@ struct Locator_Cell {
   }
 
   /**
-  \param position Position to locate.
-  \param hint Mesh cell index hint.
-  \return Mesh cell index. */
+     \param position Position to locate.
+     \param hint Mesh cell index hint.
+     \return Mesh cell index.
+  */
   auto operator()(Point2D const &position, Index hint = -1) const {
     return this->operator()(make_point(position), hint);
   }
 
   /**
-  \param position Position to locate.
-  \param hint Mesh cell index hint.
-  \return Mesh cell index. */
+     \param position Position to locate.
+     \param hint Mesh cell index hint.
+     \return Mesh cell index.
+  */
   auto operator()(Scalar position, Index hint = -1) const {
     return this->operator()(make_point(position), hint);
   }
 
   /**
-  \param state State with position to locate.
-  \return Mesh cell for state, using state's cell hint.
-  \note State must implement:
-  - position
-  - cell [cell index, used as hint] */
+     \param state State with position to locate.
+     \return Mesh cell for state, using state's cell hint.
+     \note State must implement:
+     - \c position
+     - \c cell [cell index, used as hint]
+  */
   template <typename State> auto operator()(State const &state) const {
     return this->operator()(make_point(state.position), state.cell);
   }
 
   /**
-   \param position Position to locate.
-   \return Nearest mesh cell index.
-   \details Does not use hint because holes are not handled correctly. */
+     \param position Position to locate.
+     \return Nearest mesh cell index.
+     \details Does not use hint because holes are not handled correctly.
+  */
   auto nearest_cell(Point const &position) const {
     return mesh_search().findNearestCell(position);
   }
 
   /**
-  \param position Position to locate.
-  \return Nearest mesh cell index.
-  \details Does not use hint because holes are not handled correctly. */
+     \param position Position to locate.
+     \return Nearest mesh cell index.
+     \details Does not use hint because holes are not handled correctly.
+  */
   auto nearest_cell(Point2D const &position) const {
     return nearest_cell(make_point(position));
   }
 
   /**
-  \param position Position to locate.
-  \return Nearest mesh cell index.
-  \details Does not use hint because holes are not handled correctly. */
+     \param position Position to locate.
+     \return Nearest mesh cell index.
+     \details Does not use hint because holes are not handled correctly.
+  */
   auto nearest_cell(Scalar position) const {
     return nearest_cell(make_point(position));
   }
 
   /**
-   \param state State with position to locate.
-   \return Nearest mesh cell index.
-   \details Does not use hint because holes are not handled correctly.
-   \note State must implement:
-   - position */
+     \param state State with position to locate.
+     \return Nearest mesh cell index.
+     \details Does not use hint because holes are not handled correctly.
+     \note State must implement:
+     - \c position
+  */
   template <typename State> auto nearest_cell(State const &state) const {
     return nearest_cell(make_point(state.position));
   }

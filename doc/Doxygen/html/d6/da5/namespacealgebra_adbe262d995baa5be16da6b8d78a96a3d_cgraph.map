@@ -1,6 +1,6 @@
 <map id="algebra::gram_schmidt" name="algebra::gram_schmidt">
-<area shape="rect" id="node1" title=" " alt="" coords="5,183,160,209"/>
-<area shape="rect" id="node2" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title=" " alt="" coords="208,157,363,184"/>
+<area shape="rect" id="node1" title="Orthogonal basis from Gram&#45;Schmidt decomposition, preserving given direction." alt="" coords="5,183,160,209"/>
+<area shape="rect" id="node2" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title="Orthogonal basis from Gram&#45;schmidt decomposition, given complete set of linearly&#45;independent vectors...." alt="" coords="208,157,363,184"/>
 <area shape="rect" id="node13" href="$db/dd7/namespaceop.html#a7d3205f418cfa9b7da0709a7d9f0db98" title=" " alt="" coords="235,208,335,235"/>
 <area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="453,208,519,235"/>
 <area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="617,183,704,209"/>

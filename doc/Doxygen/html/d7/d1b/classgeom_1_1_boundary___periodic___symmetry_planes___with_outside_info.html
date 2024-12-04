@@ -98,9 +98,10 @@ $(document).ready(function(){initNavTree('d7/d1b/classgeom_1_1_boundary___period
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3a364dbfd0ec112af5ea37c902b467d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a3a364dbfd0ec112af5ea37c902b467d4">Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a> (SymmetryPlanes <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#adfc5c54199c87dd0b50b4a8d83e65007">symmetry_planes</a>, double <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#ad805a546618e8521ccc25fae45b7483e">scale</a>=1., std::vector&lt; double &gt; <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#ad0009471e592e6d5e8227b2d72b1897e">origin</a>={})</td></tr>
+<tr class="memdesc:a3a364dbfd0ec112af5ea37c902b467d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a3a364dbfd0ec112af5ea37c902b467d4">More...</a><br /></td></tr>
 <tr class="separator:a3a364dbfd0ec112af5ea37c902b467d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e6a13c1bc01c9a865f41f222e39f71d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a4e6a13c1bc01c9a865f41f222e39f71d">Boundary_Periodic_SymmetryPlanes_WithOutsideInfo</a> (double <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#ad805a546618e8521ccc25fae45b7483e">scale</a>=1., std::vector&lt; double &gt; <a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#ad0009471e592e6d5e8227b2d72b1897e">origin</a>={})</td></tr>
-<tr class="memdesc:a4e6a13c1bc01c9a865f41f222e39f71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use default-constructed domain symmetry planes.  <a href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a4e6a13c1bc01c9a865f41f222e39f71d">More...</a><br /></td></tr>
+<tr class="memdesc:a4e6a13c1bc01c9a865f41f222e39f71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a4e6a13c1bc01c9a865f41f222e39f71d">More...</a><br /></td></tr>
 <tr class="separator:a4e6a13c1bc01c9a865f41f222e39f71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae96d8b9910727f43a07d9c914501593"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:aae96d8b9910727f43a07d9c914501593"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#aae96d8b9910727f43a07d9c914501593">out_of_bounds</a> (Position const &amp;position) const</td></tr>
@@ -129,10 +130,9 @@ Data Fields</h2></td></tr>
 class geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo&lt; SymmetryPlanes &gt;</h3>
 
 <p>Periodic boundaries along each symmetry plane with information about where position would be outside domain. </p>
-<p>"Geometry/Boundary.h"</p>
-<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
-<li><code>position</code> [container]</li>
-<li><code>periodicity</code> [container of signed integers] (counting how many domains have been traveled along each dimension) </li>
+<p>"Geometry/Boundary.h" </p><dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>position</code> [Container]</li>
+<li><code>periodicity</code> [Container of signed integers] (counting how many domains have been traveled along each dimension) </li>
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -177,10 +177,12 @@ template&lt;typename SymmetryPlanes &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
 <blockquote class="doxtable">
 <p>Coordinate origin. </p>
 </blockquote>
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">symmetry_planes</td><td>Object describing domain symmetry planes. </td></tr>
     <tr><td class="paramname">scale</td><td>Scale factor. </td></tr>
@@ -227,8 +229,8 @@ template&lt;typename SymmetryPlanes &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Use default-constructed domain symmetry planes. </p>
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor. </p>
+<p>Use default-constructed domain symmetry planes. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">scale</td><td>Scale factor. </td></tr>
     <tr><td class="paramname">origin</td><td>Coordinate origin. </td></tr>

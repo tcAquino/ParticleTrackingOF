@@ -16,8 +16,9 @@
 #include <type_traits>
 #include <vector>
 
-/** \namespace range Numerical sequences with different inter-element spacings.
- */
+/**
+   \namespace range Numerical sequences with different inter-element spacings.
+*/
 namespace range {
 /** \return Linear partition of [\p xx1, \p xx2] with \p nr_points points. */
 template <template <typename...> typename Container = std::vector,
@@ -39,7 +40,7 @@ Container<Scalar, Args...> linspace(Scalar xx1, Scalar xx2,
     output.push_back(xx2);
     return output;
   } else {
-    Container output(nr_points);
+    Container<Scalar, Args...> output(nr_points);
     output[0] = xx1;
     for (std::size_t ii = 1; ii < output.size() - 1; ++ii)
       output[ii] = xx1 + ii * inc;
@@ -78,9 +79,11 @@ Container<Scalar, Args...> logspace(Scalar xx1, Scalar xx2,
   }
 }
 
-/** \return Linear partition of \c xx1 up to \c xx2 (excluded), with spacing
- given by \p increment. \note For signed \c Scalar types, the last element can
- be smaller than the first. The sign of the increment is adjusted automatically
+/**
+   \return Linear partition of \c xx1 up to \c xx2 (excluded), with spacing
+   given by \p increment.
+   \note For signed \c Scalar types, the last element can be smaller than the
+   first. The sign of the increment is adjusted automatically.
  */
 template <template <typename...> typename Container = std::vector,
           typename Scalar, typename... Args>

@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a0070199d79e3a9ddf31e78fd69d4507b">geom::Boundary_Open_RadialReflecting_3d&lt; dd_open &gt;</a>
 </li>
 <li>_bernoulli_dist
-: <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#ab97c0b90800c124d0188c1ec528c2dcf">ctrw::JumpGenerator_RW_1d&lt; Distance_type, RNG &gt;</a>
+: <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a3420e679ca43e390d5bc54fb83a432e9">ctrw::JumpGenerator_RW_1d&lt; Distance_type, ParallelOption, RNG &gt;</a>
 </li>
 <li>_boundary
 : <a class="el" href="dd/dd1/structctrw_1_1_get__position__periodic.html#ac3963e329d4a7ec0af18a62ead18d869">ctrw::Get_position_periodic&lt; Boundary &gt;</a>
@@ -100,8 +100,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a4122eadbd7dceb00a8926f8cf31d2ce1">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
 , <a class="el" href="d7/d1d/classctrw_1_1_transitions___position.html#a28591443177dc1bdcd74be9b5512ac61">ctrw::Transitions_Position&lt; JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="de/de9/classctrw_1_1_transitions___position___velocity_step.html#aeda719033753a40dcf66e08b1b57fc4f">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;</a>
-, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a24049588b8949f46a0e96014769c9b5b">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, RNG &gt;</a>
-, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a1b12250e3ca68f37f2cfef1955c000c2">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a23a1423537cbb27d855c4ba44f111f96">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a8f1e2f8aab4da6a5224ab5643c33522d">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 , <a class="el" href="da/d89/classctrw_1_1_transitions___run_and_tumble___p_t_r_w.html#a401c695a1e1dfbf6a235f0c3b77cfb23">ctrw::Transitions_RunAndTumble_PTRW&lt; Boundary, StateSwitcher, JumpGenerator, OrientationGenerator, OrientationGenerator_Wall &gt;</a>
 , <a class="el" href="d4/d94/classctrw_1_1_transitions___time___position.html#aea363eefef6f0d16a55068e91dce27f5">ctrw::Transitions_Time_Position&lt; TimeGenerator, JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#a330fa1d15d0ba23d3bf32d469d78d4fd">ctrw::Transitions_Velocity_Acceleration&lt; Acceleration, Boundary &gt;</a>
@@ -117,6 +117,12 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </li>
 <li>_boundary_periodic
 : <a class="el" href="d4/d49/classptof_1_1_boundary___cases.html#a20e33749c980767640b0fc4f8a710878">ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;</a>
+</li>
+<li>_cell_id
+: <a class="el" href="d9/ddf/structptof_1_1_initial_condition___point.html#afca4ce52db308cb0c05633ace9df9ed1">ptof::InitialCondition_Point&lt; ParticleMaker, Geometry &gt;</a>
+</li>
+<li>_cell_ids
+: <a class="el" href="d7/d02/structptof_1_1_initial_condition___distributed_cell_centers.html#a941982b38364c0808a8ac6f5aa2e0bcd">ptof::InitialCondition_DistributedCellCenters&lt; ParticleMaker, Geometry, CellIdContainer, Distribution &gt;</a>
 </li>
 <li>_column_widths
 : <a class="el" href="d4/d33/structptof_1_1_measurer__absorption__time.html#a38975cdb05e866d7f2815fdfba614b29">ptof::Measurer_absorption_time&lt; Subject, Geometry &gt;</a>
@@ -137,30 +143,31 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="d4/db6/structptof_1_1_measurer_time__position__second__moment__periodic.html#ac5fea6782c1e3942d6cb2c8ce253b324">ptof::MeasurerTime_position_second_moment_periodic&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="d2/d0d/structptof_1_1_measurer_time__position__variance.html#a8ddce5cfa9aaa7f9174ae85116e17bd0">ptof::MeasurerTime_position_variance&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="d6/def/structptof_1_1_measurer_time__position__variance__periodic.html#ab024c71fe5b0f56f407cf6fa17c7502b">ptof::MeasurerTime_position_variance_periodic&lt; Subject, Geometry &gt;</a>
-, <a class="el" href="d4/dda/structptof_1_1_measurer_time__scalar__field.html#ab4e1c689d656bea9ca33ba87255f0390">ptof::MeasurerTime_scalar_field&lt; Subject, Geometry, Field &gt;</a>
+, <a class="el" href="d4/dda/structptof_1_1_measurer_time__scalar__field.html#a2220cc966a1ee1ebdc4aa6659976f19f">ptof::MeasurerTime_scalar_field&lt; Subject, Geometry, Field &gt;</a>
 , <a class="el" href="d7/d28/structptof_1_1_measurer_time__scalar__field__mean.html#ad593bacb14b2d9d123980f0039227963">ptof::MeasurerTime_scalar_field_mean&lt; Subject, Geometry, Field &gt;</a>
-, <a class="el" href="d9/d35/structptof_1_1_measurer_time__tensor__field.html#a71b60c812d7313ee1fe2d322bf11f1a4">ptof::MeasurerTime_tensor_field&lt; Subject, Geometry, Field &gt;</a>
+, <a class="el" href="d9/d35/structptof_1_1_measurer_time__tensor__field.html#ace2bbfdd2f65f43b133c1488af405a1a">ptof::MeasurerTime_tensor_field&lt; Subject, Geometry, Field &gt;</a>
 , <a class="el" href="d8/df5/structptof_1_1_measurer_time__tensor__field__mean.html#a827a12c59896cff642ff15adbaefeed1">ptof::MeasurerTime_tensor_field_mean&lt; Subject, Geometry, Field &gt;</a>
-, <a class="el" href="db/d15/structptof_1_1_measurer_time__vector__field.html#a5713f44f302745e5bab25bbc7369f21d">ptof::MeasurerTime_vector_field&lt; Subject, Geometry, Field &gt;</a>
+, <a class="el" href="db/d15/structptof_1_1_measurer_time__vector__field.html#ae4c94480faf2d150d67da7b1595a9c6d">ptof::MeasurerTime_vector_field&lt; Subject, Geometry, Field &gt;</a>
 , <a class="el" href="d5/d79/structptof_1_1_measurer_time__vector__field__mean.html#ae35b4a737c56355cd5f559ad0a4b27b1">ptof::MeasurerTime_vector_field_mean&lt; Subject, Geometry, Field &gt;</a>
 </li>
 <li>_concentration
-: <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a8dae2fe5e1ddd63878e2e68fcffe0b49">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, RNG &gt;</a>
+: <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a6e806093ea101e48d35ba063886668e9">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, ParallelOption, RNG &gt;</a>
 </li>
 <li>_crossing_times_masses
 : <a class="el" href="dc/dd6/structptof_1_1_measurer_time__first__crossing__time.html#a0265227164a0dff8c7d42768d11a0f33">ptof::MeasurerTime_first_crossing_time&lt; Subject, Geometry &gt;</a>
 </li>
 <li>_diff_aux
-: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aca1d13cbc7a567af868533801ff78471">ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt;</a>
+: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#aaf282b0b909366ec6a9728d28441df3d">ctrw::JumpGenerator_Diffusion_1d&lt; ParallelOption, RNG &gt;</a>
 </li>
 <li>_diff_coeff
-: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#ab048395eb80eef8576f7aeeaff0899bd">ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt;</a>
+: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a2f61104d868acd7ae0ee10593e916e5e">ctrw::JumpGenerator_Diffusion_1d&lt; ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a89b3012bd7a8604ffbf20f1c04f5a002">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
 </li>
 <li>_diff_generators
-: <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a4579d03e13b27a568878fd9c5c29d4b4">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+: <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#ac5ee88f5e08b22fa1ec0a3525e999309">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 </li>
 <li>_dim
-: <a class="el" href="d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#acfcf05ff6bafe108640eb6d8ceff3ec9">stochastic::isotropic_unit_vector_distribution&lt; Value_type &gt;</a>
+: <a class="el" href="d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#a4e727e3060e6ce0169eb0f3dd6b752a2">stochastic::isotropic_unit_vector_distribution</a>
 </li>
 <li>_dimensions
 : <a class="el" href="dc/d1a/classuseful_1_1_multi_array.html#a40f1b3172dab92882a2740917d2979d1">useful::MultiArray&lt; value_t &gt;</a>
@@ -172,16 +179,23 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="dc/d44/classstochastic_1_1discrete__conditional__dist__distribution.html#a538318a8ab5fbe0549a02dd123c25124">stochastic::discrete_conditional_dist_distribution&lt; Discrete_conditional_dist &gt;</a>
 </li>
 <li>_dist
-: <a class="el" href="d1/d43/classctrw_1_1_jump_generator___uniform__1d.html#a07d273cb5de9a2f8e40cfca7a622954d">ctrw::JumpGenerator_Uniform_1d&lt; RNG &gt;</a>
-, <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a511c73c7fd40033d8c9419eda814dab7">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, RNG &gt;</a>
-, <a class="el" href="dd/d51/classctrw_1_1_time_generator___dist.html#a5e8ab7731076a5b65efbddda5ef9f2a9">ctrw::TimeGenerator_Dist&lt; Dist, RNG &gt;</a>
+: <a class="el" href="d1/d43/classctrw_1_1_jump_generator___uniform__1d.html#af9165c7d2b7cc5f733c838da6bd2bd61">ctrw::JumpGenerator_Uniform_1d&lt; DistanceType, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a957d9deb5fc8379b9887f6c495b76567">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, ParallelOption, RNG &gt;</a>
+, <a class="el" href="dd/d51/classctrw_1_1_time_generator___dist.html#ac24f365e6133165d478bed5d580f22f2">ctrw::TimeGenerator_Dist&lt; Dist, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d7/d02/structptof_1_1_initial_condition___distributed_cell_centers.html#a047302975ab9601106bc0571c5d128e4">ptof::InitialCondition_DistributedCellCenters&lt; ParticleMaker, Geometry, CellIdContainer, Distribution &gt;</a>
+, <a class="el" href="de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#ad0607533989d2aef1e69aa8ba9edddc5">ptof::InitialCondition_DistributedFaceCenters&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#ac24d815202262bbbdc79f3452587b5de">ptof::InitialCondition_DistributedNearFaces&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="d7/dc5/structptof_1_1_initial_condition___distributed_position.html#a29531081cd76a7f582ec4471879ffeac">ptof::InitialCondition_DistributedPosition&lt; ParticleMaker, Geometry, Distribution &gt;</a>
 </li>
 <li>_dist_base
 : <a class="el" href="dc/d44/classstochastic_1_1discrete__conditional__dist__distribution.html#a661ee9745d8c6174c826cbcdf4fbc1db">stochastic::discrete_conditional_dist_distribution&lt; Discrete_conditional_dist &gt;</a>
 , <a class="el" href="da/dd2/classstochastic_1_1discrete__dist__distribution.html#a4d162fb04b1e39a890348432d02b0232">stochastic::discrete_dist_distribution&lt; Discrete_dist &gt;</a>
 </li>
+<li>_distance
+: <a class="el" href="dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#aae4908c6c6bec2dc6266356d6832975e">ptof::InitialCondition_DistributedNearFaces&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+</li>
 <li>_end_criterion
-: <a class="el" href="d5/de8/classptof_1_1_output___cases.html#ac0be432d95b3515d7343f1fccad8718b">ptof::Output_Cases&lt; Subject, Geometry &gt;</a>
+: <a class="el" href="d5/de8/classptof_1_1_output___cases.html#ad1b232f140bb2d9b376a1b23f42f236d">ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt;</a>
 </li>
 <li>_exponential_dist
 : <a class="el" href="d7/d85/classstochastic_1_1pareto__distribution.html#a02c44b392796921934cbf8404f67e9c1">stochastic::pareto_distribution&lt; Value_type &gt;</a>
@@ -190,6 +204,10 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_exponents
 : <a class="el" href="d5/d78/structptof_1_1_measurer_time__position__moment.html#a60d2a98017d28d63c3fd7294230a3a98">ptof::MeasurerTime_position_moment&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="d8/d64/structptof_1_1_measurer_time__position__moment__periodic.html#abe92fe39b4ef7d7acc24c655e79e8c0b">ptof::MeasurerTime_position_moment_periodic&lt; Subject, Geometry &gt;</a>
+</li>
+<li>_face_ids
+: <a class="el" href="de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#af206838b2287a4354dba9066ae10beb4">ptof::InitialCondition_DistributedFaceCenters&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#a18265bc31c0cdb75352abfda9cd075a2">ptof::InitialCondition_DistributedNearFaces&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
 </li>
 <li>_field
 : <a class="el" href="d4/dda/structptof_1_1_measurer_time__scalar__field.html#a7f1aa5592ed4edb60ae1762d2fd123d2">ptof::MeasurerTime_scalar_field&lt; Subject, Geometry, Field &gt;</a>
@@ -210,10 +228,11 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="d5/d79/structptof_1_1_measurer_time__vector__field__mean.html#ac5ba46f0232080ff18781f56a4118328">ptof::MeasurerTime_vector_field_mean&lt; Subject, Geometry, Field &gt;</a>
 </li>
 <li>_flow_field
-: <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#ac1378772532f88a2b34057cca1012e9e">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+: <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a2c35937f96843ba938ed535f344bbd65">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 </li>
 <li>_geometry
-: <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a4bc3006cf5f0d9d4defab6a4e2d8ecfb">ptof::Locator_Cell&lt; Geometry, SearchOption &gt;</a>
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#a884c1d3919c7b442d931e740cbbccfee">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d0/d4f/structptof_1_1_locator___cell.html#a4bc3006cf5f0d9d4defab6a4e2d8ecfb">ptof::Locator_Cell&lt; Geometry, SearchOption &gt;</a>
 , <a class="el" href="db/d74/structptof_1_1_measurer.html#ae3840c1b3cab5171fe2160ebcd00f711">ptof::Measurer&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="dc/d05/structptof_1_1_measurer_time.html#ab3cd07a64c20a701d8ced561cb3d8f3a">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a7ace6578f2b5806891f64fd43dd49522">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
@@ -229,24 +248,36 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="da/dc0/structptof_1_1_measurer_time__position__periodic.html#aa453bed5d81167e6e68cc76bdc80b98a">ptof::MeasurerTime_position_periodic&lt; Subject, Geometry &gt;</a>
 </li>
 <li>_gradient
-: <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a2870dd93c63340e76858a44f8adc5433">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, RNG &gt;</a>
+: <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a2af24e4b1796895f4132448cddd9ed84">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, ParallelOption, RNG &gt;</a>
 </li>
 <li>_height_vector
 : <a class="el" href="d8/d10/classstochastic_1_1uniform__cylinder__distribution.html#a80c7b00c813152f7934035d8c2ffb263">stochastic::uniform_cylinder_distribution</a>
+</li>
+<li>_initial_condition
+: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#aa57ec6a095fdaa9f74f416fe62c45d82">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
+</li>
+<li>_injection_time
+: <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#a1c5c213021bc393289db3816bbcb0faa">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
+</li>
+<li>_injection_time_end
+: <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#ab006e02a835064c13bb53733724495a4">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
+</li>
+<li>_injection_time_step
+: <a class="el" href="d5/d94/structptof_1_1_initial_condition___continuous.html#a530c94d2d0fb15f07dc149a0a8a384d7">ptof::InitialCondition_Continuous&lt; InitialCondition &gt;</a>
 </li>
 <li>_interpolant
 : <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#ad09856eade79af9307f3ee4e01b03723">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 , <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a7da73039ca7d663187f7e1a4364922eb">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 </li>
 <li>_isotropic_dist
-: <a class="el" href="dd/d2c/classstochastic_1_1uniform__sphere__distribution.html#a3311a950f2a62cee77382e1157d7cb52">stochastic::uniform_sphere_distribution&lt; Value_type &gt;</a>
+: <a class="el" href="dd/d2c/classstochastic_1_1uniform__sphere__distribution.html#af45c681053292d767a23cdfad2952153">stochastic::uniform_sphere_distribution</a>
 </li>
 <li>_jump_generator
-: <a class="el" href="df/d00/classctrw_1_1_jump_generator___diffusion.html#a7fb29474f2215184b43b7d40ed8ec391">ctrw::JumpGenerator_Diffusion</a>
+: <a class="el" href="df/d00/classctrw_1_1_jump_generator___diffusion.html#ab41ef6d6cae7afb13eb55d65da667ee2">ctrw::JumpGenerator_Diffusion&lt; ParallelOption, RNG &gt;</a>
 , <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a35f7228b4c78ab41ab2233dac53dcfa8">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
 , <a class="el" href="d7/d1d/classctrw_1_1_transitions___position.html#a420fc1928ff34dc006f0546b1d3ba859">ctrw::Transitions_Position&lt; JumpGenerator, Boundary &gt;</a>
 , <a class="el" href="de/de9/classctrw_1_1_transitions___position___velocity_step.html#aec7747c09cd2ef7a2b60d956c750396d">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;</a>
-, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#add7ee94bd015a19607b4e38091f2a166">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, RNG &gt;</a>
+, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#acb97db8e99427fbda14a46b8e46c55df">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, ParallelOption, RNG &gt;</a>
 , <a class="el" href="d8/d5f/classctrw_1_1_transitions___reaction___position.html#a1df3c0dabb1a8074a51ccedbab51b1f3">ctrw::Transitions_Reaction_Position&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
 , <a class="el" href="d5/dd3/classctrw_1_1_transitions___reaction___position___conditional.html#a8e27b986a845bd96e74140161e8e0f72">ctrw::Transitions_Reaction_Position_Conditional&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
 , <a class="el" href="d6/d56/classctrw_1_1_transitions___run_and_tumble.html#aa6d2c63dcbb69264f61a513d9bd2825d">ctrw::Transitions_RunAndTumble&lt; TimeGenerator_run, TimeGenerator_tumble, JumpGenerator, OrientationGenerator &gt;</a>
@@ -261,19 +292,24 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="d8/dd5/classctrw_1_1_jump_generator___add.html#adb95133061fa6dde51323f34892e03be">ctrw::JumpGenerator_Add&lt; JumpGenerator_1, JumpGenerator_2 &gt;</a>
 </li>
 <li>_jump_size
-: <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aedc920cf96ed35635d5a954e56df6e7d">ctrw::JumpGenerator_RW_1d&lt; Distance_type, RNG &gt;</a>
+: <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a4e0ff40510b65955c5ae9607966c83b5">ctrw::JumpGenerator_RW_1d&lt; Distance_type, ParallelOption, RNG &gt;</a>
+</li>
+<li>_local_time_step_adv
+: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a3a2d79e2f3f549485bf45b8013d56135">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
+</li>
+<li>_local_time_step_diff
+: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#adb3a86fd1bac2df2517f5f9b0d36ce29">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
+</li>
+<li>_local_time_step_react
+: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a3ef0b35a1dc8933e87942b018077f6d1">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
 </li>
 <li>_locator
 : <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a1c1a8c7c9b470a6c72fdc8f6bb30e154">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
 , <a class="el" href="d4/d49/classptof_1_1_boundary___cases.html#a9069aa818635fb6675ed386c4577a01a">ptof::Boundary_Cases&lt; Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction &gt;</a>
-, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a7076d52e07de85ad9b7a40e39ec5d020">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
 , <a class="el" href="db/d74/structptof_1_1_measurer.html#af1a575080fa8d24d758e9d76224ea73d">ptof::Measurer&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="dc/d05/structptof_1_1_measurer_time.html#aa1c77c0ea0cf606c35b9b46f92b98f9f">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="d6/d57/classptof_1_1_scalar_field___linear_interpolation___o_f.html#afb40174c7bb45dc26f45382c457b38a6">ptof::ScalarField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
 , <a class="el" href="d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#a0da170bd937b2bb0b5f4eeb9f10b9264">ptof::VectorField_LinearInterpolation_OF&lt; Field, Locator, CheckOption, Uninterpolated &gt;</a>
-</li>
-<li>_mask
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#ad95b3a1ae5e8c41d1085dfdfd90b6627">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
 </li>
 <li>_masks
 : <a class="el" href="d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#aa9bc638d3caf92ef5c182adfcfe675d8">ptof::MeasurerTime_mass_in_regions&lt; Subject, Geometry, Mask &gt;</a>
@@ -281,18 +317,18 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="dd/d75/structptof_1_1_measurer_time__position__in__regions__periodic.html#a911fc32365705a71b1b824e848988ec6">ptof::MeasurerTime_position_in_regions_periodic&lt; Subject, Geometry, Mask &gt;</a>
 </li>
 <li>_mesh_searches
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#a088802d1fc8687b5189e40caef42a796">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ac89c922c0a5f7c844e313f09cea49772">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#ac89c922c0a5f7c844e313f09cea49772">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#a15cafbffdd397de8d58779cfc19b4145">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a4691e700220e602530ab6a6b146d7581">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>_meshes
-: <a class="el" href="dc/d30/structptof_1_1_geometry.html#ad2e7bf671185369a193d2bfe56836ba8">ptof::Geometry&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
-, <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a35b19c12c73a76531728d7a8fd0c9a4f">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+: <a class="el" href="da/d9d/structptof_1_1_geometry___bcc.html#a35b19c12c73a76531728d7a8fd0c9a4f">ptof::Geometry_Bcc&lt; ParallelOption_t, periodicity, dynamics, SearchOption &gt;</a>
+, <a class="el" href="da/dd3/structptof_1_1_geometry___generic.html#a7927e5875c77d0d017216755fe7c51e5">ptof::Geometry_Generic&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 , <a class="el" href="d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a0cedf4f26f5af7e0dbd0366b887952d5">ptof::Geometry_Periodic_Cartesian&lt; dim_val, ParallelOption_t, dynamics, SearchOption &gt;</a>
 </li>
 <li>_next_measurement
 : <a class="el" href="d7/df2/struct_next_measurement_time.html#a1e083ab12ae4232a305b6e4798419413">NextMeasurementTime&lt; Parameters &gt;</a>
-, <a class="el" href="d5/de8/classptof_1_1_output___cases.html#a4a960bbd99331b5a9dd3d7b3ae4f75e9">ptof::Output_Cases&lt; Subject, Geometry &gt;</a>
+, <a class="el" href="d5/de8/classptof_1_1_output___cases.html#ade0200cc2c34a1a7c851080865528b64">ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt;</a>
 </li>
 <li>_next_time
 : <a class="el" href="d7/df2/struct_next_measurement_time.html#af5b60203ae5a63991d458b05c5277a2b">NextMeasurementTime&lt; Parameters &gt;</a>
@@ -302,12 +338,13 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="d2/d1c/structptof_1_1_measurer_time__position__nth__moment__periodic.html#a2a685d7e9cc1be2da845d9c3b814b518">ptof::MeasurerTime_position_nth_moment_periodic&lt; Subject, Geometry &gt;</a>
 </li>
 <li>_normal_dist
-: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a9aab68b84d22ba8db5761066cac0bfee">ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt;</a>
+: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a653449debf81f134f31ea7bed7174225">ctrw::JumpGenerator_Diffusion_1d&lt; ParallelOption, RNG &gt;</a>
 , <a class="el" href="de/d41/classstochastic_1_1inverse__gaussian__distribution.html#a204b5c1a91179b5313159f866ce7ad58">stochastic::inverse_gaussian_distribution&lt; Value_type &gt;</a>
-, <a class="el" href="d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#a68366828e7c67ad00f1ab3e1178d1ff9">stochastic::isotropic_unit_vector_distribution&lt; Value_type &gt;</a>
+, <a class="el" href="d8/d4d/classstochastic_1_1isotropic__unit__vector__distribution.html#a276a62efaaf9c9a2e21930f65e552ee8">stochastic::isotropic_unit_vector_distribution</a>
 </li>
-<li>_nr_particles
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a65323f5b200f0986bf33ba76f8b07de6">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+<li>_nr_tries
+: <a class="el" href="dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#a3eb1ad8cc50847290989bb2941efc42b">ptof::InitialCondition_DistributedNearFaces&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="d7/dc5/structptof_1_1_initial_condition___distributed_position.html#a2dbd04608ce374d4b3f5e2d8579dffc7">ptof::InitialCondition_DistributedPosition&lt; ParticleMaker, Geometry, Distribution &gt;</a>
 </li>
 <li>_orientation_generator
 : <a class="el" href="d6/d56/classctrw_1_1_transitions___run_and_tumble.html#a2ebfb7d0887aa483649673f6face5495">ctrw::Transitions_RunAndTumble&lt; TimeGenerator_run, TimeGenerator_tumble, JumpGenerator, OrientationGenerator &gt;</a>
@@ -319,35 +356,26 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_output
 : <a class="el" href="db/d74/structptof_1_1_measurer.html#a4ad69d04060b2bf428a6d5e3b1097caa">ptof::Measurer&lt; Subject, Geometry &gt;</a>
 , <a class="el" href="dc/d05/structptof_1_1_measurer_time.html#a3f967d336ee612df371f3f7d25fada4a">ptof::MeasurerTime&lt; Subject, Geometry &gt;</a>
-, <a class="el" href="d5/de8/classptof_1_1_output___cases.html#ae5e999fbccb99ef864d9c734b36c9950">ptof::Output_Cases&lt; Subject, Geometry &gt;</a>
+, <a class="el" href="d5/de8/classptof_1_1_output___cases.html#a34237375c606ca43ff812e99069efcfa">ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt;</a>
 </li>
 <li>_output_time
-: <a class="el" href="d5/de8/classptof_1_1_output___cases.html#aa0c6ba605b7e5f8b1a0dd157e6468daf">ptof::Output_Cases&lt; Subject, Geometry &gt;</a>
+: <a class="el" href="d5/de8/classptof_1_1_output___cases.html#a5903c3df542d52d190e4087697eb9a78">ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt;</a>
 </li>
 <li>_parameters
 : <a class="el" href="d7/df2/struct_next_measurement_time.html#abe3d8298ebaee0f89d2a4361a96ea06b">NextMeasurementTime&lt; Parameters &gt;</a>
 </li>
-<li>_params_reaction
-: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a1c056197fd8fe3b0dcac0ab28f7e5dfb">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
-</li>
-<li>_params_solvers
-: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#ac12f3bbe22f185ebbd3c34c40f817ee5">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
-</li>
-<li>_params_transport
-: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a66cb0402157cb40d014b201430ff5947">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
-</li>
 <li>_particle_maker
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a3cf16886a8853328e8af9e467651f2da">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+: <a class="el" href="dd/d1e/structptof_1_1_initial_condition.html#a3890c001ba77ec3a65bf208bbb0ef47b">ptof::InitialCondition&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a637c22be38451e377b56f53474442f39">ptof::InitialCondition_Cases&lt; Particle, Geometry &gt;</a>
 </li>
 <li>_particles
-: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a95b7281087cf53bfc2abe579671e7825">ctrw::CTRW&lt; State_t &gt;</a>
-, <a class="el" href="d7/dfc/classctrw_1_1_c_t_r_w___parallel.html#a660c8d64c4bd144da822b05cda16d5a0">ctrw::CTRW_Parallel&lt; State_t &gt;</a>
+: <a class="el" href="d2/dd2/classctrw_1_1_c_t_r_w.html#a6b7f82efd58957f80686edd4f4fb1605">ctrw::CTRW&lt; State_t, ParallelOption_t &gt;</a>
 </li>
-<li>_position_maker
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a3934c904771ba378ae0985c90c3855aa">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+<li>_position
+: <a class="el" href="d9/ddf/structptof_1_1_initial_condition___point.html#a22f50a87bf59a9b38f3e350c36e12f67">ptof::InitialCondition_Point&lt; ParticleMaker, Geometry &gt;</a>
 </li>
 <li>_prob_right
-: <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a77cf875f218a54c24572d05eda09d117">ctrw::JumpGenerator_RW_1d&lt; Distance_type, RNG &gt;</a>
+: <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a5987559cf90c2f30c054ce538576ebbc">ctrw::JumpGenerator_RW_1d&lt; Distance_type, ParallelOption, RNG &gt;</a>
 </li>
 <li>_radius_sq
 : <a class="el" href="df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a49a463ed794cfa846400ffd43f83685c">geom::Boundary_Open_RadialReflecting_3d&lt; dd_open &gt;</a>
@@ -363,14 +391,22 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="d5/dd3/classctrw_1_1_transitions___reaction___position___conditional.html#a2df54d6ef79b05722a7636efa88366ad">ctrw::Transitions_Reaction_Position_Conditional&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
 </li>
 <li>_rng
-: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a6bb91887d4ae5b160969949ed35eaac0">ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt;</a>
-, <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a90ac43f457ad2d26c54b8d9582ef0c1e">ctrw::JumpGenerator_RW_1d&lt; Distance_type, RNG &gt;</a>
-, <a class="el" href="d1/d43/classctrw_1_1_jump_generator___uniform__1d.html#ae6c8c31d2fca5cb95d984ea14198b325">ctrw::JumpGenerator_Uniform_1d&lt; RNG &gt;</a>
-, <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#ab80ee549cce4a43dee684c4c3c56a0e8">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, RNG &gt;</a>
-, <a class="el" href="dd/d51/classctrw_1_1_time_generator___dist.html#ab0bd459da197be9b45ffbcb06c7c6568">ctrw::TimeGenerator_Dist&lt; Dist, RNG &gt;</a>
-, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#aa23814b8b4fdca227dd18aceedfbd6b7">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
+: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a17dfaf19463781e525c76a066df11503">ctrw::JumpGenerator_Diffusion_1d&lt; ParallelOption, RNG &gt;</a>
+, <a class="el" href="dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a86bdb21fd249958687bf71fe9ca445af">ctrw::JumpGenerator_RW_1d&lt; Distance_type, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d1/d43/classctrw_1_1_jump_generator___uniform__1d.html#a771f37199cc1edaa848fc4fa548a1f78">ctrw::JumpGenerator_Uniform_1d&lt; DistanceType, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/d34/classctrw_1_1_orientation_generator___gradient__1d.html#a4316f0855d629fe6529bb1938693bdd5">ctrw::OrientationGenerator_Gradient_1d&lt; Concentration, Gradient, ParallelOption, RNG &gt;</a>
+, <a class="el" href="dd/d51/classctrw_1_1_time_generator___dist.html#aa841565c9b0f66f98ef9f078ed0d95f3">ctrw::TimeGenerator_Dist&lt; Dist, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d7/d02/structptof_1_1_initial_condition___distributed_cell_centers.html#a130171606937f6c951092082e2cc6d42">ptof::InitialCondition_DistributedCellCenters&lt; ParticleMaker, Geometry, CellIdContainer, Distribution &gt;</a>
+, <a class="el" href="de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a590af6effa3678c6998061da32ba093e">ptof::InitialCondition_DistributedFaceCenters&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#a6c6224c30408e06abe8f292144c7e38e">ptof::InitialCondition_DistributedNearFaces&lt; ParticleMaker, Geometry, FaceIdContainer, Distribution &gt;</a>
+, <a class="el" href="d7/dc5/structptof_1_1_initial_condition___distributed_position.html#afb87af3f775832bf15844f7bdd954065">ptof::InitialCondition_DistributedPosition&lt; ParticleMaker, Geometry, Distribution &gt;</a>
+, <a class="el" href="d9/ddf/structptof_1_1_initial_condition___point.html#a4af2e49d9a8dce52b251008b9d5c5959">ptof::InitialCondition_Point&lt; ParticleMaker, Geometry &gt;</a>
 , <a class="el" href="d1/d7d/structstochastic_1_1_r_n_g.html#a97a81908f5be6b9b3ccf22be1d3df1d9">stochastic::RNG&lt; Distribution_t, Engine_t &gt;</a>
 , <a class="el" href="d6/d67/structstochastic_1_1_r_n_g__shared__engine.html#ac3eb304bf04f5b48c0d9cf6d9e57b21c">stochastic::RNG_shared_engine&lt; Distribution_t, Engine_t &gt;</a>
+, <a class="el" href="d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4.html#a0af38ae58229474be70a1f9caf66fa9e">stochastic::RNGThreaded&lt; par::ParallelOptions::Serial, Engine_t &gt;</a>
+</li>
+<li>_rngs
+: <a class="el" href="d3/d90/structstochastic_1_1_r_n_g_threaded.html#ae467e93151b44a6aeb740a48313e8536">stochastic::RNGThreaded&lt; ParallelOption, Engine_t &gt;</a>
 </li>
 <li>_rotation
 : <a class="el" href="d8/d10/classstochastic_1_1uniform__cylinder__distribution.html#aaaf8366b731c529320752311e6cb5b3c">stochastic::uniform_cylinder_distribution</a>
@@ -398,9 +434,6 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_surface_reaction
 : <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a8d8d10e9d88f0ccfd14658b3bc584edc">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
 </li>
-<li>_threshold
-: <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#aeed8f7fc02565459bb8b506b615dcb0b">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
-</li>
 <li>_thresholds
 : <a class="el" href="d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#afe46940ae050e7e5955a8fe402483a22">ptof::MeasurerTime_mass_in_regions&lt; Subject, Geometry, Mask &gt;</a>
 , <a class="el" href="da/de0/structptof_1_1_measurer_time__position__in__regions.html#ad6be162f00bd134ff90aaf3944017f46">ptof::MeasurerTime_position_in_regions&lt; Subject, Geometry, Mask &gt;</a>
@@ -408,8 +441,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </li>
 <li>_time_generator
 : <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#a2da06d397dca796adf5a8f6f26176215">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
-, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a5df3a85aaf6ddc92b27e7e47e5c10c6a">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, RNG &gt;</a>
-, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a30fa14e53abb726b30f1d83a7f5d48d8">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, RNG &gt;</a>
+, <a class="el" href="d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a72c6436355832d9b9ed54696e580cf5f">ctrw::Transitions_PTRW_Diffusion_1d&lt; Boundary, ParallelOption, RNG &gt;</a>
+, <a class="el" href="d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a3eb213bf638e168f3d37f34ae736afcf">ctrw::Transitions_PTRW_FlowField_Diff&lt; FlowField, Boundary, ParallelOption, RNG &gt;</a>
 , <a class="el" href="d8/d5f/classctrw_1_1_transitions___reaction___position.html#a13d6cb5a39c77581f0fbea2af33bc454">ctrw::Transitions_Reaction_Position&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
 , <a class="el" href="d5/dd3/classctrw_1_1_transitions___reaction___position___conditional.html#adb27b2934e7ebc76cc52f91c7dd57138">ctrw::Transitions_Reaction_Position_Conditional&lt; TimeGenerator, JumpGenerator, Reaction &gt;</a>
 , <a class="el" href="d4/d94/classctrw_1_1_transitions___time___position.html#add750f06bc2262be339eb100615350ba">ctrw::Transitions_Time_Position&lt; TimeGenerator, JumpGenerator, Boundary &gt;</a>
@@ -424,7 +457,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="d1/d82/structptof_1_1_directories_o_f.html#a457ed0c7898ffdea27f206ac25ddb97e">ptof::DirectoriesOF</a>
 </li>
 <li>_time_step
-: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a5bfd95756f94488efab724861fda4375">ctrw::JumpGenerator_Diffusion_1d&lt; RNG &gt;</a>
+: <a class="el" href="d1/d8b/classctrw_1_1_jump_generator___diffusion__1d.html#a9e64900fce3643529c026ad681c7582c">ctrw::JumpGenerator_Diffusion_1d&lt; ParallelOption, RNG &gt;</a>
 , <a class="el" href="d3/d4c/classctrw_1_1_jump_generator___velocity.html#a18bf12da093233e7ab2e8f255313930b">ctrw::JumpGenerator_Velocity&lt; VelocityField &gt;</a>
 , <a class="el" href="df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#ad5c8655deef414629e39c53a9fe18440">ctrw::JumpGenerator_Velocity_RK4&lt; VelocityField, Boundary &gt;</a>
 , <a class="el" href="d1/d01/classctrw_1_1_time_generator___step.html#ae08891e5015cb59ff910a0719a7cb8d4">ctrw::TimeGenerator_Step&lt; val_type &gt;</a>
@@ -435,6 +468,9 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_time_step_adaptor
 : <a class="el" href="db/dad/classctrw_1_1_transitions___adaptive_time_step___time___position.html#ab901a7b7ff27fbcb2164661db3949353">ctrw::Transitions_AdaptiveTimeStep_Time_Position&lt; TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary &gt;</a>
 </li>
+<li>_time_step_global
+: <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#a92e5cfd894dc94338d8037ab88bd4783">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
+</li>
 <li>_transitions_transport
 : <a class="el" href="db/dbd/classctrw_1_1_transitions___c_t_r_w___transport___reaction.html#aa7a6214620c1f4aa4e193c1d3beac6e0">ctrw::Transitions_CTRW_Transport_Reaction&lt; Transitions_Transport, Reaction &gt;</a>
 , <a class="el" href="dc/db1/classctrw_1_1_transitions___p_t_r_w___transport___reaction.html#aeb7f6bc0c89652381b14fdc086bbe0bc">ctrw::Transitions_PTRW_Transport_Reaction&lt; Transitions_Transport, Reaction &gt;</a>
@@ -443,8 +479,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="de/d41/classstochastic_1_1inverse__gaussian__distribution.html#aadbe896deb2ebd11244471fd67b2b42c">stochastic::inverse_gaussian_distribution&lt; Value_type &gt;</a>
 , <a class="el" href="d5/d09/classstochastic_1_1lomax__distribution.html#a32fed40ab3c59c45d90f1cc2f7995ed9">stochastic::lomax_distribution&lt; Value_type &gt;</a>
 , <a class="el" href="d7/db1/classstochastic_1_1skewedlevystable__distribution.html#a5b90c6b9170bde4baa16561eb1727222">stochastic::skewedlevystable_distribution&lt; Value_type &gt;</a>
-, <a class="el" href="d5/d74/classstochastic_1_1uniform__paralleliped__distribution.html#a5afdc87643b0f54d48354937b01f29e5">stochastic::uniform_paralleliped_distribution</a>
-, <a class="el" href="dd/d2c/classstochastic_1_1uniform__sphere__distribution.html#addeaaed6ebafeaf5fa881c66b161a5a8">stochastic::uniform_sphere_distribution&lt; Value_type &gt;</a>
+, <a class="el" href="d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution.html#ac54733061d387a1eeb2126bcc525037c">stochastic::uniform_parallelipiped_distribution</a>
+, <a class="el" href="dd/d2c/classstochastic_1_1uniform__sphere__distribution.html#a2031ed1e0dd6467a82902f52f5f240a3">stochastic::uniform_sphere_distribution</a>
 </li>
 <li>_uniform_dist_angle
 : <a class="el" href="d8/d10/classstochastic_1_1uniform__cylinder__distribution.html#ae39148cc9e2b0449a6b72751954e4275">stochastic::uniform_cylinder_distribution</a>
@@ -466,7 +502,6 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="d3/d4c/classctrw_1_1_jump_generator___velocity.html#a3a590f3e1a9dd996f0f79ebbe1bbab79">ctrw::JumpGenerator_Velocity&lt; VelocityField &gt;</a>
 , <a class="el" href="df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#ae5fdfb2422390ce673077e7f78f2415a">ctrw::JumpGenerator_Velocity_RK4&lt; VelocityField, Boundary &gt;</a>
 , <a class="el" href="de/de9/classctrw_1_1_transitions___position___velocity_step.html#aa64bd056e2fa46c014dc82261f6c48f4">ctrw::Transitions_Position_VelocityStep&lt; JumpGenerator, VelocityField, Boundary &gt;</a>
-, <a class="el" href="db/dfb/classptof_1_1_initial_condition___cases.html#a224be13ba7cc3ed7ffd383654a827eed">ptof::InitialCondition_Cases&lt; Geometry, VelocityField, ParticleMaker, Mask &gt;</a>
 , <a class="el" href="d0/d9a/classptof_1_1_time_step_adaptor___cell_size___surface_reaction.html#aa33272d09e4bd59e02e8bdc66d10422c">ptof::TimeStepAdaptor_CellSize_SurfaceReaction&lt; Geometry, VelocityField, SurfaceReaction, TransportParameters, ReactionParameters, SolverParameters, CheckOption &gt;</a>
 </li>
 <li>_volume_factor

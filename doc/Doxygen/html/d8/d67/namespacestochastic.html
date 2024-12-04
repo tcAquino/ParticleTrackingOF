@@ -98,6 +98,11 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d67/structstochastic_1_1_r_n_g__shared__engine.html">RNG_shared_engine</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for random number generation with shared <a class="el" href="../../d1/d7d/structstochastic_1_1_r_n_g.html" title="Wrapper for random number generation with own RNG engine.">RNG</a> engine.  <a href="../../d6/d67/structstochastic_1_1_r_n_g__shared__engine.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d90/structstochastic_1_1_r_n_g_threaded.html">RNGThreaded</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of RNGs for thread-safe random number generation.  <a href="../../d3/d90/structstochastic_1_1_r_n_g_threaded.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d21/structstochastic_1_1_r_n_g_threaded_3_01par_1_1_parallel_options_1_1_serial_00_01_engine__t_01_4.html">RNGThreaded&lt; par::ParallelOptions::Serial, Engine_t &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/db1/classstochastic_1_1skewedlevystable__distribution.html">skewedlevystable_distribution</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Skewed Lévy stable distribution.  <a href="../../d7/db1/classstochastic_1_1skewedlevystable__distribution.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,7 +129,7 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d10/classstochastic_1_1uniform__cylinder__distribution.html">uniform_cylinder_distribution</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniformly random distribution inside cylinder.  <a href="../../d8/d10/classstochastic_1_1uniform__cylinder__distribution.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d74/classstochastic_1_1uniform__paralleliped__distribution.html">uniform_paralleliped_distribution</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dcc/classstochastic_1_1uniform__parallelipiped__distribution.html">uniform_parallelipiped_distribution</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d3c/structstochastic_1_1_logspacing.html">Logspacing</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type helper to represent logarithmic spacing.  <a href="../../d7/d3c/structstochastic_1_1_logspacing.html#details">More...</a><br /></td></tr>
@@ -331,7 +336,7 @@ template&lt;typename Spacing , typename Container &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Tail CDF of samples, 1 - CDF. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Tail CDF of samples, <code>1 - CDF</code>. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -393,7 +398,7 @@ template&lt;typename Spacing , typename Container &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Tail CDF of samples, 1 - CDF. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Tail CDF of samples, <code>1 - CDF</code>. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>First and last bin edges determined by a factor of min and max of data. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -477,7 +482,8 @@ template&lt;typename Container &gt; </div>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>PDF of given set of values, normalized to integral equal to number of samples. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>- Output bin values are bin centers.<ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>Output bin values are bin centers.</li>
 <li>Data smaller than leftmost edge and larger than rightmost edge are included in leftmost and rightmost bins, respectively. </li>
 </ul>
 </dd></dl>
@@ -515,12 +521,12 @@ template&lt;typename Container , typename Engine_t  = std::mt19937&gt; </div>
 <p>Pick an event. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">probs</td><td>Cumulative probabilities (not necessarily normalized), <code>p(0), p(0)+p(1), ...</code>.</td></tr>
+    <tr><td class="paramname">probs</td><td>Cumulative probabilities (not necessarily normalized), <code>p(0), p(0)+p(1), ...</code>. </td></tr>
     <tr><td class="paramname">rng</td><td>Random number generator. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Event index <code>i</code> with probability <code>p(i)</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Event index <code>i</code> with probability &lt;tt&gt;p(i). </dd></dl>
 
 </div>
 </div>
@@ -557,7 +563,7 @@ template&lt;typename Engine_t  = std::mt19937&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Random non-repeating sequence of <code>subset_size()</code> elements out of <code>{0, 1, ..., total-1}</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Random non-repeating sequence of <code>subset_size</code> elements out of <code>{0, 1, ..., total-1}</code>. </dd></dl>
 
 </div>
 </div>
@@ -602,7 +608,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d8/d67/namespacestochastic_a774c37f226a04be1685817ec27d8f21d_cgraph.png" border="0" usemap="#ad8/d67/namespacestochastic_a774c37f226a04be1685817ec27d8f21d_cgraph" alt=""/></div>
 <map name="ad8/d67/namespacestochastic_a774c37f226a04be1685817ec27d8f21d_cgraph" id="ad8/d67/namespacestochastic_a774c37f226a04be1685817ec27d8f21d_cgraph">
 <area shape="rect" title="Generate a random non&#45;repeating sequence of subset.size() elements out of {0, 1, ...." alt="" coords="5,5,161,32"/>
-<area shape="rect" href="../../df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="209,5,344,32"/>
+<area shape="rect" href="../../df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="209,5,344,32"/>
 </map>
 </div>
 

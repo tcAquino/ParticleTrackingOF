@@ -1,7 +1,8 @@
 /**
-\file PTOF/BoundaryConditionList.h
-\author Tomás Aquino
-\date 29/09/2024
+   \file PTOF/BoundaryConditionList.h
+   \author Tomás Aquino
+   \date 29/09/2024
+   \brief Boundary condition types.
 */
 
 #ifndef PTOF_BOUNDARYCONDITIONLIST_H
@@ -11,12 +12,16 @@
 #include <string>
 
 namespace ptof {
-/** \struct BoundaryConditionList PTOF/BoundaryConditionList.h
- "PTOF/BoundaryConditionList.h" \brief Names and types of boundary conditions.
- */
+/**
+   \struct BoundaryConditionList PTOF/BoundaryConditionList.h
+   "PTOF/BoundaryConditionList.h"
+   \brief Names and types of boundary conditions.
+*/
 struct BoundaryConditionList {
-  /** \enum Type
-   *  \brief Implemented types. */
+  /**
+     \enum Type
+     \brief Implemented types.
+  */
   enum class Type {
     reflecting, /**< Reflecting                                         */
     reacting_reflecting, /**< Reacting and reflecting                   */
@@ -27,22 +32,25 @@ struct BoundaryConditionList {
     empty      /**< No effect (default for unspecified patches in mesh) */
   };
 
-  /** \brief Type from name.
-   \param name Boundary condition name.
-   \return Boundary condition type.
-   */
+  /**
+     \brief Type from name.
+     \param name Boundary condition name.
+     \return Boundary condition type.
+  */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
-  /** \brief Name from type.
-   \param type Boundary condition type.
-   \return Boundary condition name.
+  /**
+     \brief Name from type.
+     \param type Boundary condition type.
+     \return Boundary condition name.
   */
   static auto name(Type type) { return type_to_name.at(type); }
 
-  /** \brief Check if name exists.
-   \param name condition name.
-   \return \c true if name exists, \c false otherwise.
-   */
+  /**
+     \brief Check if name exists.
+     \param name condition name.
+     \return \c true if name exists, \c false otherwise.
+  */
   static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }

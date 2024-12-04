@@ -1,7 +1,7 @@
 <map id="ptof::OutputParameters_Cases::Measurement" name="ptof::OutputParameters_Cases::Measurement">
 <area shape="rect" id="node1" title=" " alt="" coords="5,119,164,161"/>
-<area shape="rect" id="node2" href="$d6/dd8/structptof_1_1_output_parameters___cases_1_1_measurement__dim__position.html" title=" " alt="" coords="219,5,402,61"/>
-<area shape="rect" id="node3" href="$de/de8/structptof_1_1_output_parameters___cases_1_1_measurement__field.html" title=" " alt="" coords="218,86,403,127"/>
-<area shape="rect" id="node4" href="$d7/dc5/structptof_1_1_output_parameters___cases_1_1_measurement__order.html" title=" " alt="" coords="215,151,406,193"/>
-<area shape="rect" id="node5" href="$d4/d2b/structptof_1_1_output_parameters___cases_1_1_measurement__orders.html" title=" " alt="" coords="212,217,409,258"/>
+<area shape="rect" id="node2" href="$db/d78/structptof_1_1_output_parameters___cases_1_1_measurement___dim___position.html" title=" " alt="" coords="219,5,405,61"/>
+<area shape="rect" id="node3" href="$d8/d72/structptof_1_1_output_parameters___cases_1_1_measurement___field.html" title=" " alt="" coords="217,86,407,127"/>
+<area shape="rect" id="node4" href="$d8/d21/structptof_1_1_output_parameters___cases_1_1_measurement___order.html" title=" " alt="" coords="215,151,409,193"/>
+<area shape="rect" id="node5" href="$d4/dc7/structptof_1_1_output_parameters___cases_1_1_measurement___orders.html" title=" " alt="" coords="212,217,412,258"/>
 </map>

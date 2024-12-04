@@ -107,8 +107,10 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad5408623d0f464c51519ebe2ad4cb2d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d85/classstochastic_1_1pareto__distribution.html#ad5408623d0f464c51519ebe2ad4cb2d4">pareto_distribution</a> (Value_type <a class="el" href="../../d7/d85/classstochastic_1_1pareto__distribution.html#a504c95e5fe451c5b1cc5392ba8d84b22">alpha</a>, Value_type <a class="el" href="../../d7/d85/classstochastic_1_1pareto__distribution.html#ae615d53ff2eff890d6aabdab13477e77">min</a>)</td></tr>
+<tr class="memdesc:ad5408623d0f464c51519ebe2ad4cb2d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d7/d85/classstochastic_1_1pareto__distribution.html#ad5408623d0f464c51519ebe2ad4cb2d4">More...</a><br /></td></tr>
 <tr class="separator:ad5408623d0f464c51519ebe2ad4cb2d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07d68a73c9f4fc21c08814d7370c7b30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d85/classstochastic_1_1pareto__distribution.html#a07d68a73c9f4fc21c08814d7370c7b30">pareto_distribution</a> (<a class="el" href="../../d7/d85/classstochastic_1_1pareto__distribution.html#a65387d11e2a3d8c75e23466ddc89e4c6">param_type</a> const &amp;params)</td></tr>
+<tr class="memdesc:a07d68a73c9f4fc21c08814d7370c7b30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d7/d85/classstochastic_1_1pareto__distribution.html#a07d68a73c9f4fc21c08814d7370c7b30">More...</a><br /></td></tr>
 <tr class="separator:a07d68a73c9f4fc21c08814d7370c7b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a595ff8a9a8442590847c06153ed6210f"><td class="memTemplParams" colspan="2">template&lt;typename Generator &gt; </td></tr>
 <tr class="memitem:a595ff8a9a8442590847c06153ed6210f"><td class="memTemplItemLeft" align="right" valign="top">Value_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/d85/classstochastic_1_1pareto__distribution.html#a595ff8a9a8442590847c06153ed6210f">operator()</a> (Generator &amp;rng)</td></tr>
@@ -131,7 +133,7 @@ Private Attributes</h2></td></tr>
 class stochastic::pareto_distribution&lt; Value_type &gt;</h3>
 
 <p>Pareto distribution. </p>
-<dl class="section note"><dt>Note</dt><dd>PDF <code>alpha/xm (x/min)^{-alpha-1} for x &gt;= min</code>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>PDF <code>(x/min)^{-alpha-1}</code> for <code>x &gt;= min</code>. </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a65387d11e2a3d8c75e23466ddc89e4c6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a65387d11e2a3d8c75e23466ddc89e4c6">&#9670;&nbsp;</a></span>param_type</h2>
@@ -202,6 +204,15 @@ template&lt;typename Value_type  = double&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">alpha</td><td>Tailing exponent, PDF <code>x^{-1-alpha}</code>. </td></tr>
+    <tr><td class="paramname">min</td><td>Minimum value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a07d68a73c9f4fc21c08814d7370c7b30"></a>
@@ -229,6 +240,19 @@ template&lt;typename Value_type  = double&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">params</td><td><code>param[0] = alpha</code>, <code>param[1] = min</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>alpha: Tailing exponent, <code>PDF ~ x^{-1-alpha}<code>.</code></code></li>
+<li><code><code>min: Minimum value. </code></code></li>
+</ul>
+</dd></dl>
 
 </div>
 </div>

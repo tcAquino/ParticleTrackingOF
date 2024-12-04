@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ParticleTrackingOF: ptof::Output_Cases&lt; Subject, Geometry &gt; Class Template Reference</title>
+<title>ParticleTrackingOF: ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -83,13 +83,12 @@ $(document).ready(function(){initNavTree('d5/de8/classptof_1_1_output___cases.ht
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">ptof::Output_Cases&lt; Subject, Geometry &gt; Class Template Reference</div>  </div>
+<div class="title">ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -98,141 +97,108 @@ $(document).ready(function(){initNavTree('d5/de8/classptof_1_1_output___cases.ht
 
 <p><code>#include &quot;<a class="el" href="../../d9/ddf/_output___cases_8h_source.html">PTOF/Output_Cases.h</a>&quot;</code></p>
 <div class="dynheader">
-Collaboration diagram for ptof::Output_Cases&lt; Subject, Geometry &gt;:</div>
+Collaboration diagram for ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d7/df6/classptof_1_1_output___cases__coll__graph.png" border="0" usemap="#aptof_1_1_output___cases_3_01_subject_00_01_geometry_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aptof_1_1_output___cases_3_01_subject_00_01_geometry_01_4_coll__map" id="aptof_1_1_output___cases_3_01_subject_00_01_geometry_01_4_coll__map">
-<area shape="rect" title="Output object to handle implemented output options." alt="" coords="7,109,162,151"/>
-<area shape="rect" href="../../d8/d12/structptof_1_1_output_parameters___cases.html" title=" " alt="" coords="5,5,164,47"/>
+<div class="center"><img src="../../d7/df6/classptof_1_1_output___cases__coll__graph.png" border="0" usemap="#aptof_1_1_output___cases_3_01_subject_00_01_geometry_00_01_parameters_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aptof_1_1_output___cases_3_01_subject_00_01_geometry_00_01_parameters_01_4_coll__map" id="aptof_1_1_output___cases_3_01_subject_00_01_geometry_00_01_parameters_01_4_coll__map">
+<area shape="rect" title="Output object to handle implemented output options." alt="" coords="15,95,160,151"/>
+<area shape="rect" href="../../de/d93/structptof_1_1_phase_1_1_parameters.html" title=" " alt="" coords="5,5,169,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a7d415ad01cbe31563c65ced4800a206c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> = <a class="el" href="../../d8/d12/structptof_1_1_output_parameters___cases.html">OutputParameters_Cases</a></td></tr>
-<tr class="separator:a7d415ad01cbe31563c65ced4800a206c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6784584506c1eb0f5937bdcf72077f80"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a6784584506c1eb0f5937bdcf72077f80"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a6784584506c1eb0f5937bdcf72077f80">Output_Cases</a> (Subject const &amp;subject, VelocityField const &amp;velocity_field, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks={}, std::vector&lt; double &gt; thresholds={})</td></tr>
-<tr class="separator:a6784584506c1eb0f5937bdcf72077f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa22f67ac93fa38269490d7f162745262"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </td></tr>
-<tr class="memitem:aa22f67ac93fa38269490d7f162745262"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#aa22f67ac93fa38269490d7f162745262">Output_Cases</a> (Subject const &amp;, VelocityField const &amp;, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> &amp;&amp;, std::string const &amp;, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt;={}, std::vector&lt; double &gt;={})=delete</td></tr>
-<tr class="separator:aa22f67ac93fa38269490d7f162745262"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e7cec35d5d106055803a86d87b34c7e"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask &gt; </td></tr>
-<tr class="memitem:a9e7cec35d5d106055803a86d87b34c7e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a9e7cec35d5d106055803a86d87b34c7e">Output_Cases</a> (Subject const &amp;subject, VelocityField const &amp;velocity_field, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::initializer_list&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::initializer_list&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:a9e7cec35d5d106055803a86d87b34c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for initializer list arguments.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a9e7cec35d5d106055803a86d87b34c7e">More...</a><br /></td></tr>
-<tr class="separator:a9e7cec35d5d106055803a86d87b34c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a390167c57391f96e9d745e3f2a6e95ac"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask &gt; </td></tr>
-<tr class="memitem:a390167c57391f96e9d745e3f2a6e95ac"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a390167c57391f96e9d745e3f2a6e95ac">Output_Cases</a> (Subject const &amp;subject, VelocityField const &amp;velocity_field, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::initializer_list&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:a390167c57391f96e9d745e3f2a6e95ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for initializer list arguments.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a390167c57391f96e9d745e3f2a6e95ac">More...</a><br /></td></tr>
-<tr class="separator:a390167c57391f96e9d745e3f2a6e95ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c8401c1a6d15a56d802f8a7ef1fedb2"><td class="memTemplParams" colspan="2">template&lt;typename Mask  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a0c8401c1a6d15a56d802f8a7ef1fedb2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a0c8401c1a6d15a56d802f8a7ef1fedb2">Output_Cases</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks={}, std::vector&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:a0c8401c1a6d15a56d802f8a7ef1fedb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload without velocity field.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a0c8401c1a6d15a56d802f8a7ef1fedb2">More...</a><br /></td></tr>
-<tr class="separator:a0c8401c1a6d15a56d802f8a7ef1fedb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35a3014b0e1e56e6c6c65be7ce372e17"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask &gt; </td></tr>
-<tr class="memitem:a35a3014b0e1e56e6c6c65be7ce372e17"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a35a3014b0e1e56e6c6c65be7ce372e17">Output_Cases</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::initializer_list&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::initializer_list&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:a35a3014b0e1e56e6c6c65be7ce372e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for initializer list arguments.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a35a3014b0e1e56e6c6c65be7ce372e17">More...</a><br /></td></tr>
-<tr class="separator:a35a3014b0e1e56e6c6c65be7ce372e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbe96b660be040499544cb63929975a9"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask &gt; </td></tr>
-<tr class="memitem:afbe96b660be040499544cb63929975a9"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#afbe96b660be040499544cb63929975a9">Output_Cases</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::initializer_list&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:afbe96b660be040499544cb63929975a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for initializer list arguments.  <a href="../../d5/de8/classptof_1_1_output___cases.html#afbe96b660be040499544cb63929975a9">More...</a><br /></td></tr>
-<tr class="separator:afbe96b660be040499544cb63929975a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53273170211d3b7edf812201cdef2c37"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField , typename Mask &gt; </td></tr>
-<tr class="memitem:a53273170211d3b7edf812201cdef2c37"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a53273170211d3b7edf812201cdef2c37">Output_Cases</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::initializer_list&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::vector&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:a53273170211d3b7edf812201cdef2c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for initializer list arguments.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a53273170211d3b7edf812201cdef2c37">More...</a><br /></td></tr>
-<tr class="separator:a53273170211d3b7edf812201cdef2c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbd0a9c90b9f0dd9db0fe99d63c81c52"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#abbd0a9c90b9f0dd9db0fe99d63c81c52">done</a> (double time) const</td></tr>
-<tr class="separator:abbd0a9c90b9f0dd9db0fe99d63c81c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7740fb0d2461830fd2f0ee2a891d77f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#af7740fb0d2461830fd2f0ee2a891d77f">set_next_measurement_time</a> ()</td></tr>
-<tr class="memdesc:af7740fb0d2461830fd2f0ee2a891d77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time of next measurement.  <a href="../../d5/de8/classptof_1_1_output___cases.html#af7740fb0d2461830fd2f0ee2a891d77f">More...</a><br /></td></tr>
-<tr class="separator:af7740fb0d2461830fd2f0ee2a891d77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eea8a4174e12f7ac422ab323a5e5d4e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a1eea8a4174e12f7ac422ab323a5e5d4e">next_measurement_time</a> () const</td></tr>
-<tr class="separator:a1eea8a4174e12f7ac422ab323a5e5d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aca596701efc183194f798592511ed0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a8aca596701efc183194f798592511ed0">operator()</a> (double time)</td></tr>
-<tr class="memdesc:a8aca596701efc183194f798592511ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output requested measurements at given time and advance to next measurement.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a8aca596701efc183194f798592511ed0">More...</a><br /></td></tr>
-<tr class="separator:a8aca596701efc183194f798592511ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56e910fca1b02fffe5d99cb1563ae428"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a56e910fca1b02fffe5d99cb1563ae428">operator()</a> ()</td></tr>
-<tr class="memdesc:a56e910fca1b02fffe5d99cb1563ae428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output current information.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a56e910fca1b02fffe5d99cb1563ae428">More...</a><br /></td></tr>
-<tr class="separator:a56e910fca1b02fffe5d99cb1563ae428"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a496d5d40fc02a1cf31ec85775753571d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a496d5d40fc02a1cf31ec85775753571d">update</a> (double time, double time_of_change)</td></tr>
-<tr class="memdesc:a496d5d40fc02a1cf31ec85775753571d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update internal state.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a496d5d40fc02a1cf31ec85775753571d">More...</a><br /></td></tr>
-<tr class="separator:a496d5d40fc02a1cf31ec85775753571d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a065b1518ed2121f95b7580e7a3e6ba58"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:a065b1518ed2121f95b7580e7a3e6ba58"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a065b1518ed2121f95b7580e7a3e6ba58">info_runtime</a> (OStream &amp;output) const</td></tr>
-<tr class="memdesc:a065b1518ed2121f95b7580e7a3e6ba58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a065b1518ed2121f95b7580e7a3e6ba58">More...</a><br /></td></tr>
-<tr class="separator:a065b1518ed2121f95b7580e7a3e6ba58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1756650d1bd03fa4f10c90de1cfb4ae7"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Empty&gt; </td></tr>
+<tr class="memitem:a1756650d1bd03fa4f10c90de1cfb4ae7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a1756650d1bd03fa4f10c90de1cfb4ae7">Output_Cases</a> (Subject const &amp;subject, VelocityField const &amp;velocity_field, Geometry const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a256f1a77e6ca62fb247515a7c6e4378a">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks={}, std::vector&lt; double &gt; thresholds={})</td></tr>
+<tr class="memdesc:a1756650d1bd03fa4f10c90de1cfb4ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a1756650d1bd03fa4f10c90de1cfb4ae7">More...</a><br /></td></tr>
+<tr class="separator:a1756650d1bd03fa4f10c90de1cfb4ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d8853ed6f1956819f7c6b39f75a7600"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = useful::Empty, typename Mask &gt; </td></tr>
+<tr class="memitem:a6d8853ed6f1956819f7c6b39f75a7600"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a6d8853ed6f1956819f7c6b39f75a7600">Output_Cases</a> (Subject const &amp;subject, VelocityField const &amp;velocity_field, Geometry const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a256f1a77e6ca62fb247515a7c6e4378a">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::initializer_list&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::initializer_list&lt; double &gt; thresholds={})</td></tr>
+<tr class="memdesc:a6d8853ed6f1956819f7c6b39f75a7600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a6d8853ed6f1956819f7c6b39f75a7600">More...</a><br /></td></tr>
+<tr class="separator:a6d8853ed6f1956819f7c6b39f75a7600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92def6fdbeab57114aa4f49914e5af3f"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = useful::Empty, typename Mask &gt; </td></tr>
+<tr class="memitem:a92def6fdbeab57114aa4f49914e5af3f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a92def6fdbeab57114aa4f49914e5af3f">Output_Cases</a> (Subject const &amp;subject, VelocityField &amp;&amp;velocity_field, Geometry const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a256f1a77e6ca62fb247515a7c6e4378a">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::initializer_list&lt; double &gt; thresholds={})</td></tr>
+<tr class="memdesc:a92def6fdbeab57114aa4f49914e5af3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a92def6fdbeab57114aa4f49914e5af3f">More...</a><br /></td></tr>
+<tr class="separator:a92def6fdbeab57114aa4f49914e5af3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13c7406b9656d8478a0624c4a5b104fe"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = useful::Empty, typename Mask &gt; </td></tr>
+<tr class="memitem:a13c7406b9656d8478a0624c4a5b104fe"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a13c7406b9656d8478a0624c4a5b104fe">Output_Cases</a> (Subject const &amp;subject, VelocityField &amp;&amp;velocity_field, Geometry const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a256f1a77e6ca62fb247515a7c6e4378a">parameters</a>, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, std::initializer_list&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks, std::vector&lt; double &gt; thresholds={})</td></tr>
+<tr class="memdesc:a13c7406b9656d8478a0624c4a5b104fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a13c7406b9656d8478a0624c4a5b104fe">More...</a><br /></td></tr>
+<tr class="separator:a13c7406b9656d8478a0624c4a5b104fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0781843d21615691cf1f3f5d94334552"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a0781843d21615691cf1f3f5d94334552">done</a> (double time) const</td></tr>
+<tr class="separator:a0781843d21615691cf1f3f5d94334552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66bbc08aaaf664140dc817f30630f0be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a66bbc08aaaf664140dc817f30630f0be">set_next_measurement_time</a> ()</td></tr>
+<tr class="memdesc:a66bbc08aaaf664140dc817f30630f0be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time of next measurement.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a66bbc08aaaf664140dc817f30630f0be">More...</a><br /></td></tr>
+<tr class="separator:a66bbc08aaaf664140dc817f30630f0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56cc18db52166e2ab62e90f994b83373"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a56cc18db52166e2ab62e90f994b83373">next_measurement_time</a> () const</td></tr>
+<tr class="separator:a56cc18db52166e2ab62e90f994b83373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1319020ca6821dc72ccbccae5c77ad6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#ac1319020ca6821dc72ccbccae5c77ad6">operator()</a> (double time)</td></tr>
+<tr class="memdesc:ac1319020ca6821dc72ccbccae5c77ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output requested measurements at given time and advance to next measurement.  <a href="../../d5/de8/classptof_1_1_output___cases.html#ac1319020ca6821dc72ccbccae5c77ad6">More...</a><br /></td></tr>
+<tr class="separator:ac1319020ca6821dc72ccbccae5c77ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb68e0b680d197185e93983421c6e09c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#acb68e0b680d197185e93983421c6e09c">operator()</a> ()</td></tr>
+<tr class="memdesc:acb68e0b680d197185e93983421c6e09c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output current information.  <a href="../../d5/de8/classptof_1_1_output___cases.html#acb68e0b680d197185e93983421c6e09c">More...</a><br /></td></tr>
+<tr class="separator:acb68e0b680d197185e93983421c6e09c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02546d9d4c83f074b1695bb2b44f7ab5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a02546d9d4c83f074b1695bb2b44f7ab5">update</a> (double time, double time_of_change)</td></tr>
+<tr class="memdesc:a02546d9d4c83f074b1695bb2b44f7ab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update internal state.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a02546d9d4c83f074b1695bb2b44f7ab5">More...</a><br /></td></tr>
+<tr class="separator:a02546d9d4c83f074b1695bb2b44f7ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1c33376f2fc476e7b149cee16320817"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
+<tr class="memitem:af1c33376f2fc476e7b149cee16320817"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#af1c33376f2fc476e7b149cee16320817">info_runtime</a> (OStream &amp;output) const</td></tr>
+<tr class="memdesc:af1c33376f2fc476e7b149cee16320817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../d5/de8/classptof_1_1_output___cases.html#af1c33376f2fc476e7b149cee16320817">More...</a><br /></td></tr>
+<tr class="separator:af1c33376f2fc476e7b149cee16320817"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a914586c8ec443818d08dc61549669dfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a914586c8ec443818d08dc61549669dfe">parameters</a></td></tr>
-<tr class="separator:a914586c8ec443818d08dc61549669dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a256f1a77e6ca62fb247515a7c6e4378a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a256f1a77e6ca62fb247515a7c6e4378a">parameters</a></td></tr>
+<tr class="separator:a256f1a77e6ca62fb247515a7c6e4378a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a44811fa8682917e563dbfce20dcaf654"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
-<tr class="memitem:a44811fa8682917e563dbfce20dcaf654"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a44811fa8682917e563dbfce20dcaf654">info_runtime_measurements</a> (OStream &amp;output) const</td></tr>
-<tr class="memdesc:a44811fa8682917e563dbfce20dcaf654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about measurement types.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a44811fa8682917e563dbfce20dcaf654">More...</a><br /></td></tr>
-<tr class="separator:a44811fa8682917e563dbfce20dcaf654"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36d544268fde9e05d9c70322e5d8a70f"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a36d544268fde9e05d9c70322e5d8a70f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a36d544268fde9e05d9c70322e5d8a70f">set_measurement_types</a> (Subject const &amp;subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, VelocityField const &amp;velocity_field={}, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks={}, std::vector&lt; double &gt; thresholds={})</td></tr>
-<tr class="memdesc:a36d544268fde9e05d9c70322e5d8a70f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up output streams for requested output types.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a36d544268fde9e05d9c70322e5d8a70f">More...</a><br /></td></tr>
-<tr class="separator:a36d544268fde9e05d9c70322e5d8a70f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41ff5aefb9c92a26e003b60919ae3b6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a41ff5aefb9c92a26e003b60919ae3b6a">set_end_criterion</a> (Subject const &amp;subject)</td></tr>
-<tr class="separator:a41ff5aefb9c92a26e003b60919ae3b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bafc98702a6020ec232f8d439531ef0"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
+<tr class="memitem:a7bafc98702a6020ec232f8d439531ef0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7bafc98702a6020ec232f8d439531ef0">info_runtime_measurements</a> (OStream &amp;output) const</td></tr>
+<tr class="memdesc:a7bafc98702a6020ec232f8d439531ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about measurement types.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a7bafc98702a6020ec232f8d439531ef0">More...</a><br /></td></tr>
+<tr class="separator:a7bafc98702a6020ec232f8d439531ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb0ee2e4832126c9c84ff7456586238"><td class="memTemplParams" colspan="2">template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Empty&gt; </td></tr>
+<tr class="memitem:a1bb0ee2e4832126c9c84ff7456586238"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a1bb0ee2e4832126c9c84ff7456586238">set_measurement_types</a> (Subject const &amp;subject, Geometry const &amp;geometry, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, std::string const &amp;<a class="el" href="../../d2/dd1/namespaceptof.html#a5fd6254123a2771ee35249f3600c7ed1">identifier</a>, VelocityField &amp;&amp;velocity_field={}, std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt; masks={}, std::vector&lt; double &gt; thresholds={})</td></tr>
+<tr class="memdesc:a1bb0ee2e4832126c9c84ff7456586238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up output streams for requested output types.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a1bb0ee2e4832126c9c84ff7456586238">More...</a><br /></td></tr>
+<tr class="separator:a1bb0ee2e4832126c9c84ff7456586238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a263658f5405520f840ba14ed5694c9dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a263658f5405520f840ba14ed5694c9dd">set_end_criterion</a> (Subject const &amp;subject)</td></tr>
+<tr class="memdesc:a263658f5405520f840ba14ed5694c9dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set end criterion.  <a href="../../d5/de8/classptof_1_1_output___cases.html#a263658f5405520f840ba14ed5694c9dd">More...</a><br /></td></tr>
+<tr class="separator:a263658f5405520f840ba14ed5694c9dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a721c0d2e53721b587569e86d07e1ad69"><td class="memTemplParams" colspan="2">template&lt;typename SpecificMeasurement &gt; </td></tr>
+<tr class="memitem:a721c0d2e53721b587569e86d07e1ad69"><td class="memTemplItemLeft" align="right" valign="top">SpecificMeasurement *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a721c0d2e53721b587569e86d07e1ad69">cast</a> (std::unique_ptr&lt; <a class="el" href="../../df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html">OutputParameters_Cases::Measurement</a> &gt; const &amp;measurement)</td></tr>
+<tr class="separator:a721c0d2e53721b587569e86d07e1ad69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ac0be432d95b3515d7343f1fccad8718b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d9/d13/structptof_1_1_criterion.html">Criterion</a>&lt; Subject &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#ac0be432d95b3515d7343f1fccad8718b">_end_criterion</a></td></tr>
-<tr class="separator:ac0be432d95b3515d7343f1fccad8718b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a960bbd99331b5a9dd3d7b3ae4f75e9"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d7/df2/struct_next_measurement_time.html">NextMeasurementTime</a>&lt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a4a960bbd99331b5a9dd3d7b3ae4f75e9">_next_measurement</a></td></tr>
-<tr class="separator:a4a960bbd99331b5a9dd3d7b3ae4f75e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0c6ba605b7e5f8b1a0dd157e6468daf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#aa0c6ba605b7e5f8b1a0dd157e6468daf">_output_time</a></td></tr>
-<tr class="separator:aa0c6ba605b7e5f8b1a0dd157e6468daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5e999fbccb99ef864d9c734b36c9950"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../db/d74/structptof_1_1_measurer.html">Measurer</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#ae5e999fbccb99ef864d9c734b36c9950">_output</a></td></tr>
-<tr class="separator:ae5e999fbccb99ef864d9c734b36c9950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b232f140bb2d9b376a1b23f42f236d"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d9/d13/structptof_1_1_criterion.html">Criterion</a>&lt; Subject &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#ad1b232f140bb2d9b376a1b23f42f236d">_end_criterion</a></td></tr>
+<tr class="separator:ad1b232f140bb2d9b376a1b23f42f236d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0200cc2c34a1a7c851080865528b64"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d7/df2/struct_next_measurement_time.html">NextMeasurementTime</a>&lt; std::remove_reference_t&lt; <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#ade0200cc2c34a1a7c851080865528b64">_next_measurement</a></td></tr>
+<tr class="separator:ade0200cc2c34a1a7c851080865528b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5903c3df542d52d190e4087697eb9a78"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a>&lt; Subject, Geometry &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a5903c3df542d52d190e4087697eb9a78">_output_time</a></td></tr>
+<tr class="separator:a5903c3df542d52d190e4087697eb9a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34237375c606ca43ff812e99069efcfa"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../db/d74/structptof_1_1_measurer.html">Measurer</a>&lt; Subject, Geometry &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a34237375c606ca43ff812e99069efcfa">_output</a></td></tr>
+<tr class="separator:a34237375c606ca43ff812e99069efcfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Subject, typename Geometry&gt;<br />
-class ptof::Output_Cases&lt; Subject, Geometry &gt;</h3>
+<div class="textblock"><h3>template&lt;typename Subject, typename Geometry, typename Parameters&gt;<br />
+class ptof::Output_Cases&lt; Subject, Geometry, Parameters &gt;</h3>
 
 <p>Output object to handle implemented output options. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a7d415ad01cbe31563c65ced4800a206c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d415ad01cbe31563c65ced4800a206c">&#9670;&nbsp;</a></span>Parameters</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1756650d1bd03fa4f10c90de1cfb4ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1756650d1bd03fa4f10c90de1cfb4ae7">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> =  <a class="el" href="../../d8/d12/structptof_1_1_output_parameters___cases.html">OutputParameters_Cases</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Output parameters. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6784584506c1eb0f5937bdcf72077f80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6784584506c1eb0f5937bdcf72077f80">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[1/8]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
-<div class="memtemplate">
-template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
+          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
           <td>(</td>
           <td class="paramtype">Subject const &amp;&#160;</td>
           <td class="paramname"><em>subject</em>, </td>
@@ -246,7 +212,7 @@ template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype">Geometry const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -258,7 +224,7 @@ template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>parameters</em>, </td>
         </tr>
         <tr>
@@ -291,7 +257,9 @@ template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">subject</td><td>CTRW object to measure. </td></tr>
     <tr><td class="paramname">velocity_field</td><td>Velocity field as a function of state. </td></tr>
@@ -299,105 +267,29 @@ template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </div>
     <tr><td class="paramname">directories</td><td>Current case directory information. </td></tr>
     <tr><td class="paramname">parameters</td><td>Output parameters. </td></tr>
     <tr><td class="paramname">identifier</td><td>String to include in names of output files. </td></tr>
-    <tr><td class="paramname">masks</td><td>Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].</td></tr>
-    <tr><td class="paramname">thresholds</td><td>Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered. </td></tr>
+    <tr><td class="paramname">masks</td><td>Scalar fields reference wrappers. </td></tr>
+    <tr><td class="paramname">thresholds</td><td>Thresholds for each mask, such that cells where a mask is above or equal to the threshold are considered. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="aa22f67ac93fa38269490d7f162745262"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa22f67ac93fa38269490d7f162745262">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[2/8]</span></h2>
+<a id="a6d8853ed6f1956819f7c6b39f75a7600"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d8853ed6f1956819f7c6b39f75a7600">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
-template&lt;typename VelocityField , typename Mask  = useful::Empty&gt; </div>
+template&lt;typename VelocityField  = useful::Empty, typename Mask &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
-          <td>(</td>
-          <td class="paramtype">Subject const &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">VelocityField const &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> &amp;&amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt;&#160;</td>
-          <td class="paramname"> = <code>{}</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; double &gt;&#160;</td>
-          <td class="paramname"> = <code>{}</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9e7cec35d5d106055803a86d87b34c7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e7cec35d5d106055803a86d87b34c7e">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[3/8]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
-<div class="memtemplate">
-template&lt;typename VelocityField , typename Mask &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
+          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
           <td>(</td>
           <td class="paramtype">Subject const &amp;&#160;</td>
           <td class="paramname"><em>subject</em>, </td>
@@ -411,7 +303,7 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype">Geometry const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -423,7 +315,7 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>parameters</em>, </td>
         </tr>
         <tr>
@@ -457,26 +349,26 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Overload for initializer list arguments. </p>
 <p>Constructor. </p>
+<p>Overload for initializer list arguments. </p>
 
 </div>
 </div>
-<a id="a390167c57391f96e9d745e3f2a6e95ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a390167c57391f96e9d745e3f2a6e95ac">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[4/8]</span></h2>
+<a id="a92def6fdbeab57114aa4f49914e5af3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92def6fdbeab57114aa4f49914e5af3f">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
-template&lt;typename VelocityField , typename Mask &gt; </div>
+template&lt;typename VelocityField  = useful::Empty, typename Mask &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
+          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
           <td>(</td>
           <td class="paramtype">Subject const &amp;&#160;</td>
           <td class="paramname"><em>subject</em>, </td>
@@ -484,13 +376,13 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">VelocityField const &amp;&#160;</td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
           <td class="paramname"><em>velocity_field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype">Geometry const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -502,7 +394,7 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>parameters</em>, </td>
         </tr>
         <tr>
@@ -536,26 +428,26 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Constructor. </p>
 <p>Overload for initializer list arguments. </p>
-<p>Constructor. </p>
 
 </div>
 </div>
-<a id="a0c8401c1a6d15a56d802f8a7ef1fedb2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c8401c1a6d15a56d802f8a7ef1fedb2">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[5/8]</span></h2>
+<a id="a13c7406b9656d8478a0624c4a5b104fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13c7406b9656d8478a0624c4a5b104fe">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
-template&lt;typename Mask  = useful::Empty&gt; </div>
+template&lt;typename VelocityField  = useful::Empty, typename Mask &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
+          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
           <td>(</td>
           <td class="paramtype">Subject const &amp;&#160;</td>
           <td class="paramname"><em>subject</em>, </td>
@@ -563,7 +455,13 @@ template&lt;typename Mask  = useful::Empty&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Geometry const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -575,226 +473,7 @@ template&lt;typename Mask  = useful::Empty&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>parameters</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>identifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt;&#160;</td>
-          <td class="paramname"><em>masks</em> = <code>{}</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; double &gt;&#160;</td>
-          <td class="paramname"><em>thresholds</em> = <code>{}</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Overload without velocity field. </p>
-<p>Constructor. </p>
-
-</div>
-</div>
-<a id="a35a3014b0e1e56e6c6c65be7ce372e17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35a3014b0e1e56e6c6c65be7ce372e17">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[6/8]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
-<div class="memtemplate">
-template&lt;typename VelocityField , typename Mask &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
-          <td>(</td>
-          <td class="paramtype">Subject const &amp;&#160;</td>
-          <td class="paramname"><em>subject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directories</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>parameters</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>identifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::initializer_list&lt; std::reference_wrapper&lt; const Mask &gt;&gt;&#160;</td>
-          <td class="paramname"><em>masks</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::initializer_list&lt; double &gt;&#160;</td>
-          <td class="paramname"><em>thresholds</em> = <code>{}</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Overload for initializer list arguments. </p>
-<p>Constructor. </p>
-
-</div>
-</div>
-<a id="afbe96b660be040499544cb63929975a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbe96b660be040499544cb63929975a9">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[7/8]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
-<div class="memtemplate">
-template&lt;typename VelocityField , typename Mask &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
-          <td>(</td>
-          <td class="paramtype">Subject const &amp;&#160;</td>
-          <td class="paramname"><em>subject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directories</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
-          <td class="paramname"><em>parameters</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>identifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; std::reference_wrapper&lt; const Mask &gt;&gt;&#160;</td>
-          <td class="paramname"><em>masks</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::initializer_list&lt; double &gt;&#160;</td>
-          <td class="paramname"><em>thresholds</em> = <code>{}</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Overload for initializer list arguments. </p>
-<p>Constructor. </p>
-
-</div>
-</div>
-<a id="a53273170211d3b7edf812201cdef2c37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53273170211d3b7edf812201cdef2c37">&#9670;&nbsp;</a></span>Output_Cases() <span class="overload">[8/8]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
-<div class="memtemplate">
-template&lt;typename VelocityField , typename Mask &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">Output_Cases</a> </td>
-          <td>(</td>
-          <td class="paramtype">Subject const &amp;&#160;</td>
-          <td class="paramname"><em>subject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directories</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>parameters</em>, </td>
         </tr>
         <tr>
@@ -828,25 +507,55 @@ template&lt;typename VelocityField , typename Mask &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Overload for initializer list arguments. </p>
 <p>Constructor. </p>
+<p>Overload for initializer list arguments. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abbd0a9c90b9f0dd9db0fe99d63c81c52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbd0a9c90b9f0dd9db0fe99d63c81c52">&#9670;&nbsp;</a></span>done()</h2>
+<a id="a721c0d2e53721b587569e86d07e1ad69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a721c0d2e53721b587569e86d07e1ad69">&#9670;&nbsp;</a></span>cast()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
+<div class="memtemplate">
+template&lt;typename SpecificMeasurement &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::done </td>
+          <td class="memname">SpecificMeasurement* <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::cast </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="../../df/d93/structptof_1_1_output_parameters___cases_1_1_measurement.html">OutputParameters_Cases::Measurement</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>measurement</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0781843d21615691cf1f3f5d94334552"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0781843d21615691cf1f3f5d94334552">&#9670;&nbsp;</a></span>done()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::done </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em></td><td>)</td>
@@ -863,13 +572,13 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="a065b1518ed2121f95b7580e7a3e6ba58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a065b1518ed2121f95b7580e7a3e6ba58">&#9670;&nbsp;</a></span>info_runtime()</h2>
+<a id="af1c33376f2fc476e7b149cee16320817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1c33376f2fc476e7b149cee16320817">&#9670;&nbsp;</a></span>info_runtime()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -877,7 +586,7 @@ template&lt;typename OStream &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::info_runtime </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::info_runtime </td>
           <td>(</td>
           <td class="paramtype">OStream &amp;&#160;</td>
           <td class="paramname"><em>output</em></td><td>)</td>
@@ -895,26 +604,26 @@ template&lt;typename OStream &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_a065b1518ed2121f95b7580e7a3e6ba58_cgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_a065b1518ed2121f95b7580e7a3e6ba58_cgraph" alt=""/></div>
-<map name="ad5/de8/classptof_1_1_output___cases_a065b1518ed2121f95b7580e7a3e6ba58_cgraph" id="ad5/de8/classptof_1_1_output___cases_a065b1518ed2121f95b7580e7a3e6ba58_cgraph">
+<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_af1c33376f2fc476e7b149cee16320817_cgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_af1c33376f2fc476e7b149cee16320817_cgraph" alt=""/></div>
+<map name="ad5/de8/classptof_1_1_output___cases_af1c33376f2fc476e7b149cee16320817_cgraph" id="ad5/de8/classptof_1_1_output___cases_af1c33376f2fc476e7b149cee16320817_cgraph">
 <area shape="rect" title="Output information about current object." alt="" coords="5,71,141,112"/>
-<area shape="rect" href="../../d5/de8/classptof_1_1_output___cases.html#a44811fa8682917e563dbfce20dcaf654" title="Output information about measurement types." alt="" coords="189,5,384,47"/>
+<area shape="rect" href="../../d5/de8/classptof_1_1_output___cases.html#a7bafc98702a6020ec232f8d439531ef0" title="Output information about measurement types." alt="" coords="189,5,384,47"/>
 <area shape="rect" href="../../dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062" title=" " alt="" coords="225,71,349,112"/>
-<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a1b9b2b415e597fca989c72c9e90146cc" title=" " alt="" coords="197,136,376,177"/>
+<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a1b9b2b415e597fca989c72c9e90146cc" title="Type from name." alt="" coords="197,136,376,177"/>
 <area shape="rect" href="../../dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="459,71,583,112"/>
-<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a088483c7da28d1c3c030454882d1031b" title=" " alt="" coords="432,136,611,177"/>
+<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a088483c7da28d1c3c030454882d1031b" title="Name from type." alt="" coords="432,136,611,177"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a44811fa8682917e563dbfce20dcaf654"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44811fa8682917e563dbfce20dcaf654">&#9670;&nbsp;</a></span>info_runtime_measurements()</h2>
+<a id="a7bafc98702a6020ec232f8d439531ef0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bafc98702a6020ec232f8d439531ef0">&#9670;&nbsp;</a></span>info_runtime_measurements()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
 template&lt;typename OStream &gt; </div>
 <table class="mlabels">
@@ -922,7 +631,7 @@ template&lt;typename OStream &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::info_runtime_measurements </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::info_runtime_measurements </td>
           <td>(</td>
           <td class="paramtype">OStream &amp;&#160;</td>
           <td class="paramname"><em>output</em></td><td>)</td>
@@ -940,28 +649,28 @@ template&lt;typename OStream &gt; </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_a44811fa8682917e563dbfce20dcaf654_icgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_a44811fa8682917e563dbfce20dcaf654_icgraph" alt=""/></div>
-<map name="ad5/de8/classptof_1_1_output___cases_a44811fa8682917e563dbfce20dcaf654_icgraph" id="ad5/de8/classptof_1_1_output___cases_a44811fa8682917e563dbfce20dcaf654_icgraph">
+<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_a7bafc98702a6020ec232f8d439531ef0_icgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_a7bafc98702a6020ec232f8d439531ef0_icgraph" alt=""/></div>
+<map name="ad5/de8/classptof_1_1_output___cases_a7bafc98702a6020ec232f8d439531ef0_icgraph" id="ad5/de8/classptof_1_1_output___cases_a7bafc98702a6020ec232f8d439531ef0_icgraph">
 <area shape="rect" title="Output information about measurement types." alt="" coords="189,5,384,47"/>
-<area shape="rect" href="../../d5/de8/classptof_1_1_output___cases.html#a065b1518ed2121f95b7580e7a3e6ba58" title="Output information about current object." alt="" coords="5,5,141,47"/>
+<area shape="rect" href="../../d5/de8/classptof_1_1_output___cases.html#af1c33376f2fc476e7b149cee16320817" title="Output information about current object." alt="" coords="5,5,141,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a1eea8a4174e12f7ac422ab323a5e5d4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1eea8a4174e12f7ac422ab323a5e5d4e">&#9670;&nbsp;</a></span>next_measurement_time()</h2>
+<a id="a56cc18db52166e2ab62e90f994b83373"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56cc18db52166e2ab62e90f994b83373">&#9670;&nbsp;</a></span>next_measurement_time()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::next_measurement_time </td>
+          <td class="memname">double <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::next_measurement_time </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -977,19 +686,19 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="a56e910fca1b02fffe5d99cb1563ae428"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56e910fca1b02fffe5d99cb1563ae428">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+<a id="acb68e0b680d197185e93983421c6e09c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb68e0b680d197185e93983421c6e09c">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::operator() </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::operator() </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1006,19 +715,19 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="a8aca596701efc183194f798592511ed0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8aca596701efc183194f798592511ed0">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+<a id="ac1319020ca6821dc72ccbccae5c77ad6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1319020ca6821dc72ccbccae5c77ad6">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::operator() </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em></td><td>)</td>
@@ -1036,19 +745,19 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="a41ff5aefb9c92a26e003b60919ae3b6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41ff5aefb9c92a26e003b60919ae3b6a">&#9670;&nbsp;</a></span>set_end_criterion()</h2>
+<a id="a263658f5405520f840ba14ed5694c9dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a263658f5405520f840ba14ed5694c9dd">&#9670;&nbsp;</a></span>set_end_criterion()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::set_end_criterion </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::set_end_criterion </td>
           <td>(</td>
           <td class="paramtype">Subject const &amp;&#160;</td>
           <td class="paramname"><em>subject</em></td><td>)</td>
@@ -1061,27 +770,28 @@ template&lt;typename Subject , typename Geometry &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Set end criterion. </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_a41ff5aefb9c92a26e003b60919ae3b6a_cgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_a41ff5aefb9c92a26e003b60919ae3b6a_cgraph" alt=""/></div>
-<map name="ad5/de8/classptof_1_1_output___cases_a41ff5aefb9c92a26e003b60919ae3b6a_cgraph" id="ad5/de8/classptof_1_1_output___cases_a41ff5aefb9c92a26e003b60919ae3b6a_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,151,47"/>
-<area shape="rect" href="../../dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062" title=" " alt="" coords="199,5,333,47"/>
-<area shape="rect" href="../../dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="381,5,516,47"/>
+<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_a263658f5405520f840ba14ed5694c9dd_cgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_a263658f5405520f840ba14ed5694c9dd_cgraph" alt=""/></div>
+<map name="ad5/de8/classptof_1_1_output___cases_a263658f5405520f840ba14ed5694c9dd_cgraph" id="ad5/de8/classptof_1_1_output___cases_a263658f5405520f840ba14ed5694c9dd_cgraph">
+<area shape="rect" title="Set end criterion." alt="" coords="5,5,141,47"/>
+<area shape="rect" href="../../dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062" title=" " alt="" coords="189,5,313,47"/>
+<area shape="rect" href="../../dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="361,5,485,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a36d544268fde9e05d9c70322e5d8a70f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36d544268fde9e05d9c70322e5d8a70f">&#9670;&nbsp;</a></span>set_measurement_types()</h2>
+<a id="a1bb0ee2e4832126c9c84ff7456586238"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bb0ee2e4832126c9c84ff7456586238">&#9670;&nbsp;</a></span>set_measurement_types()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <div class="memtemplate">
 template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Empty&gt; </div>
 <table class="mlabels">
@@ -1089,7 +799,7 @@ template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Em
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::set_measurement_types </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::set_measurement_types </td>
           <td>(</td>
           <td class="paramtype">Subject const &amp;&#160;</td>
           <td class="paramname"><em>subject</em>, </td>
@@ -1097,7 +807,7 @@ template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Em
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramtype">Geometry const &amp;&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -1115,7 +825,7 @@ template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Em
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">VelocityField const &amp;&#160;</td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
           <td class="paramname"><em>velocity_field</em> = <code>{}</code>, </td>
         </tr>
         <tr>
@@ -1148,27 +858,27 @@ template&lt;typename VelocityField  = useful::Empty, typename Mask  = useful::Em
   <table class="params">
     <tr><td class="paramname">directories</td><td>Current case directory information. </td></tr>
     <tr><td class="paramname">identifier</td><td>String to include in names of output files. </td></tr>
-    <tr><td class="paramname">masks</td><td>Container of mask reference wrappers. Masks are scalar fields assigned values to mesh cells through operator[].</td></tr>
-    <tr><td class="paramname">thresholds</td><td>Vector of thresholds for each mask, such that cells where a mask is above the threshold are considered. </td></tr>
+    <tr><td class="paramname">masks</td><td>Scalar field reference wrappers. </td></tr>
+    <tr><td class="paramname">thresholds</td><td>Thresholds for each mask, such that cells where a mask is above or equal to the threshold are considered. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="af7740fb0d2461830fd2f0ee2a891d77f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7740fb0d2461830fd2f0ee2a891d77f">&#9670;&nbsp;</a></span>set_next_measurement_time()</h2>
+<a id="a66bbc08aaaf664140dc817f30630f0be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66bbc08aaaf664140dc817f30630f0be">&#9670;&nbsp;</a></span>set_next_measurement_time()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::set_next_measurement_time </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::set_next_measurement_time </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1185,29 +895,29 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_af7740fb0d2461830fd2f0ee2a891d77f_cgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_af7740fb0d2461830fd2f0ee2a891d77f_cgraph" alt=""/></div>
-<map name="ad5/de8/classptof_1_1_output___cases_af7740fb0d2461830fd2f0ee2a891d77f_cgraph" id="ad5/de8/classptof_1_1_output___cases_af7740fb0d2461830fd2f0ee2a891d77f_cgraph">
+<div class="center"><img src="../../d5/de8/classptof_1_1_output___cases_a66bbc08aaaf664140dc817f30630f0be_cgraph.png" border="0" usemap="#ad5/de8/classptof_1_1_output___cases_a66bbc08aaaf664140dc817f30630f0be_cgraph" alt=""/></div>
+<map name="ad5/de8/classptof_1_1_output___cases_a66bbc08aaaf664140dc817f30630f0be_cgraph" id="ad5/de8/classptof_1_1_output___cases_a66bbc08aaaf664140dc817f30630f0be_cgraph">
 <area shape="rect" title="Set time of next measurement." alt="" coords="5,5,204,47"/>
-<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a1b9b2b415e597fca989c72c9e90146cc" title=" " alt="" coords="252,5,431,47"/>
-<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a088483c7da28d1c3c030454882d1031b" title=" " alt="" coords="479,5,657,47"/>
+<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a1b9b2b415e597fca989c72c9e90146cc" title="Type from name." alt="" coords="252,5,431,47"/>
+<area shape="rect" href="../../d3/da6/structptof_1_1_measurement_spacing.html#a088483c7da28d1c3c030454882d1031b" title="Name from type." alt="" coords="479,5,657,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a496d5d40fc02a1cf31ec85775753571d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a496d5d40fc02a1cf31ec85775753571d">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a02546d9d4c83f074b1695bb2b44f7ab5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02546d9d4c83f074b1695bb2b44f7ab5">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::update </td>
+          <td class="memname">void <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::update </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>, </td>
@@ -1236,19 +946,19 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="ac0be432d95b3515d7343f1fccad8718b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0be432d95b3515d7343f1fccad8718b">&#9670;&nbsp;</a></span>_end_criterion</h2>
+<a id="ad1b232f140bb2d9b376a1b23f42f236d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1b232f140bb2d9b376a1b23f42f236d">&#9670;&nbsp;</a></span>_end_criterion</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="../../d9/d13/structptof_1_1_criterion.html">Criterion</a>&lt;Subject&gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::_end_criterion</td>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="../../d9/d13/structptof_1_1_criterion.html">Criterion</a>&lt;Subject&gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::_end_criterion</td>
         </tr>
       </table>
   </td>
@@ -1261,19 +971,19 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="a4a960bbd99331b5a9dd3d7b3ae4f75e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a960bbd99331b5a9dd3d7b3ae4f75e9">&#9670;&nbsp;</a></span>_next_measurement</h2>
+<a id="ade0200cc2c34a1a7c851080865528b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade0200cc2c34a1a7c851080865528b64">&#9670;&nbsp;</a></span>_next_measurement</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="../../d7/df2/struct_next_measurement_time.html">NextMeasurementTime</a>&lt;<a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a>&gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::_next_measurement</td>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="../../d7/df2/struct_next_measurement_time.html">NextMeasurementTime</a>&lt;std::remove_reference_t&lt;<a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a>&gt; &gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::_next_measurement</td>
         </tr>
       </table>
   </td>
@@ -1282,23 +992,23 @@ template&lt;typename Subject , typename Geometry &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Handle next measure time. </p>
+<p>Handle next measurement time. </p>
 
 </div>
 </div>
-<a id="ae5e999fbccb99ef864d9c734b36c9950"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5e999fbccb99ef864d9c734b36c9950">&#9670;&nbsp;</a></span>_output</h2>
+<a id="a34237375c606ca43ff812e99069efcfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34237375c606ca43ff812e99069efcfa">&#9670;&nbsp;</a></span>_output</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../db/d74/structptof_1_1_measurer.html">Measurer</a>&lt;Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>&gt; &gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::_output</td>
+          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../db/d74/structptof_1_1_measurer.html">Measurer</a>&lt;Subject, Geometry&gt; &gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::_output</td>
         </tr>
       </table>
   </td>
@@ -1311,19 +1021,19 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="aa0c6ba605b7e5f8b1a0dd157e6468daf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0c6ba605b7e5f8b1a0dd157e6468daf">&#9670;&nbsp;</a></span>_output_time</h2>
+<a id="a5903c3df542d52d190e4087697eb9a78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5903c3df542d52d190e4087697eb9a78">&#9670;&nbsp;</a></span>_output_time</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a>&lt;Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a>&gt; &gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::_output_time</td>
+          <td class="memname">std::vector&lt;std::unique_ptr&lt;<a class="el" href="../../dc/d05/structptof_1_1_measurer_time.html">MeasurerTime</a>&lt;Subject, Geometry&gt; &gt; &gt; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::_output_time</td>
         </tr>
       </table>
   </td>
@@ -1336,16 +1046,16 @@ template&lt;typename Subject , typename Geometry &gt; </div>
 
 </div>
 </div>
-<a id="a914586c8ec443818d08dc61549669dfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a914586c8ec443818d08dc61549669dfe">&#9670;&nbsp;</a></span>parameters</h2>
+<a id="a256f1a77e6ca62fb247515a7c6e4378a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a256f1a77e6ca62fb247515a7c6e4378a">&#9670;&nbsp;</a></span>parameters</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Subject , typename Geometry &gt; </div>
+template&lt;typename Subject , typename Geometry , typename Parameters &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d5/de8/classptof_1_1_output___cases.html#a7d415ad01cbe31563c65ced4800a206c">Parameters</a> const&amp; <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, <a class="el" href="../../dc/d30/structptof_1_1_geometry.html">Geometry</a> &gt;::parameters</td>
+          <td class="memname"><a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> <a class="el" href="../../d5/de8/classptof_1_1_output___cases.html">ptof::Output_Cases</a>&lt; Subject, Geometry, <a class="el" href="../../d4/d48/struct_phase_1_1_parameters.html">Parameters</a> &gt;::parameters</td>
         </tr>
       </table>
 </div><div class="memdoc">

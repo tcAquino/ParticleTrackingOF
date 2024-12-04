@@ -98,13 +98,14 @@ $(document).ready(function(){initNavTree('d3/dd9/structptof_1_1_boundary___perio
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab50443db85848b4c04e21656817cf96c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html#ab50443db85848b4c04e21656817cf96c">Boundary_Periodic</a> (Boundary &amp;&amp;boundary, Locator &amp;&amp;<a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html#a24ca25806926cadc5ada1cd5696c1be3">locator</a>)</td></tr>
+<tr class="memdesc:ab50443db85848b4c04e21656817cf96c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d3/dd9/structptof_1_1_boundary___periodic.html#ab50443db85848b4c04e21656817cf96c">More...</a><br /></td></tr>
 <tr class="separator:ab50443db85848b4c04e21656817cf96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29a7c5b6c8d3a16796c9384f8dbad56d"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:a29a7c5b6c8d3a16796c9384f8dbad56d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html#a29a7c5b6c8d3a16796c9384f8dbad56d">out_of_bounds</a> (Position const &amp;position) const</td></tr>
 <tr class="memdesc:a29a7c5b6c8d3a16796c9384f8dbad56d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if position is out of bounds.  <a href="../../d3/dd9/structptof_1_1_boundary___periodic.html#a29a7c5b6c8d3a16796c9384f8dbad56d">More...</a><br /></td></tr>
 <tr class="separator:a29a7c5b6c8d3a16796c9384f8dbad56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3aa9153873a227a71cd8f64d163da17"><td class="memTemplParams" colspan="2">template&lt;typename State , typename Intersection &gt; </td></tr>
-<tr class="memitem:ac3aa9153873a227a71cd8f64d163da17"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html#ac3aa9153873a227a71cd8f64d163da17">operator()</a> (<a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;state, Intersection &amp;intersection) const</td></tr>
+<tr class="memitem:ac3aa9153873a227a71cd8f64d163da17"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html#ac3aa9153873a227a71cd8f64d163da17">operator()</a> (State &amp;state, Intersection &amp;intersection) const</td></tr>
 <tr class="memdesc:ac3aa9153873a227a71cd8f64d163da17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce boundary condition and place intersection at its periodic image.  <a href="../../d3/dd9/structptof_1_1_boundary___periodic.html#ac3aa9153873a227a71cd8f64d163da17">More...</a><br /></td></tr>
 <tr class="separator:ac3aa9153873a227a71cd8f64d163da17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -156,7 +157,9 @@ template&lt;typename Boundary , typename Locator &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">boundary</td><td>Periodic boundary enforcer. </td></tr>
     <tr><td class="paramname">locator</td><td>Object to locate positions in mesh. </td></tr>
@@ -183,7 +186,7 @@ template&lt;typename State , typename Intersection &gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="../../d3/dd9/structptof_1_1_boundary___periodic.html">ptof::Boundary_Periodic</a>&lt; Boundary, Locator &gt;::operator() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/dd1/namespaceptof.html#a81b97a03e1f9e213bb1fefdc0fecfe54">State</a> &amp;&#160;</td>
+          <td class="paramtype">State &amp;&#160;</td>
           <td class="paramname"><em>state</em>, </td>
         </tr>
         <tr>

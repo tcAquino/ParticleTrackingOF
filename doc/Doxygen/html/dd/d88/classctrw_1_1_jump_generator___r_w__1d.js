@@ -1,9 +1,9 @@
 var classctrw_1_1_jump_generator___r_w__1d =
 [
-    [ "JumpGenerator_RW_1d", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aa536ca8ad810c5ce892d3444c70e2fcd", null ],
-    [ "operator()", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aa54e9ec4844fcb40ee3c6725bdfcf07a", null ],
-    [ "_bernoulli_dist", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#ab97c0b90800c124d0188c1ec528c2dcf", null ],
-    [ "_jump_size", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#aedc920cf96ed35635d5a954e56df6e7d", null ],
-    [ "_prob_right", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a77cf875f218a54c24572d05eda09d117", null ],
-    [ "_rng", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a90ac43f457ad2d26c54b8d9582ef0c1e", null ]
+    [ "JumpGenerator_RW_1d", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a468ec4b80894acd9b676afd850ca310b", null ],
+    [ "operator()", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#ad523c6606147ccb786889b078c785df1", null ],
+    [ "_bernoulli_dist", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a3420e679ca43e390d5bc54fb83a432e9", null ],
+    [ "_jump_size", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a4e0ff40510b65955c5ae9607966c83b5", null ],
+    [ "_prob_right", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a5987559cf90c2f30c054ce538576ebbc", null ],
+    [ "_rng", "dd/d88/classctrw_1_1_jump_generator___r_w__1d.html#a86bdb21fd249958687bf71fe9ca445af", null ]
 ];

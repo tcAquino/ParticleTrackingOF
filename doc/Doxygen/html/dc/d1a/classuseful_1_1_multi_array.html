@@ -104,8 +104,10 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a49290e77670da969af293aa6e82b8df4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d1a/classuseful_1_1_multi_array.html#a49290e77670da969af293aa6e82b8df4">MultiArray</a> (std::vector&lt; std::size_t &gt; dimensions)</td></tr>
+<tr class="memdesc:a49290e77670da969af293aa6e82b8df4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../dc/d1a/classuseful_1_1_multi_array.html#a49290e77670da969af293aa6e82b8df4">More...</a><br /></td></tr>
 <tr class="separator:a49290e77670da969af293aa6e82b8df4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b3fbb7aa7b50ec946f3d03d97feb688"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d1a/classuseful_1_1_multi_array.html#a9b3fbb7aa7b50ec946f3d03d97feb688">MultiArray</a> (std::vector&lt; std::size_t &gt; dimensions, <a class="el" href="../../dc/d1a/classuseful_1_1_multi_array.html#adda49097d11b9f91af96b6e3ce435998">value_type</a> value)</td></tr>
+<tr class="memdesc:a9b3fbb7aa7b50ec946f3d03d97feb688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../dc/d1a/classuseful_1_1_multi_array.html#a9b3fbb7aa7b50ec946f3d03d97feb688">More...</a><br /></td></tr>
 <tr class="separator:a9b3fbb7aa7b50ec946f3d03d97feb688"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad51e8ca12b7d7e351c27932b2e0ca462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d1a/classuseful_1_1_multi_array.html#adda49097d11b9f91af96b6e3ce435998">value_type</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d1a/classuseful_1_1_multi_array.html#ad51e8ca12b7d7e351c27932b2e0ca462">operator[]</a> (std::vector&lt; std::size_t &gt; const &amp;indexes) const</td></tr>
 <tr class="separator:ad51e8ca12b7d7e351c27932b2e0ca462"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,7 +157,7 @@ Private Attributes</h2></td></tr>
 class useful::MultiArray&lt; value_t &gt;</h3>
 
 <p>Array container with arbitrary rank. </p>
-<p>Different dimensions may have different sizes. The elements are indexed, traversing the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0) in either 1D or using a multi-dimensional index. The elements are continguous in memory in the order of the 1D index. </p>
+<p>Different dimensions may have different sizes. The elements are indexed, traversing the container in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0) in either 1D or using a multi-dimensional index. The elements are continguous in memory in the order of the 1D index. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="adda49097d11b9f91af96b6e3ce435998"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adda49097d11b9f91af96b6e3ce435998">&#9670;&nbsp;</a></span>value_type</h2>
@@ -200,7 +202,9 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dimensions</td><td>Number of elements along each dimension. </td></tr>
   </table>
@@ -244,7 +248,9 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dimensions</td><td>Number of elements along each dimension. </td></tr>
     <tr><td class="paramname">value</td><td>Value to assign to all entries. </td></tr>
@@ -279,7 +285,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Iterator to beginning. Container is traverse in the order (0,...,0), (0,...,1), ..., (0,..,1,0). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to beginning. Container is traverse in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </dd></dl>
 
 </div>
 </div>
@@ -307,7 +313,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Iterator to beginning. Container is traverse in the order (0,...,0), (0,...,1), ..., (0,..,1,0). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to beginning. Container is traverse in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </dd></dl>
 
 </div>
 </div>
@@ -335,7 +341,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Constant iterator to beginning. Container is traverse in the order (0,...,0), (0,...,1), ..., (0,..,1,0). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to beginning. Container is traverse in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </dd></dl>
 
 </div>
 </div>
@@ -363,7 +369,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Constant iterator to end. Container is traverse in the order (0,...,0), (0,...,1), ..., (0,..,1,0). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to end. Container is traverse in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </dd></dl>
 
 </div>
 </div>
@@ -392,8 +398,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Convert multi-dimensional index <code>indexes</code> to 1D index, which traverses the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0), .... <br  />
- </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Convert multi-dimensional index <code>indexes</code> to 1D index, which traverses the container in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0), .... </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -440,8 +445,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Convert 1D index <code>index</code>, which traverses the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0), ..., to multi-dimensional index. <br  />
- </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Convert 1D index <code>index</code>, which traverses the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0), ..., to multi-dimensional index. </dd></dl>
 
 </div>
 </div>
@@ -484,7 +488,7 @@ template&lt;typename value_t &gt; </div>
 <p>Convert 1D index <code>index</code> to multi-dimensional index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>Index to convert, which traverses the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0).</td></tr>
+    <tr><td class="paramname">index</td><td>Index to convert, which traverses the container in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </td></tr>
     <tr><td class="paramname">indexes</td><td>Multidimensional index is returned here. </td></tr>
   </table>
   </dd>
@@ -495,8 +499,8 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dc/d1a/classuseful_1_1_multi_array_a0c78a874cac9590e5de68b12fee7fbe8_cgraph.png" border="0" usemap="#adc/d1a/classuseful_1_1_multi_array_a0c78a874cac9590e5de68b12fee7fbe8_cgraph" alt=""/></div>
 <map name="adc/d1a/classuseful_1_1_multi_array_a0c78a874cac9590e5de68b12fee7fbe8_cgraph" id="adc/d1a/classuseful_1_1_multi_array_a0c78a874cac9590e5de68b12fee7fbe8_cgraph">
-<area shape="rect" title="Convert 1D index index to multi&#45;dimensional index." alt="" coords="5,5,144,47"/>
-<area shape="rect" href="../../da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0" title="Given 1d index idx, convert to position (x_idx,y_idx,...) in a regular grid; output in position." alt="" coords="192,13,379,39"/>
+<area shape="rect" title="Convert 1D index index to multi&#45;dimensional index." alt="" coords="5,5,132,47"/>
+<area shape="rect" href="../../da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0" title="Given 1d index idx, convert to position (x_idx, y_idx, ...) in a regular grid; output in position." alt="" coords="180,13,348,39"/>
 </map>
 </div>
 
@@ -526,7 +530,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Iterator to end. Container is traverse in the order (0,...,0), (0,...,1), ..., (0,..,1,0). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to end. Container is traverse in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </dd></dl>
 
 </div>
 </div>
@@ -554,7 +558,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Iterator to end. Container is traverse in the order (0,...,0), (0,...,1), ..., (0,..,1,0). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to end. Container is traverse in the order (0, ..., 0), (0, ..., 1), ..., (0, ..., 1, 0). </dd></dl>
 
 </div>
 </div>
@@ -583,8 +587,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Value at 1D index <code>index</code>, which traverses the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0), .... <br  />
- </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Value at 1D index <code>index</code>, which traverses the container in the order (0, ..., 0), (0, ..., 1), ..., ( 0, ..., 1, 0), .... </dd></dl>
 
 </div>
 </div>
@@ -613,8 +616,7 @@ template&lt;typename value_t &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Value at 1D index <code>index</code>, traversing the container in the order (0,...,0), (0,...,1), ..., (0,..,1,0), etc. <br  />
- </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Value at 1D index <code>index</code>, traversing the container in the order (0, ..., 0), (0, ..., 1), ..., (0, .., 1, 0), etc. </dd></dl>
 
 </div>
 </div>

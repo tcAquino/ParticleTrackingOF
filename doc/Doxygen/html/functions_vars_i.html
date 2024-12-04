@@ -86,8 +86,8 @@ $(document).ready(function(){initNavTree('functions_vars_i.html',''); initResiza
 
 <h3><a id="index_i"></a>- i -</h3><ul>
 <li>info
-: <a class="el" href="da/dae/structptof_1_1_particle_maker.html#ab15354075939506dc106a3a704dcc219">ptof::ParticleMaker&lt; Particle, Locator &gt;</a>
-, <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#a306ee9fc9673d34f553666496b4ce11a">ptof::ParticleMaker_Periodic&lt; Particle, Locator, Boundary &gt;</a>
+: <a class="el" href="d4/ddd/structptof_1_1_particle_maker___generic.html#a8d296b064db7c1af0d9e148693adf022">ptof::ParticleMaker_Generic&lt; Particle_t, Locator &gt;</a>
+, <a class="el" href="d5/d84/structptof_1_1_particle_maker___periodic.html#a5f82ea48ae071ca85c459f2446139d4e">ptof::ParticleMaker_Periodic&lt; Particle_t, Locator, Boundary &gt;</a>
 , <a class="el" href="d9/daf/structptof_1_1_state1_d.html#a8d5a72a07ceab4815569a467e1716638">ptof::State1D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="d0/d12/structptof_1_1_state1_d___periodic.html#afaa73b4b723be6a0786d228acc02ecd9">ptof::State1D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 , <a class="el" href="d1/d58/structptof_1_1_state2_d.html#aec83b8d3d8dc9cff38cfc80132267574">ptof::State2D&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
@@ -96,17 +96,25 @@ $(document).ready(function(){initNavTree('functions_vars_i.html',''); initResiza
 , <a class="el" href="da/d6a/structptof_1_1_state3_d___periodic.html#aa3167a37c5b97e18b9456f34ed92fd49">ptof::State3D_Periodic&lt; Info_t, Time_t, Mass_t, Tag_t &gt;</a>
 </li>
 <li>initial_condition
-: <a class="el" href="d4/d7b/structptof_1_1_boundary___reinject.html#a2e64406ba3ea143259a4f0542ec7b144">ptof::Boundary_Reinject&lt; InitialCondition &gt;</a>
+: <a class="el" href="d4/d7b/structptof_1_1_boundary___reinject.html#ac7e0e9145e16f21110ff77db59e4b7fd">ptof::Boundary_Reinject&lt; InitialCondition, Locator &gt;</a>
 </li>
 <li>initial_distribution
-: <a class="el" href="d2/d04/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_reaction_1_1_parameters.html#a4795f2c59d670c09878955492c8e6fbd">ptof::model_advection_diffusion_surface_decay_2d::Reaction::Parameters</a>
+: <a class="el" href="d7/d05/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction_1_1_parameters.html#a33b5980142dabbd88bcfea45d2b00630">ptof::model_advection_diffusion_surface_decay_2d::Definitions&lt; ParallelOption &gt;::Reaction::Parameters</a>
 </li>
-<li>initial_mass
-: <a class="el" href="dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a221b49e8b3ee86bf50b827f9f46db128">ptof::InitialConditionParameters_Cases</a>
+<li>injection_parameters
+: <a class="el" href="dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a3489ad3f65932b5387a51f170b50a61e">ptof::InitialConditionParameters_Cases</a>
 </li>
 <li>inner_radius
-: <a class="el" href="dd/d86/structstochastic_1_1uniform__cylinder__distribution_1_1param__type.html#af68f73fe5dfd3c70b450578c94514855">stochastic::uniform_cylinder_distribution::param_type</a>
-, <a class="el" href="da/d9c/structstochastic_1_1uniform__sphere__distribution_1_1param__type.html#a67c13775502d7ca1948af4b5be844d86">stochastic::uniform_sphere_distribution&lt; Value_type &gt;::param_type</a>
+: <a class="el" href="d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___cylinder.html#a40f2f8cdfa9a9b4dbe112ed440b08a7c">ptof::InitialConditionParameters_Cases::SpecificParameters_Cylinder</a>
+, <a class="el" href="db/d3f/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___sphere.html#a04b6fc2a3d4948d2933d5d10c0280444">ptof::InitialConditionParameters_Cases::SpecificParameters_Sphere</a>
+, <a class="el" href="dd/d86/structstochastic_1_1uniform__cylinder__distribution_1_1param__type.html#af68f73fe5dfd3c70b450578c94514855">stochastic::uniform_cylinder_distribution::param_type</a>
+, <a class="el" href="da/d9c/structstochastic_1_1uniform__sphere__distribution_1_1param__type.html#a4261720b9f50ae7aad58bfda652e0f1d">stochastic::uniform_sphere_distribution::param_type</a>
+</li>
+<li>input
+: <a class="el" href="d7/db0/structptof_1_1_initial_condition___prescribed_positions.html#a9441a21df1df4ba804076d3ba567b6f3">ptof::InitialCondition_PrescribedPositions&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d9/d62/structptof_1_1_initial_condition___prescribed_positions_masses.html#a8d349e6465b51570de5928df5145dcf5">ptof::InitialCondition_PrescribedPositionsMasses&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d4/da9/structptof_1_1_initial_condition___prescribed_positions_masses_tags.html#afd0e5050fa15db673cfe9ccad03e0819">ptof::InitialCondition_PrescribedPositionsMassesTags&lt; ParticleMaker, Geometry &gt;</a>
+, <a class="el" href="d0/d04/structptof_1_1_initial_condition___prescribed_positions_masses_tags_times.html#a622ad5d7697442119f970bc4a738d8f9">ptof::InitialCondition_PrescribedPositionsMassesTagsTimes&lt; ParticleMaker, Geometry &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

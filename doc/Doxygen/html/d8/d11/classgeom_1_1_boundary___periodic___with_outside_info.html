@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('d8/d11/classgeom_1_1_boundary___period
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a82d1fdde92608141cf137c23195c34c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#a82d1fdde92608141cf137c23195c34c6">Boundary_Periodic_WithOutsideInfo</a> (std::vector&lt; std::pair&lt; double, double &gt;&gt; <a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#a016a9d78182ec0696068083c66259567">boundaries</a>)</td></tr>
+<tr class="memdesc:a82d1fdde92608141cf137c23195c34c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#a82d1fdde92608141cf137c23195c34c6">More...</a><br /></td></tr>
 <tr class="separator:a82d1fdde92608141cf137c23195c34c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68d582c28b7a1dcb1960502d73b9296a"><td class="memTemplParams" colspan="2">template&lt;typename Position &gt; </td></tr>
 <tr class="memitem:a68d582c28b7a1dcb1960502d73b9296a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#a68d582c28b7a1dcb1960502d73b9296a">out_of_bounds</a> (Position const &amp;position) const</td></tr>
@@ -127,10 +128,9 @@ Private Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Periodic boundaries along each dimension with information about where position would be outside domain. </p>
-<p>"Geometry/Boundary.h"</p>
-<dl class="section note"><dt>Note</dt><dd>State must define:<ul>
-<li><code>position</code> [container]</li>
-<li><code>periodicity</code> [container of signed integers] (counting how many domains have been traveled along each dimension) </li>
+<p>"Geometry/Boundary.h" </p><dl class="section note"><dt>Note</dt><dd>State must define:<ul>
+<li><code>position</code> [Container]</li>
+<li><code>periodicity</code> [Container of signed integers] (counting how many domains have been traveled along each dimension) </li>
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -157,7 +157,9 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">boundaries</td><td>Container of pairs of lower and upper boundary locations along each dimension. </td></tr>
   </table>
@@ -277,7 +279,7 @@ template&lt;typename Position &gt; </div>
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if position is out of bounds. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>Position to check </td></tr>
+    <tr><td class="paramname">position</td><td>Position to check. </td></tr>
   </table>
   </dd>
 </dl>

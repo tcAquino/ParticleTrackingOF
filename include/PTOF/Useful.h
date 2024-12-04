@@ -1,13 +1,15 @@
 /**
- \file PTOF/Useful.h
- \author Tomás Aquino
- \date 2022/02/17
+   \file PTOF/Useful.h
+   \author Tomás Aquino
+   \date 2022/02/17
+   \brief Miscelaneous objects and utilities.
 */
 
 #ifndef PTOF_USEFUL_H
 #define PTOF_USEFUL_H
 
 #include "CTRW/StateGetter.h"
+#include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Operations.h"
 #include "General/Ranges.h"
@@ -17,59 +19,85 @@
 #include <iostream>
 #include <map>
 #include <point.H>
+#include <random>
 #include <set>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 
 namespace ptof {
-/** \struct CheckOptions PTOF/Useful.h "PTOF/Useful.h"
- \brief Options for checking conditions. */
+/**
+   \struct CheckOptions PTOF/Useful.h "PTOF/Useful.h"
+   \brief Options for checking conditions.
+*/
 struct CheckOptions {
-  /** \struct CheckOptions::NoChecl PTOF/Useful.h "PTOF/Useful.h"
-    \brief No bounds checking. */
+  /**
+     \struct CheckOptions::NoCheck PTOF/Useful.h "PTOF/Useful.h"
+     \brief No bounds checking.
+  */
   struct NoCheck {};
 
-  /** \struct CheckOptions::Check PTOF/Useful.h "PTOF/Useful.h"
-    \brief Bounds checking, no warning. */
+  /**
+     \struct CheckOptions::Check PTOF/Useful.h "PTOF/Useful.h"
+     \brief Bounds checking, no warning.
+  */
   struct Check {};
 
-  /** \struct CheckOptions::Warn PTOF/Useful.h "PTOF/Useful.h"
-    \brief Bounds checking and warning. */
+  /**
+     \struct CheckOptions::Warn PTOF/Useful.h "PTOF/Useful.h"
+     \brief Bounds checking and warning.
+  */
   struct Warn {};
 };
 
-/** \struct SearchOptions PTOF/Useful.h "PTOF/Useful.h"
- \brief Options for mesh searching. */
+/**
+   \struct SearchOptions PTOF/Useful.h "PTOF/Useful.h"
+   \brief Options for mesh searching.
+*/
 struct SearchOptions {
-  /** \class SearchOptions::NeighborPrecheck PTOF/Useful.h "PTOF/Useful.h"
-  \brief Level of neighbors to check before searching mesh for position.. */
+  /**
+     \class SearchOptions::NeighborPrecheck PTOF/Useful.h "PTOF/Useful.h"
+     \brief Level of neighbors to check before searching mesh for position.
+  */
   template <int level> struct NeighborPrecheck {
     static constexpr int neighbor_check_level{level};
   };
 
-  /** \brief Dot not check neighbors, even self, before searching mesh for
-   * position. */
+  /**
+     \brief Dot not check neighbors, even self, before searching mesh for
+     position.
+  */
   using NoNeighborPrecheck = NeighborPrecheck<-1>;
 
-  /** \brief Check if position is in given cell before searching mesh for
-   * position */
+  /**
+     \brief Check if position is in given cell before searching mesh for
+     position.
+  */
   using ZeroNeighborPrecheck = NeighborPrecheck<0>;
 
-  /** \brief Check if position is in given cell and in first orthogonal
-   * neighbors before searching mesh for position */
+  /**
+     \brief Check if position is in given cell and in first orthogonal neighbors
+     before searching mesh for position.
+  */
   using FirstNeighborPrecheck = NeighborPrecheck<1>;
 
-  /** \brief Check if position is in given cell and in first and second
-   * orthogonal neighbors before searching mesh for position */
+  /**
+     \brief Check if position is in given cell and in first and second
+     orthogonal neighbors before searching mesh for position.
+  */
   using SecondNeighborPrecheck = NeighborPrecheck<2>;
 };
 
-/** \struct Dynamics PTOF/Useful.h "PTOF/Useful.h"
+/**
+   \struct Dynamics PTOF/Useful.h "PTOF/Useful.h"
    \brief Keep track of names of dynamics types for different types of
-   simulations. */
+   simulations.
+*/
 struct Dynamics {
-  /** \enum Dynamics::Type
-   *  \brief Implemented dynamics types. */
+  /**
+     \enum Dynamics::Type
+     \brief Implemented dynamics types.
+  */
   enum class Type {
     transport,    /**< No parameters, custom boundary does nothing.   */
     firstpassage, /**< Parameters should hold InitialCondition object.*/
@@ -99,8 +127,10 @@ struct Dynamics {
   };
 };
 
-/** \struct Periodicity PTOF/Useful.h "PTOF/Useful.h"
-   \brief Keep track of names of periodicity types for boundary conditions. */
+/**
+   \struct Periodicity PTOF/Useful.h "PTOF/Useful.h"
+   \brief Keep track of names of periodicity types for boundary conditions.
+*/
 struct Periodicity {
   /** \enum Periodicity::Type
    *  \brief Implemented periodicity types. */
@@ -130,12 +160,13 @@ struct Periodicity {
 };
 
 /**
-   \brief Print static info for \c Class and \c Class::Parameters, if defined.
+   \brief Print static info for \c Class and <tt>Class::Parameters</tt>, if
+   defined.
    \param output Output stream to print info.
    \param warn_if_no_info Print notification if no info is available.
    \param help_option Information about requested info, to print if info is not
    available if notification is requested.
-   \return \c true if there is available info, \c false otherwise
+   \return \c true if there is available info, \c false otherwise.
 */
 template <typename Class, typename OStream>
 bool print_static_info(OStream &output, bool notify_if_no_info = false,
@@ -159,7 +190,7 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
     if (!help_option.empty())
       output << " for help option " << help_option;
     if (std::is_same_v<Class, useful::Empty>)
-      output << " : object type is empty";
+      output << " : object type is Empty";
     output << "\n";
   }
 
@@ -167,18 +198,17 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
 }
 
 /**
-   \brief Handle help options for main executable
+   \brief Handle help options for main executable.
    \return \c true if help flag was passed as first argument, \c false otherwise
-   \note \c useful::Empty can be passed for non-existent templated types, except
-   \c ExecutableInfo, which must define a static ExecutableInfo::help(OStream&)
-   method
+   \note useful::Empty can be passed for non-existent templated types, except
+   \c ExecutableInfo, which must define a static <tt>help(OStream&)</tt> method.
 */
 template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
           typename Transport, typename Phase, typename Reaction,
           typename Solvers, typename InitialCondition, typename Output,
           typename OStream>
 bool options_help(OStream &output, int argc, const char *const *argv) {
-  if (!useful::check_options_help(argc, argv))
+  if (!io::check_options_help(argc, argv))
     return 0;
 
   if (argc == 2) {
@@ -280,7 +310,7 @@ auto make_point(Foam::scalar point) { return Foam::point{point, 0., 0.}; }
 /** \brief Make 3D point from 3D point (simple copy). */
 auto make_point(Foam::point const &point) { return point; }
 
-/** \brief Make point from vector (simple copy). */
+/** \brief Make point from vector. */
 Foam::point make_point(std::vector<double> const &point) {
   if (point.size() >= 3)
     return {point[0], point[1], point[2]};
@@ -323,47 +353,137 @@ template <typename Mesh> auto cell_center(Foam::label cell, Mesh const &mesh) {
   return mesh.cellCentres()[cell];
 }
 
-/**
-   \brief Sometimes the face center associated with a mesh face is not
-considered within the cell and may be outside the mesh. Verify this.
-\param face Mesh face index.
-\param locator Object to locate positions in mesh.
-\param cell_hint Hint of face's owner cell
-\return \c true if face center is in mesh, \c false otherwise. */
-template <typename Locator>
-bool face_center_is_in_mesh(Foam::label face, Locator const &locator,
-                            Foam::label cell_hint = -1) {
-  return !outside(locator(face_center(face, locator.mesh()), cell_hint));
+template <typename Container, typename Mesh>
+auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
+  std::vector<double> volumes;
+  volumes.reserve(cell_ids.size());
+  for (auto cell : cell_ids)
+    volumes.push_back(cell_volume(cell, mesh));
+  return volumes;
+}
+
+template <typename Container, typename Mesh>
+auto face_areas(Container const &face_ids, Mesh const &mesh) {
+  std::vector<double> areas;
+  areas.reserve(face_ids.size());
+  for (auto face : face_ids)
+    areas.push_back(face_area(face, mesh));
+  return areas;
+}
+
+template <typename Container, typename Mesh>
+auto face_area(std::vector<Foam::label> const &face_ids, Mesh const &mesh) {
+  double area = 0.;
+  for (auto const &face : face_ids)
+    area += face_area(face, mesh);
+  return area;
+}
+
+template <typename Mesh>
+auto patch_area(std::string const &patch_name, Mesh const &mesh) {
+  double area = 0.;
+  Foam::label patch_id = mesh.boundary().findPatchID(patch_name);
+  auto const &patch = mesh.boundaryMesh()[patch_id];
+  Foam::label start = patch.start();
+  for (std::size_t idx = 0; idx < static_cast<std::size_t>(patch.size()); ++idx)
+    area += face_area(start + idx, mesh);
+  return area;
+}
+
+template <typename Mesh>
+auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
+  double area = 0.;
+  for (auto const &patch : patch_names)
+    area += patch_area(patch, mesh);
+  return area;
+}
+
+template <typename Mesh>
+auto patch_areas(std::vector<std::string> const &patch_names,
+                 Mesh const &mesh) {
+  std::vector<double> areas;
+  for (auto const &patch : patch_names)
+    areas.push_back(patch_area(patch, mesh));
+  return areas;
+}
+
+template <typename VectorField, typename Mesh>
+auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
+               Mesh const &mesh) {
+  return cell_volume(cell_id, mesh) *
+         Foam::mag(vector_field(cell_center(cell_id, mesh)));
+}
+
+template <typename VectorField, typename Locator>
+auto face_flux(Foam::label face_id, VectorField const &vector_field,
+               Locator const &locator) {
+  auto const &mesh = locator.mesh();
+  return face_area(face_id, mesh) *
+         Foam::mag(vector_field(adjusted_face_center(face_id, locator),
+                                mesh.faceOwner()[face_id]));
+}
+
+template <typename Container, typename VectorField, typename Mesh>
+auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
+                 Mesh const &mesh) {
+  std::vector<double> fluxes;
+  fluxes.reserve(cell_ids.size());
+  for (auto cell : cell_ids)
+    fluxes.push_back(cell_flux(cell, vector_field, mesh));
+  return fluxes;
+}
+
+template <typename Container, typename VectorField, typename Locator>
+auto face_fluxes(Container const &face_ids, VectorField const &vector_field,
+                 Locator const &locator) {
+  std::vector<double> fluxes;
+  fluxes.reserve(face_ids.size());
+  for (auto face : face_ids)
+    fluxes.push_back(face_flux(face, vector_field, locator));
+  return fluxes;
 }
 
 /**
    \brief Sometimes the face center associated with a mesh face is not
-considered within the owner cell. Verify this.
-\param locator Object to locate positions in mesh.
-\param cell_hint Hint of face's owner cell
-\return \c true if face center is in owner cell, \c false otherwise.
+   considered within the cell and may be outside the mesh. Verify this.
+   \param face Mesh face index.
+   \param locator Object to locate positions in mesh.
+   \param cell_hint Hint of face's owner cell
+   \return \c true if face center is in mesh, \c false otherwise.
 */
 template <typename Locator>
-bool face_center_is_in_cell(Foam::label face, Locator const &locator,
-                            Foam::label cell_hint = -1) {
+bool face_center_is_in_mesh(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
-  auto cell = locator(face_center(face, mesh), cell_hint);
-  return !outside(cell) && cell == mesh.faceOwner()[face];
+  return !outside(locator(face_center(face, mesh), mesh.faceOwner()[face]));
 }
 
 /**
-   \brief Compute face center's position if face center is in mesh, owner cell
-center otherwise.
-\param face Mesh face index.
-\param locator Object to locate positions in mesh.
-\param cell_hint Hint of face's owner cell.
-\return Position.
+   \brief Sometimes the face center associated with a mesh face is not
+   considered within the owner cell. Verify this.
+   \param locator Object to locate positions in mesh.
+   \param cell_hint Hint of face's owner cell
+   \return \c true if face center is in owner cell, \c false otherwise.
 */
 template <typename Locator>
-auto adjusted_face_center(Foam::label face, Locator const &locator,
-                          Foam::label cell_hint = -1) {
+bool face_center_is_in_cell(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
-  if (face_center_is_in_mesh(face, locator, cell_hint))
+  auto owner_cell = mesh.faceOwner()[face];
+  auto cell = locator(face_center(face, mesh), owner_cell);
+  return !outside(cell) && cell == owner_cell;
+}
+
+/**
+   \brief Compute face center's position if face center is in owner cell, owner
+   cell center otherwise.
+   \param face Mesh face index.
+   \param locator Object to locate positions in mesh.
+   \param cell_hint Hint of face's owner cell.
+   \return Position.
+*/
+template <typename Locator>
+auto adjusted_face_center(Foam::label face, Locator const &locator) {
+  auto const &mesh = locator.mesh();
+  if (face_center_is_in_cell(face, locator))
     return face_center(face, mesh);
   else {
     auto center = face_center(face, mesh);
@@ -376,7 +496,7 @@ auto adjusted_face_center(Foam::label face, Locator const &locator,
   }
 }
 
-/** \brief Small offset forward given current face and direction.*/
+/** \brief Small offset forward given current face and direction. */
 template <typename Locator>
 Foam::vector offset_face(Foam::label face, Foam::vector const &direction,
                          Locator const &locator) {
@@ -390,10 +510,10 @@ Foam::vector offset_face(Foam::label face, Foam::vector const &direction,
 }
 
 /**
- \brief Small offset along face normal (outward).
- \param face Mesh face index to use face center as beginning point.
- \param locator Object to locate positions in mesh.
- \return Offset vector.
+   \brief Small offset along face normal (outward).
+   \param face Mesh face index to use face center as beginning point.
+   \param locator Object to locate positions in mesh.
+   \return Offset vector.
 */
 template <typename Locator>
 Foam::vector offset_face(Foam::label face, Locator const &locator) {
@@ -402,12 +522,12 @@ Foam::vector offset_face(Foam::label face, Locator const &locator) {
 }
 
 /**
- \brief Small offset forward from a point on a face.
- \param begin Starting point (on a face).
- \param face Mesh face index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset forward from a point on a face.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_forward_face(Foam::point const &begin, Foam::label face,
@@ -417,14 +537,15 @@ Foam::point offset_forward_face(Foam::point const &begin, Foam::label face,
 }
 
 /**
- \brief Small offset forward from a point on a face.
- \details If begin point is in mesh, guarantee offset point in same cell.
- \param begin Starting point (on a face).
- \param face Mesh face index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset forward from a point on a face.
+   \details If begin point is in mesh, guarantee offset point in same cell.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
+
 template <typename Locator>
 Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
                                             Foam::label face,
@@ -445,12 +566,12 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
 }
 
 /**
- \brief Small offset backward from a point on a face.
- \param begin Starting point (on a face).
- \param face Mesh face index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset backward from a point on a face.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_backward_face(Foam::point const &begin, Foam::label face,
@@ -460,13 +581,13 @@ Foam::point offset_backward_face(Foam::point const &begin, Foam::label face,
 }
 
 /**
- \brief Small offset backward from a point on a face.
- \details If begin point is in mesh, guarantee offset point in same cell.
- \param begin Starting point (on a face).
- \param face Mesh face index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset backward from a point on a face.
+   \details If begin point is in mesh, guarantee offset point in same cell.
+   \param begin Starting point (on a face).
+   \param face Mesh face index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
@@ -487,11 +608,11 @@ Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
 }
 
 /**
- \brief Small offset outward along face normal starting from face center.
- \details If begin point is in mesh, guarantee offset point in mesh.
- \param face Mesh face index.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset outward along face normal starting from face center.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param face Mesh face index.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_outward_face(Foam::label face, Locator const &locator) {
@@ -499,11 +620,11 @@ Foam::point offset_outward_face(Foam::label face, Locator const &locator) {
 }
 
 /**
- \brief Small offset inward along face normal starting from face center.
- \details If begin point is in mesh, guarantee offset point in mesh.
- \param face Mesh face index.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset inward along face normal starting from face center.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param face Mesh face index.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_inward_face(Foam::label face, Locator const &locator) {
@@ -511,13 +632,13 @@ Foam::point offset_inward_face(Foam::label face, Locator const &locator) {
 }
 
 /**
- \brief Small offset outward along face normal starting from face center.
- \details If begin point is in mesh, guarantee offset point in mesh.
- \param begin Starting point in cell.
- \param cell Mesh cell index.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset outward along face normal starting from face center.
+   \details If begin point is in mesh, guarantee offset point in mesh.
+   \param begin Starting point in cell.
+   \param cell Mesh cell index.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::vector offset_cell(Foam::point const &begin, Foam::label cell,
@@ -531,12 +652,12 @@ Foam::vector offset_cell(Foam::point const &begin, Foam::label cell,
 }
 
 /**
- \brief Small offset forward.
- \param begin Starting point in cell.
- \param cell Hint for cell index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset forward.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_forward_cell(Foam::point const &begin, Foam::label cell,
@@ -545,14 +666,14 @@ Foam::point offset_forward_cell(Foam::point const &begin, Foam::label cell,
   return begin + offset_cell(begin, cell, direction, locator);
 }
 
-/** Small offset forward
- \brief Small offset forward.
- \details If begin point is in mesh, guarantee offset point in same cell.
- \param begin Starting point in cell.
- \param cell Hint for cell index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+/**
+   \brief Small offset forward.
+   \details If begin point is in mesh, guarantee offset point in same cell.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_forward_cell_keep_inside(Foam::point const &begin,
@@ -571,12 +692,12 @@ Foam::point offset_forward_cell_keep_inside(Foam::point const &begin,
 }
 
 /**
- \brief Small offset backward.
- \param begin Starting point in cell.
- \param cell Hint for cell index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset backward.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_backward_cell(Foam::point const &begin, Foam::label cell,
@@ -586,13 +707,13 @@ Foam::point offset_backward_cell(Foam::point const &begin, Foam::label cell,
 }
 
 /**
- \brief Small offset backward.
- \details If begin point is in mesh, guarantee offset point in same cell.
- \param begin Starting point in cell.
- \param cell Hint for cell index where \p begin is located.
- \param direction Direction of offset.
- \param locator Object to locate positions in mesh.
- \return Offset point.
+   \brief Small offset backward.
+   \details If begin point is in mesh, guarantee offset point in same cell.
+   \param begin Starting point in cell.
+   \param cell Hint for cell index where \p begin is located.
+   \param direction Direction of offset.
+   \param locator Object to locate positions in mesh.
+   \return Offset point.
 */
 template <typename Locator>
 Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
@@ -611,40 +732,54 @@ Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
 }
 
 /**
- \param mesh Mesh object.
- \return All mesh cell indices. */
+   \param mesh Mesh object.
+   \return All mesh cell indices.
+*/
 template <typename Mesh> auto all_cell_ids(Mesh const &mesh) {
   return range::range<std::vector>(0, mesh.nCells());
 }
 
 /**
- \param mesh Mesh object.
- \param patch_names Names of patches.
- \return Mesh face indices of faces given patches. */
+   \brief Append mesh face indices of faces in patch to container.
+   \param patch_name Name of patch.
+   \param mesh Mesh object.
+   \param face_ids Face index container to append to.
+*/
 template <typename Mesh>
-auto patches_face_ids(Mesh const &mesh,
-                      std::vector<std::string> const &patch_names) {
+void patch_face_ids(std::string const &patch_name, Mesh const &mesh,
+                    std::vector<Foam::label> &face_ids) {
+  Foam::label patch_id = mesh.boundary().findPatchID(patch_name);
+  auto const &patch = mesh.boundaryMesh()[patch_id];
+  face_ids.reserve(face_ids.size() + patch.size());
+  Foam::label start = patch.start();
+  for (std::size_t idx = 0; idx < static_cast<std::size_t>(patch.size()); ++idx)
+    face_ids.push_back(start + idx);
+}
+
+/**
+ \param patch_names Names of patches.
+ \param mesh Mesh object.
+ \return Mesh face indices of faces in patchs.
+*/
+template <typename Mesh>
+auto patch_face_ids(std::vector<std::string> const &patch_names,
+                    Mesh const &mesh) {
   std::vector<Foam::label> face_ids;
-  for (auto const &name : patch_names) {
-    Foam::label patch_id = mesh.boundary().findPatchID(name);
-    auto const &patch = mesh.boundaryMesh()[patch_id];
-    face_ids.reserve(face_ids.size() + patch.size());
-    Foam::label start = patch.start();
-    for (std::size_t idx = 0; idx < std::size_t(patch.size()); ++idx)
-      face_ids.push_back(start + idx);
-  }
+  for (auto const &name : patch_names)
+    patch_face_ids(name, mesh, face_ids);
   return face_ids;
 }
 
 /**
- \param boundaries Container of pairs of lower and upper boundary locations
- along each dimension.
- \param locator Object to locate positions in mesh.
- \return Mesh cell indices within boundaries.
+   \param boundaries Container of pairs of lower and upper boundary locations
+   along each dimension.
+   \param locator Object to locate positions in mesh.
+   \return Mesh cell indices within boundaries.
 */
 template <typename Locator>
 auto cell_ids_region_cartesian(
-    std::vector<std::pair<double, double>> boundaries, Locator const &locator) {
+    std::vector<std::pair<double, double>> const &boundaries,
+    Locator const &locator) {
   // Identify degenerate dimensions
   // (if some minimum and maximum boundary values are equal,
   // the Cartesian region has lower dimension than the space)
@@ -691,286 +826,397 @@ auto cell_ids_region_cartesian(
 }
 
 /**
- \param subject CTRW object.
- \param time Current time.
- \return Number of absorbed particles.
- \note Particle states must implement:
- - info.absorbed [std::size_t]
- - time */
+   \brief Remove cell indices if mask is below threshold.
+   \param cell_ids Container with mesh cell indices.
+   \param mask Scalar field.
+   \param threshold Threshold.
+*/
+template <typename Container, typename Mask>
+void apply_mask_cells_inplace(Container &cell_ids, Mask const &mask,
+                              double threshold = 0.) {
+  useful::swap_erase_if(cell_ids, [&mask, threshold](Foam::label face_id) {
+    return mask[face_id] < threshold;
+  });
+}
+
+/**
+   \brief Remove face indices if mask is below threshold.
+   \param face_ids Container with mesh face indices.
+   \param mask Scalar field.
+   \param threshold Threshold.
+   \return \p Container with indices of elements where mask is below threshold
+   removed. */
+template <typename Container, typename Mask>
+auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
+                      double threshold = 0.) {
+  auto masked_ids = cell_ids;
+  apply_mask_cells_inplace(masked_ids, mask, threshold);
+
+  return masked_ids;
+}
+
+/**
+   \brief Remove face indices if mask is below threshold.
+   \param cell_or_face_ids Container with mesh boundary face indices.
+   \param mask Scalar field.
+   \param threshold Threshold.
+*/
+template <typename Container, typename Mesh, typename Mask>
+void apply_mask_patch_faces_inplace(Container &face_ids, Mesh const &mesh,
+                                    Mask const &mask, double threshold = 0.) {
+  useful::swap_erase_if(
+      face_ids, [&mask, &mesh, threshold](Foam::label face_id) {
+        Foam::label patch_id = mesh.boundaryMesh().whichPatch(face_id);
+        return mask.boundaryField()[patch_id][face_id] < threshold;
+      });
+}
+
+/**
+   \brief Remove face indices if mask is below threshold.
+   \param face_ids Container with mesh face indices.
+   \param mask Scalar field.
+   \param threshold Threshold.
+   \return \p Container with indices of elements where mask is below threshold
+   removed. */
+template <typename Container, typename Mesh, typename Mask>
+auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
+                            Mask const &mask, double threshold = 0.) {
+  auto masked_ids = face_ids;
+  apply_mask_patch_faces_inplace(masked_ids, mask, threshold);
+
+  return masked_ids;
+}
+
+template <typename Container, typename Mesh>
+auto uniform_cell_distribution(Container const &cell_ids, Mesh const &mesh) {
+  auto weights = cell_volumes(cell_ids, mesh);
+  return std::discrete_distribution<std::size_t>{weights.begin(),
+                                                 weights.end()};
+}
+
+template <typename Container, typename Mesh>
+auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
+  auto weights = face_areas(face_ids, mesh);
+  return std::discrete_distribution<std::size_t>{weights.begin(),
+                                                 weights.end()};
+}
+
+template <typename Container, typename VectorField, typename Mesh>
+auto fluxweighted_cell_distribution(Container const &cell_ids,
+                                    VectorField const &vector_field,
+                                    Mesh const &mesh) {
+  auto weights = cell_fluxes(cell_ids, vector_field, mesh);
+  if (op::sum(weights) == 0.)
+    throw std::runtime_error{"Cannot define flux-weighted distribution because "
+                             "all cells have zero flux"};
+  return std::discrete_distribution<std::size_t>{weights.begin(),
+                                                 weights.end()};
+}
+
+template <typename Container, typename VectorField, typename Locator>
+auto fluxweighted_face_distribution(Container const &face_ids,
+                                    VectorField const &vector_field,
+                                    Locator const &locator) {
+  auto weights = face_areas(face_ids, locator.mesh());
+  if (op::sum(weights) == 0.)
+    throw std::runtime_error{"Cannot define flux-weighted distribution because "
+                             "all faces have zero flux"};
+  return std::discrete_distribution<std::size_t>{weights.begin(),
+                                                 weights.end()};
+}
+
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \return Number of absorbed particles.
+   \note Particle states must define:
+   - <tt>info.absorbed</tt> [bool or integer type]
+   - \c time
+*/
 template <typename Subject>
 std::size_t nr_absorbed(Subject const &subject, double time) {
   std::size_t absorbed = 0;
-  for (auto const &part : subject.particles())
-
-    if (part.state_new().info.absorbed && part.state_old().time <= time)
+  for (auto const &part : subject.particles()) {
+    auto const &state_new = part.state_new();
+    if (state_new.info.absorbed && state_new.time <= time)
       ++absorbed;
+  }
   return absorbed;
-};
+}
 
 /**
-\param subject CTRW object.
-\param time Current time.
-\return Total mass.
-\note Particle states must implement:
- - mass [double]
- - info.absorbed [std::size_t]
- - time */
+   \param subject CTRW object.
+   \param time Current time.
+   \return Total mass.
+   \note Particle states must define:
+   - \c mass
+   - \c time
+*/
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
-  for (auto const &part : subject.particles())
-    if (!part.state_new().info.absorbed && part.state_old().time <= time) {
-      mass += part.state_new().mass;
-    }
+  for (auto const &part : subject.particles()) {
+    auto const &state_new = part.state_new();
+    auto const &state_old = part.state_old();
+    if (state_new.time >= time && state_old.time <= time)
+      mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+  }
   return mass;
-};
+}
 
 /**
- \param subject CTRW object.
- \param time Current time.
- \param locator Object to locate positions in mesh.
- \param masks Container of mask reference wrappers. Masks are scalar fields
- assigning values to mesh cells through operator[].
- \param tolerances Vector of
- tolerances for each mask, such that cells where a mask is above the tolerance
- are considered.
- \return Total masses in regions specified by masks.
- \note
- -Particle states must implement:
- -# mass [double]
- -# info.absorbed [std::size_t]
- -# time
- - \c tolerances must have at least the same size as \c masks
+   \param subject CTRW object.
+   \param time Current time.
+   \param locator Object to locate positions in mesh.
+   \param masks Scalar fields.
+   \param thresholds Thresholds for each mask.
+   \return Total masses in regions where mask is above or equal to threshold.
+   \note
+   -Particle states must define:
+   -# mass
+   -# time
+   -# cell
+   - \c thresholds must have at least the same size as \c masks
 */
-template <typename Subject, typename Locator, typename Mask>
-auto mass(Subject const &subject, double time, Locator const &locator,
+template <typename Subject, typename Mask>
+auto mass(Subject const &subject, double time,
           std::vector<std::reference_wrapper<const Mask>> masks,
-          std::vector<double> tolerances) {
+          std::vector<double> thresholds) {
   std::vector<double> masses(masks.size(), 0.);
   for (auto const &part : subject.particles()) {
-    if (!part.state_new().info.absorbed && part.state_old().time <= time) {
-      auto cell = locator(part.state_new());
-      for (std::size_t ii = 0; ii < masks.size(); ++ii) {
-        if (cell >= 0 && masks[ii].get()[cell] > tolerances[ii])
-          masses[ii] += part.state_new().mass;
-      }
+    auto const &state_new = part.state_new();
+    auto const &state_old = part.state_old();
+    auto cell_new = state_new.cell;
+    auto cell_old = state_old.cell;
+    if (!outside(cell_new) && !outside(cell_old) && state_new.time >= time &&
+        state_old.time <= time) {
+      for (std::size_t ii = 0; ii < masks.size(); ++ii)
+        if (masks[ii].get()[cell_new] >= thresholds[ii] &&
+            masks[ii].get()[cell_old] >= thresholds[ii])
+          masses[ii] +=
+              ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
     }
   }
   return masses;
-};
+}
 
-/**
-  \param subject CTRW object.
-  \param time Current time.
-  \param getter_position Get position from state, gets position directly by
-  default.
-  \return Mean position (weighted by mass).
-  \note Particle states must implement:
-  - position [for default positition getter]
-  - info.absorbed [std::size_t]
-  - mass
-  - time
-*/
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
-auto position_mean(Subject const &subject, double time,
-                   GetterPosition getter_position = {}) {
-  decltype(getter_position(subject.particles(0).state_new())) position_mean =
-      Foam::zero{};
-  for (auto const &part : subject.particles()) {
-    auto const &state = part.state_new();
-    if (!state.info.absorbed && part.state_old().time <= time) {
-      position_mean += state.mass * getter_position(state);
+  /**
+     \param subject CTRW object.
+     \param time Current time.
+     \param getter_position Get position from state, gets position directly by
+     default.
+     \return Mean position (weighted by mass).
+     \note Particle states must define:
+     - \c position [for default position getter]
+     - \c mass
+     - \c time
+  */
+  template <typename Subject, typename GetterPosition = ctrw::Get_position>
+  auto position_mean(Subject const &subject, double time,
+                     GetterPosition getter_position = {}) {
+    using Position =
+        decltype(getter_position(subject.particles(0).state_new()));
+    Position position_mean = Foam::zero{};
+    for (auto const &part : subject.particles()) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time)
+        position_mean +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+            ctrw::Get_interp{time, getter_position}(state_new, state_old);
     }
+    return position_mean / mass(subject, time);
   }
-  return position_mean / mass(subject, time);
-};
 
-/**
- \param subject CTRW object.
- \param time Current time.
- \param getter_position Get position from state, gets position directly by
- default.
- \return Second moment of position (weighted by mass).
- \note Particle states must implement:
- - position [for default positition getter]
- - info.absorbed [std::size_t]
- - mass
-*/
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
-auto position_second_moment(Subject const &subject, double time,
-                            GetterPosition getter_position = {}) {
-  decltype(getter_position(subject.particles(0).state_new())) second_moment =
-      Foam::zero{};
-  for (auto const &part : subject.particles()) {
-    auto const &state = part.state_new();
-    if (!state.info.absorbed && part.state_old().time <= time)
-      op::plus_inplace(
-          second_moment,
-          op::times_scalar(state.mass, op::square(getter_position(state))));
-  }
-  return second_moment / mass(subject, time);
-};
-
-/**
- \param subject CTRW object.
- \param exponents Order of moment or vector with order for each dimension.
- \param time Current time.
- \param getter_position Get position from state, gets \c position directly by
- default.
- \return Nth moment of position (weighted by mass).
- \note Particle states must implement:
- - position [for default positition getter]
- - info.absorbed [std::size_t]
- - mass
-*/
-template <typename Subject, typename Exponents,
-          typename GetterPosition = ctrw::Get_position>
-auto position_moment(Subject const &subject, Exponents const &exponents,
-                     double time, GetterPosition getter_position = {}) {
-  decltype(getter_position(subject.particles(0).state_new())) moment =
-      Foam::zero{};
-  for (auto const &part : subject.particles()) {
-    auto const &state = part.state_new();
-    if (!state.info.absorbed && part.state_old().time <= time)
-      op::plus_inplace(
-          moment, op::times_scalar(state.mass,
-                                   op::pow(getter_position(state), exponents)));
-  }
-  return moment / mass(subject, time);
-};
-
-/**
-\param subject CTRW object.
-\param time Current time.
-\param getter_position Get position from state, gets position directly by
-default.
-\return Position variance (weighted by mass).
-\note Particle states must implement:
-- position [for default positition getter]
-- info.absorbed [std::size_t]
-- mass
-*/
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
-auto position_variance(Subject const &subject, double time,
-                       GetterPosition getter_position = {}) {
-  return position_second_moment(subject, time, getter_position) -
-         op::square(position_mean(subject, time, getter_position));
-};
-
-/**
-  \param subject CTRW object.
-  \param time Current time.
-  \param getter_position Get position from state, gets position directly by
-  default.
-  \return Mean field value (weighted by mass).
-  \note Particle states must implement:
-  - info.absorbed [std::size_t]
-  - mass
-  - time
-*/
-template <typename Subject, typename Field,
-          typename GetterPosition = ctrw::Get_position>
-auto mean(Subject const &subject, double time, Field const &field) {
-  decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
-  for (auto const &part : subject.particles()) {
-    auto const &state = part.state_new();
-    if (!state.info.absorbed && part.state_old().time <= time) {
-      field_mean += state.mass * field(state);
+  /**
+     \param subject CTRW object.
+     \param time Current time.
+     \param getter_position Get position from state, gets position directly by
+     default.
+     \return Second moment of position (weighted by mass).
+     \note Particle states must define:
+     - \c position [for default positition getter]
+     - \c mass
+  */
+  template <typename Subject, typename GetterPosition = ctrw::Get_position>
+  auto position_second_moment(Subject const &subject, double time,
+                              GetterPosition getter_position = {}) {
+    using Position =
+        decltype(getter_position(subject.particles(0).state_new()));
+    Position second_moment = Foam::zero{};
+    for (auto const &part : subject.particles()) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time)
+        second_moment +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+            op::square(
+                ctrw::Get_interp{time, getter_position}(state_new, state_old));
     }
+    return second_moment / mass(subject, time);
   }
-  return field_mean / mass(subject, time);
-};
 
-/** \brief Output time information.
- \param output Output stream.
- \param params Output parameters, holding time_unit_factor to rescale \p time.
- \param time Current time.
- */
-template <typename OStream, typename ParametersOutput>
-void info_time(OStream &output, ParametersOutput const &params, double time) {
-  output << "Time "
-         << "[" << params.time_units
-         << " time units]: " << time / params.time_unit_factor << "\n";
-}
+  /**
+     \param subject CTRW object.
+     \param exponents Order of moment or vector with order for each dimension.
+     \param time Current time.
+     \param getter_position Get position from state, gets \c position directly
+     by default. \return Nth moment of position (weighted by mass). \note
+     Particle states must define:
+     - \c position [for default positition getter]
+     - \c mass
+  */
+  template <typename Subject, typename Exponents,
+            typename GetterPosition = ctrw::Get_position>
+  auto position_moment(Subject const &subject, Exponents const &exponents,
+                       double time, GetterPosition getter_position = {}) {
+    decltype(getter_position(subject.particles(0).state_new())) moment =
+        Foam::zero{};
+    for (auto const &part : subject.particles()) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time)
+        moment +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+            op::pow(
+                ctrw::Get_interp{time, getter_position}(state_new, state_old),
+                exponents);
+    }
+    return moment / mass(subject, time);
+  }
 
-/** \brief Output information about fraction of particles that have not been
- absorbed.
- \param output Output stream. \param subject CTRW object.
- \param time Current time.
- \note Particle states must implement:
- - info.absorbed [std::size_t]
-*/
-template <typename OStream, typename Subject>
-void info_fraction_not_absorbed(OStream &output, Subject const &subject,
-                                double time) {
-  output << "Fraction not absorbed: "
-         << 1. - double(ptof::nr_absorbed(subject, time)) / subject.size()
-         << "\n";
-}
+  /**
+     \param subject CTRW object.
+     \param time Current time.
+     \param getter_position Get position from state, gets position directly by
+     default.
+     \return Position variance (weighted by mass).
+     \note Particle states must define:
+     - \c position [for default positition getter]
+     - \c mass
+  */
+  template <typename Subject, typename GetterPosition = ctrw::Get_position>
+  auto position_variance(Subject const &subject, double time,
+                         GetterPosition getter_position = {}) {
+    return position_second_moment(subject, time, getter_position) -
+           op::square(position_mean(subject, time, getter_position));
+  }
 
-/** \return Identifier string for output file names. */
-inline std::string identifier(std::string const &model_name,
-                              std::string const &case_name,
-                              std::string const &of_case_name,
-                              std::string const &params_transport_name,
-                              std::string const &params_reaction_name,
-                              std::string const &params_solvers_name,
-                              std::string const &params_initial_condition_name,
-                              std::string const &params_output_name) {
-  return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name + "_T_" +
-         params_transport_name + "_R_" + params_reaction_name + "_S_" +
-         params_solvers_name + "_I_" + params_initial_condition_name + "_O_" +
-         params_output_name;
-}
+  /**
+     \param subject CTRW object.
+     \param time Current time.
+     \param getter_position Get position from state, gets position directly by
+     default.
+     \return Mean field value (weighted by mass).
+     \note Particle states must define:
+     - \c mass
+     - \c time
+  */
+  template <typename Subject, typename Field,
+            typename GetterPosition = ctrw::Get_position>
+  auto mean(Subject const &subject, double time, Field const &field) {
+    decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
+    for (auto const &part : subject.particles()) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
+      if (state_new.time >= time && state_old.time <= time)
+        field_mean +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+            ctrw::Get_interp{time, ctrw::Get_property{field}}(state_new,
+                                                              state_old);
+    }
+    return field_mean / mass(subject, time);
+  }
 
-/** \return Identifier string for output file names. */
-inline std::string identifier(std::string const &model_name,
-                              std::string const &case_name,
-                              std::string const &of_case_name,
-                              std::string const &params_transport_name,
-                              std::string const &params_reaction_name,
-                              std::string const &params_solvers_name,
-                              std::string const &params_initial_condition_name,
-                              std::string const &params_output_name,
-                              std::size_t run_nr) {
-  return identifier(model_name, case_name, of_case_name, params_transport_name,
-                    params_reaction_name, params_solvers_name,
-                    params_initial_condition_name, params_output_name) +
-         "_RUN_" + std::to_string(run_nr);
-}
+  /**
+     \brief Output time information.
+     \param output Output stream.
+     \param params Output parameters, holding time_unit_factor to rescale \p
+     time. \param time Current time.
+   */
+  template <typename OStream, typename ParametersOutput>
+  void info_time(OStream & output, ParametersOutput const &params,
+                 double time) {
+    output << "Time "
+           << "[" << params.time_units
+           << " time units]: " << time / params.time_unit_factor << "\n";
+  }
 
-/** \return Identifier string for output file names. */
-inline std::string identifier(std::string const &model_name,
-                              std::string const &case_name,
-                              std::string const &of_case_name,
-                              std::string const &params_transport_name,
-                              std::string const &params_phase_name,
-                              std::string const &params_reaction_name,
-                              std::string const &params_solvers_name,
-                              std::string const &params_initial_condition_name,
-                              std::string const &params_output_name) {
-  return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name + "_T_" +
-         params_transport_name + "_P_" + params_phase_name + "_R_" +
-         params_reaction_name + "_S_" + params_solvers_name + "_I_" +
-         params_initial_condition_name + "_O_" + params_output_name;
-}
+  /**
+     \brief Output information about fraction of particles that have not been
+     absorbed.
+     \param output Output stream.
+     \param subject CTRW object.
+     \param time Current time.
+     \note Particle states must define:
+     - <tt>info.absorbed</tt> [std::size_t]
+  */
+  template <typename OStream, typename Subject>
+  void info_fraction_not_absorbed(OStream & output, Subject const &subject,
+                                  double time) {
+    output << "Fraction not absorbed: "
+           << 1. - double(ptof::nr_absorbed(subject, time)) / subject.size()
+           << "\n";
+  }
 
-/** \return Identifier string for output file names. */
-inline std::string identifier(std::string const &model_name,
-                              std::string const &case_name,
-                              std::string const &of_case_name,
-                              std::string const &params_transport_name,
-                              std::string const &params_phase_name,
-                              std::string const &params_reaction_name,
-                              std::string const &params_solvers_name,
-                              std::string const &params_initial_condition_name,
-                              std::string const &params_output_name,
-                              std::size_t run_nr) {
-  return identifier(model_name, case_name, of_case_name, params_transport_name,
-                    params_phase_name, params_reaction_name,
-                    params_solvers_name, params_initial_condition_name,
-                    params_output_name) +
-         "_RUN_" + std::to_string(run_nr);
-}
+  /** \return Identifier string for output file names. */
+  inline std::string identifier(
+      std::string const &model_name, std::string const &case_name,
+      std::string const &of_case_name, std::string const &params_transport_name,
+      std::string const &params_reaction_name,
+      std::string const &params_solvers_name,
+      std::string const &params_initial_condition_name,
+      std::string const &params_output_name) {
+    return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name +
+           "_T_" + params_transport_name + "_R_" + params_reaction_name +
+           "_S_" + params_solvers_name + "_I_" + params_initial_condition_name +
+           "_O_" + params_output_name;
+  }
+
+  /** \return Identifier string for output file names. */
+  inline std::string identifier(
+      std::string const &model_name, std::string const &case_name,
+      std::string const &of_case_name, std::string const &params_transport_name,
+      std::string const &params_reaction_name,
+      std::string const &params_solvers_name,
+      std::string const &params_initial_condition_name,
+      std::string const &params_output_name, std::size_t run_nr) {
+    return identifier(model_name, case_name, of_case_name,
+                      params_transport_name, params_reaction_name,
+                      params_solvers_name, params_initial_condition_name,
+                      params_output_name) +
+           "_RUN_" + std::to_string(run_nr);
+  }
+
+  /** \return Identifier string for output file names. */
+  inline std::string identifier(
+      std::string const &model_name, std::string const &case_name,
+      std::string const &of_case_name, std::string const &params_transport_name,
+      std::string const &params_phase_name,
+      std::string const &params_reaction_name,
+      std::string const &params_solvers_name,
+      std::string const &params_initial_condition_name,
+      std::string const &params_output_name) {
+    return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name +
+           "_T_" + params_transport_name + "_P_" + params_phase_name + "_R_" +
+           params_reaction_name + "_S_" + params_solvers_name + "_I_" +
+           params_initial_condition_name + "_O_" + params_output_name;
+  }
+
+  /** \return Identifier string for output file names. */
+  inline std::string identifier(
+      std::string const &model_name, std::string const &case_name,
+      std::string const &of_case_name, std::string const &params_transport_name,
+      std::string const &params_phase_name,
+      std::string const &params_reaction_name,
+      std::string const &params_solvers_name,
+      std::string const &params_initial_condition_name,
+      std::string const &params_output_name, std::size_t run_nr) {
+    return identifier(model_name, case_name, of_case_name,
+                      params_transport_name, params_phase_name,
+                      params_reaction_name, params_solvers_name,
+                      params_initial_condition_name, params_output_name) +
+           "_RUN_" + std::to_string(run_nr);
+  }
 } // namespace ptof
 
 #endif /* PTOF_USEFUL_H */

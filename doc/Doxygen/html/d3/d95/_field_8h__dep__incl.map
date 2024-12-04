@@ -1,10 +1,9 @@
 <map id="PTOF/Field.h" name="PTOF/Field.h">
-<area shape="rect" id="node1" title=" " alt="" coords="246,5,346,32"/>
-<area shape="rect" id="node2" href="$db/d50/_advection_8h.html" title=" " alt="" coords="5,155,136,181"/>
-<area shape="rect" id="node5" href="$d4/de6/_measurer_time_8h.html" title=" " alt="" coords="104,80,259,107"/>
-<area shape="rect" id="node6" href="$d9/ddf/_output___cases_8h.html" title=" " alt="" coords="167,155,323,181"/>
-<area shape="rect" id="node7" href="$dc/dba/_time_step_adaptor_8h.html" title=" " alt="" coords="334,80,506,107"/>
-<area shape="rect" id="node8" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title=" " alt="" coords="352,155,488,181"/>
-<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title=" " alt="" coords="188,229,303,256"/>
-<area shape="rect" id="node4" href="$d0/dee/_models___parallel_8h.html" title=" " alt="" coords="163,304,327,331"/>
+<area shape="rect" id="node1" title="Field objects with interpolation and other utilities." alt="" coords="246,5,346,32"/>
+<area shape="rect" id="node2" href="$db/d50/_advection_8h.html" title="Utilities for handling velocity field." alt="" coords="5,155,136,181"/>
+<area shape="rect" id="node4" href="$d4/de6/_measurer_time_8h.html" title="Objects to measure and output quantities given a measurement time." alt="" coords="104,80,259,107"/>
+<area shape="rect" id="node5" href="$d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="167,155,323,181"/>
+<area shape="rect" id="node6" href="$dc/dba/_time_step_adaptor_8h.html" title="Objects for adaptive time stepping." alt="" coords="334,80,506,107"/>
+<area shape="rect" id="node7" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="352,155,488,181"/>
+<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="188,229,303,256"/>
 </map>
