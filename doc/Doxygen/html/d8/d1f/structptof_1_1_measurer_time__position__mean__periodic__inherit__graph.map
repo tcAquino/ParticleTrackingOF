@@ -1,0 +1,4 @@
+<map id="ptof::MeasurerTime_position_mean_periodic&lt; Subject, Geometry &gt;" name="ptof::MeasurerTime_position_mean_periodic&lt; Subject, Geometry &gt;">
+<area shape="rect" id="node1" title="Output time and mean position (weighted by mass), with positions accounting for periodicity." alt="" coords="5,95,171,151"/>
+<area shape="rect" id="node2" href="$dc/d05/structptof_1_1_measurer_time.html" title="Abstract polymorphic output handler for outputting time and some quantity." alt="" coords="11,5,165,47"/>
+</map>

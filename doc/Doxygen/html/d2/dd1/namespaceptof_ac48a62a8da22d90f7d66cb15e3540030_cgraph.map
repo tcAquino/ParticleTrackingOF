@@ -1,0 +1,6 @@
+<map id="ptof::cell_fluxes" name="ptof::cell_fluxes">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,120,57"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a67ae1ccdfc452d83b87bc00d30e4ff2f" title=" " alt="" coords="168,31,268,57"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="319,5,434,32"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="316,56,437,83"/>
+</map>

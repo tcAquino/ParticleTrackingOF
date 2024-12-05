@@ -1,0 +1,5 @@
+<map id="ptof::face_center_is_in_mesh" name="ptof::face_center_is_in_mesh">
+<area shape="rect" id="node1" title="Sometimes the face center associated with a mesh face is not considered within the cell and may be ou..." alt="" coords="5,23,155,65"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="203,5,333,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="217,56,319,83"/>
+</map>

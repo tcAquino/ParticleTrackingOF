@@ -1,0 +1,4 @@
+<map id="geom::translate_back" name="geom::translate_back">
+<area shape="rect" id="node1" title="Translate position backwards along basis vectors of symmetry planes." alt="" coords="236,5,399,32"/>
+<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a4fc84e21684ae11357a063628682fca9" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,5,188,32"/>
+</map>

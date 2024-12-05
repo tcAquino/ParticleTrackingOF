@@ -1,0 +1,8 @@
+<map id="ptof::InitialCondition_DistributedFaceCenters::make_position_and_hint" name="ptof::InitialCondition_DistributedFaceCenters::make_position_and_hint">
+<area shape="rect" id="node1" title=" " alt="" coords="5,41,176,97"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ac7024364e76842305fdea9fe67706e3b" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="224,49,357,90"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="417,5,531,32"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="591,60,711,87"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#ab292ea279bbaf58427c1603cbb72a7b5" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="405,107,543,149"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="603,115,698,141"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="ptof::MeasurementSpacing::name" name="ptof::MeasurementSpacing::name">
+<area shape="rect" id="node1" title="Name from type." alt="" coords="807,79,1003,120"/>
+<area shape="rect" id="node2" href="$d3/da6/structptof_1_1_measurement_spacing.html#a02bd7712dbc94561832d12f748dda1a8" title="Check if name exists." alt="" coords="563,13,759,55"/>
+<area shape="rect" id="node3" href="$d3/da6/structptof_1_1_measurement_spacing.html#a1b9b2b415e597fca989c72c9e90146cc" title="Type from name." alt="" coords="563,79,759,120"/>
+<area shape="rect" id="node4" href="$d5/de8/classptof_1_1_output___cases.html#af1c33376f2fc476e7b149cee16320817" title="Output information about current object." alt="" coords="331,5,477,47"/>
+<area shape="rect" id="node5" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a12699b6d59fb03defd762e7baa686429" title="Read measurement spacing type from input stream." alt="" coords="303,71,505,127"/>
+<area shape="rect" id="node7" href="$d5/de8/classptof_1_1_output___cases.html#a66bbc08aaaf664140dc817f30630f0be" title="Set time of next measurement." alt="" coords="293,152,515,193"/>
+<area shape="rect" id="node6" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,79,245,120"/>
+</map>

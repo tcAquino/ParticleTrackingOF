@@ -1,0 +1,7 @@
+<map id="useful::chop" name="useful::chop">
+<area shape="rect" id="node1" title="If to_chop is smaller than tolerance, replace it with replace_with." alt="" coords="5,5,107,32"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="155,5,224,32"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="272,5,363,32"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="282,56,353,83"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a2b31f2c11ab895bd6137eca382720c0d" title="Element&#45;wise square root." alt="" coords="411,56,481,83"/>
+</map>

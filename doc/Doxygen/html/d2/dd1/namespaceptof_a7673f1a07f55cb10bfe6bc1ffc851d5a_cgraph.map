@@ -1,0 +1,5 @@
+<map id="ptof::offset_forward_cell_keep_inside" name="ptof::offset_forward_cell_keep_inside">
+<area shape="rect" id="node1" title="Small offset forward." alt="" coords="5,23,155,65"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a1cf7b993521b555fe198dbb5980eb438" title="Small offset outward along face normal starting from face center." alt="" coords="203,5,325,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="213,56,315,83"/>
+</map>

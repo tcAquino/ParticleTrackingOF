@@ -1,0 +1,33 @@
+<map id="io::remove_carriage_return_in_place" name="io::remove_carriage_return_in_place">
+<area shape="rect" id="node1" title="Remove." alt="" coords="851,150,1003,191"/>
+<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#ac21286bff86df484360ec18680bd501d" title="Load file into vector of vectors of doubles." alt="" coords="440,5,511,32"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#a2241c961926d320a0691d4eb5a62918d" title="Load 1&#45;column file into vector of doubles." alt="" coords="433,56,518,83"/>
+<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a9eef99be14203759679ab7f542aeb0af" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="433,107,518,133"/>
+<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#a375aeae64bc3a6208b5343df9ac2777e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="417,157,534,184"/>
+<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#a674e1af6fffb7b3cf9458832d7197ceb" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="389,208,561,235"/>
+<area shape="rect" id="node8" href="$d1/d96/namespaceio.html#a9c554f2ee943941037a6cf12b06d3362" title="Remove." alt="" coords="651,727,803,769"/>
+<area shape="rect" id="node9" href="$d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="676,676,777,703"/>
+<area shape="rect" id="node7" href="$d1/d96/namespaceio.html#a106fc4b6c7919bfe29ec971999505634" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="67,208,239,235"/>
+<area shape="rect" id="node10" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="403,1391,547,1433"/>
+<area shape="rect" id="node12" href="$d7/db0/structptof_1_1_initial_condition___prescribed_positions.html#ab4c2d354acb567fee6c7bd374877b740" title="Make a single position along with location hint." alt="" coords="385,1457,565,1513"/>
+<area shape="rect" id="node13" href="$d9/d62/structptof_1_1_initial_condition___prescribed_positions_masses.html#a46cd3da15578c4427f19519c77d49434" title="Make a single position along with location hint." alt="" coords="373,1537,578,1593"/>
+<area shape="rect" id="node14" href="$d4/da9/structptof_1_1_initial_condition___prescribed_positions_masses_tags.html#a6aa3fdc3c5f6a8dbd4b4e192cbc21ea0" title="Make a single position along with location hint." alt="" coords="358,1617,593,1673"/>
+<area shape="rect" id="node15" href="$d0/d04/structptof_1_1_initial_condition___prescribed_positions_masses_tags_times.html#ab1d498809cb64a323394c9685edd704b" title="Make a single position along with location hint." alt="" coords="358,1697,593,1753"/>
+<area shape="rect" id="node16" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="403,259,547,301"/>
+<area shape="rect" id="node17" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="33,435,273,477"/>
+<area shape="rect" id="node18" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title="Constructor." alt="" coords="387,589,563,630"/>
+<area shape="rect" id="node19" href="$d7/d05/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction_1_1_parameters.html#a3c3597b42d548333c2a7dfcdbbbde6e5" title=" " alt="" coords="381,654,569,725"/>
+<area shape="rect" id="node20" href="$df/df0/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_solvers_1_1_parameters.html#a5bdc1d1de45eaee825e547cf1939347b" title=" " alt="" coords="354,749,597,805"/>
+<area shape="rect" id="node21" href="$d5/d3e/structptof_1_1model__advection__2d_1_1_definitions_1_1_solvers_1_1_parameters.html#a7eb1e7f48ba7735d0c19ad90d800a5dd" title=" " alt="" coords="382,829,569,885"/>
+<area shape="rect" id="node22" href="$dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8a12e645c6acfcb3a5aeb8af52b62040" title=" " alt="" coords="382,910,569,981"/>
+<area shape="rect" id="node23" href="$dd/d5e/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport_1_1_parameters.html#ac217149f4e047aa064b27eb21ac9a7b2" title=" " alt="" coords="380,1005,571,1061"/>
+<area shape="rect" id="node24" href="$dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#af1efc545706c65a80cee44242ca15a5f" title=" " alt="" coords="348,1085,603,1141"/>
+<area shape="rect" id="node25" href="$d8/d17/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport_1_1_parameters.html#a81ebdc07bcbd089b2b6c72002cca3196" title=" " alt="" coords="379,1166,571,1237"/>
+<area shape="rect" id="node26" href="$d8/d12/structptof_1_1_output_parameters___cases.html#afc7d74dd713a38a70e32d0b47c9d19e8" title="Read end criterion from input stream." alt="" coords="377,325,574,366"/>
+<area shape="rect" id="node27" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a12699b6d59fb03defd762e7baa686429" title="Read measurement spacing type from input stream." alt="" coords="374,391,577,447"/>
+<area shape="rect" id="node28" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a37c3a03bdf38eb32be577c31d038bfa2" title="Read measurement type from input stream." alt="" coords="352,471,599,513"/>
+<area shape="rect" id="node29" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a96079ed4219946dff4a8d420286f8b54" title="Read initial condition info from input stream." alt="" coords="355,1326,596,1367"/>
+<area shape="rect" id="node31" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a90cc9a3192dde068ef32e830bf0e5c1b" title="Read initial condition type and specific parameters." alt="" coords="358,1261,593,1302"/>
+<area shape="rect" id="node11" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="81,1391,225,1433"/>
+<area shape="rect" id="node30" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2" title=" " alt="" coords="5,1293,300,1334"/>
+</map>

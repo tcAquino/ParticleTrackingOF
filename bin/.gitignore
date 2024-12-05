@@ -1,0 +1,8 @@
+*
+*/
+!release/
+!release/**
+!debug/
+!debug/**
+!.gitignore
+

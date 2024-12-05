@@ -1,0 +1,7 @@
+<map id="ptof::OutputParameters::read_end_criterion" name="ptof::OutputParameters::read_end_criterion">
+<area shape="rect" id="node1" title="Read end criterion from input stream." alt="" coords="5,71,179,112"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a5311197ad21c705ad8556c9798a30d0e" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="227,71,357,112"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12" title="Remove comments after escape sequence." alt="" coords="418,5,573,47"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="405,71,585,112"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="446,137,545,163"/>
+</map>

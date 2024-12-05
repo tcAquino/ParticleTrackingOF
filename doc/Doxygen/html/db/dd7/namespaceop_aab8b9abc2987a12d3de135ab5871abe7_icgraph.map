@@ -1,0 +1,8 @@
+<map id="op::times" name="op::times">
+<area shape="rect" id="node1" title="Element&#45;wise multiplication." alt="" coords="253,136,336,163"/>
+<area shape="rect" id="node2" href="$d7/dda/structctrw_1_1_get__position__periodic__cartesian.html#a692c3237d204ba5ddbd3be61583c1e0a" title=" " alt="" coords="31,5,179,61"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a167c0a4fe56dddad477dcfd3c5a05f79" title="Element&#45;wise multiplication." alt="" coords="64,85,147,112"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a38dbd5c863a81242c2c7d0e453eb692f" title="Element&#45;wise multiplication." alt="" coords="37,136,174,163"/>
+<area shape="rect" id="node5" href="$d8/d1f/classgeom_1_1_boundary___periodic.html#afafd90feed6104e8fa303e26ff48af93" title="Translate a position according to projection in periodic cell." alt="" coords="11,187,199,229"/>
+<area shape="rect" id="node6" href="$d8/d11/classgeom_1_1_boundary___periodic___with_outside_info.html#ab50748fa677fc8faad1f60763b537a1f" title="Translate a position according to projection in periodic cell." alt="" coords="5,253,205,294"/>
+</map>

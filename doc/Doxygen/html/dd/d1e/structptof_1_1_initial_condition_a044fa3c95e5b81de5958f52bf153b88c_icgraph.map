@@ -1,0 +1,10 @@
+<map id="ptof::InitialCondition::make_position_and_hint" name="ptof::InitialCondition::make_position_and_hint">
+<area shape="rect" id="node1" title="Make a single position along with location hint." alt="" coords="641,136,812,177"/>
+<area shape="rect" id="node2" href="$dd/d1e/structptof_1_1_initial_condition.html#af64a61a66ccf6dd64061a8db654b049a" title="Make a single particle." alt="" coords="443,71,581,112"/>
+<area shape="rect" id="node6" href="$dd/d1e/structptof_1_1_initial_condition.html#a3bc5c42ece5578a6591c9c0b37f42c01" title="Make a single position." alt="" coords="443,136,581,177"/>
+<area shape="rect" id="node8" href="$d4/d7b/structptof_1_1_boundary___reinject.html#a046e0387b90e6ec8e7be9b38e9951614" title="Enforce boundary condition." alt="" coords="431,201,593,243"/>
+<area shape="rect" id="node3" href="$dd/d1e/structptof_1_1_initial_condition.html#a455df9e200782d7f209605417c2013bf" title=" " alt="" coords="218,5,357,47"/>
+<area shape="rect" id="node5" href="$d5/d94/structptof_1_1_initial_condition___continuous.html#a952fd31d043b007ad40174fc4af71e0e" title=" " alt="" coords="192,71,383,112"/>
+<area shape="rect" id="node4" href="$dd/d1e/structptof_1_1_initial_condition.html#a0fb1e232bf0c2a78791e80f6691ca638" title="Make particles." alt="" coords="5,5,144,47"/>
+<area shape="rect" id="node7" href="$dd/d1e/structptof_1_1_initial_condition.html#a65d0032f8bd7e61713149a05ae1f1ec3" title=" " alt="" coords="218,136,357,177"/>
+</map>

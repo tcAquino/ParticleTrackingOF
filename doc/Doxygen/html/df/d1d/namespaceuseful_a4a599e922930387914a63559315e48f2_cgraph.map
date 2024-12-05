@@ -1,0 +1,4 @@
+<map id="useful::swap_erase" name="useful::swap_erase">
+<area shape="rect" id="node1" title="Swap&#45;erase elements in container at indices indices." alt="" coords="5,5,152,32"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ac3e6b848d8ef9eba06dbc51d69fda7d4" title="Copy end element of container to index idx, then erase end element." alt="" coords="200,5,347,32"/>
+</map>

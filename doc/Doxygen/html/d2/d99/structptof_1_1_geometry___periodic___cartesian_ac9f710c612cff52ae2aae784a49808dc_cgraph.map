@@ -1,0 +1,5 @@
+<map id="ptof::Geometry_Periodic_Cartesian::info" name="ptof::Geometry_Periodic_Cartesian::info">
+<area shape="rect" id="node1" title="Output generic information about object." alt="" coords="5,5,184,47"/>
+<area shape="rect" id="node2" href="$d9/d9c/structptof_1_1_dynamics.html#aa374baa881964be414677edb6a73c662" title="Get name from type." alt="" coords="232,13,397,39"/>
+<area shape="rect" id="node3" href="$d9/d9c/structptof_1_1_dynamics.html#a1daeaeb2fd564dba29a57ed85e750fd1" title="Get type from name." alt="" coords="445,13,603,39"/>
+</map>

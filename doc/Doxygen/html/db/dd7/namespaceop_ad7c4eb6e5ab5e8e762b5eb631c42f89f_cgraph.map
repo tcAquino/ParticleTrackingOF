@@ -1,0 +1,9 @@
+<map id="op::normalize_inplace" name="op::normalize_inplace">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,153,83"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="244,19,309,45"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a49b514a21b533a96c3a47c74c259212d" title="Element&#45;wise division by scalar." alt="" coords="201,81,352,108"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="408,5,495,32"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="418,56,485,83"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a2b31f2c11ab895bd6137eca382720c0d" title="Element&#45;wise square root." alt="" coords="551,56,617,83"/>
+<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#a7ae5ec63d74d4cae92a9763df2cb0d2b" title="Element&#45;wise division by scalar." alt="" coords="400,107,503,133"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="op::linearop" name="op::linearop">
+<area shape="rect" id="node1" title="lambda_1*input_1+lambda_2*input2." alt="" coords="480,148,579,175"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a8fe3b492063e0c76b5475f1fb5df4708" title="lambda_1*input_1+lambda_2*input2." alt="" coords="288,5,387,32"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a74492bab6e568d339c9cb9f964d6ed8c" title="lambda_1*input_1+lambda_2*input2." alt="" coords="261,56,414,83"/>
+<area shape="rect" id="node4" href="$db/d5a/classctrw_1_1_transitions___velocity___acceleration.html#aaaf4045fd954e3cff7088704fdb56098" title=" " alt="" coords="244,107,431,149"/>
+<area shape="rect" id="node5" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#aab8567de2cefe3fdda201376a0cc8b9a" title=" " alt="" coords="244,173,431,214"/>
+<area shape="rect" id="node6" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="251,238,423,279"/>
+<area shape="rect" id="node8" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="243,303,432,345"/>
+<area shape="rect" id="node7" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="14,238,186,279"/>
+<area shape="rect" id="node9" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,303,195,345"/>
+</map>

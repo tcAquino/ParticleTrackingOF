@@ -1,0 +1,5 @@
+<map id="ptof::InitialCondition_UniformCellCenters&lt; ParticleMaker, Geometry, CellIdContainer &gt;" name="ptof::InitialCondition_UniformCellCenters&lt; ParticleMaker, Geometry, CellIdContainer &gt;">
+<area shape="rect" id="node1" title="Initial condition at uniformly randomly distributed cell centers (weighted by cell volume)." alt="" coords="487,20,717,76"/>
+<area shape="rect" id="node2" href="$d7/d02/structptof_1_1_initial_condition___distributed_cell_centers.html" title=" " alt="" coords="244,5,439,91"/>
+<area shape="rect" id="node3" href="$dd/d1e/structptof_1_1_initial_condition.html" title="Make particles and positions according to prescribed rules." alt="" coords="5,27,196,69"/>
+</map>

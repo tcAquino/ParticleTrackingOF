@@ -1,0 +1,5 @@
+<map id="io::split_line" name="io::split_line">
+<area shape="rect" id="node1" title="Read and split next line, discarding escaped lines." alt="" coords="5,46,107,73"/>
+<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="157,5,304,47"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="155,71,307,112"/>
+</map>

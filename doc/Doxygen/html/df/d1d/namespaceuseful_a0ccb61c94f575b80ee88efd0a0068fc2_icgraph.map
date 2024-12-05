@@ -1,0 +1,17 @@
+<map id="useful::split" name="useful::split">
+<area shape="rect" id="node1" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="459,150,548,177"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="280,7,411,48"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd" title="Load file into vector of vectors of doubles." alt="" coords="301,74,390,101"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a98cb712af3c27b2f8650b4c78d181e3c" title="Load 1&#45;column file into vector of doubles." alt="" coords="294,125,397,151"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a0363b363a89bc9844a8a29f1908ae11e" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="294,175,397,202"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a78d057731be2e6d3e8ea19bd807e11f0" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="280,226,411,253"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#a15d820b4096cdb22b03d681f6808a38c" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="286,279,405,320"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="53,5,184,47"/>
+<area shape="rect" id="node9" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="52,71,185,112"/>
+<area shape="rect" id="node10" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,136,232,177"/>
+<area shape="rect" id="node11" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title="Constructor." alt="" coords="37,201,201,243"/>
+<area shape="rect" id="node12" href="$d7/d05/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction_1_1_parameters.html#a3c3597b42d548333c2a7dfcdbbbde6e5" title=" " alt="" coords="32,267,205,337"/>
+<area shape="rect" id="node13" href="$df/df0/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_solvers_1_1_parameters.html#a5bdc1d1de45eaee825e547cf1939347b" title=" " alt="" coords="7,362,231,418"/>
+<area shape="rect" id="node14" href="$d5/d3e/structptof_1_1model__advection__2d_1_1_definitions_1_1_solvers_1_1_parameters.html#a7eb1e7f48ba7735d0c19ad90d800a5dd" title=" " alt="" coords="33,442,205,498"/>
+<area shape="rect" id="node15" href="$df/d1d/namespaceuseful.html#ac4a217c58253612e3abdf8481e2e83b0" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="59,523,178,564"/>
+</map>

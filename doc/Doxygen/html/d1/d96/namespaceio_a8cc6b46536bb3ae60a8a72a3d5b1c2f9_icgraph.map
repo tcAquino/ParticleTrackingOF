@@ -1,0 +1,21 @@
+<map id="io::open_read" name="io::open_read">
+<area shape="rect" id="node1" title="Open file for reading." alt="" coords="540,465,651,491"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="273,5,417,47"/>
+<area shape="rect" id="node4" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2" title=" " alt="" coords="197,71,492,112"/>
+<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#ac21286bff86df484360ec18680bd501d" title="Load file into vector of vectors of doubles." alt="" coords="309,137,380,163"/>
+<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#a2241c961926d320a0691d4eb5a62918d" title="Load 1&#45;column file into vector of doubles." alt="" coords="302,187,387,214"/>
+<area shape="rect" id="node7" href="$d1/d96/namespaceio.html#a9eef99be14203759679ab7f542aeb0af" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="302,238,387,265"/>
+<area shape="rect" id="node8" href="$d1/d96/namespaceio.html#a375aeae64bc3a6208b5343df9ac2777e" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="286,289,403,315"/>
+<area shape="rect" id="node9" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="273,340,417,381"/>
+<area shape="rect" id="node10" href="$d1/d96/namespaceio.html#a707dd22667c1484ffd43c6b3c5f9a200" title="Get number of numbers in first line of file." alt="" coords="244,406,445,433"/>
+<area shape="rect" id="node11" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="225,457,465,499"/>
+<area shape="rect" id="node12" href="$de/d93/structptof_1_1_phase_1_1_parameters.html#a8c65207db79beabd334fd015cb9c3847" title="Constructor." alt="" coords="257,523,433,564"/>
+<area shape="rect" id="node13" href="$d7/d05/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction_1_1_parameters.html#a3c3597b42d548333c2a7dfcdbbbde6e5" title=" " alt="" coords="251,588,439,659"/>
+<area shape="rect" id="node14" href="$df/df0/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_solvers_1_1_parameters.html#a5bdc1d1de45eaee825e547cf1939347b" title=" " alt="" coords="223,683,466,739"/>
+<area shape="rect" id="node15" href="$d5/d3e/structptof_1_1model__advection__2d_1_1_definitions_1_1_solvers_1_1_parameters.html#a7eb1e7f48ba7735d0c19ad90d800a5dd" title=" " alt="" coords="251,763,438,819"/>
+<area shape="rect" id="node16" href="$dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a8a12e645c6acfcb3a5aeb8af52b62040" title=" " alt="" coords="251,844,438,915"/>
+<area shape="rect" id="node17" href="$dd/d5e/structptof_1_1model__advection__2d_1_1_definitions_1_1_transport_1_1_parameters.html#ac217149f4e047aa064b27eb21ac9a7b2" title=" " alt="" coords="249,939,440,995"/>
+<area shape="rect" id="node18" href="$dc/dec/structptof_1_1model__bcc__cartesian__advection__diffusion_1_1_definitions_1_1_transport_1_1_parameters.html#af1efc545706c65a80cee44242ca15a5f" title=" " alt="" coords="217,1019,472,1075"/>
+<area shape="rect" id="node19" href="$d8/d17/structptof_1_1model__bcc__cartesian__advection_1_1_definitions_1_1_transport_1_1_parameters.html#a81ebdc07bcbd089b2b6c72002cca3196" title=" " alt="" coords="249,1100,441,1171"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
+</map>

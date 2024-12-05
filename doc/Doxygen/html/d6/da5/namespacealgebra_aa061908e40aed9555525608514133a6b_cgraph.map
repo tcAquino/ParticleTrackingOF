@@ -1,0 +1,4 @@
+<map id="algebra::solve_cyclic_tridiag" name="algebra::solve_cyclic_tridiag">
+<area shape="rect" id="node1" title="Uses Sherman&#45;Morrison and the Thomas Algorithm (see solve_tridiag()) to solve a cyclic tridiagonal sy..." alt="" coords="5,5,149,47"/>
+<area shape="rect" id="node2" href="$d6/da5/namespacealgebra.html#a1d70ec4eda308f08faceff2e368934f7" title="Thomas Algorithm for tridiagonal systems." alt="" coords="197,13,343,39"/>
+</map>
