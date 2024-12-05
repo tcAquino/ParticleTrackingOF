@@ -1,7 +1,0 @@
-<map id="op::cartesian_power" name="op::cartesian_power">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,144,83"/>
-<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#ae4d74fa754ad662f004c7005ea8816dc" title="num are the digits of a basis basis number. Increment it by 1." alt="" coords="192,5,325,32"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#ae709d445d28597ea6879d98b66f09036" title="Total number of elements in a container of containers." alt="" coords="201,56,316,83"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#ae6a67a2f6fbe1651795472b9fd76e5bd" title="Element&#45;wise power." alt="" coords="225,107,293,133"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a623debf04cb078b74ebf69fc2f78218f" title="Element&#45;wise power." alt="" coords="373,107,441,133"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="geom::translate" name="geom::translate">
-<area shape="rect" id="node1" title="Translate position along basis vectors of symmetry planes." alt="" coords="305,50,431,77"/>
-<area shape="rect" id="node2" href="$d9/d18/classgeom_1_1_boundary___periodic___symmetry_planes.html#a7599b2e3ca4600a0244af87eb1a1a06c" title="Translate a position according to projection in periodic cell." alt="" coords="28,5,235,47"/>
-<area shape="rect" id="node3" href="$d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#a196e1af20c404f0d10837be44c63080b" title="Translate a position according to projection in periodic cell." alt="" coords="5,71,257,127"/>
-</map>

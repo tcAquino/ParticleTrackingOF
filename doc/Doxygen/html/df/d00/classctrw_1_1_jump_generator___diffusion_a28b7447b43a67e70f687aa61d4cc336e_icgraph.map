@@ -1,7 +1,0 @@
-<map id="ctrw::JumpGenerator_Diffusion::time_step" name="ctrw::JumpGenerator_Diffusion::time_step">
-<area shape="rect" id="node1" title=" " alt="" coords="503,50,649,91"/>
-<area shape="rect" id="node2" href="$df/d00/classctrw_1_1_jump_generator___diffusion.html#a1150e38478bd71dacd69bb1a0fc58688" title="Constructor." alt="" coords="276,5,455,61"/>
-<area shape="rect" id="node3" href="$df/d00/classctrw_1_1_jump_generator___diffusion.html#ab864320fbb0ca645ea7c1fb9b5c3b3fd" title=" " alt="" coords="292,86,439,127"/>
-<area shape="rect" id="node4" href="$d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#a8e517eb97a46e883753b19dbf13f1e8e" title=" " alt="" coords="5,39,228,95"/>
-<area shape="rect" id="node5" href="$d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a641a22cb1d47a29373ef54398cc4888c" title=" " alt="" coords="32,119,201,175"/>
-</map>

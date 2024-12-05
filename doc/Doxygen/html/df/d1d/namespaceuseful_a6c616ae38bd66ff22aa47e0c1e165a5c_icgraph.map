@@ -1,7 +1,0 @@
-<map id="useful::swap_erase_if" name="useful::swap_erase_if">
-<area shape="rect" id="node1" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="456,46,619,73"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a68a956b1e94ac2bf574b1960324112b9" title="Remove cell indices if mask is below threshold." alt="" coords="234,5,405,47"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#aae3c9c092de08d61fe0d9ae0ac77d2eb" title="Remove face indices if mask is below threshold." alt="" coords="231,71,408,112"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a9362b0932b5dcc38c21c7a5cd2821349" title="Remove face indices if mask is below threshold." alt="" coords="9,13,179,39"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a407151a1ede68422b8f8bed2fb09bd4f" title="Remove face indices if mask is below threshold." alt="" coords="5,71,183,112"/>
-</map>

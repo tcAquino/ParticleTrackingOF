@@ -1,9 +1,0 @@
-<map id="useful::getenv_home" name="useful::getenv_home">
-<area shape="rect" id="node1" title="Get $HOME environment variable." alt="" coords="1192,42,1335,69"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="1001,35,1144,76"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#af16a1231d16103a8216fb1935113de82" title="Expand ~ if present at the beginning of directory dir." alt="" coords="807,35,953,76"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a830a4c998c929eb294f129376a821601" title="Expand ~ if present at the beginning of directory dir." alt="" coords="592,13,759,39"/>
-<area shape="rect" id="node7" href="$d1/d82/structptof_1_1_directories_o_f.html#aac4860cc22e836b3474ffaf6e0854900" title=" " alt="" coords="609,64,742,105"/>
-<area shape="rect" id="node5" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a6f86cd69ac30b01cecf08b991d04de50" title="Read initial condition type and specific parameters." alt="" coords="327,5,544,47"/>
-<area shape="rect" id="node6" href="$dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2" title=" " alt="" coords="5,5,279,47"/>
-</map>

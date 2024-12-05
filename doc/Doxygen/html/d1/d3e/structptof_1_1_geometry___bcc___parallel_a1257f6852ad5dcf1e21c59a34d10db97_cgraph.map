@@ -1,6 +1,0 @@
-<map id="ptof::Geometry_Bcc_Parallel::makeboundary_periodic" name="ptof::Geometry_Bcc_Parallel::makeboundary_periodic">
-<area shape="rect" id="node1" title="Make a boundary object to enforce cartesian periodicity." alt="" coords="5,16,188,72"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a46aa74cea53512de3676e0154da276f8" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="236,23,404,65"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="458,5,577,32"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="452,56,583,83"/>
-</map>

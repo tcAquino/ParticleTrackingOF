@@ -1,6 +1,0 @@
-<map id="ptof::apply_mask" name="ptof::apply_mask">
-<area shape="rect" id="node1" title="Remove cell/face indices if mask is above threshold." alt="" coords="5,13,140,39"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a42b0ae8508d0fe2d62c5311583c263e2" title="Remove cell/face indices if mask is above threshold." alt="" coords="188,5,341,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a3c5a3b87490b0d427bfd0143f8a5b4cd" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="389,13,552,39"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a74ccfcb5a5df435382150f915c399e20" title="Copy end element of container to position position, then erase end element." alt="" coords="600,13,747,39"/>
-</map>

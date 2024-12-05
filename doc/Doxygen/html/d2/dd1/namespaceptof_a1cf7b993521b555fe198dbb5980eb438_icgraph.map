@@ -1,7 +1,0 @@
-<map id="ptof::offset_cell" name="ptof::offset_cell">
-<area shape="rect" id="node1" title="Small offset outward along face normal starting from face center." alt="" coords="245,93,368,120"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aa74dcf8fcf3cb084637b7f209ff24fc4" title="Small offset backward." alt="" coords="5,5,197,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a403f2134a620767dd025954e733b68c5" title="Small offset backward." alt="" coords="20,57,183,98"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#aa7f85fb4058ae942dc9b482221cfed96" title="Small offset forward." alt="" coords="12,123,191,149"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a7673f1a07f55cb10bfe6bc1ffc851d5a" title="Small offset forward." alt="" coords="27,174,176,215"/>
-</map>

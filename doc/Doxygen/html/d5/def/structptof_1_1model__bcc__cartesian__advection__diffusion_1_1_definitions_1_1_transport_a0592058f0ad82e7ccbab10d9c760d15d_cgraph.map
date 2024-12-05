@@ -1,8 +1,0 @@
-<map id="ptof::model_bcc_cartesian_advection_diffusion::Definitions::Transport::makeVelocityInterpolator" name="ptof::model_bcc_cartesian_advection_diffusion::Definitions::Transport::makeVelocityInterpolator">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,243,105"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="297,5,451,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#abb1ff965576a54cbd3d9f56e0f0cc381" title="Make a linear interpolator for a field using OpenFOAM interpolation." alt="" coords="291,57,457,98"/>
-<area shape="rect" id="node5" href="$da/d9d/structptof_1_1_geometry___bcc.html#a14399f9a69fb99b5d5159cb7dc386121" title=" " alt="" coords="305,122,443,163"/>
-<area shape="rect" id="node4" href="$d8/d71/classptof_1_1_vector_field___linear_interpolation___o_f.html#aaffa63f78d1b987cef0ffcc88799f01d" title=" " alt="" coords="505,57,671,98"/>
-<area shape="rect" id="node6" href="$d4/df4/namespacepar.html#a81d7b5c97e52788b890728440d556ec5" title="Get number of current parallel thread." alt="" coords="517,129,659,156"/>
-</map>

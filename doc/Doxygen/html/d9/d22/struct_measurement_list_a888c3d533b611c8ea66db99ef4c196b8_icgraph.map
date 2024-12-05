@@ -1,7 +1,0 @@
-<map id="MeasurementList::name" name="MeasurementList::name">
-<area shape="rect" id="node1" title="Name from type." alt="" coords="835,56,1015,83"/>
-<area shape="rect" id="node2" href="$d9/d22/struct_measurement_list.html#a4c4a3d7c7bf660d39c249fa2351917c1" title="Check if name exists." alt="" coords="588,5,787,32"/>
-<area shape="rect" id="node5" href="$d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title="Type from name." alt="" coords="601,56,773,83"/>
-<area shape="rect" id="node3" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a37c3a03bdf38eb32be577c31d038bfa2" title="Read measurement type from input stream." alt="" coords="293,23,540,65"/>
-<area shape="rect" id="node4" href="$d8/d12/structptof_1_1_output_parameters___cases.html#a0563b243046dfd75cd9e2ac8cc8cc2c7" title="Constructor." alt="" coords="5,23,245,65"/>
-</map>

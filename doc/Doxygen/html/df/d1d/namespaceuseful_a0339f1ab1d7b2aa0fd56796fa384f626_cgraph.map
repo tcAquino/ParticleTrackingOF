@@ -1,6 +1,0 @@
-<map id="useful::split_line" name="useful::split_line">
-<area shape="rect" id="node1" title="Read and split next line into line_tokens, discarding escaped lines, appending result to tokens." alt="" coords="5,71,121,98"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="179,5,321,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a06a1cd9b983202c4bba74f5a0ec1b466" title="Read next value from file." alt="" coords="205,71,295,98"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="169,123,331,164"/>
-</map>

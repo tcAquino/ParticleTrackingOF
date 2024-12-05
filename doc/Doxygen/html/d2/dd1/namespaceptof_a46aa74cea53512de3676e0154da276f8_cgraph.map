@@ -1,5 +1,0 @@
-<map id="ptof::extract_cartesian_periodic_boundaries" name="ptof::extract_cartesian_periodic_boundaries">
-<area shape="rect" id="node1" title="For boundaries conditions indicated as type periodic, extract the corresponding boundary positions." alt="" coords="5,23,173,65"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="227,5,346,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="221,56,352,83"/>
-</map>

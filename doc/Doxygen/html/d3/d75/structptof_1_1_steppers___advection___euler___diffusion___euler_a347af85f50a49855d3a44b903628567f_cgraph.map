@@ -1,7 +1,0 @@
-<map id="ptof::Steppers_Advection_Euler_Diffusion_Euler::makeJumpGenerator" name="ptof::Steppers_Advection_Euler_Diffusion_Euler::makeJumpGenerator">
-<area shape="rect" id="node1" title=" " alt="" coords="5,55,189,111"/>
-<area shape="rect" id="node2" href="$d3/d4c/classctrw_1_1_jump_generator___velocity.html#acb556481866d3c10951c2ccf70361d88" title=" " alt="" coords="240,29,395,71"/>
-<area shape="rect" id="node3" href="$df/d00/classctrw_1_1_jump_generator___diffusion.html#a75409748795a3af3cd4f3e987cd49776" title=" " alt="" coords="237,95,397,136"/>
-<area shape="rect" id="node4" href="$df/d00/classctrw_1_1_jump_generator___diffusion.html#a053d7b5d656032487c23dd474f34ef43" title=" " alt="" coords="448,61,603,103"/>
-<area shape="rect" id="node5" href="$df/d00/classctrw_1_1_jump_generator___diffusion.html#abcdaca15f4df53b5071b24a4d3a053b5" title=" " alt="" coords="445,127,605,168"/>
-</map>

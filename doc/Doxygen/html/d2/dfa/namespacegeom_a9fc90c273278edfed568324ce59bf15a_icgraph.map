@@ -1,6 +1,0 @@
-<map id="geom::project" name="geom::project">
-<area shape="rect" id="node1" title="Compute projection along basis vectors of symmetry planes." alt="" coords="236,71,348,98"/>
-<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#a09e0461dcffe26ab99642b88f5474bfa" title="Add periodic velocity point images outside domain." alt="" coords="21,5,172,47"/>
-<area shape="rect" id="node3" href="$d2/dfa/namespacegeom.html#a4fc84e21684ae11357a063628682fca9" title="Place particle in periodic unit cell according to symmetry planes." alt="" coords="5,71,188,98"/>
-<area shape="rect" id="node4" href="$d2/dfa/namespacegeom.html#ac540106435e9ad161c1ba9ed91dce040" title="Compute projection along basis vectors of symmetry planes." alt="" coords="41,122,153,149"/>
-</map>

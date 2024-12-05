@@ -1,4 +1,0 @@
-<map id="useful::expand_env_in_place" name="useful::expand_env_in_place">
-<area shape="rect" id="node1" title="Expand environment variables." alt="" coords="5,5,155,47"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="203,13,317,39"/>
-</map>

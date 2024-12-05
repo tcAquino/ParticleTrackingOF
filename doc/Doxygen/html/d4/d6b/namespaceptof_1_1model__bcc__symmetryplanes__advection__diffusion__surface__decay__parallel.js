@@ -1,4 +1,0 @@
-var namespaceptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay__parallel =
-[
-    [ "Model", "da/d03/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay__parallel_1_1_model.html", "da/d03/structptof_1_1model__bcc__symmetryplanes__advection__diffusion__surface__decay__parallel_1_1_model" ]
-];

@@ -1,7 +1,0 @@
-<map id="useful::expand_home_dir" name="useful::expand_home_dir">
-<area shape="rect" id="node1" title="Expand ~ if present at the beginning of directory dir." alt="" coords="5,13,192,39"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#af16a1231d16103a8216fb1935113de82" title="Expand ~ if present at the beginning of directory dir." alt="" coords="240,5,403,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a6409f2c15bb32065bc3b04487359b786" title="Get $HOME environment variable, throw if empty." alt="" coords="451,5,609,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a3e0a3b48ee9d116db39e842f2787fdf7" title="Get $HOME environment variable." alt="" coords="657,13,816,39"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a17f3125fc16a442a73df3809c22d1ab4" title="Get value of shell environment variable name (do not pass $ in name)." alt="" coords="864,13,979,39"/>
-</map>

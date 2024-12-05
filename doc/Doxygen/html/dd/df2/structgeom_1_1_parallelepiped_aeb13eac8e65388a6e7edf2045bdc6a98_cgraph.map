@@ -1,6 +1,0 @@
-<map id="geom::Parallelepiped::get_center" name="geom::Parallelepiped::get_center">
-<area shape="rect" id="node1" title=" " alt="" coords="5,35,148,76"/>
-<area shape="rect" id="node2" href="$dd/df2/structgeom_1_1_parallelepiped.html#a65cb4870f5abe5e30cf560c227665e72" title=" " alt="" coords="196,5,345,47"/>
-<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a992e4710a78c18b732b83702fc1ed016" title="Element&#45;wise sum." alt="" coords="237,71,305,98"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a7ae5ec63d74d4cae92a9763df2cb0d2b" title="Element&#45;wise division by scalar." alt="" coords="393,13,496,39"/>
-</map>

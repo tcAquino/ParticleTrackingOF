@@ -1,4 +1,0 @@
-<map id="io::read_first_from_line" name="io::read_first_from_line">
-<area shape="rect" id="node1" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="225,5,397,32"/>
-<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#a106fc4b6c7919bfe29ec971999505634" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="5,5,177,32"/>
-</map>
