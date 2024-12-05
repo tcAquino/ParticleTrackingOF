@@ -7,4 +7,3 @@
 .cache/
 update.sh
 compile_commands.json
-.clang-tidy
