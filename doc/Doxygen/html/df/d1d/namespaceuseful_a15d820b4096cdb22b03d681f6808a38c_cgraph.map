@@ -1,7 +1,0 @@
-<map id="useful::read_first_from_line" name="useful::read_first_from_line">
-<area shape="rect" id="node1" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="5,56,124,97"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="345,5,488,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="336,88,497,129"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="185,89,275,115"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="172,38,288,65"/>
-</map>

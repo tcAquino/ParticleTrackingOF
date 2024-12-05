@@ -1,8 +1,0 @@
-<map id="ptof::OutputParameters_Cases::read_end_criterion" name="ptof::OutputParameters_Cases::read_end_criterion">
-<area shape="rect" id="node1" title="Read end criterion from input stream." alt="" coords="5,104,187,145"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="239,78,355,105"/>
-<area shape="rect" id="node5" href="$dd/d0d/structptof_1_1_end_criterion.html#a554c327c03e9ba81d77475bd14402062" title=" " alt="" coords="235,136,359,177"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="416,5,559,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="407,71,568,112"/>
-<area shape="rect" id="node6" href="$dd/d0d/structptof_1_1_end_criterion.html#a15c48bf39f902b5d99d475bad718b33b" title=" " alt="" coords="425,136,549,177"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="CTRW/TimeGenerator.h" name="CTRW/TimeGenerator.h">
-<area shape="rect" id="node1" title="Objects to generate time increments for particle tracking." alt="" coords="68,5,231,32"/>
-<area shape="rect" id="node2" href="$d6/d95/_c_t_r_w_2_transitions_8h.html" title="Objects to handle state transitions in particle tracking." alt="" coords="25,80,167,107"/>
-<area shape="rect" id="node5" href="$d0/dd9/_steppers_8h.html" title="Objects and utilities to handle time stepping along advective and diffusive trajectories." alt="" coords="166,155,290,181"/>
-<area shape="rect" id="node3" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="5,155,141,181"/>
-<area shape="rect" id="node4" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="93,229,208,256"/>
-</map>

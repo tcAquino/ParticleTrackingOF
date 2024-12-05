@@ -1,4 +1,0 @@
-var namespaceptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d =
-[
-    [ "Definitions", "d1/d4c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_definitions.html", "d1/d4c/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__3d_1_1_definitions" ]
-];

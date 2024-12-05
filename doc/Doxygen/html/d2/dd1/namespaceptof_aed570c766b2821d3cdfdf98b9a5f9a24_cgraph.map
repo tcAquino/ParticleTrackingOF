@@ -1,7 +1,0 @@
-<map id="ptof::get_velocity_data_rescaled" name="ptof::get_velocity_data_rescaled">
-<area shape="rect" id="node1" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="5,23,140,65"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aac351f75a62fadba4267e352ab98a20d" title="Get the velocity field U from the OpenFOAM case time associated with a mesh." alt="" coords="194,5,365,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a07b1bffbe58d8cec927aa9d40f4f9981" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="188,56,371,83"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="419,49,564,90"/>
-<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#a485607aaf9ab1b22a1d50af086a2628b" title="Sum of elements." alt="" coords="612,56,687,83"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="ptof::OutputParameters::read_measurement_types" name="ptof::OutputParameters::read_measurement_types">
-<area shape="rect" id="node1" title="Read measure spacing type from input stream." alt="" coords="5,71,205,112"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#ab4cf0c5be4646ef7b6c20820c9cbdd12" title="Remove comments after escape sequence." alt="" coords="266,5,421,47"/>
-<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="253,71,433,112"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ad5ca702e1c45aaf21184b4018e916363" title="Split string into vector of strings at instances of delimeter." alt="" coords="294,137,393,163"/>
-</map>

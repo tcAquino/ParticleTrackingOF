@@ -1,5 +1,0 @@
-<map id="ptof::model_advection_diffusion_2d::Reaction::info" name="ptof::model_advection_diffusion_2d::Reaction::info">
-<area shape="rect" id="node1" title=" " alt="" coords="5,39,212,80"/>
-<area shape="rect" id="node2" href="$df/d31/classptof_1_1_surface_reaction___do_nothing.html#a7d2fc55df0ebe5f0e6647a4931ff5ac6" title="Output generic information about object." alt="" coords="260,5,421,47"/>
-<area shape="rect" id="node3" href="$dd/d75/classptof_1_1_bulk_reaction___do_nothing.html#aabb0e8fcba14ca825677ddca87006735" title="Output generic information about object." alt="" coords="270,71,411,112"/>
-</map>

@@ -1,4 +1,0 @@
-var namespaceptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d =
-[
-    [ "Definitions", "df/d86/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_definitions.html", "df/d86/structptof_1_1model__periodic__cartesian__advection__diffusion__surface__decay__2d_1_1_definitions" ]
-];

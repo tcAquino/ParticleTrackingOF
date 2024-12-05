@@ -1,5 +1,0 @@
-<map id="ptof::model_advection_diffusion_surface_decay_2d::Definitions::Reaction::info" name="ptof::model_advection_diffusion_surface_decay_2d::Definitions::Reaction::info">
-<area shape="rect" id="node1" title="Output generic information about object." alt="" coords="5,31,208,87"/>
-<area shape="rect" id="node2" href="$d4/d30/classptof_1_1_surface_reaction___a_fluid_plus_a_solidto_a_solid.html#a6c81478672c186c4a82add8a11b37eb9" title="Output generic information about object." alt="" coords="256,5,464,47"/>
-<area shape="rect" id="node3" href="$dd/d75/classptof_1_1_bulk_reaction___do_nothing.html#aabb0e8fcba14ca825677ddca87006735" title="Output generic information about object." alt="" coords="295,71,425,112"/>
-</map>

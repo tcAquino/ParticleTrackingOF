@@ -1,6 +1,0 @@
-<map id="ptof::Phase::get_carrier_phase_data" name="ptof::Phase::get_carrier_phase_data">
-<area shape="rect" id="node1" title=" " alt="" coords="503,27,675,69"/>
-<area shape="rect" id="node2" href="$d0/d06/structptof_1_1_phase.html#a2e58aed53eb55629c2926990235128fc" title="Make phase field." alt="" coords="247,5,455,32"/>
-<area shape="rect" id="node3" href="$d0/d06/structptof_1_1_phase.html#a90c6850a2c681beffbe94f5ed0f08a57" title="Update phase field." alt="" coords="277,57,424,98"/>
-<area shape="rect" id="node4" href="$d0/d06/structptof_1_1_phase.html#aea0dd696f8cf71ff5e6bea8ca71224d8" title="Update phase field and velocity field." alt="" coords="5,57,199,98"/>
-</map>

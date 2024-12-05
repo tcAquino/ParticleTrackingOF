@@ -1,5 +1,0 @@
-<map id="ptof::offset_forward_face" name="ptof::offset_forward_face">
-<area shape="rect" id="node1" title="Small offset forward from a point on a face." alt="" coords="433,13,600,39"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a4a979c6dbff09b46400fc4854dc2d048" title="Find periodic image of intersection point." alt="" coords="215,13,385,39"/>
-<area shape="rect" id="node3" href="$d3/dd9/structptof_1_1_boundary___periodic.html#ac3aa9153873a227a71cd8f64d163da17" title="Enforce boundary condition and place intersection at its periodic image." alt="" coords="5,5,167,47"/>
-</map>

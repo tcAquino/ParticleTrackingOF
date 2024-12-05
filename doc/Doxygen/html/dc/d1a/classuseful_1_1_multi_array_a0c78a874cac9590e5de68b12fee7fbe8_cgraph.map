@@ -1,4 +1,0 @@
-<map id="useful::MultiArray::computeIndexes" name="useful::MultiArray::computeIndexes">
-<area shape="rect" id="node1" title="Convert 1D index index to multi&#45;dimensional index." alt="" coords="5,5,132,47"/>
-<area shape="rect" id="node2" href="$da/d32/namespacemodular.html#a078f1d5d403be1ba74f69eb96c4301a0" title="Given 1d index idx, convert to position (x_idx, y_idx, ...) in a regular grid; output in position." alt="" coords="180,13,348,39"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="ptof::offset_inward_face" name="ptof::offset_inward_face">
-<area shape="rect" id="node1" title="Small offset inward along face normal starting from face center." alt="" coords="5,31,184,57"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="407,5,537,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a5c1f93251005a76a298700d652da61b9" title="Small offset forward given current face and direction." alt="" coords="232,56,359,83"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="409,56,535,83"/>
-</map>
