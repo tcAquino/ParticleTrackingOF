@@ -1,0 +1,5 @@
+<map id="ptof::BulkReaction_DoNothing::info" name="ptof::BulkReaction_DoNothing::info">
+<area shape="rect" id="node1" title="Output generic information about object." alt="" coords="256,53,387,94"/>
+<area shape="rect" id="node2" href="$d7/d3f/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_reaction.html#aa41be012b3639b6dd85a00fcac8f692a" title="Output generic information about object." alt="" coords="22,5,191,61"/>
+<area shape="rect" id="node3" href="$d7/d86/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction.html#a3ff926a6bbcb95854f3589a183f68f66" title="Output generic information about object." alt="" coords="5,85,208,141"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="geom::add_periodic_images" name="geom::add_periodic_images">
+<area shape="rect" id="node1" title="Add periodic velocity point images outside domain." alt="" coords="5,23,140,65"/>
+<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#ac8e82574d35c346d8a632fcd1a60105b" title=" " alt="" coords="188,5,355,32"/>
+<area shape="rect" id="node3" href="$d2/dfa/namespacegeom.html#a9fc90c273278edfed568324ce59bf15a" title="Compute projection along basis vectors of symmetry planes." alt="" coords="221,56,322,83"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a225d490a0ea3fa49263755d3735ad326" title="Element&#45;wise subtraction." alt="" coords="403,56,481,83"/>
+</map>

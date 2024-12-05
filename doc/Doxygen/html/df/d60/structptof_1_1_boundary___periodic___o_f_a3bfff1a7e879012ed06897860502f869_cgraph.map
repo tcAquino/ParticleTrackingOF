@@ -1,0 +1,9 @@
+<map id="ptof::Boundary_Periodic_OF::operator()" name="ptof::Boundary_Periodic_OF::operator()">
+<area shape="rect" id="node1" title="Enforce boundary condition and place intersection at its periodic image." alt="" coords="5,23,181,65"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a4a979c6dbff09b46400fc4854dc2d048" title="Find periodic image of intersection point." alt="" coords="229,31,420,57"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a218beff88363f0d2ba3306e2e574bacc" title="Make 3D point from 2D point." alt="" coords="495,5,625,32"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a67459c219dcedf37533595b362a7bed1" title="Small offset forward from a point on a face." alt="" coords="468,56,652,83"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a5c1f93251005a76a298700d652da61b9" title="Small offset forward given current face and direction." alt="" coords="700,56,827,83"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="877,31,1003,57"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="875,81,1005,108"/>
+</map>

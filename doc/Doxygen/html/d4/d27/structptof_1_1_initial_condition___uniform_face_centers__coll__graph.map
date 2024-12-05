@@ -1,0 +1,5 @@
+<map id="ptof::InitialCondition_UniformFaceCenters&lt; ParticleMaker, Geometry, FaceIdContainer &gt;" name="ptof::InitialCondition_UniformFaceCenters&lt; ParticleMaker, Geometry, FaceIdContainer &gt;">
+<area shape="rect" id="node1" title="Initial condition at uniformly randomly distributed face centers (weighted by face area)." alt="" coords="493,20,729,76"/>
+<area shape="rect" id="node2" href="$de/d10/structptof_1_1_initial_condition___distributed_face_centers.html" title=" " alt="" coords="244,5,445,91"/>
+<area shape="rect" id="node3" href="$dd/d1e/structptof_1_1_initial_condition.html" title="Make particles and positions according to prescribed rules." alt="" coords="5,27,196,69"/>
+</map>

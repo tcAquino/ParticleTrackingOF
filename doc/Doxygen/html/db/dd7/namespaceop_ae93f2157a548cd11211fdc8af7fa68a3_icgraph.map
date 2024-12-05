@@ -1,0 +1,18 @@
+<map id="op::dot" name="op::dot">
+<area shape="rect" id="node1" title="Dot product." alt="" coords="552,297,615,324"/>
+<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a6397522d0322d74fa874603d8499ce55" title="Container of containers dotted into container, &#160;output_i = sum_j(input_1)_{ij}(input_2)_j...." alt="" coords="363,5,425,32"/>
+<area shape="rect" id="node3" href="$d6/da5/namespacealgebra.html#a2bf2157e25f2d2b41a4c845e3d477772" title="Orthogonal basis from Gram&#45;schmidt decomposition, given complete set of linearly&#45;independent vectors...." alt="" coords="317,56,471,83"/>
+<area shape="rect" id="node5" href="$d8/d10/classstochastic_1_1uniform__cylinder__distribution.html#a1453468b57ba62ae0ac0061bfc424347" title=" " alt="" coords="322,107,466,163"/>
+<area shape="rect" id="node6" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="284,187,504,229"/>
+<area shape="rect" id="node7" href="$da/dd1/structctrw_1_1_get__position__projection.html#a98e0dd0db70f79c1d0daf9c9e078e18b" title=" " alt="" coords="320,253,468,294"/>
+<area shape="rect" id="node8" href="$d9/d7f/structctrw_1_1_get__position__periodic__cartesian__projection.html#aa6078c3ba3fa807fad4eb91b3d773aed" title=" " alt="" coords="320,319,468,375"/>
+<area shape="rect" id="node9" href="$df/de2/structctrw_1_1_get__projection.html#ac22027432f0205984f35755fd8fc9866" title=" " alt="" coords="325,399,463,441"/>
+<area shape="rect" id="node10" href="$d2/dfa/namespacegeom.html#ad3cb8154dbafd06a85a0f9b92653a97f" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="343,465,445,492"/>
+<area shape="rect" id="node13" href="$d2/dfa/namespacegeom.html#aacac11986abbc0ef178801b04c144094" title="Reflect off sphere exterior (in any dimension)." alt="" coords="315,523,473,565"/>
+<area shape="rect" id="node15" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="308,589,480,630"/>
+<area shape="rect" id="node4" href="$d6/da5/namespacealgebra.html#adbe262d995baa5be16da6b8d78a96a3d" title="Orthogonal basis from Gram&#45;Schmidt decomposition, preserving given direction." alt="" coords="43,56,198,83"/>
+<area shape="rect" id="node11" href="$d9/d18/classgeom_1_1_boundary___periodic___symmetry_planes.html#a6459bdbd652347b172dc12ab8eeded4d" title="Check if position is out of bounds." alt="" coords="34,367,207,423"/>
+<area shape="rect" id="node12" href="$d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#aae96d8b9910727f43a07d9c914501593" title="Check if position is out of bounds." alt="" coords="5,447,236,503"/>
+<area shape="rect" id="node14" href="$d2/dfa/namespacegeom.html#a0cff2c6401a95d49c39924a79432d203" title="Reflect off sphere exterior (in any dimension)." alt="" coords="42,527,199,569"/>
+<area shape="rect" id="node16" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="35,593,207,634"/>
+</map>

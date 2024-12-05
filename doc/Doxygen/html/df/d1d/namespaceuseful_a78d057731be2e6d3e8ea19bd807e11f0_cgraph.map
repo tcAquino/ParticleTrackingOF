@@ -1,0 +1,10 @@
+<map id="useful::load_pair_1" name="useful::load_pair_1">
+<area shape="rect" id="node1" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="5,107,136,133"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a2fcffe2f6d0b1ea29e55d88925738fe1" title="Open file for reading." alt="" coords="187,5,312,32"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ac910633cf4fdd85cb44df30117f2d92e" title=" " alt="" coords="184,56,315,83"/>
+<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="363,117,524,158"/>
+<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a0ccb61c94f575b80ee88efd0a0068fc2" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="205,157,294,184"/>
+<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="191,208,307,235"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#aaf94f2344123dd23396ad6452b724fa8" title=" " alt="" coords="364,5,523,32"/>
+<area shape="rect" id="node8" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="372,201,515,242"/>
+</map>

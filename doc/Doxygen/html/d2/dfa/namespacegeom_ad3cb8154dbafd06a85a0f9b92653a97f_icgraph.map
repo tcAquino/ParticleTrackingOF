@@ -1,0 +1,5 @@
+<map id="geom::project" name="geom::project">
+<area shape="rect" id="node1" title="Compute component of projection along basis vectors of symmetry planes." alt="" coords="305,60,417,87"/>
+<area shape="rect" id="node2" href="$d9/d18/classgeom_1_1_boundary___periodic___symmetry_planes.html#a6459bdbd652347b172dc12ab8eeded4d" title="Check if position is out of bounds." alt="" coords="37,5,226,61"/>
+<area shape="rect" id="node3" href="$d7/d1b/classgeom_1_1_boundary___periodic___symmetry_planes___with_outside_info.html#aae96d8b9910727f43a07d9c914501593" title="Check if position is out of bounds." alt="" coords="5,85,257,141"/>
+</map>

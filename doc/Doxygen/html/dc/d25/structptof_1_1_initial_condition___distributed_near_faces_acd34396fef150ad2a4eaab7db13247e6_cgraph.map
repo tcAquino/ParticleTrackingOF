@@ -1,0 +1,6 @@
+<map id="ptof::InitialCondition_DistributedNearFaces::make_position_and_hint" name="ptof::InitialCondition_DistributedNearFaces::make_position_and_hint">
+<area shape="rect" id="node1" title="Make a single position along with location hint." alt="" coords="5,41,176,97"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="246,5,366,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="259,56,353,83"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, pointing inward." alt="" coords="224,107,388,133"/>
+</map>

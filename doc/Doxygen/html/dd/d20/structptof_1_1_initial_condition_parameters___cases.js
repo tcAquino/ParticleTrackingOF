@@ -1,0 +1,26 @@
+var structptof_1_1_initial_condition_parameters___cases =
+[
+    [ "InjectionParameters", "da/d34/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters.html", "da/d34/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters" ],
+    [ "InjectionParameters_Continuous", "d0/de3/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___continuous.html", "d0/de3/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___continuous" ],
+    [ "InjectionParameters_ContinuousNoMass", "d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___continuous_no_mass.html", "d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___continuous_no_mass" ],
+    [ "InjectionParameters_Pulse", "d4/d99/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___pulse.html", "d4/d99/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___pulse" ],
+    [ "InjectionParameters_PulseNoMass", "d1/d29/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___pulse_no_mass.html", "d1/d29/structptof_1_1_initial_condition_parameters___cases_1_1_injection_parameters___pulse_no_mass" ],
+    [ "SpecificParameters", "d0/db8/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters.html", "d0/db8/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters" ],
+    [ "SpecificParameters_Boundaries", "d0/dbc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___boundaries.html", "d0/dbc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___boundaries" ],
+    [ "SpecificParameters_Cylinder", "d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___cylinder.html", "d9/dcc/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___cylinder" ],
+    [ "SpecificParameters_Filename", "dd/d8b/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___filename.html", "dd/d8b/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___filename" ],
+    [ "SpecificParameters_Parallelipiped", "dd/d57/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___parallelipiped.html", "dd/d57/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___parallelipiped" ],
+    [ "SpecificParameters_Patches", "d1/d95/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___patches.html", "d1/d95/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___patches" ],
+    [ "SpecificParameters_Patches_Distance", "db/db7/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___patches___distance.html", "db/db7/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___patches___distance" ],
+    [ "SpecificParameters_Position", "d5/df3/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___position.html", "d5/df3/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___position" ],
+    [ "SpecificParameters_Sphere", "db/d3f/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___sphere.html", "db/d3f/structptof_1_1_initial_condition_parameters___cases_1_1_specific_parameters___sphere" ],
+    [ "InitialConditionParameters_Cases", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aebd290759ed7f4ed11f881a38d70a3d2", null ],
+    [ "info", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a0dd4f7cf6073fe3343b26654b82cd163", null ],
+    [ "set_injection_parameters", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a96079ed4219946dff4a8d420286f8b54", null ],
+    [ "set_specific_parameters", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a90cc9a3192dde068ef32e830bf0e5c1b", null ],
+    [ "continuity", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a3adeff04b975a91d142c5da6386bd6f9", null ],
+    [ "injection_parameters", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a3489ad3f65932b5387a51f170b50a61e", null ],
+    [ "name", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#aa63509b1aebe94ee076745404696cff3", null ],
+    [ "specific_parameters", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a266ec3801a600fff8f870f0a3eb096ac", null ],
+    [ "type", "dd/d20/structptof_1_1_initial_condition_parameters___cases.html#a3d838ec46862750b45e3fd9c799923a0", null ]
+];

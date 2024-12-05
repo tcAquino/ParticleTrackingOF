@@ -1,0 +1,12 @@
+<map id="PTOF/Locator.h" name="PTOF/Locator.h">
+<area shape="rect" id="node1" title="Objects to locate positions in mesh." alt="" coords="19,5,134,32"/>
+<area shape="rect" id="node2" href="$d1/d4e/_geometry_8h.html" title="Objects to handle domain geometry and boundaries." alt="" coords="45,319,172,345"/>
+<area shape="rect" id="node3" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="274,393,388,420"/>
+<area shape="rect" id="node4" href="$de/ddd/_reaction_8h.html" title="Objects and utilities for surface and bulk reactions." alt="" coords="240,80,364,107"/>
+<area shape="rect" id="node5" href="$dd/da3/_p_t_o_f_2_boundary_8h.html" title="Objects and utilities to enforce boundary conditions." alt="" coords="239,155,364,181"/>
+<area shape="rect" id="node6" href="$d7/d77/_boundary___cases_8h.html" title="Enforce different types of boundary condition depending on patch." alt="" coords="114,237,286,263"/>
+<area shape="rect" id="node9" href="$dc/dba/_time_step_adaptor_8h.html" title="Objects for adaptive time stepping." alt="" coords="390,155,562,181"/>
+<area shape="rect" id="node7" href="$d3/df6/_initial_condition___cases_8h.html" title="Create particles according to different initial conditions." alt="" coords="311,229,458,271"/>
+<area shape="rect" id="node8" href="$d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="196,319,352,345"/>
+<area shape="rect" id="node10" href="$de/db0/_p_t_o_f_2_transitions_8h.html" title="Objects to handle particle dynamics." alt="" coords="427,319,563,345"/>
+</map>

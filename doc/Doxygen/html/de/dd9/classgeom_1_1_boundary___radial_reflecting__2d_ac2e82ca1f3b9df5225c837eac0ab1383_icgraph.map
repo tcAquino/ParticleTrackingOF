@@ -1,0 +1,4 @@
+<map id="geom::Boundary_RadialReflecting_2d::out_of_bounds" name="geom::Boundary_RadialReflecting_2d::out_of_bounds">
+<area shape="rect" id="node1" title="Check if position is out of bounds." alt="" coords="296,5,539,47"/>
+<area shape="rect" id="node2" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="5,5,248,47"/>
+</map>

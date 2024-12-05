@@ -1,0 +1,9 @@
+<map id="ptof::InitialConditionParameters_Cases::set_injection_parameters" name="ptof::InitialConditionParameters_Cases::set_injection_parameters">
+<area shape="rect" id="node1" title="Read initial condition info from input stream." alt="" coords="5,100,225,141"/>
+<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="288,78,404,105"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#aa5987770261695eb69ab41fdb7bbbe96" title="Get time units factor." alt="" coords="273,133,419,159"/>
+<area shape="rect" id="node3" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="476,5,619,47"/>
+<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="467,71,628,112"/>
+<area shape="rect" id="node6" href="$df/d99/structptof_1_1_time_units.html#a78accf71c73303ac4eaa4d60f92960ee" title="Type from name." alt="" coords="475,137,620,163"/>
+<area shape="rect" id="node7" href="$df/d99/structptof_1_1_time_units.html#a55d1755d99c8da3bdcc35d293d5a1d11" title="Name from type." alt="" coords="676,137,828,163"/>
+</map>

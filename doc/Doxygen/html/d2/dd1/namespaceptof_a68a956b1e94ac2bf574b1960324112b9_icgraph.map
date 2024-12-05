@@ -1,0 +1,4 @@
+<map id="ptof::apply_mask_cells_inplace" name="ptof::apply_mask_cells_inplace">
+<area shape="rect" id="node1" title="Remove cell indices if mask is below threshold." alt="" coords="209,5,365,47"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a9362b0932b5dcc38c21c7a5cd2821349" title="Remove face indices if mask is below threshold." alt="" coords="5,13,161,39"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="ptof::get_boundary_conditions" name="ptof::get_boundary_conditions">
+<area shape="rect" id="node1" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="5,31,149,73"/>
+<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#a8cc6b46536bb3ae60a8a72a3d5b1c2f9" title="Open file for reading." alt="" coords="197,9,308,36"/>
+<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="202,64,303,91"/>
+<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#a6c2ebb3c165cea33a041174b0cd0823b" title=" " alt="" coords="358,5,506,32"/>
+<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="359,57,505,98"/>
+<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="356,122,508,163"/>
+</map>

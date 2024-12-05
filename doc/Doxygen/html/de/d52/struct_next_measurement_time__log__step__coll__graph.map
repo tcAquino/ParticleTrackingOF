@@ -1,0 +1,5 @@
+<map id="NextMeasurementTime_log_step&lt; Parameters &gt;" name="NextMeasurementTime_log_step&lt; Parameters &gt;">
+<area shape="rect" id="node1" title="NextMeasurementTime object for constant time step." alt="" coords="5,185,175,227"/>
+<area shape="rect" id="node2" href="$d7/df2/struct_next_measurement_time.html" title="Abstract polymorphic object to handle setting up the next measurement time." alt="" coords="11,95,169,136"/>
+<area shape="rect" id="node3" href="$d4/d48/struct_phase_1_1_parameters.html" title="Parameters for phase&#45;related quantities." alt="" coords="45,5,135,32"/>
+</map>

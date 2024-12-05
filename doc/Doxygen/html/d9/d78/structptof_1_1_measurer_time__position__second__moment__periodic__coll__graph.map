@@ -1,0 +1,5 @@
+<map id="ptof::MeasurerTime_position_second_moment_periodic&lt; Subject, Geometry &gt;" name="ptof::MeasurerTime_position_second_moment_periodic&lt; Subject, Geometry &gt;">
+<area shape="rect" id="node1" title="Output time and second moment of position (weighted by mass), with position accounting for periodicit..." alt="" coords="297,35,504,91"/>
+<area shape="rect" id="node2" href="$dc/d05/structptof_1_1_measurer_time.html" title="Abstract polymorphic output handler for outputting time and some quantity." alt="" coords="5,5,160,47"/>
+<area shape="rect" id="node3" href="$dd/dd1/structctrw_1_1_get__position__periodic.html" title=" " alt="" coords="12,71,153,127"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$d7/df2/struct_next_measurement_time.html" title="Abstract polymorphic object to handle setting up the next measurement time." alt="" coords="5,104,181,145"/>
+<area shape="rect" id="node2" href="$da/d8b/struct_next_measurement_time__linear.html" title="NextMeasurementTime object for linearly&#45;spaced times." alt="" coords="244,5,420,47"/>
+<area shape="rect" id="node3" href="$d9/dff/struct_next_measurement_time__linear__step.html" title="NextMeasurementTime object for constant time step." alt="" coords="229,71,435,112"/>
+<area shape="rect" id="node4" href="$da/d3d/struct_next_measurement_time__log.html" title=" " alt="" coords="244,136,420,177"/>
+<area shape="rect" id="node5" href="$d7/db7/struct_next_measurement_time__log__step.html" title="NextMeasurementTime object for constant time step." alt="" coords="238,201,426,243"/>
+</map>

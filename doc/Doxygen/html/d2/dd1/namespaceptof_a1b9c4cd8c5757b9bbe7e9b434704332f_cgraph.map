@@ -1,0 +1,5 @@
+<map id="ptof::uniform_solid_reactant" name="ptof::uniform_solid_reactant">
+<area shape="rect" id="node1" title=" " alt="" coords="5,27,135,69"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ac0f14b099779d22e37cdd8dec121ada9" title="Append mesh face indices of faces in patch to container." alt="" coords="183,5,323,32"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#aa7f7acb9ce3a22408902565db798402b" title="Append homogeneous surface concentrations over patch faces to map." alt="" coords="188,57,317,98"/>
+</map>

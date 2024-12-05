@@ -1,0 +1,16 @@
+<map id="geom::reflectOffSphere_velocity_outsideToInside" name="geom::reflectOffSphere_velocity_outsideToInside">
+<area shape="rect" id="node1" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,201,177,242"/>
+<area shape="rect" id="node2" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="225,201,397,242"/>
+<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a078a70673817d84c47594402c94acc3a" title="Euclidean norm squared." alt="" coords="485,5,572,32"/>
+<area shape="rect" id="node6" href="$db/dd7/namespaceop.html#a2b31f2c11ab895bd6137eca382720c0d" title="Element&#45;wise square root." alt="" coords="941,5,1008,32"/>
+<area shape="rect" id="node7" href="$db/dd7/namespaceop.html#a49b514a21b533a96c3a47c74c259212d" title="Element&#45;wise division by scalar." alt="" coords="453,107,604,133"/>
+<area shape="rect" id="node9" href="$db/dd7/namespaceop.html#ae93f2157a548cd11211fdc8af7fa68a3" title="Dot product." alt="" coords="497,157,560,184"/>
+<area shape="rect" id="node10" href="$db/dd7/namespaceop.html#af6f2e659df6244d006c126f2b453d8b7" title="lambda_1*input_1+lambda_2*input2." alt="" coords="484,208,573,235"/>
+<area shape="rect" id="node11" href="$db/dd7/namespaceop.html#a225d490a0ea3fa49263755d3735ad326" title="Element&#45;wise subtraction." alt="" coords="489,259,568,285"/>
+<area shape="rect" id="node12" href="$db/dd7/namespaceop.html#a992e4710a78c18b732b83702fc1ed016" title="Element&#45;wise sum." alt="" coords="495,309,563,336"/>
+<area shape="rect" id="node13" href="$db/dd7/namespaceop.html#aafe7f4a8472a74a5fdb2beb978d64df9" title="Element&#45;wise multiplication by scalar." alt="" coords="660,385,779,412"/>
+<area shape="rect" id="node14" href="$db/dd7/namespaceop.html#adeae9eb6036c08b138c63493dea370fe" title="Element&#45;wise multiplication by scalar." alt="" coords="445,411,612,437"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#a4244ccb7fff2fa6190c7ec29a040c4de" title="Euclidean norm." alt="" coords="687,5,752,32"/>
+<area shape="rect" id="node5" href="$db/dd7/namespaceop.html#ac9c925536c747d5628361c081a694023" title="Element&#45;wise square root." alt="" coords="827,5,893,32"/>
+<area shape="rect" id="node8" href="$db/dd7/namespaceop.html#a7ae5ec63d74d4cae92a9763df2cb0d2b" title="Element&#45;wise division by scalar." alt="" coords="668,107,771,133"/>
+</map>

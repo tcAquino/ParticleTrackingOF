@@ -1,0 +1,10 @@
+<map id="par::get_num_threads" name="par::get_num_threads">
+<area shape="rect" id="node1" title="Get total number of parallel threads." alt="" coords="232,225,380,251"/>
+<area shape="rect" id="node2" href="$da/dd3/structptof_1_1_geometry___generic.html#a594c21c0e7f24ee16f0bb3ba57b038b7" title=" " alt="" coords="14,5,175,47"/>
+<area shape="rect" id="node3" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7f70b4f50234b2ad967acb4fa995da16" title=" " alt="" coords="13,71,177,127"/>
+<area shape="rect" id="node4" href="$da/d9d/structptof_1_1_geometry___bcc.html#a4f2cc907cf130a3861ad794ba456d0c5" title=" " alt="" coords="14,152,175,193"/>
+<area shape="rect" id="node5" href="$da/dd3/structptof_1_1_geometry___generic.html#a3eab8fc8934c22c92699196f8676c0e9" title=" " alt="" coords="14,217,175,259"/>
+<area shape="rect" id="node6" href="$d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7616c42e165109a462b26f7ed6d720c9" title=" " alt="" coords="5,283,184,324"/>
+<area shape="rect" id="node7" href="$da/d9d/structptof_1_1_geometry___bcc.html#aaafcdabdc6cecd422e448ae69e2c01da" title=" " alt="" coords="25,348,164,389"/>
+<area shape="rect" id="node8" href="$d3/d90/structstochastic_1_1_r_n_g_threaded.html#ae00c51df4527246942924c4efd5d2059" title=" " alt="" coords="7,413,182,455"/>
+</map>

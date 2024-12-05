@@ -1,0 +1,6 @@
+<map id="op::rotate" name="op::rotate">
+<area shape="rect" id="node1" title="Rotate vector by angle." alt="" coords="296,86,381,113"/>
+<area shape="rect" id="node2" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="5,5,248,47"/>
+<area shape="rect" id="node3" href="$df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a492b845009e383f8e0d898195a33ad97" title="Enforce boundary condition." alt="" coords="41,71,212,127"/>
+<area shape="rect" id="node4" href="$db/dd7/namespaceop.html#afd54d5941f38f49c75f4f1cca72fb109" title="Rotate vector by angle." alt="" coords="84,151,169,178"/>
+</map>

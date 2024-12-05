@@ -1,0 +1,8 @@
+<map id="PTOF/Boundary.h" name="PTOF/Boundary.h">
+<area shape="rect" id="node1" title="Objects and utilities to enforce boundary conditions." alt="" coords="121,5,246,32"/>
+<area shape="rect" id="node2" href="$d7/d77/_boundary___cases_8h.html" title="Enforce different types of boundary condition depending on patch." alt="" coords="5,87,177,114"/>
+<area shape="rect" id="node5" href="$d3/df6/_initial_condition___cases_8h.html" title="Create particles according to different initial conditions." alt="" coords="202,80,349,121"/>
+<area shape="rect" id="node3" href="$d1/d4e/_geometry_8h.html" title="Objects to handle domain geometry and boundaries." alt="" coords="28,169,155,196"/>
+<area shape="rect" id="node4" href="$d3/d74/_models_8h.html" title="Type definitions to implement models." alt="" coords="135,244,250,271"/>
+<area shape="rect" id="node6" href="$d9/ddf/_output___cases_8h.html" title="Handle different types of measurements and output." alt="" coords="231,169,387,196"/>
+</map>
