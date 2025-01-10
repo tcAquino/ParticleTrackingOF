@@ -6,6 +6,7 @@ var structptof_1_1_boundary_condition_list =
       [ "periodic", "d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978ae6ffdec5e14fce371eb7ae99edebbbee", null ],
       [ "absorbing", "d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978acf8fafb9998f81c2acb2360f7121435e", null ],
       [ "info", "d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978acaf9b6b99962bf5c2264824231d7a40c", null ],
+      [ "inlet", "d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978ac7cdd1badf3c900c84c900bc03e6f6fc", null ],
       [ "custom", "d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978a8b9035807842a4e4dbe009f3f1478127", null ],
       [ "empty", "d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978aa2e4822a98337283e39f7b60acf85ec9", null ]
     ] ],

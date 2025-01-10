@@ -130,10 +130,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2a104cc97f10d068ff9977e7c052f5f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a2a104cc97f10d068ff9977e7c052f5f0">Geometry_Periodic_Cartesian</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
 <tr class="memdesc:a2a104cc97f10d068ff9977e7c052f5f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a2a104cc97f10d068ff9977e7c052f5f0">More...</a><br /></td></tr>
 <tr class="separator:a2a104cc97f10d068ff9977e7c052f5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b123acc6ffc5bd7db39fdf547c70ce1"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
-<tr class="memitem:a7b123acc6ffc5bd7db39fdf547c70ce1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7b123acc6ffc5bd7db39fdf547c70ce1">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;initial_condition={}) const</td></tr>
-<tr class="memdesc:a7b123acc6ffc5bd7db39fdf547c70ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for Cartesian periodicity.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7b123acc6ffc5bd7db39fdf547c70ce1">More...</a><br /></td></tr>
-<tr class="separator:a7b123acc6ffc5bd7db39fdf547c70ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af971786f575b465a8faf1cfc71ab7f3c"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename VelocityField , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
+<tr class="memitem:af971786f575b465a8faf1cfc71ab7f3c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#af971786f575b465a8faf1cfc71ab7f3c">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, VelocityField &amp;&amp;velocity_field, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;initial_condition={}) const</td></tr>
+<tr class="memdesc:af971786f575b465a8faf1cfc71ab7f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for Cartesian periodicity.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#af971786f575b465a8faf1cfc71ab7f3c">More...</a><br /></td></tr>
+<tr class="separator:af971786f575b465a8faf1cfc71ab7f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8d668a5653a54be96478525ccf82491"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:ac8d668a5653a54be96478525ccf82491"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ac8d668a5653a54be96478525ccf82491">info_runtime</a> (OStream &amp;output) const</td></tr>
 <tr class="memdesc:ac8d668a5653a54be96478525ccf82491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ac8d668a5653a54be96478525ccf82491">More...</a><br /></td></tr>
@@ -505,15 +505,15 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a7b123acc6ffc5bd7db39fdf547c70ce1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b123acc6ffc5bd7db39fdf547c70ce1">&#9670;&nbsp;</a></span>makeBoundary()</h2>
+<a id="af971786f575b465a8faf1cfc71ab7f3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af971786f575b465a8faf1cfc71ab7f3c">&#9670;&nbsp;</a></span>makeBoundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::size_t dim_val, typename ParallelOption_t , Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
-template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
+template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename VelocityField , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -541,6 +541,12 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
           <td></td>
           <td class="paramtype">SolverParameters const &amp;&#160;</td>
           <td class="paramname"><em>params_solvers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

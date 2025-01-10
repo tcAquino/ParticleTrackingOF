@@ -321,16 +321,30 @@ Foam::point make_point(std::vector<double> const &point) {
   return {0., 0., 0.};
 }
 
-/** \brief Unit normal at boundary face, pointing outward. */
+/** \brief Oriented area at boundary face, using right-hand-rule (outward for
+    boundary faces). */
+template <typename Mesh> auto area_outward(Foam::label face, Mesh const &mesh) {
+  return mesh.faces()[face].areaNormal(mesh.points());
+}
+
+/** \brief Oriented area at boundary face, using left-hand-rule (inward for
+  boundary faces). */
+template <typename Mesh> auto area_inward(Foam::label face, Mesh const &mesh) {
+  return -area_outward(face, mesh);
+}
+
+/** \brief Unit normal at boundary face, using right-hand-rule (outward for
+    boundary faces). */
 template <typename Mesh>
 auto unit_normal_outward(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].unitNormal(mesh.points());
 }
 
-/** \brief Unit normal at boundary face, pointing inward. */
+/** \brief Unit normal at boundary face, using left-hand-rule (inward for
+  boundary faces). */
 template <typename Mesh>
 auto unit_normal_inward(Foam::label face, Mesh const &mesh) {
-  return -mesh.faces()[face].unitNormal(mesh.points());
+  return -unit_normal_outward(face, mesh);
 }
 
 /** \brief Area (magnitude) of a face. */
@@ -353,6 +367,7 @@ template <typename Mesh> auto cell_center(Foam::label cell, Mesh const &mesh) {
   return mesh.cellCentres()[cell];
 }
 
+/** \brief Cell volumes. */
 template <typename Container, typename Mesh>
 auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
   std::vector<double> volumes;
@@ -362,6 +377,7 @@ auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
   return volumes;
 }
 
+/** \brief Face areas (magnitudes). */
 template <typename Container, typename Mesh>
 auto face_areas(Container const &face_ids, Mesh const &mesh) {
   std::vector<double> areas;
@@ -371,6 +387,7 @@ auto face_areas(Container const &face_ids, Mesh const &mesh) {
   return areas;
 }
 
+/** \brief Total area of faces. */
 template <typename Container, typename Mesh>
 auto face_area(std::vector<Foam::label> const &face_ids, Mesh const &mesh) {
   double area = 0.;
@@ -379,6 +396,7 @@ auto face_area(std::vector<Foam::label> const &face_ids, Mesh const &mesh) {
   return area;
 }
 
+/** \brief Total area of faces in patch. */
 template <typename Mesh>
 auto patch_area(std::string const &patch_name, Mesh const &mesh) {
   double area = 0.;
@@ -390,6 +408,7 @@ auto patch_area(std::string const &patch_name, Mesh const &mesh) {
   return area;
 }
 
+/** \brief Total area of faces in patches. */
 template <typename Mesh>
 auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
   double area = 0.;
@@ -398,6 +417,7 @@ auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
   return area;
 }
 
+/** Total areas of faces in each patch. */
 template <typename Mesh>
 auto patch_areas(std::vector<std::string> const &patch_names,
                  Mesh const &mesh) {
@@ -407,6 +427,10 @@ auto patch_areas(std::vector<std::string> const &patch_names,
   return areas;
 }
 
+/**
+   \brief Cell volume weighted by magnitude of vector field value at cell
+   center.
+*/
 template <typename VectorField, typename Mesh>
 auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
                Mesh const &mesh) {
@@ -414,15 +438,34 @@ auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
          Foam::mag(vector_field(cell_center(cell_id, mesh)));
 }
 
+/**
+   \brief Face area weighted by outward-normal component of vector field at face
+   center. */
 template <typename VectorField, typename Locator>
-auto face_flux(Foam::label face_id, VectorField const &vector_field,
-               Locator const &locator) {
+auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
+                       Locator const &locator) {
   auto const &mesh = locator.mesh();
-  return face_area(face_id, mesh) *
-         Foam::mag(vector_field(adjusted_face_center(face_id, locator),
-                                mesh.faceOwner()[face_id]));
+  return area_outward(face_id, mesh) &
+         vector_field(adjusted_face_center(face_id, locator),
+                      mesh.faceOwner()[face_id]);
 }
 
+/**
+   \brief Face area weighted by inward-normal component of vector field at face
+   center. */
+template <typename VectorField, typename Locator>
+auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
+                      Locator const &locator) {
+  auto const &mesh = locator.mesh();
+  return area_inward(face_id, mesh) &
+         vector_field(adjusted_face_center(face_id, locator),
+                      mesh.faceOwner()[face_id]);
+}
+
+/**
+   \brief Cell volumes weighted by magnitude of vector field value at cell
+   centers.
+*/
 template <typename Container, typename VectorField, typename Mesh>
 auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
                  Mesh const &mesh) {
@@ -433,13 +476,31 @@ auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
   return fluxes;
 }
 
+/**
+   \brief Face areas weighted by outward-normal component of vector field at
+   face center. */
 template <typename Container, typename VectorField, typename Locator>
-auto face_fluxes(Container const &face_ids, VectorField const &vector_field,
-                 Locator const &locator) {
+auto face_fluxes_outward(Container const &face_ids,
+                         VectorField const &vector_field,
+                         Locator const &locator) {
   std::vector<double> fluxes;
   fluxes.reserve(face_ids.size());
   for (auto face : face_ids)
-    fluxes.push_back(face_flux(face, vector_field, locator));
+    fluxes.push_back(face_flux_outward(face, vector_field, locator));
+  return fluxes;
+}
+
+/**
+   \brief Face areas weighted by inward-normal component of vector field at
+   face center. */
+template <typename Container, typename VectorField, typename Locator>
+auto face_fluxes_inward(Container const &face_ids,
+                        VectorField const &vector_field,
+                        Locator const &locator) {
+  std::vector<double> fluxes;
+  fluxes.reserve(face_ids.size());
+  for (auto face : face_ids)
+    fluxes.push_back(face_flux_inward(face, vector_field, locator));
   return fluxes;
 }
 
@@ -845,7 +906,8 @@ void apply_mask_cells_inplace(Container &cell_ids, Mask const &mask,
    \param mask Scalar field.
    \param threshold Threshold.
    \return \p Container with indices of elements where mask is below threshold
-   removed. */
+   removed.
+*/
 template <typename Container, typename Mask>
 auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
                       double threshold = 0.) {
@@ -877,7 +939,8 @@ void apply_mask_patch_faces_inplace(Container &face_ids, Mesh const &mesh,
    \param mask Scalar field.
    \param threshold Threshold.
    \return \p Container with indices of elements where mask is below threshold
-   removed. */
+   removed.
+*/
 template <typename Container, typename Mesh, typename Mask>
 auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
                             Mask const &mask, double threshold = 0.) {
@@ -887,13 +950,20 @@ auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
   return masked_ids;
 }
 
+/**
+   \brief Distribution for random number generation of cell indices weighted by
+   cell volumes.
+*/
 template <typename Container, typename Mesh>
 auto uniform_cell_distribution(Container const &cell_ids, Mesh const &mesh) {
   auto weights = cell_volumes(cell_ids, mesh);
   return std::discrete_distribution<std::size_t>{weights.begin(),
                                                  weights.end()};
 }
-
+/**
+   \brief Distribution for random number generation of face indices weighted by
+   face areas.
+*/
 template <typename Container, typename Mesh>
 auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
   auto weights = face_areas(face_ids, mesh);
@@ -901,6 +971,10 @@ auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
                                                  weights.end()};
 }
 
+/**
+   \brief Distribution for random number generation of cell indices weighted by
+   cell volumes multiplied by vector field magnitude at cell center.
+*/
 template <typename Container, typename VectorField, typename Mesh>
 auto fluxweighted_cell_distribution(Container const &cell_ids,
                                     VectorField const &vector_field,
@@ -913,11 +987,17 @@ auto fluxweighted_cell_distribution(Container const &cell_ids,
                                                  weights.end()};
 }
 
+/**
+   \brief Distribution for random number generation of face indices weighted by
+   face areas multiplied by vector field component along inward normal.
+   \note Face with vector field pointing outward have weight zero.
+*/
 template <typename Container, typename VectorField, typename Locator>
 auto fluxweighted_face_distribution(Container const &face_ids,
                                     VectorField const &vector_field,
                                     Locator const &locator) {
-  auto weights = face_areas(face_ids, locator.mesh());
+  auto weights = face_fluxes_inward(face_ids, vector_field, locator);
+  op::apply([](auto val) { return std::max(0., val); }, weights);
   if (op::sum(weights) == 0.)
     throw std::runtime_error{"Cannot define flux-weighted distribution because "
                              "all faces have zero flux"};
@@ -1217,6 +1297,6 @@ auto mass(Subject const &subject, double time,
                       params_initial_condition_name, params_output_name) +
            "_RUN_" + std::to_string(run_nr);
   }
-} // namespace ptof
+  } // namespace ptof
 
 #endif /* PTOF_USEFUL_H */

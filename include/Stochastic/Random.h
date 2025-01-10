@@ -88,8 +88,10 @@ private:
    \class RNGThreaded Stochastic/Random.h "Stochastic/Random.h"
    \brief Set of RNGs for thread-safe random number generation.
 */
-template <typename ParallelOption, typename Engine_t> struct RNGThreaded {
+template <typename ParallelOption, typename Engine_t = std::mt19937>
+struct RNGThreaded {
   using Engine = Engine_t;
+  using result_type = typename Engine::result_type;
 
   RNGThreaded() {
     std::size_t num_threads = get_num_threads(ParallelOption{});
@@ -103,11 +105,20 @@ template <typename ParallelOption, typename Engine_t> struct RNGThreaded {
       RNGs. */
   RNGThreaded(std::size_t) : RNGThreaded{} {}
 
+  /** \brief Constructor.
+      \details Seed each RNG separately. */
+  RNGThreaded(std::vector<std::size_t> const &seeds) : RNGThreaded{} {
+    std::size_t num_threads = get_num_threads(ParallelOption{});
+    _rngs.reserve(num_threads);
+    for (std::size_t ii = 0; ii < num_threads; ++ii)
+      _rngs.emplace_back(seeds[ii]);
+  }
+
   auto operator()() { return _rngs[get_thread_num(ParallelOption{})](); }
 
-  auto min() { return Engine_t::min(); }
+  static constexpr auto min() { return Engine_t::min(); }
 
-  auto max() { return Engine_t::max(); }
+  static constexpr auto max() { return Engine_t::max(); }
 
 private:
   std::vector<Engine_t> _rngs;

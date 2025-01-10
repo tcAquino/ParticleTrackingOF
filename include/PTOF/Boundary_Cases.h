@@ -30,8 +30,9 @@ namespace ptof {
    \class Boundary_Cases PTOF/Boundary_Cases.h "PTOF/Boundary_Cases.h"
    \brief Boundary object to handle implemented boundary types.
 */
-template <typename Locator, typename Store_Info, typename Boundary_Periodic,
-          typename Boundary_Custom, typename SurfaceReaction>
+template <typename Locator, typename Store_Info, typename VelocityField,
+          typename Boundary_Periodic, typename Boundary_Custom,
+          typename SurfaceReaction>
 class Boundary_Cases {
 public:
   /** \brief Container type to hold patch names and associated bc type names. */
@@ -44,18 +45,21 @@ public:
      \param locator Object to locate positions in mesh.
      \param store_info Object to handle storing of information upon hitting a
      boundary.
+     \param velocity_field Velocity field as a function of state.
      \param boundary_periodic Periodic boundary condition enforcer.
      \param boundary_custom Custom boundary condition enforcer.
      \param surface_reaction Surface Reaction.
   */
   Boundary_Cases(
       BCs boundary_conditions, Locator &&locator, Store_Info &&store_info,
+      VelocityField &&velocity_field,
       Boundary_Periodic &&boundary_periodic = Boundary_DoNothing{},
       Boundary_Custom &&boundary_custom = Boundary_DoNothing{},
       SurfaceReaction &&surface_reaction = SurfaceReaction_DoNothing{})
       : _boundary_conditions{boundary_conditions},
         _locator{std::forward<Locator>(locator)},
         _store_info{std::forward<Store_Info>(store_info)},
+        _velocity_field{std::forward<VelocityField>(velocity_field)},
         _boundary_periodic{std::forward<Boundary_Periodic>(boundary_periodic)},
         _boundary_custom{std::forward<Boundary_Custom>(boundary_custom)},
         surface_reaction{std::forward<SurfaceReaction>(surface_reaction)} {
@@ -150,7 +154,8 @@ public:
       // Apply the approriate boundary and store associated info
       switch (_boundary_condition_types.type(type_name)) {
       case BoundaryConditionList::Type::reflecting: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, state_old, intersection, patch_id,
+                    _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::reflecting>{});
         boundary_reflecting(state, intersection.point(),
@@ -159,9 +164,10 @@ public:
         break;
       }
       case BoundaryConditionList::Type::reacting_reflecting: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::reflecting>{});
+        _store_info(
+            state, state_old, intersection, patch_id, _boundary_condition_types,
+            meta::Selector<BoundaryConditionList::Type,
+                           BoundaryConditionList::Type::reacting_reflecting>{});
         surface_reaction(state, state_old, intersection.index());
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
@@ -169,22 +175,45 @@ public:
         break;
       }
       case BoundaryConditionList::Type::periodic: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, state_old, intersection, patch_id,
+                    _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::periodic>{});
         had_effect += _boundary_periodic(state, intersection);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, state_old, intersection, patch_id,
+                    _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
         state.set_position(intersection.point());
         had_effect = 1;
         break;
       }
+      case BoundaryConditionList::Type::inlet: {
+        if (face_flux_outward(intersection.index(), _velocity_field, _locator) >
+            0.) {
+          _store_info(state, state_old, intersection, patch_id,
+                      _boundary_condition_types,
+                      meta::Selector<BoundaryConditionList::Type,
+                                     BoundaryConditionList::Type::absorbing>{});
+          state.set_position(intersection.point());
+        } else {
+          _store_info(
+              state, state_old, intersection, patch_id,
+              _boundary_condition_types,
+              meta::Selector<BoundaryConditionList::Type,
+                             BoundaryConditionList::Type::reflecting>{});
+          boundary_reflecting(state, intersection.point(),
+                              reflection_normal(intersection.index()));
+        }
+        had_effect = 1;
+        break;
+      }
       case BoundaryConditionList::Type::custom: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, state_old, intersection, patch_id,
+                    _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::custom>{});
         had_effect += _boundary_custom(state, state_old, intersection);
@@ -278,6 +307,7 @@ private:
   Locator _locator;         /**< Object to locate positions in mesh. */
   Store_Info
       _store_info; /**< Object to handle boundary info storing in states. */
+  VelocityField _velocity_field;
   Boundary_Periodic
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
   Boundary_Custom
@@ -345,35 +375,40 @@ private:
             (make_point(state.position) - next_intersection.point())) < 0.;
   }
 };
-template <typename Locator, typename Store_Info, typename Boundary_Periodic,
-          typename Boundary_Custom, typename Surface_Reaction>
-Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                                       Boundary_Custom, Surface_Reaction>::BCs,
-               Locator &&, Store_Info &&, Boundary_Periodic &&,
-               Boundary_Custom &&, Surface_Reaction &&)
-    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic, Boundary_Custom,
-                      Surface_Reaction>;
-template <typename Locator, typename Store_Info, typename Boundary_Periodic,
-          typename Boundary_Custom>
-Boundary_Cases(
-    typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                            Boundary_Custom, SurfaceReaction_DoNothing>::BCs,
-    Locator &&, Store_Info &&, Boundary_Periodic &&, Boundary_Custom &&)
-    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic, Boundary_Custom,
-                      SurfaceReaction_DoNothing>;
-template <typename Locator, typename Store_Info, typename Boundary_Periodic>
-Boundary_Cases(
-    typename Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
-                            Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
-    Locator &&, Store_Info &&, Boundary_Periodic &&)
-    -> Boundary_Cases<Locator, Store_Info, Boundary_Periodic,
+template <typename Locator, typename Store_Info, typename VelocityField,
+          typename Boundary_Periodic, typename Boundary_Custom,
+          typename Surface_Reaction>
+Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+                                       Boundary_Periodic, Boundary_Custom,
+                                       Surface_Reaction>::BCs,
+               Locator &&, Store_Info &&, VelocityField &&,
+               Boundary_Periodic &&, Boundary_Custom &&, Surface_Reaction &&)
+    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_Periodic,
+                      Boundary_Custom, Surface_Reaction>;
+template <typename Locator, typename Store_Info, typename VelocityField,
+          typename Boundary_Periodic, typename Boundary_Custom>
+Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+                                       Boundary_Periodic, Boundary_Custom,
+                                       SurfaceReaction_DoNothing>::BCs,
+               Locator &&, Store_Info &&, VelocityField &&,
+               Boundary_Periodic &&, Boundary_Custom &&)
+    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_Periodic,
+                      Boundary_Custom, SurfaceReaction_DoNothing>;
+template <typename Locator, typename Store_Info, typename VelocityField,
+          typename Boundary_Periodic>
+Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+                                       Boundary_Periodic, Boundary_DoNothing,
+                                       SurfaceReaction_DoNothing>::BCs,
+               Locator &&, Store_Info &&, VelocityField &&,
+               Boundary_Periodic &&)
+    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_Periodic,
                       Boundary_DoNothing, SurfaceReaction_DoNothing>;
-template <typename Locator, typename Store_Info>
-Boundary_Cases(
-    typename Boundary_Cases<Locator, Store_Info, Boundary_DoNothing,
-                            Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
-    Locator &&, Store_Info &&)
-    -> Boundary_Cases<Locator, Store_Info, Boundary_DoNothing,
+template <typename Locator, typename Store_Info, typename VelocityField>
+Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+                                       Boundary_DoNothing, Boundary_DoNothing,
+                                       SurfaceReaction_DoNothing>::BCs,
+               Locator &&, Store_Info &&, VelocityField &&)
+    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_DoNothing,
                       Boundary_DoNothing, SurfaceReaction_DoNothing>;
 } // namespace ptof
 

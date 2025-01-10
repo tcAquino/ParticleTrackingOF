@@ -1,7 +1,7 @@
 <map id="op::sum" name="op::sum">
 <area shape="rect" id="node1" title="Sum of elements." alt="" coords="759,163,833,190"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title=" " alt="" coords="547,57,686,99"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a9c0e291883e7c0f8af32a5640eafef09" title=" " alt="" coords="547,123,686,164"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title="Distribution for random number generation of cell indices weighted by cell volumes multiplied by vect..." alt="" coords="547,57,686,99"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a9c0e291883e7c0f8af32a5640eafef09" title="Distribution for random number generation of face indices weighted by face areas multiplied by vector..." alt="" coords="547,123,686,164"/>
 <area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#afaa9a48640e0e9b7389f209471463290" title="Compute magnitude of average of volumetric field (set of values associated with mesh cells)." alt="" coords="544,188,689,229"/>
 <area shape="rect" id="node12" href="$d7/d05/structptof_1_1model__advection__diffusion__surface__decay__2d_1_1_definitions_1_1_reaction_1_1_parameters.html#a3c3597b42d548333c2a7dfcdbbbde6e5" title=" " alt="" coords="523,253,711,324"/>
 <area shape="rect" id="node5" href="$dc/d3a/structptof_1_1model__advection__diffusion__2d_1_1_definitions_1_1_transport_1_1_parameters.html#a4151239be3e7489927b0abeee63fc554" title=" " alt="" coords="264,5,451,76"/>

@@ -343,6 +343,10 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a072abd757e515561bb5b2aa8ac759865"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a072abd757e515561bb5b2aa8ac759865">velocity_rescaling_factor_t</a> = decltype(std::declval&lt; X &gt;().velocity_rescaling_factor)</td></tr>
 <tr class="memdesc:a072abd757e515561bb5b2aa8ac759865"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::velocity_rescaling_factor</code>.  <a href="../../d8/db6/namespacemeta.html#a072abd757e515561bb5b2aa8ac759865">More...</a><br /></td></tr>
 <tr class="separator:a072abd757e515561bb5b2aa8ac759865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a336c56be9d368f8b087eb33c72f6cc75"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a336c56be9d368f8b087eb33c72f6cc75"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a336c56be9d368f8b087eb33c72f6cc75">patch_id_t</a> = decltype(std::declval&lt; X &gt;().patch_id)</td></tr>
+<tr class="memdesc:a336c56be9d368f8b087eb33c72f6cc75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of <code>X::patch_id</code>.  <a href="../../d8/db6/namespacemeta.html#a336c56be9d368f8b087eb33c72f6cc75">More...</a><br /></td></tr>
+<tr class="separator:a336c56be9d368f8b087eb33c72f6cc75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -526,6 +530,10 @@ Variables</h2></td></tr>
 <tr class="memitem:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#acc97ff166f6593ccfc89ef43cfaae2a7">has_velocity_rescaling_factor_v</a></td></tr>
 <tr class="memdesc:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>double velocity_rescaling_factor</code>.  <a href="../../d8/db6/namespacemeta.html#acc97ff166f6593ccfc89ef43cfaae2a7">More...</a><br /></td></tr>
 <tr class="separator:acc97ff166f6593ccfc89ef43cfaae2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f3a277a34c025af689ed8884216fe53"><td class="memTemplParams" colspan="2">template&lt;typename X &gt; </td></tr>
+<tr class="memitem:a2f3a277a34c025af689ed8884216fe53"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/db6/namespacemeta.html#a2f3a277a34c025af689ed8884216fe53">has_patch_id_v</a></td></tr>
+<tr class="memdesc:a2f3a277a34c025af689ed8884216fe53"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>Foam::label patch_id</code>.  <a href="../../d8/db6/namespacemeta.html#a2f3a277a34c025af689ed8884216fe53">More...</a><br /></td></tr>
+<tr class="separator:a2f3a277a34c025af689ed8884216fe53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Template metamagic utilities. </p>
@@ -1065,6 +1073,24 @@ template&lt;typename X &gt; </div>
 </div><div class="memdoc">
 
 <p>Type of member <code>X::Parameters</code>. </p>
+
+</div>
+</div>
+<a id="a336c56be9d368f8b087eb33c72f6cc75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a336c56be9d368f8b087eb33c72f6cc75">&#9670;&nbsp;</a></span>patch_id_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename X &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d8/db6/namespacemeta.html#a336c56be9d368f8b087eb33c72f6cc75">meta::patch_id_t</a> = typedef decltype(std::declval&lt;X&gt;().patch_id)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type of <code>X::patch_id</code>. </p>
 
 </div>
 </div>
@@ -1871,6 +1897,35 @@ template&lt;typename X &gt; </div>
 
 </div>
 </div>
+<a id="a2f3a277a34c025af689ed8884216fe53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f3a277a34c025af689ed8884216fe53">&#9670;&nbsp;</a></span>has_patch_id_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename X &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool meta::has_patch_id_v</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    std::conjunction_v&lt;has_member&lt;patch_id_t, X&gt;,</div>
+<div class="line">                       is_same&lt;patch_id_t, X, Foam::label&gt;&gt;</div>
+</div><!-- fragment -->
+<p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>Foam::label patch_id</code>. </p>
+
+</div>
+</div>
 <a id="ab79e8357d04767ad475502bb5969d1dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab79e8357d04767ad475502bb5969d1dd">&#9670;&nbsp;</a></span>has_periodicity_v</h2>
 
@@ -2246,8 +2301,8 @@ template&lt;typename X &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">    has_member&lt;velocity_rescaling_factor_t, X&gt;::value</div>
-<div class="line">        &amp;&amp;std::is_same_v&lt;velocity_rescaling_factor_t&lt;X&gt;, <span class="keywordtype">double</span>&gt;</div>
+<div class="line">    std::conjunction_v&lt;has_member&lt;velocity_rescaling_factor_t, X&gt;,</div>
+<div class="line">                       is_same&lt;velocity_rescaling_factor_t, X, double&gt;&gt;</div>
 </div><!-- fragment -->
 <p><a class="el" href="../../de/df2/class_check.html">Check</a> if a class has member <code>double velocity_rescaling_factor</code>. </p>
 

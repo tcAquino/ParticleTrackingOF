@@ -1,0 +1,5 @@
+<map id="ptof::Boundary_Cases::reflection_normal" name="ptof::Boundary_Cases::reflection_normal">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,168,47"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="216,13,400,39"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#abf0aa3876390d4bac9c2877bfc88100b" title="Unit normal at boundary face, using right&#45;hand&#45;rule (outward for boundary faces)." alt="" coords="448,13,641,39"/>
+</map>

@@ -1,6 +1,9 @@
 <map id="ptof::adjusted_face_center" name="ptof::adjusted_face_center">
-<area shape="rect" id="node1" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="391,31,524,73"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a7e3e43ceb8c6053f3d420fe91b5e296b" title=" " alt="" coords="205,5,310,32"/>
-<area shape="rect" id="node4" href="$de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a10d4026a54940b39ddc144c9807697af" title=" " alt="" coords="172,56,343,112"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a145dbf20bf4a1f003017891798092c1f" title=" " alt="" coords="5,5,124,32"/>
+<area shape="rect" id="node1" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="664,56,811,97"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a074e29d0d2fa52ba81aed79ecd4b4b6f" title="Face area weighted by inward&#45;normal component of vector field at face center." alt="" coords="439,13,605,39"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a80378652fd050cd7e58f31a9e20beaca" title="Face area weighted by outward&#45;normal component of vector field at face center." alt="" coords="435,63,609,90"/>
+<area shape="rect" id="node7" href="$de/d10/structptof_1_1_initial_condition___distributed_face_centers.html#a10d4026a54940b39ddc144c9807697af" title=" " alt="" coords="428,114,616,170"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#aa3d470eac18760f51c04d50148d1f00f" title="Face areas weighted by inward&#45;normal component of vector field at face center." alt="" coords="197,13,375,39"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a9c0e291883e7c0f8af32a5640eafef09" title="Distribution for random number generation of face indices weighted by face areas multiplied by vector..." alt="" coords="5,5,144,47"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#ad75227d649169a53c130c61250f548af" title="Face areas weighted by outward&#45;normal component of vector field at face center." alt="" coords="192,63,380,90"/>
 </map>

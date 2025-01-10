@@ -16,6 +16,7 @@
 
 #include "General/Meta.h"
 #include "General/Modular.h"
+#include <algorithm>
 #include <cmath>
 #include <functional>
 #include <stdexcept>
@@ -1021,6 +1022,54 @@ std::vector<std::vector<double>> outer_product(Container1 const &input_1,
 
   return output;
 }
+
+/** \brief Apply element-wise unary operation. */
+template <typename Op, typename Container1, typename Container2>
+Container2 &apply(Op &&operation, Container1 const &input, Container2 &output) {
+  if constexpr (meta::has_begin_v<Container1> &&
+                meta::has_begin_v<Container2>) {
+    std::transform(input.begin(), input.end(), output.begin(), operation);
+  } else if constexpr (meta::has_begin_v<Container1>) {
+    std::size_t ii = 0;
+    for (auto const &val : input)
+      output[ii++] = operation(val);
+  } else if constexpr (meta::has_begin_v<Container2>) {
+    std::size_t ii = 0;
+    for (auto &val : output)
+      val = operation(input[ii++]);
+  } else {
+    for (std::size_t ii = 0; ii < input.size(); ++ii)
+      output[ii] = operation(input[ii]);
+  }
+
+  return output;
+}
+
+/** \brief Apply element-wise unary operation. */
+template <typename Op, typename Container>
+Container &apply_inplace(Op &&operation, Container &input) {
+  if constexpr (meta::has_begin_v<Container>) {
+    std::for_each(input.begin(), input.end(), operation);
+    return input;
+  } else {
+    return apply(operation, input, input);
+  }
+}
+
+/** \brief Apply element-wise unary operation. */
+template <typename Op, typename Container>
+Container apply(Op &&operation, Container &input) {
+  if constexpr (meta::is_constructible_from_size_v<Container>) {
+    Container output(input.size());
+    apply(operation, input, output);
+    return output;
+  } else {
+    Container output{};
+    apply(operation, input, output);
+    return output;
+  }
+}
+
 } // namespace op
 
 #endif /* GENERAL_OPERATIONS_H */

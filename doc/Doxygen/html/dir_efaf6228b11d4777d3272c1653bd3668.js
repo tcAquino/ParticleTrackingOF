@@ -26,7 +26,13 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Geometry_Periodic_Cartesian", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html", "d2/d99/structptof_1_1_geometry___periodic___cartesian" ],
       [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ]
     ] ],
-    [ "Info.h", "d2/d32/_info_8h.html", "d2/d32/_info_8h" ],
+    [ "Info.h", "d2/d32/_info_8h.html", [
+      [ "Info_Type", "d8/d13/structptof_1_1_info___type.html", "d8/d13/structptof_1_1_info___type" ],
+      [ "Info_Absorbed", "d6/df0/structptof_1_1_info___absorbed.html", "d6/df0/structptof_1_1_info___absorbed" ],
+      [ "Info_Absorbed_Patch", "de/d57/structptof_1_1_info___absorbed___patch.html", "de/d57/structptof_1_1_info___absorbed___patch" ],
+      [ "Info_Absorbed_Reinjections", "dc/d06/structptof_1_1_info___absorbed___reinjections.html", "dc/d06/structptof_1_1_info___absorbed___reinjections" ],
+      [ "Info_Contact_Point", "d3/d28/structptof_1_1_info___contact___point.html", "d3/d28/structptof_1_1_info___contact___point" ]
+    ] ],
     [ "InitialCondition.h", "d6/d44/_initial_condition_8h.html", "d6/d44/_initial_condition_8h" ],
     [ "InitialCondition_Cases.h", "d3/df6/_initial_condition___cases_8h.html", "d3/df6/_initial_condition___cases_8h" ],
     [ "InitialConditionList.h", "d6/d5d/_initial_condition_list_8h.html", [
@@ -135,12 +141,7 @@ var dir_efaf6228b11d4777d3272c1653bd3668 =
       [ "Steppers_Advection_RK4_Diffusion_Euler", "d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html", "d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler" ],
       [ "Steppers_Advection_Euler_Diffusion_Euler", "d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html", "d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler" ]
     ] ],
-    [ "Store.h", "d4/deb/_store_8h.html", [
-      [ "Store_Type", "d9/dcd/structptof_1_1_store___type.html", "d9/dcd/structptof_1_1_store___type" ],
-      [ "Store_Nothing", "de/df6/structptof_1_1_store___nothing.html", "de/df6/structptof_1_1_store___nothing" ],
-      [ "Store_Absorbed", "d6/dee/structptof_1_1_store___absorbed.html", "d6/dee/structptof_1_1_store___absorbed" ],
-      [ "Store_Absorbed_Reinjections", "de/dbb/structptof_1_1_store___absorbed___reinjections.html", "de/dbb/structptof_1_1_store___absorbed___reinjections" ]
-    ] ],
+    [ "Store.h", "d4/deb/_store_8h.html", "d4/deb/_store_8h" ],
     [ "TimeStepAdaptor.h", "dc/dba/_time_step_adaptor_8h.html", "dc/dba/_time_step_adaptor_8h" ],
     [ "TimeUnits.h", "db/d69/_time_units_8h.html", "db/d69/_time_units_8h" ],
     [ "Transitions.h", "de/db0/_p_t_o_f_2_transitions_8h.html", "de/db0/_p_t_o_f_2_transitions_8h" ],

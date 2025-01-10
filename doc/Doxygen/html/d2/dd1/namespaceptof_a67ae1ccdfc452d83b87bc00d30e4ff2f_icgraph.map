@@ -1,5 +1,5 @@
 <map id="ptof::cell_flux" name="ptof::cell_flux">
-<area shape="rect" id="node1" title=" " alt="" coords="341,13,441,39"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ac48a62a8da22d90f7d66cb15e3540030" title=" " alt="" coords="179,13,293,39"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title=" " alt="" coords="5,5,131,47"/>
+<area shape="rect" id="node1" title="Cell volume weighted by magnitude of vector field value at cell center." alt="" coords="363,13,472,39"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ac48a62a8da22d90f7d66cb15e3540030" title="Cell volumes weighted by magnitude of vector field value at cell centers." alt="" coords="192,13,315,39"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title="Distribution for random number generation of cell indices weighted by cell volumes multiplied by vect..." alt="" coords="5,5,144,47"/>
 </map>

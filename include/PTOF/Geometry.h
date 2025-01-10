@@ -79,12 +79,13 @@ struct Geometry_Generic {
      \return Boundary object.
   */
   template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters, typename SurfaceReaction,
-            typename InitialCondition = useful::Empty>
+            typename SolverParameters, typename VelocityField,
+            typename SurfaceReaction, typename InitialCondition = useful::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
                     SolverParameters const &params_solvers,
+                    VelocityField &&velocity_field,
                     SurfaceReaction &&surface_reaction,
                     InitialCondition &&initial_condition = {}) const {
     auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
@@ -105,12 +106,17 @@ struct Geometry_Generic {
           boundary_conditions,
           locator,
           BoundaryInfo{},
+          std::forward<VelocityField>(velocity_field),
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
-          boundary_conditions, locator, BoundaryInfo{}, Boundary_DoNothing{},
+          boundary_conditions,
+          locator,
+          BoundaryInfo{},
+          std::forward<VelocityField>(velocity_field),
+          Boundary_DoNothing{},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
     throw std::runtime_error{std::string{"Boundary conditions for "} +
@@ -180,7 +186,7 @@ private:
      \return Mesh copies for parallel searches.
   */
   std::vector<std::unique_ptr<Mesh>>
-  make_meshes(DirectoriesOF const &directories_of) {
+  make_meshes(DirectoriesOF const &directories_of) const {
     std::size_t num_threads = par::get_num_threads(ParallelOption{});
     std::vector<std::unique_ptr<Mesh>> meshes;
     meshes.reserve(num_threads);
@@ -196,14 +202,13 @@ private:
      \return Mesh search tools for parallel searches.
   */
   std::vector<std::unique_ptr<MeshSearch>>
-  make_mesh_searches(DirectoriesOF const &directories_of) {
+  make_mesh_searches(DirectoriesOF const &directories_of) const {
     std::size_t num_threads = par::get_num_threads(ParallelOption{});
     std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
     mesh_searches.reserve(num_threads);
     for (std::size_t thread = 0; thread < num_threads; ++thread)
       mesh_searches.emplace_back(
           std::make_unique<MeshSearch>(*_meshes[thread]));
-
     return mesh_searches;
   }
 
@@ -257,12 +262,13 @@ struct Geometry_Periodic_Cartesian {
      \return Boundary object.
   */
   template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters, typename SurfaceReaction,
-            typename InitialCondition = useful::Empty>
+            typename SolverParameters, typename VelocityField,
+            typename SurfaceReaction, typename InitialCondition = useful::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
                     SolverParameters const &params_solvers,
+                    VelocityField &&velocity_field,
                     SurfaceReaction &&surface_reaction,
                     InitialCondition &&initial_condition = {}) const {
     auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
@@ -279,12 +285,16 @@ struct Geometry_Periodic_Cartesian {
           boundary_conditions,
           locator,
           BoundaryInfo{},
+          std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
-          boundary_conditions, locator, BoundaryInfo{},
+          boundary_conditions,
+          locator,
+          BoundaryInfo{},
+          std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
@@ -463,12 +473,13 @@ struct Geometry_Bcc {
      dynamics).
   */
   template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters, typename SurfaceReaction,
-            typename InitialCondition = useful::Empty>
+            typename SolverParameters, typename VelocityField,
+            typename SurfaceReaction, typename InitialCondition = useful::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
                     SolverParameters const &params_solvers,
+                    VelocityField &&velocity_field,
                     SurfaceReaction &&surface_reaction,
                     InitialCondition &&initial_condition = {}) const {
     auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
@@ -485,12 +496,16 @@ struct Geometry_Bcc {
           boundary_conditions,
           locator,
           BoundaryInfo{},
+          std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
-          boundary_conditions, locator, BoundaryInfo{},
+          boundary_conditions,
+          locator,
+          BoundaryInfo{},
+          std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
@@ -567,9 +582,7 @@ private:
     std::vector<std::unique_ptr<Mesh>> meshes;
     meshes.reserve(num_threads);
     for (std::size_t thread = 0; thread < num_threads; ++thread)
-      meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion, directories_of.time.timeName(),
-          directories_of.time, Foam::IOobject::MUST_READ}));
+      meshes.emplace_back(std::make_unique<Mesh>(*_meshes[thread]));
     return meshes;
   }
 

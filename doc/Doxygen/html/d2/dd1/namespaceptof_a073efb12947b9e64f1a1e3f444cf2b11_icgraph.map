@@ -1,8 +1,8 @@
 <map id="ptof::cell_volume" name="ptof::cell_volume">
-<area shape="rect" id="node1" title="Volume of a cell." alt="" coords="525,42,647,69"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a67ae1ccdfc452d83b87bc00d30e4ff2f" title=" " alt="" coords="363,15,463,42"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a835bcfbed5028f991aaa8588ac282528" title=" " alt="" coords="349,67,477,94"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#ac48a62a8da22d90f7d66cb15e3540030" title=" " alt="" coords="183,13,297,39"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title=" " alt="" coords="5,5,131,47"/>
-<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#ad0af76b5bce8ecfc693a8b65cbb4d58e" title=" " alt="" coords="179,64,301,105"/>
+<area shape="rect" id="node1" title="Volume of a cell." alt="" coords="565,42,700,69"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a67ae1ccdfc452d83b87bc00d30e4ff2f" title="Cell volume weighted by magnitude of vector field value at cell center." alt="" coords="392,15,501,42"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a835bcfbed5028f991aaa8588ac282528" title="Cell volumes." alt="" coords="376,67,517,94"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#ac48a62a8da22d90f7d66cb15e3540030" title="Cell volumes weighted by magnitude of vector field value at cell centers." alt="" coords="199,13,321,39"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a70bd90e1fa6c6641bd58aa330f37d7c0" title="Distribution for random number generation of cell indices weighted by cell volumes multiplied by vect..." alt="" coords="5,5,144,47"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#ad0af76b5bce8ecfc693a8b65cbb4d58e" title="Distribution for random number generation of cell indices weighted by cell volumes." alt="" coords="192,64,328,105"/>
 </map>

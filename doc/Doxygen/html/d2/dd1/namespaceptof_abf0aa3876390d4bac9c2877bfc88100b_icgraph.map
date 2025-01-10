@@ -1,4 +1,7 @@
 <map id="ptof::unit_normal_outward" name="ptof::unit_normal_outward">
-<area shape="rect" id="node1" title="Unit normal at boundary face, pointing outward." alt="" coords="180,5,373,32"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aa3001150c0a019905f023f5d5a60ff61" title="Small offset along face normal (outward)." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node1" title="Unit normal at boundary face, using right&#45;hand&#45;rule (outward for boundary faces)." alt="" coords="473,32,667,59"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aa3001150c0a019905f023f5d5a60ff61" title="Small offset along face normal (outward)." alt="" coords="270,7,397,33"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#ad10f85db01b3c1f0a432df9f9642a5ee" title="Unit normal at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="241,57,425,84"/>
+<area shape="rect" id="node4" href="$dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#acd34396fef150ad2a4eaab7db13247e6" title="Make a single position along with location hint." alt="" coords="5,5,193,61"/>
+<area shape="rect" id="node5" href="$d4/d49/classptof_1_1_boundary___cases.html#a5eabf14647d263dc7793648f54594392" title=" " alt="" coords="18,86,181,127"/>
 </map>

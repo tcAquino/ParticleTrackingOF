@@ -8,6 +8,7 @@
 #ifndef PTOF_LOCATOR_H
 #define PTOF_LOCATOR_H
 
+#include "General/Parallel.h"
 #include "PTOF/Useful.h"
 #include <Vector2D.H>
 #include <fieldTypes.H>
@@ -35,6 +36,8 @@ struct Locator_Cell {
      \param mesh_search Mesh searching object.
   */
   Locator_Cell(Geometry const &geometry) : _geometry{geometry} {}
+
+  Locator_Cell(Geometry&&) = delete;
 
   /** \return Mesh search object. */
   MeshSearch const &mesh_search() const { return _geometry.mesh_search(); }

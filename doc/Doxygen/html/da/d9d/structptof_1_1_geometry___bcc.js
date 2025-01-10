@@ -13,7 +13,7 @@ var structptof_1_1_geometry___bcc =
     [ "make_boundary_periodic", "da/d9d/structptof_1_1_geometry___bcc.html#a4e634b7e71b1226acd7bc892e17113bc", null ],
     [ "make_mesh_searches", "da/d9d/structptof_1_1_geometry___bcc.html#a4f2cc907cf130a3861ad794ba456d0c5", null ],
     [ "make_meshes", "da/d9d/structptof_1_1_geometry___bcc.html#aaafcdabdc6cecd422e448ae69e2c01da", null ],
-    [ "makeBoundary", "da/d9d/structptof_1_1_geometry___bcc.html#a0d8442b4a277f4cd8651a78d0055d9b2", null ],
+    [ "makeBoundary", "da/d9d/structptof_1_1_geometry___bcc.html#ae9445c79529e7011f49fb0a718365785", null ],
     [ "mesh", "da/d9d/structptof_1_1_geometry___bcc.html#a14399f9a69fb99b5d5159cb7dc386121", null ],
     [ "mesh_search", "da/d9d/structptof_1_1_geometry___bcc.html#ad15ff3b9fa35cb26dbe3129d084242d8", null ],
     [ "_mesh_searches", "da/d9d/structptof_1_1_geometry___bcc.html#ac89c922c0a5f7c844e313f09cea49772", null ],

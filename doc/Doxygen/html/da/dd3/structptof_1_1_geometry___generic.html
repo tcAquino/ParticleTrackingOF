@@ -127,10 +127,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac8ee12a562b96f655741a597aa7d87eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#ac8ee12a562b96f655741a597aa7d87eb">Geometry_Generic</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of, <a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories)</td></tr>
 <tr class="memdesc:ac8ee12a562b96f655741a597aa7d87eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="../../da/dd3/structptof_1_1_geometry___generic.html#ac8ee12a562b96f655741a597aa7d87eb">More...</a><br /></td></tr>
 <tr class="separator:ac8ee12a562b96f655741a597aa7d87eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2d05f0b8761362ca08e454824898502"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
-<tr class="memitem:ab2d05f0b8761362ca08e454824898502"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#ab2d05f0b8761362ca08e454824898502">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;initial_condition={}) const</td></tr>
-<tr class="memdesc:ab2d05f0b8761362ca08e454824898502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics.  <a href="../../da/dd3/structptof_1_1_geometry___generic.html#ab2d05f0b8761362ca08e454824898502">More...</a><br /></td></tr>
-<tr class="separator:ab2d05f0b8761362ca08e454824898502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c871490425d8238b53445ada30aa3b8"><td class="memTemplParams" colspan="2">template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename VelocityField , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </td></tr>
+<tr class="memitem:a7c871490425d8238b53445ada30aa3b8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a7c871490425d8238b53445ada30aa3b8">makeBoundary</a> (<a class="el" href="../../df/d68/structptof_1_1_directories.html">Directories</a> const &amp;directories, TransportParameters const &amp;params_transport, ReactionParameters const &amp;params_reaction, SolverParameters const &amp;params_solvers, VelocityField &amp;&amp;velocity_field, SurfaceReaction &amp;&amp;surface_reaction, <a class="el" href="../../dd/d1e/structptof_1_1_initial_condition.html">InitialCondition</a> &amp;&amp;initial_condition={}) const</td></tr>
+<tr class="memdesc:a7c871490425d8238b53445ada30aa3b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a Boundary object for the preset type of dynamics.  <a href="../../da/dd3/structptof_1_1_geometry___generic.html#a7c871490425d8238b53445ada30aa3b8">More...</a><br /></td></tr>
+<tr class="separator:a7c871490425d8238b53445ada30aa3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a079c83a5895de55150fac24126cc3a79"><td class="memTemplParams" colspan="2">template&lt;typename OStream &gt; </td></tr>
 <tr class="memitem:a079c83a5895de55150fac24126cc3a79"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a079c83a5895de55150fac24126cc3a79">info_runtime</a> (OStream &amp;output) const</td></tr>
 <tr class="memdesc:a079c83a5895de55150fac24126cc3a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output information about current object.  <a href="../../da/dd3/structptof_1_1_geometry___generic.html#a079c83a5895de55150fac24126cc3a79">More...</a><br /></td></tr>
@@ -159,10 +159,10 @@ Static Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a3eab8fc8934c22c92699196f8676c0e9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a6c34db7be851e75414d62209306f0161">Mesh</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a3eab8fc8934c22c92699196f8676c0e9">make_meshes</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of)</td></tr>
-<tr class="separator:a3eab8fc8934c22c92699196f8676c0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a594c21c0e7f24ee16f0bb3ba57b038b7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a5475259497da643d3a5d84c7e4d4ba48">MeshSearch</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a594c21c0e7f24ee16f0bb3ba57b038b7">make_mesh_searches</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of)</td></tr>
-<tr class="separator:a594c21c0e7f24ee16f0bb3ba57b038b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c1b8ed51c5fd6a97a664126db460d24"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a6c34db7be851e75414d62209306f0161">Mesh</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a4c1b8ed51c5fd6a97a664126db460d24">make_meshes</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of) const</td></tr>
+<tr class="separator:a4c1b8ed51c5fd6a97a664126db460d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6e99679dd09777301f0d5377b8d942e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#a5475259497da643d3a5d84c7e4d4ba48">MeshSearch</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd3/structptof_1_1_geometry___generic.html#aa6e99679dd09777301f0d5377b8d942e">make_mesh_searches</a> (<a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;directories_of) const</td></tr>
+<tr class="separator:aa6e99679dd09777301f0d5377b8d942e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -402,8 +402,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a594c21c0e7f24ee16f0bb3ba57b038b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a594c21c0e7f24ee16f0bb3ba57b038b7">&#9670;&nbsp;</a></span>make_mesh_searches()</h2>
+<a id="aa6e99679dd09777301f0d5377b8d942e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6e99679dd09777301f0d5377b8d942e">&#9670;&nbsp;</a></span>make_mesh_searches()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -418,7 +418,7 @@ template&lt;std::size_t dim_val, typename ParallelOption_t  = par::ParallelOptio
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;&#160;</td>
           <td class="paramname"><em>directories_of</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -437,17 +437,17 @@ template&lt;std::size_t dim_val, typename ParallelOption_t  = par::ParallelOptio
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../da/dd3/structptof_1_1_geometry___generic_a594c21c0e7f24ee16f0bb3ba57b038b7_cgraph.png" border="0" usemap="#ada/dd3/structptof_1_1_geometry___generic_a594c21c0e7f24ee16f0bb3ba57b038b7_cgraph" alt=""/></div>
-<map name="ada/dd3/structptof_1_1_geometry___generic_a594c21c0e7f24ee16f0bb3ba57b038b7_cgraph" id="ada/dd3/structptof_1_1_geometry___generic_a594c21c0e7f24ee16f0bb3ba57b038b7_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,167,47"/>
-<area shape="rect" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b" title="Get total number of parallel threads." alt="" coords="215,13,363,39"/>
+<div class="center"><img src="../../da/dd3/structptof_1_1_geometry___generic_aa6e99679dd09777301f0d5377b8d942e_cgraph.png" border="0" usemap="#ada/dd3/structptof_1_1_geometry___generic_aa6e99679dd09777301f0d5377b8d942e_cgraph" alt=""/></div>
+<map name="ada/dd3/structptof_1_1_geometry___generic_aa6e99679dd09777301f0d5377b8d942e_cgraph" id="ada/dd3/structptof_1_1_geometry___generic_aa6e99679dd09777301f0d5377b8d942e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,183,47"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b" title="Get total number of parallel threads." alt="" coords="231,13,395,39"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a3eab8fc8934c22c92699196f8676c0e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3eab8fc8934c22c92699196f8676c0e9">&#9670;&nbsp;</a></span>make_meshes()</h2>
+<a id="a4c1b8ed51c5fd6a97a664126db460d24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c1b8ed51c5fd6a97a664126db460d24">&#9670;&nbsp;</a></span>make_meshes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -462,7 +462,7 @@ template&lt;std::size_t dim_val, typename ParallelOption_t  = par::ParallelOptio
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d82/structptof_1_1_directories_o_f.html">DirectoriesOF</a> const &amp;&#160;</td>
           <td class="paramname"><em>directories_of</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -481,24 +481,24 @@ template&lt;std::size_t dim_val, typename ParallelOption_t  = par::ParallelOptio
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../da/dd3/structptof_1_1_geometry___generic_a3eab8fc8934c22c92699196f8676c0e9_cgraph.png" border="0" usemap="#ada/dd3/structptof_1_1_geometry___generic_a3eab8fc8934c22c92699196f8676c0e9_cgraph" alt=""/></div>
-<map name="ada/dd3/structptof_1_1_geometry___generic_a3eab8fc8934c22c92699196f8676c0e9_cgraph" id="ada/dd3/structptof_1_1_geometry___generic_a3eab8fc8934c22c92699196f8676c0e9_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,167,47"/>
-<area shape="rect" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b" title="Get total number of parallel threads." alt="" coords="215,13,363,39"/>
+<div class="center"><img src="../../da/dd3/structptof_1_1_geometry___generic_a4c1b8ed51c5fd6a97a664126db460d24_cgraph.png" border="0" usemap="#ada/dd3/structptof_1_1_geometry___generic_a4c1b8ed51c5fd6a97a664126db460d24_cgraph" alt=""/></div>
+<map name="ada/dd3/structptof_1_1_geometry___generic_a4c1b8ed51c5fd6a97a664126db460d24_cgraph" id="ada/dd3/structptof_1_1_geometry___generic_a4c1b8ed51c5fd6a97a664126db460d24_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,183,47"/>
+<area shape="rect" href="../../d4/df4/namespacepar.html#ae1461c2908e354ed71f1e39415ba860b" title="Get total number of parallel threads." alt="" coords="231,13,395,39"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ab2d05f0b8761362ca08e454824898502"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2d05f0b8761362ca08e454824898502">&#9670;&nbsp;</a></span>makeBoundary()</h2>
+<a id="a7c871490425d8238b53445ada30aa3b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c871490425d8238b53445ada30aa3b8">&#9670;&nbsp;</a></span>makeBoundary()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::size_t dim_val, typename ParallelOption_t  = par::ParallelOptions::Serial, Dynamics::Type dynamics = Dynamics::Type::transport, typename SearchOption  = SearchOptions::SecondNeighborPrecheck&gt; </div>
 <div class="memtemplate">
-template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
+template&lt;typename TransportParameters , typename ReactionParameters , typename SolverParameters , typename VelocityField , typename SurfaceReaction , typename InitialCondition  = useful::Empty&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -526,6 +526,12 @@ template&lt;typename TransportParameters , typename ReactionParameters , typenam
           <td></td>
           <td class="paramtype">SolverParameters const &amp;&#160;</td>
           <td class="paramname"><em>params_solvers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">VelocityField &amp;&amp;&#160;</td>
+          <td class="paramname"><em>velocity_field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

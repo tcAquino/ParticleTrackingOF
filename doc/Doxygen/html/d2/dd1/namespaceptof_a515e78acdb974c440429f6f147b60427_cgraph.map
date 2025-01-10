@@ -1,5 +1,5 @@
 <map id="ptof::uniform_face_distribution" name="ptof::uniform_face_distribution">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,132,47"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ace8a56f5540a556cab826dc49cf231fa" title=" " alt="" coords="180,13,296,39"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="344,13,453,39"/>
+<area shape="rect" id="node1" title="Distribution for random number generation of face indices weighted by face areas." alt="" coords="5,5,147,47"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ace8a56f5540a556cab826dc49cf231fa" title="Face areas (magnitudes)." alt="" coords="195,13,321,39"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a96af753324a65471bd534041a41eadbe" title="Area (magnitude) of a face." alt="" coords="369,13,488,39"/>
 </map>

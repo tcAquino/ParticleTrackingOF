@@ -9,6 +9,7 @@
 #define PTOF_META_H
 
 #include "General/Meta.h"
+#include <label.H>
 #include <type_traits>
 #include <utility>
 
@@ -22,8 +23,18 @@ using velocity_rescaling_factor_t =
 */
 template <typename X>
 inline constexpr bool has_velocity_rescaling_factor_v =
-    has_member<velocity_rescaling_factor_t, X>::value
-        &&std::is_same_v<velocity_rescaling_factor_t<X>, double>;
+    std::conjunction_v<has_member<velocity_rescaling_factor_t, X>,
+                       is_same<velocity_rescaling_factor_t, X, double>>;
+
+/**\brief Type of \c X::patch_id. */
+template <typename X> using patch_id_t = decltype(std::declval<X>().patch_id);
+/**
+   \brief Check if a class has member <tt>Foam::label patch_id</tt>.
+*/
+template <typename X>
+inline constexpr bool has_patch_id_v =
+    std::conjunction_v<has_member<patch_id_t, X>,
+                       is_same<patch_id_t, X, Foam::label>>;
 } // namespace meta
 
 #endif /* PTOF_META_H */

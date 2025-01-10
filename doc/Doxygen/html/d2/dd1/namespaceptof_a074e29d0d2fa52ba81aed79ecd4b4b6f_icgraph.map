@@ -1,0 +1,5 @@
+<map id="ptof::face_flux_inward" name="ptof::face_flux_inward">
+<area shape="rect" id="node1" title="Face area weighted by inward&#45;normal component of vector field at face center." alt="" coords="419,13,584,39"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aa3d470eac18760f51c04d50148d1f00f" title="Face areas weighted by inward&#45;normal component of vector field at face center." alt="" coords="192,13,371,39"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a9c0e291883e7c0f8af32a5640eafef09" title="Distribution for random number generation of face indices weighted by face areas multiplied by vector..." alt="" coords="5,5,144,47"/>
+</map>

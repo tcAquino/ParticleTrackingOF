@@ -1,0 +1,4 @@
+<map id="ptof::face_flux_outward" name="ptof::face_flux_outward">
+<area shape="rect" id="node1" title="Face area weighted by outward&#45;normal component of vector field at face center." alt="" coords="241,5,416,32"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ad75227d649169a53c130c61250f548af" title="Face areas weighted by outward&#45;normal component of vector field at face center." alt="" coords="5,5,193,32"/>
+</map>

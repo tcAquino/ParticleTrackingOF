@@ -1,4 +1,4 @@
 var structptof_1_1_store___nothing =
 [
-    [ "operator()", "de/df6/structptof_1_1_store___nothing.html#afc325ccfbba4537452cffaaa0a725fcc", null ]
+    [ "operator()", "de/df6/structptof_1_1_store___nothing.html#ade0d4275f7453c37d2b63e3fa3b613f8", null ]
 ];

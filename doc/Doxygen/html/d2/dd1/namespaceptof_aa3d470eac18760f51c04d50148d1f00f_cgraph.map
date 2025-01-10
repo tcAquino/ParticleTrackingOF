@@ -1,0 +1,11 @@
+<map id="ptof::face_fluxes_inward" name="ptof::face_fluxes_inward">
+<area shape="rect" id="node1" title="Face areas weighted by inward&#45;normal component of vector field at face center." alt="" coords="5,115,184,141"/>
+<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a074e29d0d2fa52ba81aed79ecd4b4b6f" title="Face area weighted by inward&#45;normal component of vector field at face center." alt="" coords="232,115,397,141"/>
+<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#ac7024364e76842305fdea9fe67706e3b" title="Compute face center&#39;s position if face center is in owner cell, owner cell center otherwise." alt="" coords="445,78,592,119"/>
+<area shape="rect" id="node8" href="$d2/dd1/namespaceptof.html#a2cb4c7a4f67a75c7f41b7e1581abe11b" title="Oriented area at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="451,144,586,171"/>
+<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="651,5,778,32"/>
+<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#add4127e6a1c4c63ec163e3309b50d06e" title="Center of a face." alt="" coords="837,60,968,87"/>
+<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#ab292ea279bbaf58427c1603cbb72a7b5" title="Sometimes the face center associated with a mesh face is not considered within the owner cell...." alt="" coords="640,107,789,149"/>
+<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#a771b932077b91dda298c2ba0aa8b5959" title="Return whether cell is outside mesh." alt="" coords="851,115,954,141"/>
+<area shape="rect" id="node9" href="$d2/dd1/namespaceptof.html#a15e633e764f47198a72eb45f2def101c" title="Oriented area at boundary face, using right&#45;hand&#45;rule (outward for boundary faces)." alt="" coords="643,173,787,200"/>
+</map>

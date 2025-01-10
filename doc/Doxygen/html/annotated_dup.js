@@ -224,6 +224,7 @@ var annotated_dup =
       [ "Geometry_Bcc", "da/d9d/structptof_1_1_geometry___bcc.html", "da/d9d/structptof_1_1_geometry___bcc" ],
       [ "Info_Type", "d8/d13/structptof_1_1_info___type.html", "d8/d13/structptof_1_1_info___type" ],
       [ "Info_Absorbed", "d6/df0/structptof_1_1_info___absorbed.html", "d6/df0/structptof_1_1_info___absorbed" ],
+      [ "Info_Absorbed_Patch", "de/d57/structptof_1_1_info___absorbed___patch.html", "de/d57/structptof_1_1_info___absorbed___patch" ],
       [ "Info_Absorbed_Reinjections", "dc/d06/structptof_1_1_info___absorbed___reinjections.html", "dc/d06/structptof_1_1_info___absorbed___reinjections" ],
       [ "Info_Contact_Point", "d3/d28/structptof_1_1_info___contact___point.html", "d3/d28/structptof_1_1_info___contact___point" ],
       [ "InitialCondition", "dd/d1e/structptof_1_1_initial_condition.html", "dd/d1e/structptof_1_1_initial_condition" ],

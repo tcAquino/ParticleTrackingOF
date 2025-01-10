@@ -28,8 +28,10 @@ struct BoundaryConditionList {
     periodic,  /**< Periodic                                            */
     absorbing, /**< Absorbing                                           */
     info,      /**< Information upon hitting                            */
-    custom,    /**< Enforced by custom Boundary object                  */
-    empty      /**< No effect (default for unspecified patches in mesh) */
+    inlet, /**< Reflecting for non-negative flow velocities, absorbing otherwise
+            */
+    custom, /**< Enforced by custom Boundary object                  */
+    empty   /**< No effect (default for unspecified patches in mesh) */
   };
 
   /**
@@ -61,6 +63,7 @@ struct BoundaryConditionList {
       {"reacting_reflecting", Type::reacting_reflecting},
       {"periodic", Type::periodic},
       {"absorbing", Type::absorbing},
+      {"inlet", Type::inlet},
       {"custom", Type::custom},
       {"empty", Type::empty},
   };
@@ -71,6 +74,7 @@ struct BoundaryConditionList {
       {Type::reacting_reflecting, "reacting_reflecting"},
       {Type::periodic, "periodic"},
       {Type::absorbing, "absorbing"},
+      {Type::inlet, "inlet"},
       {Type::custom, "custom"},
       {Type::empty, "empty"}};
 };

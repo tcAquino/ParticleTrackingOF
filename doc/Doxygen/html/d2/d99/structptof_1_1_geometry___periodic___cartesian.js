@@ -11,7 +11,7 @@ var structptof_1_1_geometry___periodic___cartesian =
     [ "info_runtime", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#ac8d668a5653a54be96478525ccf82491", null ],
     [ "make_mesh_searches", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7f70b4f50234b2ad967acb4fa995da16", null ],
     [ "make_meshes", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7616c42e165109a462b26f7ed6d720c9", null ],
-    [ "makeBoundary", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a7b123acc6ffc5bd7db39fdf547c70ce1", null ],
+    [ "makeBoundary", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#af971786f575b465a8faf1cfc71ab7f3c", null ],
     [ "mesh", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#abfc1cde95019aa6a91c532deb6e6f3c4", null ],
     [ "mesh_search", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a2967903f397cc2f07d0278cfe634255a", null ],
     [ "_mesh_searches", "d2/d99/structptof_1_1_geometry___periodic___cartesian.html#a4691e700220e602530ab6a6b146d7581", null ],

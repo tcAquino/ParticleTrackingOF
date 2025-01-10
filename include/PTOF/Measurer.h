@@ -10,6 +10,7 @@
 
 #include "General/IO.h"
 #include "PTOF/Directories.h"
+#include "PTOF/Meta.h"
 #include <IOobject.H>
 #include <algorithm>
 #include <array>
@@ -89,30 +90,53 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
                            std::string const &identifier, int precision = 8)
       : Measurer<Subject, Geometry>{subject,           geometry,   directories,
                                     "absorption_time", identifier, precision},
+        _patch_names{geometry.mesh().boundaryMesh().names()},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(_patch_names.empty()
+                         ? 0
+                         : int(1 + std::max_element(
+                                       _patch_names.begin(), _patch_names.end(),
+                                       [](Foam::word const &name1,
+                                          Foam::word const &name2) {
+                                         return name1.length() < name2.length();
+                                       })
+                                       ->length()),
+                     int(1 + std::string{"Patch"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[2]) << "Mass";
+    if constexpr (meta::has_patch_id_v<
+                      typename Subject::Particle::State::Info>) {
+      _output << std::setw(_column_widths[3]) << "Patch";
+      _patch_names = geometry.mesh().boundaryMesh().names();
+    }
+    _output << "\n";
   }
 
   void print() override {
     for (auto const &part : _subject.particles()) {
       auto const &state = part.state_new();
-      if (state.info.absorbed)
+      if (state.info.absorbed) {
         _output << std::setw(_column_widths[0]) << state.time
                 << std::setw(_column_widths[1]) << state.tag
-                << std::setw(_column_widths[2]) << state.mass << "\n";
+                << std::setw(_column_widths[2]) << state.mass;
+        if constexpr (meta::has_patch_id_v<
+                          typename Subject::Particle::State::Info>)
+          _output << std::setw(_column_widths[3])
+                  << _patch_names[state.info.patch_id];
+        _output << "\n";
+      }
     }
   }
 
 private:
   using Measurer<Subject, Geometry>::_output;
   using Measurer<Subject, Geometry>::_subject;
-  std::array<int, 3> _column_widths;
+  Foam::List<Foam::word> _patch_names;
+  std::array<int, 4> _column_widths;
 };
 } // namespace ptof
 

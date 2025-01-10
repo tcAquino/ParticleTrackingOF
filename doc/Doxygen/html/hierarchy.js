@@ -1,6 +1,6 @@
 var hierarchy =
 [
-    [ "ptof::Boundary_Cases< Locator, Store_Info, Boundary_Periodic, Boundary_Custom, SurfaceReaction >", "d4/d49/classptof_1_1_boundary___cases.html", null ],
+    [ "ptof::Boundary_Cases< Locator, Store_Info, VelocityField, Boundary_Periodic, Boundary_Custom, SurfaceReaction >", "d4/d49/classptof_1_1_boundary___cases.html", null ],
     [ "geom::Boundary_DoNothing", "d2/df1/classgeom_1_1_boundary___do_nothing.html", null ],
     [ "ptof::Boundary_DoNothing", "d6/d3e/structptof_1_1_boundary___do_nothing.html", null ],
     [ "geom::Boundary_Open_RadialReflecting_3d< dd_open >", "df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html", null ],
@@ -117,6 +117,7 @@ var hierarchy =
     [ "meta::indices< Indices >", "d5/d37/structmeta_1_1indices.html", null ],
     [ "ptof::Info_Absorbed", "d6/df0/structptof_1_1_info___absorbed.html", null ],
     [ "Info_Absorbed_Contact_Point", "d4/d9f/struct_info___absorbed___contact___point.html", null ],
+    [ "ptof::Info_Absorbed_Patch", "de/d57/structptof_1_1_info___absorbed___patch.html", null ],
     [ "ptof::Info_Absorbed_Reinjections", "dc/d06/structptof_1_1_info___absorbed___reinjections.html", null ],
     [ "ptof::Info_Contact_Point", "d3/d28/structptof_1_1_info___contact___point.html", null ],
     [ "ptof::Info_Type", "d8/d13/structptof_1_1_info___type.html", null ],

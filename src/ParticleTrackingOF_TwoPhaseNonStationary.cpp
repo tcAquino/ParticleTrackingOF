@@ -81,7 +81,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_bcc_symmetryplanes_advection;
+  namespace model = ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d;
   using Phase = ptof::Phase;
 
   ExecutableInfo<ParallelOption>::banner(std::cout);
@@ -265,6 +265,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   auto boundary = geometry.makeBoundary(
       directories, params_transport, params_reaction, params_solvers,
+      velocity_field,
       model::Definitions<ParallelOption>::Reaction::makeSurfaceReaction(
           geometry, params_reaction, params_transport, params_solvers),
       initial_condition);
