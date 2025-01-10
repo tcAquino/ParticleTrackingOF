@@ -73,7 +73,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_advection_diffusion_fpt_2d;
+  namespace model = ptof::model_periodic_cartesian_advection_diffusion_fpt_3d;
 
   std::cout << std::setprecision(2) << std::scientific;
   ExecutableInfo<ParallelOption>::banner(std::cout);
