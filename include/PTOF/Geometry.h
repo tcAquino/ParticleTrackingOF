@@ -577,12 +577,14 @@ private:
      \return Mesh copies for parallel searches.
   */
   std::vector<std::unique_ptr<Mesh>>
-  make_meshes(DirectoriesOF const &directories_of) {
+  make_meshes(DirectoriesOF const &directories_of) const {
     std::size_t num_threads = par::get_num_threads(ParallelOption{});
     std::vector<std::unique_ptr<Mesh>> meshes;
     meshes.reserve(num_threads);
     for (std::size_t thread = 0; thread < num_threads; ++thread)
-      meshes.emplace_back(std::make_unique<Mesh>(*_meshes[thread]));
+      meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
+          Foam::fvMesh::defaultRegion, directories_of.time.timeName(),
+          directories_of.time, Foam::IOobject::MUST_READ}));
     return meshes;
   }
 
@@ -591,14 +593,13 @@ private:
      \return Mesh search tools for parallel searches.
   */
   std::vector<std::unique_ptr<MeshSearch>>
-  make_mesh_searches(DirectoriesOF const &directories_of) {
+  make_mesh_searches(DirectoriesOF const &directories_of) const {
     std::size_t num_threads = par::get_num_threads(ParallelOption{});
     std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
     mesh_searches.reserve(num_threads);
     for (std::size_t thread = 0; thread < num_threads; ++thread)
       mesh_searches.emplace_back(
           std::make_unique<MeshSearch>(*_meshes[thread]));
-
     return mesh_searches;
   }
 
