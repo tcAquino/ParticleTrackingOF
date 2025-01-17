@@ -1,4 +1,0 @@
-<map id="io::read" name="io::read">
-<area shape="rect" id="node1" title="Extract values from container of strings and increment index." alt="" coords="5,5,76,32"/>
-<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#a07f168349a7ec4b83432f5d55456ed65" title="Read next value from file." alt="" coords="124,5,195,32"/>
-</map>

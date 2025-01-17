@@ -100,8 +100,7 @@ auto get_boundary_conditions(Directories const &directories,
    \param boundary_conditions Container of pairs of patch names and boundary
    condition types.
    \param mesh Mesh object.
-   \param BoundaryCondition object holding information about implemented
-   boundary conditions.
+   \param implemented Information about implemented boundary conditions.
 */
 template <typename BoundaryCondition, typename Mesh, typename Implemented>
 void verify_boundary_conditions(BoundaryCondition const &boundary_conditions,
@@ -314,6 +313,7 @@ struct Boundary_Reinject {
   /**
      \brief Constructor.
      \param initial_condition Initial condition object.
+     \param locator Object to locate positions in mesh.
   */
   Boundary_Reinject(InitialCondition &&initial_condition, Locator &&locator)
       : initial_condition{std::forward<InitialCondition>(initial_condition)},

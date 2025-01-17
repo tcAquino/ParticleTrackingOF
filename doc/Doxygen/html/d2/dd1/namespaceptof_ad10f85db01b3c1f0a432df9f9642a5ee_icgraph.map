@@ -1,5 +1,0 @@
-<map id="ptof::unit_normal_inward" name="ptof::unit_normal_inward">
-<area shape="rect" id="node1" title="Unit normal at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="241,57,425,84"/>
-<area shape="rect" id="node2" href="$dc/d25/structptof_1_1_initial_condition___distributed_near_faces.html#acd34396fef150ad2a4eaab7db13247e6" title="Make a single position along with location hint." alt="" coords="5,5,193,61"/>
-<area shape="rect" id="node3" href="$d4/d49/classptof_1_1_boundary___cases.html#a5eabf14647d263dc7793648f54594392" title=" " alt="" coords="18,86,181,127"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="op::mean" name="op::mean">
-<area shape="rect" id="node1" title="Element&#45;wise mean of two containers." alt="" coords="196,121,272,148"/>
-<area shape="rect" id="node2" href="$db/dd7/namespaceop.html#a3ea3b44e4adfb0056a81a2bf66d13f23" title="Element&#45;wise mean of two containers." alt="" coords="39,5,115,32"/>
-<area shape="rect" id="node3" href="$db/dd7/namespaceop.html#a5a287e2ad037a918ac672320f39b2ab6" title="Element&#45;wise mean of two containers." alt="" coords="15,56,139,83"/>
-<area shape="rect" id="node4" href="$d7/d28/structptof_1_1_measurer_time__scalar__field__mean.html#ad1c264395b9796943c2b682ce4a30ca8" title="Make measurement and output or store, given current time time." alt="" coords="5,107,148,163"/>
-<area shape="rect" id="node5" href="$d5/d79/structptof_1_1_measurer_time__vector__field__mean.html#a5cfd2c8c71859c88dbff7c76e8774986" title="Make measurement and output or store, given current time time." alt="" coords="5,187,148,243"/>
-<area shape="rect" id="node6" href="$d8/df5/structptof_1_1_measurer_time__tensor__field__mean.html#a3c09baaf545ed4f16072547620bb9cd6" title="Make measurement and output or store, given current time time." alt="" coords="5,267,148,323"/>
-</map>

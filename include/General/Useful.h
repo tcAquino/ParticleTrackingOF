@@ -121,45 +121,12 @@ struct Store {
 };
 
 /**
-   \class Empty General/Useful.h "General/Useful.h"
-   \brief Class holding nothing and doing nothing.
-*/
-struct Empty {
-  template <typename... Args> Empty(Args...) {}
-  Empty() {}
-};
-
-/**
-   \struct DoNothing General/Useful.h "General/Useful.h"
-   \brief Functor that does nothing.
-*/
-struct DoNothing {
-  template <typename... Args> void operator()(Args...) const {}
-};
-
-/**
-   \struct DoFalse General/Useful.h "General/Useful.h"
-   \brief Functor that always returns false.
-*/
-struct DoFalse {
-  template <typename... Args> bool operator()(Args...) const { return false; }
-};
-
-/**
-   \struct DoTrue General/Useful.h "General/Useful.h"
-   \brief Functor that always returns true.
-*/
-struct DoTrue {
-  template <typename... Args> bool operator()(Args...) const { return true; }
-};
-
-/**
    \brief Make an object and initialize it given \p parameters.
    \note Object must implement:
    - initialize(Params const&).
 */
 template <typename Object, typename Params>
-Object create(Params const &parameters = useful::Empty()) {
+Object create(Params const &parameters = meta::Empty{}) {
   Object object;
   object.initialize(parameters);
 

@@ -159,7 +159,7 @@ auto positionToIndex(Container const &position, Container const &nr_points) {
 }
 
 /**
-   \brief \p num are the digits of a basis \p basis number. Increment it by 1.
+   \brief \p num are the digits of a basis \p basis number; increment it by 1.
    \note
    - Units digit in <tt>num[0]</tt>.
    - Maximum value wraps to <tt>00...0</tt>.
@@ -177,7 +177,7 @@ void increment(Container &num, IntegerType basis) {
 
 /**
    \brief \p num are the digits of a number such that each digit ranges from 0
-   to <tt>basis[dig] - 1</tt>. Increment it by 1.
+   to <tt>basis[dig] - 1</tt>; increment it by 1.
    \note
    - Units digit in <tt>num[0]</tt>.
    - Maximum value wraps to <tt>00...0</tt>.
@@ -195,10 +195,9 @@ void increment(Container &num, Container const &basis) {
 
 /**
    \brief \p num are the digits of a number such that each digit ranges from 0
-   to \<tt>basis[dig] - 1</tt>.
-   Increment it by \p inc.
+   to <tt>basis[dig] - 1</tt>; increment it by \p inc.
    \note
-   - Units digit in <tt>num[0]<tt>.
+   - Units digit in <tt>num[0]</tt>.
    - Maximum value wraps to <tt>00...0</tt>.
 */
 template <typename Container>

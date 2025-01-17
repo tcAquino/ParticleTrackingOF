@@ -20,6 +20,7 @@
 #include <iomanip>
 #include <ios>
 #include <map>
+#include <ostream>
 #include <point.H>
 #include <stdexcept>
 #include <string>
@@ -75,7 +76,7 @@ public:
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
-    Foam::label cell = _locator.mesh_search().findCell(make_point(position));
+    Foam::label cell = _locator(make_point(position));
     return outside(cell);
   }
 
@@ -260,7 +261,7 @@ public:
      \brief Output information about current object.
      \param output Output stream.
   */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     io::StreamScopeFormat guard{output};
     output
         << "--------------------------------------------------------------\n"
@@ -344,7 +345,6 @@ private:
      previous intersection to endpoint.
      \param intersection Previous intersection.
      \param end Endpoint.
-     \param cell Cell index for previous intersection.
      \return Next intersection.
   */
   template <typename Intersection>

@@ -63,6 +63,7 @@ struct Store_Type {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
@@ -88,6 +89,7 @@ struct Store_Nothing {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
@@ -110,6 +112,7 @@ struct Store_Absorbed {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
@@ -126,6 +129,7 @@ struct Store_Absorbed {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
@@ -151,6 +155,7 @@ struct Store_Absorbed_Reinjections {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
@@ -167,6 +172,7 @@ struct Store_Absorbed_Reinjections {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
@@ -186,6 +192,7 @@ struct Store_Absorbed_Reinjections {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
+     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>

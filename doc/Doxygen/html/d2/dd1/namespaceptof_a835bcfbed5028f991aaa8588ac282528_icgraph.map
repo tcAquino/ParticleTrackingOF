@@ -1,4 +1,0 @@
-<map id="ptof::cell_volumes" name="ptof::cell_volumes">
-<area shape="rect" id="node1" title="Cell volumes." alt="" coords="189,13,331,39"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ad0af76b5bce8ecfc693a8b65cbb4d58e" title="Distribution for random number generation of cell indices weighted by cell volumes." alt="" coords="5,5,141,47"/>
-</map>

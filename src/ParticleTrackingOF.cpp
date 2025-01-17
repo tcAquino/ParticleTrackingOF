@@ -5,6 +5,7 @@
 //
 
 #include "General/IO.h"
+#include "General/Meta.h"
 #include "General/Parallel.h"
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
@@ -73,7 +74,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_periodic_cartesian_advection_diffusion_fpt_3d;
+  namespace model = ptof::model_bcc_symmetryplanes_advection;
 
   std::cout << std::setprecision(2) << std::scientific;
   ExecutableInfo<ParallelOption>::banner(std::cout);
@@ -83,7 +84,7 @@ int main(int argc, char *argv[]) {
   if (ptof::options_help<
           ExecutableInfo<ParallelOption>,
           model::Definitions<ParallelOption>::Geometry, ptof::DirectoriesOF,
-          model::Definitions<ParallelOption>::Transport, useful::Empty,
+          model::Definitions<ParallelOption>::Transport, meta::Empty,
           model::Definitions<ParallelOption>::Reaction,
           model::Definitions<ParallelOption>::Solvers,
           model::Definitions<ParallelOption>::InitialCondition,
@@ -133,8 +134,8 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up geometry...\n";
   auto execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Geometry geometry{directories_of,
-                                                        directories};
+  model::Definitions<ParallelOption>::Geometry geometry{
+      directories_of, directories, io::CoutLogger{}};
   geometry.info_runtime(std::cout);
   auto execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -158,7 +159,7 @@ int main(int argc, char *argv[]) {
             << "Importing transport parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   model::Definitions<ParallelOption>::Transport::Parameters params_transport{
-    directories, params_transport_name, geometry, velocity_field};
+      directories, params_transport_name, geometry, velocity_field};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

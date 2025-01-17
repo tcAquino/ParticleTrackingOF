@@ -1,4 +1,0 @@
-<map id="useful::swap_delete" name="useful::swap_delete">
-<area shape="rect" id="node1" title="Swap&#45;delete elements in container at positions positions." alt="" coords="5,5,144,32"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a62bdd9f21db7c46301dce0c4dccb79a1" title="Like swap_erase(), but call delete on the removed element." alt="" coords="192,5,331,32"/>
-</map>

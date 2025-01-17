@@ -987,7 +987,9 @@ inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
 /** \return Sign of \c val. */
 template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
-/** \return Cartesian power of \c set, <tt>set^{power} = set x ... x set<tt>. */
+/**
+   \return Cartesian power of \c set, <tt>set^{power} = set x ... x set</tt>.
+ */
 template <typename Set>
 std::vector<std::vector<typename Set::value_type>>
 cartesian_power(Set const &set, std::size_t power) {

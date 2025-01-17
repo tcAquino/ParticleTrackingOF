@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['type_2571',['Type',['../d8/ddb/structptof_1_1_boundary_condition_list.html#aea7c4c74a57c4babe29df2f3a6ec0978',1,'ptof::BoundaryConditionList::Type()'],['../dd/d0d/structptof_1_1_end_criterion.html#a61e456c94b5f3f3cee6b07ba469166a5',1,'ptof::EndCriterion::Type()'],['../df/dfe/structptof_1_1_initial_condition_list.html#ab679bb98bc31780fe9679fec229da663',1,'ptof::InitialConditionList::Type()'],['../d9/d22/struct_measurement_list.html#a2ce06579d4bafd3d45fb71286c141619',1,'MeasurementList::Type()'],['../d3/da6/structptof_1_1_measurement_spacing.html#a5347e4ac582689ed8be4e8bdd4bc6483',1,'ptof::MeasurementSpacing::Type()'],['../df/d99/structptof_1_1_time_units.html#a48dbd88c8f96ce6130521f4d169cae53',1,'ptof::TimeUnits::Type()'],['../d9/d9c/structptof_1_1_dynamics.html#a56660dfe4a836f51ac8ab5c85da3dba9',1,'ptof::Dynamics::Type()'],['../d3/dc2/structptof_1_1_periodicity.html#a1d8f705232ab4a1a8a0298d42e00ea4f',1,'ptof::Periodicity::Type()']]]
-];

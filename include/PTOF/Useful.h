@@ -95,7 +95,7 @@ struct SearchOptions {
 */
 struct Dynamics {
   /**
-     \enum Dynamics::Type
+     \enum Type PTOF/Useful.h "PTOF/Useful.h"
      \brief Implemented dynamics types.
   */
   enum class Type {
@@ -132,7 +132,7 @@ struct Dynamics {
    \brief Keep track of names of periodicity types for boundary conditions.
 */
 struct Periodicity {
-  /** \enum Periodicity::Type
+  /** \enum Type PTOF/Useful.h "PTOF/Useful.h"
    *  \brief Implemented periodicity types. */
   enum class Type {
     cartesian,     /**< Cartesian periodicity.                         */
@@ -160,10 +160,10 @@ struct Periodicity {
 };
 
 /**
-   \brief Print static info for \c Class and <tt>Class::Parameters</tt>, if
+   \brief Print static info for \tparam Class and Class::Parameters, if
    defined.
    \param output Output stream to print info.
-   \param warn_if_no_info Print notification if no info is available.
+   \param notify_if_no_info Print notification if no info is available.
    \param help_option Information about requested info, to print if info is not
    available if notification is requested.
    \return \c true if there is available info, \c false otherwise.
@@ -189,7 +189,7 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
               "No static info available";
     if (!help_option.empty())
       output << " for help option " << help_option;
-    if (std::is_same_v<Class, useful::Empty>)
+    if (std::is_same_v<Class, meta::Empty>)
       output << " : object type is Empty";
     output << "\n";
   }
@@ -200,7 +200,7 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
 /**
    \brief Handle help options for main executable.
    \return \c true if help flag was passed as first argument, \c false otherwise
-   \note useful::Empty can be passed for non-existent templated types, except
+   \note meta::Empty can be passed for non-existent templated types, except
    \c ExecutableInfo, which must define a static <tt>help(OStream&)</tt> method.
 */
 template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
@@ -509,7 +509,6 @@ auto face_fluxes_inward(Container const &face_ids,
    considered within the cell and may be outside the mesh. Verify this.
    \param face Mesh face index.
    \param locator Object to locate positions in mesh.
-   \param cell_hint Hint of face's owner cell
    \return \c true if face center is in mesh, \c false otherwise.
 */
 template <typename Locator>
@@ -521,8 +520,8 @@ bool face_center_is_in_mesh(Foam::label face, Locator const &locator) {
 /**
    \brief Sometimes the face center associated with a mesh face is not
    considered within the owner cell. Verify this.
+   \param face Mesh face index.
    \param locator Object to locate positions in mesh.
-   \param cell_hint Hint of face's owner cell
    \return \c true if face center is in owner cell, \c false otherwise.
 */
 template <typename Locator>
@@ -538,7 +537,6 @@ bool face_center_is_in_cell(Foam::label face, Locator const &locator) {
    cell center otherwise.
    \param face Mesh face index.
    \param locator Object to locate positions in mesh.
-   \param cell_hint Hint of face's owner cell.
    \return Position.
 */
 template <typename Locator>
@@ -877,7 +875,7 @@ auto cell_ids_region_cartesian(
     // mesh, include it in the region
     for (auto dd : degenerate_dimensions)
       center[dd] = degenerate_dimensions[dd];
-    auto cell_id = mesh.findCell(center);
+    auto cell_id = locator(center);
     if (!outside(cell_id))
       cell_ids.insert(cell_id);
   }
@@ -902,7 +900,7 @@ void apply_mask_cells_inplace(Container &cell_ids, Mask const &mask,
 
 /**
    \brief Remove face indices if mask is below threshold.
-   \param face_ids Container with mesh face indices.
+   \param cell_ids Container with mesh cell indices.
    \param mask Scalar field.
    \param threshold Threshold.
    \return \p Container with indices of elements where mask is below threshold
@@ -919,7 +917,8 @@ auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
 
 /**
    \brief Remove face indices if mask is below threshold.
-   \param cell_or_face_ids Container with mesh boundary face indices.
+   \param face_ids Container with mesh boundary face indices.
+   \param mesh Mesh object.
    \param mask Scalar field.
    \param threshold Threshold.
 */
@@ -936,6 +935,7 @@ void apply_mask_patch_faces_inplace(Container &face_ids, Mesh const &mesh,
 /**
    \brief Remove face indices if mask is below threshold.
    \param face_ids Container with mesh face indices.
+   \param mesh Mesh object.
    \param mask Scalar field.
    \param threshold Threshold.
    \return \p Container with indices of elements where mask is below threshold
@@ -953,6 +953,8 @@ auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
 /**
    \brief Distribution for random number generation of cell indices weighted by
    cell volumes.
+   \param cell_ids Container with mesh cell indices.
+   \param mesh Mesh object.
 */
 template <typename Container, typename Mesh>
 auto uniform_cell_distribution(Container const &cell_ids, Mesh const &mesh) {
@@ -963,6 +965,8 @@ auto uniform_cell_distribution(Container const &cell_ids, Mesh const &mesh) {
 /**
    \brief Distribution for random number generation of face indices weighted by
    face areas.
+   \param face_ids Container with mesh face indices.
+   \param mesh Mesh object.
 */
 template <typename Container, typename Mesh>
 auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
@@ -974,6 +978,9 @@ auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
 /**
    \brief Distribution for random number generation of cell indices weighted by
    cell volumes multiplied by vector field magnitude at cell center.
+   \param cell_ids Container with mesh cell indices.
+   \param vector_field Vector field.
+   \param mesh Mesh object.
 */
 template <typename Container, typename VectorField, typename Mesh>
 auto fluxweighted_cell_distribution(Container const &cell_ids,
@@ -1046,15 +1053,14 @@ template <typename Subject> auto mass(Subject const &subject, double time) {
 /**
    \param subject CTRW object.
    \param time Current time.
-   \param locator Object to locate positions in mesh.
    \param masks Scalar fields.
    \param thresholds Thresholds for each mask.
    \return Total masses in regions where mask is above or equal to threshold.
    \note
    -Particle states must define:
-   -# mass
-   -# time
-   -# cell
+       - mass
+       - time
+       - cell
    - \c thresholds must have at least the same size as \c masks
 */
 template <typename Subject, typename Mask>
@@ -1079,224 +1085,260 @@ auto mass(Subject const &subject, double time,
   return masses;
 }
 
-  /**
-     \param subject CTRW object.
-     \param time Current time.
-     \param getter_position Get position from state, gets position directly by
-     default.
-     \return Mean position (weighted by mass).
-     \note Particle states must define:
-     - \c position [for default position getter]
-     - \c mass
-     - \c time
-  */
-  template <typename Subject, typename GetterPosition = ctrw::Get_position>
-  auto position_mean(Subject const &subject, double time,
-                     GetterPosition getter_position = {}) {
-    using Position =
-        decltype(getter_position(subject.particles(0).state_new()));
-    Position position_mean = Foam::zero{};
-    for (auto const &part : subject.particles()) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      if (state_new.time >= time && state_old.time <= time)
-        position_mean +=
-            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-            ctrw::Get_interp{time, getter_position}(state_new, state_old);
-    }
-    return position_mean / mass(subject, time);
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \param getter_position Get position from state, gets position directly by
+   default.
+   \return Mean position (weighted by mass).
+   \note Particle states must define:
+   - \c position [for default position getter]
+   - \c mass
+   - \c time
+*/
+template <typename Subject, typename GetterPosition = ctrw::Get_position>
+auto position_mean(Subject const &subject, double time,
+                   GetterPosition getter_position = {}) {
+  using Position = decltype(getter_position(subject.particles(0).state_new()));
+  Position position_mean = Foam::zero{};
+  for (auto const &part : subject.particles()) {
+    auto const &state_new = part.state_new();
+    auto const &state_old = part.state_old();
+    if (state_new.time >= time && state_old.time <= time)
+      position_mean +=
+          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+          ctrw::Get_interp{time, getter_position}(state_new, state_old);
   }
+  return position_mean / mass(subject, time);
+}
 
-  /**
-     \param subject CTRW object.
-     \param time Current time.
-     \param getter_position Get position from state, gets position directly by
-     default.
-     \return Second moment of position (weighted by mass).
-     \note Particle states must define:
-     - \c position [for default positition getter]
-     - \c mass
-  */
-  template <typename Subject, typename GetterPosition = ctrw::Get_position>
-  auto position_second_moment(Subject const &subject, double time,
-                              GetterPosition getter_position = {}) {
-    using Position =
-        decltype(getter_position(subject.particles(0).state_new()));
-    Position second_moment = Foam::zero{};
-    for (auto const &part : subject.particles()) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      if (state_new.time >= time && state_old.time <= time)
-        second_moment +=
-            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-            op::square(
-                ctrw::Get_interp{time, getter_position}(state_new, state_old));
-    }
-    return second_moment / mass(subject, time);
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \param getter_position Get position from state, gets position directly by
+   default.
+   \return Second moment of position (weighted by mass).
+   \note Particle states must define:
+   - \c position [for default positition getter]
+   - \c mass
+*/
+template <typename Subject, typename GetterPosition = ctrw::Get_position>
+auto position_second_moment(Subject const &subject, double time,
+                            GetterPosition getter_position = {}) {
+  using Position = decltype(getter_position(subject.particles(0).state_new()));
+  Position second_moment = Foam::zero{};
+  for (auto const &part : subject.particles()) {
+    auto const &state_new = part.state_new();
+    auto const &state_old = part.state_old();
+    if (state_new.time >= time && state_old.time <= time)
+      second_moment +=
+          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+          op::square(
+              ctrw::Get_interp{time, getter_position}(state_new, state_old));
   }
+  return second_moment / mass(subject, time);
+}
 
-  /**
-     \param subject CTRW object.
-     \param exponents Order of moment or vector with order for each dimension.
-     \param time Current time.
-     \param getter_position Get position from state, gets \c position directly
-     by default. \return Nth moment of position (weighted by mass). \note
-     Particle states must define:
-     - \c position [for default positition getter]
-     - \c mass
-  */
-  template <typename Subject, typename Exponents,
-            typename GetterPosition = ctrw::Get_position>
-  auto position_moment(Subject const &subject, Exponents const &exponents,
-                       double time, GetterPosition getter_position = {}) {
-    decltype(getter_position(subject.particles(0).state_new())) moment =
-        Foam::zero{};
-    for (auto const &part : subject.particles()) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      if (state_new.time >= time && state_old.time <= time)
-        moment +=
-            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-            op::pow(
-                ctrw::Get_interp{time, getter_position}(state_new, state_old),
-                exponents);
-    }
-    return moment / mass(subject, time);
+/**
+   \param subject CTRW object.
+   \param exponents Order of moment or vector with order for each dimension.
+   \param time Current time.
+   \param getter_position Get position from state, gets \c position directly
+   by default. \return Nth moment of position (weighted by mass). \note
+   Particle states must define:
+   - \c position [for default positition getter]
+   - \c mass
+*/
+template <typename Subject, typename Exponents,
+          typename GetterPosition = ctrw::Get_position>
+auto position_moment(Subject const &subject, Exponents const &exponents,
+                     double time, GetterPosition getter_position = {}) {
+  decltype(getter_position(subject.particles(0).state_new())) moment =
+      Foam::zero{};
+  for (auto const &part : subject.particles()) {
+    auto const &state_new = part.state_new();
+    auto const &state_old = part.state_old();
+    if (state_new.time >= time && state_old.time <= time)
+      moment +=
+          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+          op::pow(ctrw::Get_interp{time, getter_position}(state_new, state_old),
+                  exponents);
   }
+  return moment / mass(subject, time);
+}
 
-  /**
-     \param subject CTRW object.
-     \param time Current time.
-     \param getter_position Get position from state, gets position directly by
-     default.
-     \return Position variance (weighted by mass).
-     \note Particle states must define:
-     - \c position [for default positition getter]
-     - \c mass
-  */
-  template <typename Subject, typename GetterPosition = ctrw::Get_position>
-  auto position_variance(Subject const &subject, double time,
-                         GetterPosition getter_position = {}) {
-    return position_second_moment(subject, time, getter_position) -
-           op::square(position_mean(subject, time, getter_position));
-  }
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \param getter_position Get position from state, gets position directly by
+   default.
+   \return Position variance (weighted by mass).
+   \note Particle states must define:
+   - \c position [for default positition getter]
+   - \c mass
+*/
+template <typename Subject, typename GetterPosition = ctrw::Get_position>
+auto position_variance(Subject const &subject, double time,
+                       GetterPosition getter_position = {}) {
+  return position_second_moment(subject, time, getter_position) -
+         op::square(position_mean(subject, time, getter_position));
+}
 
-  /**
-     \param subject CTRW object.
-     \param time Current time.
-     \param getter_position Get position from state, gets position directly by
-     default.
-     \return Mean field value (weighted by mass).
-     \note Particle states must define:
-     - \c mass
-     - \c time
-  */
-  template <typename Subject, typename Field,
-            typename GetterPosition = ctrw::Get_position>
-  auto mean(Subject const &subject, double time, Field const &field) {
-    decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
-    for (auto const &part : subject.particles()) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      if (state_new.time >= time && state_old.time <= time)
-        field_mean +=
-            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-            ctrw::Get_interp{time, ctrw::Get_property{field}}(state_new,
-                                                              state_old);
-    }
-    return field_mean / mass(subject, time);
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \param field Field to evaluate at particle positions.
+   \return Mean field value (weighted by mass).
+   \note Particle states must define:
+   - \c mass
+   - \c time
+*/
+template <typename Subject, typename Field>
+auto mean(Subject const &subject, double time, Field const &field) {
+  decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
+  for (auto const &part : subject.particles()) {
+    auto const &state_new = part.state_new();
+    auto const &state_old = part.state_old();
+    if (state_new.time >= time && state_old.time <= time)
+      field_mean +=
+          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+          ctrw::Get_interp{time, ctrw::Get_property{field}}(state_new,
+                                                            state_old);
   }
+  return field_mean / mass(subject, time);
+}
 
-  /**
-     \brief Output time information.
-     \param output Output stream.
-     \param params Output parameters, holding time_unit_factor to rescale \p
-     time. \param time Current time.
-   */
-  template <typename OStream, typename ParametersOutput>
-  void info_time(OStream & output, ParametersOutput const &params,
-                 double time) {
-    output << "Time "
-           << "[" << params.time_units
-           << " time units]: " << time / params.time_unit_factor << "\n";
-  }
+/**
+   \brief Compute demand-drived mesh data.
+   \note
+   - For parallel runs where each thread has access to the whole mesh,
+   demand-driven mesh data must be pre-computed, otherwise there can be
+   synchronization problems.
+   - The cell tree used in searching is not precomputed. Mesh search tools
+   should be used for searching instead.
+   - Global mesh data is not precomputed. It assumed that the mesh is
+   global (not decomposed).
+   - Mesh-movement related quantities are not precomputed.
+   - Not all mesh connectivity quantities are precomputed (only faceEdges and
+   cellCells).
+*/
+template <typename Mesh> void compute_demand_driven_mesh_data(Mesh &mesh) {
+  (void)mesh.V();
+  (void)mesh.magSf();
+  (void)mesh.C();
+  (void)mesh.Cf();
+  (void)mesh.faceEdges();
+  (void)mesh.cellCells();
+}
 
-  /**
-     \brief Output information about fraction of particles that have not been
-     absorbed.
-     \param output Output stream.
-     \param subject CTRW object.
-     \param time Current time.
-     \note Particle states must define:
-     - <tt>info.absorbed</tt> [std::size_t]
-  */
-  template <typename OStream, typename Subject>
-  void info_fraction_not_absorbed(OStream & output, Subject const &subject,
-                                  double time) {
-    output << "Fraction not absorbed: "
-           << 1. - double(ptof::nr_absorbed(subject, time)) / subject.size()
-           << "\n";
-  }
+/**
+   \brief Compute demand-drived meshSearch data.
+   \note
+   - For parallel runs where each thread has access to the whole mesh,
+   demand-driven mesh data must be pre-computed, otherwise there can be
+   synchronization problems.
+   - Non-coupled boundary tree is not precomputed.
+*/
+template <typename MeshSearch>
+void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
+  (void)mesh_search.cellTree();
+  (void)mesh_search.boundaryTree();
+}
 
-  /** \return Identifier string for output file names. */
-  inline std::string identifier(
-      std::string const &model_name, std::string const &case_name,
-      std::string const &of_case_name, std::string const &params_transport_name,
-      std::string const &params_reaction_name,
-      std::string const &params_solvers_name,
-      std::string const &params_initial_condition_name,
-      std::string const &params_output_name) {
-    return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name +
-           "_T_" + params_transport_name + "_R_" + params_reaction_name +
-           "_S_" + params_solvers_name + "_I_" + params_initial_condition_name +
-           "_O_" + params_output_name;
-  }
+/**
+   \brief Output time information.
+   \param output Output stream.
+   \param params Output parameters, holding time_unit_factor to rescale \p
+   time. \param time Current time.
+ */
+template <typename OStream, typename ParametersOutput>
+void info_time(OStream &output, ParametersOutput const &params, double time) {
+  output << "Time "
+         << "[" << params.time_units
+         << " time units]: " << time / params.time_unit_factor << "\n";
+}
 
-  /** \return Identifier string for output file names. */
-  inline std::string identifier(
-      std::string const &model_name, std::string const &case_name,
-      std::string const &of_case_name, std::string const &params_transport_name,
-      std::string const &params_reaction_name,
-      std::string const &params_solvers_name,
-      std::string const &params_initial_condition_name,
-      std::string const &params_output_name, std::size_t run_nr) {
-    return identifier(model_name, case_name, of_case_name,
-                      params_transport_name, params_reaction_name,
-                      params_solvers_name, params_initial_condition_name,
-                      params_output_name) +
-           "_RUN_" + std::to_string(run_nr);
-  }
+/**
+   \brief Output information about fraction of particles that have not been
+   absorbed.
+   \param output Output stream.
+   \param subject CTRW object.
+   \param time Current time.
+   \note Particle states must define:
+   - <tt>info.absorbed</tt> [std::size_t]
+*/
+template <typename OStream, typename Subject>
+void info_fraction_not_absorbed(OStream &output, Subject const &subject,
+                                double time) {
+  output << "Fraction not absorbed: "
+         << 1. - double(ptof::nr_absorbed(subject, time)) / subject.size()
+         << "\n";
+}
 
-  /** \return Identifier string for output file names. */
-  inline std::string identifier(
-      std::string const &model_name, std::string const &case_name,
-      std::string const &of_case_name, std::string const &params_transport_name,
-      std::string const &params_phase_name,
-      std::string const &params_reaction_name,
-      std::string const &params_solvers_name,
-      std::string const &params_initial_condition_name,
-      std::string const &params_output_name) {
-    return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name +
-           "_T_" + params_transport_name + "_P_" + params_phase_name + "_R_" +
-           params_reaction_name + "_S_" + params_solvers_name + "_I_" +
-           params_initial_condition_name + "_O_" + params_output_name;
-  }
+/** \return Identifier string for output file names. */
+inline std::string identifier(std::string const &model_name,
+                              std::string const &case_name,
+                              std::string const &of_case_name,
+                              std::string const &params_transport_name,
+                              std::string const &params_reaction_name,
+                              std::string const &params_solvers_name,
+                              std::string const &params_initial_condition_name,
+                              std::string const &params_output_name) {
+  return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name + "_T_" +
+         params_transport_name + "_R_" + params_reaction_name + "_S_" +
+         params_solvers_name + "_I_" + params_initial_condition_name + "_O_" +
+         params_output_name;
+}
 
-  /** \return Identifier string for output file names. */
-  inline std::string identifier(
-      std::string const &model_name, std::string const &case_name,
-      std::string const &of_case_name, std::string const &params_transport_name,
-      std::string const &params_phase_name,
-      std::string const &params_reaction_name,
-      std::string const &params_solvers_name,
-      std::string const &params_initial_condition_name,
-      std::string const &params_output_name, std::size_t run_nr) {
-    return identifier(model_name, case_name, of_case_name,
-                      params_transport_name, params_phase_name,
-                      params_reaction_name, params_solvers_name,
-                      params_initial_condition_name, params_output_name) +
-           "_RUN_" + std::to_string(run_nr);
-  }
-  } // namespace ptof
+/** \return Identifier string for output file names. */
+inline std::string identifier(std::string const &model_name,
+                              std::string const &case_name,
+                              std::string const &of_case_name,
+                              std::string const &params_transport_name,
+                              std::string const &params_reaction_name,
+                              std::string const &params_solvers_name,
+                              std::string const &params_initial_condition_name,
+                              std::string const &params_output_name,
+                              std::size_t run_nr) {
+  return identifier(model_name, case_name, of_case_name, params_transport_name,
+                    params_reaction_name, params_solvers_name,
+                    params_initial_condition_name, params_output_name) +
+         "_RUN_" + std::to_string(run_nr);
+}
+
+/** \return Identifier string for output file names. */
+inline std::string identifier(std::string const &model_name,
+                              std::string const &case_name,
+                              std::string const &of_case_name,
+                              std::string const &params_transport_name,
+                              std::string const &params_phase_name,
+                              std::string const &params_reaction_name,
+                              std::string const &params_solvers_name,
+                              std::string const &params_initial_condition_name,
+                              std::string const &params_output_name) {
+  return "M_" + model_name + "_C_" + case_name + "_OF_" + of_case_name + "_T_" +
+         params_transport_name + "_P_" + params_phase_name + "_R_" +
+         params_reaction_name + "_S_" + params_solvers_name + "_I_" +
+         params_initial_condition_name + "_O_" + params_output_name;
+}
+
+/** \return Identifier string for output file names. */
+inline std::string identifier(std::string const &model_name,
+                              std::string const &case_name,
+                              std::string const &of_case_name,
+                              std::string const &params_transport_name,
+                              std::string const &params_phase_name,
+                              std::string const &params_reaction_name,
+                              std::string const &params_solvers_name,
+                              std::string const &params_initial_condition_name,
+                              std::string const &params_output_name,
+                              std::size_t run_nr) {
+  return identifier(model_name, case_name, of_case_name, params_transport_name,
+                    params_phase_name, params_reaction_name,
+                    params_solvers_name, params_initial_condition_name,
+                    params_output_name) +
+         "_RUN_" + std::to_string(run_nr);
+}
+} // namespace ptof
 
 #endif /* PTOF_USEFUL_H */

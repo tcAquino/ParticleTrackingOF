@@ -11,6 +11,7 @@
 #include "General/IO.h"
 #include <Time.H>
 #include <string>
+#include <ostream>
 
 namespace ptof {
 
@@ -43,7 +44,7 @@ struct Directories {
         dir_boundaryconditions{dir_case + "/boundary_conditions"} {}
 
   /** \brief Output information about current object. */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "Directories\n"
@@ -94,7 +95,7 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output
         << "--------------------------------------------------------------\n"
            "OpenFOAM directories (pass '' for default in [])\n"
@@ -109,7 +110,7 @@ public:
      \brief Output information about current object.
      \param output Output stream.
   */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "OpenFOAM directories\n"

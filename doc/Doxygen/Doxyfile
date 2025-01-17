@@ -862,7 +862,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # See also: WARN_FORMAT
 # The default value is: at line $line of file $file.
 
-WARN_LOGFILE           =
+WARN_LOGFILE           = log.DoxygenWarnings
 
 #---------------------------------------------------------------------------
 # Configuration options related to the input files

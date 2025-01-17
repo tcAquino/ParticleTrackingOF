@@ -12,7 +12,6 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Operations.h"
-#include "General/Useful.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/InitialCondition.h"
 #include "PTOF/InitialConditionList.h"
@@ -658,14 +657,13 @@ public:
      \brief Constructor.
      \param geometry Domain geometry info and utilities.
      \param velocity_field Velocity field as a function of state.
-     \param particle_maker Functor to make a particle given a position.
+     \param nr_particles Number of particles to make.
      \param parameters Output parameters.
      \param mask Scalar field.
      \param threshold Threshold for the mask, such that cells where the mask is
      above or equal to the threshold are considered.
   */
-  template <typename VelocityField = useful::Empty,
-            typename Mask = useful::Empty>
+  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   InitialCondition_Cases(Geometry const &geometry,
                          VelocityField const &velocity_field,
                          std::size_t nr_particles, Parameters const &parameters,
@@ -675,14 +673,12 @@ public:
         _initial_condition{
             set_type(geometry, velocity_field, parameters, mask, threshold)} {}
 
-  template <typename VelocityField = useful::Empty,
-            typename Mask = useful::Empty>
+  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   InitialCondition_Cases(Geometry &&, VelocityField const &, std::size_t,
                          Parameters const &, Mask const & = {},
                          double = 0.) = delete;
 
-  template <typename VelocityField = useful::Empty,
-            typename Mask = useful::Empty>
+  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   InitialCondition_Cases(meta::Selector_t<Particle>, Geometry const &geometry,
                          VelocityField const &velocity_field,
                          std::size_t nr_particles, Parameters const &parameters,
@@ -692,8 +688,7 @@ public:
         _initial_condition{
             set_type(geometry, velocity_field, parameters, mask, threshold)} {}
 
-  template <typename VelocityField = useful::Empty,
-            typename Mask = useful::Empty>
+  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   InitialCondition_Cases(meta::Selector_t<Particle>, Geometry &&,
                          VelocityField const &, std::size_t, Parameters const &,
                          Mask const & = {}, double = 0.) = delete;
@@ -743,7 +738,7 @@ public:
 
 private:
   template <typename TT, bool periodic = false> struct BP {
-    using type = useful::Empty;
+    using type = meta::Empty;
   };
 
   template <typename TT> struct BP<TT, true> {
@@ -790,7 +785,7 @@ private:
                            initial_time, initial_particle_mass};
   }
 
-  template <typename VelocityField, typename Mask = useful::Empty>
+  template <typename VelocityField, typename Mask = meta::Empty>
   std::unique_ptr<IC> set_type(Geometry const &geometry,
                                VelocityField const &velocity_field,
                                Parameters const &parameters,
@@ -820,7 +815,7 @@ private:
     case InitialConditionList::Type::fluxweighted_all_cells: {
       using InitialCondition = InitialCondition_FluxweightedCellCenters<
           ParticleMaker &, Geometry const &, std::vector<Foam::label>>;
-      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
         return set_injection(
             InitialCondition{_particle_maker, geometry,
                              cell_ids_masked(all_cell_ids(geometry.mesh()),
@@ -852,7 +847,7 @@ private:
       using SpecificParameters = Parameters::SpecificParameters_Patches;
       SpecificParameters *specific_parameters =
           cast<SpecificParameters>(parameters);
-      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
@@ -888,7 +883,7 @@ private:
           Parameters::SpecificParameters_Patches_Distance;
       SpecificParameters *specific_parameters =
           cast<SpecificParameters>(parameters);
-      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
@@ -924,7 +919,7 @@ private:
       using SpecificParameters = Parameters::SpecificParameters_Boundaries;
       SpecificParameters *specific_parameters =
           cast<SpecificParameters>(parameters);
-      if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
@@ -1039,24 +1034,24 @@ private:
     }
   }
 
-  template <typename Container, typename Mask = useful::Empty>
+  template <typename Container, typename Mask = meta::Empty>
   auto cell_ids_masked(Container cell_ids, Geometry const &geometry,
                        Mask const &mask = {}, double threshold = 0.) {
-    if constexpr (!std::is_same_v<Mask, useful::Empty>)
+    if constexpr (!std::is_same_v<Mask, meta::Empty>)
       apply_mask_cells_inplace(cell_ids, mask, threshold);
     return cell_ids;
   }
 
-  template <typename Container, typename Mask = useful::Empty>
+  template <typename Container, typename Mask = meta::Empty>
   auto patch_face_ids_masked(Container face_ids, Geometry const &geometry,
                              Mask const &mask = {}, double threshold = 0.) {
-    if constexpr (!std::is_same_v<Mask, useful::Empty>)
+    if constexpr (!std::is_same_v<Mask, meta::Empty>)
       apply_mask_patch_faces_inplace(face_ids, geometry.mesh(), mask,
                                      threshold);
     return face_ids;
   }
 
-  template <typename Mask = useful::Empty>
+  template <typename Mask = meta::Empty>
   auto patch_face_ids_masked(std::vector<std::string> const &patch_names,
                              Geometry const &geometry, Mask const &mask = {},
                              double threshold = 0.) {

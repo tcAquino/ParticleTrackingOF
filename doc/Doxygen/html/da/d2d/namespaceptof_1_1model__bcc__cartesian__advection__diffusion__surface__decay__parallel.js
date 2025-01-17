@@ -1,4 +1,0 @@
-var namespaceptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay__parallel =
-[
-    [ "Model", "d6/dfa/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay__parallel_1_1_model.html", "d6/dfa/structptof_1_1model__bcc__cartesian__advection__diffusion__surface__decay__parallel_1_1_model" ]
-];

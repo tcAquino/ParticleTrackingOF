@@ -33,7 +33,7 @@ struct Locator_Cell {
 
   /**
      \brief Constructor.
-     \param mesh_search Mesh searching object.
+     \param geometry Domain geometry info and utilities.
   */
   Locator_Cell(Geometry const &geometry) : _geometry{geometry} {}
 

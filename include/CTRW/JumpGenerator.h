@@ -30,7 +30,6 @@
 #include "General/Meta.h"
 #include "General/Operations.h"
 #include "General/Parallel.h"
-#include "General/Useful.h"
 #include "Geometry/Boundary.h"
 #include "Stochastic/Random.h"
 #include <algorithm>
@@ -56,7 +55,7 @@ public:
      \param state Particle state (unused).
      \return Jump increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   auto operator()(State const &state = {}) {
     return step;
   }
@@ -70,7 +69,7 @@ template <typename JumpGenerator_1, typename JumpGenerator_2>
 class JumpGenerator_Add {
 public:
   /**
-     \bried Constructor.
+     \brief Constructor.
      \param jump_generator_1 First jump generator.
      \param jump_generator_2 Second jump generator.
   */
@@ -83,7 +82,7 @@ public:
      \param state Particle state (unused).
      \return Jump increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   auto operator()(State const &state = {}) {
     return op::plus(_jump_generator_1(state), _jump_generator_2(state));
   }
@@ -281,7 +280,7 @@ public:
      \param state Particle state (unused).
      \return Jump increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   double operator()(State const &state = {}) {
     return _diff_aux * _normal_dist(_rng);
   }
@@ -356,7 +355,7 @@ public:
      \param state Particle state (unused).
      \return Jump increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   auto operator()(State const &state = {}) {
     auto jump = state.position;
     for (std::size_t dd = 0; dd < dim(); ++dd)
@@ -398,7 +397,7 @@ public:
      \param state Particle state (unused).
      \return Jump increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   double operator()(State const &state = {}) {
     return _jump_size * (2 * _bernoulli_dist(_rng) - 1);
   }
@@ -428,7 +427,7 @@ public:
      \param state Particle state (unused).
      \return Jump increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   DistanceType operator()(State const &state = {}) {
     return max_jump_size * (2. * _dist(_rng) - 1.);
   }
@@ -590,7 +589,7 @@ public:
      \param state Particle state (unused).
      \return Orientation increment.
   */
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   double operator()(State const &state = {}) {
     return constants::pi;
   }

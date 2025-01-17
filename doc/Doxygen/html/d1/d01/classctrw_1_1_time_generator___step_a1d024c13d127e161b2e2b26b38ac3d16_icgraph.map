@@ -1,8 +1,0 @@
-<map id="ctrw::TimeGenerator_Step::time_step" name="ctrw::TimeGenerator_Step::time_step">
-<area shape="rect" id="node1" title=" " alt="" coords="273,166,415,207"/>
-<area shape="rect" id="node2" href="$d7/dce/structptof_1_1_steppers___advection___r_k4___diffusion___euler.html#ad9ffe0fac558d6b02a8ace6a097561ed" title=" " alt="" coords="5,5,225,61"/>
-<area shape="rect" id="node3" href="$d3/d75/structptof_1_1_steppers___advection___euler___diffusion___euler.html#a44f228d645b27704766e09bc7b6f3c0a" title=" " alt="" coords="31,85,200,141"/>
-<area shape="rect" id="node4" href="$d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#ae949418f0db21ea3c2e62d4c447ff874" title=" " alt="" coords="27,166,203,207"/>
-<area shape="rect" id="node5" href="$d0/df3/classctrw_1_1_transitions___p_t_r_w___flow_field___diff.html#a8a86edc964c2bc6946964e8aadc643e9" title=" " alt="" coords="26,231,205,273"/>
-<area shape="rect" id="node6" href="$d8/da3/classctrw_1_1_transitions___p_t_r_w___diffusion__1d.html#a5ca574c64d7eba75359d26d346a1b27a" title=" " alt="" coords="32,297,199,338"/>
-</map>

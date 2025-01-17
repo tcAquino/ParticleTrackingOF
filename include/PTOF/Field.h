@@ -9,7 +9,6 @@
 #define PTOF_FIELD_H
 
 #include "General/Meta.h"
-#include "General/Useful.h"
 #include "PTOF/Useful.h"
 #include <Vector2D.H>
 #include <fieldTypes.H>
@@ -26,7 +25,7 @@ namespace ptof {
    \note See CheckOptions class for bounds checking options.
 */
 template <typename Field, typename Locator, typename CheckOption,
-          typename Uninterpolated = useful::Empty>
+          typename Uninterpolated = meta::Empty>
 class VectorField_LinearInterpolation_OF {
 public:
   using Point = Foam::point;                     /**> 3D point. */
@@ -110,13 +109,13 @@ public:
               cell, position,
               "Assigning vector field value from nearest cell")) {
         cell = _locator.nearest_cell(position);
-        if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
+        if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
           return _field[cell] + _uninterpolated[cell];
         else
           return _field[cell];
       }
 
-    if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
+    if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
       return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
 
     return _interpolant.interpolate(position, cell);
@@ -255,7 +254,7 @@ template <typename Field, typename Locator, typename CheckOption>
 VectorField_LinearInterpolation_OF(Field &&, Locator &&,
                                    meta::Selector_t<CheckOption>)
     -> VectorField_LinearInterpolation_OF<Field, Locator, CheckOption,
-                                          useful::Empty>;
+                                          meta::Empty>;
 template <typename Field, typename Locator, typename Uninterpolated,
           typename CheckOption>
 VectorField_LinearInterpolation_OF(Field &&, Locator &&, Uninterpolated &&,
@@ -270,7 +269,7 @@ VectorField_LinearInterpolation_OF(Field &&, Locator &&, Uninterpolated &&,
    \note See CheckOptions class for bounds checking options.
 */
 template <typename Field, typename Locator, typename CheckOption,
-          typename Uninterpolated = useful::Empty>
+          typename Uninterpolated = meta::Empty>
 class ScalarField_LinearInterpolation_OF {
 public:
   using Point = Foam::point;                    /**> 3D point. */
@@ -352,13 +351,13 @@ public:
               cell, position,
               "Assigning scalar field value from nearest cell")) {
         cell = _locator.nearest_cell(position);
-        if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
+        if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
           return _field[cell] + _uninterpolated[cell];
         else
           return _field[cell];
       }
 
-    if constexpr (!std::is_same_v<Uninterpolated, useful::Empty>)
+    if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
       return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
 
     return _interpolant.interpolate(position, cell);
@@ -495,7 +494,7 @@ template <typename Field, typename Locator, typename CheckOption>
 ScalarField_LinearInterpolation_OF(Field &&, Locator &&,
                                    meta::Selector_t<CheckOption>)
     -> ScalarField_LinearInterpolation_OF<Field, Locator, CheckOption,
-                                          useful::Empty>;
+                                          meta::Empty>;
 template <typename Field, typename Locator, typename Uninterpolated,
           typename CheckOption>
 ScalarField_LinearInterpolation_OF(Field &&, Locator &&, Uninterpolated &&,

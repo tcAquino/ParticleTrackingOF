@@ -1,8 +1,0 @@
-<map id="op::times_scalar_inplace" name="op::times_scalar_inplace">
-<area shape="rect" id="node1" title="Element&#45;wise multiplication by scalar." alt="" coords="533,123,716,150"/>
-<area shape="rect" id="node2" href="$de/dd9/classgeom_1_1_boundary___radial_reflecting__2d.html#aec84b550d8e143aaacf88cb24e1ea928" title="Enforce boundary condition." alt="" coords="243,5,485,47"/>
-<area shape="rect" id="node3" href="$df/db5/classgeom_1_1_boundary___open___radial_reflecting__3d.html#a492b845009e383f8e0d898195a33ad97" title="Enforce boundary condition." alt="" coords="279,71,449,127"/>
-<area shape="rect" id="node4" href="$df/dcd/classctrw_1_1_jump_generator___velocity___r_k4.html#aab8567de2cefe3fdda201376a0cc8b9a" title=" " alt="" coords="271,152,457,193"/>
-<area shape="rect" id="node5" href="$d2/dfa/namespacegeom.html#ab9c153cfb8b0528819534d1c542e08fc" title="Reflect off sphere exterior (in any dimension)." alt="" coords="269,217,459,259"/>
-<area shape="rect" id="node6" href="$d2/dfa/namespacegeom.html#a47f5f9e6a6f487b4473741100072b50e" title="Reflect off sphere exterior (in any dimension)." alt="" coords="5,217,195,259"/>
-</map>

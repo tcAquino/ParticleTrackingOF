@@ -1,4 +1,0 @@
-<map id="ptof::area_inward" name="ptof::area_inward">
-<area shape="rect" id="node1" title="Oriented area at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="5,5,140,32"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a15e633e764f47198a72eb45f2def101c" title="Oriented area at boundary face, using right&#45;hand&#45;rule (outward for boundary faces)." alt="" coords="188,5,332,32"/>
-</map>

@@ -24,8 +24,8 @@
 #ifndef CTRW_TIMEGENERATOR_H
 #define CTRW_TIMEGENERATOR_H
 
+#include "General/Meta.h"
 #include "General/Parallel.h"
-#include "General/Useful.h"
 #include "Stochastic/Random.h"
 #include <random>
 
@@ -46,7 +46,7 @@ public:
 
   value_type time_step() const { return _time_step; }
 
-  template <typename State = useful::Empty>
+  template <typename State = meta::Empty>
   value_type operator()(State const & = {}) {
     return _time_step;
   }
@@ -67,8 +67,7 @@ public:
 
   TimeGenerator_Dist(Dist dist) : _dist{dist} {}
 
-  template <typename State = useful::Empty>
-  auto operator()(State const & = {}) {
+  template <typename State = meta::Empty> auto operator()(State const & = {}) {
     return _dist(_rng);
   }
 };

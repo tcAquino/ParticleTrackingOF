@@ -13,8 +13,8 @@
 
 namespace ptof {
 /**
-   \struct InitialConditionList PTOF/InitialCondiitonList.h
-   "PTOF/InitialCondiitonList.h"
+   \struct InitialConditionList PTOF/InitialConditionList.h
+   "PTOF/InitialConditionList.h"
    \brief Keep track of names and types of initial conditions.
 */
 struct InitialConditionList {

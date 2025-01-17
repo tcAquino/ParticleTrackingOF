@@ -1,4 +1,0 @@
-<map id="useful::swap_erase_if" name="useful::swap_erase_if">
-<area shape="rect" id="node1" title="Swap&#45;erase elements of container satisfying criterion." alt="" coords="5,5,155,32"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#aca6d5245d3d448bb65d0d951c12ee1bd" title="Copy end element of container to index idx, then erase end element." alt="" coords="203,5,337,32"/>
-</map>

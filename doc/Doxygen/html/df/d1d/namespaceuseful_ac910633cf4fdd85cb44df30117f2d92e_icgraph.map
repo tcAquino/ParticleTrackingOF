@@ -1,9 +1,0 @@
-<map id="useful::parse_error" name="useful::parse_error">
-<area shape="rect" id="node1" title=" " alt="" coords="391,122,535,149"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a75c0e6f4913d7d5ba00b5732c217caa8" title="Get the boundary conditions associated with a set of patches from file." alt="" coords="198,5,342,47"/>
-<area shape="rect" id="node4" href="$df/d1d/namespaceuseful.html#ade7b00077c0b1b122c80175082c198fd" title="Load file into vector of vectors of doubles." alt="" coords="221,71,319,98"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a98cb712af3c27b2f8650b4c78d181e3c" title="Load 1&#45;column file into vector of doubles." alt="" coords="213,122,327,149"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#a0363b363a89bc9844a8a29f1908ae11e" title="Load 2&#45;column file into pair of vectors of doubles." alt="" coords="213,173,327,199"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a78d057731be2e6d3e8ea19bd807e11f0" title="Load 3&#45;column file, first two columns into vector of pairs, last column into vector of doubles." alt="" coords="197,223,343,250"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a2296e2ce1bc18bec7fcbc3f641b139d6" title="Get boundary conditions for dynamics type." alt="" coords="5,5,149,47"/>
-</map>

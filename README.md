@@ -4,6 +4,8 @@ Particle tracking based on OpenFOAM-generated meshes and flow fields, including 
 
 ## Dependencies
 
+PTOF is meant to be used in a Linux system. It has mostly been tested under Ubuntu v22.04. It is also expected to work on MacOS, but is less tested there.
+
 Required external libraries (free and open-source):
 - OpenFOAM : CFD software (https://www.openfoam.com/)
 
@@ -11,12 +13,12 @@ A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5 a
 
 ## Documentation
 
-Basic information on code structure, compilation, and execution is given in doc/Manual.pdf. Doxygen documentation can be found in doc/Doxygen.
+Basic information on code structure, compilation, and execution is given in doc/Manual.pdf. Doxygen documentation can be found in doc/Doxygen. The compiled doxygen documentation is not currently online. To compile and view it, make sure you have doxygen and graphviz installed (both free and available in common repositories like apt), go to the doc folder, and execute doxygen Doxyfile. Then open the doc/html/index.html file to view it in a browser.
 
 ## Notes and known issues
 
 - If the underlying OpenFOAM case uses dynamicCode functionalities, they are compiled at runtime by OpenFOAM when running PTOF executables on that case for the first time and placed on a dynamicCode folder in the same folder as the executable. If more than one instance of PTOF is run simultaneously during this first run, this can cause a conflict and lead to a crash. A simple workaround is to wait for dynamic compilation, which happens early on, before launching a second instance on the first run.
-- Parall simulations employ parallelization over particles across the whole spatial domain. This means that parallel OpenFOAM cases must be reconstructed before using PTOF, and that each thread must have access to the full mesh. Unfortunatlely, OpenFOAM is not designed with this type of parallelization in mind, and even mesh searching methods that are marked const can make changes to mutable members of the mesh object. At least for the moment, this requires each thread to have its own dedicated copy of the full mesh. Because of this, you should be careful of RAM consumption when running parallel simulations.
+- Parall simulations employ parallelization over particles across the whole spatial domain. This means that parallel OpenFOAM cases must be reconstructed before using PTOF, and that each thread must have access to the full mesh. OpenFOAM is not designed with this type of parallelization in mind. Demand-driven mesh and mesh search tool data must be precomputed in serial before being used in parallel. When implementing extensions, be careful to verify that all necessary data is precomputed.
 
 ## Citations
 

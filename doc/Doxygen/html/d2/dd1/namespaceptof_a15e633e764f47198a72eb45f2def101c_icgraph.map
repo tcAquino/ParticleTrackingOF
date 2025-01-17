@@ -1,9 +1,0 @@
-<map id="ptof::area_outward" name="ptof::area_outward">
-<area shape="rect" id="node1" title="Oriented area at boundary face, using right&#45;hand&#45;rule (outward for boundary faces)." alt="" coords="877,38,1021,65"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a2cb4c7a4f67a75c7f41b7e1581abe11b" title="Oriented area at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="675,13,809,39"/>
-<area shape="rect" id="node6" href="$d2/dd1/namespaceptof.html#a80378652fd050cd7e58f31a9e20beaca" title="Face area weighted by outward&#45;normal component of vector field at face center." alt="" coords="655,63,829,90"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a074e29d0d2fa52ba81aed79ecd4b4b6f" title="Face area weighted by inward&#45;normal component of vector field at face center." alt="" coords="430,13,595,39"/>
-<area shape="rect" id="node4" href="$d2/dd1/namespaceptof.html#aa3d470eac18760f51c04d50148d1f00f" title="Face areas weighted by inward&#45;normal component of vector field at face center." alt="" coords="192,13,371,39"/>
-<area shape="rect" id="node5" href="$d2/dd1/namespaceptof.html#a9c0e291883e7c0f8af32a5640eafef09" title="Distribution for random number generation of face indices weighted by face areas multiplied by vector..." alt="" coords="5,5,144,47"/>
-<area shape="rect" id="node7" href="$d2/dd1/namespaceptof.html#ad75227d649169a53c130c61250f548af" title="Face areas weighted by outward&#45;normal component of vector field at face center." alt="" coords="419,63,607,90"/>
-</map>

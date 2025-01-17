@@ -1,4 +1,0 @@
-<map id="modular::indexToPosition" name="modular::indexToPosition">
-<area shape="rect" id="node1" title="Given 1d index idx, convert to position (x_idx, y_idx, ...) in a regular grid; output in position." alt="" coords="180,13,348,39"/>
-<area shape="rect" id="node2" href="$dc/d1a/classuseful_1_1_multi_array.html#a0c78a874cac9590e5de68b12fee7fbe8" title="Convert 1D index index to multi&#45;dimensional index." alt="" coords="5,5,132,47"/>
-</map>

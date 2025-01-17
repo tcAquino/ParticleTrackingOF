@@ -81,7 +81,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_periodic_cartesian_advection_diffusion_3d;
+  namespace model = ptof::model_bcc_symmetryplanes_advection;
   using Phase = ptof::Phase;
 
   ExecutableInfo<ParallelOption>::banner(std::cout);
@@ -145,8 +145,8 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up geometry...\n";
   auto execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Geometry geometry{directories_of,
-                                                        directories};
+  model::Definitions<ParallelOption>::Geometry geometry{
+      directories_of, directories, io::CoutLogger{}};
   geometry.info_runtime(std::cout);
   auto execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";

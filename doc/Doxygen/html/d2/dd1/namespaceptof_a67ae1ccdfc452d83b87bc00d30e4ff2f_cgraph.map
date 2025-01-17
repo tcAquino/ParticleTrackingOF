@@ -1,5 +1,0 @@
-<map id="ptof::cell_flux" name="ptof::cell_flux">
-<area shape="rect" id="node1" title="Cell volume weighted by magnitude of vector field value at cell center." alt="" coords="5,31,115,57"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#a65ce2f6ce88714c9a15798b95e9a17c7" title="Center of a cell." alt="" coords="167,5,293,32"/>
-<area shape="rect" id="node3" href="$d2/dd1/namespaceptof.html#a073efb12947b9e64f1a1e3f444cf2b11" title="Volume of a cell." alt="" coords="163,56,297,83"/>
-</map>

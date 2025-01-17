@@ -8,7 +8,7 @@
 #ifndef PTOF_STATE_H
 #define PTOF_STATE_H
 
-#include "General/Useful.h"
+#include "General/Meta.h"
 #include "PTOF/Useful.h"
 #include <Vector2D.H>
 #include <array>
@@ -31,8 +31,8 @@ namespace ptof {
    - \c tag
    - \c info
 */
-template <typename Info_t = useful::Empty, typename Time_t = useful::Empty,
-          typename Mass_t = useful::Empty, typename Tag_t = useful::Empty>
+template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
+          typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State1D {
   using Position = Foam::scalar;
   using Cell = Foam::label;
@@ -90,8 +90,8 @@ struct State1D {
    - \c tag
    - \c info
 */
-template <typename Info_t = useful::Empty, typename Time_t = useful::Empty,
-          typename Mass_t = useful::Empty, typename Tag_t = useful::Empty>
+template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
+          typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State2D {
   using Position = Foam::Vector2D<Foam::scalar>;
   using Cell = Foam::label;
@@ -155,8 +155,8 @@ struct State2D {
    - \c tag
    - \c info
 */
-template <typename Info_t = useful::Empty, typename Time_t = useful::Empty,
-          typename Mass_t = useful::Empty, typename Tag_t = useful::Empty>
+template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
+          typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State3D {
   using Position = Foam::point;
   using Cell = Foam::label;
@@ -205,8 +205,8 @@ struct State3D {
    \return State for 1D positions.
    \details Locate mesh cell using \c Locator object.
 */
-template <typename Info, typename Locator, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Locator, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D<Info, Time, Mass, Tag>
 make_state(Foam::scalar position, Info const &info, Locator const &locator,
            Foam::label hint = -1, Time time = {}, Mass const &mass = {},
@@ -221,8 +221,8 @@ make_state(Foam::scalar position, Info const &info, Locator const &locator,
    \return State for 2D positions.
    \details Locate initial mesh cell using \c Locator object.
 */
-template <typename Info, typename Locator, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Locator, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D<Info, Time, Mass, Tag>
 make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
            Locator const &locator, Foam::label hint = -1, Time time = {},
@@ -237,8 +237,8 @@ make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
    \return State for 3D positions.
    \details Locate initial mesh cell using \c Locator object.
 */
-template <typename Info, typename Locator, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Locator, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D<Info, Time, Mass, Tag>
 make_state(Foam::vector const &position, Info const &info,
            Locator const &locator, Foam::label hint = -1, Time time = {},
@@ -253,8 +253,8 @@ make_state(Foam::vector const &position, Info const &info,
    \return State for 1D positions.
    \details Initial cell index to be provided.
 */
-template <typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D<Info, Time, Mass, Tag> make_state(Foam::scalar position, Info info,
                                           Foam::label cell_id, Time time = {},
                                           Mass mass = {}, Tag tag = {}) {
@@ -265,8 +265,8 @@ State1D<Info, Time, Mass, Tag> make_state(Foam::scalar position, Info info,
    \return State for 2D positions.
    \details Initial cell index to be provided.
 */
-template <typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D<Info, Time, Mass, Tag>
 make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
            Foam::label cell_id, Time time = {}, Mass const &mass = {},
@@ -278,8 +278,8 @@ make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
    \return State for 3D positions.
    \details Initial cell index to be provided.
 */
-template <typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D<Info, Time, Mass, Tag>
 make_state(Foam::vector const &position, Info const &info, Foam::label cell_id,
            Time time = {}, Mass const &mass = {}, Tag tag = {}) {
@@ -287,8 +287,8 @@ make_state(Foam::vector const &position, Info const &info, Foam::label cell_id,
 }
 
 /** \brief Generic state type templated on spatial dimension. */
-template <std::size_t dim, typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <std::size_t dim, typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 using State_Generic = typename std::conditional_t<
     dim == 3, State3D<Info, Time, Mass, Tag>,
     std::conditional_t<dim == 2, State2D<Info, Time, Mass, Tag>,
@@ -307,8 +307,8 @@ using State_Generic = typename std::conditional_t<
    - \c tag
    - \c info
 */
-template <typename Info_t = useful::Empty, typename Time_t = useful::Empty,
-          typename Mass_t = useful::Empty, typename Tag_t = useful::Empty>
+template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
+          typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State1D_Periodic {
   using Position = Foam::scalar;
   using Periodicity = int;
@@ -371,8 +371,8 @@ struct State1D_Periodic {
    - \c tag
    - \c info
 */
-template <typename Info_t = useful::Empty, typename Time_t = useful::Empty,
-          typename Mass_t = useful::Empty, typename Tag_t = useful::Empty>
+template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
+          typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State2D_Periodic {
   using Position = Foam::Vector2D<Foam::scalar>;
   using Periodicity = std::array<int, 2>;
@@ -441,8 +441,8 @@ struct State2D_Periodic {
    - \c tag
    - \c info
 */
-template <typename Info_t = useful::Empty, typename Time_t = useful::Empty,
-          typename Mass_t = useful::Empty, typename Tag_t = useful::Empty>
+template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
+          typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State3D_Periodic {
   using Position = Foam::point;
   using Periodicity = std::array<int, 3>;
@@ -493,8 +493,8 @@ struct State3D_Periodic {
    \return State for 1D positions.
    \details Locate mesh cell using \c Locator object.
 */
-template <typename Info, typename Locator, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Locator, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D_Periodic<Info, Time, Mass, Tag>
 make_state(Foam::scalar position, int periodicity, Info const &info,
            Locator const &locator, Foam::label hint = -1, Time time = {},
@@ -509,8 +509,8 @@ make_state(Foam::scalar position, int periodicity, Info const &info,
    \return State for 2D positions.
    \details Locate mesh cell using \c Locator object.
 */
-template <typename Info, typename Locator, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Locator, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D_Periodic<Info, Time, Mass, Tag>
 make_state(Foam::Vector2D<Foam::scalar> const &position,
            std::array<int, 2> const &periodicity, Info const &info,
@@ -526,8 +526,8 @@ make_state(Foam::Vector2D<Foam::scalar> const &position,
    \return State for 3D positions.
    \details Locate mesh cell using \c Locator object.
 */
-template <typename Info, typename Locator, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Locator, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D_Periodic<Info, Time, Mass, Tag>
 make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
            Info const &info, Locator const &locator, Foam::label hint = -1,
@@ -542,8 +542,8 @@ make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
    \return State for 1D positions with periodicity info
    \details Initial cell index to be provided.
 */
-template <typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D_Periodic<Info, Time, Mass, Tag>
 make_state(Foam::scalar position, int periodicity, Info const &info,
            Foam::label cell_id, Time time = {}, Mass const &mass = {},
@@ -555,8 +555,8 @@ make_state(Foam::scalar position, int periodicity, Info const &info,
    \return State for 2D positions with periodicity info
    \details Initial cell index to be provided.
 */
-template <typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D_Periodic<Info, Time, Mass, Tag>
 make_state(Foam::Vector2D<Foam::scalar> const &position,
            std::array<int, 2> const &periodicity, Info const &info,
@@ -569,8 +569,8 @@ make_state(Foam::Vector2D<Foam::scalar> const &position,
    \return State for 3D positions with periodicity info
    \details Initial cell index to be provided.
 */
-template <typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D_Periodic<Info, Time, Mass, Tag>
 make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
            Info const &info, Foam::label cell_id, Time time = {},
@@ -579,8 +579,8 @@ make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
 }
 
 /** \brief Periodic state type templated on spatial dimension. */
-template <std::size_t dim, typename Info, typename Time = useful::Empty,
-          typename Mass = useful::Empty, typename Tag = useful::Empty>
+template <std::size_t dim, typename Info, typename Time = meta::Empty,
+          typename Mass = meta::Empty, typename Tag = meta::Empty>
 using State_Periodic = typename std::conditional_t<
     dim == 3, State3D_Periodic<Info, Time, Mass, Tag>,
     std::conditional_t<dim == 2, State2D_Periodic<Info, Time, Mass, Tag>,

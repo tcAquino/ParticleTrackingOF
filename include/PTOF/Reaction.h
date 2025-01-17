@@ -13,6 +13,7 @@
 #include "PTOF/Useful.h"
 #include <cmath>
 #include <fieldTypes.H>
+#include <ostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -23,7 +24,8 @@ namespace ptof {
    \param face_ids Mesh face indices where to assign concentration.
    \param surface_concentration Homogeneous surface concentration value.
    \param mesh Mesh object.
-   \param Map of surface concentrations over face indices to append to.
+   \param surface_concentrations Map of surface concentrations over given face
+   indices, to append result.
 */
 template <typename Container, typename Mesh>
 void uniform_solid_reactant(
@@ -35,9 +37,10 @@ void uniform_solid_reactant(
 
 /**
    \param patch_names Mesh patch names where to assign concentration.
-   \param surface_concentration Mean surface concentration value.
+   \param surface_concentration_values Surface concentration value in each
+   patch.
    \param mesh Mesh object.
-   \return Map of homogeneous surface concentrations over given face indices.
+   \return Map of homogeneous surface concentrations over patch face indices.
 */
 template <typename Mesh>
 auto uniform_solid_reactant(
@@ -122,7 +125,7 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output
         << "--------------------------------------------------------------\n"
            "Surface reaction\n"
@@ -163,7 +166,7 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output
         << "--------------------------------------------------------------\n"
            "Surface reaction\n"
@@ -191,7 +194,7 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output
         << "--------------------------------------------------------------\n"
            "Bulk reaction\n"

@@ -65,7 +65,7 @@ inline std::size_t get_thread_num(ParallelOptions::Parallel) {
 
 /**
    \brief Get total number of parallel threads.
-   \details Passing an empty object of type ParallelOptions::Parallel</tt>
+   \details Passing an empty object of type ParallelOptions::Parallel
    chooses this implementation (parallel).
    \return Number of threads.
 */

@@ -46,7 +46,7 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
      \return Advection--diffusion JumpGenerator.
      \note
      - \p params_transport must define:
-     -# \c diff_coeff
+         - \c diff_coeff
      - If \p params_solvers does not define \c time_step, the time step is
      initially set to zero.
    */
@@ -126,7 +126,7 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
      \return Advection--diffusion JumpGenerator.
      \note
      -\p params_transport must define:
-     -# \c diff_coeff
+         - \c diff_coeff
      -If \p params_solvers does not define \c time_step, the time step is
      initially set to zero.
   */

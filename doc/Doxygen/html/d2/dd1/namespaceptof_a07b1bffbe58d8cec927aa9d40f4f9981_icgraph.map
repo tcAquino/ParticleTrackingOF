@@ -1,4 +1,0 @@
-<map id="ptof::rescale_to_average" name="ptof::rescale_to_average">
-<area shape="rect" id="node1" title="Rescale a volumetric field (set of values associated with mesh cells) to a given average value." alt="" coords="188,13,371,39"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#aed570c766b2821d3cdfdf98b9a5f9a24" title="Get the velocity field U from the OpenFOAM case time associated with a mesh and rescale it to a given..." alt="" coords="5,5,140,47"/>
-</map>

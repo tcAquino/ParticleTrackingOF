@@ -1,8 +1,0 @@
-<map id="ptof::mass" name="ptof::mass">
-<area shape="rect" id="node1" title=" " alt="" coords="264,129,355,156"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#ab8774a56d0a39b0593063f39d575aaea" title=" " alt="" coords="65,5,157,32"/>
-<area shape="rect" id="node3" href="$da/df1/structptof_1_1_criterion__mass__below.html#a2c3bb1a32d6a9d97c682cc395bc50811" title=" " alt="" coords="34,57,187,98"/>
-<area shape="rect" id="node4" href="$d0/d36/structptof_1_1_criterion__mass__above.html#a66d147566805676b87eb472dae3d42d4" title=" " alt="" coords="34,122,187,163"/>
-<area shape="rect" id="node5" href="$d7/db9/structptof_1_1_measurer_time__mass.html#adec0a2df289c0c63d7936c489eaa1f1f" title="Make measurement and output or store, given current time time." alt="" coords="36,187,185,229"/>
-<area shape="rect" id="node6" href="$d0/d9d/structptof_1_1_measurer_time__mass__in__regions.html#ab8e351d3f04f8ad69de7c19d71d6d826" title="Make measurement and output or store, given current time time." alt="" coords="5,253,216,294"/>
-</map>

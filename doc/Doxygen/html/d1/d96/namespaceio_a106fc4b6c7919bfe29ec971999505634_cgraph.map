@@ -1,8 +1,0 @@
-<map id="io::read_first_from_line" name="io::read_first_from_line">
-<area shape="rect" id="node1" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="5,63,177,90"/>
-<area shape="rect" id="node2" href="$d1/d96/namespaceio.html#a674e1af6fffb7b3cf9458832d7197ceb" title="Extract first value from line, discarding escaped lines and the rest of the line." alt="" coords="225,63,397,90"/>
-<area shape="rect" id="node3" href="$d1/d96/namespaceio.html#aa0540484fe569802f08da476c61eedf9" title="Remove comments after escape sequence." alt="" coords="597,5,744,47"/>
-<area shape="rect" id="node4" href="$d1/d96/namespaceio.html#a62cdc84ea5d2cbc3cce4eb7eb7dc1ab9" title="Remove." alt="" coords="595,88,747,129"/>
-<area shape="rect" id="node5" href="$d1/d96/namespaceio.html#a578ec9c5826f2659bc1a70a39749b56a" title="Split string into vector of strings at instances of delimeter and append to tokens." alt="" coords="461,89,531,115"/>
-<area shape="rect" id="node6" href="$d1/d96/namespaceio.html#a6084fd6ed8ab875f0747683b197fe62d" title="Read and split next line, discarding escaped lines." alt="" coords="445,38,547,65"/>
-</map>

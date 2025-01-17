@@ -29,7 +29,6 @@
 #include "General/Meta.h"
 #include "General/Operations.h"
 #include "General/Parallel.h"
-#include "General/Useful.h"
 #include "Geometry/Boundary.h"
 #include "Stochastic/Random.h"
 #include <limits>
@@ -99,7 +98,7 @@ Transitions_Time_Position(TimeGenerator &&, JumpGenerator &&, Boundary &&)
    - \c time
 */
 template <typename TimeStepAdaptor, typename TimeGenerator,
-          typename JumpGenerator, typename Locator = useful::Empty,
+          typename JumpGenerator, typename Locator = meta::Empty,
           typename Boundary = geom::Boundary_DoNothing>
 class Transitions_AdaptiveTimeStep_Time_Position {
 public:
@@ -235,11 +234,11 @@ private:
    state and old state.
    \note
    - State must define:
-   -# \c position
-   -# \c time
+       - \c position
+       - \c time
    - Velocity field may be passed to constructor, or velocities may be obtained
    from <tt>jump_generator</tt> if \c JumpGenerator defines:
-    - <tt>velocity(State const&)</tt>
+       - <tt>velocity(State const&)</tt>
 */
 template <typename JumpGenerator, typename VelocityField,
           typename Boundary = geom::Boundary_DoNothing>
@@ -537,7 +536,7 @@ Transitions_PTRW_Diffusion_1d(meta::Selector_t<ParallelOption>,
    - \p transitions_transport should enforce any boundary conditions.
    - Time step needed for reaction may be specified or extracted from transport
    transitions if \c Transitions_Transport defines:
-   -# \c %time_step()
+       - \c %time_step()
 */
 template <typename Transitions_Transport, typename Reaction>
 class Transitions_PTRW_Transport_Reaction {
@@ -596,7 +595,7 @@ Transitions_PTRW_Transport_Reaction(Transitions_Transport &&, Reaction &&,
    time increment.
    \note
    - State must define:
-   -# \c time
+       - \c time
    - \p transitions_transport should enforce any boundary conditions.
 */
 template <typename Transitions_Transport, typename Reaction>
@@ -636,8 +635,8 @@ Transitions_CTRW_Transport_Reaction(Transitions_Transport &&, Reaction &&)
    time increment.
    \note
    - State must define:
-   -# \c position
-   -# \c time
+       - \c position
+       - \c time
    - \p jump_generator should enforce any boundary conditions.
 */
 template <typename TimeGenerator, typename JumpGenerator, typename Reaction>
@@ -685,8 +684,8 @@ Transitions_Reaction_Position(TimeGenerator &&, JumpGenerator &&, Reaction &&)
    - \c reaction must return true when applied if reaction occurs and false
 otherwise.
    - State must define:
-   -# \c position
-   -# \c time
+       - \c position
+       - \c time
    - \p jump_generator should enforce any boundary conditions.
 */
 template <typename TimeGenerator, typename JumpGenerator, typename Reaction>
@@ -741,10 +740,10 @@ Transitions_Reaction_Position_Conditional(TimeGenerator &&, JumpGenerator &&,
    state.
    \note
    - State must define:
-   -# \c position
-   -# \c time
-   -# \c orientation
-   -# \c run
+       - \c position
+       - \c time
+       - \c orientation
+       - \c run
    -\p jump_generator should enforce any boundary conditions.
 */
 template <typename TimeGenerator_run, typename TimeGenerator_tumble,
@@ -798,38 +797,40 @@ Transitions_RunAndTumble(TimeGenerator_run &&, TimeGenerator_tumble &&,
 /**
    \class Transitions_RunAndTumble_PTRW CTRW/Transitions.h "CTRW/Transitions.h"
    \brief Update state according to current internal state.
+   \tparam Boundary Object to enforce boundary
+   condition on new state given new state and old state.
+   \tparam StateSwitcher
+   Object to return new internal state given state.
+   \tparam JumpGenerator Object
+   to return jump given state.
+   \tparam OrientationGenerator Object to return
+   orientation increments given state.
+   \tparam OrientationGenerator_Wall Object
+   to return orientation increments given state.
+   \note
+  - State must define:
+      - \c position
+      - \c orientation
+      - \c state
+  - \tparam StateSwitcher must define:
+      - <tt>int run(State const&)</tt>
+      - <tt>int tumble(State const&)</tt>
+      - <tt>int wall_tumble(State const&)</tt>
+      - \tparam Boundary object should set wall_tumble state when appropriate.
    \details When internal state is:
    - 0 (run):
-   -# Update position as according to \c JumpGenerator object.
-   -# Apply \p Boundary condition.
-   -# If internal state has not been switched to wall-tumble, apply the \c
-  StateSwitcher run rule given state to obtain new internal state.
+       - Update position as according to \c JumpGenerator object.
+       - Apply \p Boundary condition.
+       - If internal state has not been switched to wall-tumble, apply the \c
+       StateSwitcher run rule given state to obtain new internal state.
    - 1 (tumble):
-   -# Apply the \c StateSwitcher tumble rule given state to obtain new internal
-  state. If internal state has been switched to run, update orientation
-  according to \c OrientationGenerator.
+       - Apply the \c StateSwitcher tumble rule given state to obtain new
+       internal state. If internal state has been switched to run, update
+       orientation according to \c OrientationGenerator.
    - 2 (wall-tumble):
-   -# Apply \c StateSwitcher wall_tumble rule to obtain new internal state. If
-  internal state has been switched to run, update orientation accoiding to \c
-  OrientationGenerator_Wall.
-  \tparam Boundary Object to enforce boundary condition on new state given new
-  state and old state.
-  \tparam StateSwitcher Object to return new internal state given state.
-  \tparam JumpGenerator Object to return jump given state.
-  \tparam OrientationGenerator Object to return orientation increments given
-  state.
-  \tparam OrientationGenerator_Wall Object to return orientation increments
-  given state.
-  \note
-  - State must define:
-   -# \c position
-   -# \c orientation
-   -# \c state
-  - \c StateSwitcher must define:
-   -# <tt>int run(State const&)</tt>
-   -# <tt>int tumble(State const&)</tt>
-   -# <tt>int wall_tumble(State const&)</tt>
-  - \c Boundary object should set wall_tumble state when appropriate.
+       - Apply \c StateSwitcher wall_tumble rule to obtain new internal state.
+       If internal state has been switched to run, update orientation according
+       to \tparam OrientationGenerator_Wall.
 */
 template <typename Boundary, typename StateSwitcher, typename JumpGenerator,
           typename OrientationGenerator, typename OrientationGenerator_Wall>
@@ -926,7 +927,7 @@ Transitions_RunAndTumble_PTRW(JumpGenerator &&, OrientationGenerator &&,
    - \c position
    - \c velocity
 */
-template <typename Acceleration, typename Boundary = useful::Empty>
+template <typename Acceleration, typename Boundary = meta::Empty>
 class Transitions_Velocity_Acceleration {
 public:
   Transitions_Velocity_Acceleration(double time_step,
@@ -940,7 +941,7 @@ public:
                                     Acceleration &&acceleration)
       : _time_step{time_step}, _acceleration{std::forward<Acceleration>(
                                    acceleration)},
-        _boundary{useful::Empty{}} {}
+        _boundary{meta::Empty{}} {}
 
   template <typename State> void operator()(State &state) {
     auto state_old = state;
@@ -970,7 +971,7 @@ Transitions_Velocity_Acceleration(double, Acceleration &&, Boundary &&)
     -> Transitions_Velocity_Acceleration<Acceleration, Boundary>;
 template <typename Acceleration>
 Transitions_Velocity_Acceleration(double, Acceleration &&)
-    -> Transitions_Velocity_Acceleration<Acceleration, useful::Empty>;
+    -> Transitions_Velocity_Acceleration<Acceleration, meta::Empty>;
 } // namespace ctrw
 
 #endif /* CTRW_TRANSITIONS_H */

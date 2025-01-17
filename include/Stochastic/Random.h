@@ -166,7 +166,7 @@ public:
      \param sigma Scale parameter.
      \param mu location parameter.
      \note Tail <tt>~ -sigma^alpha * tan(alpha*pi/2) *
-     x^{-1-\alpha}/Gamma(-alpha)</tt>.
+     x^{-1-alpha}/Gamma(-alpha)</tt>.
   */
   skewedlevystable_distribution(Value_type alpha, Value_type sigma = 1.,
                                 Value_type mu = 0.)
@@ -177,11 +177,11 @@ public:
      \param params <tt>param[0] = alpha</tt>, <tt>param[1] = sigma</tt>,
      <tt>param[2] = mu</tt>.
      \note
-      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}<tt>.
+      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}</tt>.
       - sigma: Scale parameter.
       - mu: Location parameter.
       - Tail <tt>~ -sigma^alpha * tan(alpha*pi/2) *
-      t^{-1-\alpha}/Gamma(-alpha)</tt>.
+      t^{-1-alpha}/Gamma(-alpha)</tt>.
   */
   skewedlevystable_distribution(param_type const &params)
       : alpha(params[0]), sigma(params[1]), mu(params[2]) {}
@@ -227,7 +227,7 @@ public:
      \brief Constructor.
      \param params <tt>param[0] = alpha</tt>, <tt>param[1] = min</tt>.
      \note
-      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}<tt>.
+      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}</tt>.
       - min: Minimum value.
   */
   pareto_distribution(param_type const &params)
@@ -265,7 +265,7 @@ public:
      \brief Constructor.
      \param params <tt>param[0] = alpha</tt>, <tt>param[1] = scale</tt>.
      \note
-      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}<tt>.
+      - alpha: Tailing exponent, <tt>PDF ~ x^{-1-alpha}</tt>.
       - scale: Scale parameter.
   */
   lomax_distribution(param_type const &params)
@@ -578,7 +578,7 @@ std::vector<std::pair<double, double>> pdf(std::vector<double> const &bin_edges,
    \param probs Cumulative probabilities (not necessarily normalized), <tt>p(0),
    p(0)+p(1), ...</tt>.
    \param rng Random number generator.
-   \return Event index \c i with probability \<tt>p(i)</tt>.
+   \return Event index \c i with probability <tt>p(i)</tt>.
 */
 template <typename Container, typename Engine_t = std::mt19937>
 std::size_t pick(Container const &probs, Engine_t &rng) {

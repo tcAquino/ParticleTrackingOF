@@ -1,4 +1,0 @@
-<map id="useful::read" name="useful::read">
-<area shape="rect" id="node1" title="Read next value from file." alt="" coords="169,5,260,32"/>
-<area shape="rect" id="node2" href="$df/d1d/namespaceuseful.html#a0339f1ab1d7b2aa0fd56796fa384f626" title="Read and split next line into line_tokens, discarding escaped lines, appending result to tokens." alt="" coords="5,5,121,32"/>
-</map>

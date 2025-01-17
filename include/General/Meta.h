@@ -43,7 +43,7 @@ template <template <typename...> typename Z, typename... Ts>
 using has_member = has_member_impl<Z, types<Ts...>>;
 
 /** \class is_same General/Meta.h "General/Meta.h"
- \class Check if X<Y> is the same type as Z. */
+ \brief Check if X<Y> is the same type as Z. */
 template <template <typename> typename X, typename Y, typename Z>
 struct is_same {
   static constexpr bool value = std::is_same_v<X<Y>, Z>;
@@ -460,6 +460,40 @@ inline constexpr bool is_instance_of_v = std::false_type{};
 /** \brief Check if type T is an instance of type U<Vs...>. */
 template <template <typename...> typename U, typename... Vs>
 inline constexpr bool is_instance_of_v<U<Vs...>, U> = std::true_type{};
+
+/**
+   \class Empty General/Meta.h "General/Meta.h"
+   \brief Class holding nothing and doing nothing.
+*/
+struct Empty {
+  template <typename... Args> Empty(Args...) {}
+  Empty() {}
+};
+
+/**
+   \struct DoNothing General/Meta.h "General/Meta.h"
+   \brief Functor that does nothing.
+*/
+struct DoNothing {
+  template <typename... Args> void operator()(Args...) const {}
+};
+
+/**
+   \struct DoFalse General/Meta.h "General/Meta.h"
+   \brief Functor that always returns false.
+*/
+struct DoFalse {
+  template <typename... Args> bool operator()(Args...) const { return false; }
+};
+
+/**
+   \struct DoTrue General/Meta.h "General/Meta.h"
+   \brief Functor that always returns true.
+*/
+struct DoTrue {
+  template <typename... Args> bool operator()(Args...) const { return true; }
+};
+
 } // namespace meta
 
 #endif /* GENERAL_META_H */

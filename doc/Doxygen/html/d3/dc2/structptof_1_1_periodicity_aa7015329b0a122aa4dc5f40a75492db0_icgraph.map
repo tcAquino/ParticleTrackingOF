@@ -1,6 +1,0 @@
-<map id="ptof::Periodicity::name" name="ptof::Periodicity::name">
-<area shape="rect" id="node1" title="Get name from type." alt="" coords="213,107,381,134"/>
-<area shape="rect" id="node2" href="$d3/dc2/structptof_1_1_periodicity.html#a10cba93552bd6eabdb1989da5cd40d3f" title="Check if name exists." alt="" coords="20,5,151,47"/>
-<area shape="rect" id="node3" href="$da/d9d/structptof_1_1_geometry___bcc.html#a8a071dd6fd14d6cd7cb10c2dc0ecdd2f" title="Output generic information about object." alt="" coords="10,71,161,112"/>
-<area shape="rect" id="node4" href="$d3/dc2/structptof_1_1_periodicity.html#a05ce12d51ffd1705157e9b144cbc98ab" title="Get type from name." alt="" coords="5,137,165,163"/>
-</map>

@@ -11,7 +11,6 @@
 #include "CTRW/Meta.h"
 #include "General/IO.h"
 #include "General/Meta.h"
-#include "General/Useful.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Criterion.h"
 #include "PTOF/Directories.h"
@@ -32,6 +31,7 @@
 #include <initializer_list>
 #include <iterator>
 #include <memory>
+#include <ostream>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -64,9 +64,9 @@ public:
     std::string name;
     int precision;
 
-    template <typename OStream> void info_runtime(OStream &output) const {
-      output << name;
-      output << "  Precision: " << precision;
+    inline void info_runtime(std::ostream &output) const {
+      output << name << "\n";
+      output << "  - Precision: " << precision << "\n";
     }
   };
 
@@ -77,9 +77,9 @@ public:
 
     std::string field_name;
 
-    template <typename OStream> void info_runtime(OStream &output) const {
+    inline void info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  Field: " << field_name;
+      output << "  - Field: " << field_name << "\n";
     }
   };
 
@@ -91,10 +91,10 @@ public:
     std::size_t dim;
     double position;
 
-    template <typename OStream> void info(OStream &output) const {
+    inline void info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  Dimension: " << dim << "  "
-             << "  Position: " << position;
+      output << "  - Dimension: " << dim << "\n"
+             << "  - Position: " << position << "\n";
     }
   };
 
@@ -104,9 +104,9 @@ public:
 
     double order;
 
-    template <typename OStream> void info_runtime(OStream &output) const {
+    inline void info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  Order: " << order;
+      output << "  - Order: " << order << "\n";
     }
   };
 
@@ -117,10 +117,10 @@ public:
 
     std::vector<double> orders;
 
-    template <typename OStream> void info_runtime(OStream &output) const {
+    inline void info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  Orders: ";
-      io::print(output, orders, false, " ");
+      output << "  - Orders: ";
+      io::print(output, orders, false, " ") << "\n";
     }
   };
 
@@ -130,6 +130,7 @@ public:
      \brief Constructor.
      \param directories Current case directory information.
      \param parameter_set_name Name of parameter set.
+     \param geometry Domain geometry info and utilities.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
@@ -162,7 +163,7 @@ public:
   }
 
   /** \brief Output generic information about object. */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output
         << "--------------------------------------------------------------"
            "\n"
@@ -545,8 +546,7 @@ public:
      \param thresholds Thresholds for each mask, such that cells where a mask is
      above or equal to the threshold are considered.
   */
-  template <typename VelocityField = useful::Empty,
-            typename Mask = useful::Empty>
+  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   Output_Cases(Subject const &subject, VelocityField const &velocity_field,
                Geometry const &geometry, Directories const &directories,
                Parameters &&params_output, std::string const &identifier,
@@ -563,7 +563,7 @@ public:
      \brief Constructor.
      \details Overload for initializer list arguments.
   */
-  template <typename VelocityField = useful::Empty, typename Mask>
+  template <typename VelocityField = meta::Empty, typename Mask>
   Output_Cases(Subject const &subject, VelocityField const &velocity_field,
                Geometry const &geometry, Directories const &directories,
                Parameters &&params_output, std::string const &identifier,
@@ -578,7 +578,7 @@ public:
      \brief Constructor.
      \details Overload for initializer list arguments.
   */
-  template <typename VelocityField = useful::Empty, typename Mask>
+  template <typename VelocityField = meta::Empty, typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
                Geometry const &geometry, Directories const &directories,
                Parameters &&params_output, std::string const &identifier,
@@ -592,7 +592,7 @@ public:
      \brief Constructor.
      \details Overload for initializer list arguments.
   */
-  template <typename VelocityField = useful::Empty, typename Mask>
+  template <typename VelocityField = meta::Empty, typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
                Geometry const &geometry, Directories const &directories,
                Parameters &&params_output, std::string const &identifier,
@@ -670,7 +670,7 @@ public:
   }
 
   /** \brief Output information about current object. */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     output << "------------------------------------------------------------"
               "--\n"
               "Output\n"
@@ -713,8 +713,7 @@ public:
 
 private:
   /** \brief Output information about measurement types. */
-  template <typename OStream>
-  void info_runtime_measurements(OStream &output) const {
+  void info_runtime_measurements(std::ostream &output) const {
     if (parameters.measurements.empty()) {
       output << "\tNone\n";
       return;
@@ -728,14 +727,16 @@ private:
 
   /**
      \brief Set up output streams for requested output types.
+     \param subject CTRW object to measure.
      \param directories Current case directory information.
+     \param geometry Domain geometry info and utilities.
      \param identifier String to include in names of output files.
+     \param velocity_field Velocity field as a function of state.
      \param masks Scalar field reference wrappers.
      \param thresholds Thresholds for each mask, such that cells where a mask is
      above or equal to the threshold are considered.
   */
-  template <typename VelocityField = useful::Empty,
-            typename Mask = useful::Empty>
+  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   void set_measurement_types(
       Subject const &subject, Geometry const &geometry,
       Directories const &directories, std::string const &identifier,
@@ -752,7 +753,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_in_regions: {
-        if constexpr (!std::is_same_v<Mask, useful::Empty>)
+        if constexpr (!std::is_same_v<Mask, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_in_regions<Subject, Geometry, Mask>>(
@@ -821,7 +822,7 @@ private:
         break;
       }
       case MeasurementList::Type::mass_in_regions: {
-        if constexpr (!std::is_same_v<Mask, useful::Empty>)
+        if constexpr (!std::is_same_v<Mask, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_mass_in_regions<Subject, Geometry, Mask>>(
@@ -835,7 +836,7 @@ private:
         break;
       }
       case MeasurementList::Type::velocity: {
-        if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_vector_field<
                   Subject, Geometry, VelocityField const &>>(
@@ -849,7 +850,7 @@ private:
         break;
       }
       case MeasurementList::Type::velocity_mean: {
-        if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_vector_field_mean<
                   Subject, Geometry, VelocityField const &>>(
@@ -863,7 +864,7 @@ private:
         break;
       }
       case MeasurementList::Type::velocity_gradient: {
-        if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_tensor_field<Subject, Geometry>>(
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
@@ -875,7 +876,7 @@ private:
         break;
       }
       case MeasurementList::Type::velocity_gradient_mean: {
-        if constexpr (!std::is_same_v<VelocityField, useful::Empty>)
+        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_tensor_field_mean<Subject, Geometry>>(
@@ -965,7 +966,7 @@ private:
       case MeasurementList::Type::position_in_regions_periodic: {
         if constexpr (meta::has_periodicity_v<
                           typename Subject::Particle::State> &&
-                      !std::is_same_v<Mask, useful::Empty>)
+                      !std::is_same_v<Mask, meta::Empty>)
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_in_regions_periodic<
                   Subject, Geometry, Mask>>(subject, geometry, directories,

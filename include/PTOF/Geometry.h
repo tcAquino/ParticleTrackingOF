@@ -10,7 +10,6 @@
 #include "General/Constants.h"
 #include "General/Meta.h"
 #include "General/Parallel.h"
-#include "General/Useful.h"
 #include "Geometry/Boundary.h"
 #include "PTOF/Boundary_Cases.h"
 #include "PTOF/Directories.h"
@@ -20,7 +19,9 @@
 #include <IOobject.H>
 #include <cmath>
 #include <cstddef>
+#include <fstream>
 #include <fvMesh.H>
+#include <iostream>
 #include <limits>
 #include <meshSearch.H>
 #include <stdexcept>
@@ -57,22 +58,36 @@ struct Geometry_Generic {
      \details Use mesh from specified OpenFOAM case time.
      \param directories_of OpenFOAM case directory information.
      \param directories Current case directory information.
+     \param logger Logger object for optional construction information.
   */
   Geometry_Generic(DirectoriesOF const &directories_of,
-                   Directories const &directories)
-      : _meshes(make_meshes(directories_of)),
-        _mesh_searches(make_mesh_searches(directories_of)) {}
+                   Directories const &directories,
+                   io::Logger &&logger = io::NullLogger{})
+      : _mesh(make_mesh(directories_of)),
+        _mesh_search(make_mesh_search(directories_of)) {
+    if constexpr (std::is_same_v<ParallelOption,
+                                 par::ParallelOptions::Parallel>) {
+      logger("Precomputing demand-driven mesh data...");
+      compute_demand_driven_mesh_data(_mesh);
+      logger("Done!");
+      logger("Precomputing demand-driven mesh search data...");
+      compute_demand_driven_meshSearch_data(_mesh_search);
+      logger("Done!");
+    }
+  }
 
   /**
-     \brief Make a Boundary object for the preset type of dynamics.
+     \brief Make a Boundary object for the \tparam dynamics type.
      \details
-     - 'transport': No parameters, custom boundary does nothing.
-     - 'firstpassage': Parameters should hold InitialCondition object.
-     - 'custom': Boundary reinjects according to initial condition.
+     - transport: No parameters, custom boundary is not supported.
+     - firstpassage: Parameters should hold InitialCondition object, custom
+     boundary reinjects particles.
+     \note Periodic boundaries are not supported.
      \param directories Current case directory information.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
+     \param velocity_field Velocity field as a function of state.
      \param surface_reaction Surface reaction.
      \param initial_condition Initial condition object for reinjection (for FPT
      dynamics).
@@ -80,7 +95,7 @@ struct Geometry_Generic {
   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters, typename VelocityField,
-            typename SurfaceReaction, typename InitialCondition = useful::Empty>
+            typename SurfaceReaction, typename InitialCondition = meta::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
@@ -127,7 +142,7 @@ struct Geometry_Generic {
      \brief Output generic information about object.
      \param output Output stream.
   */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output << "--------------------------------------------------------------\n"
               "Geometry\n"
               "--------------------------------------------------------------\n"
@@ -154,7 +169,7 @@ struct Geometry_Generic {
   }
 
   /** \brief Output information about current object. */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "Mesh\n"
@@ -166,50 +181,31 @@ struct Geometry_Generic {
   }
 
   /** \return Mesh. */
-  auto const &mesh() const {
-    return *_meshes[par::get_thread_num(ParallelOption{})];
-  }
+  auto const &mesh() const { return _mesh; }
 
   /** \return Mesh search tools. */
-  auto const &mesh_search() const {
-    return *_mesh_searches[par::get_thread_num(ParallelOption{})];
-  }
+  auto const &mesh_search() const { return _mesh_search; }
 
 private:
-  std::vector<std::unique_ptr<Mesh>>
-      _meshes; /**< Mesh or mesh copies needed for parallel searches. */
-  std::vector<std::unique_ptr<MeshSearch>>
-      _mesh_searches; /**< Mesh searching tools. */
+  Mesh _mesh;              /**< Mesh object. */
+  MeshSearch _mesh_search; /**< Mesh searching tools. */
 
   /**
      \param directories_of OpenFOAM case directory information.
-     \return Mesh copies for parallel searches.
+     \return Mesh.
   */
-  std::vector<std::unique_ptr<Mesh>>
-  make_meshes(DirectoriesOF const &directories_of) const {
-    std::size_t num_threads = par::get_num_threads(ParallelOption{});
-    std::vector<std::unique_ptr<Mesh>> meshes;
-    meshes.reserve(num_threads);
-    for (std::size_t thread = 0; thread < num_threads; ++thread)
-      meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion, directories_of.time.timeName(),
-          directories_of.time, Foam::IOobject::MUST_READ}));
-    return meshes;
+  Mesh make_mesh(DirectoriesOF const &directories_of) const {
+    return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
+                               directories_of.time.timeName(),
+                               directories_of.time, Foam::IOobject::MUST_READ}};
   }
 
   /**
      \param directories_of OpenFOAM case directory information.
-     \return Mesh search tools for parallel searches.
+     \return Mesh search tools.
   */
-  std::vector<std::unique_ptr<MeshSearch>>
-  make_mesh_searches(DirectoriesOF const &directories_of) const {
-    std::size_t num_threads = par::get_num_threads(ParallelOption{});
-    std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
-    mesh_searches.reserve(num_threads);
-    for (std::size_t thread = 0; thread < num_threads; ++thread)
-      mesh_searches.emplace_back(
-          std::make_unique<MeshSearch>(*_meshes[thread]));
-    return mesh_searches;
+  MeshSearch make_mesh_search(DirectoriesOF const &directories_of) const {
+    return MeshSearch{_mesh};
   }
 
 public:
@@ -242,20 +238,38 @@ struct Geometry_Periodic_Cartesian {
      \details Use mesh from specified OpenFOAM case time.
      \param directories_of OpenFOAM case directory information.
      \param directories Current case directory information.
+     \param logger Logger object for optional construction information.
   */
   Geometry_Periodic_Cartesian(DirectoriesOF const &directories_of,
-                              Directories const &directories)
-      : _meshes(make_meshes(directories_of)),
-        _mesh_searches(make_mesh_searches(directories_of)),
+                              Directories const &directories,
+                              io::Logger &&logger = io::NullLogger{})
+      : _mesh(make_mesh(directories_of)),
+        _mesh_search(make_mesh_search(directories_of)),
         boundary_periodic{extract_cartesian_periodic_boundaries(
-            get_boundary_conditions<dynamics>(directories), mesh(), dim)} {}
+            get_boundary_conditions<dynamics>(directories), mesh(), dim)} {
+    if constexpr (std::is_same_v<ParallelOption,
+                                 par::ParallelOptions::Parallel>) {
+      logger("Precomputing demand-driven mesh data...");
+      compute_demand_driven_mesh_data(_mesh);
+      logger("Done!");
+      logger("Precomputing demand-driven mesh search data...");
+      compute_demand_driven_meshSearch_data(_mesh_search);
+      logger("Done!");
+    }
+  }
 
   /**
-     \brief Make a Boundary object for Cartesian periodicity.
+     \brief Make a Boundary object for the \tparam dynamics type with Cartesian
+     periodicity along periodic boundary pairs.
+     \details
+     - transport: No parameters, custom boundary is not supported.
+     - firstpassage: Parameters should hold InitialCondition object, custom
+     boundary reinjects particles.
      \param directories Current case directory information.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
+     \param velocity_field Velocity field as a function of state.
      \param surface_reaction Surface reaction.
      \param initial_condition Initial condition object for reinjection (for FPT
      dynamics).
@@ -263,7 +277,7 @@ struct Geometry_Periodic_Cartesian {
   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters, typename VelocityField,
-            typename SurfaceReaction, typename InitialCondition = useful::Empty>
+            typename SurfaceReaction, typename InitialCondition = meta::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
@@ -303,7 +317,7 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /** \brief Output generic information about object. */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output << "--------------------------------------------------------------\n"
               "Geometry\n"
               "--------------------------------------------------------------\n"
@@ -332,7 +346,7 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /** \brief Output information about current object. */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     output << "--------------------------------------------------------------\n"
               "Mesh\n"
               "--------------------------------------------------------------\n"
@@ -358,51 +372,31 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /** \return Mesh. */
-  auto const &mesh() const {
-    return *_meshes[par::get_thread_num(ParallelOption{})];
-  }
+  auto const &mesh() const { return _mesh; }
 
   /** \return Mesh search tools. */
-  auto const &mesh_search() const {
-    return *_mesh_searches[par::get_thread_num(ParallelOption{})];
-  }
+  auto const &mesh_search() const { return _mesh_search; }
 
 private:
-  std::vector<std::unique_ptr<Mesh>>
-      _meshes; /**< Mesh or mesh copies needed for parallel searches. */
-  std::vector<std::unique_ptr<MeshSearch>>
-      _mesh_searches; /**< Mesh searching tools. */
+  Mesh _mesh;              /**< Mesh object. */
+  MeshSearch _mesh_search; /**< Mesh searching tools. */
 
   /**
      \param directories_of OpenFOAM case directory information.
-     \return Mesh copies for parallel searches.
+     \return Mesh.
   */
-  std::vector<std::unique_ptr<Mesh>>
-  make_meshes(DirectoriesOF const &directories_of) {
-    std::size_t num_threads = par::get_num_threads(ParallelOption{});
-    std::vector<std::unique_ptr<Mesh>> meshes;
-    meshes.reserve(num_threads);
-    for (std::size_t thread = 0; thread < num_threads; ++thread)
-      meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion, directories_of.time.timeName(),
-          directories_of.time, Foam::IOobject::MUST_READ}));
-    return meshes;
+  Mesh make_mesh(DirectoriesOF const &directories_of) {
+    return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
+                               directories_of.time.timeName(),
+                               directories_of.time, Foam::IOobject::MUST_READ}};
   }
 
   /**
      \param directories_of OpenFOAM case directory information.
-     \return Mesh search tools for parallel searches.
+     \return Mesh search tools.
   */
-  std::vector<std::unique_ptr<MeshSearch>>
-  make_mesh_searches(DirectoriesOF const &directories_of) {
-    std::size_t num_threads = par::get_num_threads(ParallelOption{});
-    std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
-    mesh_searches.reserve(num_threads);
-    for (std::size_t thread = 0; thread < num_threads; ++thread)
-      mesh_searches.emplace_back(
-          std::make_unique<MeshSearch>(*_meshes[thread]));
-
-    return mesh_searches;
+  MeshSearch make_mesh_search(DirectoriesOF const &directories_of) {
+    return MeshSearch{_mesh};
   }
 
 public:
@@ -444,11 +438,13 @@ struct Geometry_Bcc {
      \details Use mesh from specified OpenFOAM case time.
      \param directories_of OpenFOAM case directory information.
      \param directories Current case directory information.
+     \param logger Logger object for optional construction information.
   */
   Geometry_Bcc(DirectoriesOF const &directories_of,
-               Directories const &directories)
-      : _meshes(make_meshes(directories_of)),
-        _mesh_searches(make_mesh_searches(directories_of)),
+               Directories const &directories,
+               io::Logger &&logger = io::NullLogger{})
+      : _mesh(make_mesh(directories_of)),
+        _mesh_search(make_mesh_search(directories_of)),
         radius{periodicity == Periodicity::Type::cartesian
                    ? std::pow(sum(mesh().cellVolumes()) /
                                   (1. - std::sqrt(3.) * constants::pi / 8.),
@@ -456,25 +452,41 @@ struct Geometry_Bcc {
                          std::sqrt(3.) / 4.
                    : 1.},
         boundary_periodic{make_boundary_periodic(
-            meta::Selector<Periodicity::Type, periodicity>{}, directories)} {}
+            meta::Selector<Periodicity::Type, periodicity>{}, directories)} {
+    if constexpr (std::is_same_v<ParallelOption,
+                                 par::ParallelOptions::Parallel>) {
+      logger("Precomputing demand-driven mesh data...");
+      compute_demand_driven_mesh_data(_mesh);
+      logger("Done!");
+      logger("Precomputing demand-driven mesh search data...");
+      compute_demand_driven_meshSearch_data(_mesh_search);
+      logger("Done!");
+    }
+  }
 
   /**
-     \brief Make a Boundary object for the preset type of dynamics and
-     periodicity.
+     \brief Make a Boundary object for the \tparam dynamics and \tparam
+     periodicity types.
      \details
-     - 'cartesian': Cartesian periodicity
-     - 'symmetryplanes': Periodicity according to symmetry planes
+     - Dynamics types:
+         - transport: No parameters, custom boundary does nothing.
+         - firstpassage: Parameters should hold InitialCondition object,
+         custom boundary reinjects particles.
+     - Periodicity types:
+         - cartesian: Cartesian periodicity
+         - symmetryplanes: Periodicity according to symmetry planes
      \param directories Current case directory information.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
      \param params_solvers Solver parameters.
+     \param velocity_field Velocity field as a function of state.
      \param surface_reaction Surface reaction.
-     \param initial_condition Initial condition object for reinjection (for FPT
-     dynamics).
+     \param initial_condition Initial condition object for reinjection (for
+     FPT dynamics).
   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters, typename VelocityField,
-            typename SurfaceReaction, typename InitialCondition = useful::Empty>
+            typename SurfaceReaction, typename InitialCondition = meta::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
@@ -514,7 +526,7 @@ struct Geometry_Bcc {
   }
 
   /** \brief Output generic information about object. */
-  template <typename OStream> static void info(OStream &output) {
+  inline static void info(std::ostream &output) {
     output << "--------------------------------------------------------------\n"
               "Geometry\n"
               "--------------------------------------------------------------\n"
@@ -545,7 +557,7 @@ struct Geometry_Bcc {
   }
 
   /** \brief Output information about current object. */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  inline void info_runtime(std::ostream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "Mesh\n"
@@ -557,50 +569,31 @@ struct Geometry_Bcc {
   }
 
   /** \return Mesh. */
-  auto const &mesh() const {
-    return *_meshes[par::get_thread_num(ParallelOption{})];
-  }
+  auto const &mesh() const { return _mesh; }
 
   /** \return Mesh search tools. */
-  auto const &mesh_search() const {
-    return *_mesh_searches[par::get_thread_num(ParallelOption{})];
-  }
+  auto const &mesh_search() const { return _mesh_search; }
 
 private:
-  std::vector<std::unique_ptr<Mesh>>
-      _meshes; /**< Mesh or mesh copies needed for parallel searches. */
-  std::vector<std::unique_ptr<MeshSearch>>
-      _mesh_searches; /**< Mesh searching tools. */
+  Mesh _mesh;              /**< Mesh object. */
+  MeshSearch _mesh_search; /**< Mesh searching tools. */
 
   /**
      \param directories_of OpenFOAM case directory information.
-     \return Mesh copies for parallel searches.
+     \return Mesh.
   */
-  std::vector<std::unique_ptr<Mesh>>
-  make_meshes(DirectoriesOF const &directories_of) const {
-    std::size_t num_threads = par::get_num_threads(ParallelOption{});
-    std::vector<std::unique_ptr<Mesh>> meshes;
-    meshes.reserve(num_threads);
-    for (std::size_t thread = 0; thread < num_threads; ++thread)
-      meshes.emplace_back(std::make_unique<Mesh>(Foam::IOobject{
-          Foam::fvMesh::defaultRegion, directories_of.time.timeName(),
-          directories_of.time, Foam::IOobject::MUST_READ}));
-    return meshes;
+  Mesh make_mesh(DirectoriesOF const &directories_of) const {
+    return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
+                               directories_of.time.timeName(),
+                               directories_of.time, Foam::IOobject::MUST_READ}};
   }
 
   /**
      \param directories_of OpenFOAM case directory information.
-     \return Mesh search tools for parallel searches.
+     \return Mesh search tools.
   */
-  std::vector<std::unique_ptr<MeshSearch>>
-  make_mesh_searches(DirectoriesOF const &directories_of) const {
-    std::size_t num_threads = par::get_num_threads(ParallelOption{});
-    std::vector<std::unique_ptr<MeshSearch>> mesh_searches;
-    mesh_searches.reserve(num_threads);
-    for (std::size_t thread = 0; thread < num_threads; ++thread)
-      mesh_searches.emplace_back(
-          std::make_unique<MeshSearch>(*_meshes[thread]));
-    return mesh_searches;
+  MeshSearch make_mesh_search(DirectoriesOF const &directories_of) const {
+    return MeshSearch{_mesh};
   }
 
 public:

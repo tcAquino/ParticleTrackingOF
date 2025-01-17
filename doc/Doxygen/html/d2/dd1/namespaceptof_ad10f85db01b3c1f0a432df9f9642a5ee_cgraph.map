@@ -1,4 +1,0 @@
-<map id="ptof::unit_normal_inward" name="ptof::unit_normal_inward">
-<area shape="rect" id="node1" title="Unit normal at boundary face, using left&#45;hand&#45;rule (inward for boundary faces)." alt="" coords="5,5,189,32"/>
-<area shape="rect" id="node2" href="$d2/dd1/namespaceptof.html#abf0aa3876390d4bac9c2877bfc88100b" title="Unit normal at boundary face, using right&#45;hand&#45;rule (outward for boundary faces)." alt="" coords="237,5,431,32"/>
-</map>

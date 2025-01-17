@@ -1,6 +1,0 @@
-<map id="ptof::InitialCondition_Cases::make_particles" name="ptof::InitialCondition_Cases::make_particles">
-<area shape="rect" id="node1" title="Make given number of particles." alt="" coords="427,39,589,80"/>
-<area shape="rect" id="node2" href="$db/dfb/classptof_1_1_initial_condition___cases.html#aff6c122b2e5bca61cc0561af804334ce" title="Make positions according to prescribed initial condition." alt="" coords="212,5,379,47"/>
-<area shape="rect" id="node4" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a4c958f9fd3216cf66c87beb4c251e29f" title="Make particles according to prescribed initial condition and particle maker." alt="" coords="226,71,365,112"/>
-<area shape="rect" id="node3" href="$db/dfb/classptof_1_1_initial_condition___cases.html#a0649dea52e39c2356e1419705213082b" title="Make a single position according to prescribed initial condition and particle maker." alt="" coords="5,5,164,47"/>
-</map>

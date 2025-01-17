@@ -16,6 +16,7 @@
 #include <cmath>
 #include <fieldTypes.H>
 #include <fvcGrad.H>
+#include <ostream>
 #include <stdexcept>
 #include <string>
 #include <volFields.H>
@@ -56,6 +57,7 @@ struct Phase {
        \brief Constructor.
        \param directories Current case directory information.
        \param name Name of phase parameters set.
+       \param geometry Domain geometry info and utilities.
     */
     template <typename Geometry>
     Parameters(Directories const &directories, std::string const &name,
@@ -111,7 +113,7 @@ struct Phase {
     }
 
     /** \brief Output general information about object. */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Phase parameters\n"

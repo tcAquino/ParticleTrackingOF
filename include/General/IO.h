@@ -17,6 +17,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -358,8 +359,10 @@ inline std::ifstream open_read(std::string const &filename) {
 }
 
 /** \brief Open file for writing. */
-inline std::ofstream open_write(std::string const &filename) {
-  std::ofstream file(filename);
+inline std::ofstream
+open_write(std::string const &filename,
+           std::ios_base::openmode mode = std::ios_base::out) {
+  std::ofstream file(filename, mode);
   if (!file.is_open())
     throw open_write_error(filename);
 
@@ -449,7 +452,6 @@ template <typename... Args> struct tuple_types {
    \param strings Strings to extract from.
    \param index Index of first string to read; is incremented by one.
    \param error Base error message in case of failure.
-   \param results variables to extract into, converting based on type.
    \return Extracted value.
 */
 template <typename Type>
@@ -485,7 +487,6 @@ Type read(std::vector<std::string> const &strings, std::size_t &index,
    \param index Index of first string to read; is incremented by one.
    \param nr_to_read Number of elements to read.
    \param error Base error message in case of failure.
-   \param results variables to extract into, converting based on type.
    \return Vector of extracted values.
 */
 template <typename Type>
@@ -505,7 +506,7 @@ std::vector<Type> read(std::vector<std::string> const &strings,
  \param index Index of first string to read; is incremented by one per value
  read.
  \param error Base error message in case of failure.
- \param results variables to extract into, converting based on type.
+ \param result Variable to extract into, converting based on type.
  \return Reference to extracted value.
 */
 template <typename Type>
@@ -720,9 +721,9 @@ inline auto load(std::string const &filename, std::size_t nr_columns,
 }
 
 /** \brief Print values in container. */
-template <typename Stream, typename Container>
-Stream &print(Stream &stream, Container const &container,
-              bool delimit_first = false, std::string delimiter = "\t") {
+template <typename Container>
+std::ostream &print(std::ostream &stream, Container const &container,
+                    bool delimit_first = false, std::string delimiter = "\t") {
   // TODO: Choose this specialization when stream << container exists
   if constexpr (std::is_pod<Container>::value) {
     if (delimit_first)
@@ -739,9 +740,9 @@ Stream &print(Stream &stream, Container const &container,
 }
 
 /** \brief Print values in container. */
-template <typename Stream, typename Container>
-Stream &print(Stream &stream, Container const &container, int width,
-              std::ios_base &(*alignment)(std::ios_base &) = std::right) {
+template <typename Container>
+std::ostream &print(std::ostream &stream, Container const &container, int width,
+                    std::ios_base &(*alignment)(std::ios_base &) = std::right) {
   io::StreamScopeFormat guard{stream};
   stream << alignment;
   // TODO: Choose this specialization when stream << container exists
@@ -752,6 +753,84 @@ Stream &print(Stream &stream, Container const &container, int width,
       stream << std::setw(width) << val;
   return stream;
 }
+
+/**
+   \struct Logger General/IO.h "General/IO.h"
+   \brief Base object to handle log messages
+*/
+struct Logger {
+  virtual void nonewline(std::string const &message) = 0;
+  virtual void operator()(std::string const &) = 0;
+};
+
+/**
+   \struct StreamLogger General/IO.h "General/IO.h"
+   \brief Logger object that uses provided stream
+*/
+template <typename Stream = std::ostream &>
+struct StreamLogger : public Logger {
+  StreamLogger(Stream &&stream) : _stream{std::forward<Stream>(stream)} {}
+
+  void nonewline(std::string const &message) override { _stream << message; }
+
+  void operator()(std::string const &message) override {
+    nonewline(message);
+    _stream << std::endl;
+  }
+
+protected:
+  Stream _stream;
+};
+template <typename Stream> StreamLogger(Stream &&) -> StreamLogger<Stream>;
+
+/**
+   \struct NullLogger General/IO.h "General/IO.h"
+   \brief Logger object that ignores messages
+*/
+struct NullLogger : public Logger {
+  void nonewline(std::string const &) override{};
+  void operator()(std::string const &) override{};
+};
+
+/**
+   \struct FileLogger General/IO.h "General/IO.h"
+   \brief Logger object that logs to a file
+*/
+struct FileLogger : public StreamLogger<std::ofstream> {
+  FileLogger(std::string const &filename,
+             std::ios_base::openmode mode = std::ios_base::out)
+      : StreamLogger{open_write(filename, mode)} {}
+
+protected:
+  using StreamLogger::_stream;
+};
+
+/**
+   \struct CoutLogger General/IO.h "General/IO.h"
+   \brief Logger object that output to standard output
+*/
+struct CoutLogger : public StreamLogger<> {
+  CoutLogger() : StreamLogger{std::cout} {}
+};
+
+/**
+   \brief Output to specified stream, pass instance of meta::Empty for no output
+*/
+template <typename OStream>
+OStream &log(std::string const &message, OStream &stream) {
+  if constexpr (std::is_same_v<OStream, meta::Empty>)
+    return stream << message << std::endl;
+}
+
+/**
+   \brief Output to specified stream, pass instance of meta::Empty for no output
+*/
+template <typename OStream>
+OStream &nonewline(std::string const &message, OStream &stream) {
+  if constexpr (std::is_same_v<OStream, meta::Empty>)
+    return stream << message;
+}
+
 } // namespace io
 
 #endif /* GENERAL_IO_H */

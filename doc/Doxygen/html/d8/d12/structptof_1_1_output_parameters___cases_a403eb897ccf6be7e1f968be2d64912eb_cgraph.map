@@ -1,9 +1,0 @@
-<map id="ptof::OutputParameters_Cases::read_measurement_types" name="ptof::OutputParameters_Cases::read_measurement_types">
-<area shape="rect" id="node1" title="Read measure spacing type from input stream." alt="" coords="5,31,231,73"/>
-<area shape="rect" id="node2" href="$d9/d22/struct_measurement_list.html#a4ff765413eab2f5095f5d24a8e0339cb" title=" " alt="" coords="279,9,457,36"/>
-<area shape="rect" id="node5" href="$df/d1d/namespaceuseful.html#a994a0f0e643e141fe392c7e9cde8c5d3" title="Read and split next line, discarding escaped lines." alt="" coords="310,64,426,91"/>
-<area shape="rect" id="node3" href="$d9/d22/struct_measurement_list.html#a888c3d533b611c8ea66db99ef4c196b8" title=" " alt="" coords="505,5,668,32"/>
-<area shape="rect" id="node4" href="$d9/d22/struct_measurement_list.html#a310edf1264764eddb61a5cbd91d4aa3f" title=" " alt="" coords="716,5,871,32"/>
-<area shape="rect" id="node6" href="$df/d1d/namespaceuseful.html#ad4924fa08b3b4fc95888649da79c4c98" title="Remove comments after escape sequence." alt="" coords="515,57,658,98"/>
-<area shape="rect" id="node7" href="$df/d1d/namespaceuseful.html#a82b6cb140f848578a0fb18683c66e33c" title="Remove." alt="" coords="506,122,667,163"/>
-</map>

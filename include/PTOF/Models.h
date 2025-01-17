@@ -13,7 +13,6 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Operations.h"
-#include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Geometry.h"
 #include "PTOF/Info.h"
@@ -31,6 +30,7 @@
 #include <exception>
 #include <limits>
 #include <meshSearch.H>
+#include <ostream>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -38,7 +38,7 @@
 /** \namespace ptof Objects and methods for ParticleTrackingOF. */
 namespace ptof {
 /**
-   \namespace ptof::model_advection_diffusion_2d Definitions for 2D
+   \namespace model_advection_diffusion_2d Definitions for 2D
    advective--diffusive transport.
 */
 namespace model_advection_diffusion_2d {
@@ -54,7 +54,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -123,7 +123,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -155,7 +155,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Solvers\n"
@@ -286,7 +286,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -375,7 +375,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Transport\n"
@@ -408,7 +408,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output << "------------------------------------------------------------"
                   "--\n"
                   "Reaction parameters\n"
@@ -442,7 +442,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       BulkReaction::info(output);
       output << "\n";
       SurfaceReaction::info(output);
@@ -455,7 +455,7 @@ template <typename ParallelOption> struct Definitions {
     using Parameters = InitialConditionParameters_Cases;
 
     template <typename Particle, typename Geometry, typename VelocityField,
-              typename SolverParameters, typename Mask = useful::Empty>
+              typename SolverParameters, typename Mask = meta::Empty>
     static auto makeInitialCondition(Geometry const &geometry,
                                      VelocityField const &velocity_field,
                                      Parameters const &params_initial_condition,
@@ -477,7 +477,7 @@ template <typename ParallelOption> struct Definitions {
     using Parameters = OutputParameters_Cases;
 
     template <typename Subject, typename VelocityField, typename Geometry,
-              typename Mask = useful::Empty>
+              typename Mask = meta::Empty>
     static auto
     makeOutput(Subject const &subject, VelocityField const &velocity_field,
                Geometry const &geometry, Directories const &directories,
@@ -528,7 +528,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_diffusion_2d
 
 /**
-   \namespace ptof::model_advection_2d Definitions for 2D advective transport.
+   \namespace model_advection_2d Definitions for 2D advective transport.
 */
 namespace model_advection_2d {
 template <typename ParallelOption> struct Definitions {
@@ -541,7 +541,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output << "------------------------------------------------------------"
                 "--\n"
                 "Model\n"
@@ -620,7 +620,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -646,7 +646,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output << "------------------------------------------------------------"
                 "--\n"
                 "Solvers\n"
@@ -739,7 +739,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -808,7 +808,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output << "------------------------------------------------------------"
                 "--\n"
                 "Transport\n"
@@ -824,7 +824,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_2d
 
 /**
-   \namespace ptof::model_advection_diffusion_fpt_2d Definitions for
+   \namespace model_advection_diffusion_fpt_2d Definitions for
    first-passage times under 2D advective--diffusive transport.
 */
 namespace model_advection_diffusion_fpt_2d {
@@ -838,7 +838,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -874,7 +874,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_diffusion_fpt_2d
 
 /**
-   \namespace ptof::model_advection_diffusion_surface_decay_2d Definitions for
+   \namespace model_advection_diffusion_surface_decay_2d Definitions for
    2D advective--diffusive transport with surface reaction \f$ A_F
    + B_S \to B_S\f$.
 */
@@ -890,7 +890,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1023,7 +1023,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -1078,7 +1078,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       BulkReaction::info(output);
       output << "\n";
       SurfaceReaction::info(output);
@@ -1088,7 +1088,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_diffusion_surface_decay_2d
 
 /**
-   \namespace ptof::model_periodic_cartesian_advection_diffusion_2d Definitions
+   \namespace model_periodic_cartesian_advection_diffusion_2d Definitions
    for 2D advective--diffusive transport with some periodic boundaries aligned
    with the Cartesian axes.
 */
@@ -1104,7 +1104,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1142,7 +1142,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_diffusion_2d
 
 /**
-   \namespace ptof::model_periodic_cartesian_advection_2d Definitions for 2D
+   \namespace model_periodic_cartesian_advection_2d Definitions for 2D
    advective transport with some periodic boundaries aligned with the Cartesian
    axes.
 */
@@ -1157,7 +1157,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1200,7 +1200,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_2d
 
 /**
-   \namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_2d
+   \namespace model_periodic_cartesian_advection_diffusion_fpt_2d
    Definitions for first-passage times under 2D advective--diffusive transport
    with some periodic boundaries aligned with the Cartesian axes.
 */
@@ -1216,7 +1216,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1260,8 +1260,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_diffusion_fpt_2d
 
 /**
-   \namespace
-   ptof::model_periodic_cartesian_advection_diffusion_surface_decay_2d
+   \namespace model_periodic_cartesian_advection_diffusion_surface_decay_2d
    Definitions for first-passage times under 2D advective--diffusive transport
    with surface reaction \f$ A_F + B_S \to B_S\f$, with some periodic boundaries
    aligned with the Cartesian axes.
@@ -1278,7 +1277,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1328,7 +1327,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_diffusion_surface_decay_2d
 
 /**
-   \namespace ptof::model_advection_diffusion_3d Definitions for 3D
+   \namespace model_advection_diffusion_3d Definitions for 3D
    advective--diffusive transport.
 */
 namespace model_advection_diffusion_3d {
@@ -1342,7 +1341,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1376,7 +1375,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_diffusion_3d
 
 /**
-   \namespace ptof::model_advection_3d Definitions for 3D advective transport.
+   \namespace model_advection_3d Definitions for 3D advective transport.
 */
 namespace model_advection_3d {
 template <typename ParallelOption> struct Definitions {
@@ -1389,7 +1388,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1427,7 +1426,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_3d
 
 /**
-   \namespace ptof::model_advection_diffusion_fpt_3d Definitions for
+   \namespace model_advection_diffusion_fpt_3d Definitions for
    first-passage times under 3D advective--diffusive transport.
 */
 namespace model_advection_diffusion_fpt_3d {
@@ -1441,7 +1440,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1478,7 +1477,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_diffusion_fpt_3d
 
 /**
-   \namespace ptof::model_advection_diffusion_surface_decay_3d Definitions for
+   \namespace model_advection_diffusion_surface_decay_3d Definitions for
    3D advective--diffusive transport with surface reaction \f$ A_F + B_S \to
    B_S\f$.
 */
@@ -1494,7 +1493,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1534,7 +1533,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_advection_diffusion_surface_decay_3d
 
 /**
-   \namespace ptof::model_periodic_cartesian_advection_diffusion_3d Definitions
+   \namespace model_periodic_cartesian_advection_diffusion_3d Definitions
    for 3D advective transport with some periodic boundaries aligned with the
    Cartesian axes.
 */
@@ -1550,7 +1549,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1587,7 +1586,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_diffusion_3d
 
 /**
-   \namespace ptof::model_periodic_cartesian_advection_3d
+   \namespace model_periodic_cartesian_advection_3d
    Definitions for 3D advective transport with some periodic boundaries aligned
    with the Cartesian axes.
 */
@@ -1602,7 +1601,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1647,7 +1646,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_3d
 
 /**
-   \namespace ptof::model_periodic_cartesian_advection_diffusion_fpt_3d
+   \namespace model_periodic_cartesian_advection_diffusion_fpt_3d
    Definitions for first-passage times under 3D advective--diffusive transport
    with some periodic boundaries aligned with the Cartesian axes.
 */
@@ -1663,7 +1662,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1707,8 +1706,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_diffusion_fpt_3d
 
 /**
-   \namespace
-   ptof::model_periodic_cartesian_advection_diffusion_surface_decay_3d
+   \namespace model_periodic_cartesian_advection_diffusion_surface_decay_3d
    Definitions for 3D advective--diffusive transport with surface reaction \f$
    A_F + B_S \to B_S\f$, with some periodic boundaries aligned with the
    Cartesian axes.
@@ -1725,7 +1723,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1774,7 +1772,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_periodic_cartesian_advection_diffusion_surface_decay_3d
 
 /**
-   \namespace ptof::model_bcc_cartesian_advection_diffusion Definitions for
+   \namespace model_bcc_cartesian_advection_diffusion Definitions for
    advective--diffusive transport in a body centered cubic beadpack, based on
    the primitive unit cell.
 */
@@ -1789,7 +1787,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -1976,7 +1974,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -2075,7 +2073,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Transport\n"
@@ -2089,7 +2087,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_cartesian_advection_diffusion
 
 /**
-   \namespace ptof::model_bcc_cartesian_advection_diffusion_fpt Definitions for
+   \namespace model_bcc_cartesian_advection_diffusion_fpt Definitions for
    first-passage times under advective--diffusive transport in a body centered
    cubic beadpack, based on the primitive unit cell.
 */
@@ -2105,7 +2103,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -2152,7 +2150,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_cartesian_advection_diffusion_fpt
 
 /**
-   \namespace ptof::model_bcc_cartesian_advection Definitions for advective
+   \namespace model_bcc_cartesian_advection Definitions for advective
    transport in a body centered cubic beadpack, based on the primitive unit
    cell.
 */
@@ -2167,7 +2165,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -2310,7 +2308,7 @@ template <typename ParallelOption> struct Definitions {
          \brief Output generic information about object.
          \param output Output stream.
       */
-      template <typename OStream> static void info(OStream &output) {
+      inline static void info(std::ostream &output) {
         output
             << "--------------------------------------------------------------"
                "\n"
@@ -2389,7 +2387,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Transport\n"
@@ -2403,7 +2401,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_cartesian_advection
 
 /**
-   \namespace ptof::model_bcc_cartesian_advection_diffusion_surface_decay
+   \namespace model_bcc_cartesian_advection_diffusion_surface_decay
    Definitions for advective--diffusive transport with surface reaction \f$ A_F
    + B_S \to B_S\f$ in a body centered cubic beadpack, based on the primitive
    unit cell.
@@ -2420,7 +2418,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -2464,7 +2462,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_cartesian_advection_diffusion_surface_decay
 
 /**
-   \namespace ptof::model_bcc_symmetryplanes_advection_diffusion Definitions for
+   \namespace model_bcc_symmetryplanes_advection_diffusion Definitions for
    advective--diffusive transport in a body centered cubic beadpack, based on
    the minimal unit cell.
 */
@@ -2480,7 +2478,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -2522,7 +2520,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_symmetryplanes_advection_diffusion
 
 /**
-   \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_fpt Definitions
+   \namespace model_bcc_symmetryplanes_advection_diffusion_fpt Definitions
    for first-passage times under advective--diffusive transport in a body
    centered cubic beadpack, based on the minimal unit cell.
 */
@@ -2538,7 +2536,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -2587,7 +2585,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_symmetryplanes_advection_diffusion_fpt
 
 /**
-   \namespace ptof::model_bcc_symmetryplanes_advection Definitions for advective
+   \namespace model_bcc_symmetryplanes_advection Definitions for advective
    transport in a body centered cubic beadpack, based on the minimal unit cell.
 */
 namespace model_bcc_symmetryplanes_advection {
@@ -2601,7 +2599,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
@@ -2639,7 +2637,7 @@ template <typename ParallelOption> struct Definitions {
 } // namespace model_bcc_symmetryplanes_advection
 
 /**
-   \namespace ptof::model_bcc_symmetryplanes_advection_diffusion_surface_decay
+   \namespace model_bcc_symmetryplanes_advection_diffusion_surface_decay
    Definitions for advective--diffusive transport with surface reaction \f$ A_F
    + B_S \to B_S\f$ in a body centered cubic beadpack, based on the minimal unit
    cell.
@@ -2656,7 +2654,7 @@ template <typename ParallelOption> struct Definitions {
        \brief Output generic information about object.
        \param output Output stream.
     */
-    template <typename OStream> static void info(OStream &output) {
+    inline static void info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Model\n"
