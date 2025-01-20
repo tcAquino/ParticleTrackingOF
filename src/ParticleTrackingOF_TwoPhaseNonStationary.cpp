@@ -12,6 +12,7 @@
 #include "PTOF/Directories.h"
 #include "PTOF/Models.h"
 #include "PTOF/Phase.h"
+#include "PTOF/Transitions.h"
 #include <algorithm>
 #include <chrono>
 #include <cstddef>
@@ -81,7 +82,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_bcc_symmetryplanes_advection;
+  namespace model = ptof::model_advection_diffusion_2d;
   using Phase = ptof::Phase;
 
   ExecutableInfo<ParallelOption>::banner(std::cout);
@@ -189,8 +190,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up phases..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto carrier_phase_field =
-      Phase::makePhaseField(geometry, params_phase);
+  auto carrier_phase_field = Phase::makePhaseField(geometry, params_phase);
   Phase::update_effective_velocity_field(carrier_phase_field, velocity_field,
                                          geometry, params_transport,
                                          params_phase);
@@ -281,8 +281,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   model::Definitions<ParallelOption>::CTRW ctrw{initial_condition()};
   auto transitions =
-      ptof::makeTransitions<model::Definitions<ParallelOption>::Transport,
-                            model::Definitions<ParallelOption>::Solvers>(
+      ptof::makeTransitions<model::Definitions<ParallelOption>::Transport>(
           velocity_field, geometry, boundary, params_transport, params_reaction,
           params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
@@ -313,8 +312,7 @@ int main(int argc, char *argv[]) {
         case_name, directories_of.case_name, params_transport_name,
         params_phase_name, params_reaction_name, params_solvers_name,
         params_initial_condition_name, params_output_name);
-  filename_output_identifier +=
-      (io::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
+  filename_output_identifier += (io::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
   auto output = model::Definitions<ParallelOption>::Output::makeOutput(
       ctrw, velocity_field, geometry, directories, params_output,
       filename_output_identifier, {std::cref(carrier_phase_field)},
@@ -380,17 +378,13 @@ int main(int argc, char *argv[]) {
       output(output.next_measurement_time());
       std::cout << "Done!\n";
     }
+    double previous_time = current_time;
     current_time =
         next_flow_time > current_time
             ? std::min(output.next_measurement_time(), next_flow_time)
             : output.next_measurement_time();
-    ctrw.evolve(
-        [current_time](
-            model::Definitions<ParallelOption>::CTRW::Particle const &part) {
-          return part.state_new().time < current_time &&
-                 !part.state_new().info.absorbed;
-        },
-        transitions);
+    model::Definitions<ParallelOption>::Solvers::evolve(
+        ctrw, transitions, params_solvers, current_time, previous_time);
   }
   if (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";

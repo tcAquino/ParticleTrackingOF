@@ -10,6 +10,7 @@
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Models.h"
+#include "PTOF/Transitions.h"
 #include "PTOF/Useful.h"
 #include <chrono>
 #include <cstddef>
@@ -248,8 +249,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   model::Definitions<ParallelOption>::CTRW ctrw{initial_condition()};
   auto transitions =
-      ptof::makeTransitions<model::Definitions<ParallelOption>::Transport,
-                            model::Definitions<ParallelOption>::Solvers>(
+      ptof::makeTransitions<model::Definitions<ParallelOption>::Transport>(
           velocity_field, geometry, boundary, params_transport, params_reaction,
           params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
@@ -304,14 +304,10 @@ int main(int argc, char *argv[]) {
       output(output.next_measurement_time());
       std::cout << "Done!\n";
     }
+    double previous_time = current_time;
     current_time = output.next_measurement_time();
-    ctrw.evolve(
-        [current_time](
-            model::Definitions<ParallelOption>::CTRW::Particle const &part) {
-          return part.state_new().time < current_time &&
-                 !part.state_new().info.absorbed;
-        },
-        transitions);
+    model::Definitions<ParallelOption>::Solvers::evolve(
+        ctrw, transitions, params_solvers, current_time, previous_time);
   }
   if (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";

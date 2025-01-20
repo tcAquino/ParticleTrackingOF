@@ -23,6 +23,8 @@ err=0
 ((err+=$?))
 ./make.sh "${1}" advection_diffusion_surface_decay_2d "${2}" ${3} 
 ((err+=$?))
+./make.sh "${1}" advection_diffusion_surface_order2_2d "${2}" ${3}
+((err+=$?))
 ./make.sh "${1}" advection_2d "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" periodic_cartesian_advection_diffusion_2d "${2}" ${3}
@@ -30,6 +32,8 @@ err=0
 ./make.sh "${1}" periodic_cartesian_advection_diffusion_fpt_2d "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" periodic_cartesian_advection_diffusion_surface_decay_2d "${2}" ${3}
+((err+=$?))
+./make.sh "${1}" periodic_cartesian_advection_diffusion_surface_order2_2d "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" periodic_cartesian_advection_2d "${2}" ${3} 
 ((err+=$?))
@@ -39,6 +43,8 @@ err=0
 ((err+=$?))
 ./make.sh "${1}" advection_diffusion_surface_decay_3d "${2}" ${3}
 ((err+=$?))
+./make.sh "${1}" advection_diffusion_surface_order2_3d "${2}" ${3}
+((err+=$?))
 ./make.sh "${1}" advection_3d "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" periodic_cartesian_advection_diffusion_3d "${2}" ${3}
@@ -46,6 +52,8 @@ err=0
 ./make.sh "${1}" periodic_cartesian_advection_diffusion_fpt_3d "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" periodic_cartesian_advection_diffusion_surface_decay_3d "${2}" ${3}
+((err+=$?))
+./make.sh "${1}" periodic_cartesian_advection_diffusion_surface_order2_3d "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" periodic_cartesian_advection_3d "${2}" ${3}
 ((err+=$?))
@@ -55,6 +63,8 @@ err=0
 ((err+=$?))
 ./make.sh "${1}" bcc_cartesian_advection_diffusion_surface_decay "${2}" ${3}
 ((err+=$?))
+./make.sh "${1}" bcc_cartesian_advection_diffusion_surface_order2 "${2}" ${3}
+((err+=$?))
 ./make.sh "${1}" bcc_cartesian_advection "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" bcc_symmetryplanes_advection_diffusion "${2}" ${3}
@@ -62,6 +72,8 @@ err=0
 ./make.sh "${1}" bcc_symmetryplanes_advection_diffusion_fpt "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" bcc_symmetryplanes_advection_diffusion_surface_decay "${2}" ${3}
+((err+=$?))
+./make.sh "${1}" bcc_symmetryplanes_advection_diffusion_surface_order2 "${2}" ${3}
 ((err+=$?))
 ./make.sh "${1}" bcc_symmetryplanes_advection "${2}" ${3}
 ((err+=$?))
