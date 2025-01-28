@@ -113,7 +113,7 @@ struct Phase {
     }
 
     /** \brief Output general information about object. */
-    inline static void info(std::ostream &output) {
+    inline static std::ostream &info(std::ostream &output) {
       output
           << "--------------------------------------------------------------\n"
              "Phase parameters\n"
@@ -134,6 +134,7 @@ struct Phase {
              "  excluded phase and carrier phase)\n"
              "- Phase field tolerance to consider pure phase\n"
              "--------------------------------------------------------------\n";
+      return output;
     }
   };
 

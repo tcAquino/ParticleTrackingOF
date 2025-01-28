@@ -226,6 +226,7 @@ bool options_help(OStream &output, int argc, const char *const *argv) {
       info += print_static_info<Transport>(output);
       info += print_static_info<Phase>(output);
       info += print_static_info<Reaction>(output);
+      info += print_static_info<Solvers>(output);
       info += print_static_info<InitialCondition>(output);
       info += print_static_info<Output>(output);
       if (!info)

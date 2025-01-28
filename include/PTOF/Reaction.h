@@ -9,12 +9,12 @@
 #define PTOF_REACTION_H
 
 #include "General/Constants.h"
-#include "PTOF/Locator.h"
 #include "PTOF/Useful.h"
 #include <cmath>
 #include <fieldTypes.H>
 #include <ostream>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
@@ -67,7 +67,6 @@ nearest_boundary_face_dist(Foam::vector const &position,
   // Do not use hint because this can get stuck in local minima
   auto face_id = locator.mesh_search().findNearestBoundaryFace(position);
   auto dist = Foam::mag(position - mesh.faces()[face_id].centre(mesh.points()));
-
   return {face_id, dist};
 }
 
@@ -117,7 +116,6 @@ public:
   double rate(Foam::label face) const {
     if (surface_concentrations.count(face))
       return rate_constant * surface_concentrations.at(face);
-
     return 0.;
   }
 
@@ -125,17 +123,126 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  inline static void info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Surface reaction\n"
-           "--------------------------------------------------------------\n"
-           "A_Fluid + A_Solid -> A_Solid\n"
-           "--------------------------------------------------------------\n";
+  inline static std::ostream &info(std::ostream &output) {
+    return output
+           << "--------------------------------------------------------------\n"
+              "Surface reaction\n"
+              "--------------------------------------------------------------\n"
+              "A_Fluid + A_Solid -> A_Solid\n"
+              "--------------------------------------------------------------"
+              "\n";
   }
 
   double rate_constant; /**< Surface reaction rate per solid concentration. */
   double diff_coeff;    /**< Diffusion coefficient. */
+  SurfaceConcentrations
+      surface_concentrations; /**< Map of concentrations over reactive faces. */
+};
+
+/**
+   \class SurfaceReaction_AFluidPlusASolidtoNothing PTOF/Reaction.h
+   "PTOF/Reaction.h"
+   \brief \f$A_F + A_S \to \emptyset\f$ surface reaction.
+*/
+class SurfaceReaction_AFluidPlusASolidtoNothing {
+public:
+  /** Container to hold reactant surface concentrations. */
+  using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
+
+  /**
+     \brief Constructor.
+     \param rate_constant Surface reaction rate per solid concentration
+     for fluid phase.
+     \param rate_constant_ratio_solid_to_fluid Ratio of reactions for solid and
+     fluid phase concentrations.
+     \param diff_coeff Diffusion coefficient.
+     \param surface_concentrations Map of initial reactive surface
+     concentrations over mesh faces.
+  */
+  SurfaceReaction_AFluidPlusASolidtoNothing(
+      double rate_constant, double rate_constant_ratio_solid_to_fluid,
+      double diff_coeff, SurfaceConcentrations surface_concentrations)
+      : rate_constant{rate_constant},
+        rate_constant_ratio_solid_to_fluid{rate_constant_ratio_solid_to_fluid},
+        solid_rate_constant{rate_constant_ratio_solid_to_fluid * rate_constant},
+        diff_coeff{diff_coeff}, surface_concentrations{surface_concentrations} {
+  }
+
+  /**
+     \brief React over exposure time.
+     \param state State of particle to react.
+     \param state_old Previous state of particle.
+     \param face Mesh face index where reaction occurs.
+  */
+  template <typename State>
+  void operator()(State &state, State const &state_old, Foam::label face) {
+    double exposure_time = state.time - state_old.time;
+    double probability_first_order =
+        rate(face) * std::sqrt(constants::pi * exposure_time / diff_coeff);
+    double probability_first_order_solid =
+        rate_constant_ratio_solid_to_fluid * probability_first_order;
+    double probability_second_order =
+        probability_first_order / (1. + probability_first_order / 2.);
+    double probability_second_order_solid =
+        probability_first_order_solid /
+        (1. + probability_first_order_solid / 2.);
+    state.mass *= std::exp(-probability_second_order);
+    surface_concentrations[face] *= std::exp(-probability_second_order_solid);
+  }
+
+  /**
+     \param face Mesh face index.
+     \return Surface reaction rate for fluid phase at face.
+  */
+  double rate(Foam::label face) const {
+    if (surface_concentrations.count(face))
+      return rate_constant * surface_concentrations.at(face);
+    return 0.;
+  }
+
+  /**
+     \param face Mesh face index.
+     \return Surface reaction rate for solid phase at face.
+  */
+  double solid_rate(Foam::label face) const {
+    if (surface_concentrations.count(face))
+      return solid_rate_constant * surface_concentrations.at(face);
+    return 0.;
+  }
+
+  /**
+     \param face Mesh face index.
+     \return Surface reaction rate for fluid and solid phases at face.
+  */
+  std::vector<double> rates(Foam::label face) const {
+    if (surface_concentrations.count(face)) {
+      double fluid_rate = solid_rate_constant * surface_concentrations.at(face);
+      return {fluid_rate, rate_constant_ratio_solid_to_fluid * fluid_rate};
+    }
+    return {0., 0.};
+  }
+
+  /**
+     \brief Output generic information about object.
+     \param output Output stream.
+  */
+  inline static std::ostream &info(std::ostream &output) {
+    return output
+           << "--------------------------------------------------------------\n"
+              "Surface reaction\n"
+              "--------------------------------------------------------------\n"
+              "A_Fluid + A_Solid -> Nothing\n"
+              "--------------------------------------------------------------"
+              "\n";
+  }
+
+  double rate_constant; /**< Surface reaction rate per solid
+                           concentration for fluid phase. */
+  double rate_constant_ratio_solid_to_fluid; /** Ratio of solid to fluid rate
+                                                constants. */
+  double solid_rate_constant;                /**< Surface reaction rate per
+                                                solid concentration for solid phase. */
+  double diff_coeff;                         /**< Diffusion coefficient. */
   SurfaceConcentrations
       surface_concentrations; /**< Map of concentrations over reactive faces. */
 };
@@ -166,13 +273,14 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  inline static void info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Surface reaction\n"
-           "--------------------------------------------------------------\n"
-           "None\n"
-           "--------------------------------------------------------------\n";
+  inline static std::ostream &info(std::ostream &output) {
+    return output
+           << "--------------------------------------------------------------\n"
+              "Surface reaction\n"
+              "--------------------------------------------------------------\n"
+              "None\n"
+              "--------------------------------------------------------------"
+              "\n";
   }
 };
 
@@ -194,13 +302,14 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  inline static void info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Bulk reaction\n"
-           "--------------------------------------------------------------\n"
-           "None\n"
-           "--------------------------------------------------------------\n";
+  inline static std::ostream &info(std::ostream &output) {
+    return output
+           << "--------------------------------------------------------------\n"
+              "Bulk reaction\n"
+              "--------------------------------------------------------------\n"
+              "None\n"
+              "--------------------------------------------------------------"
+              "\n";
   }
 };
 } // namespace ptof

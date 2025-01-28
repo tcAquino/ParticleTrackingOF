@@ -12,11 +12,138 @@
 #include "CTRW/JumpGenerator.h"
 #include "CTRW/Meta.h"
 #include "CTRW/TimeGenerator.h"
+#include "General/Meta.h"
 #include <cstddef>
 #include <type_traits>
 #include <utility>
 
 namespace ptof {
+
+/**
+   \struct CTRWStepper PTOF/Steppers.h
+   "PTOF/Steppers.h"
+   \brief Types to choose options of CTRW stepping mode.
+*/
+struct CTRWStepper {
+  /**
+     \struct Asynchronous PTOF/Steppers.h
+     "PTOF/Steppers.h"
+     \brief Step particles independtly
+  */
+  struct Asynchronous {
+    template <typename CTRW, typename Transitions, typename SolverParameters,
+              typename Time, typename Update = meta::DoNothing>
+    static void evolve(CTRW &ctrw, Transitions &&transitions,
+                       SolverParameters const &parameters_solvers,
+                       Time new_time, Time old_time, Update &&update = {}) {
+      ctrw.evolve(
+          [new_time](typename CTRW::Particle const &part) {
+            return part.state_new().time < new_time &&
+                   !part.state_new().info.absorbed;
+          },
+          transitions);
+      update(ctrw, new_time, old_time);
+    }
+
+    /**
+       \brief Output generic information about object.
+       \param output Output stream.
+    */
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << "--------------------------------------------------------------\n"
+             "CTRW Stepper\n"
+             "--------------------------------------------------------------\n"
+             "Asynchronous stepping\n"
+             "--------------------------------------------------------------\n";
+      return output;
+    }
+  };
+
+  /**
+     \struct ParticleStep PTOF/Steppers.h
+     "PTOF/Steppers.h"
+     \brief Evolve CTRW particles with synchronization over particle steps.
+  */
+  struct ParticleStep {
+    template <typename CTRW, typename Transitions, typename SolverParameters,
+              typename Time, typename Update = meta::DoNothing>
+    static void evolve(CTRW &ctrw, Transitions &&transitions,
+                       SolverParameters const &parameters_solvers,
+                       Time new_time, Time old_time, Update &&update = {}) {
+      std::size_t nr_stepped = 1;
+      while (nr_stepped != 0) {
+        nr_stepped = ctrw.step(
+            [new_time](typename CTRW::Particle const &part) {
+              return part.state_new().time < new_time &&
+                     !part.state_new().info.absorbed;
+            },
+            transitions);
+        update(ctrw, new_time, old_time);
+      }
+    }
+
+    /**
+       \brief Output generic information about object.
+       \param output Output stream.
+    */
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << "--------------------------------------------------------------\n"
+             "CTRW Stepper\n"
+             "--------------------------------------------------------------\n"
+             "Particle-based stepping\n"
+             "--------------------------------------------------------------\n";
+      return output;
+    }
+  };
+
+  /**
+     \struct TimeStep PTOF/Steppers.h
+     "PTOF/Steppers.h"
+     \brief Evolve CTRW particles with synchronization over prescribed time
+     step.
+  */
+  struct TimeStep {
+    template <typename CTRW, typename Transitions, typename SolverParameters,
+              typename Time, typename Update = meta::DoNothing>
+    static void evolve(CTRW &ctrw, Transitions &&transitions,
+                       SolverParameters const &parameters_solvers,
+                       Time new_time, Time old_time, Update &&update = {}) {
+      double current_time = old_time;
+      while (current_time < new_time) {
+        current_time += parameters_solvers.ctrw_time_step;
+        ctrw.evolve(
+            [current_time](typename CTRW::Particle const &part) {
+              return part.state_new().time < current_time &&
+                     !part.state_new().info.absorbed;
+            },
+            transitions);
+        update(ctrw, new_time, old_time);
+      }
+    }
+  };
+
+  /**
+       \brief Output generic information about object.
+       \param output Output stream.
+    */
+  inline static std::ostream &info(std::ostream &output) {
+    output
+        << "--------------------------------------------------------------\n"
+           "CTRW Stepper\n"
+           "--------------------------------------------------------------\n"
+           "Time-based stepping\n"
+           "--------------------------------------------------------------\n";
+    return output;
+  }
+};
+
+struct Stepper {
+  struct Euler {};
+  struct RK4 {};
+};
+
 /**
    \struct Steppers_Advection_RK4_Diffusion_Euler PTOF/Steppers.h
    "PTOF/Steppers.h"
@@ -24,6 +151,8 @@ namespace ptof {
    diffusion.
 */
 struct Steppers_Advection_RK4_Diffusion_Euler {
+  Steppers_Advection_RK4_Diffusion_Euler() = delete;
+
   /**
      \param params_solvers Solver parameters.
      \return Deterministic time step TimeGenerator.
@@ -95,15 +224,32 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
         std::forward<VelocityField>(velocity_field), 0.,
         std::forward<Boundary>(boundary)};
   }
+
+  /**
+       \brief Output generic information about object.
+       \param output Output stream.
+    */
+  inline static std::ostream &info(std::ostream &output) {
+    output
+        << "--------------------------------------------------------------\n"
+           "Steppers\n"
+           "--------------------------------------------------------------\n"
+           "Advection: Euler\n"
+           "Diffusion: Stochastic Euler\n"
+           "--------------------------------------------------------------\n";
+    return output;
+  }
 };
 
 /**
    \struct Steppers_Advection_Euler_Diffusion_Euler PTOF/Steppers.h
    "PTOF/Steppers.h"
-   \brief Time steppers for forward Euler advection and stochastic forward Euler
-   diffusion.
+   \brief Time steppers for forward Euler advection and stochastic forward
+   Euler diffusion.
 */
 struct Steppers_Advection_Euler_Diffusion_Euler {
+  Steppers_Advection_Euler_Diffusion_Euler() = delete;
+
   /**
      \param params_solvers Solver parameters.
      \return Deterministic time step TimeGenerator.
@@ -172,6 +318,42 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
           params_solvers.time_step};
     return ctrw::JumpGenerator_Velocity{
         std::forward<VelocityField>(velocity_field), 0.};
+  }
+
+  /**
+     \param boundary Boundary condition enforcer.
+     \param params_transport Transport parameters (unused).
+     \param params_solvers Solver parameters.
+     \param dim Spatial dimension.
+     \return Pure diffusion JumpGenerator.
+     \note If \p params_solvers does not define \c time_step, the time step is
+     initially set to zero.
+  */
+  template <typename ParallelOption, typename Boundary,
+            typename TransportParameters, typename SolverParameters>
+  static auto makeJumpGenerator_Diffusion(
+      Boundary &&boundary, TransportParameters const &params_transport,
+      SolverParameters const &params_solvers, std::size_t dim) {
+    if constexpr (meta::has_time_step_v<SolverParameters>)
+      return ctrw::JumpGenerator_Diffusion<ParallelOption>{
+          params_transport.diff_coeff, params_solvers.time_step, dim};
+    return ctrw::JumpGenerator_Diffusion<ParallelOption>{
+        params_transport.diff_coeff, 0., dim};
+  }
+
+  /**
+     \brief Output generic information about object.
+     \param output Output stream.
+  */
+  inline static std::ostream &info(std::ostream &output) {
+    output
+        << "--------------------------------------------------------------\n"
+           "Steppers\n"
+           "--------------------------------------------------------------\n"
+           "Advection: Euler\n"
+           "Diffusion: Stochastic Euler\n"
+           "--------------------------------------------------------------\n";
+    return output;
   }
 };
 } // namespace ptof

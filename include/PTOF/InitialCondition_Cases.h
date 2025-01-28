@@ -242,7 +242,7 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  template <typename OStream> static void info(OStream &output) {
+  template <typename OStream> static std::ostream &info(OStream &output) {
     output
         << "--------------------------------------------------------------\n"
            "Initial condition parameters\n"
@@ -381,6 +381,7 @@ public:
            "              reaction time\n"
            "      - Total injected mass per injection time step\n"
            "--------------------------------------------------------------\n";
+    return output;
   }
 
 private:
@@ -1091,7 +1092,8 @@ public:
      \brief Output information about current object.
      \param output Output stream.
   */
-  template <typename OStream> void info_runtime(OStream &output) const {
+  template <typename OStream>
+  std::ostream &info_runtime(OStream &output) const {
     output << "------------------------------------------------------------"
               "--\n"
               "Initial condition\n"
@@ -1101,6 +1103,7 @@ public:
                   InitialConditionList::name(type) + "\n"
            << "------------------------------------------------------------"
               "--\n";
+    return output;
   }
 };
 template <typename Particle, typename Geometry, typename VelocityField,

@@ -142,7 +142,7 @@ struct Geometry_Generic {
      \brief Output generic information about object.
      \param output Output stream.
   */
-  inline static void info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output << "--------------------------------------------------------------\n"
               "Geometry\n"
               "--------------------------------------------------------------\n"
@@ -166,10 +166,11 @@ struct Geometry_Generic {
         << "  - empty\n"
            "    - No effect (default for unspecified patches in mesh)\n"
            "--------------------------------------------------------------\n";
+    return output;
   }
 
   /** \brief Output information about current object. */
-  inline void info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "Mesh\n"
@@ -178,6 +179,7 @@ struct Geometry_Generic {
         << "Faces: " << mesh().nFaces() << "\n"
         << "Edges: " << mesh().nEdges() << "\n"
         << "--------------------------------------------------------------\n";
+    return output;
   }
 
   /** \return Mesh. */
@@ -317,7 +319,7 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /** \brief Output generic information about object. */
-  inline static void info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output << "--------------------------------------------------------------\n"
               "Geometry\n"
               "--------------------------------------------------------------\n"
@@ -343,10 +345,11 @@ struct Geometry_Periodic_Cartesian {
         << "  - empty\n"
            "    - No effect (default for unspecified patches in mesh)\n"
            "--------------------------------------------------------------\n";
+    return output;
   }
 
   /** \brief Output information about current object. */
-  inline void info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output << "--------------------------------------------------------------\n"
               "Mesh\n"
               "--------------------------------------------------------------\n"
@@ -369,6 +372,7 @@ struct Geometry_Periodic_Cartesian {
                << boundary_periodic.boundaries[dd].second << "\n";
     output
         << "--------------------------------------------------------------\n";
+    return output;
   }
 
   /** \return Mesh. */
@@ -526,7 +530,7 @@ struct Geometry_Bcc {
   }
 
   /** \brief Output generic information about object. */
-  inline static void info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output << "--------------------------------------------------------------\n"
               "Geometry\n"
               "--------------------------------------------------------------\n"
@@ -554,10 +558,11 @@ struct Geometry_Bcc {
         << "  - empty\n"
            "    - No effect (default for unspecified patches in mesh)\n"
            "--------------------------------------------------------------\n";
+    return output;
   }
 
   /** \brief Output information about current object. */
-  inline void info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output
         << "--------------------------------------------------------------\n"
            "Mesh\n"
@@ -566,6 +571,7 @@ struct Geometry_Bcc {
         << "Faces: " << mesh().nFaces() << "\n"
         << "Edges: " << mesh().nEdges() << "\n"
         << "--------------------------------------------------------------\n";
+    return output;
   }
 
   /** \return Mesh. */

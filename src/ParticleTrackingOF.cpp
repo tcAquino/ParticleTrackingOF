@@ -75,7 +75,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_bcc_symmetryplanes_advection;
+  namespace model = ptof::model_periodic_cartesian_advection_diffusion_surface_order2_2d;
 
   std::cout << std::setprecision(2) << std::scientific;
   ExecutableInfo<ParallelOption>::banner(std::cout);

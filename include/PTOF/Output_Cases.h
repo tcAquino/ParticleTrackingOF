@@ -64,9 +64,10 @@ public:
     std::string name;
     int precision;
 
-    inline void info_runtime(std::ostream &output) const {
-      output << name << "\n";
-      output << "  - Precision: " << precision << "\n";
+    inline std::ostream &info_runtime(std::ostream &output) const {
+      output << "  - " << name << "\n"
+             << "    - Precision: " << precision << "\n";
+      return output;
     }
   };
 
@@ -77,9 +78,10 @@ public:
 
     std::string field_name;
 
-    inline void info_runtime(std::ostream &output) const {
+    inline std::ostream &info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  - Field: " << field_name << "\n";
+      output << "    - Field: " << field_name << "\n";
+      return output;
     }
   };
 
@@ -91,10 +93,11 @@ public:
     std::size_t dim;
     double position;
 
-    inline void info_runtime(std::ostream &output) const {
+    inline std::ostream &info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  - Dimension: " << dim << "\n"
-             << "  - Position: " << position << "\n";
+      output << "    - Dimension: " << dim << "\n"
+             << "    - Position: " << position << "\n";
+      return output;
     }
   };
 
@@ -104,9 +107,10 @@ public:
 
     double order;
 
-    inline void info_runtime(std::ostream &output) const {
+    inline std::ostream &info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  - Order: " << order << "\n";
+      output << "    - Order: " << order << "\n";
+      return output;
     }
   };
 
@@ -117,10 +121,11 @@ public:
 
     std::vector<double> orders;
 
-    inline void info_runtime(std::ostream &output) const {
+    inline std::ostream &info_runtime(std::ostream &output) const {
       Measurement::info_runtime(output);
-      output << "  - Orders: ";
+      output << "    - Orders: ";
       io::print(output, orders, false, " ") << "\n";
+      return output;
     }
   };
 
@@ -163,7 +168,7 @@ public:
   }
 
   /** \brief Output generic information about object. */
-  inline static void info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output
         << "--------------------------------------------------------------"
            "\n"
@@ -320,6 +325,7 @@ public:
            "      masses at end of dynamics\n"
            "--------------------------------------------------------------"
            "\n";
+    return output;
   }
 
   /** \brief Read end criterion from input stream. */
@@ -670,7 +676,7 @@ public:
   }
 
   /** \brief Output information about current object. */
-  inline void info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output << "------------------------------------------------------------"
               "--\n"
               "Output\n"
@@ -709,20 +715,19 @@ public:
     info_runtime_measurements(output);
     output << "------------------------------------------------------------"
               "--\n";
+    return output;
   }
 
 private:
   /** \brief Output information about measurement types. */
-  void info_runtime_measurements(std::ostream &output) const {
+  std::ostream &info_runtime_measurements(std::ostream &output) const {
     if (parameters.measurements.empty()) {
-      output << "\tNone\n";
-      return;
+      return output << "  None\n";
     }
     for (auto const &measurement : parameters.measurements) {
-      output << "  - ";
       measurement->info_runtime(output);
-      output << "\n";
     }
+    return output;
   }
 
   /**

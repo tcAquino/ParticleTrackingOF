@@ -14,43 +14,24 @@
 #include "PTOF/TimeStepAdaptor.h"
 
 namespace ptof {
-/** \brief Make Transitions object to handle advective-diffusive transport. */
-template <typename Steppers, typename Geometry, typename VelocityField,
+/** \brief Make Transitions object to handle transport. */
+template <typename Solvers, typename Geometry, typename VelocityField,
           typename Boundary, typename TransportParameters,
-          typename ReactionParameters, typename SolverParameters>
-auto makeTransportTransitions(VelocityField const &velocity_field,
-                              Geometry const &geometry, Boundary &boundary,
-                              TransportParameters const &params_transport,
-                              ReactionParameters const &params_reaction,
-                              SolverParameters const &params_solvers) {
-  return ctrw::Transitions_AdaptiveTimeStep_Time_Position{
-      TimeStepAdaptor_CellSize_SurfaceReaction{
-          geometry, velocity_field, boundary.surface_reaction, params_transport,
-          params_reaction, params_solvers, meta::Selector_t<CheckOptions::Check>{}},
-      Steppers::makeTimeGenerator(params_solvers),
-      Steppers::template makeJumpGenerator<typename Geometry::ParallelOption>(
-          velocity_field, boundary, params_transport, params_solvers,
-          geometry.dim),
-      geometry.locator, boundary};
-}
-
-/** \brief Make Transitions object to handle purely-advective transport. */
-template <typename Steppers, typename Geometry, typename VelocityField,
-          typename Boundary, typename TransportParameters,
-          typename ReactionParameters, typename SolverParameters>
-auto makeTransportTransitions_Advection(
+          typename ReactionParameters>
+auto makeTransportTransitions(
     VelocityField const &velocity_field, Geometry const &geometry,
     Boundary &boundary, TransportParameters const &params_transport,
     ReactionParameters const &params_reaction,
-    SolverParameters const &params_solvers) {
+    typename Solvers::Parameters const &params_solvers) {
   return ctrw::Transitions_AdaptiveTimeStep_Time_Position{
       TimeStepAdaptor_CellSize_SurfaceReaction{
           geometry, velocity_field, boundary.surface_reaction, params_transport,
-          params_reaction, params_solvers, meta::Selector_t<CheckOptions::Check>{}},
-      Steppers::makeTimeGenerator(params_solvers),
-      Steppers::makeJumpGenerator_Advection(velocity_field, boundary,
-                                            params_transport, params_solvers,
-                                            geometry.dim),
+          params_reaction, params_solvers,
+          meta::Selector_t<CheckOptions::Check>{}},
+      Solvers::makeTimeGenerator(params_solvers),
+      Solvers::template makeJumpGenerator<typename Geometry::ParallelOption>(
+          velocity_field, boundary, params_transport, params_solvers,
+          geometry.dim),
       geometry.locator, boundary};
 }
 
@@ -59,22 +40,21 @@ auto makeTransportTransitions_Advection(
    \details Conservative transitions and reaction are determined from template
    parameters that must be explicitly specified:
    - \tparam Transport Conservative transport information.
-   - \tparam Solvers Numerical solver information.
    - \tparam Reaction Reaction information.
 */
-template <typename Transport, typename Solvers, typename Reaction,
-          typename VelocityField, typename Geometry, typename Boundary>
-auto makeTransitions(VelocityField const &velocity_field,
-                     Geometry const &geometry, Boundary &boundary,
-                     typename Transport::Parameters const &params_transport,
-                     typename Reaction::Parameters const &params_reaction,
-                     typename Solvers::Parameters const &params_solvers) {
+template <typename Transport, typename Reaction, typename VelocityField,
+          typename Geometry, typename Boundary>
+auto makeTransitions(
+    VelocityField const &velocity_field, Geometry const &geometry,
+    Boundary &boundary, typename Transport::Parameters const &params_transport,
+    typename Reaction::Parameters const &params_reaction,
+    typename Transport::Solvers::Parameters const &params_solvers) {
   return ctrw::Transitions_CTRW_Transport_Reaction{
-    Transport::template makeTransitions<Solvers>(
-        velocity_field, geometry, boundary, params_transport,
-        params_reaction, params_solvers),
-    Reaction::makeBulkReaction(geometry, params_reaction, params_transport,
-                               params_solvers)};
+      Transport::makeTransitions(velocity_field, geometry, boundary,
+                                 params_transport, params_reaction,
+                                 params_solvers),
+      Reaction::makeBulkReaction(geometry, params_reaction, params_transport,
+                                 params_solvers)};
 }
 
 /**
@@ -82,21 +62,19 @@ auto makeTransitions(VelocityField const &velocity_field,
    \details Conservative transitions are determined from template parameters
    that must be explicitly specified:
    - \tparam Transport Conservative transport information.
-   - \tparam Solvers Numerical solver information.
 */
-template <typename Transport, typename Solvers, typename VelocityField,
-          typename Geometry, typename Boundary, typename ReactionParameters,
-          typename BulkReaction>
-auto makeTransitions(VelocityField const &velocity_field,
-                     Geometry const &geometry, Boundary &boundary,
-                     typename Transport::Parameters const &params_transport,
-                     ReactionParameters const &params_reaction,
-                     typename Solvers::Parameters const &params_solvers,
-                     BulkReaction const &bulk_reaction) {
+template <typename Transport, typename VelocityField, typename Geometry,
+          typename Boundary, typename ReactionParameters, typename BulkReaction>
+auto makeTransitions(
+    VelocityField const &velocity_field, Geometry const &geometry,
+    Boundary &boundary, typename Transport::Parameters const &params_transport,
+    ReactionParameters const &params_reaction,
+    typename Transport::Solvers::Parameters const &params_solvers,
+    BulkReaction const &bulk_reaction) {
   return ctrw::Transitions_CTRW_Transport_Reaction{
-      Transport::template makeTransitions<Solvers>(
-          velocity_field, geometry, boundary, params_transport, params_reaction,
-          params_solvers),
+      Transport::makeTransitions(velocity_field, geometry, boundary,
+                                 params_transport, params_reaction,
+                                 params_solvers),
       bulk_reaction};
 }
 } // namespace ptof
