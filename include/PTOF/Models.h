@@ -357,7 +357,7 @@ template <typename ParallelOption> struct Definitions {
   using Output = typename model_advection_diffusion_2d::Definitions<
       ParallelOption>::Output;
   using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                  CTRWStepper::ParticleStep>;
+                                  CTRWStepper::TimeStep>;
   using State =
       typename model_advection_diffusion_2d::Definitions<ParallelOption>::State;
   using Transport = Transport_Generic<Solvers>;
