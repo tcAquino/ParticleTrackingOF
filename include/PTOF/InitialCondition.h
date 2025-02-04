@@ -76,11 +76,15 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
 
   /**
      \brief Make a single position along with location hint.
-     \param nr_positions Number of positions to make
-     \return Position.
+     \return Position and hint.
   */
   virtual PositionAndHint make_position_and_hint() = 0;
 
+  /**
+     \brief Make a single position along with location hint.
+     \param nr_particles Number of particles to make.
+     \return Container with particles.
+  */
   virtual ParticleContainer make_particles(std::size_t nr_particles) {
     ParticleContainer particles;
     particles.reserve(nr_particles);
@@ -90,6 +94,11 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
     return particles;
   };
 
+  /**
+     \brief Make positions.
+     \param nr_positions Number of positions to make.
+     \return Container with positions.
+  */
   virtual PositionContainer make_positions(std::size_t nr_positions) {
     PositionContainer positions;
     positions.reserve(nr_positions);
@@ -227,9 +236,6 @@ public:
            std::forward<Geometry>(geometry)},
         _dist{std::forward<Distribution>(dist)}, _nr_tries{nr_tries} {}
 
-  /** \brief Make a single position according to prescribed initial condition.
-  \param nr_positions Number of positions to make
-  \return Position.  */
   typename IC::PositionAndHint make_position_and_hint() override {
     for (std::size_t ii = 0; ii < _nr_tries; ++ii) {
       auto position = IC::Particle::State::make_position(_dist(_rng));
@@ -332,8 +338,11 @@ public:
       throw std::runtime_error{"No faces provided for initial condition"};
   }
 
-  /** \note If face center is not in owner cell, position is placed at cell
-   * center.*/
+  /**
+     \brief Make a single position along with location hint.
+     \note If face center is not in owner cell, position is placed at cell
+     center.
+  */
   typename IC::PositionAndHint make_position_and_hint() override {
     auto const &mesh = this->_geometry.mesh();
     auto face_id = _face_ids[_dist(_rng)];
