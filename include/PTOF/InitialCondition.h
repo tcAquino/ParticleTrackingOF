@@ -81,7 +81,7 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   virtual PositionAndHint make_position_and_hint() = 0;
 
   /**
-     \brief Make a single position along with location hint.
+     \brief Make particles.
      \param nr_particles Number of particles to make.
      \return Container with particles.
   */

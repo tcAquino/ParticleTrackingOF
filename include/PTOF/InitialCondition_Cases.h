@@ -711,7 +711,10 @@ public:
     return make_particles(nr_particles);
   }
 
-  /** \brief Make a single particle. \return One particle.  */
+  /**
+     \brief Make a single particle.
+     \return One particle.
+  */
   auto make_particle() { return _initial_condition->make_particle(); }
 
   /**
@@ -722,17 +725,26 @@ public:
 
   /**
      \brief Make a single position along with location hint.
-     \param nr_positions Number of positions to make
-     \return Position.
+     \return Position and hint.
   */
   auto make_position_and_hint() {
     return _initial_condition->make_position_and_hint();
   }
 
+  /**
+     \brief Make particles.
+     \param nr_particles Number of particles to make.
+     \return Container with particles.
+  */
   auto make_particles(std::size_t nr_particles) {
     return _initial_condition->make_particles(nr_particles);
   };
 
+  /**
+     \brief Make positions.
+     \param nr_positions Number of positions to make.
+     \return Container with positions.
+  */
   auto make_positions(std::size_t nr_positions) {
     return _initial_condition->make_positions(nr_particles);
   };
