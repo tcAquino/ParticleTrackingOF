@@ -237,7 +237,7 @@ public:
            "    - Pass any number, one per line\n"
            "    - Precision [8] can be passed at end of line\n"
            "    - Masks are passed on construction of output handler; the\n"
-           "      same masks are used for all measurements involving masks\n"
+           "      same masks are used for all measurements involving masks)\n"
            "  - position\n"
            "    - Time, particle tags, particle positions, and particle\n"
            "      masses\n"

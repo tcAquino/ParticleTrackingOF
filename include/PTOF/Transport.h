@@ -813,15 +813,15 @@ struct Transport_LinearInterp {
               "--------------------------------------------------------------\n"
               "Advection: ";
     if constexpr (Solvers::Parameters::advection) {
-      output << "Yes";
+      output << "Yes\n";
     } else {
-      output << "No";
+      output << "No\n";
     }
     output << "Diffusion: ";
     if constexpr (Solvers::Parameters::diffusion) {
-      output << "Yes";
+      output << "Yes\n";
     } else {
-      output << "No";
+      output << "No\n";
     }
     if constexpr (Solvers::Parameters::advection) {
       output << "Velocity interpolation: Linear\n";

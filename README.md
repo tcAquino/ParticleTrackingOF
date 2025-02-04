@@ -13,7 +13,7 @@ A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5 a
 
 ## Documentation
 
-Basic information on code structure, compilation, and execution is given in doc/Manual.pdf. Doxygen documentation can be found in doc/Doxygen. The compiled doxygen documentation is not currently online. To compile and view it, make sure you have doxygen, graphviz, and latex (texlive-full or equivalent is safest) installed (all free and available in common repositories like apt), go to the doc folder, and execute doxygen Doxyfile. Then open the doc/html/index.html file to view it in a browser.
+Basic information on code structure, compilation, and execution is given in doc/Manual.pdf. Doxygen documentation can be found in doc/Doxygen. The compiled doxygen documentation is not currently online. To compile and view it, make sure you have doxygen, graphviz, and latex (e.g., texlive-full) installed (all free and available in common repositories like apt), go to the doc folder, and execute doxygen Doxyfile. Then open the doc/html/index.html file to view it in a browser.
 
 ## Notes and known issues
 
