@@ -240,30 +240,30 @@ public:
   template <typename CTRW>
   void update(CTRW &ctrw, typename CTRW::State::Time time_new,
               typename CTRW::State::Time time_old) {
-    if constexpr (std::is_same_v<ParallelOption,
-                                 par::ParallelOptions::Parallel>) {
-      auto merged_face_to_tags_times = merge_and_clear_hits();
+    if constexpr (std::is_same_v<ParallelOption, par::ParallelOptions::Serial>)
+      return;
+
+    auto merged_face_to_tags_times = merge_and_clear_hits();
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-      for (std::size_t ii = 0; ii < merged_face_to_tags_times.size(); ++ii) {
-        // Note: Must advance iterator manually each time due to current OMP
-        // limitations on some platforms
-        auto it = merged_face_to_tags_times.begin();
-        std::advance(it, ii);
-        auto const &[face, tags_times] = *it;
-        for (auto const &tag_time : tags_times) {
-          // Due to a limitation of the current language standard, lambdas
-          // cannot capture elements of structured bindings
-          auto const &face_to_capture = face;
-          ctrw.transform(
-              [this, face_to_capture](typename CTRW::State state,
-                                      typename CTRW::State const &state_old) {
-                update_mass_and_surface_concentration(state, state_old,
-                                                      face_to_capture);
-              },
-              tag_time.tag);
-        }
+    for (std::size_t ii = 0; ii < merged_face_to_tags_times.size(); ++ii) {
+      // Note: Must advance iterator manually each time due to current OMP
+      // limitations on some platforms
+      auto it = merged_face_to_tags_times.begin();
+      std::advance(it, ii);
+      auto const &[face, tags_times] = *it;
+      for (auto const &tag_time : tags_times) {
+        // Due to a limitation of the current language standard, lambdas
+        // cannot capture elements of structured bindings
+        auto const &face_to_capture = face;
+        ctrw.transform(
+            [this, face_to_capture](typename CTRW::State state,
+                                    typename CTRW::State const &state_old) {
+              update_mass_and_surface_concentration(state, state_old,
+                                                    face_to_capture);
+            },
+            tag_time.tag);
       }
     }
   }

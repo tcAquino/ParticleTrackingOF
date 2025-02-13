@@ -158,7 +158,7 @@ struct Model {
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                      CTRWStepper::TimeStep>;
+                                      CTRWStepper::ParticleTime>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
@@ -304,7 +304,7 @@ struct Model {
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                      CTRWStepper::TimeStep>;
+                                      CTRWStepper::ParticleTime>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
@@ -440,7 +440,7 @@ struct Model {
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                      CTRWStepper::TimeStep>;
+                                      CTRWStepper::ParticleTime>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
@@ -584,7 +584,7 @@ struct Model {
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                      CTRWStepper::TimeStep>;
+                                      CTRWStepper::ParticleTime>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
@@ -728,7 +728,7 @@ struct Model {
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                      CTRWStepper::TimeStep>;
+                                      CTRWStepper::ParticleTime>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
@@ -875,7 +875,7 @@ struct Model {
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
-                                      CTRWStepper::TimeStep>;
+                                      CTRWStepper::ParticleTime>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;

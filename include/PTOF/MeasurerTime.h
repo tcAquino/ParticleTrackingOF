@@ -95,8 +95,8 @@ protected:
                            std::string const &output_name,
                            std::string const &identifier) {
     return io::open_write(directories.dir_output + "/Data_" + output_name +
-                              (identifier.empty() ? "" : "_" + identifier) +
-                              ".dat");
+                          (identifier.empty() ? "" : "_" + identifier) +
+                          ".dat");
   }
 };
 
@@ -129,7 +129,7 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
@@ -194,7 +194,7 @@ struct MeasurerTime_position_in_regions final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       auto cell_new = state_new.cell;
@@ -210,9 +210,9 @@ struct MeasurerTime_position_in_regions final
                         [](int ii) { return ii > 0; })) {
           _output << std::setw(_column_widths[1]) << state_old.tag;
           io::print(_output,
-                        ctrw::Get_interp{time, ctrw::Get_position{}}(state_new,
-                                                                     state_old),
-                        _column_widths[2]);
+                    ctrw::Get_interp{time, ctrw::Get_position{}}(state_new,
+                                                                 state_old),
+                    _column_widths[2]);
           _output << std::setw(_column_widths[3])
                   << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                               state_old);
@@ -297,7 +297,7 @@ struct MeasurerTime_position_second_moment final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, position_second_moment(_subject, time),
-                  _column_widths[1]);
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -336,8 +336,7 @@ struct MeasurerTime_position_nth_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_moment(_subject, _nn, time),
-                  _column_widths[1]);
+    io::print(_output, position_moment(_subject, _nn, time), _column_widths[1]);
     _output << "\n";
   }
 
@@ -388,7 +387,7 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, position_moment(_subject, _exponents, time),
-                  _column_widths[1]);
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -435,8 +434,7 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_variance(_subject, time),
-                  _column_widths[1]);
+    io::print(_output, position_variance(_subject, time), _column_widths[1]);
     _output << "\n";
   }
 
@@ -503,7 +501,7 @@ struct MeasurerTime_mass_in_regions final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, mass(_subject, time, _masks, _thresholds),
-                  _column_widths[1]);
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -574,7 +572,7 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
@@ -694,15 +692,15 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
         _output << std::setw(_column_widths[1]) << state_old.tag;
         io::print(_output,
-                      ctrw::Get_interp{time, ctrw::Get_property{_field}}(
-                          state_new, state_old),
-                      _column_widths[2]);
+                  ctrw::Get_interp{time, ctrw::Get_property{_field}}(state_new,
+                                                                     state_old),
+                  _column_widths[2]);
         _output << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                             state_old);
       }
@@ -811,7 +809,7 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
@@ -819,7 +817,7 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
         if (outside(state_new.cell || outside(state_old.cell)))
           for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
             io::print(_output, std::vector<double>(Geometry::dim, 0.),
-                          _column_widths[2]);
+                      _column_widths[2]);
         else
           for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
             for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
@@ -1229,7 +1227,7 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
@@ -1301,7 +1299,7 @@ struct MeasurerTime_position_in_regions_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       auto cell_new = state_new.cell;
@@ -1317,9 +1315,9 @@ struct MeasurerTime_position_in_regions_periodic final
                         [](int ii) { return ii > 0; })) {
           _output << std::setw(_column_widths[1]) << state_old.tag;
           io::print(_output,
-                        ctrw::Get_interp{time, ctrw::Get_position{}}(state_new,
-                                                                     state_old),
-                        _column_widths[2]);
+                    ctrw::Get_interp{time, ctrw::Get_position{}}(state_new,
+                                                                 state_old),
+                    _column_widths[2]);
           _output << std::setw(_column_widths[3])
                   << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                               state_old);
@@ -1373,7 +1371,7 @@ struct MeasurerTime_position_mean_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, position_mean(_subject, time, getter_position),
-                  _column_widths[1]);
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1421,9 +1419,8 @@ struct MeasurerTime_position_second_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-                  position_second_moment(_subject, time, getter_position),
-                  _column_widths[1]);
+    io::print(_output, position_second_moment(_subject, time, getter_position),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1466,9 +1463,8 @@ struct MeasurerTime_position_nth_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-                  position_moment(_subject, _nn, time, getter_position),
-                  _column_widths[1]);
+    io::print(_output, position_moment(_subject, _nn, time, getter_position),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1526,8 +1522,8 @@ struct MeasurerTime_position_moment_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-                  position_moment(_subject, _exponents, time, getter_position),
-                  _column_widths[1]);
+              position_moment(_subject, _exponents, time, getter_position),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1581,7 +1577,7 @@ struct MeasurerTime_position_variance_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, position_variance(_subject, time, getter_position),
-                  _column_widths[1]);
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1628,7 +1624,7 @@ struct MeasurerTime_first_crossing_time final
   }
 
   void operator()(double) override {
-    for (auto const &part : _subject.particles()) {
+    for (auto const &part : _subject) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       auto pos_new = ctrw::Get_position_component_arg{dimension}(state_new);

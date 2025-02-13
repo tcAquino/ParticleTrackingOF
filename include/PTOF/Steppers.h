@@ -13,6 +13,8 @@
 #include "CTRW/Meta.h"
 #include "CTRW/TimeGenerator.h"
 #include "General/Meta.h"
+#include "General/Parallel.h"
+#include <algorithm>
 #include <cstddef>
 #include <type_traits>
 #include <utility>
@@ -89,6 +91,71 @@ struct CTRWStepper {
              << io::line() << "Particle-based stepping\n"
              << io::line();
       return output;
+    }
+  };
+
+  /**
+     \struct ParticleTime PTOF/Steppers.h
+     "PTOF/Steppers.h"
+     \brief Evolve CTRW particles by stepping earliest-time particles first and
+     synchronizing after at most one particle per thread has stepped.
+  */
+  struct ParticleTime {
+    template <typename CTRW, typename Transitions, typename SolverParameters,
+              typename Time, typename Update = meta::DoNothing>
+    static void evolve(CTRW &ctrw, Transitions &&transitions,
+                       SolverParameters const &parameters_solvers,
+                       Time new_time, Time old_time, Update &&update = {}) {
+      std::size_t nr_stepped = 1;
+      while (nr_stepped != 0) {
+        nr_stepped = ctrw.step_specified(
+            find_earliest_time_tags(ctrw, new_time, old_time), transitions);
+        update(ctrw, new_time, old_time);
+      }
+    }
+
+    /**
+       \brief Output generic information about object.
+       \param output Output stream.
+    */
+    inline static std::ostream &info(std::ostream &output) {
+      output << io::line() << "CTRW Stepper\n"
+             << io::line() << "Particle-based stepping\n"
+             << io::line();
+      return output;
+    }
+
+  private:
+    template <typename CTRW>
+    static std::vector<std::size_t> find_earliest_time_tags(CTRW const &ctrw,
+                                                            double new_time,
+                                                            double old_time) {
+      std::vector<
+          std::pair<typename CTRW::State::Tag, typename CTRW::State::Time>>
+          tags_times;
+      tags_times.reserve(ctrw.size());
+      for (auto const &part : ctrw) {
+        if (part.state_new().time < new_time &&
+            !part.state_new().info.absorbed) {
+          tags_times.push_back({part.state_new().tag, part.state_old().time});
+        }
+      }
+
+      std::size_t nr_tags =
+          std::min(tags_times.size(),
+                   par::get_num_threads(typename CTRW::ParallelOption{}));
+      if (nr_tags == 0)
+        return {};
+
+      std::vector<std::size_t> tags;
+      tags.reserve(nr_tags);
+      std::nth_element(tags_times.begin(), tags_times.begin() + nr_tags - 1,
+                       tags_times.end());
+
+      for (auto const &tag_time : tags_times)
+        tags.push_back(tag_time.first);
+
+      return tags;
     }
   };
 

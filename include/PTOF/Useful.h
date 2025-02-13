@@ -1024,7 +1024,7 @@ auto fluxweighted_face_distribution(Container const &face_ids,
 template <typename Subject>
 std::size_t nr_absorbed(Subject const &subject, double time) {
   std::size_t absorbed = 0;
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     if (state_new.info.absorbed && state_new.time <= time)
       ++absorbed;
@@ -1042,7 +1042,7 @@ std::size_t nr_absorbed(Subject const &subject, double time) {
 */
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     if (state_new.time >= time && state_old.time <= time)
@@ -1069,7 +1069,7 @@ auto mass(Subject const &subject, double time,
           std::vector<std::reference_wrapper<const Mask>> masks,
           std::vector<double> thresholds) {
   std::vector<double> masses(masks.size(), 0.);
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     auto cell_new = state_new.cell;
@@ -1102,7 +1102,7 @@ auto position_mean(Subject const &subject, double time,
                    GetterPosition getter_position = {}) {
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position position_mean = Foam::zero{};
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     if (state_new.time >= time && state_old.time <= time)
@@ -1128,7 +1128,7 @@ auto position_second_moment(Subject const &subject, double time,
                             GetterPosition getter_position = {}) {
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position second_moment = Foam::zero{};
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     if (state_new.time >= time && state_old.time <= time)
@@ -1156,7 +1156,7 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
                      double time, GetterPosition getter_position = {}) {
   decltype(getter_position(subject.particles(0).state_new())) moment =
       Foam::zero{};
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     if (state_new.time >= time && state_old.time <= time)
@@ -1197,7 +1197,7 @@ auto position_variance(Subject const &subject, double time,
 template <typename Subject, typename Field>
 auto mean(Subject const &subject, double time, Field const &field) {
   decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
-  for (auto const &part : subject.particles()) {
+  for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     if (state_new.time >= time && state_old.time <= time)

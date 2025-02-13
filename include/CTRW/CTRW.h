@@ -258,7 +258,7 @@ public:
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < _particles.size(); ++part)
+      for (std::size_t part = 0; part < size(); ++part)
         while (criterion(_particles[part]))
           _particles[part].transition(transitions);
     } else {
@@ -271,19 +271,22 @@ public:
   /**
      \brief Evolve each particle one step.
      \param transitions Handle changes to particle states in each step.
+     \return Number of particles stepped (all particles).
   */
-  template <typename Transitions> void step(Transitions &&transitions) {
+  template <typename Transitions> std::size_t step(Transitions &&transitions) {
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Parallel>) {
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < _particles.size(); ++part)
+      for (std::size_t part = 0; part < size(); ++part)
         _particles[part].transition(transitions);
     } else {
       for (auto &part : _particles)
         part.transition(transitions);
     }
+
+    return size();
   }
 
   /**
@@ -291,7 +294,7 @@ public:
      \param criterion Criterion to apply to each particle.
      \param transitions Handle changes to particle states in each step.
   */
-  template <typename Transitions, typename Criterion>
+  template <typename Criterion, typename Transitions>
   std::size_t step(Criterion &&criterion, Transitions &&transitions) {
     std::size_t nr_stepped = 0;
     if constexpr (std::is_same_v<ParallelOption,
@@ -299,7 +302,7 @@ public:
 #ifdef _OPENMP
 #pragma omp parallel for reduction(+ : nr_stepped)
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < _particles.size(); ++part)
+      for (std::size_t part = 0; part < size(); ++part)
         if (criterion(_particles[part])) {
           _particles[part].transition(transitions);
           ++nr_stepped;
@@ -313,6 +316,29 @@ public:
     }
 
     return nr_stepped;
+  }
+
+  /**
+     \brief Evolve specified particles one step.
+     \param tags Tags of particles to evolve.
+     \param transitions Handle changes to particle states in each step.
+     \return Number of particles stepped (size of \c tags).
+  */
+  template <typename Container, typename Transitions>
+  std::size_t step_specified(Container const &tags, Transitions &&transitions) {
+    if constexpr (std::is_same_v<ParallelOption,
+                                 par::ParallelOptions::Parallel>) {
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif /** _OPENMP */
+      for (std::size_t part = 0; part < tags.size(); ++part)
+        _particles[tags[part]].transition(transitions);
+    } else {
+      for (auto tag : tags)
+        _particles[tag].transition(transitions);
+    }
+
+    return tags.size();
   }
 
   /** \return Particle container. */
