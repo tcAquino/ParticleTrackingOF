@@ -1,0 +1,889 @@
+/**
+   \file PTOF/Model.h
+   \author Tomás Aquino
+   \date 22/02/2022
+   \brief Type definitions to implement models.
+*/
+
+#ifndef PTOF_MODEL_H
+#define PTOF_MODEL_H
+
+#include "CTRW/CTRW.h"
+#include "CTRW/Meta.h"
+#include "General/Meta.h"
+#include "PTOF/Advection.h"
+#include "PTOF/Geometry.h"
+#include "PTOF/Info.h"
+#include "PTOF/InitialConditionHandler.h"
+#include "PTOF/OutputHandler.h"
+#include "PTOF/ReactionHandler.h"
+#include "PTOF/Solvers.h"
+#include "PTOF/State.h"
+#include "PTOF/Steppers.h"
+#include "PTOF/Transport.h"
+#include "PTOF/Useful.h"
+#include <functional>
+#include <ostream>
+#include <string>
+#include <type_traits>
+#include <vector>
+
+/** \namespace ptof Objects and methods for ParticleTrackingOF. */
+namespace ptof {
+struct Model {
+  inline static std::string banner() {
+    return io::line() + "Model\n" + io::line();
+  };
+
+  struct advection_diffusion_2d {
+    inline static const std::string name{"advection_diffusion_2d"};
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advective-diffusive transport in 2D.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_2d {
+    inline static const std::string name{"advection_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advective transport in 2D.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_fpt_2d {
+    inline static const std::string name{"advection_diffusion_fpt_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: First passage times under advective-diffusive\n"
+                "             transport in 2D.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Generic<2, ParallelOption, Dynamics::Type::firstpassage>;
+      using Info = Info_Absorbed_Reinjections;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_surface_decay_2d {
+    inline static const std::string name{
+        "advection_diffusion_surface_decay_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advective-diffusive transport with surface\n"
+                "             reaction A_F + B_S -> B_S.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_surface_order2_2d {
+    inline static const std::string name{
+        "advection_diffusion_surface_order2_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advective-diffusive transport with surface\n"
+                "             reaction A_F + B_S -> Nothing.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::TimeStep>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_2d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << io::line() << "Name: " << name << "\n"
+             << "Description: Advective-diffusive transport in 2D, with some\n"
+                "             periodic boundaries aligned with the Cartesian\n"
+                "             axes.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_2d {
+    inline static const std::string name{"periodic_cartesian_advection_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advective transport in 2D, with some periodic\n"
+                "             boundaries aligned with the Cartesian axes.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_fpt_2d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_fpt_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << io::line() << "Name: " << name << "\n"
+             << "Description: First-passage times under advective-diffusive\n"
+                "             transport in 2D, with some periodic boundaries\n"
+                "             aligned with the Cartesian axes.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Periodic_Cartesian<2, ParallelOption,
+                                      Dynamics::Type::firstpassage>;
+      using Info = Info_Absorbed_Reinjections;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_surface_decay_2d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_surface_decay_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: First-passage times under advection-diffusion in\n"
+             "             2D, with surface reaction A_F + B_S -> B_S, with\n"
+             "             some periodic boundaries aligned with the\n"
+             "             Cartesian axes.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_surface_order2_2d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_surface_order2_2d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: First-passage times under advection-diffusion in\n"
+             "             2D, with surface reaction A_F + B_S -> Nothing,\n"
+             "             with some periodic boundaries aligned with the\n"
+             "             Cartesian axes.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::TimeStep>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_3d {
+    inline static const std::string name{"advection_diffusion_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection-diffusion in 3D.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_3d {
+    inline static const std::string name{"advection_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection in 3D.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_fpt_3d {
+    inline static const std::string name{"advection_diffusion_fpt_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: First-passage times under advection-diffusion in\n"
+             "             3D.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Generic<3, ParallelOption, Dynamics::Type::firstpassage>;
+      using Info = Info_Absorbed_Reinjections;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_surface_decay_3d {
+    inline static const std::string name{
+        "advection_diffusion_surface_decay_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection-diffusion in 3D, with surface reaction\n"
+             "             A_F + B_S -> B_S.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct advection_diffusion_surface_order2_3d {
+    inline static const std::string name{
+        "advection_diffusion_surface_order2_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection-diffusion in 3D, with surface reaction\n"
+             "             A_F + B_S -> Nothing.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Generic<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::TimeStep>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_3d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection-diffusion in 3D, with some periodic\n"
+                "             boundaries aligned with the Cartesian axes.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_3d {
+    inline static const std::string name{"periodic_cartesian_advection_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection in 3D, with some periodic boundaries\n"
+                "             aligned with the Cartesian axes.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_fpt_3d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_fpt_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: First-passage times under advection-diffusion in\n"
+             "             3D, with some periodic boundaries aligned with the\n"
+             "             Cartesian axes.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Periodic_Cartesian<3, ParallelOption,
+                                      Dynamics::Type::firstpassage>;
+      using Info = Info_Absorbed_Reinjections;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_surface_decay_3d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_surface_decay_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection-diffusion in 3D, with surface reaction\n"
+             "             A_F + B_S -> B_S, with some periodic boundaries\n"
+             "             aligned with the Cartesian axes.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct periodic_cartesian_advection_diffusion_surface_order2_3d {
+    inline static const std::string name{
+        "periodic_cartesian_advection_diffusion_surface_order2_3d"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection-diffusion in 3D, with surface reaction\n"
+             "             A_F + B_S -> Nothing, with some periodic\n"
+             "             boundaries aligned with the Cartesian axes.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::TimeStep>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_cartesian_advection_diffusion {
+    inline static const std::string name{"bcc_cartesian_advection_diffusion"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection-diffusion in a body centered cubic\n"
+                "             beadpack, based on the primitive unit cell.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Bcc<ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_cartesian_advection_diffusion_fpt {
+    inline static const std::string name{
+        "bcc_cartesian_advection_diffusion_fpt"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: First-passage times under advection-diffusion in\n"
+             "             body centered cubic beadpack, based on the\n"
+             "             primitive unit cell.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Bcc<ParallelOption, Periodicity::Type::cartesian,
+                       Dynamics::Type::firstpassage>;
+      using Info = Info_Absorbed_Reinjections;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_cartesian_advection {
+    inline static const std::string name{"bcc_cartesian_advection"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection in a body centered cubic beadpack, based\n"
+             "             on the primitive unit cell.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Bcc<ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_cartesian_advection_diffusion_surface_decay {
+    inline static const std::string name{
+        "bcc_cartesian_advection_diffusion_surface_decay"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection-diffusion in a body centered cubic\n"
+             "             beadpack, based on the primitive unit cell, with\n"
+             "             surface reaction A_F + B_S -> B_S.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Bcc<ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_cartesian_advection_diffusion_surface_order2 {
+    inline static const std::string name{
+        "bcc_cartesian_advection_diffusion_surface_order2"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection-diffusion in a body centered cubic\n"
+             "             beadpack, based on the primitive unit cell, with\n"
+             "             surface reaction A_F + B_S -> Nothing.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry = Geometry_Bcc<ParallelOption>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::TimeStep>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_symmetryplanes_advection_diffusion {
+    inline static const std::string name{
+        "bcc_symmetryplanes_advection_diffusion"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection-diffusion in a body centered cubic\n"
+                "             beadpack, based on the minimal unit cell.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_symmetryplanes_advection_diffusion_fpt {
+    inline static const std::string name{
+        "bcc_cartesian_advection_diffusion_fpt"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: First-passage times under advection-diffusion in\n"
+             "             body centered cubic beadpack, based on the minimal\n"
+             "             unit cell.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes,
+                       Dynamics::Type::firstpassage>;
+      using Info = Info_Absorbed_Reinjections;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_symmetryplanes_advection {
+    inline static const std::string name{"bcc_symmetryplanes_advection"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output
+          << banner() << "Name: " << name << "\n"
+          << "Description: Advection in body centered cubic beadpack, based\n"
+             "             on the minimal unit cell.\n"
+          << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction = ReactionHandler_NoBulk_NoSurface;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_symmetryplanes_advection_diffusion_surface_decay {
+    inline static const std::string name{
+        "bcc_symmetryplanes_advection_diffusion_surface_decay"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << io::line() << "Name: " << name << "\n"
+             << "Description: Advection-diffusion in a body centered cubic\n"
+                "             beadpack, based on the minimal unit cell, with\n"
+                "             surface reaction A_F + B_S -> B_S.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::Asynchronous>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+
+  struct bcc_symmetryplanes_advection_diffusion_surface_order2 {
+    inline static const std::string name{
+        "bcc_symmetryplanes_advection_diffusion_surface_order2"};
+
+    inline static std::ostream &info(std::ostream &output) {
+      output << banner() << "Name: " << name << "\n"
+             << "Description: Advection-diffusion in a body centered cubic\n"
+                "             beadpack, based on the minimal unit cell, with\n"
+                "             surface reaction A_F + B_S -> Nothing.\n"
+             << io::line();
+      return output;
+    }
+
+    template <typename ParallelOption> struct Definitions {
+      using Geometry =
+          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+      using Info = Info_Absorbed_Patch;
+      using State =
+          State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
+      using CTRW = ctrw::CTRW<State, ParallelOption>;
+      using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
+                                      CTRWStepper::TimeStep>;
+      using Transport = Transport_Generic<Solvers>;
+      using Reaction =
+          ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
+      using InitialCondition = InitialConditionHandler_Generic;
+      using Output = OutputHandler_Generic;
+    };
+  };
+};
+} // namespace ptof
+
+#endif /* PTOF_MODEL::H */

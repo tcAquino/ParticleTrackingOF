@@ -62,7 +62,7 @@ template <typename Geometry, typename Field>
 auto makeLinearVelocityInterpolator(Geometry const &geometry, Field &&field) {
   return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field), geometry.locator,
-      meta::Selector_t<CheckOptions::Warn>{}};
+      CheckOptions::Warn{}};
 };
 
 /**
@@ -79,7 +79,7 @@ auto makeLinearVelocityInterpolator(Geometry const &geometry, Field &&field,
   return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field), geometry.locator,
       std::forward<Uninterpolated>(uninterpolated),
-      meta::Selector_t<CheckOptions::Warn>{}};
+      CheckOptions::Warn{}};
 };
 } // namespace ptof
 

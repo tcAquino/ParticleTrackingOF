@@ -831,6 +831,13 @@ OStream &nonewline(std::string const &message, OStream &stream) {
     return stream << message;
 }
 
+/**
+   \brief Line of hyphens.
+*/
+
+inline std::string line(std::size_t nr_characters = 80, bool endl = true) {
+  return std::string(nr_characters, '-') + (endl ? "\n" : "");
+}
 } // namespace io
 
 #endif /* GENERAL_IO_H */

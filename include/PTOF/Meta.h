@@ -19,7 +19,7 @@ template <typename X>
 using velocity_rescaling_factor_t =
     decltype(std::declval<X>().velocity_rescaling_factor);
 /**
-   \brief Check if a class has member <tt>double velocity_rescaling_factor</tt>.
+   \brief Check if \c X has member <tt>double velocity_rescaling_factor</tt>.
 */
 template <typename X>
 inline constexpr bool has_velocity_rescaling_factor_v =
@@ -29,7 +29,7 @@ inline constexpr bool has_velocity_rescaling_factor_v =
 /**\brief Type of \c X::patch_id. */
 template <typename X> using patch_id_t = decltype(std::declval<X>().patch_id);
 /**
-   \brief Check if a class has member <tt>Foam::label patch_id</tt>.
+   \brief Check if \c X has member <tt>Foam::label patch_id</tt>.
 */
 template <typename X>
 inline constexpr bool has_patch_id_v =

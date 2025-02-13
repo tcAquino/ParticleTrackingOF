@@ -38,7 +38,7 @@ if [[ ${3,,} = "parallel" ]] ; then
 	file_modifier="_parallel"
 fi
 
-echo -e "${GREEN}Making ${1} ${3,,} executable for model_${2} ($BUILD build)...${NC}"
+echo -e "${GREEN}Making ${1} ${3,,} executable for model ${2} ($BUILD build)...${NC}"
 make "BUILD=$BUILD" "PTHBIN_BASE=$PTHBIN_BASE" "${1}${file_modifier}"
 if [[ $? -eq 0 ]] ; then
 	mv "$PTHBIN_BASE/$BUILD/${1}${file_modifier}" "$PTHBIN_BASE/$BUILD/${1}${file_modifier}_${2}"

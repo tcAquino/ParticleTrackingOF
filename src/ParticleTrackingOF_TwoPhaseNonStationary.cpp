@@ -10,9 +10,10 @@
 #include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Directories.h"
-#include "PTOF/Models.h"
+#include "PTOF/Model.h"
 #include "PTOF/Phase.h"
 #include "PTOF/Transitions.h"
+#include "PTOF/Useful.h"
 #include <algorithm>
 #include <chrono>
 #include <cstddef>
@@ -25,22 +26,18 @@
 #include <string>
 
 template <typename ParallelOption> struct ExecutableInfo {
-  template <typename OStream> static void banner(OStream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "ParticleTrackingOF_TwoPhaseNonStationary\n"
-           "--------------------------------------------------------------\n";
-  }
+  inline static std::string banner() {
+    return io::line() + "ParticleTrackingOF_TwoPhaseNonStationary\n" +
+           io::line();
+  };
 
   static int constexpr nr_parameters =
       std::is_same_v<ParallelOption, par::ParallelOptions::Serial> ? 11 : 12;
 
-  template <typename OStream> static void info(OStream &output) {
-    output << "--------------------------------------------------------------\n"
-              "Executable parameters (pass '' for default in []):\n"
-              "--------------------------------------------------------------\n"
-              "Number of parameters: "
-           << nr_parameters << "\n"
+  inline static std::ostream &info(std::ostream &output) {
+    output << io::line()
+           << "Executable parameters (pass '' for default in []):\n"
+           << io::line() << "Number of parameters: " << nr_parameters << "\n"
            << "- Cases directory [../cases]\n"
               "- Name of case\n"
               "- Name of transport parameter set\n"
@@ -55,26 +52,26 @@ template <typename ParallelOption> struct ExecutableInfo {
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Parallel>)
       output << "- Number of parallel threads\n";
-    output
-        << "--------------------------------------------------------------\n";
+    output << io::line();
+    return output;
   }
 
-  template <typename OStream> static void help(OStream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Help options (pass any number after -h or --help):\n"
-           "--------------------------------------------------------------\n"
-           "-a / --all : All available info\n"
-           "-e / --executable : Main executable info\n"
-           "-g / --geometry : Geometry info\n"
-           "-d / --directories-of : OpenFOAM directories info\n"
-           "-t / --transport : Transport info\n"
-           "-p / --phase : Phase info\n"
-           "-r / --reaction : Reaction info\n"
-           "-s / --solvers : Solver info\n"
-           "-i / --initial-condition : Initial condition info\n"
-           "-o / --output : Output info\n"
-           "--------------------------------------------------------------\n";
+  inline static std::ostream &help(std::ostream &output) {
+    output << io::line()
+           << "Help options (pass any number after -h or --help):\n"
+           << io::line()
+           << "-a / --all : All available info\n"
+              "-e / --executable : Main executable info\n"
+              "-g / --geometry : Geometry info\n"
+              "-d / --directories-of : OpenFOAM directories info\n"
+              "-t / --transport : Transport info\n"
+              "-p / --phase : Phase info\n"
+              "-r / --reaction : Reaction info\n"
+              "-s / --solvers : Solver info\n"
+              "-i / --initial-condition : Initial condition info\n"
+              "-o / --output : Output info\n"
+           << io::line();
+    return output;
   }
 
   ExecutableInfo() = delete;
@@ -82,21 +79,18 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  namespace model = ptof::model_bcc_symmetryplanes_advection;
+  using Model = ptof::Model::bcc_symmetryplanes_advection;
   using Phase = ptof::Phase;
+  using Definitions = Model::Definitions<ParallelOption>;
 
-  ExecutableInfo<ParallelOption>::banner(std::cout);
-  std::cout << "\n";
-  model::Definitions<ParallelOption>::Model::info(std::cout);
+  std::cout << std::setprecision(2) << std::scientific;
+  std::cout << ExecutableInfo<ParallelOption>::banner() << "\n";
+  Model::info(std::cout);
 
-  if (ptof::options_help<ExecutableInfo<ParallelOption>,
-                         model::Definitions<ParallelOption>::Geometry,
-                         ptof::DirectoriesOF,
-                         model::Definitions<ParallelOption>::Transport, Phase,
-                         model::Definitions<ParallelOption>::Reaction,
-                         model::Definitions<ParallelOption>::Solvers,
-                         model::Definitions<ParallelOption>::InitialCondition,
-                         model::Definitions<ParallelOption>::Output>(
+  if (ptof::options_help<ExecutableInfo<ParallelOption>, Definitions::Geometry,
+                         ptof::DirectoriesOF, Definitions::Transport, Phase,
+                         Definitions::Reaction, Definitions::Solvers,
+                         Definitions::InitialCondition, Definitions::Output>(
           std::cout, argc, argv))
     return 0;
   if (argc != ExecutableInfo<ParallelOption>::nr_parameters + 1)
@@ -116,22 +110,15 @@ int main(int argc, char *argv[]) {
   std::string run_nr = argv[arg++];
   if constexpr (!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>) {
     omp_set_num_threads(atoi(argv[arg++]));
-    std::cout
-        << "\n"
-        << "--------------------------------------------------------------\n"
-           "Number of threads: "
-        << par::get_num_threads(ParallelOption{})
-        << "\n"
-           "--------------------------------------------------------------\n";
+    std::cout << io::line()
+              << "Number of threads: " << par::get_num_threads(ParallelOption{})
+              << "\n"
+              << io::line();
   }
   if (!io::is_empty(run_nr))
-    std::cout
-        << "\n"
-        << "--------------------------------------------------------------\n"
-           "Run number: "
-        << std::stoul(run_nr)
-        << "\n"
-           "--------------------------------------------------------------\n";
+    std::cout << "\n"
+              << io::line() << "Run number: " << std::stoul(run_nr) << "\n"
+              << io::line();
 
   ptof::Directories directories{dir, case_name, dir_output};
   std::cout << "\n";
@@ -141,13 +128,10 @@ int main(int argc, char *argv[]) {
   std::cout << "\n";
   directories_of.info_runtime(std::cout);
 
-  std::cout << std::setprecision(2) << std::scientific;
-
   std::cout << "\n"
             << "Setting up geometry...\n";
   auto execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Geometry geometry{
-      directories_of, directories, io::CoutLogger{}};
+  Definitions::Geometry geometry{directories_of, directories, io::CoutLogger{}};
   geometry.info_runtime(std::cout);
   auto execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -158,8 +142,9 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = model::Definitions<ParallelOption>::Transport::
-      makeVelocityInterpolator_WithUninterpolated(geometry);
+  auto velocity_field =
+      Definitions::Transport::makeVelocityInterpolator_WithUninterpolated(
+          geometry);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -169,7 +154,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing transport parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Transport::Parameters params_transport{
+  Definitions::Transport::Parameters params_transport{
       directories, params_transport_name, geometry, velocity_field};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -201,7 +186,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing reaction parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Reaction::Parameters params_reaction{
+  Definitions::Reaction::Parameters params_reaction{
       directories, params_reaction_name, geometry, params_transport};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -212,7 +197,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing solver parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Solvers::Parameters params_solvers{
+  Definitions::Solvers::Parameters params_solvers{
       directories, params_solvers_name, geometry, params_transport,
       params_reaction};
   execution_end = std::chrono::high_resolution_clock::now();
@@ -224,9 +209,10 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up reaction..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto bulk_reaction =
-      model::Definitions<ParallelOption>::Reaction::makeBulkReaction(
-          geometry, params_reaction, params_transport, params_solvers);
+  auto bulk_reaction = Definitions::Reaction::makeBulkReaction(
+      geometry, params_reaction, params_transport, params_solvers);
+  auto surface_reaction = Definitions::Reaction::makeSurfaceReaction(
+      geometry, params_reaction, params_transport, params_solvers);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -236,9 +222,9 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing initial condition parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::InitialCondition::Parameters
-      params_initial_condition{directories, params_initial_condition_name,
-                               geometry, params_transport, params_reaction};
+  Definitions::InitialCondition::Parameters params_initial_condition{
+      directories, params_initial_condition_name, geometry, params_transport,
+      params_reaction};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -248,11 +234,10 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up initial condition...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto initial_condition = model::Definitions<ParallelOption>::
-      InitialCondition::makeInitialCondition<
-          model::Definitions<ParallelOption>::CTRW::Particle>(
-          geometry, velocity_field, params_initial_condition, params_solvers,
-          carrier_phase_field, 1. - params_phase.phase_tolerance);
+  auto initial_condition = Definitions::InitialCondition::makeInitialCondition<
+      Definitions::CTRW::Particle>(
+      geometry, velocity_field, params_initial_condition, params_solvers,
+      carrier_phase_field, 1. - params_phase.phase_tolerance);
   initial_condition.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -265,10 +250,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   auto boundary = geometry.makeBoundary(
       directories, params_transport, params_reaction, params_solvers,
-      velocity_field,
-      model::Definitions<ParallelOption>::Reaction::makeSurfaceReaction(
-          geometry, params_reaction, params_transport, params_solvers),
-      initial_condition);
+      velocity_field, surface_reaction, initial_condition);
   boundary.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -279,11 +261,10 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::CTRW ctrw{initial_condition()};
-  auto transitions =
-      ptof::makeTransitions<model::Definitions<ParallelOption>::Transport>(
-          velocity_field, geometry, boundary, params_transport, params_reaction,
-          params_solvers, bulk_reaction);
+  Definitions::CTRW ctrw{initial_condition()};
+  auto transitions = ptof::makeTransitions<Definitions::Transport>(
+      velocity_field, geometry, boundary, params_transport, params_reaction,
+      params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -293,7 +274,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing output parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  model::Definitions<ParallelOption>::Output::Parameters params_output{
+  Definitions::Output::Parameters params_output{
       directories,      params_output_name, geometry,
       params_transport, params_reaction,    params_solvers};
   execution_end = std::chrono::high_resolution_clock::now();
@@ -307,13 +288,12 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   if (io::is_empty(filename_output_identifier))
     filename_output_identifier = ptof::identifier(
-        "TwoPhaseNonStationary_" +
-            model::Definitions<ParallelOption>::Model::name,
-        case_name, directories_of.case_name, params_transport_name,
-        params_phase_name, params_reaction_name, params_solvers_name,
+        "TwoPhaseNonStationary_" + Model::name, case_name,
+        directories_of.case_name, params_transport_name, params_phase_name,
+        params_reaction_name, params_solvers_name,
         params_initial_condition_name, params_output_name);
   filename_output_identifier += (io::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
-  auto output = model::Definitions<ParallelOption>::Output::makeOutput(
+  auto output = Definitions::Output::makeOutput(
       ctrw, velocity_field, geometry, directories, params_output,
       filename_output_identifier, {std::cref(carrier_phase_field)},
       {params_phase.phase_tolerance});
@@ -383,8 +363,14 @@ int main(int argc, char *argv[]) {
         next_flow_time > current_time
             ? std::min(output.next_measurement_time(), next_flow_time)
             : output.next_measurement_time();
-    model::Definitions<ParallelOption>::Solvers::evolve(
-        ctrw, transitions, params_solvers, current_time, previous_time);
+    Definitions::Solvers::evolve(
+        ctrw, transitions, params_solvers, current_time, previous_time,
+        [&bulk_reaction, &surface_reaction](Definitions::CTRW ctrw,
+                                            Definitions::State::Time new_time,
+                                            Definitions::State::Time old_time) {
+          Definitions::Reaction::update(bulk_reaction, surface_reaction, ctrw,
+                                        new_time, old_time);
+        });
   }
   if (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";

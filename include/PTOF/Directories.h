@@ -45,22 +45,19 @@ struct Directories {
 
   /** \brief Output information about current object. */
   inline std::ostream &info_runtime(std::ostream &output) const {
-    output
-        << "--------------------------------------------------------------\n"
-           "Directories\n"
-           "--------------------------------------------------------------\n"
-           "Case: " +
-               dir_case +
-               "\n"
-               "Parameters: " +
-               dir_parameters +
-               "\n"
-               "Boundary conditions: " +
-               dir_boundaryconditions +
-               "\n"
-               "Output: " +
-               dir_output + "\n"
-        << "--------------------------------------------------------------\n";
+    output << io::line() << "Directories\n"
+           << io::line()
+           << "Case: " + dir_case +
+                  "\n"
+                  "Parameters: " +
+                  dir_parameters +
+                  "\n"
+                  "Boundary conditions: " +
+                  dir_boundaryconditions +
+                  "\n"
+                  "Output: " +
+                  dir_output + "\n"
+           << io::line();
     return output;
   }
 };
@@ -97,14 +94,12 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "OpenFOAM directories (pass '' for default in [])\n"
-           "--------------------------------------------------------------\n"
-           "OpenFOAM cases directory [$FOAM_RUN]\n"
-           "OpenFOAM case name\n"
-           "OpenFOAM case time [last OpenFOAM case time]\n"
-           "--------------------------------------------------------------\n";
+    output << io::line() << "OpenFOAM directories (pass '' for default in [])\n"
+           << io::line()
+           << "OpenFOAM cases directory [$FOAM_RUN]\n"
+              "OpenFOAM case name\n"
+              "OpenFOAM case time [last OpenFOAM case time]\n"
+           << io::line();
     return output;
   }
 
@@ -113,16 +108,13 @@ public:
      \param output Output stream.
   */
   inline std::ostream &info_runtime(std::ostream &output) const {
-    output
-        << "--------------------------------------------------------------\n"
-           "OpenFOAM directories\n"
-           "--------------------------------------------------------------\n"
-           "Case: " +
-               dir_case +
-               "\n"
-               "Time: " +
-               time.timeName() + "\n"
-        << "--------------------------------------------------------------\n";
+    output << io::line() << "OpenFOAM directories\n"
+           << io::line()
+           << "Case: " + dir_case +
+                  "\n"
+                  "Time: " +
+                  time.timeName() + "\n"
+           << io::line();
     return output;
   }
 

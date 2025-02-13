@@ -143,11 +143,9 @@ struct Geometry_Generic {
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------\n"
-              "Geometry\n"
-              "--------------------------------------------------------------\n"
-              "Spatial dimension: " +
-                  std::to_string(dim) +
+    output << io::line() << "Geometry\n"
+           << io::line()
+           << "Spatial dimension: " + std::to_string(dim) +
                   "\n"
                   "Boundary conditions for: " +
                   Dynamics::name(dynamics) +
@@ -162,23 +160,19 @@ struct Geometry_Generic {
     if constexpr (dynamics != Dynamics::Type::firstpassage)
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
-    output
-        << "  - empty\n"
-           "    - No effect (default for unspecified patches in mesh)\n"
-           "--------------------------------------------------------------\n";
+    output << "  - empty\n"
+              "    - No effect (default for unspecified patches in mesh)\n"
+           << io::line();
     return output;
   }
 
   /** \brief Output information about current object. */
   inline std::ostream &info_runtime(std::ostream &output) const {
-    output
-        << "--------------------------------------------------------------\n"
-           "Mesh\n"
-           "--------------------------------------------------------------\n"
-        << "Cells: " << mesh().nCells() << "\n"
-        << "Faces: " << mesh().nFaces() << "\n"
-        << "Edges: " << mesh().nEdges() << "\n"
-        << "--------------------------------------------------------------\n";
+    output << io::line() << "Mesh\n"
+           << io::line() << "Cells: " << mesh().nCells() << "\n"
+           << "Faces: " << mesh().nFaces() << "\n"
+           << "Edges: " << mesh().nEdges() << "\n"
+           << io::line();
     return output;
   }
 
@@ -320,11 +314,9 @@ struct Geometry_Periodic_Cartesian {
 
   /** \brief Output generic information about object. */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------\n"
-              "Geometry\n"
-              "--------------------------------------------------------------\n"
-              "Spatial dimension: " +
-                  std::to_string(dim) +
+    output << io::line() << "Geometry\n"
+           << io::line()
+           << "Spatial dimension: " + std::to_string(dim) +
                   "\n"
                   "Boundary conditions for: " +
                   Dynamics::name(dynamics) +
@@ -341,27 +333,22 @@ struct Geometry_Periodic_Cartesian {
     if constexpr (dynamics != Dynamics::Type::firstpassage)
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
-    output
-        << "  - empty\n"
-           "    - No effect (default for unspecified patches in mesh)\n"
-           "--------------------------------------------------------------\n";
+    output << "  - empty\n"
+              "    - No effect (default for unspecified patches in mesh)\n"
+           << io::line();
     return output;
   }
 
   /** \brief Output information about current object. */
   inline std::ostream &info_runtime(std::ostream &output) const {
-    output << "--------------------------------------------------------------\n"
-              "Mesh\n"
-              "--------------------------------------------------------------\n"
-           << "Cells: " << mesh().nCells() << "\n"
+    output << io::line() << "Mesh\n"
+           << io::line() << "Cells: " << mesh().nCells() << "\n"
            << "Faces: " << mesh().nFaces() << "\n"
            << "Edges: " << mesh().nEdges() << "\n"
-           << "--------------------------------------------------------------\n"
-           << "\n"
-           << "--------------------------------------------------------------\n"
-              "Periodic boundaries\n"
-              "--------------------------------------------------------------\n"
-           << "Automatically extracted Cartesian periodic boundaries:\n";
+           << io::line() << "\n"
+           << io::line()
+           << "Automatically extracted Cartesian periodic boundaries\n"
+           << io::line();
     if (boundary_periodic.boundaries.size() == 0)
       output << "None";
     for (std::size_t dd = 0; dd < boundary_periodic.boundaries.size(); ++dd)
@@ -370,8 +357,7 @@ struct Geometry_Periodic_Cartesian {
         output << "Dimension " << dd << " at "
                << boundary_periodic.boundaries[dd].first << " and "
                << boundary_periodic.boundaries[dd].second << "\n";
-    output
-        << "--------------------------------------------------------------\n";
+    output << io::line();
     return output;
   }
 
@@ -531,11 +517,9 @@ struct Geometry_Bcc {
 
   /** \brief Output generic information about object. */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------\n"
-              "Geometry\n"
-              "--------------------------------------------------------------\n"
-              "Spatial dimension: " +
-                  std::to_string(dim) +
+    output << io::line() << "Geometry\n"
+           << io::line()
+           << "Spatial dimension: " + std::to_string(dim) +
                   "\n"
                   "Boundary conditions for: " +
                   Dynamics::name(dynamics) +
@@ -554,23 +538,19 @@ struct Geometry_Bcc {
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
-    output
-        << "  - empty\n"
-           "    - No effect (default for unspecified patches in mesh)\n"
-           "--------------------------------------------------------------\n";
+    output << "  - empty\n"
+              "    - No effect (default for unspecified patches in mesh)\n"
+           << io::line();
     return output;
   }
 
   /** \brief Output information about current object. */
   inline std::ostream &info_runtime(std::ostream &output) const {
-    output
-        << "--------------------------------------------------------------\n"
-           "Mesh\n"
-           "--------------------------------------------------------------\n"
-        << "Cells: " << mesh().nCells() << "\n"
-        << "Faces: " << mesh().nFaces() << "\n"
-        << "Edges: " << mesh().nEdges() << "\n"
-        << "--------------------------------------------------------------\n";
+    output << io::line() << "Mesh\n"
+           << io::line() << "Cells: " << mesh().nCells() << "\n"
+           << "Faces: " << mesh().nFaces() << "\n"
+           << "Edges: " << mesh().nEdges() << "\n"
+           << io::line();
     return output;
   }
 

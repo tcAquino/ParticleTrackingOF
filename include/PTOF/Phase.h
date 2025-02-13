@@ -114,26 +114,24 @@ struct Phase {
 
     /** \brief Output general information about object. */
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << "--------------------------------------------------------------\n"
-             "Phase parameters\n"
-             "--------------------------------------------------------------\n"
-             "- Name of phase to be read from file\n"
-             "- Pass on same line:\n"
-             "  - Whether named phase is carrier or excluded phase:\n"
-             "    - carrier\n"
-             "      - Transport in this phase\n"
-             "    - excluded\n"
-             "      - No transport in this phase\n"
-             "- How to compute gradient of carrier phase:\n"
-             "  - read\n"
-             "    - Based on reading gradient of named phase\n"
-             "  - compute\n"
-             "    - Computed from named phase data\n"
-             "- Leakage tolerance (log of ratio of concentrations between\n"
-             "  excluded phase and carrier phase)\n"
-             "- Phase field tolerance to consider pure phase\n"
-             "--------------------------------------------------------------\n";
+      output << io::line() << "Phase parameters\n"
+             << io::line()
+             << "- Name of phase to be read from file\n"
+                "- Pass on same line:\n"
+                "  - Whether named phase is carrier or excluded phase:\n"
+                "    - carrier\n"
+                "      - Transport in this phase\n"
+                "    - excluded\n"
+                "      - No transport in this phase\n"
+                "- How to compute gradient of carrier phase:\n"
+                "  - read\n"
+                "    - Based on reading gradient of named phase\n"
+                "  - compute\n"
+                "    - Computed from named phase data\n"
+                "- Leakage tolerance (log of ratio of concentrations between\n"
+                "  excluded phase and carrier phase)\n"
+                "- Phase field tolerance to consider pure phase\n"
+             << io::line();
       return output;
     }
   };

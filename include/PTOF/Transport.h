@@ -128,12 +128,9 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Transport parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- Reference lengthscale\n"
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "- Reference lengthscale\n"
               "- How to set the Peclet number:\n"
               "  - compute_from_diff_coeff\n"
               "    - Compute from given diffusion coefficient (do not\n"
@@ -166,8 +163,7 @@ public:
               "      - Advection time, based on absolute value of mean\n"
               "        velocity vector\n"
               "      - Diffusion coefficient\n"
-              "--------------------------------------------------------------"
-              "\n";
+           << io::line();
     return output;
   }
 };
@@ -250,12 +246,9 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Transport parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- Reference lengthscale\n"
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "- Reference lengthscale\n"
               "- Whether and how to rescale velocity field:\n"
               "  - rescale_velocity_to_mean\n"
               "    - Rescale according to given mean\n"
@@ -268,8 +261,7 @@ public:
               "        velocity vector\n"
               "  - no_rescale_velocity\n"
               "    - Do not rescale\n"
-              "--------------------------------------------------------------"
-              "\n";
+           << io::line();
     return output;
   }
 };
@@ -310,15 +302,11 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Transport parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- Reference lengthscale\n"
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "- Reference lengthscale\n"
               "- Diffusion coefficient\n"
-              "--------------------------------------------------------------"
-              "\n";
+           << io::line();
     return output;
   }
 };
@@ -460,12 +448,9 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Transport parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- How to set the reference lengthscale:\n"
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "- How to set the reference lengthscale:\n"
               "  - radius\n"
               "    - Equal to bead radius\n"
               "  - diameter\n"
@@ -508,8 +493,7 @@ public:
               "      - Advection time, based on absolute value of mean\n"
               "        velocity vector\n"
               "      - Diffusion coefficient\n"
-              "--------------------------------------------------------------"
-              "\n";
+           << io::line();
     return output;
   }
 };
@@ -619,12 +603,9 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Transport parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- How to set the reference lengthscale:\n"
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "- How to set the reference lengthscale:\n"
               "  - radius\n"
               "    - Equal to bead radius\n"
               "  - diameter\n"
@@ -647,8 +628,7 @@ public:
               "        velocity vector\n"
               "  - no_rescale_velocity\n"
               "    - Do not rescale\n"
-              "--------------------------------------------------------------"
-              "\n";
+           << io::line();
     return output;
   }
 };
@@ -716,12 +696,9 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Transport parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- How to set the reference lengthscale:\n"
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "- How to set the reference lengthscale:\n"
               "  - radius\n"
               "    - Equal to bead radius\n"
               "  - diameter\n"
@@ -733,8 +710,7 @@ public:
               "    - Pass on same line:\n"
               "      - Reference lengthscale value\n"
               "- Diffusion coefficient"
-              "--------------------------------------------------------------"
-              "\n";
+           << io::line();
     return output;
   }
 };
@@ -808,10 +784,7 @@ struct Transport_LinearInterp {
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------\n"
-              "Transport\n"
-              "--------------------------------------------------------------\n"
-              "Advection: ";
+    output << io::line() << "Transport\n" << io::line() << "Advection: ";
     if constexpr (Solvers::Parameters::advection) {
       output << "Yes\n";
     } else {
@@ -826,8 +799,7 @@ struct Transport_LinearInterp {
     if constexpr (Solvers::Parameters::advection) {
       output << "Velocity interpolation: Linear\n";
     }
-    output
-        << "--------------------------------------------------------------\n";
+    output << io::line();
     return output;
   }
 };

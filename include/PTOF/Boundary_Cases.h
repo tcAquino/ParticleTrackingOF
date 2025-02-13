@@ -8,6 +8,7 @@
 #ifndef PTOF_BOUNDARY_CASES_H
 #define PTOF_BOUNDARY_CASES_H
 
+#include "General/IO.h"
 #include "General/Meta.h"
 #include "Geometry/Boundary.h"
 #include "PTOF/Boundary.h"
@@ -261,17 +262,12 @@ public:
      \brief Output information about current object.
      \param output Output stream.
   */
-  inline void info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     io::StreamScopeFormat guard{output};
-    output
-        << "--------------------------------------------------------------\n"
-           "Boundary conditions\n"
-           "--------------------------------------------------------------\n";
+    output << io::line() << "Boundary conditions\n" << io::line();
     if (_boundary_conditions.empty()) {
-      output
-          << "None\n"
-          << "--------------------------------------------------------------\n";
-      return;
+      output << "None\n" << io::line();
+      return output;
     }
     std::size_t width_patch =
         std::max_element(_boundary_conditions.begin(),
@@ -299,8 +295,8 @@ public:
         output << std::setw(width_bc) << bc.second;
       output << "\n";
     }
-    output
-        << "--------------------------------------------------------------\n";
+    output << io::line();
+    return output;
   }
 
 private:

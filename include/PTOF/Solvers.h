@@ -12,6 +12,7 @@
 #include "General/Meta.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Steppers.h"
+#include "PTOF/TimeUnits.h"
 #include <ostream>
 #include <string>
 #include <type_traits>
@@ -112,9 +113,16 @@ struct SolverParameters_Generic {
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>) {
       split_line = io::split_line(input);
       param_index = 0;
+      auto time_units = io::read<std::string>(
+          split_line, param_index, in_file + "Could not parse time units");
+      if (!TimeUnits{}.contains(time_units))
+        throw std::runtime_error{in_file + "Not supported"};
+      double time_unit_factor =
+          ptof::time_unit_factor(time_units, params_transport, params_reaction);
       io::read(split_line, param_index,
                in_file + "Could not parse Time step for synchronizing CTRW",
                ctrw_time_step);
+      ctrw_time_step *= time_unit_factor;
     }
   }
 
@@ -123,12 +131,9 @@ struct SolverParameters_Generic {
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << "--------------------------------------------------------------"
-              "\n"
-              "Solver parameters\n"
-              "--------------------------------------------------------------"
-              "\n"
-              "- Number of Lagrangian particles in each injection step\n"
+    output << io::line() << "Solver parameters\n"
+           << io::line()
+           << "- Number of Lagrangian particles in each injection step\n"
               "- Local time step accuracy:\n"
               "  (Note:\n"
               "    - Minimum between processes is used\n"
@@ -147,10 +152,20 @@ struct SolverParameters_Generic {
               "    - Time step accuracy with respect to global diffusion\n"
               "      time\n"
               "    - Time step accuracy with respect to global reaction time\n";
-    if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>)
-      output << "- Time step for synchronizing CTRW\n";
-    output
-        << "--------------------------------------------------------------\n";
+    if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>) {
+      output << "- Time units for CTRW synchronization time step:\n"
+                "  - diffusion\n"
+                "    - Diffusion time units\n"
+                "  - advection\n"
+                "    - Advection time units\n"
+                "  - reaction\n"
+                "    - Reaction time units\n"
+                "  - arbitrary\n"
+                "    - Arbitary units (no rescaling)\n"
+                "  - Pass on same line:\n"
+                "    - Time step for synchronizing CTRW\n";
+    }
+    output << io::line();
     return output;
   }
 };
@@ -186,10 +201,7 @@ struct Solvers_Generic {
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Solvers\n"
-           "--------------------------------------------------------------\n";
+    output << io::line() << "Solvers\n" << io::line();
     if constexpr (Parameters::advection) {
       output << "Advection: ";
       if constexpr (std::is_same_v<Stepper_Advection, Stepper::Euler>) {
@@ -209,8 +221,7 @@ struct Solvers_Generic {
     } else if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>) {
       output << "Time step synchronization\n";
     }
-    output
-        << "--------------------------------------------------------------\n";
+    output << io::line();
     return output;
   }
 

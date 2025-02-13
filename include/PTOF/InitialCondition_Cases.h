@@ -244,10 +244,9 @@ public:
   */
   template <typename OStream> static std::ostream &info(OStream &output) {
     output
-        << "--------------------------------------------------------------\n"
-           "Initial condition parameters\n"
-           "--------------------------------------------------------------\n"
-           "- Initial condition type:\n"
+        << io::line() << "Initial condition parameters\n"
+        << io::line()
+        << "- Initial condition type:\n"
            "  - point\n"
            "    - All particles at specified position\n"
            "    - Pass on same line:\n"
@@ -380,7 +379,7 @@ public:
            "            - Injection time step accuracy with respect to\n"
            "              reaction time\n"
            "      - Total injected mass per injection time step\n"
-           "--------------------------------------------------------------\n";
+        << io::line();
     return output;
   }
 
@@ -1106,15 +1105,9 @@ public:
   */
   template <typename OStream>
   std::ostream &info_runtime(OStream &output) const {
-    output << "------------------------------------------------------------"
-              "--\n"
-              "Initial condition\n"
-              "------------------------------------------------------------"
-              "--\n"
-              "Type: " +
-                  InitialConditionList::name(type) + "\n"
-           << "------------------------------------------------------------"
-              "--\n";
+    output << io::line() << "Initial condition\n"
+           << io::line() << "Type: " + InitialConditionList::name(type) + "\n"
+           << io::line();
     return output;
   }
 };

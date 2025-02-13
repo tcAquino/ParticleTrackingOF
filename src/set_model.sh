@@ -21,7 +21,7 @@ else
     exit 1
 fi
 
-match="$(grep -nosm 1 "using ParallelOption =[^;]*;" ${1}.cpp)"
+match="$(grep -nosm 1 "using ParallelOption =[^;]*;$" ${1}.cpp)"
 if [[ -z "$match" ]] ; then
     echo "$(basename "$0") : Parallelization option not found in ${1}.cpp. Declaration must be in a single line."
     exit 1
@@ -34,14 +34,14 @@ else
     fi
 fi
 
-match="$(grep -nosm 1 "namespace model =[^;]*;" ${1}.cpp)"
+match="$(grep -nosm 1 "using Model =[^;]*;$" ${1}.cpp)"
 if [[ -z "$lineno" ]] ; then
     echo "$(basename "$0") : Model definition not found in ${1}.cpp. Declaration must be in a single line."
     exit 1
 else
     lineno="$(cut -d ':' -f1 <<< "$match")"
     pattern="$(cut -d ':' -f 2- <<< "$match")"
-    sed -i.bak "${lineno}s/${pattern}/namespace model = ptof::model_${2};/" "${1}.cpp" && rm "${1}.cpp.bak"
+    sed -i.bak "${lineno}s/${pattern}/using Model = ptof::Model::${2};/" "${1}.cpp" && rm "${1}.cpp.bak"
     if [[ "$?" -ne 0 ]] ; then
         echo "$(basename "$0") : Failed to substitute model definition in ${1}.cpp"
     fi

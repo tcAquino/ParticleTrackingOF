@@ -29,18 +29,18 @@ template <typename...> struct types { using type = types; };
    \class has_member_impl General/Meta.h "General/Meta.h"
    \brief Implementation details for \c has_member.
 */
-template <template <typename...> typename Z, typename types, typename = void>
+template <template <typename...> typename X, typename types, typename = void>
 struct has_member_impl : std::false_type {};
 /**
    \class has_member_impl General/Meta.h "General/Meta.h"
    \brief Implementation details for \c has_member.
 */
-template <template <typename...> typename Z, typename... Ts>
-struct has_member_impl<Z, types<Ts...>, std::void_t<Z<Ts...>>>
+template <template <typename...> typename X, typename... Ts>
+struct has_member_impl<X, types<Ts...>, std::void_t<X<Ts...>>>
     : std::true_type {};
-/** \brief Check if a class has a member. */
-template <template <typename...> typename Z, typename... Ts>
-using has_member = has_member_impl<Z, types<Ts...>>;
+/** \brief Check if \c X has a member. */
+template <template <typename...> typename X, typename... Ts>
+using has_member = has_member_impl<X, types<Ts...>>;
 
 /** \class is_same General/Meta.h "General/Meta.h"
  \brief Check if X<Y> is the same type as Z. */
@@ -68,61 +68,61 @@ template <template <typename> typename X, typename Y> struct is_integral {
 
 /**\brief Type of \c X::print(). */
 template <typename X> using print_t = decltype(std::declval<X>().print());
-/** \brief Check if a class has method \c print(). */
+/** \brief Check if \c X has method \c print(). */
 template <typename X> using has_print = has_member<print_t, X>;
-/** \brief Check if a class has method \c print(). */
+/** \brief Check if \c X has method \c print(). */
 template <typename X> inline constexpr bool has_print_v = has_print<X>::value;
 
 /**\brief Type of \c X::begin(). */
 template <typename X>
 using begin_result_t = decltype(std::declval<X>().begin());
-/** \brief Check if a class has method \c begin(). */
+/** \brief Check if \c X has method \c begin(). */
 template <typename X> using has_begin = has_member<begin_result_t, X>;
 template <typename X>
-/** \brief Check if a class has method \c begin(). */
+/** \brief Check if \c X has method \c begin(). */
 inline constexpr bool has_begin_v = has_begin<X>::value;
 
 /**\brief Type of \c X::size(). */
 template <typename X> using size_result_t = decltype(std::declval<X>().size());
-/** \brief Check if a class has method \c size(). */
+/** \brief Check if \c X has method \c size(). */
 template <typename X> using has_size = has_member<size_result_t, X>;
-/** \brief Check if a class has method \c size(). */
+/** \brief Check if \c X has method \c size(). */
 template <typename X> inline constexpr bool has_size_v = has_size<X>::value;
 
 /**\brief Type of \c X::reserve(). */
 template <typename X>
 using reserve_result_t = decltype(std::declval<X>().reserve());
-/** \brief Check if a class has method \c reserve(). */
+/** \brief Check if \c X has method \c reserve(). */
 template <typename X> using has_reserve = has_member<reserve_result_t, X>;
 template <typename X>
-/** \brief Check if a class has method \c reserve(). */
+/** \brief Check if \c X has method \c reserve(). */
 inline constexpr bool has_reserve_v = has_reserve<X>::value;
 
 /**\brief Type of \c X::push_back(). */
 template <typename X>
 using push_back_result_t = decltype(std::declval<X>().reserve());
-/** \brief Check if a class has method \c push_back(). */
+/** \brief Check if \c X has method \c push_back(). */
 template <typename X> using has_push_back = has_member<push_back_result_t, X>;
 template <typename X>
-/** \brief Check if a class has method \c push_back(). */
+/** \brief Check if \c X has method \c push_back(). */
 inline constexpr bool has_push_back_v = has_push_back<X>::value;
 
 /**\brief Type of static method \c X::info(std::cout). */
 template <typename X> using static_info_result_t = decltype(X::info(std::cout));
-/** \brief Check if a class can call static method \c info(std::cout). */
+/** \brief Check if \c X can call static method \c info(std::cout). */
 template <typename X>
 using has_static_info = has_member<static_info_result_t, X>;
 template <typename X>
-/** \brief Check if a class can call static method \c info(std::cout). */
+/** \brief Check if \c X can call static method \c info(std::cout). */
 inline constexpr bool has_static_info_v = has_static_info<X>::value;
 
 /**\brief Type of member \c X::Parameters. */
 template <typename X> using parameters_type_t = typename X::Parameters;
-/** \brief Check if a class defines type \c Parameters. */
+/** \brief Check if \c X defines type \c Parameters. */
 template <typename X>
 using has_parameters_type = has_member<parameters_type_t, X>;
 template <typename X>
-/** \brief Check if a class defines type \c Parameters. */
+/** \brief Check if \c X defines type \c Parameters. */
 inline constexpr bool has_parameters_type_v = has_parameters_type<X>::value;
 
 // The following can_call methods are adapted from Passer By's answer here:

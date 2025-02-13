@@ -170,12 +170,9 @@ public:
   /** \brief Output generic information about object. */
   inline static std::ostream &info(std::ostream &output) {
     output
-        << "--------------------------------------------------------------"
-           "\n"
-           "Output parameters\n"
-           "--------------------------------------------------------------"
-           "\n"
-           "- Time units for measurement times:\n"
+        << io::line() << "Output parameters\n"
+        << io::line()
+        << "- Time units for measurement times:\n"
            "  - diffusion\n"
            "    - Diffusion time units\n"
            "  - advection\n"
@@ -323,8 +320,7 @@ public:
            "  - absorption_time\n"
            "    - Particle absorption times, particle tags and particle\n"
            "      masses at end of dynamics\n"
-           "--------------------------------------------------------------"
-           "\n";
+        << io::line();
     return output;
   }
 
@@ -677,13 +673,9 @@ public:
 
   /** \brief Output information about current object. */
   inline std::ostream &info_runtime(std::ostream &output) const {
-    output << "------------------------------------------------------------"
-              "--\n"
-              "Output\n"
-              "------------------------------------------------------------"
-              "--\n"
-              "- End criterion: "
-           << parameters.end_criterion << "\n";
+    output << io::line() << "Output\n"
+           << io::line() << "- End criterion: " << parameters.end_criterion
+           << "\n";
     if (EndCriterion::type(parameters.end_criterion) ==
             EndCriterion::Type::time ||
         EndCriterion::type(parameters.end_criterion) ==
@@ -713,8 +705,7 @@ public:
       output << parameters.time_max << "\n";
     output << "- Measurement types:\n";
     info_runtime_measurements(output);
-    output << "------------------------------------------------------------"
-              "--\n";
+    output << io::line();
     return output;
   }
 

@@ -11,6 +11,7 @@
 #include "General/IO.h"
 #include "General/Operations.h"
 #include "PTOF/Directories.h"
+#include "PTOF/Meta.h"
 #include "PTOF/Reaction.h"
 #include <exception>
 #include <limits>
@@ -21,8 +22,6 @@
 
 namespace ptof {
 struct ReactionHandler_NoBulk_NoSurface {
-  ReactionHandler_NoBulk_NoSurface() = delete;
-
   using BulkReaction = BulkReaction_DoNothing;
   using SurfaceReaction = SurfaceReaction_DoNothing;
 
@@ -43,14 +42,9 @@ struct ReactionHandler_NoBulk_NoSurface {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output << "------------------------------------------------------------"
-                "--\n"
-                "Reaction parameters\n"
-                "------------------------------------------------------------"
-                "--\n"
-                "None\n"
-                "------------------------------------------------------------"
-                "--\n";
+      output << io::line() << "Reaction parameters\n"
+             << io::line() << "None\n"
+             << io::line();
       return output;
     }
   };
@@ -82,14 +76,20 @@ struct ReactionHandler_NoBulk_NoSurface {
     SurfaceReaction::info(output);
     return output;
   }
+
+  template <typename CTRW>
+  static void update(BulkReaction &, SurfaceReaction &, CTRW &,
+                     typename CTRW::State::Time, typename CTRW::State::Time) {}
 };
 
-template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
-  ReactionHandler_NoBulk_SurfaceDecay() = delete;
-
+template <typename Geometry, bool solid_decay, typename ParallelOption>
+struct ReactionHandler_NoBulk_SurfaceDecay {
   using BulkReaction = BulkReaction_DoNothing;
+  using Locator = typename Geometry::Locator;
   using SurfaceReaction =
-      std::conditional_t<solid_decay, SurfaceReaction_AFluidPlusASolidtoNothing,
+      std::conditional_t<solid_decay,
+                         SurfaceReaction_AFluidPlusASolidtoNothing<
+                             Locator const &, ParallelOption>,
                          SurfaceReaction_AFluidPlusASolidtoASolid>;
 
   struct Parameters {
@@ -103,7 +103,7 @@ template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
 
     double rate_constant_ratio_solid_to_fluid = 0.;
 
-    template <typename Geometry, typename TransportParameters>
+    template <typename TransportParameters>
     Parameters(Directories const &directories,
                std::string const &parameter_set_name, Geometry const &geometry,
                TransportParameters const &params_transport) {
@@ -190,12 +190,9 @@ template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output << "--------------------------------------------------------------"
-                "\n"
-                "Reaction parameters:\n"
-                "--------------------------------------------------------------"
-                "\n"
-                "- Solid reactant initial distribution type:\n"
+      output << io::line() << "Reaction parameters:\n"
+             << io::line()
+             << "- Solid reactant initial distribution type:\n"
                 "  - uniform\n"
                 "    - Homogeneous in specified boundary patches\n"
                 "    - Pass on same line:\n"
@@ -211,14 +208,12 @@ template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
       }
       output << "      - Pairs of boundary patch names and surface\n"
                 "        concentrations\n"
-                "--------------------------------------------------------------"
-                "\n";
+             << io::line();
       return output;
     }
   };
 
-  template <typename Geometry, typename TransportParameters,
-            typename SolverParameters>
+  template <typename TransportParameters, typename SolverParameters>
   static auto makeBulkReaction(Geometry const &geometry,
                                Parameters const &params_reactions,
                                TransportParameters const &params_transport,
@@ -226,8 +221,7 @@ template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
     return BulkReaction{};
   }
 
-  template <typename Geometry, typename TransportParameters,
-            typename SolverParameters>
+  template <typename TransportParameters, typename SolverParameters>
   static auto makeSurfaceReaction(Geometry const &geometry,
                                   Parameters const &params_reaction,
                                   TransportParameters const &params_transport,
@@ -240,7 +234,9 @@ template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
             params_transport.diff_coeff,
             uniform_solid_reactant(params_reaction.patch_names,
                                    params_reaction.surface_concentrations,
-                                   geometry.mesh())};
+                                   geometry.mesh()),
+            geometry.locator,
+            ParallelOption{}};
       } else {
         return SurfaceReaction{
             params_reaction.rate_constant, params_transport.diff_coeff,
@@ -262,6 +258,15 @@ template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
     BulkReaction::info(output) << "\n";
     SurfaceReaction::info(output);
     return output;
+  }
+
+  template <typename CTRW>
+  static void update(BulkReaction &bulk_reaction,
+                     SurfaceReaction &surface_reaction, CTRW &ctrw,
+                     typename CTRW::State::Time time_new,
+                     typename CTRW::State::Time time_old) {
+    if constexpr (solid_decay)
+      surface_reaction.update(ctrw, time_new, time_old);
   }
 };
 } // namespace ptof

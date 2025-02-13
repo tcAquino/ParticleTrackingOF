@@ -192,20 +192,20 @@ template <typename Container> struct hash_container {
 };
 
 /** \brief Combine \p seed with the hash of an object \p v. */
-template <typename T> void hash_combine(std::size_t &seed, T const &v) {
+template <typename T> void hash_combine(std::size_t &seed, T const &vv) {
   std::hash<T> hasher;
-  seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  seed ^= hasher(vv) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 }
 
 /**
-   \class hash_pair General/Useful.h "General/Useful.h"
+   \class Hash_pair General/Useful.h "General/Useful.h"
    \brief Hash for std::pair.
 */
-template <typename S, typename T> struct hash_pair {
-  std::size_t operator()(std::pair<S, T> const &v) const {
+template <typename S, typename T> struct Hash_pair {
+  std::size_t operator()(std::pair<S, T> const &vv) const {
     std::size_t seed = 0;
-    hash_combine(seed, v.first);
-    hash_combine(seed, v.second);
+    hash_combine(seed, vv.first);
+    hash_combine(seed, vv.second);
     return seed;
   }
 };

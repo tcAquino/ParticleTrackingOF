@@ -70,7 +70,7 @@ public:
      \param locator Mesh locator.
   */
   VectorField_LinearInterpolation_OF(Field &&field, Locator &&locator,
-                                     meta::Selector_t<CheckOption>)
+                                     CheckOption)
       : VectorField_LinearInterpolation_OF{std::forward<Field>(field),
                                            std::forward<Locator>(locator)} {}
 
@@ -82,7 +82,7 @@ public:
   */
   VectorField_LinearInterpolation_OF(Field &&field, Locator &&locator,
                                      Uninterpolated &&uninterpolated,
-                                     meta::Selector_t<CheckOption>)
+                                     CheckOption)
       : VectorField_LinearInterpolation_OF{
             std::forward<Field>(field), std::forward<Locator>(locator),
             std::forward<Uninterpolated>(uninterpolated)} {}
@@ -251,14 +251,13 @@ private:
       _uninterpolated; /** Uninterpolated field to add to interpolated field. */
 };
 template <typename Field, typename Locator, typename CheckOption>
-VectorField_LinearInterpolation_OF(Field &&, Locator &&,
-                                   meta::Selector_t<CheckOption>)
+VectorField_LinearInterpolation_OF(Field &&, Locator &&, CheckOption)
     -> VectorField_LinearInterpolation_OF<Field, Locator, CheckOption,
                                           meta::Empty>;
 template <typename Field, typename Locator, typename Uninterpolated,
           typename CheckOption>
 VectorField_LinearInterpolation_OF(Field &&, Locator &&, Uninterpolated &&,
-                                   meta::Selector_t<CheckOption>)
+                                   CheckOption)
     -> VectorField_LinearInterpolation_OF<Field, Locator, CheckOption,
                                           Uninterpolated>;
 
@@ -312,7 +311,7 @@ public:
      \param locator Mesh locator.
   */
   ScalarField_LinearInterpolation_OF(Field &&field, Locator &&locator,
-                                     meta::Selector_t<CheckOption>)
+                                     CheckOption)
       : ScalarField_LinearInterpolation_OF{std::forward<Field>(field),
                                            std::forward<Locator>(locator)} {}
 
@@ -324,7 +323,7 @@ public:
   */
   ScalarField_LinearInterpolation_OF(Field &&field, Locator &&locator,
                                      Uninterpolated &&uninterpolated,
-                                     meta::Selector_t<CheckOption>)
+                                     CheckOption)
       : ScalarField_LinearInterpolation_OF{
             std::forward<Field>(field), std::forward<Locator>(locator),
             std::forward<Uninterpolated>(uninterpolated)} {}
@@ -491,14 +490,13 @@ private:
       _uninterpolated; /** Uninterpolated field to add to interpolated field. */
 };
 template <typename Field, typename Locator, typename CheckOption>
-ScalarField_LinearInterpolation_OF(Field &&, Locator &&,
-                                   meta::Selector_t<CheckOption>)
+ScalarField_LinearInterpolation_OF(Field &&, Locator &&, CheckOption)
     -> ScalarField_LinearInterpolation_OF<Field, Locator, CheckOption,
                                           meta::Empty>;
 template <typename Field, typename Locator, typename Uninterpolated,
           typename CheckOption>
 ScalarField_LinearInterpolation_OF(Field &&, Locator &&, Uninterpolated &&,
-                                   meta::Selector_t<CheckOption>)
+                                   CheckOption)
     -> ScalarField_LinearInterpolation_OF<Field, Locator, CheckOption,
                                           Uninterpolated>;
 

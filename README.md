@@ -19,6 +19,7 @@ Basic information on code structure, compilation, and execution is given in doc/
 
 - If the underlying OpenFOAM case uses dynamicCode functionalities, they are compiled at runtime by OpenFOAM when running PTOF executables on that case for the first time and placed on a dynamicCode folder in the same folder as the executable. If more than one instance of PTOF is run simultaneously during this first run, this can cause a conflict and lead to a crash. A simple workaround is to wait for dynamic compilation, which happens early on, before launching a second instance on the first run.
 - Parallel simulations employ parallelization over particles across the whole spatial domain. This means that parallel OpenFOAM cases must be reconstructed before using PTOF, and that each thread must have access to the full mesh. OpenFOAM is not designed with this type of parallelization in mind. Demand-driven mesh and mesh search tool data must be precomputed in serial before being used in parallel. When implementing extensions, be careful to verify that all necessary data is precomputed.
+- Attempting to compile different models or parallel settings corresponding to the same cpp file at the same time is not safe, as it can lead to concurrent modifications to the same file.
 
 ## Citations
 

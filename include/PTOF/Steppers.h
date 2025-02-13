@@ -50,12 +50,9 @@ struct CTRWStepper {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << "--------------------------------------------------------------\n"
-             "CTRW Stepper\n"
-             "--------------------------------------------------------------\n"
-             "Asynchronous stepping\n"
-             "--------------------------------------------------------------\n";
+      output << io::line() << "CTRW Stepper\n"
+             << io::line() << "Asynchronous stepping\n"
+             << io::line();
       return output;
     }
   };
@@ -88,12 +85,9 @@ struct CTRWStepper {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << "--------------------------------------------------------------\n"
-             "CTRW Stepper\n"
-             "--------------------------------------------------------------\n"
-             "Particle-based stepping\n"
-             "--------------------------------------------------------------\n";
+      output << io::line() << "CTRW Stepper\n"
+             << io::line() << "Particle-based stepping\n"
+             << io::line();
       return output;
     }
   };
@@ -129,12 +123,9 @@ struct CTRWStepper {
        \param output Output stream.
     */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "CTRW Stepper\n"
-           "--------------------------------------------------------------\n"
-           "Time-based stepping\n"
-           "--------------------------------------------------------------\n";
+    output << io::line() << "CTRW Stepper\n"
+           << io::line() << "Time-based stepping\n"
+           << io::line();
     return output;
   }
 };
@@ -230,13 +221,11 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
        \param output Output stream.
     */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Steppers\n"
-           "--------------------------------------------------------------\n"
-           "Advection: Euler\n"
-           "Diffusion: Stochastic Euler\n"
-           "--------------------------------------------------------------\n";
+    output << io::line() << "Steppers\n"
+           << io::line()
+           << "Advection: Euler\n"
+              "Diffusion: Stochastic Euler\n"
+           << io::line();
     return output;
   }
 };
@@ -346,13 +335,11 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << "--------------------------------------------------------------\n"
-           "Steppers\n"
-           "--------------------------------------------------------------\n"
-           "Advection: Euler\n"
-           "Diffusion: Stochastic Euler\n"
-           "--------------------------------------------------------------\n";
+    output << io::line() << "Steppers\n"
+           << io::line()
+           << "Advection: Euler\n"
+              "Diffusion: Stochastic Euler\n"
+           << io::line();
     return output;
   }
 };
