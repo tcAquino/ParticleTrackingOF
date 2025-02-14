@@ -182,6 +182,8 @@ public:
   */
   template <typename State>
   void operator()(State &state, State const &state_old, Foam::label face) {
+    if (!surface_concentrations.count(face))
+      return;
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Serial>) {
       update_mass_and_surface_concentration(state, state_old, face);
@@ -330,6 +332,12 @@ private:
     return merged_face_to_tags_times;
   }
 
+  /**
+     \brief Update particle masses and surface concentration at face.
+     \param state State of particle to react.
+     \param state_old Previous state of particle.
+     \param face Mesh face index where reaction occurs.
+  */
   template <typename State>
   void update_mass_and_surface_concentration(State state,
                                              State const &state_old,
@@ -343,9 +351,9 @@ private:
         state_old.mass * (std::exp(-probability_second_order) - 1.);
     double mass_solid =
         surface_concentrations[face] * face_area(face, _locator.mesh());
-    if (mass_solid < rate_constant_ratio_solid_to_fluid * delta_mass) {
+    if (mass_solid <= rate_constant_ratio_solid_to_fluid * delta_mass) {
       state.mass -= mass_solid / rate_constant_ratio_solid_to_fluid;
-      surface_concentrations[face] = 0.;
+      surface_concentrations.erase(face);
     } else {
       state.mass += delta_mass;
       surface_concentrations[face] -= rate_constant_ratio_solid_to_fluid *

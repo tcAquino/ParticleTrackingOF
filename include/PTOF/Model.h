@@ -39,7 +39,7 @@ struct Model {
     inline static const std::string name{"advection_diffusion_2d"};
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport in 2D.\n"
+             << "Description: Advective-diffusive transport in 2D\n"
              << io::line();
       return output;
     }
@@ -64,7 +64,7 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
-             << "Description: Advective transport in 2D.\n"
+             << "Description: Advective transport in 2D\n"
              << io::line();
       return output;
     }
@@ -90,7 +90,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: First passage times under advective-diffusive\n"
-                "             transport in 2D.\n"
+                "             transport in 2D\n"
              << io::line();
       return output;
     }
@@ -118,7 +118,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S.\n"
+                "             reaction A_F + B_S -> B_S\n"
              << io::line();
       return output;
     }
@@ -146,7 +146,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> Nothing.\n"
+                "             reaction A_F + B_S -> Nothing\n"
              << io::line();
       return output;
     }
@@ -175,7 +175,7 @@ struct Model {
       output << io::line() << "Name: " << name << "\n"
              << "Description: Advective-diffusive transport in 2D, with some\n"
                 "             periodic boundaries aligned with the Cartesian\n"
-                "             axes.\n"
+                "             axes\n"
              << io::line();
       return output;
     }
@@ -201,7 +201,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advective transport in 2D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes.\n"
+                "             boundaries aligned with the Cartesian axes\n"
              << io::line();
       return output;
     }
@@ -229,7 +229,7 @@ struct Model {
       output << io::line() << "Name: " << name << "\n"
              << "Description: First-passage times under advective-diffusive\n"
                 "             transport in 2D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes.\n"
+                "             aligned with the Cartesian axes\n"
              << io::line();
       return output;
     }
@@ -261,7 +261,7 @@ struct Model {
           << "Description: First-passage times under advection-diffusion in\n"
              "             2D, with surface reaction A_F + B_S -> B_S, with\n"
              "             some periodic boundaries aligned with the\n"
-             "             Cartesian axes.\n"
+             "             Cartesian axes\n"
           << io::line();
       return output;
     }
@@ -292,7 +292,7 @@ struct Model {
           << "Description: First-passage times under advection-diffusion in\n"
              "             2D, with surface reaction A_F + B_S -> Nothing,\n"
              "             with some periodic boundaries aligned with the\n"
-             "             Cartesian axes.\n"
+             "             Cartesian axes\n"
           << io::line();
       return output;
     }
@@ -318,7 +318,7 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
-             << "Description: Advection-diffusion in 3D.\n"
+             << "Description: Advection-diffusion in 3D\n"
              << io::line();
       return output;
     }
@@ -343,7 +343,7 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
-             << "Description: Advection in 3D.\n"
+             << "Description: Advection in 3D\n"
              << io::line();
       return output;
     }
@@ -370,7 +370,7 @@ struct Model {
       output
           << banner() << "Name: " << name << "\n"
           << "Description: First-passage times under advection-diffusion in\n"
-             "             3D.\n"
+             "             3D\n"
           << io::line();
       return output;
     }
@@ -399,7 +399,7 @@ struct Model {
       output
           << banner() << "Name: " << name << "\n"
           << "Description: Advection-diffusion in 3D, with surface reaction\n"
-             "             A_F + B_S -> B_S.\n"
+             "             A_F + B_S -> B_S\n"
           << io::line();
       return output;
     }
@@ -428,7 +428,7 @@ struct Model {
       output
           << banner() << "Name: " << name << "\n"
           << "Description: Advection-diffusion in 3D, with surface reaction\n"
-             "             A_F + B_S -> Nothing.\n"
+             "             A_F + B_S -> Nothing\n"
           << io::line();
       return output;
     }
@@ -456,7 +456,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advection-diffusion in 3D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes.\n"
+                "             boundaries aligned with the Cartesian axes\n"
              << io::line();
       return output;
     }
@@ -482,7 +482,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advection in 3D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes.\n"
+                "             aligned with the Cartesian axes\n"
              << io::line();
       return output;
     }
@@ -511,7 +511,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: First-passage times under advection-diffusion in\n"
              "             3D, with some periodic boundaries aligned with the\n"
-             "             Cartesian axes.\n"
+             "             Cartesian axes\n"
           << io::line();
       return output;
     }
@@ -542,7 +542,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: Advection-diffusion in 3D, with surface reaction\n"
              "             A_F + B_S -> B_S, with some periodic boundaries\n"
-             "             aligned with the Cartesian axes.\n"
+             "             aligned with the Cartesian axes\n"
           << io::line();
       return output;
     }
@@ -572,7 +572,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: Advection-diffusion in 3D, with surface reaction\n"
              "             A_F + B_S -> Nothing, with some periodic\n"
-             "             boundaries aligned with the Cartesian axes.\n"
+             "             boundaries aligned with the Cartesian axes\n"
           << io::line();
       return output;
     }
@@ -599,7 +599,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advection-diffusion in a body centered cubic\n"
-                "             beadpack, based on the primitive unit cell.\n"
+                "             beadpack, based on the primitive unit cell\n"
              << io::line();
       return output;
     }
@@ -628,7 +628,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: First-passage times under advection-diffusion in\n"
              "             body centered cubic beadpack, based on the\n"
-             "             primitive unit cell.\n"
+             "             primitive unit cell\n"
           << io::line();
       return output;
     }
@@ -657,7 +657,7 @@ struct Model {
       output
           << banner() << "Name: " << name << "\n"
           << "Description: Advection in a body centered cubic beadpack, based\n"
-             "             on the primitive unit cell.\n"
+             "             on the primitive unit cell\n"
           << io::line();
       return output;
     }
@@ -686,7 +686,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: Advection-diffusion in a body centered cubic\n"
              "             beadpack, based on the primitive unit cell, with\n"
-             "             surface reaction A_F + B_S -> B_S.\n"
+             "             surface reaction A_F + B_S -> B_S\n"
           << io::line();
       return output;
     }
@@ -716,7 +716,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: Advection-diffusion in a body centered cubic\n"
              "             beadpack, based on the primitive unit cell, with\n"
-             "             surface reaction A_F + B_S -> Nothing.\n"
+             "             surface reaction A_F + B_S -> Nothing\n"
           << io::line();
       return output;
     }
@@ -744,7 +744,7 @@ struct Model {
     inline static std::ostream &info(std::ostream &output) {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advection-diffusion in a body centered cubic\n"
-                "             beadpack, based on the minimal unit cell.\n"
+                "             beadpack, based on the minimal unit cell\n"
              << io::line();
       return output;
     }
@@ -774,7 +774,7 @@ struct Model {
           << banner() << "Name: " << name << "\n"
           << "Description: First-passage times under advection-diffusion in\n"
              "             body centered cubic beadpack, based on the minimal\n"
-             "             unit cell.\n"
+             "             unit cell\n"
           << io::line();
       return output;
     }
@@ -803,7 +803,7 @@ struct Model {
       output
           << banner() << "Name: " << name << "\n"
           << "Description: Advection in body centered cubic beadpack, based\n"
-             "             on the minimal unit cell.\n"
+             "             on the minimal unit cell\n"
           << io::line();
       return output;
     }
@@ -832,7 +832,7 @@ struct Model {
       output << io::line() << "Name: " << name << "\n"
              << "Description: Advection-diffusion in a body centered cubic\n"
                 "             beadpack, based on the minimal unit cell, with\n"
-                "             surface reaction A_F + B_S -> B_S.\n"
+                "             surface reaction A_F + B_S -> B_S\n"
              << io::line();
       return output;
     }
@@ -862,7 +862,7 @@ struct Model {
       output << banner() << "Name: " << name << "\n"
              << "Description: Advection-diffusion in a body centered cubic\n"
                 "             beadpack, based on the minimal unit cell, with\n"
-                "             surface reaction A_F + B_S -> Nothing.\n"
+                "             surface reaction A_F + B_S -> Nothing\n"
              << io::line();
       return output;
     }

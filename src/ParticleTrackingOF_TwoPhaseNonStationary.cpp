@@ -79,7 +79,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_3d;
+  using Model = ptof::Model::bcc_symmetryplanes_advection;
   using Phase = ptof::Phase;
   using Definitions = Model::Definitions<ParallelOption>;
 
