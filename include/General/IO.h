@@ -720,7 +720,11 @@ inline auto load(std::string const &filename, std::size_t nr_columns,
   return values;
 }
 
-/** \brief Print values in container. */
+/**
+   \brief Print values in container.
+   \note Pass true or false, not 0 or 1, in \c delimit_first to avoid choosing a
+   different overload.
+*/
 template <typename Container>
 std::ostream &print(std::ostream &stream, Container const &container,
                     bool delimit_first = false, std::string delimiter = "\t") {
@@ -831,10 +835,7 @@ OStream &nonewline(std::string const &message, OStream &stream) {
     return stream << message;
 }
 
-/**
-   \brief Line of hyphens.
-*/
-
+/** \brief Line of hyphens. */
 inline std::string line(std::size_t nr_characters = 80, bool endl = true) {
   return std::string(nr_characters, '-') + (endl ? "\n" : "");
 }

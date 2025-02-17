@@ -33,22 +33,22 @@
 */
 namespace stochastic {
 /**
-   \class RNG Stochastic/Random.h "Stochastic/Random.h"
+   \class RNGDist Stochastic/Random.h "Stochastic/Random.h"
    \brief Wrapper for random number generation with own RNG engine.
 */
 template <typename Distribution_t, typename Engine_t = std::mt19937>
-struct RNG {
+struct RNGDist {
   using param_type = typename Distribution_t::param_type;
   using result_type = typename Distribution_t::result_type;
   using distribution_type = Distribution_t;
   using Engine = Engine_t;
 
   template <typename param_t>
-  RNG(param_t const &params) : dist{param_type(params)} {}
+  RNGDist(param_t const &params) : dist{param_type(params)} {}
 
-  RNG(Distribution_t dist) : dist{dist} {}
+  RNGDist(Distribution_t dist) : dist{dist} {}
 
-  RNG(std::size_t seed) : _rng{seed} {}
+  RNGDist(std::size_t seed) : _rng{seed} {}
 
   result_type operator()() { return dist(_rng); }
 
@@ -59,21 +59,21 @@ private:
 };
 
 /**
-   \class RNG_shared_engine Stochastic/Random.h "Stochastic/Random.h"
+   \class RNGDist_shared_engine Stochastic/Random.h "Stochastic/Random.h"
    \brief Wrapper for random number generation with shared RNG engine.
 */
 template <typename Distribution_t, typename Engine_t = std::mt19937>
-struct RNG_shared_engine {
+struct RNGDist_shared_engine {
   using param_type = typename Distribution_t::param_type;
   using result_type = typename Distribution_t::result_type;
   using distribution_type = Distribution_t;
   using Engine = Engine_t;
 
   template <typename param_t>
-  RNG_shared_engine(param_t const &params, Engine_t &rng)
+  RNGDist_shared_engine(param_t const &params, Engine_t &rng)
       : dist{param_type{params}}, _rng{rng} {}
 
-  RNG_shared_engine(Distribution_t dist, Engine_t &rng)
+  RNGDist_shared_engine(Distribution_t dist, Engine_t &rng)
       : dist{dist}, _rng{rng} {}
 
   result_type operator()() { return dist(_rng); }
