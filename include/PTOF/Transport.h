@@ -100,7 +100,6 @@ public:
   template <typename VelocityField, typename Mesh>
   void rescale(VelocityField &velocity_field, Mesh const &mesh) {
     double current_mean = magnitude_of_average(velocity_field.field(), mesh);
-    std::cout << "Mean velocity = " << current_mean << std::endl;
     if (peclet_option == "rescale_velocity_to_peclet" ||
         peclet_option == "rescale_velocity_to_mean" ||
         peclet_option == "rescale_velocity_to_advection_time") {
