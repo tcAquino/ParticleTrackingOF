@@ -168,16 +168,19 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                                    patch_names[ii]));
         }
         auto areas = patch_areas(patch_names, geometry.mesh());
-
+        double average_surface_concentration =
+            op::sum(op::times(surface_concentrations, areas)) / op::sum(areas);
         if (rate_option == "damkohler") {
-          rate_constant = params_transport.lengthscale * damkohler /
-                          (op::sum(op::times(surface_concentrations, areas)) /
-                           op::sum(areas) * params_transport.diffusion_time);
+          rate_constant =
+              params_transport.lengthscale * damkohler /
+              (average_surface_concentration * params_transport.diffusion_time);
         } else if (rate_option == "rate_constant") {
-          damkohler = op::sum(op::times(surface_concentrations, areas)) /
-                      op::sum(areas) * params_transport.diffusion_time *
-                      rate_constant / params_transport.lengthscale;
+          damkohler = average_surface_concentration *
+                      params_transport.diffusion_time * rate_constant /
+                      params_transport.lengthscale;
         }
+        reaction_time = params_transport.lengthscale /
+                        (average_surface_concentration * rate_constant);
       } else {
         throw std::runtime_error{
             std::string{"Initial surface reactant distribution type "} +
@@ -202,7 +205,8 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                 "            - Damkohler number\n"
                 "        - rate_constant\n"
                 "          - Pass on same line:\n"
-                "            - Surface rate constant\n";
+                "            - Surface rate constant (units length per surface\n"
+                "              concentration per time)\n";
       if constexpr (solid_decay) {
         output << "      - Ratio of solid to fluid rate constants\n";
       }

@@ -456,7 +456,7 @@ template <typename... Args> struct tuple_types {
 */
 template <typename Type>
 Type read(std::vector<std::string> const &strings, std::size_t &index,
-          std::string const &error) {
+          std::string const &error = "") {
   auto check_size = [&strings, &index](std::size_t nr_to_read) {
     if (strings.size() < index + nr_to_read)
       throw std::runtime_error{"Not enough arguments"};
@@ -477,7 +477,8 @@ Type read(std::vector<std::string> const &strings, std::size_t &index,
       return stotype<Type>(strings[index++]);
     }
   } catch (const std::exception &except) {
-    throw std::runtime_error{error + " : " + except.what()};
+    throw std::runtime_error{error.empty() ? except.what()
+                                           : error + " : " + except.what()};
   }
 }
 
@@ -492,7 +493,7 @@ Type read(std::vector<std::string> const &strings, std::size_t &index,
 template <typename Type>
 std::vector<Type> read(std::vector<std::string> const &strings,
                        std::size_t &index, std::size_t nr_to_read,
-                       std::string const &error) {
+                       std::string const &error = "") {
   std::vector<Type> result;
   result.reserve(nr_to_read);
   for (std::size_t ii = 0; ii < nr_to_read; ++ii)
