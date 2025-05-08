@@ -34,8 +34,7 @@
 #ifndef GEOMETRY_BOUNDARY_H
 #define GEOMETRY_BOUNDARY_H
 
-#include "General/Constants.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "Geometry/SymmetryPlanes.h"
 #include <cmath>
 #include <numeric>

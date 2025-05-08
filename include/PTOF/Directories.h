@@ -44,7 +44,7 @@ struct Directories {
         dir_boundaryconditions{dir_case + "/boundary_conditions"} {}
 
   /** \brief Output information about current object. */
-  inline std::ostream &info_runtime(std::ostream &output) const {
+  std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Directories\n"
            << io::line()
            << "Case: " + dir_case +
@@ -93,7 +93,7 @@ public:
      \brief Output generic information about object.
      \param output Output stream.
   */
-  inline static std::ostream &info(std::ostream &output) {
+  static std::ostream &info(std::ostream &output) {
     output << io::line() << "OpenFOAM directories (pass '' for default in [])\n"
            << io::line()
            << "OpenFOAM cases directory [$FOAM_RUN]\n"
@@ -107,7 +107,7 @@ public:
      \brief Output information about current object.
      \param output Output stream.
   */
-  inline std::ostream &info_runtime(std::ostream &output) const {
+  std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "OpenFOAM directories\n"
            << io::line()
            << "Case: " + dir_case +

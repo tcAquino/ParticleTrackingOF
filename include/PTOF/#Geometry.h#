@@ -142,7 +142,7 @@ struct Geometry_Generic {
      \brief Output generic information about object.
      \param output Output stream.
   */
-  static std::ostream &info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Geometry\n"
            << io::line()
            << "Spatial dimension: " + std::to_string(dim) +
@@ -167,7 +167,7 @@ struct Geometry_Generic {
   }
 
   /** \brief Output information about current object. */
-  std::ostream &info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Mesh\n"
            << io::line() << "Cells: " << mesh().nCells() << "\n"
            << "Faces: " << mesh().nFaces() << "\n"
@@ -313,7 +313,7 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /** \brief Output generic information about object. */
-  static std::ostream &info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Geometry\n"
            << io::line()
            << "Spatial dimension: " + std::to_string(dim) +
@@ -340,7 +340,7 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /** \brief Output information about current object. */
-  std::ostream &info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Mesh\n"
            << io::line() << "Cells: " << mesh().nCells() << "\n"
            << "Faces: " << mesh().nFaces() << "\n"
@@ -516,7 +516,7 @@ struct Geometry_Bcc {
   }
 
   /** \brief Output generic information about object. */
-  static std::ostream &info(std::ostream &output) {
+  inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Geometry\n"
            << io::line()
            << "Spatial dimension: " + std::to_string(dim) +
@@ -545,7 +545,7 @@ struct Geometry_Bcc {
   }
 
   /** \brief Output information about current object. */
-  std::ostream &info_runtime(std::ostream &output) const {
+  inline std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Mesh\n"
            << io::line() << "Cells: " << mesh().nCells() << "\n"
            << "Faces: " << mesh().nFaces() << "\n"

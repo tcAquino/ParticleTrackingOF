@@ -11,7 +11,6 @@
 #include "General/IO.h"
 #include "General/Operation.h"
 #include "PTOF/Directories.h"
-#include "PTOF/Meta.h"
 #include "PTOF/Reaction.h"
 #include <exception>
 #include <limits>
@@ -22,6 +21,8 @@
 
 namespace ptof {
 struct ReactionHandler_NoBulk_NoSurface {
+  ReactionHandler_NoBulk_NoSurface() = delete;
+
   using BulkReaction = BulkReaction_DoNothing;
   using SurfaceReaction = SurfaceReaction_DoNothing;
 
@@ -42,9 +43,14 @@ struct ReactionHandler_NoBulk_NoSurface {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Reaction parameters\n"
-             << io::line() << "None\n"
-             << io::line();
+      output << "------------------------------------------------------------"
+                "--\n"
+                "Reaction parameters\n"
+                "------------------------------------------------------------"
+                "--\n"
+                "None\n"
+                "------------------------------------------------------------"
+                "--\n";
       return output;
     }
   };
@@ -76,20 +82,14 @@ struct ReactionHandler_NoBulk_NoSurface {
     SurfaceReaction::info(output);
     return output;
   }
-
-  template <typename CTRW>
-  static void update(BulkReaction &, SurfaceReaction &, CTRW &,
-                     typename CTRW::State::Time, typename CTRW::State::Time) {}
 };
 
-template <typename Geometry, bool solid_decay, typename ParallelOption>
-struct ReactionHandler_NoBulk_SurfaceDecay {
+template <bool solid_decay> struct ReactionHandler_NoBulk_SurfaceDecay {
+  ReactionHandler_NoBulk_SurfaceDecay() = delete;
+
   using BulkReaction = BulkReaction_DoNothing;
-  using Locator = typename Geometry::Locator;
   using SurfaceReaction =
-      std::conditional_t<solid_decay,
-                         SurfaceReaction_AFluidPlusASolidtoNothing<
-                             Locator const &, ParallelOption>,
+      std::conditional_t<solid_decay, SurfaceReaction_AFluidPlusASolidtoNothing,
                          SurfaceReaction_AFluidPlusASolidtoASolid>;
 
   struct Parameters {
@@ -103,7 +103,7 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
 
     double rate_constant_ratio_solid_to_fluid = 0.;
 
-    template <typename TransportParameters>
+    template <typename Geometry, typename TransportParameters>
     Parameters(Directories const &directories,
                std::string const &parameter_set_name, Geometry const &geometry,
                TransportParameters const &params_transport) {
@@ -155,32 +155,30 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
               "At least one patch and surface concentration required"};
         patch_names.reserve(nr_patches);
         surface_concentrations.reserve(nr_patches);
-        for (std::size_t ii = 0; ii < nr_patches; ++ii) {
-          patch_names.push_back(
-              io::read<std::string>(split_line, param_index,
-                                    in_file + for_initial_distribution +
-                                        "Could not parse patch name"));
-          surface_concentrations.push_back(
-              io::read<double>(split_line, param_index,
-                               in_file + for_initial_distribution +
-                                   "Could not parse initial surface "
-                                   "concentration for patch " +
-                                   patch_names[ii]));
-        }
+        if constexpr (solid_decay)
+          for (std::size_t ii = 0; ii < nr_patches; ++ii) {
+            patch_names.push_back(
+                io::read<std::string>(split_line, param_index,
+                                      in_file + for_initial_distribution +
+                                          "Could not parse patch name"));
+            surface_concentrations.push_back(
+                io::read<double>(split_line, param_index,
+                                 in_file + for_initial_distribution +
+                                     "Could not parse initial surface "
+                                     "concentration for patch " +
+                                     patch_names[ii]));
+          }
         auto areas = patch_areas(patch_names, geometry.mesh());
-        double average_surface_concentration =
-            op::sum(op::times(surface_concentrations, areas)) / op::sum(areas);
+
         if (rate_option == "damkohler") {
-          rate_constant =
-              params_transport.lengthscale * damkohler /
-              (average_surface_concentration * params_transport.diffusion_time);
+          rate_constant = params_transport.lengthscale * damkohler /
+                          (op::sum(op::times(surface_concentrations, areas)) /
+                           op::sum(areas) * params_transport.diffusion_time);
         } else if (rate_option == "rate_constant") {
-          damkohler = average_surface_concentration *
-                      params_transport.diffusion_time * rate_constant /
-                      params_transport.lengthscale;
+          damkohler = op::sum(op::times(surface_concentrations, areas)) /
+                      op::sum(areas) * params_transport.diffusion_time *
+                      rate_constant / params_transport.lengthscale;
         }
-        reaction_time = params_transport.lengthscale /
-                        (average_surface_concentration * rate_constant);
       } else {
         throw std::runtime_error{
             std::string{"Initial surface reactant distribution type "} +
@@ -193,9 +191,12 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Reaction parameters:\n"
-             << io::line()
-             << "- Solid reactant initial distribution type:\n"
+      output << "--------------------------------------------------------------"
+                "\n"
+                "Reaction parameters:\n"
+                "--------------------------------------------------------------"
+                "\n"
+                "- Solid reactant initial distribution type:\n"
                 "  - uniform\n"
                 "    - Homogeneous in specified boundary patches\n"
                 "    - Pass on same line:\n"
@@ -205,19 +206,20 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                 "            - Damkohler number\n"
                 "        - rate_constant\n"
                 "          - Pass on same line:\n"
-                "            - Surface rate constant (units length per surface\n"
-                "              concentration per time)\n";
+                "            - Surface rate constant\n";
       if constexpr (solid_decay) {
         output << "      - Ratio of solid to fluid rate constants\n";
       }
       output << "      - Pairs of boundary patch names and surface\n"
                 "        concentrations\n"
-             << io::line();
+                "--------------------------------------------------------------"
+                "\n";
       return output;
     }
   };
 
-  template <typename TransportParameters, typename SolverParameters>
+  template <typename Geometry, typename TransportParameters,
+            typename SolverParameters>
   static auto makeBulkReaction(Geometry const &geometry,
                                Parameters const &params_reactions,
                                TransportParameters const &params_transport,
@@ -225,7 +227,8 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
     return BulkReaction{};
   }
 
-  template <typename TransportParameters, typename SolverParameters>
+  template <typename Geometry, typename TransportParameters,
+            typename SolverParameters>
   static auto makeSurfaceReaction(Geometry const &geometry,
                                   Parameters const &params_reaction,
                                   TransportParameters const &params_transport,
@@ -238,9 +241,7 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
             params_transport.diff_coeff,
             uniform_solid_reactant(params_reaction.patch_names,
                                    params_reaction.surface_concentrations,
-                                   geometry.mesh()),
-            geometry.locator,
-            ParallelOption{}};
+                                   geometry.mesh())};
       } else {
         return SurfaceReaction{
             params_reaction.rate_constant, params_transport.diff_coeff,
@@ -262,15 +263,6 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
     BulkReaction::info(output) << "\n";
     SurfaceReaction::info(output);
     return output;
-  }
-
-  template <typename CTRW>
-  static void update(BulkReaction &bulk_reaction,
-                     SurfaceReaction &surface_reaction, CTRW &ctrw,
-                     typename CTRW::State::Time time_new,
-                     typename CTRW::State::Time time_old) {
-    if constexpr (solid_decay)
-      surface_reaction.update(ctrw, time_new, time_old);
   }
 };
 } // namespace ptof

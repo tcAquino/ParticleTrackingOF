@@ -1,5 +1,5 @@
 /**
-   \file General/Operations.h
+   \file General/Operation.h
    \author Tomás Aquino
    \date 08/06/2019
 
@@ -11,8 +11,8 @@
    - In most cases, the return value type is the type of the first container.
 */
 
-#ifndef GENERAL_OPERATIONS_H
-#define GENERAL_OPERATIONS_H
+#ifndef GENERAL_OPERATION_H
+#define GENERAL_OPERATION_H
 
 #include "General/Meta.h"
 #include "General/Modular.h"
@@ -1074,4 +1074,4 @@ Container apply(Op &&operation, Container &input) {
 
 } // namespace op
 
-#endif /* GENERAL_OPERATIONS_H */
+#endif /* GENERAL_OPERATION_H */

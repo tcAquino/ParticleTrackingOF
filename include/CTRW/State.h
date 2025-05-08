@@ -9,7 +9,7 @@
 #define CTRW_STATE_H
 
 #include "General/Meta.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include <valarray>
 #include <vector>
 

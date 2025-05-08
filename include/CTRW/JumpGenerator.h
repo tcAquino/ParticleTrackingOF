@@ -26,9 +26,9 @@
 #define CTRW_JUMPGENERATOR_H
 
 #include "CTRW/Meta.h"
-#include "General/Constants.h"
+#include "General/Constant.h"
 #include "General/Meta.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "General/Parallel.h"
 #include "Geometry/Boundary.h"
 #include "Stochastic/Random.h"
@@ -540,7 +540,7 @@ public:
 
     // If local gradient is zero jump in a random direction
     if (op::abs(gradient_val) == 0.)
-      return constants::pi * (2. * _dist(_rng) - 1.);
+      return cnst::pi * (2. * _dist(_rng) - 1.);
 
     // Orient mean jump direction along gradient if below preferred
     // concentration, or along opposite direction of gradient if above
@@ -551,7 +551,7 @@ public:
 
     // Compute angle jump and bound it to ]-pi,pi]
     double angle = variance * _dist(_rng) + reference_angle;
-    angle = std::abs(angle) > constants::pi ? constants::pi : angle;
+    angle = std::abs(angle) > cnst::pi ? cnst::pi : angle;
 
     return angle - state.orientation;
   }
@@ -591,7 +591,7 @@ public:
   */
   template <typename State = meta::Empty>
   double operator()(State const &state = {}) {
-    return constants::pi;
+    return cnst::pi;
   }
 };
 } // namespace ctrw

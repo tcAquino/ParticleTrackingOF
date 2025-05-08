@@ -10,7 +10,7 @@
 
 #include "General/IO.h"
 #include "General/Meta.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Reaction.h"
 #include "PTOF/Useful.h"

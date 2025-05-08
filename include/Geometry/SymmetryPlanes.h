@@ -17,7 +17,7 @@
 #ifndef GEOMETRY_SYMMETRYPLANES_H
 #define GEOMETRY_SYMMETRYPLANES_H
 
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include <cmath>
 #include <vector>
 

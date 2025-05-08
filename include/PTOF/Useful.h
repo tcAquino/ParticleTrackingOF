@@ -11,7 +11,7 @@
 #include "CTRW/StateGetter.h"
 #include "General/IO.h"
 #include "General/Meta.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
 #include <Vector2D.H>
@@ -168,8 +168,8 @@ struct Periodicity {
    available if notification is requested.
    \return \c true if there is available info, \c false otherwise.
 */
-template <typename Class, typename OStream>
-bool print_static_info(OStream &output, bool notify_if_no_info = false,
+template <typename Class>
+bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
                        std::string const &help_option = {}) {
   bool has_info = false;
   if constexpr (meta::has_static_info_v<Class>) {
@@ -201,13 +201,12 @@ bool print_static_info(OStream &output, bool notify_if_no_info = false,
    \brief Handle help options for main executable.
    \return \c true if help flag was passed as first argument, \c false otherwise
    \note meta::Empty can be passed for non-existent templated types, except
-   \c ExecutableInfo, which must define a static <tt>help(OStream&)</tt> method.
+   \c ExecutableInfo, which must define a static <tt>help(std::ostream&)</tt> method.
 */
 template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
           typename Transport, typename Phase, typename Reaction,
-          typename Solvers, typename InitialCondition, typename Output,
-          typename OStream>
-bool options_help(OStream &output, int argc, const char *const *argv) {
+          typename Solvers, typename InitialCondition, typename Output>
+bool options_help(std::ostream &output, int argc, const char *const *argv) {
   if (!io::check_options_help(argc, argv))
     return 0;
 
@@ -1252,8 +1251,8 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
    \param params Output parameters, holding time_unit_factor to rescale \p
    time. \param time Current time.
  */
-template <typename OStream, typename ParametersOutput>
-void info_time(OStream &output, ParametersOutput const &params, double time) {
+template <typename ParametersOutput>
+void info_time(std::ostream &output, ParametersOutput const &params, double time) {
   output << "Time "
          << "[" << params.time_units
          << " time units]: " << time / params.time_unit_factor << "\n";
@@ -1268,8 +1267,8 @@ void info_time(OStream &output, ParametersOutput const &params, double time) {
    \note Particle states must define:
    - <tt>info.absorbed</tt> [std::size_t]
 */
-template <typename OStream, typename Subject>
-void info_fraction_not_absorbed(OStream &output, Subject const &subject,
+template <typename Subject>
+void info_fraction_not_absorbed(std::ostream &output, Subject const &subject,
                                 double time) {
   output << "Fraction not absorbed: "
          << 1. - double(ptof::nr_absorbed(subject, time)) / subject.size()

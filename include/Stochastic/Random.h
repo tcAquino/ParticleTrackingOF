@@ -9,9 +9,9 @@
 #define STOCHASTIC_RANDOM_H
 
 #include "Algebra/Algebra.h"
-#include "General/Constants.h"
+#include "General/Constant.h"
 #include "General/IO.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "General/Parallel.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
@@ -156,7 +156,7 @@ public:
   const Value_type sigma;
   const Value_type mu;
 
-  const double zeta{std::tan(constants::pi * alpha * 0.5)};
+  const double zeta{std::tan(cnst::pi * alpha * 0.5)};
   const double xi{std::atan(zeta) / alpha};
   const double vv{std::pow(1. + zeta * zeta, 0.5 / alpha)};
 
@@ -187,7 +187,7 @@ public:
       : alpha(params[0]), sigma(params[1]), mu(params[2]) {}
 
   template <typename Generator> Value_type operator()(Generator &rng) {
-    double uu = constants::pi * (_uniform_dist(rng) - 0.5);
+    double uu = cnst::pi * (_uniform_dist(rng) - 0.5);
     double tt =
         std::sin(alpha * (uu + xi)) / std::pow(std::cos(uu), 1. / alpha);
     double ss = std::pow(std::cos((1. - alpha) * uu - alpha * xi) /
@@ -500,7 +500,7 @@ private:
       0., op::abs(_height_vector)};
   std::uniform_real_distribution<> _uniform_dist_radius{params.inner_radius,
                                                         params.radius};
-  std::uniform_real_distribution<> _uniform_dist_angle{0., 2. * constants::pi};
+  std::uniform_real_distribution<> _uniform_dist_angle{0., 2. * cnst::pi};
 };
 
 /** \class uniform_rectangle_distribution Stochastic/Random.h

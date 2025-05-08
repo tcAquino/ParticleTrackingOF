@@ -8,7 +8,7 @@
 #ifndef PTOF_REACTION_H
 #define PTOF_REACTION_H
 
-#include "General/Constants.h"
+#include "General/Constant.h"
 #include "General/IO.h"
 #include "General/Parallel.h"
 #include "PTOF/Useful.h"
@@ -109,7 +109,7 @@ public:
   void operator()(State &state, State const &state_old, Foam::label face) {
     double exposure_time = state.time - state_old.time;
     double probability_first_order =
-        rate(face) * std::sqrt(constants::pi * exposure_time / diff_coeff);
+        rate(face) * std::sqrt(cnst::pi * exposure_time / diff_coeff);
     double probability_second_order =
         probability_first_order / (1. + probability_first_order / 2.);
     state.mass *= std::exp(-probability_second_order);
@@ -344,7 +344,7 @@ private:
                                              Foam::label face) {
     double exposure_time = state.time - state_old.time;
     double probability_first_order =
-        rate(face) * std::sqrt(constants::pi * exposure_time / diff_coeff);
+        rate(face) * std::sqrt(cnst::pi * exposure_time / diff_coeff);
     double probability_second_order =
         probability_first_order / (1. + probability_first_order / 2.);
     double delta_mass =

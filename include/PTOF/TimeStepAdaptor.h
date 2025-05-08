@@ -9,7 +9,7 @@
 #define PTOF_TIMESTEPADAPTOR_H
 
 #include "CTRW/Meta.h"
-#include "General/Constants.h"
+#include "General/Constant.h"
 #include "General/Meta.h"
 #include "PTOF/Field.h"
 #include "PTOF/Reaction.h"
@@ -174,15 +174,16 @@ public:
     if constexpr (!std::is_same_v<SurfaceReaction, SurfaceReaction_DoNothing>) {
       if (_constrain_local_react) {
         auto const &faces = _geometry.mesh().cells()[cell_id];
-        double max_face_rate = *std::max_element(
-            faces.begin(), faces.end(), [this](Foam::label f1, Foam::label f2) {
-              return _surface_reaction.rate(f1) < _surface_reaction.rate(f2);
-            });
+        double max_face_rate = 0.;
+        for (auto face : faces) {
+          double rate = _surface_reaction.rate(face);
+          if (rate > max_face_rate)
+            max_face_rate = rate;
+        }
         double local_reaction_time =
-            _diff_coeff / (constants::pi * max_face_rate * max_face_rate);
+            _diff_coeff / (cnst::pi * max_face_rate * max_face_rate);
         local_time_step = std::min(local_time_step, _local_time_step_react *
                                                         local_reaction_time);
-
       } else {
         local_time_step = std::min(local_time_step, _local_time_step_react);
       }

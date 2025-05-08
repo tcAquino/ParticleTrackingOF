@@ -8,7 +8,7 @@
 #ifndef CTRW_STATEGETTER_H
 #define CTRW_STATEGETTER_H
 
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "General/Useful.h"
 #include <type_traits>
 #include <utility>

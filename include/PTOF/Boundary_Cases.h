@@ -262,7 +262,7 @@ public:
      \brief Output information about current object.
      \param output Output stream.
   */
-  inline std::ostream &info_runtime(std::ostream &output) const {
+  std::ostream &info_runtime(std::ostream &output) const {
     io::StreamScopeFormat guard{output};
     output << io::line() << "Boundary conditions\n" << io::line();
     if (_boundary_conditions.empty()) {

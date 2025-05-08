@@ -18,6 +18,7 @@
 #include <fieldTypes.H>
 #include <fstream>
 #include <map>
+#include <ostream>
 #include <point.H>
 #include <random>
 #include <stdexcept>
@@ -108,7 +109,7 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
     return positions;
   };
 
-protected:
+ protected:
   ParticleMaker _particle_maker;
   Geometry _geometry;
 };
@@ -519,13 +520,13 @@ public:
                                        std::string filename)
       : IC{std::forward<ParticleMaker>(particle_maker),
            std::forward<Geometry>(geometry)},
-        filename{filename} {}
+        _filename{filename} {}
 
   typename IC::PositionAndHint make_position_and_hint() override {
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim)
       throw std::runtime_error{"Could not parse particle position in file " +
-                               filename};
+                               _filename};
     Foam::point position;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
       position[dd] = std::stod(split_line[dd]);
@@ -534,8 +535,8 @@ public:
   }
 
 protected:
-  std::string filename;
-  std::ifstream input{io::open_read(filename)};
+  std::string _filename;
+  std::ifstream _input{io::open_read(_filename)};
 };
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string)
@@ -560,13 +561,13 @@ public:
                                              std::string filename)
       : IC{std::forward<ParticleMaker>(particle_maker),
            std::forward<Geometry>(geometry)},
-        filename{filename} {}
+        _filename{filename} {}
 
   typename IC::PositionAndHint make_position_and_hint() override {
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1)
       throw std::runtime_error{
-          "Could not parse particle position and mass in file " + filename};
+          "Could not parse particle position and mass in file " + _filename};
     Foam::point position;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
       position[dd] = std::stod(split_line[dd]);
@@ -577,8 +578,8 @@ public:
   }
 
 protected:
-  std::string filename;
-  std::ifstream input{io::open_read(filename)};
+  std::string _filename;
+  std::ifstream _input{io::open_read(_filename)};
 };
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
@@ -605,13 +606,13 @@ public:
                                                  std::string filename)
       : IC{std::forward<ParticleMaker>(particle_maker),
            std::forward<Geometry>(geometry)},
-        filename{filename} {}
+        _filename{filename} {}
 
   typename IC::PositionAndHint make_position_and_hint() override {
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2)
       throw std::runtime_error{
-          "Could not parse particle position and mass in file " + filename};
+          "Could not parse particle position and mass in file " + _filename};
     Foam::point position;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
       position[dd] = std::stod(split_line[dd]);
@@ -624,8 +625,8 @@ public:
   }
 
 protected:
-  std::string filename;
-  std::ifstream input{io::open_read(filename)};
+  std::string _filename;
+  std::ifstream _input{io::open_read(_filename)};
 };
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&, Geometry &&,
@@ -651,13 +652,13 @@ public:
       ParticleMaker &&particle_maker, Geometry &&geometry, std::string filename)
       : IC{std::forward<ParticleMaker>(particle_maker),
            std::forward<Geometry>(geometry)},
-        filename{filename} {}
+        _filename{filename} {}
 
   typename IC::PositionAndHint make_position_and_hint() override {
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 3)
       throw std::runtime_error{
-          "Could not parse particle position and mass in file " + filename};
+          "Could not parse particle position and mass in file " + _filename};
     Foam::point position;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
       position[dd] = std::stod(split_line[dd]);
@@ -672,8 +673,8 @@ public:
   }
 
 protected:
-  std::string filename;
-  std::ifstream input{io::open_read(filename)};
+  std::string _filename;
+  std::ifstream _input{io::open_read(_filename)};
 };
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositionsMassesTagsTimes(ParticleMaker &&,

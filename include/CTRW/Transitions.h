@@ -27,7 +27,7 @@
 #include "CTRW/JumpGenerator.h"
 #include "CTRW/TimeGenerator.h"
 #include "General/Meta.h"
-#include "General/Operations.h"
+#include "General/Operation.h"
 #include "General/Parallel.h"
 #include "Geometry/Boundary.h"
 #include "Stochastic/Random.h"
