@@ -75,8 +75,8 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
-                                      CTRWStepper::Asynchronous>;
+      using Solvers =
+          Solvers_Generic<Stepper::RK4, meta::Empty, CTRWStepper::Asynchronous>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction = ReactionHandler_NoBulk_NoSurface;
       using InitialCondition = InitialConditionHandler_Generic;
@@ -212,8 +212,8 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Stepper::RK4, meta::Empty,
-                                      CTRWStepper::Asynchronous>;
+      using Solvers =
+          Solvers_Generic<Stepper::RK4, meta::Empty, CTRWStepper::Asynchronous>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction = ReactionHandler_NoBulk_NoSurface;
       using InitialCondition = InitialConditionHandler_Generic;
@@ -354,8 +354,8 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Stepper::Euler, meta::Empty,
-                                      CTRWStepper::Asynchronous>;
+      using Solvers =
+          Solvers_Generic<Stepper::RK4, meta::Empty, CTRWStepper::Asynchronous>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction = ReactionHandler_NoBulk_NoSurface;
       using InitialCondition = InitialConditionHandler_Generic;
@@ -493,8 +493,8 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Stepper::RK4, meta::Empty,
-                                      CTRWStepper::Asynchronous>;
+      using Solvers =
+          Solvers_Generic<Stepper::RK4, meta::Empty, CTRWStepper::Asynchronous>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction = ReactionHandler_NoBulk_NoSurface;
       using InitialCondition = InitialConditionHandler_Generic;
@@ -668,8 +668,8 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Stepper::RK4, meta::Empty,
-                                      CTRWStepper::Asynchronous>;
+      using Solvers =
+          Solvers_Generic<Stepper::RK4, meta::Empty, CTRWStepper::Asynchronous>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction = ReactionHandler_NoBulk_NoSurface;
       using InitialCondition = InitialConditionHandler_Generic;
@@ -815,8 +815,8 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Stepper::RK4, meta::Empty,
-                                      CTRWStepper::Asynchronous>;
+      using Solvers =
+          Solvers_Generic<Stepper::RK4, meta::Empty, CTRWStepper::Asynchronous>;
       using Transport = Transport_Generic<Solvers>;
       using Reaction = ReactionHandler_NoBulk_NoSurface;
       using InitialCondition = InitialConditionHandler_Generic;
