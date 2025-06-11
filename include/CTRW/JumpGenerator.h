@@ -155,6 +155,69 @@ JumpGenerator_Velocity(VelocityField &&, double)
     -> JumpGenerator_Velocity<VelocityField>;
 
 /**
+   \class JumpGenerator_Velocity_RK2 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
+   \brief Jump according to a velocity field and time step, using RK2 scheme.
+   \details Boundary conditions are enforced in predictor-corrector steps.
+   \note Particle state must define:
+   - \c position
+*/
+template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
+class JumpGenerator_Velocity_RK2 {
+public:
+  /**
+     \brief Constructor.
+     \param velocity_field the time step, and the boundary to enforce boundary
+     conditions.
+     \param time_step Time step.
+     \param boundary Object to apply boundary conditions to current state given
+     current state and previous state.
+  */
+  JumpGenerator_Velocity_RK2(VelocityField &&velocity_field, double time_step,
+                             Boundary &&boundary = {})
+      : _velocity_field{std::forward<VelocityField>(velocity_field)},
+        _time_step{time_step}, _boundary{std::forward<Boundary>(boundary)} {}
+
+  /** \param time_step Time step to set. */
+  void time_step(double time_step) { _time_step = time_step; }
+
+  /** \return Time step. */
+  double time_step() const { return _time_step; }
+
+  /**
+     \param state Particle state.
+     \return Jump increment.
+  */
+  template <typename State> auto operator()(State const &state) {
+    auto state_intermediate = state;
+
+    op::linearop(_time_step / 2., velocity(state), state.position,
+                 state_intermediate.position);
+    _boundary(state_intermediate, state);
+
+    return op::times_scalar(_time_step, velocity(state_intermediate));
+  }
+
+  /**
+     \param state Particle state.
+     \return Velocity value.
+  */
+  template <typename State> auto velocity(State const &state) const {
+    return _velocity_field(state);
+  }
+
+  /** \return Velocity field. */
+  auto const &get_velocity_field() const { return _velocity_field; }
+
+private:
+  VelocityField _velocity_field; /**< Velocity as a function of state.*/
+  double _time_step;             /**< Time step.                      */
+  Boundary _boundary;            /**< Boundary conditions.             */
+};
+template <typename VelocityField, typename Boundary>
+JumpGenerator_Velocity_RK2(VelocityField &&, double, Boundary &&)
+    -> JumpGenerator_Velocity_RK2<VelocityField, Boundary>;
+
+/**
    \class JumpGenerator_Velocity_RK4 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
    \brief Jump according to a velocity field and time step, using RK4 scheme.
    \details Boundary conditions are enforced in predictor-corrector steps.
@@ -193,16 +256,16 @@ public:
     auto k1 = velocity(state);
     op::linearop(_time_step / 2., k1, state.position,
                  state_intermediate.position);
-    boundary(state_intermediate, state);
+    _boundary(state_intermediate, state);
 
     auto k2 = velocity(state_intermediate);
     op::linearop(_time_step / 2., k2, state.position,
                  state_intermediate.position);
-    boundary(state_intermediate, state);
+    _boundary(state_intermediate, state);
 
     auto k3 = velocity(state_intermediate);
     op::linearop(_time_step, k3, state.position, state_intermediate.position);
-    boundary(state_intermediate, state);
+    _boundary(state_intermediate, state);
 
     auto k4 = velocity(state_intermediate);
     auto jump = op::plus(k1, k4);
@@ -232,6 +295,71 @@ private:
 template <typename VelocityField, typename Boundary>
 JumpGenerator_Velocity_RK4(VelocityField &&, double, Boundary &&)
     -> JumpGenerator_Velocity_RK4<VelocityField, Boundary>;
+
+/**
+   \class JumpGenerator_Velocity_Heun CTRW/JumpGenerator.h
+   "CTRW/JumpGenerator.h" \brief Jump according to a velocity field and time
+   step, using Heun scheme. \details Boundary conditions are enforced in
+   predictor-corrector steps. \note Particle state must define:
+   - \c position
+*/
+template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
+class JumpGenerator_Velocity_Heun {
+public:
+  /**
+     \brief Constructor.
+     \param velocity_field the time step, and the boundary to enforce boundary
+     conditions.
+     \param time_step Time step.
+     \param boundary Object to apply boundary conditions to current state given
+     current state and previous state.
+  */
+  JumpGenerator_Velocity_Heun(VelocityField &&velocity_field, double time_step,
+                              Boundary &&boundary = {})
+      : _velocity_field{std::forward<VelocityField>(velocity_field)},
+        _time_step{time_step}, _boundary{std::forward<Boundary>(boundary)} {}
+
+  /** \param time_step Time step to set. */
+  void time_step(double time_step) { _time_step = time_step; }
+
+  /** \return Time step. */
+  double time_step() const { return _time_step; }
+
+  /**
+     \param state Particle state.
+     \return Jump increment.
+  */
+  template <typename State> auto operator()(State const &state) {
+    auto state_intermediate = state;
+
+    auto vel_state = velocity(state);
+    op::linearop(_time_step, vel_state, state.position,
+                 state_intermediate.position);
+    _boundary(state_intermediate, state);
+
+    return op::times_scalar(_time_step / 2.,
+                            op::plus(vel_state, velocity(state_intermediate)));
+  }
+
+  /**
+     \param state Particle state.
+     \return Velocity value.
+  */
+  template <typename State> auto velocity(State const &state) const {
+    return _velocity_field(state);
+  }
+
+  /** \return Velocity field. */
+  auto const &get_velocity_field() const { return _velocity_field; }
+
+private:
+  VelocityField _velocity_field; /**< Velocity as a function of state.*/
+  double _time_step;             /**< Time step.                      */
+  Boundary _boundary;            /**< Boundary conditions.             */
+};
+template <typename VelocityField, typename Boundary>
+JumpGenerator_Velocity_Heun(VelocityField &&, double, Boundary &&)
+    -> JumpGenerator_Velocity_Heun<VelocityField, Boundary>;
 
 /**
    \class JumpGenerator_Diffusion_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"

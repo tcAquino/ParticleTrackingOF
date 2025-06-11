@@ -190,20 +190,28 @@ struct Solvers_Generic {
   using Parameters = SolverParameters_Generic<Stepper_Advection,
                                               Stepper_Diffusion, Stepper_CTRW>;
   static_assert(Parameters::advection || Parameters::diffusion,
-                "Either advection or diffusion must be present");
+                "No advection or diffusion must be present");
   static_assert(!(Parameters::diffusion &&
                   !std::is_same_v<Stepper_Diffusion, Stepper::Euler>),
                 "Currently only no diffusion or stochastic forward Euler "
                 "stepping are supported for diffusion");
-  static_assert(!(Parameters::advection &&
-                  !std::is_same_v<Stepper_Advection, Stepper::Euler> &&
-                  !std::is_same_v<Stepper_Advection, Stepper::RK4>),
-                "Currently only no advection, forward Euler, or RK4 stepping "
-                "are supported for advection");
-  using Steppers =
-      std::conditional_t<std::is_same_v<Stepper_Advection, Stepper::RK4>,
-                         Steppers_Advection_RK4_Diffusion_Euler,
-                         Steppers_Advection_Euler_Diffusion_Euler>;
+  static_assert(
+      !(Parameters::advection &&
+        !std::is_same_v<Stepper_Advection, Stepper::Euler> &&
+        !std::is_same_v<Stepper_Advection, Stepper::RK2> &&
+        !std::is_same_v<Stepper_Advection, Stepper::RK4> &&
+        !std::is_same_v<Stepper_Advection, Stepper::Heun>),
+      "Currently only no advection, forward Euler, RK2, RK4, or Heun stepping "
+      "are supported for advection");
+  using Steppers = std::conditional_t<
+      std::is_same_v<Stepper_Advection, Stepper::Euler>,
+      Steppers_Advection_Euler_Diffusion_Euler,
+      std::conditional_t<
+          std::is_same_v<Stepper_Advection, Stepper::RK2>,
+          Steppers_Advection_RK2_Diffusion_Euler,
+          std::conditional_t<std::is_same_v<Stepper_Advection, Stepper::RK4>,
+                             Steppers_Advection_RK4_Diffusion_Euler,
+                             Steppers_Advection_Heun_Diffusion_Euler>>>;
 
   /**
      \brief Output generic information about object.
@@ -212,24 +220,12 @@ struct Solvers_Generic {
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Solvers\n" << io::line();
     if constexpr (Parameters::advection) {
-      output << "Advection: ";
-      if constexpr (std::is_same_v<Stepper_Advection, Stepper::Euler>) {
-        output << "Forward Euler\n";
-      } else
-        output << "RK4\n";
+      output << "Advection: " << Steppers::advection_method << "\n";
     }
     if constexpr (Parameters::diffusion) {
-      output << "Diffusion: Stochastic Euler\n";
+      output << "Diffusion: " << Steppers::diffusion_method << "\n";
     }
-    output << "CTRW: ";
-    if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::Asynchronous>) {
-      output << "Asynchronous stepping\n";
-    } else if constexpr (std::is_same_v<Stepper_CTRW,
-                                        CTRWStepper::ParticleStep>) {
-      output << "Particle step synchronization\n";
-    } else if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>) {
-      output << "Time step synchronization\n";
-    }
+    output << "CTRW: " << Stepper_CTRW::method << "\n";
     output << io::line();
     return output;
   }

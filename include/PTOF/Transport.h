@@ -807,7 +807,7 @@ template <typename Solvers>
 using Transport_Generic = Transport_LinearInterp<
     Solvers,
     std::conditional_t<Solvers::Parameters::advection &&
-                           Solvers::Parameters::advection,
+                           Solvers::Parameters::diffusion,
                        TransportParameters_AdvectionDiffusion,
                        std::conditional_t<Solvers::Parameters::advection,
                                           TransportParameters_Advection,
@@ -817,7 +817,7 @@ template <typename Solvers>
 using Transport_Bcc = Transport_LinearInterp<
     Solvers,
     std::conditional_t<Solvers::Parameters::advection &&
-                           Solvers::Parameters::advection,
+                           Solvers::Parameters::diffusion,
                        TransportParameters_AdvectionDiffusion_Bcc,
                        std::conditional_t<Solvers::Parameters::advection,
                                           TransportParameters_Advection_Bcc,
