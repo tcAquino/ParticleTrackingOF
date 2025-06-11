@@ -256,7 +256,7 @@ public:
               "  - rescale_velocity_to_advection_time\n"
               "    - Rescale according to given advection time\n"
               "    - Pass on same line:\n"
-              "      - Advection time, based on absolute value of mean "
+              "      - Advection time, based on absolute value of mean\n"
               "        velocity vector\n"
               "  - no_rescale_velocity\n"
               "    - Do not rescale\n"
