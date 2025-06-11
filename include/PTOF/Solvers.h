@@ -137,7 +137,7 @@ struct SolverParameters_Generic {
            "- Local time step accuracy:\n"
            "  (Note:\n"
            "    - Minimum between processes is used\n"
-           "    - Pass inf to deactivate specific constraints; Pass zeros\n"
+           "    - Pass inf to deactivate specific constraints; Pass zeros to\n"
            "      deactivate all local constraints\n"
            "    - At least one local or one global constraint must be active,\n"
            "      otherwise the time step will be zero or infinity\n"
