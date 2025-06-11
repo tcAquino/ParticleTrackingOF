@@ -594,6 +594,30 @@ private:
                 measurement->precision));
         break;
       }
+      case MeasurementList::Type::absorption_time_patch: {
+        _output.emplace_back(
+            std::make_unique<
+                Measurer_absorption_time<Subject, Geometry, true>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::absorption_time_position: {
+        _output.emplace_back(
+            std::make_unique<
+                Measurer_absorption_time<Subject, Geometry, false, true>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::absorption_time_patch_position: {
+        _output.emplace_back(
+            std::make_unique<
+                Measurer_absorption_time<Subject, Geometry, true, true>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
       default:
         throw std::runtime_error{std::string{"Measurement type "} +
                                  measurement->name +

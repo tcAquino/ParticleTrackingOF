@@ -9,8 +9,10 @@
 #define PTOF_MEASURER_H
 
 #include "General/IO.h"
+#include "General/Meta.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Meta.h"
+#include "PTOF/Useful.h"
 #include <IOobject.H>
 #include <algorithm>
 #include <array>
@@ -83,38 +85,86 @@ protected:
    \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
    \brief  Output absorption times, tags, and masses of absorbed particles.
 */
-template <typename Subject, typename Geometry>
-struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool print_patch = false,
+          bool print_position = false>
+struct Measurer_absorption_time final : Measurer<Subject, Geometry>{
   Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
                            Directories const &directories,
                            std::string const &identifier, int precision = 8)
-      : Measurer<Subject, Geometry>{subject,           geometry,   directories,
-                                    "absorption_time", identifier, precision},
-        _patch_names{geometry.mesh().boundaryMesh().names()},
+      : Measurer<Subject, Geometry>{subject,
+                                    geometry,
+                                    directories,
+                                    std::string{"absorption_time"} +
+                                        (print_patch ? "_patch" : "") +
+                                        (print_position ? "_position" : ""),
+                                    identifier,
+                                    precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
-            std::max(_patch_names.empty()
-                         ? 0
-                         : int(1 + std::max_element(
-                                       _patch_names.begin(), _patch_names.end(),
-                                       [](Foam::word const &name1,
-                                          Foam::word const &name2) {
-                                         return name1.length() < name2.length();
-                                       })
-                                       ->length()),
-                     int(1 + std::string{"Patch"}.length()))} {
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())), 0,
+            0} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "Mass";
-    if constexpr (meta::has_patch_id_v<
-                      typename Subject::Particle::State::Info>) {
-      _output << std::setw(_column_widths[3]) << "Patch";
+    if constexpr (print_patch) {
       _patch_names = geometry.mesh().boundaryMesh().names();
+      _column_widths[3] =
+          1 + std::max(
+                  int(std::max_element(
+                          _patch_names.begin(), _patch_names.end(),
+                          [](Foam::word const &name1, Foam::word const &name2) {
+                            return name1.length() < name2.length();
+                          })
+                          ->length()),
+                  int(std::string{"Patch"}.length()));
+      _output << std::setw(_column_widths[3]) << "Patch";
+    }
+    if constexpr (print_position) {
+      _column_widths[4] =
+          std::max(9 + precision, int(2 + std::string{"Position_"}.length()));
+      for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+        _output << std::setw(_column_widths[4])
+                << "Position_" + std::to_string(dd);
     }
     _output << "\n";
   }
+
+  Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
+                           Directories const &directories,
+                           std::string const &identifier,
+                           meta::Selector<bool, true> patch,
+                           meta::Selector<bool, true> position,
+                           int precision = 8)
+      : Measurer_absorption_time<Subject, Geometry>{
+            subject, geometry, directories, identifier, precision} {}
+
+  Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
+                           Directories const &directories,
+                           std::string const &identifier,
+                           meta::Selector<bool, true> patch,
+                           meta::Selector<bool, false> position,
+                           int precision = 8)
+      : Measurer_absorption_time<Subject, Geometry>{
+            subject, geometry, directories, identifier, precision} {}
+
+  Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
+                           Directories const &directories,
+                           std::string const &identifier,
+                           meta::Selector<bool, false> patch,
+                           meta::Selector<bool, true> position,
+                           int precision = 8)
+      : Measurer_absorption_time<Subject, Geometry>{
+            subject, geometry, directories, identifier, precision} {}
+
+  Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
+                           Directories const &directories,
+                           std::string const &identifier,
+                           meta::Selector<bool, false> patch,
+                           meta::Selector<bool, false> position,
+                           int precision = 8)
+      : Measurer_absorption_time<Subject, Geometry>{
+            subject, geometry, directories, identifier, precision} {}
 
   void print() override {
     for (auto const &part : _subject.particles()) {
@@ -123,10 +173,8 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
         _output << std::setw(_column_widths[0]) << state.time
                 << std::setw(_column_widths[1]) << state.tag
                 << std::setw(_column_widths[2]) << state.mass;
-        if constexpr (meta::has_patch_id_v<
-                          typename Subject::Particle::State::Info>)
-          _output << std::setw(_column_widths[3])
-                  << _patch_names[state.info.patch_id];
+        print_state_patch(state);
+        print_state_position(state);
         _output << "\n";
       }
     }
@@ -135,9 +183,71 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
 private:
   using Measurer<Subject, Geometry>::_output;
   using Measurer<Subject, Geometry>::_subject;
-  Foam::List<Foam::word> _patch_names;
-  std::array<int, 4> _column_widths;
+  Foam::wordList _patch_names;
+  std::array<int, 5> _column_widths;
+
+  void print_state_patch(typename Subject::Particle::State const &state) {
+    if constexpr (print_patch) {
+      if constexpr (meta::has_patch_id_v<
+                        typename Subject::Particle::State::Info>) {
+        _output << std::setw(_column_widths[3])
+                << _patch_names[state.info.patch_id];
+      } else {
+        auto patch_face = this->_geometry.mesh_search().findNearestBoundaryFace(
+            make_point(state.position), state.cell);
+        _output << std::setw(_column_widths[3])
+                << _patch_names[patch_id(patch_face, this->_geometry.mesh())];
+      }
+    }
+  }
+
+  void print_state_position(typename Subject::Particle::State const &state) {
+    if constexpr (print_position) {
+      io::print(_output, state.position, _column_widths[4]);
+    }
+  }
 };
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, true>, int)
+    -> Measurer_absorption_time<Subject, Geometry, true, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, true>)
+    -> Measurer_absorption_time<Subject, Geometry, true, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, false>, int)
+    -> Measurer_absorption_time<Subject, Geometry, true, false>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, false>)
+    -> Measurer_absorption_time<Subject, Geometry, true, false>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, true>, int)
+    -> Measurer_absorption_time<Subject, Geometry, false, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, true>)
+    -> Measurer_absorption_time<Subject, Geometry, false, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, false>, int)
+    -> Measurer_absorption_time<Subject, Geometry, false, false>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, false>)
+    -> Measurer_absorption_time<Subject, Geometry, false, false>;
+
 } // namespace ptof
 
 #endif /* PTOF_MEASURER_H */

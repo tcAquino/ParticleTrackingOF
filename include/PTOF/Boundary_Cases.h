@@ -64,8 +64,9 @@ public:
         _velocity_field{std::forward<VelocityField>(velocity_field)},
         _boundary_periodic{std::forward<Boundary_Periodic>(boundary_periodic)},
         _boundary_custom{std::forward<Boundary_Custom>(boundary_custom)},
+        _patch_names{_locator.mesh().boundaryMesh().names()},
         surface_reaction{std::forward<SurfaceReaction>(surface_reaction)} {
-    add_unspecified_patches(_boundary_conditions, patch_names());
+    add_unspecified_patches(_boundary_conditions, _patch_names);
     verify_boundary_conditions(_boundary_conditions, _locator.mesh(),
                                _boundary_condition_types);
   }
@@ -147,9 +148,7 @@ public:
 
     // While some patch is intersected
     while (intersection.hit()) {
-      /** Find patch in mesh and associated boundary type name. */
-      auto patch_id =
-          _locator.mesh().boundaryMesh().whichPatch(intersection.index());
+      auto patch_id = ptof::patch_id(intersection.index(), _locator.mesh());
       auto patch = patch_name(patch_id);
       auto type_name = _boundary_conditions.at(patch);
 
@@ -309,23 +308,22 @@ private:
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
   Boundary_Custom
       _boundary_custom; /**< Boundary object to handle 'custom' bc type. */
+  Foam::wordList _patch_names;; /**< Names of patches in mesh. */
 
 public:
   SurfaceReaction
       surface_reaction; /**< Surface reaction for reactive boundaries*/
 
 private:
+  
   const BoundaryConditionList
       _boundary_condition_types{}; /**< Boundary condition names and types. */
-
-  /** \return Names of patches in mesh. */
-  auto patch_names() const { return _locator.mesh().boundaryMesh().names(); }
 
   /**
      \param patch Index of patch in mesh.
      \return Name of patch.
   */
-  auto patch_name(std::size_t patch) const { return patch_names()[patch]; }
+  auto patch_name(std::size_t patch) const { return _patch_names[patch]; }
 
   /**
      \param face Face index.

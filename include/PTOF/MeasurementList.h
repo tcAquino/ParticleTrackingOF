@@ -61,8 +61,16 @@ struct MeasurementList {
                                    for periodicity. */
     first_crossing_time, /**< First crossing time, tag, and mass for specified
                             position along specified dimension. */
-    absorption_time /**< Particle absorption times, tags, and masses at end of
+    absorption_time, /**< Particle absorption times, tags, and masses at end of
                        dynamics. */
+    absorption_time_patch,    /**< Particle absorption times, particle tags,
+                  particle masses, and absorption patch at end of dynamics. */
+    absorption_time_position, /**< Particle absorption times, particle tags,
+       particle masses, and particle position at end of dynamics. */
+    absorption_time_patch_position /**< Particle absorption times, particle
+                                      tags, particle masses, closest boundary
+                                      patch, and particle position at end of
+                                      dynamics. */
   };
 
   /**
@@ -118,7 +126,10 @@ struct MeasurementList {
       {"position_moment_periodic", Type::position_moment_periodic},
       {"position_variance_periodic", Type::position_variance_periodic},
       {"first_crossing_time", Type::first_crossing_time},
-      {"absorption_time", Type::absorption_time}};
+      {"absorption_time", Type::absorption_time},
+      {"absorption_time_patch", Type::absorption_time_patch},
+      {"absorption_time_position", Type::absorption_time_position},
+      {"absorption_time_patch_position", Type::absorption_time_patch_position}};
 
   /** Map of types to names. */
   inline static const std::map<Type, std::string> type_to_name{
@@ -150,7 +161,10 @@ struct MeasurementList {
       {Type::position_moment_periodic, "position_moment_periodic"},
       {Type::position_variance_periodic, "position_variance_periodic"},
       {Type::first_crossing_time, "first_crossing_time"},
-      {Type::absorption_time, "absorption_time"}};
+      {Type::absorption_time, "absorption_time"},
+      {Type::absorption_time_patch, "absorption_time_patch"},
+      {Type::absorption_time_position, "absorption_time_position"},
+      {Type::absorption_time_patch_position, "absorption_time_patch_position"}};
 };
 
 #endif /* PTOF_MEASUREMENTLIST_H */

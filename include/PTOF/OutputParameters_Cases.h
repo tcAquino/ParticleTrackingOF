@@ -301,6 +301,16 @@ public:
            "  - absorption_time\n"
            "    - Particle absorption times, particle tags and particle\n"
            "      masses at end of dynamics\n"
+           "  - absorption_time_patch\n"
+           "    - Particle absorption times, particle tags, particle\n"
+           "      masses, and absorption patch at end of dynamics\n"
+           "  - absorption_time_position\n"
+           "    - Particle absorption times, particle tags, particle\n"
+           "      masses, and particle position at end of dynamics\n"
+           "  - absorption_time_patch_position\n"
+           "    - Particle absorption times, particle tags, particle\n"
+           "      masses, closest boundary patch, and particle position at\n"
+           "      end of dynamics\n"
         << io::line();
     return output;
   }

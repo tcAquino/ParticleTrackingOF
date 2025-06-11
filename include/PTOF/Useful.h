@@ -417,7 +417,7 @@ auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
   return area;
 }
 
-/** Total areas of faces in each patch. */
+/** \brief Total areas of faces in each patch. */
 template <typename Mesh>
 auto patch_areas(std::vector<std::string> const &patch_names,
                  Mesh const &mesh) {
@@ -798,6 +798,18 @@ template <typename Mesh> auto all_cell_ids(Mesh const &mesh) {
   return range::range<std::vector>(0, mesh.nCells());
 }
 
+
+/** \brief Find patch id in mesh for a face known to be in a boundary patch. */
+template <typename Mesh> auto patch_id(Foam::label face, Mesh const &mesh) {
+  return mesh.boundaryMesh().whichPatch(face);
+}
+
+
+/** \brief Find patch id in mesh for a patch name. */
+template <typename Mesh> auto patch_id(Foam::word patch_name, Mesh const &mesh) {
+  return mesh.boundary().findPatchID(patch_name);
+}
+
 /**
    \brief Append mesh face indices of faces in patch to container.
    \param patch_name Name of patch.
@@ -807,7 +819,7 @@ template <typename Mesh> auto all_cell_ids(Mesh const &mesh) {
 template <typename Mesh>
 void patch_face_ids(std::string const &patch_name, Mesh const &mesh,
                     std::vector<Foam::label> &face_ids) {
-  Foam::label patch_id = mesh.boundary().findPatchID(patch_name);
+  Foam::label patch_id = ptof::patch_id(patch_name, mesh);
   auto const &patch = mesh.boundaryMesh()[patch_id];
   face_ids.reserve(face_ids.size() + patch.size());
   Foam::label start = patch.start();
