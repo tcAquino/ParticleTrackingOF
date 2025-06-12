@@ -14,9 +14,15 @@
 #include "PTOF/MeasurementList.h"
 #include "PTOF/MeasurementSpacing.h"
 #include "PTOF/TimeUnits.h"
+#include <cstddef>
+#include <fstream>
+#include <istream>
 #include <memory>
 #include <ostream>
+#include <stdexcept>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 namespace ptof {
@@ -29,8 +35,9 @@ struct OutputParameters_Cases {
 public:
   std::string time_units;
   double time_unit_factor;
-  std::string end_criterion;
-  double end_value;
+  std::string end_criterion_logical_combination;
+  std::vector<std::string> end_criteria;
+  std::unordered_map<EndCriterion::Type, double> end_values;
   std::string measurement_spacing;
   double time_min;
   double time_max;
@@ -138,11 +145,11 @@ public:
     std::size_t param_index = 0;
     io::read(split_line, param_index, in_file + "Could not parse time units",
              time_units);
-    if (!TimeUnits{}.contains(time_units))
+    if (!TimeUnits::contains(time_units))
       throw std::runtime_error{in_file + "Not supported"};
     time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);
-    read_end_criterion(input, filename);
+    read_end_criteria(input, filename);
     read_measurement_spacing(input, filename, params_transport,
                              params_reaction);
     read_measurement_types(input, filename, geometry);
@@ -163,6 +170,10 @@ public:
            "  - arbitrary\n"
            "    - Arbitary units (no rescaling)\n"
            "- End criterion to finish dynamics:\n"
+           "  (Note:"
+           "    - To combine criteria pass 'and' or 'or' on first line,\n"
+           "      followed by the number of criteria to combine on the same\n"
+           "      line, then specify one criterion per subsequent line)\n"
            "  - time\n"
            "    - Specified time\n"
            "    - Pass on same line:\n"
@@ -315,32 +326,75 @@ public:
     return output;
   }
 
-  /** \brief Read end criterion from input stream. */
-  template <typename IStream>
-  void read_end_criterion(IStream &input, std::string const &filename) {
+  /** \brief Read all end criteria from input stream. */
+  void read_end_criteria(std::ifstream &input, std::string const &filename) {
     std::string in_file = std::string{"In file "} + filename + " : ";
     auto split_line = io::split_line(input);
     std::size_t param_index = 0;
-    io::read(split_line, param_index, in_file + "Could not parse end criterion",
-             end_criterion);
+    auto criterion = io::read<std::string>(
+        split_line, param_index, in_file + "Could not parse end criterion");
+
+    if (criterion == "and" || criterion == "or") {
+      end_criterion_logical_combination = criterion;
+      std::string for_end_criterion =
+          std::string{"End criterion logical combination "} + criterion + " : ";
+      auto nr_criteria = io::read<std::size_t>(
+          split_line, param_index,
+          in_file + for_end_criterion +
+              "Could not parse number of end criteria to combine");
+      for (std::size_t ii = 0; ii < nr_criteria; ++ii) {
+        auto split_line = io::split_line(input);
+        std::size_t param_index = 0;
+        io::read(split_line, param_index, 1,
+                 in_file + "Could not parse end criterion", end_criteria);
+        parse_end_criterion_parameters(split_line, param_index,
+                                       end_criteria.back(), in_file);
+      }
+    } else {
+      end_criterion_logical_combination = "single";
+      end_criteria.push_back(criterion);
+      parse_end_criterion_parameters(split_line, param_index,
+                                     end_criteria.back(), in_file);
+    }
+
+    if (end_criteria.empty()) {
+      throw std::runtime_error{"No end criterion"};
+    }
+
+    if (std::unordered_set<std::string>(end_criteria.begin(),
+                                        end_criteria.end())
+            .size() != end_criteria.size()) {
+      throw std::runtime_error{
+          "The same end criterion type was specified more than once"};
+    }
+  }
+
+  /** \brief Parse one end criterion's parameters from split line string. */
+  void parse_end_criterion_parameters(
+      std::vector<std::string> const &split_line, std::size_t &param_index,
+      std::string const &end_criterion, std::string const &in_file = "") {
     std::string for_end_criterion =
         std::string{"End criterion "} + end_criterion + " : ";
-
-    switch (EndCriterion::type(end_criterion)) {
+    if (!EndCriterion::contains(end_criterion))
+      throw std::runtime_error{for_end_criterion + end_criterion +
+                               " Not supported"};
+    auto criterion_type = EndCriterion::type(end_criterion);
+    switch (criterion_type) {
     case EndCriterion::Type::time: {
-      io::read(split_line, param_index,
-               in_file + for_end_criterion + "Could not parse end time",
-               end_value);
-      end_value *= time_unit_factor;
+      end_values[criterion_type] =
+          io::read<double>(split_line, param_index,
+                           in_file + for_end_criterion +
+                               "Could not parse end time") *
+          time_unit_factor;
       break;
     }
     case EndCriterion::Type::time_max:
       break;
     case EndCriterion::Type::mass_below:
     case EndCriterion::Type::mass_above: {
-      io::read(split_line, param_index,
-               in_file + for_end_criterion + "Could not parse mass threshold",
-               end_value);
+      end_values[criterion_type] = io::read<double>(
+          split_line, param_index,
+          in_file + for_end_criterion + "Could not parse mass threshold");
       break;
     }
     case EndCriterion::Type::all_absorbed:
@@ -348,10 +402,10 @@ public:
     case EndCriterion::Type::one_absorbed:
       break;
     case EndCriterion::Type::fraction_not_absorbed: {
-      io::read(split_line, param_index,
-               in_file + for_end_criterion +
-                   "Could not parse absorbed fraction threshold",
-               end_value);
+      end_values[criterion_type] =
+          io::read<double>(split_line, param_index,
+                           in_file + for_end_criterion +
+                               "Could not parse absorbed fraction threshold");
       break;
     }
     default:
@@ -361,9 +415,9 @@ public:
   }
 
   /** \brief Read measurement spacing type from input stream. */
-  template <typename IStream, typename TransportParameters,
-            typename ReactionParameters>
-  void read_measurement_spacing(IStream &input, std::string const &filename,
+  template <typename TransportParameters, typename ReactionParameters>
+  void read_measurement_spacing(std::ifstream &input,
+                                std::string const &filename,
                                 TransportParameters const &params_transport,
                                 ReactionParameters const &params_reaction) {
     std::string in_file = std::string{"In file "} + filename + " : ";
@@ -374,7 +428,8 @@ public:
              measurement_spacing);
     std::string for_measurement_spacing =
         std::string{"Measurement spacing "} + measurement_spacing + " : ";
-
+    if (!MeasurementSpacing::contains(measurement_spacing))
+      throw std::runtime_error{for_measurement_spacing + " Not supported"};
     io::read(split_line, param_index,
              in_file + for_measurement_spacing +
                  "Could not parse minimum measurement time",
@@ -445,8 +500,8 @@ public:
   }
 
   /** \brief Read measurement type from input stream. */
-  template <typename IStream, typename Geometry>
-  void read_measurement_types(IStream &input, std::string const &filename,
+  template <typename Geometry>
+  void read_measurement_types(std::ifstream &input, std::string const &filename,
                               Geometry const &geometry) {
     std::string in_file = std::string{"In file "} + filename + " : ";
     for (std::vector<std::string> split_line; io::split_line(input, split_line);
@@ -457,9 +512,8 @@ public:
                                 in_file + "Could not parse measurement type");
       std::string for_measurement_type =
           std::string{"Measurement type "} + name + " : ";
-      if (!MeasurementList{}.contains(name))
-        throw std::runtime_error{"Output type " + name + " not supported"};
-
+      if (!MeasurementList::contains(name))
+        throw std::runtime_error{for_measurement_type + " Not supported"};
       switch (MeasurementList::type(name)) {
       case (MeasurementList::Type::scalar_field):
       case (MeasurementList::Type::vector_field):

@@ -6,6 +6,7 @@
 */
 
 #include <map>
+#include <stdexcept>
 #include <string>
 
 #ifndef PTOF_ENDCRITERION_H
@@ -36,7 +37,7 @@ struct EndCriterion {
   static auto name(Type type) { return type_to_name.at(type); }
 
   /** \return \c true if name exists, \c false otherwise. */
-  static bool exists(std::string const &name) {
+  static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }
 

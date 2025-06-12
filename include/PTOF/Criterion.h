@@ -9,7 +9,10 @@
 #define PTOF_CRITERION_H
 
 #include "PTOF/Useful.h"
+#include <algorithm>
 #include <cstddef>
+#include <memory>
+#include <vector>
 
 namespace ptof {
 /**
@@ -119,6 +122,45 @@ struct Criterion_fraction_not_absorbed final : Criterion<Subject> {
 
   double end_value;
 };
+
+/**
+   \class Criterion_and PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if all criteria are true.
+*/
+template <typename Subject> struct Criterion_and final : Criterion<Subject> {
+  using Criteria = std::vector<std::unique_ptr<Criterion<Subject>>>;
+
+  Criterion_and(Subject const &subject, Criteria criteria)
+      : Criterion<Subject>{subject}, _criteria{std::move(criteria)} {}
+
+  bool operator()(double time) const override {
+    return std::all_of(_criteria.begin(), _criteria.end(),
+                       [this, time](auto &cc) { return (*cc)(time); });
+  }
+
+private:
+  Criteria _criteria;
+};
+
+/**
+   \class Criterion_or PTOF/Criterion.h "PTOF/Criterion.h"
+   \brief Check if at least one criterion is true.
+*/
+template <typename Subject> struct Criterion_or final : Criterion<Subject> {
+  using Criteria = std::vector<std::unique_ptr<Criterion<Subject>>>;
+
+  Criterion_or(Subject const &subject, Criteria criteria)
+      : Criterion<Subject>{subject}, _criteria{std::move(criteria)} {}
+
+  bool operator()(double time) const override {
+    return std::any_of(_criteria.begin(), _criteria.end(),
+                       [this, time](auto &cc) { return (*cc)(time); });
+  }
+
+private:
+  Criteria _criteria;
+};
+
 } // namespace ptof
 
 #endif /* PTOF_CRITERION_H */

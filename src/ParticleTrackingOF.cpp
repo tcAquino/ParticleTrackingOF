@@ -70,7 +70,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_3d;
+  using Model = ptof::Model::advection_diffusion_2d;
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;
@@ -278,18 +278,22 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Starting dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  double current_time = 0.;
+  double start_time = 0.;
+  double previous_time = start_time;
+  double current_time = start_time;
   ptof::info_time(std::cout, params_output, current_time);
-  while (!output.done(current_time)) {
-    while (output.next_measurement_time() <= current_time) {
-      std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, params_output, output.next_measurement_time());
-      ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                       output.next_measurement_time());
-      output(output.next_measurement_time());
-      std::cout << "Done!\n";
-    }
-    double previous_time = current_time;
+  while (output.next_measurement_time() <= current_time) {
+    std::cout << "Measurement required...\n";
+    ptof::info_time(std::cout, params_output, output.next_measurement_time());
+    ptof::info_fraction_not_absorbed(std::cout, ctrw,
+                                     output.next_measurement_time());
+    output(output.next_measurement_time());
+    std::cout << "Done!\n";
+  }
+  while (output.next_measurement_time() <
+             std::numeric_limits<double>::infinity() &&
+         !output.done(current_time)) {
+    previous_time = current_time;
     current_time = output.next_measurement_time();
     Definitions::Solvers::evolve(
         ctrw, transitions, params_solvers, current_time, previous_time,
@@ -299,14 +303,17 @@ int main(int argc, char *argv[]) {
           Definitions::Reaction::update(bulk_reaction, surface_reaction, ctrw,
                                         new_time, old_time);
         });
-  }
-  if (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, params_output, output.next_measurement_time());
-    ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                     output.next_measurement_time());
+    ptof::info_time(std::cout, params_output, current_time);
+    ptof::info_fraction_not_absorbed(std::cout, ctrw, current_time);
     output(output.next_measurement_time());
     std::cout << "Done!\n";
+  }
+  if (output.done(current_time)) {
+    std::cout << "End criterion reached." << std::endl;
+  } else {
+    std::cout << "Maximum measurement time reached before end criterion."
+              << std::endl;
   }
   output();
   execution_end = std::chrono::high_resolution_clock::now();

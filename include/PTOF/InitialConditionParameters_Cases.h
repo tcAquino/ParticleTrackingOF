@@ -12,6 +12,7 @@
 #include "PTOF/Directories.h"
 #include "PTOF/InitialConditionList.h"
 #include "PTOF/TimeUnits.h"
+#include <fstream>
 #include <ostream>
 #include <stdexcept>
 #include <string>
@@ -478,9 +479,9 @@ public:
 private:
   /** \brief Read initial condition type and specific parameters. */
   template <typename Geometry, typename TransportParameters,
-            typename ReactionParameters, typename IStream>
+            typename ReactionParameters>
   std::unique_ptr<SpecificParameters>
-  set_specific_parameters(IStream &input, std::string const &filename,
+  set_specific_parameters(std::ifstream &input, std::string const &filename,
                           Directories const &directories,
                           Geometry const &geometry,
                           TransportParameters const &params_transport,
@@ -490,7 +491,7 @@ private:
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse initial condition type", name);
-    if (!InitialConditionList{}.contains(name))
+    if (!InitialConditionList::contains(name))
       throw std::runtime_error{"Initial condition type " + name +
                                " not supported"};
     type = InitialConditionList::type(name);
@@ -628,10 +629,10 @@ private:
   }
 
   /** \brief Read initial condition info from input stream. */
-  template <typename IStream, typename TransportParameters,
+  template <typename TransportParameters,
             typename ReactionParameters>
   std::unique_ptr<InjectionParameters>
-  set_injection_parameters(IStream &input, std::string const &filename,
+  set_injection_parameters(std::ifstream &input, std::string const &filename,
                            TransportParameters const &params_transport,
                            ReactionParameters const &params_reaction) {
     if (type ==
@@ -655,7 +656,7 @@ private:
         io::read<std::string>(split_line, param_index,
                               in_file + for_injection_continuity_type +
                                   "Could not parse injection time units");
-    if (!TimeUnits{}.contains(time_units))
+    if (!TimeUnits::contains(time_units))
       throw std::runtime_error{in_file + for_injection_continuity_type +
                                "Time units " + time_units + " not supported"};
     double time_unit_factor =

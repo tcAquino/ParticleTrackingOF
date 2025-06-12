@@ -307,7 +307,9 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Starting dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  double current_time = directories_of.time.value();
+  double start_time = directories_of.time.value();
+  double previous_time = start_time;
+  double current_time = start_time;
   ptof::info_time(std::cout, params_output, current_time);
   auto const &flow_times = directories_of.time.times();
   auto closest_time_index = [&flow_times](auto value) {
@@ -322,11 +324,20 @@ int main(int argc, char *argv[]) {
                        std::abs(yy.value() - value);
             }));
   };
-  Foam::label time_index = closest_time_index(current_time);
+  Foam::label time_index = closest_time_index(start_time);
   double next_flow_time = std::numeric_limits<double>::infinity();
   if (time_index < flow_times.size() - 1)
     next_flow_time = flow_times[time_index + 1].value();
-  while (!output.done(current_time)) {
+  while (output.next_measurement_time() <= current_time) {
+    std::cout << "Measurement required...\n";
+    ptof::info_time(std::cout, params_output, output.next_measurement_time());
+    ptof::info_fraction_not_absorbed(std::cout, ctrw,
+                                     output.next_measurement_time());
+    output(output.next_measurement_time());
+    std::cout << "Done!\n";
+  }
+  while (current_time < std::numeric_limits<double>::infinity() &&
+         !output.done(current_time)) {
     if (time_index < flow_times.size() - 1) {
       bool velocity_field_needs_update = false;
       while (time_index < flow_times.size() - 1 &&
@@ -350,15 +361,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Done!\n";
       }
     }
-    while (output.next_measurement_time() <= current_time) {
-      std::cout << "Measurement required...\n";
-      ptof::info_time(std::cout, params_output, output.next_measurement_time());
-      ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                       output.next_measurement_time());
-      output(output.next_measurement_time());
-      std::cout << "Done!\n";
-    }
-    double previous_time = current_time;
+    previous_time = current_time;
     current_time =
         next_flow_time > current_time
             ? std::min(output.next_measurement_time(), next_flow_time)
@@ -371,14 +374,19 @@ int main(int argc, char *argv[]) {
           Definitions::Reaction::update(bulk_reaction, surface_reaction, ctrw,
                                         new_time, old_time);
         });
+    if (current_time == output.next_measurement_time()) {
+      std::cout << "Measurement required...\n";
+      ptof::info_time(std::cout, params_output, current_time);
+      ptof::info_fraction_not_absorbed(std::cout, ctrw, current_time);
+      output(current_time);
+      std::cout << "Done!\n";
+    }
   }
-  if (output.next_measurement_time() <= current_time) {
-    std::cout << "Measurement required...\n";
-    ptof::info_time(std::cout, params_output, output.next_measurement_time());
-    ptof::info_fraction_not_absorbed(std::cout, ctrw,
-                                     output.next_measurement_time());
-    output(output.next_measurement_time());
-    std::cout << "Done!\n";
+  if (output.done(output.next_measurement_time())) {
+    std::cout << "End criterion reached." << std::endl;
+  } else {
+    std::cout << "Maximum measurement time reached before end criterion."
+              << std::endl;
   }
   output();
   execution_end = std::chrono::high_resolution_clock::now();

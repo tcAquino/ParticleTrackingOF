@@ -541,6 +541,26 @@ std::vector<Type> &read(std::vector<std::string> const &strings,
    \param strings Strings to extract from.
    \param index Index of first string to read; is incremented by one per value
    read.
+   \param nr_to_read Number of elements to read.
+   \param error Base error message in case of failure.
+   \param result Vector of variables to append to, converting based on type.
+   \return Reference to vector of extracted values.
+*/
+template <typename Type>
+std::vector<Type> &read(std::vector<std::string> const &strings,
+                        std::size_t &index, std::size_t nr_to_read,
+                        std::string const &error, std::vector<Type> &result) {
+  result.reserve(result.size() + nr_to_read);
+  for (std::size_t ii = 0; ii < nr_to_read; ++ii)
+    result.push_back(read<Type>(strings, index, error));
+  return result;
+}
+
+/**
+   \brief Extract values from container of strings and increment \p index.
+   \param strings Strings to extract from.
+   \param index Index of first string to read; is incremented by one per value
+   read.
    \param error Base error message in case of failure.
    \param results variables to extract into, converting based on type.
 */

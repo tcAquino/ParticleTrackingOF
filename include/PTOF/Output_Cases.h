@@ -31,6 +31,7 @@
 #include <fvcGrad.H>
 #include <initializer_list>
 #include <iterator>
+#include <limits>
 #include <memory>
 #include <ostream>
 #include <stdexcept>
@@ -187,35 +188,51 @@ public:
   /** \brief Output information about current object. */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Output\n"
-           << io::line() << "End criterion: " << parameters.end_criterion
-           << "\n";
-    if (EndCriterion::type(parameters.end_criterion) ==
-            EndCriterion::Type::time ||
-        EndCriterion::type(parameters.end_criterion) ==
-            EndCriterion::Type::mass_below ||
-        EndCriterion::type(parameters.end_criterion) ==
-            EndCriterion::Type::mass_above ||
-        EndCriterion::type(parameters.end_criterion) ==
-            EndCriterion::Type::fraction_not_absorbed)
-      output << "End value: " << parameters.end_value << "\n"
-             << "Time units: " << parameters.time_units
-             << "\n"
-                "Measurement spacing: "
-             << parameters.measurement_spacing
-             << "\n"
-                "Minimum measurement time: "
-             << parameters.time_min
-             << "\n"
-                "Maximum measurement time: ";
-    if (EndCriterion::type(parameters.end_criterion) ==
-            EndCriterion::Type::time &&
-        (MeasurementSpacing::type(parameters.measurement_spacing) ==
-             MeasurementSpacing::Type::linear_step ||
-         MeasurementSpacing::type(parameters.measurement_spacing) ==
-             MeasurementSpacing::Type::log_step))
-      output << parameters.end_value << "\n";
-    else
+
+           << io::line();
+    output << "  - Measurement time units: " << parameters.time_units << "\n"
+           << "  - Measurement spacing: " << parameters.measurement_spacing
+           << "\n"
+           << "  - Minimum measurement time: " << parameters.time_min << "\n"
+           << "  - Maximum measurement time: ";
+    bool time_end_criterion = false;
+    for (auto const &end_criterion : parameters.end_criteria) {
+      auto criterion_type = EndCriterion::type(end_criterion);
+      if (criterion_type == EndCriterion::Type::time) {
+        time_end_criterion = true;
+        break;
+      }
+    }
+    if (!time_end_criterion) {
       output << parameters.time_max << "\n";
+    } else {
+      double time_end = parameters.end_values.at(EndCriterion::Type::time);
+      if (parameters.time_max < time_end) {
+        throw std::runtime_error{
+            "Last measurement time is lower than specified end time"};
+      } else {
+        output << time_end << "\n";
+      }
+    }
+
+    if (parameters.end_criteria.size() > 1) {
+      output << "End criterion logical combination: "
+             << parameters.end_criterion_logical_combination;
+      output << "Number of end criteria to combine: "
+             << parameters.end_criteria.size() << "\n";
+    }
+
+    for (auto const &end_criterion : parameters.end_criteria) {
+      output << "End criterion: " << end_criterion << "\n";
+      auto criterion_type = EndCriterion::type(end_criterion);
+      if (criterion_type == EndCriterion::Type::time ||
+          criterion_type == EndCriterion::Type::mass_below ||
+          criterion_type == EndCriterion::Type::mass_above ||
+          criterion_type == EndCriterion::Type::fraction_not_absorbed) {
+        output << "  - End value: " << parameters.end_values.at(criterion_type)
+               << "\n";
+      }
+    }
     output << "Measurements:\n";
     info_runtime_measurements(output);
     output << io::line();
@@ -242,8 +259,8 @@ private:
      \param identifier String to include in names of output files.
      \param velocity_field Velocity field as a function of state.
      \param masks Scalar field reference wrappers.
-     \param thresholds Thresholds for each mask, such that cells where a mask is
-     above or equal to the threshold are considered.
+     \param thresholds Thresholds for each mask, such that cells where a mask
+     is above or equal to the threshold are considered.
   */
   template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   void set_measurement_types(
@@ -596,8 +613,7 @@ private:
       }
       case MeasurementList::Type::absorption_time_patch: {
         _output.emplace_back(
-            std::make_unique<
-                Measurer_absorption_time<Subject, Geometry, true>>(
+            std::make_unique<Measurer_absorption_time<Subject, Geometry, true>>(
                 subject, geometry, directories, identifier,
                 measurement->precision));
         break;
@@ -631,52 +647,71 @@ private:
   void set_end_criterion(Subject const &subject) {
     // Note: The non-standard control flow structure of the if statements is
     // needed to deal with the quirks of if constexpr
-    switch (EndCriterion::type(parameters.end_criterion)) {
-    case EndCriterion::Type::time: {
-      _end_criterion = std::make_unique<Criterion_time<Subject>>(
-          subject, parameters.end_value);
-      break;
-    }
-    case EndCriterion::Type::time_max: {
-      if (parameters.time_max == std::numeric_limits<double>::infinity()) {
-        throw std::runtime_error{
-            std::string{"Infinite maximum time with end criterion "} +
-            parameters.end_criterion};
+
+    std::vector<std::unique_ptr<Criterion<Subject>>> end_criteria;
+    for (auto const &end_criterion : parameters.end_criteria) {
+      auto criterion_type = EndCriterion::type(end_criterion);
+      switch (criterion_type) {
+      case EndCriterion::Type::time: {
+        end_criteria.emplace_back(std::make_unique<Criterion_time<Subject>>(
+            subject, parameters.end_values.at(criterion_type)));
+        break;
       }
-      _end_criterion = std::make_unique<Criterion_time<Subject>>(
-          subject, parameters.time_max);
-      break;
+      case EndCriterion::Type::time_max: {
+        if (parameters.time_max == std::numeric_limits<double>::infinity()) {
+          throw std::runtime_error{
+              std::string{"Infinite maximum time with end criterion "} +
+              end_criterion};
+        }
+        end_criteria.emplace_back(std::make_unique<Criterion_time<Subject>>(
+            subject, parameters.time_max));
+        break;
+      }
+      case EndCriterion::Type::mass_below: {
+        end_criteria.emplace_back(
+            std::make_unique<Criterion_mass_below<Subject>>(
+                subject, parameters.end_values.at(criterion_type)));
+        break;
+      }
+      case EndCriterion::Type::mass_above: {
+        end_criteria.emplace_back(
+            std::make_unique<Criterion_mass_above<Subject>>(
+                subject, parameters.end_values.at(criterion_type)));
+        break;
+      }
+      case EndCriterion::Type::all_absorbed: {
+        end_criteria.emplace_back(
+            std::make_unique<Criterion_all_absorbed<Subject>>(subject));
+        break;
+      }
+      case EndCriterion::Type::one_absorbed: {
+        end_criteria.emplace_back(
+            std::make_unique<Criterion_one_absorbed<Subject>>(subject));
+        break;
+      }
+      case EndCriterion::Type::fraction_not_absorbed: {
+        end_criteria.emplace_back(
+            std::make_unique<Criterion_fraction_not_absorbed<Subject>>(
+                subject, parameters.end_values.at(criterion_type)));
+        break;
+      }
+      default:
+        throw std::runtime_error{std::string{"End criterion "} + end_criterion +
+                                 " not supported"};
+      }
     }
-    case EndCriterion::Type::mass_below: {
-      _end_criterion = std::make_unique<Criterion_mass_below<Subject>>(
-          subject, parameters.end_value);
-      break;
-    }
-    case EndCriterion::Type::mass_above: {
-      _end_criterion = std::make_unique<Criterion_mass_above<Subject>>(
-          subject, parameters.end_value);
-      break;
-    }
-    case EndCriterion::Type::all_absorbed: {
-      _end_criterion =
-          std::make_unique<Criterion_all_absorbed<Subject>>(subject);
-      break;
-    }
-    case EndCriterion::Type::one_absorbed: {
-      _end_criterion =
-          std::make_unique<Criterion_one_absorbed<Subject>>(subject);
-      break;
-    }
-    case EndCriterion::Type::fraction_not_absorbed: {
-      _end_criterion =
-          std::make_unique<Criterion_fraction_not_absorbed<Subject>>(
-              subject, parameters.end_value);
-      break;
-    }
-    default:
-      throw std::runtime_error{std::string{"End criterion "} +
-                               parameters.end_criterion + " not supported"};
-    }
+
+    if (end_criteria.empty())
+      throw std::runtime_error{"No end criterion"};
+
+    if (parameters.end_criterion_logical_combination == "single") {
+      _end_criterion = std::move(end_criteria[0]);
+    } else if (parameters.end_criterion_logical_combination == "and") {
+      _end_criterion = std::make_unique<Criterion_and<Subject>>(
+          subject, std::move(end_criteria));
+    } else if (parameters.end_criterion_logical_combination == "or")
+      _end_criterion = std::make_unique<Criterion_or<Subject>>(
+          subject, std::move(end_criteria));
   }
 
   template <typename Measurement>
