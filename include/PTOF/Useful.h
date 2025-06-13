@@ -377,6 +377,17 @@ auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
   return volumes;
 }
 
+/** \brief Find patch id in mesh for a face known to be in a boundary patch. */
+template <typename Mesh> auto patch_id(Foam::label face, Mesh const &mesh) {
+  return mesh.boundaryMesh().whichPatch(face);
+}
+
+/** \brief Find patch id in mesh for a patch name. */
+template <typename Mesh>
+auto patch_id(Foam::word patch_name, Mesh const &mesh) {
+  return mesh.boundary().findPatchID(patch_name);
+}
+
 /** \brief Face areas (magnitudes). */
 template <typename Container, typename Mesh>
 auto face_areas(Container const &face_ids, Mesh const &mesh) {
@@ -445,9 +456,12 @@ template <typename VectorField, typename Locator>
 auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
                        Locator const &locator) {
   auto const &mesh = locator.mesh();
+  auto patch_id = ptof::patch_id(face_id, mesh);
+  auto const &patch = mesh.boundaryMesh()[patch_id];
+  Foam::label start = patch.start();
+
   return area_outward(face_id, mesh) &
-         vector_field(adjusted_face_center(face_id, locator),
-                      mesh.faceOwner()[face_id]);
+         vector_field.boundaryField()[patch_id][face_id - start];
 }
 
 /**
@@ -457,9 +471,12 @@ template <typename VectorField, typename Locator>
 auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
                       Locator const &locator) {
   auto const &mesh = locator.mesh();
+  auto patch_id = ptof::patch_id(face_id, mesh);
+  auto const &patch = mesh.boundaryMesh()[patch_id];
+  Foam::label start = patch.start();
+
   return area_inward(face_id, mesh) &
-         vector_field(adjusted_face_center(face_id, locator),
-                      mesh.faceOwner()[face_id]);
+         vector_field.boundaryField()[patch_id][face_id - start];
 }
 
 /**
@@ -798,18 +815,6 @@ template <typename Mesh> auto all_cell_ids(Mesh const &mesh) {
   return range::range<std::vector>(0, mesh.nCells());
 }
 
-
-/** \brief Find patch id in mesh for a face known to be in a boundary patch. */
-template <typename Mesh> auto patch_id(Foam::label face, Mesh const &mesh) {
-  return mesh.boundaryMesh().whichPatch(face);
-}
-
-
-/** \brief Find patch id in mesh for a patch name. */
-template <typename Mesh> auto patch_id(Foam::word patch_name, Mesh const &mesh) {
-  return mesh.boundary().findPatchID(patch_name);
-}
-
 /**
    \brief Append mesh face indices of faces in patch to container.
    \param patch_name Name of patch.
@@ -1009,7 +1014,7 @@ auto fluxweighted_cell_distribution(Container const &cell_ids,
 /**
    \brief Distribution for random number generation of face indices weighted by
    face areas multiplied by vector field component along inward normal.
-   \note Face with vector field pointing outward have weight zero.
+   \note Faces with vector field pointing outward have weight zero.
 */
 template <typename Container, typename VectorField, typename Locator>
 auto fluxweighted_face_distribution(Container const &face_ids,
