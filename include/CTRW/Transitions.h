@@ -98,35 +98,30 @@ Transitions_Time_Position(TimeGenerator &&, JumpGenerator &&, Boundary &&)
    - \c time
 */
 template <typename TimeStepAdaptor, typename TimeGenerator,
-          typename JumpGenerator, typename Locator = meta::Empty,
-          typename Boundary = geom::Boundary_DoNothing>
+          typename JumpGenerator, typename Boundary = geom::Boundary_DoNothing>
 class Transitions_AdaptiveTimeStep_Time_Position {
 public:
   Transitions_AdaptiveTimeStep_Time_Position(
       TimeStepAdaptor &&time_step_adaptor, TimeGenerator &&time_generator,
-      JumpGenerator &&jump_generator, Locator &&locator = {},
-      Boundary &&boundary = {})
+      JumpGenerator &&jump_generator, Boundary &&boundary = {})
       : _time_step_adaptor{std::forward<TimeStepAdaptor>(time_step_adaptor)},
         _time_generator{std::forward<TimeGenerator>(time_generator)},
         _jump_generator{std::forward<JumpGenerator>(jump_generator)},
-        _locator{std::forward<Locator>(locator)}, _boundary{
-                                                      std::forward<Boundary>(
-                                                          boundary)} {}
+        _boundary{std::forward<Boundary>(boundary)} {}
 
   template <typename State> void operator()(State &state) {
     if constexpr (std::is_same_v<Boundary, geom::Boundary_DoNothing>) {
+      std::cout << "ola!!!!" << std::endl;
       _time_step_adaptor(state, _time_generator, _jump_generator);
       double time_increment = time_generator(state);
       op::plus_inplace(state.position, _jump_generator(state));
       state.time += time_increment;
-      locate(state);
     } else {
       auto state_old = state;
       _time_step_adaptor(state, _time_generator, _jump_generator);
       op::plus_inplace(state.position, _jump_generator(state));
       state.time += _time_generator(state_old);
       _boundary(state, state_old);
-      locate(state);
     }
   }
 
@@ -136,30 +131,21 @@ public:
 
   auto const &boundary() const { return _boundary; }
 
-  auto const &locator() const { return _locator; }
-
   double time_step() const { return _time_step; }
 
 private:
   TimeStepAdaptor _time_step_adaptor;
   TimeGenerator _time_generator;
   JumpGenerator _jump_generator;
-  Locator _locator;
   Boundary _boundary;
   double _time_step;
-
-  template <typename State> void locate(State &state) {
-    if constexpr (meta::has_cell_v<State>)
-      state.cell = _locator(state);
-  }
 };
 template <typename TimeStepAdaptor, typename TimeGenerator,
-          typename JumpGenerator, typename Locator, typename Boundary>
+          typename JumpGenerator, typename Boundary>
 Transitions_AdaptiveTimeStep_Time_Position(TimeStepAdaptor &&, TimeGenerator &&,
-                                           JumpGenerator &&, Locator &&,
-                                           Boundary &&)
+                                           JumpGenerator &&, Boundary &&)
     -> Transitions_AdaptiveTimeStep_Time_Position<
-        TimeStepAdaptor, TimeGenerator, JumpGenerator, Locator, Boundary>;
+        TimeStepAdaptor, TimeGenerator, JumpGenerator, Boundary>;
 
 /**
    \class Transitions_Positions CTRW/Transitions.h "CTRW/Transitions.h"

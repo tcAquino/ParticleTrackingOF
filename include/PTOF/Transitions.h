@@ -32,7 +32,7 @@ auto makeTransportTransitions(
       Solvers::template makeJumpGenerator<typename Geometry::ParallelOption>(
           velocity_field, boundary, params_transport, params_solvers,
           geometry.dim),
-      geometry.locator, boundary};
+      boundary};
 }
 
 /**

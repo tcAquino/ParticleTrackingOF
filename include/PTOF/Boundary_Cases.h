@@ -92,6 +92,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) {
+    // Note: The code flow is chosen to avoid trying to locate particles which
+    // are outside as much as possible, because it is expensive
+    
     // Find first intersection with boundary patch.
     auto intersection = _locator.mesh_search().intersection(
         make_point(state_old.position), make_point(state.position));
@@ -99,8 +102,6 @@ public:
     // When the start point is on a cell face,
     // sometimes the intersection with it is not found, and sometimes it is
     if (!intersection.hit()) {
-      // Note: The code flow is chosen to avoid trying to locate particles which
-      // are outside as much as possible, because it is expensive
       state.cell = _locator(state);
       if (outside(state.cell)) {
         // If the final state is outside, avoid particles leaving the domain by
@@ -113,9 +114,11 @@ public:
             make_point(state.position));
         // If this didn't work, place particle at nearest cell center to avoid
         // breaking
-        if (!intersection.hit())
-          state.set_position(cell_center(_locator.nearest_cell(state.position),
-                                         _locator.mesh()));
+        if (!intersection.hit()) {
+          state.cell = _locator.nearest_cell(state.position);
+          state.set_position(cell_center(state.cell, _locator.mesh()));
+          return true;
+        }
       }
     } else if (((make_point(state.position) - intersection.point()) &
                 unit_normal_outward(intersection.index(), _locator.mesh())) <
@@ -131,8 +134,9 @@ public:
       // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
               intersection, old_intersection.point(), state) ||
-          intersection.index() == old_intersection.index())
+          intersection.index() == old_intersection.index()) {
         intersection.setMiss();
+      }
 
       // If there was no new hit and the particle is still outside, there is a
       // precision issue in finding intersections for the mesh. Place particle
@@ -200,6 +204,7 @@ public:
                       meta::Selector<BoundaryConditionList::Type,
                                      BoundaryConditionList::Type::absorbing>{});
           state.set_position(intersection.point());
+          state.cell = _locator(state);
         } else {
           _store_info(
               state, state_old, intersection, patch_id,
@@ -229,27 +234,50 @@ public:
 
       // Stop if right at the last intersection point
       // This avoids numerical issues for some edge cases
-      if (make_point(state.position) == intersection.point())
+      if (make_point(state.position) == intersection.point()) {
+        state.cell = _locator(state);
+        // For some meshes, some intersections can be considered outside the
+        // mesh. If so, use the owner cell center instead.
+        if (outside(state.cell)) {
+          auto owner_cell = _locator.mesh().faceOwner()[intersection.index()];
+          state.set_position(cell_center(owner_cell, _locator.mesh()),
+                             owner_cell);
+          return true;
+        }
         break;
+      }
 
       // Find the next intersection with a boundary patch
       auto old_intersection = intersection;
       intersection =
           next_intersection(intersection, make_point(state.position));
+
       // Ignore new intersection if offset went beyond final point or if there
       // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
               intersection, old_intersection.point(), state) ||
-          intersection.index() == old_intersection.index())
+          intersection.index() == old_intersection.index()) {
         intersection.setMiss();
+      }
 
-      // Sometimes there is not enough precision to find the next intersection.
-      // Avoid particles leaving the domain by placing the final state at the
-      // last intersection
       if (!intersection.hit()) {
         state.cell = _locator(state);
-        if (outside(state.cell))
+        // Sometimes there is not enough precision to find the next
+        // intersection. Avoid particles leaving the domain by placing the final
+        // state at the last intersection.
+        if (outside(state.cell)) {
           state.set_position(old_intersection.point());
+          state.cell = _locator(state);
+          // For some meshes, some intersections can be considered outside the
+          // mesh. If so, use the owner cell center instead.
+          if (outside(state.cell)) {
+            auto owner_cell =
+                _locator.mesh().faceOwner()[old_intersection.index()];
+            state.set_position(cell_center(owner_cell, _locator.mesh()),
+                               owner_cell);
+            return true;
+          }
+        }
         break;
       }
     }
@@ -308,14 +336,14 @@ private:
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
   Boundary_Custom
       _boundary_custom; /**< Boundary object to handle 'custom' bc type. */
-  Foam::wordList _patch_names;; /**< Names of patches in mesh. */
+  Foam::wordList _patch_names;
+  ; /**< Names of patches in mesh. */
 
 public:
   SurfaceReaction
       surface_reaction; /**< Surface reaction for reactive boundaries*/
 
 private:
-  
   const BoundaryConditionList
       _boundary_condition_types{}; /**< Boundary condition names and types. */
 

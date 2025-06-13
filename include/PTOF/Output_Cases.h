@@ -190,11 +190,10 @@ public:
     output << io::line() << "Output\n"
 
            << io::line();
-    output << "  - Measurement time units: " << parameters.time_units << "\n"
-           << "  - Measurement spacing: " << parameters.measurement_spacing
-           << "\n"
-           << "  - Minimum measurement time: " << parameters.time_min << "\n"
-           << "  - Maximum measurement time: ";
+    output << "Measurement time units: " << parameters.time_units << "\n"
+           << "Measurement spacing: " << parameters.measurement_spacing << "\n"
+           << "Minimum measurement time: " << parameters.time_min << "\n"
+           << "Maximum measurement time: ";
     bool time_end_criterion = false;
     for (auto const &end_criterion : parameters.end_criteria) {
       auto criterion_type = EndCriterion::type(end_criterion);
@@ -210,25 +209,21 @@ public:
       if (parameters.time_max < time_end) {
         throw std::runtime_error{
             "Last measurement time is lower than specified end time"};
-      } else {
-        output << time_end << "\n";
       }
+      output << time_end << "\n";
     }
 
     if (parameters.end_criteria.size() > 1) {
-      output << "End criterion logical combination: "
-             << parameters.end_criterion_logical_combination;
       output << "Number of end criteria to combine: "
              << parameters.end_criteria.size() << "\n";
+      output << "End criterion logical combination: "
+             << parameters.end_criterion_logical_combination << "\n";
     }
 
     for (auto const &end_criterion : parameters.end_criteria) {
       output << "End criterion: " << end_criterion << "\n";
       auto criterion_type = EndCriterion::type(end_criterion);
-      if (criterion_type == EndCriterion::Type::time ||
-          criterion_type == EndCriterion::Type::mass_below ||
-          criterion_type == EndCriterion::Type::mass_above ||
-          criterion_type == EndCriterion::Type::fraction_not_absorbed) {
+      if (parameters.end_values.count(criterion_type)) {
         output << "  - End value: " << parameters.end_values.at(criterion_type)
                << "\n";
       }

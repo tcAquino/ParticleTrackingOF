@@ -56,7 +56,7 @@ struct State1D {
 
   /** \brief Set position. */
   template <typename Position> void set_position(Position const &position) {
-    make_position(position);
+    set_position(make_position(position));
   }
 
   /** \brief Set position and cell. */
@@ -118,7 +118,7 @@ struct State2D {
 
   /** \brief Set position. */
   template <typename Position> void set_position(Position const &position) {
-    make_position(position);
+    set_position(make_position(position));
   }
 
   /** \brief Set position and cell. */
@@ -177,7 +177,7 @@ struct State3D {
 
   /** \brief Set position. */
   template <typename Position> void set_position(Position const &position) {
-    make_position(position);
+    set_position(make_position(position));
   }
 
   /** \brief Set position and cell. */
@@ -334,7 +334,7 @@ struct State1D_Periodic {
 
   /** \brief Set position. */
   template <typename Position> void set_position(Position const &position) {
-    make_position(position);
+    set_position(make_position(position));
   }
 
   /** \brief Set position and cell. */
@@ -401,7 +401,7 @@ struct State2D_Periodic {
 
   /** \brief Set position. */
   template <typename Position> void set_position(Position const &position) {
-    make_position(position);
+    set_position(make_position(position));
   }
 
   /** \brief Set position and cell. */
@@ -465,7 +465,7 @@ struct State3D_Periodic {
 
   /** \brief Set position. */
   template <typename Position> void set_position(Position const &position) {
-    make_position(position);
+    set_position(make_position(position));
   }
 
   /** \brief Set position and cell. */

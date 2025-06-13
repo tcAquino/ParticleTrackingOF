@@ -222,9 +222,9 @@ auto periodic_intersection(State state_outside, State const &state_image,
 
   // Ensure offset position is closer to intersection than outside position.
   // Otherwise, use displacement.
-  if (Foam::magSqr(offset) < Foam::magSqr(displacement))
+  if (Foam::magSqr(offset) < Foam::magSqr(displacement)) {
     state_outside.set_position(offset_pos);
-  else {
+  } else {
     offset = make_point(state_outside.position) - intersection.point();
     state_outside.set_position(intersection.point() + offset);
   }
