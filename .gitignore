@@ -1,6 +1,5 @@
 .DS_Store
 ._.DS_Store
 .cache/
-update.sh
 compile_commands.json
 .clang-tidy
