@@ -505,11 +505,16 @@ InitialCondition_FluxweightedFaceCenters(ParticleMaker &&, Geometry &&,
    \brief Initial condition at prescribed positions read from a file.
    \details File should contain particle positions, one particle per line.
 */
-template <typename ParticleMaker, typename Geometry>
+template <typename ParticleMaker, typename Geometry,
+          typename CheckOption = CheckOptions::Warn>
 struct InitialCondition_PrescribedPositions
     : public InitialCondition<ParticleMaker, Geometry> {
 private:
   using IC = InitialCondition<ParticleMaker, Geometry>;
+  static constexpr bool check_if_outside =
+      !std::is_same_v<CheckOption, CheckOptions::NoCheck>;
+  static constexpr bool warn_if_outside =
+      std::is_same_v<CheckOption, CheckOptions::Warn>;
 
 public:
   InitialCondition_PrescribedPositions(ParticleMaker &&particle_maker,
@@ -519,25 +524,44 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
+  InitialCondition_PrescribedPositions(ParticleMaker &&particle_maker,
+                                       Geometry &&geometry,
+                                       std::string filename, CheckOption)
+      : InitialCondition_PrescribedPositions{particle_maker, geometry,
+                                             filename} {}
+
   typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim)
       throw std::runtime_error{"Could not parse particle position in file " +
                                _filename};
-    Foam::point position;
+    Foam::point pos;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
-      position[dd] = std::stod(split_line[dd]);
+      pos[dd] = std::stod(split_line[dd]);
 
-    return {IC::Particle::State::make_position(position), -1};
+    auto position = IC::Particle::State::make_position(pos);
+    auto cell_id = this->_geometry.locator(position);
+    if constexpr (check_if_outside){
+      if (outside<warn_if_outside>(cell_id, position,
+                                   "Using closest cell center\n")) {
+        cell_id = this->_geometry.locator.nearest_cell(position);
+        position = cell_center(cell_id, this->_geometry.locator.mesh());
+      }
+    }
+    return {position, cell_id};
   }
 
-protected:
-  std::string _filename;
+protected : std::string _filename;
   std::ifstream _input{io::open_read(_filename)};
 };
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string)
-    -> InitialCondition_PrescribedPositions<ParticleMaker, Geometry>;
+    -> InitialCondition_PrescribedPositions<ParticleMaker, Geometry, CheckOptions::Warn>;
+template <typename ParticleMaker, typename Geometry, typename CheckOption>
+InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string,
+                                     CheckOption)
+    -> InitialCondition_PrescribedPositions<ParticleMaker, Geometry,
+                                            CheckOption>;
 
 /**
    \class InitialCondition_PrescribedPositionsMasses PTOF/InitialCondition.h
@@ -546,11 +570,15 @@ InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string)
    \details File should contain particle positions and masses, one particle per
    line.
 */
-template <typename ParticleMaker, typename Geometry>
+template <typename ParticleMaker, typename Geometry, typename CheckOption>
 struct InitialCondition_PrescribedPositionsMasses
     : public InitialCondition<ParticleMaker, Geometry> {
 private:
   using IC = InitialCondition<ParticleMaker, Geometry>;
+  static constexpr bool check_if_outside =
+      !std::is_same_v<CheckOption, CheckOptions::NoCheck>;
+  static constexpr bool warn_if_outside =
+      std::is_same_v<CheckOption, CheckOptions::Warn>;
 
 public:
   InitialCondition_PrescribedPositionsMasses(ParticleMaker &&particle_maker,
@@ -560,18 +588,35 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
+  InitialCondition_PrescribedPositionsMasses(ParticleMaker &&particle_maker,
+                                             Geometry &&geometry,
+                                             std::string filename, CheckOption)
+      : InitialCondition_PrescribedPositionsMasses{particle_maker, geometry,
+                                                   filename} {}
+
   typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1)
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
-    Foam::point position;
+    Foam::point pos;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
-      position[dd] = std::stod(split_line[dd]);
+      pos[dd] = std::stod(split_line[dd]);
     this->_particle_maker.mass =
         std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
 
-    return {IC::Particle::State::make_position(position), -1};
+    auto position = IC::Particle::State::make_position(pos);
+    auto cell_id = this->_geometry.locator(position);
+    if constexpr (check_if_outside) {
+      if (outside<warn_if_outside>(cell_id, position,
+                                   "Using closest cell center\n")) {
+        cell_id = this->_geometry.locator.nearest_cell(position);
+        position = cell_center(cell_id, this->_geometry.locator.mesh());
+      }
+    }
+    return {position, cell_id};
+
+    return {position, cell_id};
   }
 
 protected:
@@ -581,7 +626,12 @@ protected:
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
                                            std::string)
-    -> InitialCondition_PrescribedPositionsMasses<ParticleMaker, Geometry>;
+    -> InitialCondition_PrescribedPositionsMasses<ParticleMaker, Geometry, CheckOptions::Warn>;
+template <typename ParticleMaker, typename Geometry, typename CheckOption>
+InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
+                                           std::string, CheckOption)
+    -> InitialCondition_PrescribedPositionsMasses<ParticleMaker, Geometry,
+                                                  CheckOption>;
 
 /**
    \class InitialCondition_PrescribedPositionsMassesTags PTOF/InitialCondition.h
@@ -591,11 +641,15 @@ InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
    \details File should contain particle positions, masses, and tags, one
    particle per line.
 */
-template <typename ParticleMaker, typename Geometry>
+template <typename ParticleMaker, typename Geometry, typename CheckOption>
 struct InitialCondition_PrescribedPositionsMassesTags
     : public InitialCondition<ParticleMaker, Geometry> {
 private:
   using IC = InitialCondition<ParticleMaker, Geometry>;
+  static constexpr bool check_if_outside =
+      !std::is_same_v<CheckOption, CheckOptions::NoCheck>;
+  static constexpr bool warn_if_outside =
+      std::is_same_v<CheckOption, CheckOptions::Warn>;
 
 public:
   InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&particle_maker,
@@ -605,20 +659,38 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
+  InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&particle_maker,
+                                                 Geometry &&geometry,
+                                                 std::string filename,
+                                                 CheckOption)
+      : InitialCondition_PrescribedPositionsMassesTags{particle_maker, geometry,
+                                                       filename} {}
+
   typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2)
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
-    Foam::point position;
+    Foam::point pos;
     for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
-      position[dd] = std::stod(split_line[dd]);
+      pos[dd] = std::stod(split_line[dd]);
     this->_particle_maker.mass =
         std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
     this->_particle_maker.tag =
         std::stoul(split_line[std::remove_reference_t<Geometry>::dim + 1]);
 
-    return {IC::Particle::State::make_position(position), -1};
+    auto position = IC::Particle::State::make_position(pos);
+    auto cell_id = this->_geometry.locator(position);
+    if constexpr (check_if_outside) {
+      if (outside<warn_if_outside>(cell_id, position,
+                                   "Using closest cell center\n")) {
+        cell_id = this->_geometry.locator.nearest_cell(position);
+        position = cell_center(cell_id, this->_geometry.locator.mesh());
+      }
+    }
+    return {position, cell_id};
+
+    return {position, cell_id};
   }
 
 protected:
@@ -628,7 +700,13 @@ protected:
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&, Geometry &&,
                                                std::string)
-    -> InitialCondition_PrescribedPositionsMassesTags<ParticleMaker, Geometry>;
+    -> InitialCondition_PrescribedPositionsMassesTags<ParticleMaker, Geometry,
+                                                      CheckOptions::Warn>;
+template <typename ParticleMaker, typename Geometry, typename CheckOption>
+InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&, Geometry &&,
+                                               std::string, CheckOption)
+    -> InitialCondition_PrescribedPositionsMassesTags<ParticleMaker, Geometry,
+                                                      CheckOption>;
 
 /**
    \class InitialCondition_PrescribedPositionsMassesTagsTimes
