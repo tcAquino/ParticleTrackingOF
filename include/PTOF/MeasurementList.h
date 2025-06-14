@@ -67,9 +67,17 @@ struct MeasurementList {
                   particle masses, and absorption patch at end of dynamics. */
     absorption_time_position, /**< Particle absorption times, particle tags,
        particle masses, and particle position at end of dynamics. */
-    absorption_time_patch_position /**< Particle absorption times, particle
-                                      tags, particle masses, closest boundary
-                                      patch, and particle position at end of
+    absorption_time_patch_position,    /**< Particle absorption times, particle
+                                         tags, particle masses, closest boundary
+                                         patch, and particle position at end of
+                                         dynamics. */
+    absorption_time_position_periodic, /**< Particle absorption times, particle
+       tags, particle masses, and particle position accounting for periodicity
+       at end of dynamics. */
+    absorption_time_patch_position_periodic /**< Particle absorption times,
+                                      particle tags, particle masses, closest
+                                      boundary patch, and particle position
+                                      accounting for periodicity at end of
                                       dynamics. */
   };
 
@@ -129,7 +137,11 @@ struct MeasurementList {
       {"absorption_time", Type::absorption_time},
       {"absorption_time_patch", Type::absorption_time_patch},
       {"absorption_time_position", Type::absorption_time_position},
-      {"absorption_time_patch_position", Type::absorption_time_patch_position}};
+      {"absorption_time_patch_position", Type::absorption_time_patch_position},
+      {"absorption_time_position_periodic",
+       Type::absorption_time_position_periodic},
+      {"absorption_time_patch_position_periodic",
+       Type::absorption_time_patch_position_periodic}};
 
   /** Map of types to names. */
   inline static const std::map<Type, std::string> type_to_name{
@@ -164,7 +176,10 @@ struct MeasurementList {
       {Type::absorption_time, "absorption_time"},
       {Type::absorption_time_patch, "absorption_time_patch"},
       {Type::absorption_time_position, "absorption_time_position"},
-      {Type::absorption_time_patch_position, "absorption_time_patch_position"}};
+      {Type::absorption_time_position_periodic,
+       "absorption_time_position_periodic"},
+      {Type::absorption_time_patch_position_periodic,
+       "absorption_time_patch_position_periodic"}};
 };
 
 #endif /* PTOF_MEASUREMENTLIST_H */

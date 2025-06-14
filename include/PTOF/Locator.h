@@ -107,7 +107,6 @@ struct Locator_Cell {
   /**
      \param position Position to locate.
      \return Nearest mesh cell index.
-     \details Does not use hint because holes are not handled correctly.
   */
   auto nearest_cell(Point const &position) const {
     return mesh_search().findNearestCell(position);

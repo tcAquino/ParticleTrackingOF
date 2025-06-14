@@ -38,10 +38,7 @@ namespace ptof {
 template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   using Particle = typename std::remove_reference_t<ParticleMaker>::Particle;
   using Position = typename Particle::State::Position;
-  struct PositionAndHint {
-    Position position;
-    Foam::label hint{-1};
-  };
+  using PositionAndCell = ptof::PositionAndCell<Position>;
   using ParticleContainer = std::vector<Particle>;
   using PositionContainer = std::vector<Position>;
 
@@ -65,21 +62,21 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
      \return Particle.
   */
   virtual Particle make_particle() {
-    auto [position, hint] = make_position_and_hint();
-    return _particle_maker(position, hint);
+    auto [position, cell] = make_position_and_cell();
+    return _particle_maker(position, cell);
   }
 
   /**
      \brief Make a single position.
      \return Position.
   */
-  virtual Position make_position() { return make_position_and_hint().position; }
+  virtual Position make_position() { return make_position_and_cell().position; }
 
   /**
-     \brief Make a single position along with location hint.
-     \return Position and hint.
+     \brief Make a single position along with location cell.
+     \return Position and cell.
   */
-  virtual PositionAndHint make_position_and_hint() = 0;
+  virtual PositionAndCell make_position_and_cell() = 0;
 
   /**
      \brief Make particles.
@@ -109,7 +106,7 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
     return positions;
   };
 
- protected:
+protected:
   ParticleMaker _particle_maker;
   Geometry _geometry;
 };
@@ -152,7 +149,7 @@ public:
     return particles;
   };
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     throw std::runtime_error{"Making positions is not allowed for continuous "
                              "injections"};
   }
@@ -199,7 +196,7 @@ public:
           "Point initial condition position is outside mesh"};
   }
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     return {_position, _cell_id};
   }
 
@@ -237,7 +234,7 @@ public:
            std::forward<Geometry>(geometry)},
         _dist{std::forward<Distribution>(dist)}, _nr_tries{nr_tries} {}
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     for (std::size_t ii = 0; ii < _nr_tries; ++ii) {
       auto position = IC::Particle::State::make_position(_dist(_rng));
       auto cell_id = this->_geometry.locator(position);
@@ -290,7 +287,7 @@ public:
       throw std::runtime_error{"No cells provided for initial condition"};
   }
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     auto cell_id = _cell_ids[_dist(_rng)];
     return {IC::Particle::State::make_position(
                 cell_center(cell_id, this->_geometry.mesh())),
@@ -340,11 +337,11 @@ public:
   }
 
   /**
-     \brief Make a single position along with location hint.
+     \brief Make a single position along with location cell.
      \note If face center is not in owner cell, position is placed at cell
      center.
   */
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     auto const &mesh = this->_geometry.mesh();
     auto face_id = _face_ids[_dist(_rng)];
     return {IC::Particle::State::make_position(
@@ -522,7 +519,7 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim)
       throw std::runtime_error{"Could not parse particle position in file " +
@@ -563,7 +560,7 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1)
       throw std::runtime_error{
@@ -608,7 +605,7 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2)
       throw std::runtime_error{
@@ -654,7 +651,7 @@ public:
            std::forward<Geometry>(geometry)},
         _filename{filename} {}
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 3)
       throw std::runtime_error{
@@ -710,7 +707,7 @@ public:
       throw std::runtime_error{"No faces provided for initial condition"};
   }
 
-  typename IC::PositionAndHint make_position_and_hint() override {
+  typename IC::PositionAndCell make_position_and_cell() override {
     for (std::size_t ii = 0; ii < _nr_tries; ++ii) {
       auto const &locator = this->_geometry.locator;
       auto const &mesh = locator.mesh();

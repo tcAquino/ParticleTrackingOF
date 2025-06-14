@@ -587,8 +587,8 @@ auto split_line(std::ifstream &input, std::string const &escape_sequence = "#",
 }
 
 /**
-   \brief Read and split next line into \c line_tokens, discarding escaped
-   lines, appending result to \c tokens.
+   \brief Read and split next line, discarding escaped lines, appending result to
+   to \c tokens.
    \tparam empty_entries Whether to keep empty entries between delimiting
    characters.
    \return \c true if an unescaped line was read, \c false otherwise. */

@@ -144,11 +144,11 @@ public:
   auto make_position() { return _initial_condition->make_position(); }
 
   /**
-     \brief Make a single position along with location hint.
-     \return Position and hint.
+     \brief Make a single position along with location cell.
+     \return Position and cell.
   */
-  auto make_position_and_hint() {
-    return _initial_condition->make_position_and_hint();
+  auto make_position_and_cell() {
+    return _initial_condition->make_position_and_cell();
   }
 
   /**

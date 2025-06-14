@@ -329,8 +329,8 @@ struct Boundary_Reinject {
   template <typename State, typename Intersection>
   bool operator()(State &state, State const &state_old,
                   Intersection const &intersection) const {
-    auto [position, hint] = initial_condition.make_position_and_hint();
-    state.set_position(position, locator(position, hint));
+    auto [position, cell] = initial_condition.make_position_and_cell();
+    state.set_position(position, locator(position, cell));
     return true;
   }
 

@@ -8,6 +8,8 @@
 #ifndef PTOF_MEASURER_H
 #define PTOF_MEASURER_H
 
+#include "CTRW/Meta.h"
+#include "CTRW/StateGetter.h"
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "PTOF/Directories.h"
@@ -20,6 +22,7 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <type_traits>
 
 namespace ptof {
 /**
@@ -86,8 +89,8 @@ protected:
    \brief  Output absorption times, tags, and masses of absorbed particles.
 */
 template <typename Subject, typename Geometry, bool print_patch = false,
-          bool print_position = false>
-struct Measurer_absorption_time final : Measurer<Subject, Geometry>{
+          bool print_position = false, bool periodic_position = false>
+struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
   Measurer_absorption_time(Subject const &subject, Geometry const &geometry,
                            Directories const &directories,
                            std::string const &identifier, int precision = 8)
@@ -183,10 +186,11 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry>{
 private:
   using Measurer<Subject, Geometry>::_output;
   using Measurer<Subject, Geometry>::_subject;
+  using State = typename Subject::Particle::State;
   Foam::wordList _patch_names;
   std::array<int, 5> _column_widths;
 
-  void print_state_patch(typename Subject::Particle::State const &state) {
+  void print_state_patch(State const &state) {
     if constexpr (print_patch) {
       if constexpr (meta::has_patch_id_v<
                         typename Subject::Particle::State::Info>) {
@@ -201,9 +205,22 @@ private:
     }
   }
 
-  void print_state_position(typename Subject::Particle::State const &state) {
+  void print_state_position(State const &state) {
     if constexpr (print_position) {
-      io::print(_output, state.position, _column_widths[4]);
+      if constexpr (periodic_position) {
+        if constexpr (meta::has_periodicity_v<State>) {
+          using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
+          io::print(_output,
+                    ctrw::Get_position_periodic<Boundary const &>{
+                        this->_geometry.boundary_periodic}(state),
+                    _column_widths[4]);
+        } else {
+          throw std::runtime_error{"Requested periodicity-adjusted position "
+                                   "but state is not periodic"};
+        }
+      } else {
+        io::print(_output, state.position, _column_widths[4]);
+      }
     }
   }
 };

@@ -317,11 +317,19 @@ public:
            "      masses, and absorption patch at end of dynamics\n"
            "  - absorption_time_position\n"
            "    - Particle absorption times, particle tags, particle\n"
-           "      masses, and particle position at end of dynamics\n"
+           "      masses, and particle positions at end of dynamics\n"
            "  - absorption_time_patch_position\n"
            "    - Particle absorption times, particle tags, particle\n"
-           "      masses, closest boundary patch, and particle position at\n"
+           "      masses, closest boundary patch, and particle positions at\n"
            "      end of dynamics\n"
+           "  - absorption_time_position_periodic\n"
+           "    - Particle absorption times, particle tags, particle\n"
+           "      masses, and particle positions accounting for periodicity\n"
+           "      at end of dynamics\n"
+           "  - absorption_time_patch_position_periodic\n"
+           "    - Particle absorption times, particle tags, particle\n"
+           "      masses, closest boundary patch, and particle positions\n"
+           "      accounting for periodicity at end of dynamics\n"
         << io::line();
     return output;
   }

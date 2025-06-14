@@ -160,6 +160,19 @@ struct Periodicity {
 };
 
 /**
+   \class PositionAndCell PTOF/Useful.h "PTOF/Useful.h"
+   \brief Object to hold a position and a cell for its location in the mesh.
+*/
+template <typename Position> struct PositionAndCell {
+
+  PositionAndCell(Position position, Foam::label cell = -1)
+      : position{position}, cell{cell} {}
+
+  Position position;
+  Foam::label cell;
+};
+
+/**
    \brief Print static info for \tparam Class and Class::Parameters, if
    defined.
    \param output Output stream to print info.
@@ -201,7 +214,8 @@ bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
    \brief Handle help options for main executable.
    \return \c true if help flag was passed as first argument, \c false otherwise
    \note meta::Empty can be passed for non-existent templated types, except
-   \c ExecutableInfo, which must define a static <tt>help(std::ostream&)</tt> method.
+   \c ExecutableInfo, which must define a static <tt>help(std::ostream&)</tt>
+   method.
 */
 template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
           typename Transport, typename Phase, typename Reaction,
@@ -1226,6 +1240,68 @@ auto mean(Subject const &subject, double time, Field const &field) {
 }
 
 /**
+   \brief Interpolate position between two particle states.
+   \details Linearly interpolates between the two state positions according to
+   \c time and state times. If interpolated position would be outside mesh, use
+   nearest cell center.
+   \param state_new New particle state.
+   \param state_old Old particle state.
+   \param time Time (between state times) to interpolate to.
+   \param get_position Get position from state.
+   \return Interpolated position.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <typename State, typename Locator,
+          typename Getter = ctrw::Get_position>
+auto interpolate_position(State const &state_new, State const &state_old,
+                          double time, Locator const &locator,
+                          Getter &&get_position = {}) {
+  auto position =
+      ctrw::Get_interp{time, ctrw::Get_position{}}(state_new, state_old);
+  auto cell_id = locator(position, state_new.cell);
+  if (outside(cell_id)) {
+    auto nearest_cell_id = locator.nearest_cell(position);
+    return State::make_position(cell_center(nearest_cell_id, locator.mesh()));
+  }
+  return position;
+}
+
+/**
+   \brief Interpolate position between two particle states.
+   \details Linearly interpolates between the two state positions according to
+   \c time and state times. If interpolated position would be outside mesh, use
+   nearest cell center.
+   \param state_new New particle state.
+   \param state_old Old particle state.
+   \param time Time (between state times) to interpolate to.
+   \param get_position Get position from state.
+   \return Interpolated position and corresponding cell in mesh.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <typename State, typename Locator,
+          typename Getter = ctrw::Get_position>
+auto interpolate_position_with_cell(State const &state_new,
+                                    State const &state_old, double time,
+                                    Locator const &locator,
+                                    Getter &&get_position = {}) {
+  auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
+  auto cell_id = locator(position, state_new.cell);
+  if (outside(cell_id)) {
+    auto nearest_cell_id = locator.nearest_cell(position);
+    return PositionAndCell{
+        State::make_position(cell_center(nearest_cell_id, locator.mesh())),
+        nearest_cell_id};
+  }
+  return PositionAndCell{position, cell_id};
+};
+
+/**
    \brief Compute demand-drived mesh data.
    \note
    - For parallel runs where each thread has access to the whole mesh,
@@ -1269,7 +1345,8 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
    time. \param time Current time.
  */
 template <typename ParametersOutput>
-void info_time(std::ostream &output, ParametersOutput const &params, double time) {
+void info_time(std::ostream &output, ParametersOutput const &params,
+               double time) {
   output << "Time "
          << "[" << params.time_units
          << " time units]: " << time / params.time_unit_factor << "\n";
