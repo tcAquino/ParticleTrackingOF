@@ -541,22 +541,25 @@ public:
 
     auto position = IC::Particle::State::make_position(pos);
     auto cell_id = this->_geometry.locator(position);
-    if constexpr (check_if_outside){
-      if (outside<warn_if_outside>(cell_id, position,
+    if constexpr (check_if_outside) {
+      if (outside<warn_if_outside>(cell_id, make_point(position),
                                    "Using closest cell center\n")) {
         cell_id = this->_geometry.locator.nearest_cell(position);
-        position = cell_center(cell_id, this->_geometry.locator.mesh());
+        position = IC::Particle::State::make_position(
+            cell_center(cell_id, this->_geometry.locator.mesh()));
       }
     }
     return {position, cell_id};
   }
 
-protected : std::string _filename;
+protected:
+  std::string _filename;
   std::ifstream _input{io::open_read(_filename)};
 };
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string)
-    -> InitialCondition_PrescribedPositions<ParticleMaker, Geometry, CheckOptions::Warn>;
+    -> InitialCondition_PrescribedPositions<ParticleMaker, Geometry,
+                                            CheckOptions::Warn>;
 template <typename ParticleMaker, typename Geometry, typename CheckOption>
 InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string,
                                      CheckOption)
@@ -570,7 +573,8 @@ InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string,
    \details File should contain particle positions and masses, one particle per
    line.
 */
-template <typename ParticleMaker, typename Geometry, typename CheckOption>
+template <typename ParticleMaker, typename Geometry,
+          typename CheckOption = CheckOptions::Warn>
 struct InitialCondition_PrescribedPositionsMasses
     : public InitialCondition<ParticleMaker, Geometry> {
 private:
@@ -608,10 +612,11 @@ public:
     auto position = IC::Particle::State::make_position(pos);
     auto cell_id = this->_geometry.locator(position);
     if constexpr (check_if_outside) {
-      if (outside<warn_if_outside>(cell_id, position,
+      if (outside<warn_if_outside>(cell_id, make_point(position),
                                    "Using closest cell center\n")) {
         cell_id = this->_geometry.locator.nearest_cell(position);
-        position = cell_center(cell_id, this->_geometry.locator.mesh());
+        position = IC::Particle::State::make_position(
+            cell_center(cell_id, this->_geometry.locator.mesh()));
       }
     }
     return {position, cell_id};
@@ -626,7 +631,8 @@ protected:
 template <typename ParticleMaker, typename Geometry>
 InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
                                            std::string)
-    -> InitialCondition_PrescribedPositionsMasses<ParticleMaker, Geometry, CheckOptions::Warn>;
+    -> InitialCondition_PrescribedPositionsMasses<ParticleMaker, Geometry,
+                                                  CheckOptions::Warn>;
 template <typename ParticleMaker, typename Geometry, typename CheckOption>
 InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
                                            std::string, CheckOption)
@@ -641,7 +647,8 @@ InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
    \details File should contain particle positions, masses, and tags, one
    particle per line.
 */
-template <typename ParticleMaker, typename Geometry, typename CheckOption>
+template <typename ParticleMaker, typename Geometry,
+          typename CheckOption = CheckOptions::Warn>
 struct InitialCondition_PrescribedPositionsMassesTags
     : public InitialCondition<ParticleMaker, Geometry> {
 private:
@@ -682,10 +689,11 @@ public:
     auto position = IC::Particle::State::make_position(pos);
     auto cell_id = this->_geometry.locator(position);
     if constexpr (check_if_outside) {
-      if (outside<warn_if_outside>(cell_id, position,
+      if (outside<warn_if_outside>(cell_id, make_point(position),
                                    "Using closest cell center\n")) {
         cell_id = this->_geometry.locator.nearest_cell(position);
-        position = cell_center(cell_id, this->_geometry.locator.mesh());
+        position = IC::Particle::State::make_position(
+            cell_center(cell_id, this->_geometry.locator.mesh()));
       }
     }
     return {position, cell_id};
