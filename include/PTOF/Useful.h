@@ -1247,6 +1247,7 @@ auto mean(Subject const &subject, double time, Field const &field) {
    \param state_new New particle state.
    \param state_old Old particle state.
    \param time Time (between state times) to interpolate to.
+   \param locator Object to locate positions in mesh.
    \param get_position Get position from state.
    \return Interpolated position.
    \note Particle states must define:
@@ -1277,6 +1278,7 @@ auto interpolate_position(State const &state_new, State const &state_old,
    \param state_new New particle state.
    \param state_old Old particle state.
    \param time Time (between state times) to interpolate to.
+   \param locator Object to locate positions in mesh.
    \param get_position Get position from state.
    \return Interpolated position and corresponding cell in mesh.
    \note Particle states must define:

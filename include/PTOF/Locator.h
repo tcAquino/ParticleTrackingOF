@@ -67,12 +67,15 @@ struct Locator_Cell {
           for (auto cell_index : mesh().cellCells()[cell_index_1])
             second_neighbors.insert(cell_index);
         for (auto cell_index : second_neighbors)
-          if (mesh().pointInCell(position, cell_index))
+          if (mesh().pointInCell(position, cell_index))after rounding
             return cell_index;
       }
     }
 
-    return mesh_search().findCell(position, hint);
+    auto cell_id = mesh_search().findCell(position, hint);
+    // Sometimes findCell will not find a mesh cell with hint, but will without
+    return outside(cell_id) && !outside(hint) ? mesh_search().findCell(position)
+                                              : cell_id;
   }
 
   /**
@@ -107,6 +110,7 @@ struct Locator_Cell {
   /**
      \param position Position to locate.
      \return Nearest mesh cell index.
+     \note Does not use hint because holes are not handled correctly.
   */
   auto nearest_cell(Point const &position) const {
     return mesh_search().findNearestCell(position);
@@ -115,7 +119,7 @@ struct Locator_Cell {
   /**
      \param position Position to locate.
      \return Nearest mesh cell index.
-     \details Does not use hint because holes are not handled correctly.
+     \note Does not use hint because holes are not handled correctly.
   */
   auto nearest_cell(Point2D const &position) const {
     return nearest_cell(make_point(position));
