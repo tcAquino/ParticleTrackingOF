@@ -67,7 +67,7 @@ struct Locator_Cell {
           for (auto cell_index : mesh().cellCells()[cell_index_1])
             second_neighbors.insert(cell_index);
         for (auto cell_index : second_neighbors)
-          if (mesh().pointInCell(position, cell_index))after rounding
+          if (mesh().pointInCell(position, cell_index))
             return cell_index;
       }
     }

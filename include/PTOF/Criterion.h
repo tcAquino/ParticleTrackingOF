@@ -53,7 +53,7 @@ struct Criterion_mass_below final : Criterion<Subject> {
       : Criterion<Subject>(subject), end_value{end_value} {}
 
   bool operator()(double time) const override {
-    return mass(Criterion<Subject>::_subject, time) <= end_value;
+    return mass(this->_subject, time) <= end_value;
   }
 
   double end_value;
@@ -69,7 +69,7 @@ struct Criterion_mass_above final : Criterion<Subject> {
       : Criterion<Subject>(subject), end_value{end_value} {}
 
   bool operator()(double time) const override {
-    return mass(Criterion<Subject>::_subject, time) >= end_value;
+    return mass(this->_subject, time) >= end_value;
   }
 
   double end_value;
@@ -85,8 +85,7 @@ struct Criterion_all_absorbed final : Criterion<Subject> {
       : Criterion<Subject>(subject) {}
 
   bool operator()(double time) const override {
-    return nr_absorbed(Criterion<Subject>::_subject, time) ==
-           Criterion<Subject>::_subject.size();
+    return nr_absorbed(this->_subject, time) == this->_subject.size();
   }
 };
 
@@ -100,7 +99,7 @@ struct Criterion_one_absorbed final : Criterion<Subject> {
       : Criterion<Subject>(subject) {}
 
   bool operator()(double time) const {
-    return nr_absorbed(Criterion<Subject>::_subject, time) > 0;
+    return nr_absorbed(this->_subject, time) > 0;
   }
 };
 
@@ -115,9 +114,8 @@ struct Criterion_fraction_not_absorbed final : Criterion<Subject> {
       : Criterion<Subject>(subject), end_value{end_value} {}
 
   bool operator()(double time) const override {
-    return Criterion<Subject>::_subject.size() -
-               nr_absorbed(Criterion<Subject>::_subject, time) <=
-           std::size_t(end_value * Criterion<Subject>::_subject.size());
+    return this->_subject.size() - nr_absorbed(this->_subject, time) <=
+           std::size_t(end_value * this->_subject.size());
   }
 
   double end_value;
