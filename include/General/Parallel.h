@@ -9,6 +9,7 @@
 #define GENERAL_PARALLEL_H
 
 #include <cstddef>
+#include <vector>
 
 #if __has_include(<omp.h>)
 #include <omp.h>
@@ -77,6 +78,39 @@ inline std::size_t get_num_threads(ParallelOptions::Parallel) {
   num_threads = omp_get_num_threads();
   return num_threads;
 }
+
+/**
+   \class ThreatedType General/Parallel.h "General/Parallel.h"
+   \brief Set of values of type \c Type for separate thread use.
+*/
+template <typename Type, typename ParallelOption> struct Threaded {
+  Threaded(Type val) : _vals(get_num_threads(ParallelOption{}), val) {}
+
+  Threaded(std::vector<Type> &&vals)
+      : _vals{std::forward<std::vector<Type>>(vals)} {}
+
+  Threaded() : _vals(get_num_threads(ParallelOption{})) {}
+
+  Type &operator()() { return _vals[get_thread_num(ParallelOption{})]; }
+
+private:
+  std::vector<Type> _vals;
+};
+
+template <typename Type> struct Threaded<Type, ParallelOptions::Serial> {
+  Threaded(Type val)
+      : _val{val}
+  {}
+
+  Threaded(std::vector<Type> const &vals) : _val{vals[0]} {}
+
+  Threaded() : _val{} {}
+
+  Type &operator()() { return _val; }
+
+private:
+  Type _val;
+};
 } // namespace par
 
 #endif /* GENERAL_PARALLEL_H */

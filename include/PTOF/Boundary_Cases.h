@@ -94,7 +94,7 @@ public:
   bool operator()(State &state, State const &state_old = {}) {
     // Note: The code flow is chosen to avoid trying to locate particles which
     // are outside as much as possible, because it is expensive
-    
+
     // Find first intersection with boundary patch.
     auto intersection = _locator.mesh_search().intersection(
         make_point(state_old.position), make_point(state.position));
@@ -159,8 +159,7 @@ public:
       // Apply the approriate boundary and store associated info
       switch (_boundary_condition_types.type(type_name)) {
       case BoundaryConditionList::Type::reflecting: {
-        _store_info(state, state_old, intersection, patch_id,
-                    _boundary_condition_types,
+        _store_info(state, state_old, intersection, _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::reflecting>{});
         boundary_reflecting(state, intersection.point(),
@@ -170,7 +169,7 @@ public:
       }
       case BoundaryConditionList::Type::reacting_reflecting: {
         _store_info(
-            state, state_old, intersection, patch_id, _boundary_condition_types,
+            state, state_old, intersection, _boundary_condition_types,
             meta::Selector<BoundaryConditionList::Type,
                            BoundaryConditionList::Type::reacting_reflecting>{});
         surface_reaction(state, state_old, intersection.index());
@@ -180,16 +179,14 @@ public:
         break;
       }
       case BoundaryConditionList::Type::periodic: {
-        _store_info(state, state_old, intersection, patch_id,
-                    _boundary_condition_types,
+        _store_info(state, state_old, intersection, _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::periodic>{});
         had_effect += _boundary_periodic(state, intersection);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        _store_info(state, state_old, intersection, patch_id,
-                    _boundary_condition_types,
+        _store_info(state, state_old, intersection, _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
         state.set_position(intersection.point());
@@ -199,16 +196,14 @@ public:
       case BoundaryConditionList::Type::inlet: {
         if (face_flux_outward(intersection.index(), _velocity_field, _locator) >
             0.) {
-          _store_info(state, state_old, intersection, patch_id,
-                      _boundary_condition_types,
+          _store_info(state, state_old, intersection, _boundary_condition_types,
                       meta::Selector<BoundaryConditionList::Type,
                                      BoundaryConditionList::Type::absorbing>{});
           state.set_position(intersection.point());
           state.cell = _locator(state);
         } else {
           _store_info(
-              state, state_old, intersection, patch_id,
-              _boundary_condition_types,
+              state, state_old, intersection, _boundary_condition_types,
               meta::Selector<BoundaryConditionList::Type,
                              BoundaryConditionList::Type::reflecting>{});
           boundary_reflecting(state, intersection.point(),
@@ -218,8 +213,7 @@ public:
         break;
       }
       case BoundaryConditionList::Type::custom: {
-        _store_info(state, state_old, intersection, patch_id,
-                    _boundary_condition_types,
+        _store_info(state, state_old, intersection, _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::custom>{});
         had_effect += _boundary_custom(state, state_old, intersection);

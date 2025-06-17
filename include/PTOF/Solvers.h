@@ -239,8 +239,18 @@ struct Solvers_Generic {
                                 old_time, update);
   }
 
-  static auto makeTimeGenerator(Parameters const &params_solvers) {
-    return Steppers::makeTimeGenerator(params_solvers);
+  template <typename Geometry, typename VelocityField, typename Boundary,
+            typename TransportParameters, typename ReactionParameters,
+            typename SolverParameters>
+  static auto makeTimeGenerator(Geometry const &geometry,
+                                VelocityField const &velocity_field,
+                                Boundary &boundary,
+                                TransportParameters const &params_transport,
+                                ReactionParameters const &params_reaction,
+                                SolverParameters const &params_solvers) {
+    return Steppers::makeTimeGenerator(geometry, velocity_field, boundary,
+                                       params_transport, params_reaction,
+                                       params_solvers);
   }
 
   template <typename ParallelOption, typename VelocityField, typename Boundary,
@@ -255,7 +265,7 @@ struct Solvers_Generic {
           std::forward<Boundary>(boundary), params_transport, params_solvers,
           dim);
     else if constexpr (Parameters::advection)
-      return Steppers::makeJumpGenerator_Advection(
+      return Steppers::template makeJumpGenerator_Advection<ParallelOption>(
           std::forward<VelocityField>(velocity_field),
           std::forward<Boundary>(boundary), params_transport, params_solvers,
           dim);

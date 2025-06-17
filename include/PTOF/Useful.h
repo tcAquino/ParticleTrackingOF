@@ -14,6 +14,7 @@
 #include "General/Operation.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
+#include "PTOF/Meta.h"
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <iostream>
@@ -311,6 +312,69 @@ bool outside(Foam::label cell, Foam::point const &position,
     return 1;
   }
   return 0;
+}
+
+/**
+   \brief Check if \c time is between the two particle state times.
+   \param particle Particle to check.
+   \param time Time to check.
+   \return \c true if \c time is between two states, \c false otherwise.
+   \note Particle states must define:
+   - \c time
+*/
+template <typename Particle>
+bool brackets_time(Particle const &particle, double time) {
+  return particle.state_new().time >= time && particle.state_old().time <= time;
+}
+
+/**
+   \brief Check if a particle is absorbed at time \c time
+   \details Checks Particle::State::Info for \c absorbed, returns \c false if it
+   does not exist.
+   \param particle Particle to interpolate between old and new state.
+   \param time Time to check.
+   \return \c true if \c absorbed is true, \c false otherwise.
+   \note
+   - The absorbed state is considered special and meant to be irreversible;
+   otherwise, the adsorbed state should be used.
+   - Particle states must define:
+   -# <tt>Info info</tt>
+   -# \c time
+*/
+template <typename Particle>
+bool absorbed(Particle const &particle, double time) {
+  using Info = typename Particle::State::Info;
+  if constexpr (meta::has_absorbed_v<Info>) {
+    if (particle.state_new().info.absorbed &&
+        particle.state_new().time <= time) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+   \brief Check if a particle is adsorbed at time \c time
+   \details Checks Particle::State::Info for \c absorbed, returns \c false if it
+   does not exist.
+   \param particle Particle to interpolate between old and new state.
+   \param time Time to check.
+   \return \c true if \c absorbed is true, \c false otherwise.
+   \note
+   - Unlike the absorbed state, the absorbed state is checked like a normal
+   property and may be reversible.
+   - Particle states must define:
+   -# <tt>Info info</tt>
+*/
+template <typename Particle>
+bool adsorbed(Particle const &particle, double time) {
+  using Info = typename Particle::State::Info;
+  if constexpr (meta::has_adsorbed_v<Info>) {
+    if (particle.state_old().info.adsorbed && brackets_time(particle, time)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /** \brief Make 3D point from 2D point. */
@@ -1048,18 +1112,35 @@ auto fluxweighted_face_distribution(Container const &face_ids,
    \param time Current time.
    \return Number of absorbed particles.
    \note Particle states must define:
-   - <tt>info.absorbed</tt> [bool or integer type]
+   - <tt>Info info</tt>
    - \c time
 */
 template <typename Subject>
 std::size_t nr_absorbed(Subject const &subject, double time) {
   std::size_t absorbed = 0;
   for (auto const &part : subject) {
-    auto const &state_new = part.state_new();
-    if (state_new.info.absorbed && state_new.time <= time)
+    if (ptof::absorbed(part, time))
       ++absorbed;
   }
   return absorbed;
+}
+
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \return Number of adsorbed particles.
+   \note Particle states must define:
+   - <tt>Info info</tt>
+   - \c time
+*/
+template <typename Subject>
+std::size_t nr_adsorbed(Subject const &subject, double time) {
+  std::size_t adsorbed = 0;
+  for (auto const &part : subject) {
+    if (ptof::adsorbed(part, time))
+      ++adsorbed;
+  }
+  return adsorbed;
 }
 
 /**
@@ -1073,10 +1154,9 @@ std::size_t nr_absorbed(Subject const &subject, double time) {
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
   for (auto const &part : subject) {
-    auto const &state_new = part.state_new();
-    auto const &state_old = part.state_old();
-    if (state_new.time >= time && state_old.time <= time)
-      mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+    if (brackets_time(part, time))
+      mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(part.state_new(),
+                                                       part.state_old());
   }
   return mass;
 }
@@ -1104,8 +1184,7 @@ auto mass(Subject const &subject, double time,
     auto const &state_old = part.state_old();
     auto cell_new = state_new.cell;
     auto cell_old = state_old.cell;
-    if (!outside(cell_new) && !outside(cell_old) && state_new.time >= time &&
-        state_old.time <= time) {
+    if (!outside(cell_new) && !outside(cell_old) && brackets_time(part, time)) {
       for (std::size_t ii = 0; ii < masks.size(); ++ii)
         if (masks[ii].get()[cell_new] >= thresholds[ii] &&
             masks[ii].get()[cell_old] >= thresholds[ii])
@@ -1135,7 +1214,7 @@ auto position_mean(Subject const &subject, double time,
   for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
-    if (state_new.time >= time && state_old.time <= time)
+    if (brackets_time(part, time))
       position_mean +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           ctrw::Get_interp{time, getter_position}(state_new, state_old);
@@ -1161,7 +1240,7 @@ auto position_second_moment(Subject const &subject, double time,
   for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
-    if (state_new.time >= time && state_old.time <= time)
+    if (brackets_time(part, time))
       second_moment +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           op::square(
@@ -1189,7 +1268,7 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
   for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
-    if (state_new.time >= time && state_old.time <= time)
+    if (brackets_time(part, time))
       moment +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           op::pow(ctrw::Get_interp{time, getter_position}(state_new, state_old),
@@ -1230,7 +1309,7 @@ auto mean(Subject const &subject, double time, Field const &field) {
   for (auto const &part : subject) {
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
-    if (state_new.time >= time && state_old.time <= time)
+    if (brackets_time(part, time))
       field_mean +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           ctrw::Get_interp{time, ctrw::Get_property{field}}(state_new,
@@ -1278,7 +1357,8 @@ auto interpolate_position(State const &state_new, State const &state_old,
    \param state_new New particle state.
    \param state_old Old particle state.
    \param time Time (between state times) to interpolate to.
-   \param locator Object to locate positions in mesh.
+   \param locator Object to locate positions in mesh.n
+
    \param get_position Get position from state.
    \return Interpolated position and corresponding cell in mesh.
    \note Particle states must define:
@@ -1299,6 +1379,69 @@ auto interpolate_position_with_cell(State const &state_new,
     return PositionAndCell{
         State::make_position(cell_center(nearest_cell_id, locator.mesh())),
         nearest_cell_id};
+  }
+  return PositionAndCell{position, cell_id};
+};
+
+/**
+   \brief Interpolate position between two particle states.
+   \details Linearly interpolates between the two state positions according to
+   \c time and state times. If interpolated position would be outside mesh, use
+   nearest cell center.
+   \param particle Particle to interpolate between old and new state.
+   \param time Time (between state times) to interpolate to.
+   \param locator Object to locate positions in mesh.
+   \param get_position Get position from state.
+   \return Interpolated position.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <typename Particle, typename Locator,
+          typename Getter = ctrw::Get_position>
+auto interpolate_position(Particle const &particle, double time,
+                          Locator const &locator, Getter &&get_position = {}) {
+  auto position = ctrw::Get_interp{time, ctrw::Get_position{}}(
+      particle.state_new(), particle.state_old());
+  auto cell_id = locator(position, particle.state_new().cell);
+  if (outside(cell_id)) {
+    auto nearest_cell_id = locator.nearest_cell(position);
+    return Particle::State::make_position(
+        cell_center(nearest_cell_id, locator.mesh()));
+  }
+  return position;
+}
+
+/**
+   \brief Interpolate position between two particle states.
+   \details Linearly interpolates between the two state positions according to
+   \c time and state times. If interpolated position would be outside mesh, use
+   nearest cell center.
+   \param particle Particle to interpolate between old and new state.
+   \param time Time (between state times) to interpolate to.
+   \param locator Object to locate positions in mesh.n
+
+   \param get_position Get position from state.
+   \return Interpolated position and corresponding cell in mesh.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <typename Particle, typename Locator,
+          typename Getter = ctrw::Get_position>
+auto interpolate_position_with_cell(Particle const &particle, double time,
+                                    Locator const &locator,
+                                    Getter &&get_position = {}) {
+  auto position = ctrw::Get_interp{time, ctrw::Get_position{}}(
+      particle.state_new(), particle.state_old());
+  auto cell_id = locator(position, particle.state_new().cell);
+  if (outside(cell_id)) {
+    auto nearest_cell_id = locator.nearest_cell(position);
+    return PositionAndCell{Particle::State::make_position(
+                               cell_center(nearest_cell_id, locator.mesh())),
+                           nearest_cell_id};
   }
   return PositionAndCell{position, cell_id};
 };

@@ -134,10 +134,8 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
         _output << std::setw(_column_widths[1]) << state_old.tag;
-        io::print(
-            _output,
-            interpolate_position(state_new, state_old, time, this->_locator),
-            _column_widths[2]);
+        io::print(_output, interpolate_position(part, time, this->_locator),
+                  _column_widths[2]);
         _output << std::setw(_column_widths[3])
                 << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                             state_old);
@@ -209,10 +207,8 @@ struct MeasurerTime_position_in_regions final
         if (std::any_of(in_region.begin(), in_region.end(),
                         [](int ii) { return ii > 0; })) {
           _output << std::setw(_column_widths[1]) << state_old.tag;
-          io::print(
-              _output,
-              interpolate_position(state_new, state_old, time, this->_locator),
-              _column_widths[2]);
+          io::print(_output, interpolate_position(part, time, this->_locator),
+                    _column_widths[2]);
           _output << std::setw(_column_widths[3])
                   << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                               state_old);
@@ -1232,10 +1228,10 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
       auto const &state_old = part.state_old();
       if (state_new.time >= time && state_old.time <= time) {
         _output << std::setw(_column_widths[1]) << state_old.tag;
-        io::print(_output,
-                  interpolate_position(state_new, state_old, time,
-                                       this->_locator, _getter_position),
-                  _column_widths[2]);
+        io::print(
+            _output,
+            interpolate_position(part, time, this->_locator, _getter_position),
+            _column_widths[2]);
         _output << std::setw(_column_widths[3])
                 << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                             state_old);
@@ -1314,8 +1310,8 @@ struct MeasurerTime_position_in_regions_periodic final
                         [](int ii) { return ii > 0; })) {
           _output << std::setw(_column_widths[1]) << state_old.tag;
           io::print(_output,
-                    interpolate_position(state_new, state_old, time,
-                                         this->_locator, _getter_position),
+                    interpolate_position(part, time, this->_locator,
+                                         _getter_position),
                     _column_widths[2]);
           _output << std::setw(_column_widths[3])
                   << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,

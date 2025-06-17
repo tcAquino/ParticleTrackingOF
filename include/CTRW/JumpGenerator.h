@@ -34,6 +34,7 @@
 #include "Stochastic/Random.h"
 #include <algorithm>
 #include <cmath>
+#include <iterator>
 #include <random>
 #include <type_traits>
 #include <utility>
@@ -110,7 +111,9 @@ private:
    \class JumpGenerator_Velocity CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
    \brief Jump according to a velocity field and time step (forward Euler).
 */
-template <typename VelocityField> class JumpGenerator_Velocity {
+template <typename VelocityField,
+          typename ParallelOption = par::ParallelOptions::Serial>
+class JumpGenerator_Velocity {
 public:
   /**
      \brief Constructor.
@@ -121,18 +124,23 @@ public:
       : _velocity_field{std::forward<VelocityField>(velocity_field)},
         _time_step{time_step} {}
 
+  JumpGenerator_Velocity(VelocityField &&velocity_field, double time_step,
+                         ParallelOption)
+      : JumpGenerator_Velocity{std::forward<VelocityField>(velocity_field),
+                               time_step} {}
+
   /** \param time_step Time step to set. */
-  void time_step(double time_step) { _time_step = time_step; }
+  void time_step(double time_step) { _time_step() = time_step; }
 
   /** \return Time step. */
-  double time_step() const { return _time_step; }
+  double time_step() const { return _time_step(); }
 
   /**
      \param state Particle state.
      \return Jump increment.
   */
   template <typename State> auto operator()(State const &state) {
-    return op::times_scalar(_time_step, velocity(state));
+    return op::times_scalar(_time_step(), velocity(state));
   }
 
   /**
@@ -148,11 +156,14 @@ public:
 
 private:
   VelocityField _velocity_field; /**< Velocity as a function of state. */
-  double _time_step;             /**< Time step.                       */
+  par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
 };
 template <typename VelocityField>
 JumpGenerator_Velocity(VelocityField &&, double)
-    -> JumpGenerator_Velocity<VelocityField>;
+    -> JumpGenerator_Velocity<VelocityField, par::ParallelOptions::Serial>;
+template <typename VelocityField, typename ParallelOption>
+JumpGenerator_Velocity(VelocityField &&, double, ParallelOption)
+    -> JumpGenerator_Velocity<VelocityField, ParallelOption>;
 
 /**
    \class JumpGenerator_Velocity_RK2 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
@@ -161,7 +172,8 @@ JumpGenerator_Velocity(VelocityField &&, double)
    \note Particle state must define:
    - \c position
 */
-template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
+template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing,
+          typename ParallelOption = par::ParallelOptions::Serial>
 class JumpGenerator_Velocity_RK2 {
 public:
   /**
@@ -177,11 +189,17 @@ public:
       : _velocity_field{std::forward<VelocityField>(velocity_field)},
         _time_step{time_step}, _boundary{std::forward<Boundary>(boundary)} {}
 
+  JumpGenerator_Velocity_RK2(VelocityField &&velocity_field, double time_step,
+                             Boundary &&boundary, ParallelOption)
+      : JumpGenerator_Velocity_RK2{std::forward<VelocityField>(velocity_field),
+                                   time_step,
+                                   std::forward<Boundary>(boundary)} {}
+
   /** \param time_step Time step to set. */
-  void time_step(double time_step) { _time_step = time_step; }
+  void time_step(double time_step) { _time_step() = time_step; }
 
   /** \return Time step. */
-  double time_step() const { return _time_step; }
+  double time_step() const { return _time_step(); }
 
   /**
      \param state Particle state.
@@ -190,11 +208,11 @@ public:
   template <typename State> auto operator()(State const &state) {
     auto state_intermediate = state;
 
-    op::linearop(_time_step / 2., velocity(state), state.position,
+    op::linearop(_time_step() / 2., velocity(state), state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
 
-    return op::times_scalar(_time_step, velocity(state_intermediate));
+    return op::times_scalar(_time_step(), velocity(state_intermediate));
   }
 
   /**
@@ -210,12 +228,19 @@ public:
 
 private:
   VelocityField _velocity_field; /**< Velocity as a function of state.*/
-  double _time_step;             /**< Time step.                      */
-  Boundary _boundary;            /**< Boundary conditions.             */
+  par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
+  Boundary _boundary; /**< Boundary conditions.             */
 };
+template <typename VelocityField>
+JumpGenerator_Velocity_RK2(VelocityField &&, double)
+    -> JumpGenerator_Velocity_RK2<VelocityField, geom::Boundary_DoNothing>;
 template <typename VelocityField, typename Boundary>
 JumpGenerator_Velocity_RK2(VelocityField &&, double, Boundary &&)
     -> JumpGenerator_Velocity_RK2<VelocityField, Boundary>;
+template <typename VelocityField, typename Boundary, typename ParallelOption>
+JumpGenerator_Velocity_RK2(VelocityField &&, double, Boundary &&,
+                           ParallelOption)
+    -> JumpGenerator_Velocity_RK2<VelocityField, Boundary, ParallelOption>;
 
 /**
    \class JumpGenerator_Velocity_RK4 CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"
@@ -224,7 +249,8 @@ JumpGenerator_Velocity_RK2(VelocityField &&, double, Boundary &&)
    \note Particle state must define:
    - \c position
 */
-template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
+template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing,
+          typename ParallelOption = par::ParallelOptions::Serial>
 class JumpGenerator_Velocity_RK4 {
 public:
   /**
@@ -240,11 +266,17 @@ public:
       : _velocity_field{std::forward<VelocityField>(velocity_field)},
         _time_step{time_step}, _boundary{std::forward<Boundary>(boundary)} {}
 
+  JumpGenerator_Velocity_RK4(VelocityField &&velocity_field, double time_step,
+                             Boundary &&boundary, ParallelOption)
+      : JumpGenerator_Velocity_RK4{std::forward<VelocityField>(velocity_field),
+                                   time_step,
+                                   std::forward<Boundary>(boundary)} {}
+
   /** \param time_step Time step to set. */
-  void time_step(double time_step) { _time_step = time_step; }
+  void time_step(double time_step) { _time_step() = time_step; }
 
   /** \return Time step. */
-  double time_step() const { return _time_step; }
+  double time_step() const { return _time_step(); }
 
   /**
      \param state Particle state.
@@ -254,24 +286,24 @@ public:
     auto state_intermediate = state;
 
     auto k1 = velocity(state);
-    op::linearop(_time_step / 2., k1, state.position,
+    op::linearop(_time_step() / 2., k1, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
 
     auto k2 = velocity(state_intermediate);
-    op::linearop(_time_step / 2., k2, state.position,
+    op::linearop(_time_step() / 2., k2, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
 
     auto k3 = velocity(state_intermediate);
-    op::linearop(_time_step, k3, state.position, state_intermediate.position);
+    op::linearop(_time_step(), k3, state.position, state_intermediate.position);
     _boundary(state_intermediate, state);
 
     auto k4 = velocity(state_intermediate);
     auto jump = op::plus(k1, k4);
     op::linearop(2., k2, jump, jump);
     op::linearop(2., k3, jump, jump);
-    op::times_scalar_inplace(_time_step / 6., jump);
+    op::times_scalar_inplace(_time_step() / 6., jump);
 
     return jump;
   }
@@ -289,12 +321,19 @@ public:
 
 private:
   VelocityField _velocity_field; /**< Velocity as a function of state.*/
-  double _time_step;             /**< Time step.                      */
-  Boundary _boundary;            /**< Boundary conditions.             */
+  par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
+  Boundary _boundary; /**< Boundary conditions.             */
 };
+template <typename VelocityField>
+JumpGenerator_Velocity_RK4(VelocityField &&, double)
+    -> JumpGenerator_Velocity_RK4<VelocityField, geom::Boundary_DoNothing>;
 template <typename VelocityField, typename Boundary>
 JumpGenerator_Velocity_RK4(VelocityField &&, double, Boundary &&)
     -> JumpGenerator_Velocity_RK4<VelocityField, Boundary>;
+template <typename VelocityField, typename Boundary, typename ParallelOption>
+JumpGenerator_Velocity_RK4(VelocityField &&, double, Boundary &&,
+                           ParallelOption)
+    -> JumpGenerator_Velocity_RK4<VelocityField, Boundary, ParallelOption>;
 
 /**
    \class JumpGenerator_Velocity_Heun CTRW/JumpGenerator.h
@@ -303,7 +342,8 @@ JumpGenerator_Velocity_RK4(VelocityField &&, double, Boundary &&)
    predictor-corrector steps. \note Particle state must define:
    - \c position
 */
-template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing>
+template <typename VelocityField, typename Boundary = geom::Boundary_DoNothing,
+          typename ParallelOption = par::ParallelOptions::Serial>
 class JumpGenerator_Velocity_Heun {
 public:
   /**
@@ -319,11 +359,17 @@ public:
       : _velocity_field{std::forward<VelocityField>(velocity_field)},
         _time_step{time_step}, _boundary{std::forward<Boundary>(boundary)} {}
 
+  JumpGenerator_Velocity_Heun(VelocityField &&velocity_field, double time_step,
+                              Boundary &&boundary, ParallelOption)
+      : JumpGenerator_Velocity_Heun{std::forward<VelocityField>(velocity_field),
+                                    time_step,
+                                    std::forward<Boundary>(boundary)} {}
+
   /** \param time_step Time step to set. */
-  void time_step(double time_step) { _time_step = time_step; }
+  void time_step(double time_step) { _time_step() = time_step; }
 
   /** \return Time step. */
-  double time_step() const { return _time_step; }
+  double time_step() const { return _time_step(); }
 
   /**
      \param state Particle state.
@@ -333,11 +379,11 @@ public:
     auto state_intermediate = state;
 
     auto vel_state = velocity(state);
-    op::linearop(_time_step, vel_state, state.position,
+    op::linearop(_time_step(), vel_state, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
 
-    return op::times_scalar(_time_step / 2.,
+    return op::times_scalar(_time_step() / 2.,
                             op::plus(vel_state, velocity(state_intermediate)));
   }
 
@@ -354,8 +400,8 @@ public:
 
 private:
   VelocityField _velocity_field; /**< Velocity as a function of state.*/
-  double _time_step;             /**< Time step.                      */
-  Boundary _boundary;            /**< Boundary conditions.             */
+  par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
+  Boundary _boundary; /**< Boundary conditions.             */
 };
 template <typename VelocityField, typename Boundary>
 JumpGenerator_Velocity_Heun(VelocityField &&, double, Boundary &&)
@@ -366,14 +412,15 @@ JumpGenerator_Velocity_Heun(VelocityField &&, double, Boundary &&)
    \brief One dimensional diffusion jumps using Gaussian distribution.
 */
 template <typename ParallelOption = par::ParallelOptions::Serial,
-          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+          typename RNGEngine = std::mt19937>
 class JumpGenerator_Diffusion_1d {
-  double _time_step;  /**< Time step.            */
+  par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
   double _diff_coeff; /**< Diffusion coefficient.*/
 
-  double _diff_aux{
-      std::sqrt(2. * _diff_coeff * _time_step)}; /**< Typicall jump size. */
-  RNG _rng{std::random_device{}()}; /**< Random number generator. */
+  par::Threaded<double, ParallelOption> _diff_aux{
+      std::sqrt(2. * _diff_coeff * _time_step())}; /**< Typical jump size. */
+  stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{
+      std::random_device{}()}; /**< Random number generator. */
   std::normal_distribution<double> _normal_dist{
       0., 1.}; /**< Unit normal distribution.*/
 
@@ -386,23 +433,27 @@ public:
   JumpGenerator_Diffusion_1d(double diff_coeff, double time_step)
       : _time_step{time_step}, _diff_coeff{diff_coeff} {}
 
+  JumpGenerator_Diffusion_1d(double diff_coeff, double time_step,
+                             ParallelOption)
+      : JumpGenerator_Diffusion_1d{time_step, diff_coeff} {}
+
   /** \param time_step Time step to set. */
   void time_step(double time_step) {
-    _time_step = time_step;
-    _diff_aux = std::sqrt(2. * _diff_coeff * _time_step);
+    _time_step() = time_step;
+    _diff_aux() = std::sqrt(2. * _diff_coeff * _time_step());
   }
 
   /** \param diff_coeff Diffusion coefficient to set. */
-  void diff(double diff_coeff) {
+  void diff_coeff(double diff_coeff) {
     _diff_coeff = diff_coeff;
-    _diff_aux = std::sqrt(2. * _diff_coeff * _time_step);
+    _diff_aux() = std::sqrt(2. * _diff_coeff * _time_step());
   }
 
   /** \return Time step. */
-  double time_step() const { return _time_step; }
+  double time_step() const { return _time_step(); }
 
   /** \return Diffusion coefficient. */
-  double diff() const { return _diff_coeff; }
+  double diff_coeff() const { return _diff_coeff; }
 
   /**
      \param state Particle state (unused).
@@ -410,7 +461,7 @@ public:
   */
   template <typename State = meta::Empty>
   double operator()(State const &state = {}) {
-    return _diff_aux * _normal_dist(_rng);
+    return _diff_aux() * _normal_dist(_rng);
   }
 };
 
@@ -419,7 +470,7 @@ public:
    \brief Diffusion jumps along each dimension using Gaussian distributions.
 */
 template <typename ParallelOption = par::ParallelOptions::Serial,
-          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+          typename RNGEngine = std::mt19937>
 class JumpGenerator_Diffusion {
 public:
   /**
@@ -446,6 +497,14 @@ public:
     for (std::size_t dd = 0; dd < dim; ++dd)
       _jump_generator.emplace_back(diff_coeff, time_step);
   }
+
+  JumpGenerator_Diffusion(std::vector<double> const &diff_coeffs,
+                          double time_step, ParallelOption)
+      : JumpGenerator_Diffusion{diff_coeffs, time_step} {}
+
+  JumpGenerator_Diffusion(double diff_coeff, double time_step, std::size_t dim,
+                          ParallelOption)
+      : JumpGenerator_Diffusion{diff_coeff, time_step, dim} {}
 
   /** \param time_step Time step to set. */
   void time_step(double time_step) {
@@ -493,7 +552,7 @@ public:
   }
 
 private:
-  std::vector<JumpGenerator_Diffusion_1d<ParallelOption, RNG>>
+  std::vector<JumpGenerator_Diffusion_1d<ParallelOption, RNGEngine>>
       _jump_generator; /**< Diffusion jump generators along each dimension.*/
 };
 
@@ -504,11 +563,12 @@ private:
 */
 template <typename Distance_type = double,
           typename ParallelOption = par::ParallelOptions::Serial,
-          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+          typename RNGEngine = std::mt19937>
 class JumpGenerator_RW_1d {
-  const Distance_type _jump_size;   /**< Fixed jump size. */
-  const double _prob_right;         /**< Probability to jump right. */
-  RNG _rng{std::random_device{}()}; /**< Random number generator. */
+  const Distance_type _jump_size; /**< Fixed jump size. */
+  const double _prob_right;       /**< Probability to jump right. */
+  stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{
+      std::random_device{}()}; /**< Random number generator. */
   std::bernoulli_distribution _bernoulli_dist{
       _prob_right}; /**< Bernoulli distribution. */
 
@@ -538,7 +598,7 @@ public:
 */
 template <typename DistanceType = double,
           typename ParallelOption = par::ParallelOptions::Serial,
-          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+          typename RNGEngine = std::mt19937>
 class JumpGenerator_Uniform_1d {
 public:
   const DistanceType max_jump_size; /**< Jumps uniformly distributed between
@@ -561,7 +621,8 @@ public:
   }
 
 private:
-  RNG _rng{std::random_device{}()}; /**< Random number generator.   */
+  stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{
+      std::random_device{}()}; /**< Random number generator.   */
   std::uniform_real_distribution<DistanceType>
       _dist{}; /**< Unit uniform distribution. */
 };
@@ -603,8 +664,11 @@ public:
 */
 template <typename Concentration, typename Gradient,
           typename ParallelOption = par::ParallelOptions::Serial,
-          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+          typename RNGEngine = std::mt19937>
 class OrientationGenerator_Gradient_1d {
+private:
+  using RNG = stochastic::RNGThreaded<ParallelOption, RNGEngine>;
+
 public:
   double variance; /**< Variance of jumps around local gradient.*/
   double preferred_concentration; /**< Concentration to jump towards. */

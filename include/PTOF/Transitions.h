@@ -11,7 +11,7 @@
 #include "CTRW/Transitions.h"
 #include "General/Meta.h"
 #include "PTOF/Field.h"
-#include "PTOF/TimeStepAdaptor.h"
+#include "PTOF/TimeGenerator.h"
 
 namespace ptof {
 /** \brief Make Transitions object to handle transport. */
@@ -23,12 +23,10 @@ auto makeTransportTransitions(
     Boundary &boundary, TransportParameters const &params_transport,
     ReactionParameters const &params_reaction,
     typename Solvers::Parameters const &params_solvers) {
-  return ctrw::Transitions_AdaptiveTimeStep_Time_Position{
-      TimeStepAdaptor_CellSize_SurfaceReaction{
-          geometry, velocity_field, boundary.surface_reaction, params_transport,
-          params_reaction, params_solvers,
-          meta::Selector_t<CheckOptions::Check>{}},
-      Solvers::makeTimeGenerator(params_solvers),
+  return ctrw::Transitions_Time_Position{
+      Solvers::makeTimeGenerator(geometry, velocity_field, boundary,
+                                 params_transport, params_reaction,
+                                 params_solvers),
       Solvers::template makeJumpGenerator<typename Geometry::ParallelOption>(
           velocity_field, boundary, params_transport, params_solvers,
           geometry.dim),

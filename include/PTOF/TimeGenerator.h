@@ -1,12 +1,12 @@
 /**
-   \file PTOF/TimeStepAdaptor.h
+   \file PTOF/TimeGenerator.h
    \author Tomás Aquino
    \date 09/26/2017
    \brief Objects for adaptive time stepping.
 */
 
-#ifndef PTOF_TIMESTEPADAPTOR_H
-#define PTOF_TIMESTEPADAPTOR_H
+#ifndef PTOF_TIMEGENERATOR_H
+#define PTOF_TIMEGENERATOR_H
 
 #include "CTRW/Meta.h"
 #include "General/Constant.h"
@@ -22,10 +22,9 @@
 #include <zero.H>
 
 namespace ptof {
-
 /**
-   \class TimeStepAdaptor_CellSize PTOF/TimeStepAdaptor.h
-   "PTOF/TimeStepAdaptor.h"
+   \class TimeGenerator_Adaptive PTOF/TimeGenerator.h
+   "PTOF/TimeGenerator.h"
    \brief Adaptive time step control based on local cell size.
    \details Takes reaction limitations to time step only if close to reactive
    boundary.
@@ -33,7 +32,7 @@ namespace ptof {
 */
 template <typename Geometry, typename VelocityField, typename SurfaceReaction,
           typename CheckOption = CheckOptions::Check>
-class TimeStepAdaptor_CellSize_SurfaceReaction {
+class TimeGenerator_Adaptive {
 public:
   /** Whether to check if requested positions are outside of mesh. */
   static constexpr bool check_if_outside =
@@ -54,33 +53,12 @@ public:
   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction(
-      Geometry const &geometry, VelocityField const &velocity_field,
-      SurfaceReaction &surface_reaction,
-      TransportParameters const &params_transport,
-      ReactionParameters const &params_reaction,
-      SolverParameters const &params_solvers, meta::Selector_t<CheckOption>)
-      : TimeStepAdaptor_CellSize_SurfaceReaction{
-            geometry,         velocity_field,  surface_reaction,
-            params_transport, params_reaction, params_solvers} {}
-
-  /**
-     \brief Constructor.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field.
-     \param surface_reaction Surface reaction handler.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-  */
-  template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction(
-      Geometry const &geometry, VelocityField const &velocity_field,
-      SurfaceReaction &surface_reaction,
-      TransportParameters const &params_transport,
-      ReactionParameters const &params_reaction,
-      SolverParameters const &params_solvers)
+  TimeGenerator_Adaptive(Geometry const &geometry,
+                         VelocityField const &velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers)
       : _geometry{geometry}, _velocity_field{velocity_field},
         _surface_reaction{surface_reaction}, _volume_factor{1.},
         _diff_coeff{params_transport.diff_coeff},
@@ -114,43 +92,88 @@ public:
     }
   }
 
+  /**
+   \brief Constructor.
+   \param geometry Domain geometry info and utilities.
+   \param velocity_field Velocity field.
+   \param surface_reaction Surface reaction handler.
+   \param params_transport Transport parameters.
+   \param params_reaction Reaction parameters.
+   \param params_solvers Solver parameters.
+*/
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction(
-      Geometry &&geometry, VelocityField const &velocity_field,
-      SurfaceReaction &surface_reaction,
-      TransportParameters const &params_transport,
-      ReactionParameters const &params_reaction,
-      SolverParameters const &params_solvers) = delete;
+  TimeGenerator_Adaptive(Geometry const &geometry,
+                         VelocityField const &velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers, CheckOption)
+      : TimeGenerator_Adaptive{geometry,         velocity_field,
+                               surface_reaction, params_transport,
+                               params_reaction,  params_solvers} {}
 
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction(
-      Geometry const &geometry, VelocityField &&velocity_field,
-      SurfaceReaction &surface_reaction,
-      TransportParameters const &params_transport,
-      ReactionParameters const &params_reaction,
-      SolverParameters const &params_solvers) = delete;
+  TimeGenerator_Adaptive(Geometry &&geometry,
+                         VelocityField const &velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers) = delete;
 
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
-  TimeStepAdaptor_CellSize_SurfaceReaction(
-      Geometry &&geometry, VelocityField &&velocity_field,
-      SurfaceReaction &surface_reaction,
-      TransportParameters const &params_transport,
-      ReactionParameters const &params_reaction,
-      SolverParameters const &params_solvers) = delete;
+  TimeGenerator_Adaptive(Geometry const &geometry,
+                         VelocityField &&velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers) = delete;
+
+  template <typename TransportParameters, typename ReactionParameters,
+            typename SolverParameters>
+  TimeGenerator_Adaptive(Geometry &&geometry, VelocityField &&velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers) = delete;
+
+  template <typename TransportParameters, typename ReactionParameters,
+            typename SolverParameters>
+  TimeGenerator_Adaptive(Geometry &&geometry,
+                         VelocityField const &velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers,
+                         CheckOption) = delete;
+
+  template <typename TransportParameters, typename ReactionParameters,
+            typename SolverParameters>
+  TimeGenerator_Adaptive(Geometry const &geometry,
+                         VelocityField &&velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers,
+                         CheckOption) = delete;
+
+  template <typename TransportParameters, typename ReactionParameters,
+            typename SolverParameters>
+  TimeGenerator_Adaptive(Geometry &&geometry, VelocityField &&velocity_field,
+                         SurfaceReaction &surface_reaction,
+                         TransportParameters const &params_transport,
+                         ReactionParameters const &params_reaction,
+                         SolverParameters const &params_solvers,
+                         CheckOption) = delete;
 
   /**
-     \brief Update time step.
+     \brief Compute adaptive time step.
      \param state Particle state.
-     \param time_generator Time step generator object to be updated.
-     \param jump_generator Jump generator object to be updated.
      \return New time step.
   */
-  template <typename State, typename TimeGenerator, typename JumpGenerator>
-  double operator()(State &state, TimeGenerator &time_generator,
-                    JumpGenerator &jump_generator) const {
+  template <typename State> double operator()(State const &state) const {
     auto cell_id = state.cell;
     if constexpr (check_if_outside)
       if (outside<warn_if_outside>(state.cell, make_point(state.position),
@@ -191,10 +214,6 @@ public:
 
     double time_step = std::max(local_time_step, _global_time_step);
 
-    if constexpr (meta::has_time_step_setter_v<TimeGenerator>)
-      time_generator.time_step(time_step);
-    if constexpr (meta::has_time_step_setter_v<JumpGenerator>)
-      jump_generator.time_step(time_step);
     if constexpr (meta::has_time_step_setter_v<SurfaceReaction>)
       _surface_reaction.time_step(time_step);
 
@@ -275,13 +294,21 @@ private:
 };
 template <typename Geometry, typename VelocityField, typename SurfaceReaction,
           typename TransportParameters, typename ReactionParameters,
+          typename SolverParameters>
+TimeGenerator_Adaptive(Geometry const &, VelocityField const &,
+                       SurfaceReaction &, TransportParameters const &,
+                       ReactionParameters const &, SolverParameters const &)
+    -> TimeGenerator_Adaptive<Geometry, VelocityField, SurfaceReaction,
+                              CheckOptions::Check>;
+template <typename Geometry, typename VelocityField, typename SurfaceReaction,
+          typename TransportParameters, typename ReactionParameters,
           typename SolverParameters, typename CheckOption>
-TimeStepAdaptor_CellSize_SurfaceReaction(
-    Geometry const &, VelocityField const &, SurfaceReaction &,
-    TransportParameters const &, ReactionParameters const &,
-    SolverParameters const &, meta::Selector_t<CheckOption>)
-    -> TimeStepAdaptor_CellSize_SurfaceReaction<Geometry, VelocityField,
-                                                SurfaceReaction, CheckOption>;
+TimeGenerator_Adaptive(Geometry const &, VelocityField const &,
+                       SurfaceReaction &, TransportParameters const &,
+                       ReactionParameters const &, SolverParameters const &,
+                       CheckOption)
+    -> TimeGenerator_Adaptive<Geometry, VelocityField, SurfaceReaction,
+                              CheckOption>;
 } // namespace ptof
 
-#endif /* PTOF_TIMESTEPADAPTOR_H */
+#endif /* PTOF_TIMEGENERATOR_H */

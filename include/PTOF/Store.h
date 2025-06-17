@@ -16,11 +16,18 @@
 namespace ptof {
 /** \brief Store information about absorption. */
 template <typename State>
-void store_info_absorbed(State &state, bool absorbed,
-                         Foam::label patch_id = -1) {
+void store_info_absorbed(State &state, bool absorbed, Foam::label face = -1) {
   state.info.absorbed = absorbed;
-  if constexpr (meta::has_patch_id_v<typename State::Info>)
-    state.info.patch_id = patch_id;
+  if constexpr (meta::has_face_v<typename State::Info>)
+    state.info.face = face;
+}
+
+/** \brief Store information about adsorption. */
+template <typename State>
+void store_info_adsorbed(State &state, bool adsorbed, Foam::label face = -1) {
+  state.info.adsorbed = adsorbed;
+  if constexpr (meta::has_face_v<typename State::Info>)
+    state.info.face = face;
 }
 
 /** \brief Store information about boundary condition type. */
@@ -63,14 +70,12 @@ struct Store_Type {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
-                  Foam::label patch_id,
                   BoundaryConditionList const &implemented,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
     store_info_type(state, implemented.name(type));
@@ -89,13 +94,12 @@ struct Store_Nothing {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
-                  Intersection const &intersection, Foam::label patch_id,
+                  Intersection const &intersection,
                   BoundaryConditionList const &implemented,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
 };
@@ -112,13 +116,12 @@ struct Store_Absorbed {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
-                  Intersection const &intersection, Foam::label patch_id,
+                  Intersection const &intersection,
                   BoundaryConditionList const &implemented,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
 
@@ -129,17 +132,57 @@ struct Store_Absorbed {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
   void
   operator()(State &state, State const &state_old,
-             Intersection const &intersection, Foam::label patch_id,
+             Intersection const &intersection,
              BoundaryConditionList const &implemented,
              meta::Selector<BoundaryConditionList::Type,
                             BoundaryConditionList::Type::absorbing>) const {
-    store_info_absorbed(state, true, patch_id);
+    store_info_absorbed(state, true, intersection.index());
+  }
+};
+
+/**
+   \struct Store_Absorbed_Adsorbed PTOF/Store.h "PTOF/Store.h"
+   \brief Store info about absorption and adsorption.
+*/
+struct Store_Absorbed_Adsorbed {
+  /**
+     \brief Store nothing (unless overloads exist for boundary type).
+     \note The boundary condition type is selected at compile time through the
+     type of meta::Selector<BoundaryConditionList::Type, type>.
+     \param state Current particle state.
+     \param state_old Previous particle state.
+     \param intersection Information about intersection with boundary.
+     \param implemented Information about implemented boundary conditions.
+  */
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
+                  BoundaryConditionList const &implemented,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {}
+
+  /**
+     \brief Store info about absorption for absorbing boundaries.
+     \note The boundary condition type is selected at compile time through the
+     type of meta::Selector<BoundaryConditionList::Type, type>.
+     \param state Current particle state.
+     \param state_old Previous particle state.
+     \param intersection Information about intersection with boundary.
+     \param implemented Information about implemented boundary conditions.
+  */
+  template <typename State, typename Intersection>
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             BoundaryConditionList const &implemented,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::absorbing>) const {
+    store_info_absorbed(state, true, intersection.index());
   }
 };
 
@@ -155,13 +198,12 @@ struct Store_Absorbed_Reinjections {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
   void operator()(State &state, State const &state_old,
-                  Intersection const &intersection, Foam::label patch_id,
+                  Intersection const &intersection,
                   BoundaryConditionList const &implemented,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
 
@@ -172,17 +214,16 @@ struct Store_Absorbed_Reinjections {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
   void
   operator()(State &state, State const &state_old,
-             Intersection const &intersection, Foam::label patch_id,
+             Intersection const &intersection,
              BoundaryConditionList const &implemented,
              meta::Selector<BoundaryConditionList::Type,
                             BoundaryConditionList::Type::absorbing>) const {
-    store_info_absorbed(state, true, patch_id);
+    store_info_absorbed(state, true, intersection.index());
   }
 
   /**
@@ -192,12 +233,11 @@ struct Store_Absorbed_Reinjections {
      \param state Current particle state.
      \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param patch_id Mesh index of the patch corresponding to the intersection.
      \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
   void operator()(State &state, State const &state_old,
-                  Intersection const &intersection, Foam::label patch_id,
+                  Intersection const &intersection,
                   BoundaryConditionList const &implemented,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {

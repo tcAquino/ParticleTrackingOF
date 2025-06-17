@@ -192,16 +192,15 @@ private:
 
   void print_state_patch(State const &state) {
     if constexpr (print_patch) {
-      if constexpr (meta::has_patch_id_v<
-                        typename Subject::Particle::State::Info>) {
-        _output << std::setw(_column_widths[3])
-                << _patch_names[state.info.patch_id];
+      Foam::label face;
+      if constexpr (meta::has_face_v<typename Subject::Particle::State::Info>) {
+        face = state.info.face;
       } else {
-        auto patch_face = this->_geometry.mesh_search().findNearestBoundaryFace(
+        face = this->_geometry.mesh_search().findNearestBoundaryFace(
             make_point(state.position), state.cell);
-        _output << std::setw(_column_widths[3])
-                << _patch_names[patch_id(patch_face, this->_geometry.mesh())];
       }
+      _output << std::setw(_column_widths[3])
+              << _patch_names[ptof::patch_id(face, this->_geometry.mesh())];
     }
   }
 
