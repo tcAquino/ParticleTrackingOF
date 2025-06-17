@@ -76,7 +76,7 @@ public:
         global_constraints_deactivated)
       throw std::runtime_error{
           "Time step adaptor : All local transport-related and all global time "
-          "step step constraints are inactive"};
+          "step constraints are inactive"};
 
     for (std::size_t dd = 2; dd-- > Geometry::dim;) {
       Foam::vector direction = Foam::zero{};

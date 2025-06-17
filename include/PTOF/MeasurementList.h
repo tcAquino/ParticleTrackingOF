@@ -31,6 +31,8 @@ struct MeasurementList {
                           along each dimension. */
     position_variance, /**< Time and position variance. */
     mass,              /**< Time and total mass. */
+    mass_absorbed,     /**< Time and total absorbed mass. */
+    mass_adsorbed,     /**< Time and total adsorbed mass. */
     mass_in_regions, /**< Time and total mass in regions speciefied by masks. */
     velocity,        /**< Time, particle tags, and local velocities. */
     velocity_mean,   /**< Time and mean of velocity field over particles. */
@@ -61,6 +63,10 @@ struct MeasurementList {
                                    for periodicity. */
     first_crossing_time, /**< First crossing time, tag, and mass for specified
                             position along specified dimension. */
+    adsorbed_position, /**< Time, tag, position, and mass of adsorbed particles.
+                        */
+    adsorbed_position_periodic, /**< Time, tag, position, and mass of adsorbed
+                                   particles. */
     absorption_time, /**< Particle absorption times, tags, and masses at end of
                        dynamics. */
     absorption_time_patch,    /**< Particle absorption times, particle tags,
@@ -114,6 +120,8 @@ struct MeasurementList {
       {"position_moment", Type::position_moment},
       {"position_variance", Type::position_variance},
       {"mass", Type::mass},
+      {"mass_absorbed", Type::mass_absorbed},
+      {"mass_adsorbed", Type::mass_adsorbed},
       {"mass_in_regions", Type::mass_in_regions},
       {"velocity", Type::velocity},
       {"velocity_mean", Type::velocity_mean},
@@ -134,6 +142,8 @@ struct MeasurementList {
       {"position_moment_periodic", Type::position_moment_periodic},
       {"position_variance_periodic", Type::position_variance_periodic},
       {"first_crossing_time", Type::first_crossing_time},
+      {"adsorbed_position", Type::adsorbed_position},
+      {"adsorbed_position_periodic", Type::adsorbed_position_periodic},
       {"absorption_time", Type::absorption_time},
       {"absorption_time_patch", Type::absorption_time_patch},
       {"absorption_time_position", Type::absorption_time_position},
@@ -153,6 +163,8 @@ struct MeasurementList {
       {Type::position_moment, "position_moment"},
       {Type::position_variance, "position_variance"},
       {Type::mass, "mass"},
+      {Type::mass_absorbed, "mass_absorbed"},
+      {Type::mass_adsorbed, "mass_adsorbed"},
       {Type::mass_in_regions, "mass_in_regions"},
       {Type::velocity, "velocity"},
       {Type::velocity_mean, "velocity_mean"},
@@ -173,6 +185,8 @@ struct MeasurementList {
       {Type::position_moment_periodic, "position_moment_periodic"},
       {Type::position_variance_periodic, "position_variance_periodic"},
       {Type::first_crossing_time, "first_crossing_time"},
+      {Type::adsorbed_position, "adsorbed_position"},
+      {Type::adsorbed_position_periodic, "adsorbed_position_periodic"},
       {Type::absorption_time, "absorption_time"},
       {Type::absorption_time_patch, "absorption_time_patch"},
       {Type::absorption_time_position, "absorption_time_position"},

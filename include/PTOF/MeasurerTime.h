@@ -130,9 +130,9 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     for (auto const &part : _subject) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      if (state_new.time >= time && state_old.time <= time) {
+      if (brackets_time(part, time)) {
+        auto const &state_new = part.state_new();
+        auto const &state_old = part.state_old();
         _output << std::setw(_column_widths[1]) << state_old.tag;
         io::print(_output, interpolate_position(part, time, this->_locator),
                   _column_widths[2]);
@@ -322,11 +322,11 @@ struct MeasurerTime_position_nth_moment final
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
-                     int(2 + std::string{"Position_nth_moment_"}.length()))} {
+                     int(2 + std::string{"Position_moment_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_nth_moment_" + std::to_string(dd);
+              << "Position_moment_" + std::to_string(dd);
     _output << "\n";
   }
 
@@ -341,12 +341,69 @@ private:
     std::stringstream stream;
     stream << std::scientific << std::setprecision(2);
     stream << "_" << nn;
-    return std::string{"position_nth_moment_"} + stream.str();
+    return std::string{"position_moment_"} + stream.str();
   }
 
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   double _nn;
+  std::array<int, 2> _column_widths;
+};
+
+/**
+   \class MeasurerTime_position_moment_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and moment of position with specified exponents for each
+   coordinate (weighted by mass), with position accounting for periodicity.
+*/
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_moment_periodic final
+    : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_moment_periodic(Subject const &subject,
+                                        std::vector<double> exponents,
+                                        Geometry const &geometry,
+                                        Directories const &directories,
+                                        std::string const &identifier,
+                                        int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, make_name(exponents),
+                                        identifier,  precision},
+        _getter_position{geometry.boundary_periodic}, _exponents{exponents},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_moment_"}.length()))} {
+    throw std::runtime_error{
+        "Number of moment exponents is not the same as spatial dimension"};
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      _output << std::setw(_column_widths[1])
+              << "Position_moment_" + std::to_string(dd);
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    io::print(_output,
+              position_moment(_subject, _exponents, time, _getter_position),
+              _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  static std::string make_name(std::vector<double> const &exponents) {
+    std::stringstream stream;
+    stream << std::scientific << std::setprecision(2);
+    for (auto exp : exponents)
+      stream << "_" << exp;
+    return std::string{"position_moment_periodic"} + stream.str();
+  }
+
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
+  ctrw::Get_position_periodic<Boundary const &> _getter_position;
+  std::vector<double> _exponents;
   std::array<int, 2> _column_widths;
 };
 
@@ -369,14 +426,14 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
-                     int(2 + std::string{"Position_cross_moment_"}.length()))} {
+                     int(2 + std::string{"Position_moment_"}.length()))} {
     if (_exponents.size() != Geometry::dim)
       throw std::runtime_error{
           "Number of moment exponents is not the same as spatial dimension"};
     _output << std::setw(_column_widths[0]) << "Time";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_cross_moment_" + std::to_string(dd);
+              << "Position_moment_" + std::to_string(dd);
     _output << "\n";
   }
 
@@ -460,6 +517,66 @@ struct MeasurerTime_mass final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time
             << std::setw(_column_widths[1]) << mass(_subject, time) << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  std::array<int, 2> _column_widths;
+};
+
+/** \class MeasurerTime_mass_adsorbed PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+ *  \brief  Output time and total absorbed mass. */
+template <typename Subject, typename Geometry>
+struct MeasurerTime_mass_absorbed final : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_mass_absorbed(Subject const &subject, Geometry const &geometry,
+                             Directories const &directories,
+                             std::string const &identifier, int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, "mass_absorbed",
+                                        identifier,  precision},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time"
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time
+            << std::setw(_column_widths[1]) << mass_absorbed(_subject, time)
+            << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  std::array<int, 2> _column_widths;
+};
+
+/** \class MeasurerTime_mass_adsorbed PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+ *  \brief  Output time and total adsorbed mass. */
+template <typename Subject, typename Geometry>
+struct MeasurerTime_mass_adsorbed final : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_mass_adsorbed(Subject const &subject, Geometry const &geometry,
+                             Directories const &directories,
+                             std::string const &identifier, int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, "mass_adsorbed",
+                                        identifier,  precision},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time"
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time
+            << std::setw(_column_widths[1]) << mass_adsorbed(_subject, time)
+            << "\n";
   }
 
 private:
@@ -1479,60 +1596,104 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_moment_periodic PTOF/MeasurerTime.h
+   \class MeasurerTime_adsorbed_position PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
-   \brief Output time and moment of position with specified exponents for each
-   coordinate (weighted by mass), with position accounting for periodicity.
+   \brief Output time, tag, position, and mass of adsorbed particles.
 */
 template <typename Subject, typename Geometry>
-struct MeasurerTime_position_moment_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_moment_periodic(Subject const &subject,
-                                        std::vector<double> exponents,
-                                        Geometry const &geometry,
-                                        Directories const &directories,
-                                        std::string const &identifier,
-                                        int precision = 8)
+struct MeasurerTime_adsorbed_position final : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_adsorbed_position(Subject const &subject,
+                                 Geometry const &geometry,
+                                 Directories const &directories,
+                                 std::string const &identifier,
+                                 int precision = 8)
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, make_name(exponents),
+                                        directories, "adsorbed_position",
                                         identifier,  precision},
-        _getter_position{geometry.boundary_periodic}, _exponents{exponents},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(9 + precision,
-                     int(2 + std::string{"Position_moment_"}.length()))} {
-    throw std::runtime_error{
-        "Number of moment exponents is not the same as spatial dimension"};
-    _output << std::setw(_column_widths[0]) << "Time";
+            std::max(12, int(1 + std::string{"Tag"}.length())),
+            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time"
+            << std::setw(_column_widths[1]) << "Tag";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
       _output << std::setw(_column_widths[1])
-              << "Position_moment_" + std::to_string(dd);
-    _output << "\n";
+              << "Position_" + std::to_string(dd);
+    _output << std::setw(_column_widths[2]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_moment(_subject, _exponents, time, _getter_position),
-              _column_widths[1]);
-    _output << "\n";
+    for (auto const &part : _subject) {
+      if (adsorbed(part, time)) {
+        auto const &state_old = part.state_old();
+        _output << std::setw(_column_widths[0]) << time
+                << std::setw(_column_widths[1]) << state_old.tag;
+        io::print(_output, state_old.position, _column_widths[2]);
+        _output << std::setw(_column_widths[3]) << state_old.mass << "\n";
+      }
+    }
   }
 
 private:
-  static std::string make_name(std::vector<double> const &exponents) {
-    std::stringstream stream;
-    stream << std::scientific << std::setprecision(2);
-    for (auto exp : exponents)
-      stream << "_" << exp;
-    return std::string{"position_moment_periodic"} + stream.str();
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  std::array<int, 4> _column_widths;
+};
+
+/**
+   \class MeasurerTime_adsorbed_position_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time, tag, position accounting for periodicity, and mass of
+   adsorbed particles.
+*/
+template <typename Subject, typename Geometry>
+struct MeasurerTime_adsorbed_position_periodic final
+    : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_adsorbed_position_periodic(Subject const &subject,
+                                          Geometry const &geometry,
+                                          Directories const &directories,
+                                          std::string const &identifier,
+                                          int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,
+                                        geometry,
+                                        directories,
+                                        "adsorbed_position_periodic",
+                                        identifier,
+                                        precision},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Tag"}.length())),
+            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time"
+            << std::setw(_column_widths[1]) << "Tag";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      _output << std::setw(_column_widths[1])
+              << "Position_" + std::to_string(dd);
+    _output << std::setw(_column_widths[2]) << "Mass"
+            << "\n";
   }
 
+  void operator()(double time) override {
+    for (auto const &part : _subject) {
+      if (adsorbed(part, time)) {
+        auto const &state_old = part.state_old();
+        _output << std::setw(_column_widths[0]) << time
+                << std::setw(_column_widths[1]) << state_old.tag;
+        io::print(_output, _getter_position(state_old), _column_widths[2]);
+        _output << std::setw(_column_widths[3]) << state_old.mass << "\n";
+      }
+    }
+  }
+
+private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
   ctrw::Get_position_periodic<Boundary const &> _getter_position;
-  std::vector<double> _exponents;
-  std::array<int, 2> _column_widths;
+  std::array<int, 4> _column_widths;
 };
 
 /** \class MeasurerTime_position_variance_periodic PTOF/MeasurerTime.h

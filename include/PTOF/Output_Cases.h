@@ -342,6 +342,20 @@ private:
                 measurement->precision));
         break;
       }
+      case MeasurementList::Type::mass_absorbed: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_mass_absorbed<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::mass_adsorbed: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_mass_adsorbed<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
       case MeasurementList::Type::mass_in_regions: {
         if constexpr (!std::is_same_v<Mask, meta::Empty>)
           _output_time.emplace_back(
@@ -596,6 +610,20 @@ private:
                 MeasurerTime_first_crossing_time<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
                 measurement_derived.dim, measurement_derived.position,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::adsorbed_position: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_adsorbed_position<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::adsorbed_position_periodic: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_adsorbed_position<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
                 measurement->precision));
         break;
       }

@@ -201,11 +201,13 @@ bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
   if (notify_if_no_info && !has_info) {
     output << "\n"
               "No static info available";
-    if (!help_option.empty())
+    if (!help_option.empty()) {
       output << " for help option " << help_option;
-    if (std::is_same_v<Class, meta::Empty>)
+    }
+    if (std::is_same_v<Class, meta::Empty>) {
       output << " : object type is Empty";
-    output << "\n";
+      output << "\n";
+    }
   }
 
   return has_info;
@@ -222,8 +224,9 @@ template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
           typename Transport, typename Phase, typename Reaction,
           typename Solvers, typename InitialCondition, typename Output>
 bool options_help(std::ostream &output, int argc, const char *const *argv) {
-  if (!io::check_options_help(argc, argv))
+  if (!io::check_options_help(argc, argv)) {
     return 0;
+  }
 
   if (argc == 2) {
     output << "\n";
@@ -243,8 +246,9 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
       info += print_static_info<Solvers>(output);
       info += print_static_info<InitialCondition>(output);
       info += print_static_info<Output>(output);
-      if (!info)
+      if (!info) {
         output << "No help info available\n";
+      }
     } else if (option == "-e" || option == "--executable") {
       print_static_info<ExecutableInfo>(output, true, "-m / --main");
     } else if (option == "-g" || option == "--geometry") {
@@ -281,8 +285,9 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
    elsewhere, not a hint.
 */
 bool outside(Foam::label cell) {
-  if (cell < 0)
+  if (cell < 0) {
     return 1;
+  }
   return 0;
 }
 
@@ -305,9 +310,9 @@ bool outside(Foam::label cell, Foam::point const &position,
                 << "(" << position[0] << ", " << position[1] << ", "
                 << position[2] << ")"
                 << " outside mesh.";
-      if (!extra_warning_info.empty())
-        std::cerr << " ";
-      std::cerr << extra_warning_info << "\n";
+      if (!extra_warning_info.empty()) {
+        std::cerr << " " << extra_warning_info << "\n";
+      }
     }
     return 1;
   }
@@ -390,12 +395,15 @@ auto make_point(Foam::point const &point) { return point; }
 
 /** \brief Make point from vector. */
 Foam::point make_point(std::vector<double> const &point) {
-  if (point.size() >= 3)
+  if (point.size() >= 3) {
     return {point[0], point[1], point[2]};
-  if (point.size() == 2)
+  }
+  if (point.size() == 2) {
     return Foam::point{point[0], point[1], 0.};
-  if (point.size() == 1)
+  }
+  if (point.size() == 1) {
     return Foam::point{point[0], 0., 0.};
+  }
   return {0., 0., 0.};
 }
 
@@ -637,9 +645,9 @@ bool face_center_is_in_cell(Foam::label face, Locator const &locator) {
 template <typename Locator>
 auto adjusted_face_center(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
-  if (face_center_is_in_cell(face, locator))
+  if (face_center_is_in_cell(face, locator)) {
     return face_center(face, mesh);
-  else {
+  } else {
     auto center = face_center(face, mesh);
     std::cerr << "Warning: Face center of face " << face << " at "
               << "(" << center[0] << ", " << center[1] << ", " << center[2]
@@ -709,8 +717,9 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
   auto point = begin + offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
   auto begin_cell = locator(begin, owner_cell);
-  if (outside(begin_cell))
+  if (outside(begin_cell)) {
     return point;
+  }
   while (locator(point, begin_cell) != begin_cell) {
     offset /= 2.;
     point = begin + offset;
@@ -752,8 +761,9 @@ Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
   auto point = begin - offset;
   Foam::label owner_cell = locator.mesh().faceOwner()[face];
   auto begin_cell = locator(begin, owner_cell);
-  if (outside(begin_cell))
+  if (outside(begin_cell)) {
     return point;
+  }
   while (locator(point, begin_cell) != begin_cell) {
     offset /= 2.;
     point = begin - offset;
@@ -836,8 +846,9 @@ Foam::point offset_forward_cell_keep_inside(Foam::point const &begin,
                                             Locator const &locator) {
   auto offset = offset_cell(begin, cell, direction, locator);
   auto point = begin + offset;
-  if (outside(cell))
+  if (outside(cell)) {
     return point;
+  }
   while (locator(point, cell) != cell) {
     offset /= 2.;
     point = begin + offset;
@@ -876,8 +887,9 @@ Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
                                              Locator const &locator) {
   auto offset = offset_cell(begin, cell, direction, locator);
   auto point = begin - offset;
-  if (outside(cell))
+  if (outside(cell)) {
     return point;
+  }
   while (locator(point, cell) != cell) {
     offset /= 2.;
     point = begin - offset;
@@ -940,9 +952,9 @@ auto cell_ids_region_cartesian(
   std::vector<std::size_t> degenerate_dimensions;
   std::vector<std::size_t> non_degenerate_dimensions;
   for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
-    if (boundaries[dd].first == boundaries[dd].second)
+    if (boundaries[dd].first == boundaries[dd].second) {
       degenerate_dimensions.push_back(dd);
-    else
+    } else
       non_degenerate_dimensions.push_back(dd);
 
   auto const &mesh = locator.mesh();
@@ -1137,8 +1149,9 @@ template <typename Subject>
 std::size_t nr_adsorbed(Subject const &subject, double time) {
   std::size_t adsorbed = 0;
   for (auto const &part : subject) {
-    if (ptof::adsorbed(part, time))
+    if (ptof::adsorbed(part, time)) {
       ++adsorbed;
+    }
   }
   return adsorbed;
 }
@@ -1154,9 +1167,49 @@ std::size_t nr_adsorbed(Subject const &subject, double time) {
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
   for (auto const &part : subject) {
-    if (brackets_time(part, time))
+    if (!adsorbed(part, time) && brackets_time(part, time)) {
       mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(part.state_new(),
                                                        part.state_old());
+    }
+  }
+  return mass;
+}
+
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \return Total adsorbed mass.
+   \note Particle states must define:
+   - \c mass
+   - \c time
+*/
+template <typename Subject>
+auto mass_adsorbed(Subject const &subject, double time) {
+  double mass = 0.;
+  for (auto const &part : subject) {
+    if (adsorbed(part, time)) {
+      mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(part.state_new(),
+                                                       part.state_old());
+    }
+  }
+  return mass;
+}
+
+/**
+   \param subject CTRW object.
+   \param time Current time.
+   \return Total absorbed mass.
+   \note Particle states must define:
+   - \c mass
+   - \c time
+*/
+template <typename Subject>
+auto mass_absorbed(Subject const &subject, double time) {
+  double mass = 0.;
+  for (auto const &part : subject) {
+    if (absorbed(part, time)) {
+      mass += part.state_new().mass;
+    }
   }
   return mass;
 }
@@ -1184,7 +1237,8 @@ auto mass(Subject const &subject, double time,
     auto const &state_old = part.state_old();
     auto cell_new = state_new.cell;
     auto cell_old = state_old.cell;
-    if (!outside(cell_new) && !outside(cell_old) && brackets_time(part, time)) {
+    if (!outside(cell_new) && !outside(cell_old) && !adsorbed(part, time) &&
+        brackets_time(part, time)) {
       for (std::size_t ii = 0; ii < masks.size(); ++ii)
         if (masks[ii].get()[cell_new] >= thresholds[ii] &&
             masks[ii].get()[cell_old] >= thresholds[ii])
@@ -1212,12 +1266,13 @@ auto position_mean(Subject const &subject, double time,
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position position_mean = Foam::zero{};
   for (auto const &part : subject) {
-    auto const &state_new = part.state_new();
-    auto const &state_old = part.state_old();
-    if (brackets_time(part, time))
+    if (!adsorbed(part, time) && brackets_time(part, time)) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
       position_mean +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           ctrw::Get_interp{time, getter_position}(state_new, state_old);
+    }
   }
   return position_mean / mass(subject, time);
 }
@@ -1238,13 +1293,14 @@ auto position_second_moment(Subject const &subject, double time,
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position second_moment = Foam::zero{};
   for (auto const &part : subject) {
-    auto const &state_new = part.state_new();
-    auto const &state_old = part.state_old();
-    if (brackets_time(part, time))
+    if (!adsorbed(part, time) && brackets_time(part, time)) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
       second_moment +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           op::square(
               ctrw::Get_interp{time, getter_position}(state_new, state_old));
+    }
   }
   return second_moment / mass(subject, time);
 }
@@ -1266,13 +1322,14 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
   decltype(getter_position(subject.particles(0).state_new())) moment =
       Foam::zero{};
   for (auto const &part : subject) {
-    auto const &state_new = part.state_new();
-    auto const &state_old = part.state_old();
-    if (brackets_time(part, time))
+    if (!adsorbed(part, time) && brackets_time(part, time)) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
       moment +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           op::pow(ctrw::Get_interp{time, getter_position}(state_new, state_old),
                   exponents);
+    }
   }
   return moment / mass(subject, time);
 }
@@ -1307,13 +1364,14 @@ template <typename Subject, typename Field>
 auto mean(Subject const &subject, double time, Field const &field) {
   decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
   for (auto const &part : subject) {
-    auto const &state_new = part.state_new();
-    auto const &state_old = part.state_old();
-    if (brackets_time(part, time))
+    if (!adsorbed(part, time) && brackets_time(part, time)) {
+      auto const &state_new = part.state_new();
+      auto const &state_old = part.state_old();
       field_mean +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           ctrw::Get_interp{time, ctrw::Get_property{field}}(state_new,
                                                             state_old);
+    }
   }
   return field_mean / mass(subject, time);
 }
