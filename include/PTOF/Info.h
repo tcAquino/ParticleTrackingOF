@@ -64,6 +64,27 @@ struct Info_absorbed_reinjections {
 };
 
 /**
+   \struct Info_absorbed_face_reinjections PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption and number of reinjections.
+*/
+struct Info_absorbed_face_reinjections {
+  bool absorbed;
+  Foam::label face;
+  std::size_t reinjections;
+};
+
+/**
+   \struct Info_absorbed_adsorbed_face_reinjections PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption and number of reinjections.
+*/
+struct Info_absorbed_adsorbed_face_reinjections {
+  bool absorbed;
+  bool adsorbed;
+  Foam::label face;
+  std::size_t reinjections;
+};
+
+/**
    \struct Info_absorbed_adsorbed_reinjections PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption, adsorption, and number of reinjections.
 */
