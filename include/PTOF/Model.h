@@ -46,9 +46,9 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
-      using State =
-          State_Generic<Geometry::dim, Info, double, double, std::size_t>;
+      using Info = Info_absorbed_face;
+      using State = State_Generic<Geometry::dim, Info_absorbed_face, double,
+                                  double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Stepper::Euler, Stepper::Euler,
                                       CTRWStepper::Asynchronous>;
@@ -71,7 +71,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -98,7 +98,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Generic<2, ParallelOption, Dynamics::Type::firstpassage>;
-      using Info = Info_Absorbed_Reinjections;
+      using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -125,7 +125,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -153,7 +153,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -182,7 +182,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -208,7 +208,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -238,7 +238,7 @@ struct Model {
       using Geometry =
           Geometry_Periodic_Cartesian<2, ParallelOption,
                                       Dynamics::Type::firstpassage>;
-      using Info = Info_Absorbed_Reinjections;
+      using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -268,7 +268,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -299,7 +299,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<2, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -325,7 +325,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -350,7 +350,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -378,7 +378,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Generic<3, ParallelOption, Dynamics::Type::firstpassage>;
-      using Info = Info_Absorbed_Reinjections;
+      using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -406,7 +406,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -435,7 +435,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Generic<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -463,7 +463,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -489,7 +489,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -520,7 +520,7 @@ struct Model {
       using Geometry =
           Geometry_Periodic_Cartesian<3, ParallelOption,
                                       Dynamics::Type::firstpassage>;
-      using Info = Info_Absorbed_Reinjections;
+      using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -549,7 +549,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -579,7 +579,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Periodic_Cartesian<3, ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -606,7 +606,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Bcc<ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -637,7 +637,7 @@ struct Model {
       using Geometry =
           Geometry_Bcc<ParallelOption, Periodicity::Type::cartesian,
                        Dynamics::Type::firstpassage>;
-      using Info = Info_Absorbed_Reinjections;
+      using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -664,7 +664,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Bcc<ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -693,7 +693,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Bcc<ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -723,7 +723,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry = Geometry_Bcc<ParallelOption>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -752,7 +752,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -783,7 +783,7 @@ struct Model {
       using Geometry =
           Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes,
                        Dynamics::Type::firstpassage>;
-      using Info = Info_Absorbed_Reinjections;
+      using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -811,7 +811,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -840,7 +840,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
@@ -870,7 +870,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
-      using Info = Info_Absorbed_Face;
+      using Info = Info_absorbed_face;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;

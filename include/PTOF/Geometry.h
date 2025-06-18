@@ -49,9 +49,9 @@ struct Geometry_Generic {
   using Locator = Locator_Cell<Geometry_Generic,
                                SearchOption>; /**< Locate positions in mesh.*/
   using BoundaryInfo =
-      std::conditional_t<dynamics == Dynamics::Type::transport, Store_Absorbed,
-                         Store_Absorbed_Reinjections>; /**< What to store upon
-                                                          hitting a boundary. */
+      std::conditional_t<dynamics == Dynamics::Type::transport, Store_face,
+                         Store_face_reinjections>; /**< What to store upon
+                                                        hitting a boundary. */
 
   /**
      \brief Constructor.
@@ -227,7 +227,9 @@ struct Geometry_Periodic_Cartesian {
   using BoundaryPeriodic =
       geom::Boundary_Periodic_WithOutsideInfo; /**< Periodic boundary. */
   using BoundaryInfo =
-      Store_Absorbed; /**< What to store upon hitting a boundary. */
+      std::conditional_t<dynamics == Dynamics::Type::transport, Store_face,
+                         Store_face_reinjections>; /**< What to store upon
+                                                        hitting a boundary. */
 
   /**
      \brief Constructor.
@@ -421,7 +423,9 @@ struct Geometry_Bcc {
                              geom::SymmetryPlanes_Bcc>>; /**< Periodic boundary
                                                             type. */
   using BoundaryInfo =
-      Store_Absorbed; /**< What to store upon hitting a boundary. */
+      std::conditional_t<dynamics == Dynamics::Type::transport, Store_face,
+                         Store_face_reinjections>; /**< What to store upon
+                                                        hitting a boundary. */
 
   /**
      \brief Constructor.

@@ -330,7 +330,7 @@ struct Boundary_Reinject {
   bool operator()(State &state, State const &state_old,
                   Intersection const &intersection) const {
     auto [position, cell] = initial_condition.make_position_and_cell();
-    state.set_position(position, locator(position, cell));
+    state.set_position(position, cell);
     return true;
   }
 

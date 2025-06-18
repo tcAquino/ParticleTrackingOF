@@ -17,81 +17,78 @@
 
 namespace ptof {
 /**
-   \struct Info_Type PTOF/Info.h "PTOF/Info.h"
-   \brief Information about type.
-*/
-struct Info_Type {
-  std::string type;
-};
-
-/**
-   \struct Info_Absorbed PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption.
 */
-struct Info_Absorbed {
+struct Info_absorbed {
   bool absorbed;
 };
 
 /**
-   \struct Info_Absorbed PTOF/Info.h "PTOF/Info.h"
-   \brief Information about adsorption.
-*/
-struct Info_Adsorbed {
-  bool adsorbed;
-};
-
-/**
-   \struct Info_Absorbed PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_adsorbed PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and adsorption.
 */
-struct Info_Absorbed_Adsorbed {
+struct Info_absorbed_adsorbed {
   bool absorbed;
   bool adsorbed;
 };
 
 /**
-   \struct Info_Absorbed PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_face PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and boundary face where absorption
    happened.
 */
-struct Info_Absorbed_Face {
+struct Info_absorbed_face {
   bool absorbed;
   Foam::label face;
 };
 
 /**
-   \struct Info_Absorbed_Reinjections PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_adsorbed_face PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption and boundary face where absorption
+   happened.
+*/
+struct Info_absorbed_adsorbed_face {
+  bool absorbed;
+  bool adsorbed;
+  Foam::label face;
+};
+
+/**
+   \struct Info_absorbed_reinjections PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and number of reinjections.
 */
-struct Info_Absorbed_Reinjections {
+struct Info_absorbed_reinjections {
   bool absorbed;
   std::size_t reinjections;
 };
 
 /**
-   \struct Info_Absorbed_Reinjections PTOF/Info.h "PTOF/Info.h"
-   \brief Information about adsorption and number of reinjections.
-*/
-struct Info_Adsorbed_Reinjections {
-  bool adsorbed;
-  std::size_t reinjections;
-};
-
-/**
-   \struct Info_Absorbed_Reinjections PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_adsorbed_reinjections PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption, adsorption, and number of reinjections.
 */
-struct Info_Absorbed_Adsorbed_Reinjections {
+struct Info_absorbed_adsorbed_reinjections {
   bool absorbed;
   bool adsorbed;
   std::size_t reinjections;
 };
 
 /**
-   \struct Info_Absorbed_Contact_Point PTOF/Info.h "PTOF/Info.h"
-   \brief Information about contact point.
+   \struct Info_absorbed_contact_point PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption and contact point.
 */
-struct Info_Contact_Point {
+struct Info_absorbed_contact_point {
+  bool absorbed;
+  Foam::point contact_point;
+};
+
+/**
+   \struct Info_absorbed_adsorbed_contact_point PTOF/Info.h "PTOF/Info.h"
+   \brief Information about absorption, adsorption, and contact point.
+*/
+struct Info_absorbed_adsorbed_contact_point {
+  bool absorbed;
+  bool adsorbed;
   Foam::point contact_point;
 };
 } // namespace ptof

@@ -189,6 +189,7 @@ public:
         _store_info(state, state_old, intersection, _boundary_condition_types,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
+        state.info.absorbed = true;
         state.set_position(intersection.point());
         had_effect = 1;
         break;
