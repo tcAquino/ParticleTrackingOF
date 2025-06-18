@@ -2,7 +2,7 @@
    \file PTOF/TimeGenerator.h
    \author Tomás Aquino
    \date 09/26/2017
-   \brief Objects for adaptive time stepping.
+   \brief Objects time increment generation.
 */
 
 #ifndef PTOF_TIMEGENERATOR_H

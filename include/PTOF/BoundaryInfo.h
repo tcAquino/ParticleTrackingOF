@@ -1,12 +1,12 @@
 /**
-   \file PTOF/Store.h
+   \file PTOF/BoundaryInfo.h
    \author Tomás Aquino
    \date 09/03/2022
    \brief Objects to handle storing information upon hitting a boundary.
 */
 
-#ifndef PTOF_STORE_H
-#define PTOF_STORE_H
+#ifndef PTOF_BOUNDARYINFO_H
+#define PTOF_BOUNDARYINFO_H
 
 #include "General/Meta.h"
 #include "General/Useful.h"
@@ -15,10 +15,10 @@
 
 namespace ptof {
 /**
-   \struct Store_Nothing PTOF/Store.h "PTOF/Store.h"
+   \struct BoundaryInfo PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Do not store any info.
 */
-struct Store_Nothing {
+struct BoundaryInfo_Nothing {
   /**
      \brief Store nothing.
      \note The boundary condition type is selected at compile time through the
@@ -37,10 +37,10 @@ struct Store_Nothing {
 };
 
 /**
-   \struct Store_type PTOF/Store.h "PTOF/Store.h"
+   \struct BoundaryInfo_type PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about latest boundary type.
 */
-struct Store_type {
+struct BoundaryInfo_type {
   /**
      \brief Store boundary type.
      \note The boundary condition type is selected at compile time through the
@@ -61,10 +61,10 @@ struct Store_type {
 };
 
 /**
-   \struct Store_face PTOF/Store.h "PTOF/Store.h"
+   \struct BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about latest boundary face.
 */
-struct Store_face {
+struct BoundaryInfo_face {
   /**
      \brief Store boundary type.
      \note The boundary condition type is selected at compile time through the
@@ -85,10 +85,10 @@ struct Store_face {
 };
 
 /**
-   \struct Store_face PTOF/Store.h "PTOF/Store.h"
+   \struct BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about latest contact point.
 */
-struct Store_contact_point {
+struct BoundaryInfo_contact_point {
   /**
      \brief Store boundary type.
      \note The boundary condition type is selected at compile time through the
@@ -109,10 +109,10 @@ struct Store_contact_point {
 };
 
 /**
-   \struct Store_face PTOF/Store.h "PTOF/Store.h"
+   \struct BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about number of reinjections.
 */
-struct Store_reinjections {
+struct BoundaryInfo_reinjections {
   /**
      \brief Store nothing (unless overloads exist for boundary type).
      \note The boundary condition type is selected at compile time through the
@@ -149,10 +149,10 @@ struct Store_reinjections {
 };
 
 /**
-   \struct Store_face PTOF/Store.h "PTOF/Store.h"
+   \struct BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about face number of reinjections.
 */
-struct Store_face_reinjections {
+struct BoundaryInfo_face_reinjections {
   /**
      \brief Store nothing (unless overloads exist for boundary type).
      \note The boundary condition type is selected at compile time through the
@@ -192,4 +192,4 @@ struct Store_face_reinjections {
 };
 } // namespace ptof
 
-#endif /* PTOF_STORE_H */
+#endif /* PTOF_BOUNDARYINFO_H */

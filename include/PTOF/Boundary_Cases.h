@@ -32,7 +32,7 @@ namespace ptof {
    \class Boundary_Cases PTOF/Boundary_Cases.h "PTOF/Boundary_Cases.h"
    \brief Boundary object to handle implemented boundary types.
 */
-template <typename Locator, typename Store_Info, typename VelocityField,
+template <typename Locator, typename BoundaryInfo, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom,
           typename SurfaceReaction>
 class Boundary_Cases {
@@ -53,14 +53,14 @@ public:
      \param surface_reaction Surface Reaction.
   */
   Boundary_Cases(
-      BCs boundary_conditions, Locator &&locator, Store_Info &&store_info,
+      BCs boundary_conditions, Locator &&locator, BoundaryInfo &&store_info,
       VelocityField &&velocity_field,
       Boundary_Periodic &&boundary_periodic = Boundary_DoNothing{},
       Boundary_Custom &&boundary_custom = Boundary_DoNothing{},
       SurfaceReaction &&surface_reaction = SurfaceReaction_DoNothing{})
       : _boundary_conditions{boundary_conditions},
         _locator{std::forward<Locator>(locator)},
-        _store_info{std::forward<Store_Info>(store_info)},
+        _store_info{std::forward<BoundaryInfo>(store_info)},
         _velocity_field{std::forward<VelocityField>(velocity_field)},
         _boundary_periodic{std::forward<Boundary_Periodic>(boundary_periodic)},
         _boundary_custom{std::forward<Boundary_Custom>(boundary_custom)},
@@ -324,8 +324,8 @@ public:
 private:
   BCs _boundary_conditions; /**< Patch names and associated bc type names. */
   Locator _locator;         /**< Object to locate positions in mesh. */
-  Store_Info
-      _store_info; /**< Object to handle boundary info storing in states. */
+  BoundaryInfo _store_info; /**< Object to handle boundary-related info storing
+                               in states. */
   VelocityField _velocity_field;
   Boundary_Periodic
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
@@ -392,40 +392,40 @@ private:
             (make_point(state.position) - next_intersection.point())) < 0.;
   }
 };
-template <typename Locator, typename Store_Info, typename VelocityField,
+template <typename Locator, typename BoundaryInfo, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom,
           typename Surface_Reaction>
-Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
                                        Boundary_Periodic, Boundary_Custom,
                                        Surface_Reaction>::BCs,
-               Locator &&, Store_Info &&, VelocityField &&,
+               Locator &&, BoundaryInfo &&, VelocityField &&,
                Boundary_Periodic &&, Boundary_Custom &&, Surface_Reaction &&)
-    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_Periodic,
+    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_Periodic,
                       Boundary_Custom, Surface_Reaction>;
-template <typename Locator, typename Store_Info, typename VelocityField,
+template <typename Locator, typename BoundaryInfo, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom>
-Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
                                        Boundary_Periodic, Boundary_Custom,
                                        SurfaceReaction_DoNothing>::BCs,
-               Locator &&, Store_Info &&, VelocityField &&,
+               Locator &&, BoundaryInfo &&, VelocityField &&,
                Boundary_Periodic &&, Boundary_Custom &&)
-    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_Periodic,
+    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_Periodic,
                       Boundary_Custom, SurfaceReaction_DoNothing>;
-template <typename Locator, typename Store_Info, typename VelocityField,
+template <typename Locator, typename BoundaryInfo, typename VelocityField,
           typename Boundary_Periodic>
-Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
                                        Boundary_Periodic, Boundary_DoNothing,
                                        SurfaceReaction_DoNothing>::BCs,
-               Locator &&, Store_Info &&, VelocityField &&,
+               Locator &&, BoundaryInfo &&, VelocityField &&,
                Boundary_Periodic &&)
-    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_Periodic,
+    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_Periodic,
                       Boundary_DoNothing, SurfaceReaction_DoNothing>;
-template <typename Locator, typename Store_Info, typename VelocityField>
-Boundary_Cases(typename Boundary_Cases<Locator, Store_Info, VelocityField,
+template <typename Locator, typename BoundaryInfo, typename VelocityField>
+Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
                                        Boundary_DoNothing, Boundary_DoNothing,
                                        SurfaceReaction_DoNothing>::BCs,
-               Locator &&, Store_Info &&, VelocityField &&)
-    -> Boundary_Cases<Locator, Store_Info, VelocityField, Boundary_DoNothing,
+               Locator &&, BoundaryInfo &&, VelocityField &&)
+    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_DoNothing,
                       Boundary_DoNothing, SurfaceReaction_DoNothing>;
 } // namespace ptof
 

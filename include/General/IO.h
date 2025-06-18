@@ -24,7 +24,7 @@
 /** \namespace Utilities for input and output. */
 namespace io {
 /**
-   \class StoreConst General/IO.h "General/IO.h"
+   \class StreamScopeFormat General/IO.h "General/IO.h"
    \brief Construct from stream object to restrict formatting to local scope.
 */
 // From here:

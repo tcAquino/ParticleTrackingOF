@@ -11,10 +11,10 @@
 #include "General/Meta.h"
 #include "General/Parallel.h"
 #include "Geometry/Boundary.h"
+#include "PTOF/BoundaryInfo.h"
 #include "PTOF/Boundary_Cases.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Locator.h"
-#include "PTOF/Store.h"
 #include "PTOF/Useful.h"
 #include <IOobject.H>
 #include <cmath>
@@ -48,10 +48,10 @@ struct Geometry_Generic {
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator = Locator_Cell<Geometry_Generic,
                                SearchOption>; /**< Locate positions in mesh.*/
-  using BoundaryInfo =
-      std::conditional_t<dynamics == Dynamics::Type::transport, Store_face,
-                         Store_face_reinjections>; /**< What to store upon
-                                                        hitting a boundary. */
+  using BoundaryInfo = std::conditional_t<
+      dynamics == Dynamics::Type::transport, BoundaryInfo_face,
+      BoundaryInfo_face_reinjections>; /**< What to store upon
+                                     hitting a boundary. */
 
   /**
      \brief Constructor.
@@ -226,10 +226,10 @@ struct Geometry_Periodic_Cartesian {
                                SearchOption>; /**< Locate positions in mesh.*/
   using BoundaryPeriodic =
       geom::Boundary_Periodic_WithOutsideInfo; /**< Periodic boundary. */
-  using BoundaryInfo =
-      std::conditional_t<dynamics == Dynamics::Type::transport, Store_face,
-                         Store_face_reinjections>; /**< What to store upon
-                                                        hitting a boundary. */
+  using BoundaryInfo = std::conditional_t<
+      dynamics == Dynamics::Type::transport, BoundaryInfo_face,
+      BoundaryInfo_face_reinjections>; /**< What to store upon
+                                     hitting a boundary. */
 
   /**
      \brief Constructor.
@@ -422,10 +422,10 @@ struct Geometry_Bcc {
                          geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
                              geom::SymmetryPlanes_Bcc>>; /**< Periodic boundary
                                                             type. */
-  using BoundaryInfo =
-      std::conditional_t<dynamics == Dynamics::Type::transport, Store_face,
-                         Store_face_reinjections>; /**< What to store upon
-                                                        hitting a boundary. */
+  using BoundaryInfo = std::conditional_t<
+      dynamics == Dynamics::Type::transport, BoundaryInfo_face,
+      BoundaryInfo_face_reinjections>; /**< What to store upon
+                                     hitting a boundary. */
 
   /**
      \brief Constructor.
