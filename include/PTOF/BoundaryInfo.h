@@ -187,7 +187,7 @@ struct BoundaryInfo_face_reinjections {
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
     state.info.face = intersection.index();
-    store_info_reinjections(state);
+    state.info.reinjections++;
   }
 };
 } // namespace ptof
