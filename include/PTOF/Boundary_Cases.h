@@ -10,21 +10,23 @@
 
 #include "General/IO.h"
 #include "General/Meta.h"
+#include "General/Useful.h"
 #include "Geometry/Boundary.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/BoundaryConditionList.h"
-#include "PTOF/Reaction.h"
+#include "PTOF/Meta.h"
+#include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
 #include <algorithm>
 #include <cstddef>
 #include <fieldTypes.H>
 #include <iomanip>
 #include <ios>
-#include <map>
 #include <ostream>
 #include <point.H>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <utility>
 
 namespace ptof {
@@ -38,7 +40,9 @@ template <typename Locator, typename BoundaryInfo, typename VelocityField,
 class Boundary_Cases {
 public:
   /** \brief Container type to hold patch names and associated bc type names. */
-  using BCs = std::map<std::string, std::string>;
+  using BCs = std::unordered_map<std::string, std::string>;
+  const BCs
+      boundary_conditions; /**< Patch names and associated bc type names. */
 
   /**
      \brief Constructor
@@ -58,7 +62,7 @@ public:
       Boundary_Periodic &&boundary_periodic = Boundary_DoNothing{},
       Boundary_Custom &&boundary_custom = Boundary_DoNothing{},
       SurfaceReaction &&surface_reaction = SurfaceReaction_DoNothing{})
-      : _boundary_conditions{boundary_conditions},
+      : boundary_conditions{boundary_conditions},
         _locator{std::forward<Locator>(locator)},
         _store_info{std::forward<BoundaryInfo>(store_info)},
         _velocity_field{std::forward<VelocityField>(velocity_field)},
@@ -66,9 +70,9 @@ public:
         _boundary_custom{std::forward<Boundary_Custom>(boundary_custom)},
         _patch_names{_locator.mesh().boundaryMesh().names()},
         surface_reaction{std::forward<SurfaceReaction>(surface_reaction)} {
-    add_unspecified_patches(_boundary_conditions, _patch_names);
-    verify_boundary_conditions(_boundary_conditions, _locator.mesh(),
-                               _boundary_condition_types);
+    add_unspecified_patches(boundary_conditions, _patch_names);
+    verify_boundary_conditions(boundary_conditions, _locator.mesh(),
+                               meta::Selector_t<BoundaryConditionList>{});
   }
 
   /**
@@ -91,7 +95,7 @@ public:
      \return \c true if some boundary had an effect, \c false otherwise.
   */
   template <typename State>
-  bool operator()(State &state, State const &state_old = {}) {
+  bool operator()(State &state, State const &state_old) {
     // Note: The code flow is chosen to avoid trying to locate particles which
     // are outside as much as possible, because it is expensive
 
@@ -148,73 +152,84 @@ public:
       }
     }
 
-    bool had_effect = 0;
+    bool had_effect = false;
 
     // While some patch is intersected
     while (intersection.hit()) {
       auto patch_id = ptof::patch_id(intersection.index(), _locator.mesh());
       auto patch = patch_name(patch_id);
-      auto type_name = _boundary_conditions.at(patch);
+      auto type_name = boundary_conditions.at(patch);
 
       // Apply the approriate boundary and store associated info
-      switch (_boundary_condition_types.type(type_name)) {
+      switch (BoundaryConditionList::type(type_name)) {
       case BoundaryConditionList::Type::reflecting: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::reflecting>{});
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
-        had_effect = 1;
+        had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::reacting_reflecting: {
         _store_info(
-            state, state_old, intersection, _boundary_condition_types,
+            state, intersection,
             meta::Selector<BoundaryConditionList::Type,
                            BoundaryConditionList::Type::reacting_reflecting>{});
         surface_reaction(state, state_old, intersection.index());
+        if constexpr (meta::has_adsorbed_v<typename State::Info>) {
+          if (state.info.adsorbed) {
+            state.set_position(intersection.point());
+          }
+        }
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
-        had_effect = 1;
+        had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::periodic: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::periodic>{});
         had_effect += _boundary_periodic(state, intersection);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
         state.info.absorbed = true;
         state.set_position(intersection.point());
-        had_effect = 1;
+        had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::inlet: {
-        if (face_flux_outward(intersection.index(), _velocity_field, _locator) >
-            0.) {
-          _store_info(state, state_old, intersection, _boundary_condition_types,
-                      meta::Selector<BoundaryConditionList::Type,
-                                     BoundaryConditionList::Type::absorbing>{});
-          state.set_position(intersection.point());
-          state.cell = _locator(state);
-        } else {
-          _store_info(
-              state, state_old, intersection, _boundary_condition_types,
-              meta::Selector<BoundaryConditionList::Type,
-                             BoundaryConditionList::Type::reflecting>{});
-          boundary_reflecting(state, intersection.point(),
-                              reflection_normal(intersection.index()));
+        _store_info(state, intersection,
+                    meta::Selector<BoundaryConditionList::Type,
+                                   BoundaryConditionList::Type::absorbing>{});
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
+                                      meta::Empty>) {
+          if (face_flux_outward(intersection.index(), _velocity_field,
+                                _locator) > 0.) {
+            _store_info(
+                state, intersection,
+                meta::Selector<BoundaryConditionList::Type,
+                               BoundaryConditionList::Type::absorbing>{});
+            state.set_position(intersection.point());
+            had_effect = true;
+            break;
+          }
         }
-        had_effect = 1;
+        _store_info(state, intersection,
+                    meta::Selector<BoundaryConditionList::Type,
+                                   BoundaryConditionList::Type::reflecting>{});
+        boundary_reflecting(state, intersection.point(),
+                            reflection_normal(intersection.index()));
+        had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::custom: {
-        _store_info(state, state_old, intersection, _boundary_condition_types,
+        _store_info(state, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::custom>{});
         had_effect += _boundary_custom(state, state_old, intersection);
@@ -222,9 +237,10 @@ public:
       }
       case BoundaryConditionList::Type::empty: {
       }
-      default:
+      default: {
         throw std::runtime_error{"Boundary condition type " + type_name +
                                  " not supported"};
+      }
       }
 
       // Stop if right at the last intersection point
@@ -287,21 +303,19 @@ public:
   std::ostream &info_runtime(std::ostream &output) const {
     io::StreamScopeFormat guard{output};
     output << io::line() << "Boundary conditions\n" << io::line();
-    if (_boundary_conditions.empty()) {
+    if (boundary_conditions.empty()) {
       output << "None\n" << io::line();
       return output;
     }
     std::size_t width_patch =
-        std::max_element(_boundary_conditions.begin(),
-                         _boundary_conditions.end(),
+        std::max_element(boundary_conditions.begin(), boundary_conditions.end(),
                          [](auto const &aa, auto const &bb) {
                            return aa.first.length() < bb.first.length();
                          })
             ->first.length() +
         2;
     std::size_t width_bc =
-        std::max_element(_boundary_conditions.begin(),
-                         _boundary_conditions.end(),
+        std::max_element(boundary_conditions.begin(), boundary_conditions.end(),
                          [](auto const &aa, auto const &bb) {
                            return aa.second.length() < bb.second.length();
                          })
@@ -309,7 +323,7 @@ public:
         2;
     width_bc = std::max(width_bc, _boundary_custom.name().length());
     output << std::left;
-    for (auto const &bc : _boundary_conditions) {
+    for (auto const &bc : boundary_conditions) {
       output << std::setw(width_patch) << bc.first;
       if (bc.second == "custom")
         output << std::setw(width_bc) << _boundary_custom.name();
@@ -322,7 +336,6 @@ public:
   }
 
 private:
-  BCs _boundary_conditions; /**< Patch names and associated bc type names. */
   Locator _locator;         /**< Object to locate positions in mesh. */
   BoundaryInfo _store_info; /**< Object to handle boundary-related info storing
                                in states. */
@@ -339,9 +352,6 @@ public:
       surface_reaction; /**< Surface reaction for reactive boundaries*/
 
 private:
-  const BoundaryConditionList
-      _boundary_condition_types{}; /**< Boundary condition names and types. */
-
   /**
      \param patch Index of patch in mesh.
      \return Name of patch.

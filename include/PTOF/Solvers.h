@@ -12,7 +12,7 @@
 #include "General/Meta.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Steppers.h"
-#include "PTOF/TimeUnits.h"
+#include "PTOF/TimeUnitsList.h"
 #include <ostream>
 #include <string>
 #include <type_traits>
@@ -109,12 +109,12 @@ struct SolverParameters_Generic {
       }
     }
 
-    if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>) {
+    if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       split_line = io::split_line(input);
       param_index = 0;
       auto time_units = io::read<std::string>(
           split_line, param_index, in_file + "Could not parse time units");
-      if (!TimeUnits{}.contains(time_units))
+      if (!TimeUnitsList::contains(time_units))
         throw std::runtime_error{in_file + "Not supported"};
       double time_unit_factor =
           ptof::time_unit_factor(time_units, params_transport, params_reaction);
@@ -161,7 +161,7 @@ struct SolverParameters_Generic {
            "      time\n"
            "    - Time step accuracy with respect to global reaction time\n"
            "      (optional)\n";
-    if constexpr (std::is_same_v<Stepper_CTRW, CTRWStepper::TimeStep>) {
+    if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       output << "- Time units for CTRW synchronization time step:\n"
                 "  - diffusion\n"
                 "    - Diffusion time units\n"
@@ -192,24 +192,24 @@ struct Solvers_Generic {
   static_assert(Parameters::advection || Parameters::diffusion,
                 "No advection or diffusion must be present");
   static_assert(!(Parameters::diffusion &&
-                  !std::is_same_v<Stepper_Diffusion, Stepper::Euler>),
+                  !std::is_same_v<Stepper_Diffusion, Steppers::Euler>),
                 "Currently only no diffusion or stochastic forward Euler "
                 "stepping are supported for diffusion");
   static_assert(
       !(Parameters::advection &&
-        !std::is_same_v<Stepper_Advection, Stepper::Euler> &&
-        !std::is_same_v<Stepper_Advection, Stepper::RK2> &&
-        !std::is_same_v<Stepper_Advection, Stepper::RK4> &&
-        !std::is_same_v<Stepper_Advection, Stepper::Heun>),
+        !std::is_same_v<Stepper_Advection, Steppers::Euler> &&
+        !std::is_same_v<Stepper_Advection, Steppers::RK2> &&
+        !std::is_same_v<Stepper_Advection, Steppers::RK4> &&
+        !std::is_same_v<Stepper_Advection, Steppers::Heun>),
       "Currently only no advection, forward Euler, RK2, RK4, or Heun stepping "
       "are supported for advection");
-  using Steppers = std::conditional_t<
-      std::is_same_v<Stepper_Advection, Stepper::Euler>,
+  using Steppers_Transport = std::conditional_t<
+      std::is_same_v<Stepper_Advection, Steppers::Euler>,
       Steppers_Advection_Euler_Diffusion_Euler,
       std::conditional_t<
-          std::is_same_v<Stepper_Advection, Stepper::RK2>,
+          std::is_same_v<Stepper_Advection, Steppers::RK2>,
           Steppers_Advection_RK2_Diffusion_Euler,
-          std::conditional_t<std::is_same_v<Stepper_Advection, Stepper::RK4>,
+          std::conditional_t<std::is_same_v<Stepper_Advection, Steppers::RK4>,
                              Steppers_Advection_RK4_Diffusion_Euler,
                              Steppers_Advection_Heun_Diffusion_Euler>>>;
 
@@ -220,10 +220,10 @@ struct Solvers_Generic {
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Solvers\n" << io::line();
     if constexpr (Parameters::advection) {
-      output << "Advection: " << Steppers::advection_method << "\n";
+      output << "Advection: " << Steppers_Transport::advection_method << "\n";
     }
     if constexpr (Parameters::diffusion) {
-      output << "Diffusion: " << Steppers::diffusion_method << "\n";
+      output << "Diffusion: " << Steppers_Transport::diffusion_method << "\n";
     }
     output << "CTRW: " << Stepper_CTRW::method << "\n";
     output << io::line();
@@ -248,9 +248,9 @@ struct Solvers_Generic {
                                 TransportParameters const &params_transport,
                                 ReactionParameters const &params_reaction,
                                 SolverParameters const &params_solvers) {
-    return Steppers::makeTimeGenerator(geometry, velocity_field, boundary,
-                                       params_transport, params_reaction,
-                                       params_solvers);
+    return Steppers_Transport::makeTimeGenerator(
+        geometry, velocity_field, boundary, params_transport, params_reaction,
+        params_solvers);
   }
 
   template <typename ParallelOption, typename VelocityField, typename Boundary,
@@ -260,19 +260,19 @@ struct Solvers_Generic {
                     TransportParameters const &params_transport,
                     Parameters const &params_solvers, std::size_t dim) {
     if constexpr (Parameters::advection && Parameters::diffusion)
-      return Steppers::template makeJumpGenerator<ParallelOption>(
+      return Steppers_Transport::template makeJumpGenerator<ParallelOption>(
           std::forward<VelocityField>(velocity_field),
           std::forward<Boundary>(boundary), params_transport, params_solvers,
           dim);
     else if constexpr (Parameters::advection)
-      return Steppers::template makeJumpGenerator_Advection<ParallelOption>(
-          std::forward<VelocityField>(velocity_field),
-          std::forward<Boundary>(boundary), params_transport, params_solvers,
-          dim);
+      return Steppers_Transport::template makeJumpGenerator_Advection<
+          ParallelOption>(std::forward<VelocityField>(velocity_field),
+                          std::forward<Boundary>(boundary), params_transport,
+                          params_solvers, dim);
     else if constexpr (Parameters::diffusion)
-      return Steppers::template makeJumpGenerator_Diffusion<ParallelOption>(
-          std::forward<Boundary>(boundary), params_transport, params_solvers,
-          dim);
+      return Steppers_Transport::template makeJumpGenerator_Diffusion<
+          ParallelOption>(std::forward<Boundary>(boundary), params_transport,
+                          params_solvers, dim);
   }
 };
 } // namespace ptof

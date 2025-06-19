@@ -191,6 +191,17 @@ template <typename Container> struct hash_container {
   }
 };
 
+/**
+   \class remove_cvref General/Useful.h "General/Useful.h"
+   \brief Same as std::remo_cvref (only available from C++20).
+*/
+template <class T> struct remove_cvref {
+  using type = std::remove_cv_t<std::remove_reference_t<T>>;
+};
+
+/** \brief Same as std::remo_cvref_t (only available from C++20). */
+template <class T> using remove_cvref_t = typename remove_cvref<T>::type;
+
 /** \brief Combine \p seed with the hash of an object \p v. */
 template <typename T> void hash_combine(std::size_t &seed, T const &vv) {
   std::hash<T> hasher;

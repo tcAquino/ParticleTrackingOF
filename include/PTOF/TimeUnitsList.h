@@ -1,5 +1,5 @@
 /**
-   \file PTOF/TimeUnits.h
+   \file PTOF/TimeUnitsList.h
    \author Tomás Aquino
    \date 30/09/2024
    \brief Time unit types.
@@ -14,10 +14,10 @@
 
 namespace ptof {
 /**
-   \struct TimeUnits PTOF/TimeUnits.h "PTOF/TimeUnits.h"
+   \struct TimeUnitsList PTOF/TimeUnitsList.h "PTOF/TimeUnitsList.h"
    \brief Keep track of names and types of time units.
 */
-struct TimeUnits {
+struct TimeUnitsList {
   /**
      \enum Type
      \brief Implemented types.
@@ -72,17 +72,17 @@ template <typename TransportParameters, typename ReactionParameters>
 double time_unit_factor(std::string const &time_units,
                         TransportParameters const &params_transport,
                         ReactionParameters const &params_reaction) {
-  switch (TimeUnits::type(time_units)) {
-  case TimeUnits::Type::diffusion: {
+  switch (TimeUnitsList::type(time_units)) {
+  case TimeUnitsList::Type::diffusion: {
     return params_transport.diffusion_time;
   }
-  case TimeUnits::Type::advection: {
+  case TimeUnitsList::Type::advection: {
     return params_transport.advection_time;
   }
-  case TimeUnits::Type::reaction: {
+  case TimeUnitsList::Type::reaction: {
     return params_reaction.reaction_time;
   }
-  case TimeUnits::Type::arbitrary: {
+  case TimeUnitsList::Type::arbitrary: {
     return 1.;
   }
   default:

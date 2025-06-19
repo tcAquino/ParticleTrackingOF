@@ -1,21 +1,22 @@
 /**
-   \file PTOF/MeasurementSpacing.h
+   \file PTOF/MeasurementSpacingList.h
    \author Tomás Aquino
    \date 07/03/2022
    \brief Measurement spacing types condition types.
 */
 
-#ifndef PTOF_MEASUREMENTSPACING_H
-#define PTOF_MEASUREMENTSPACING_H
+#ifndef PTOF_MEASUREMENTSPACINGLIST_H
+#define PTOF_MEASUREMENTSPACINGLIST_H
 
 #include "General/Useful.h"
 #include <map>
 #include <string>
 
 namespace ptof {
-/** \struct MeasureSpacing PTOF/MeasurementSpacing.h "PTOF/MeasurementSpacing.h"
- *  \brief Keep track of names and types of measure spacing */
-struct MeasurementSpacing {
+/** \struct MeasureSpacing PTOF/MeasurementSpacingList.h
+ * "PTOF/MeasurementSpacingList.h" \brief Keep track of names and types of
+ * measure spacing */
+struct MeasurementSpacingList {
   /** \enum Type
    *  \brief Implemented types. */
   enum class Type {
@@ -67,4 +68,4 @@ struct MeasurementSpacing {
 };
 } // namespace ptof
 
-#endif /* PTOF_MEASUREMENT_H */
+#endif /* PTOF_MEASUREMENTLIST_H */

@@ -86,7 +86,7 @@ protected:
 
 /**
    \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
-   \brief  Output absorption times, tags, and masses of absorbed particles.
+   \brief Output absorption times, tags, and masses of absorbed particles.
 */
 template <typename Subject, typename Geometry, bool print_patch = false,
           bool print_position = false, bool periodic_position = false>
@@ -129,6 +129,10 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
       for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
         _output << std::setw(_column_widths[4])
                 << "Position_" + std::to_string(dd);
+    }
+    if constexpr (meta::has_reinjections_v<typename State::Info>) {
+      _column_widths[5] =
+          std::max(12, int(1 + std::string{"Reinjections"}.length()));
     }
     _output << "\n";
   }
@@ -178,6 +182,7 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
                 << std::setw(_column_widths[2]) << state.mass;
         print_state_patch(state);
         print_state_position(state);
+        print_reinjections(state);
         _output << "\n";
       }
     }
@@ -187,83 +192,91 @@ private:
   using Measurer<Subject, Geometry>::_output;
   using Measurer<Subject, Geometry>::_subject;
   using State = typename Subject::Particle::State;
+
   Foam::wordList _patch_names;
-  std::array<int, 5> _column_widths;
+  std::array<int, 6> _column_widths;
 
   void print_state_patch(State const &state) {
     if constexpr (print_patch) {
       Foam::label face;
-      if constexpr (meta::has_face_v<typename Subject::Particle::State::Info>) {
-        face = state.info.face;
+      if constexpr (meta::has_boundary_face_v<typename State::Info>) {
+        face = state.info.boundary_face;
+
       } else {
         face = this->_geometry.mesh_search().findNearestBoundaryFace(
             make_point(state.position), state.cell);
       }
+
       _output << std::setw(_column_widths[3])
               << _patch_names[ptof::patch_id(face, this->_geometry.mesh())];
     }
   }
 
   void print_state_position(State const &state) {
-    if constexpr (print_position) {
-      if constexpr (periodic_position) {
-        if constexpr (meta::has_periodicity_v<State>) {
-          using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-          io::print(_output,
-                    ctrw::Get_position_periodic<Boundary const &>{
-                        this->_geometry.boundary_periodic}(state),
-                    _column_widths[4]);
-        } else {
-          throw std::runtime_error{"Requested periodicity-adjusted position "
-                                   "but state is not periodic"};
-        }
+  if constexpr (print_position) {
+    if constexpr (periodic_position) {
+      if constexpr (meta::has_periodicity_v<State>) {
+        using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
+        io::print(_output,
+                  ctrw::Get_position_periodic<Boundary const &>{
+                      this->_geometry.boundary_periodic}(state),
+                  _column_widths[4]);
       } else {
-        io::print(_output, state.position, _column_widths[4]);
+        throw std::runtime_error{"Requested periodicity-adjusted position "
+                                 "but state is not periodic"};
       }
+    } else {
+      io::print(_output, state.position, _column_widths[4]);
     }
   }
-};
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, true>,
-                         meta::Selector<bool, true>, int)
-    -> Measurer_absorption_time<Subject, Geometry, true, true>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, true>,
-                         meta::Selector<bool, true>)
-    -> Measurer_absorption_time<Subject, Geometry, true, true>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, true>,
-                         meta::Selector<bool, false>, int)
-    -> Measurer_absorption_time<Subject, Geometry, true, false>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, true>,
-                         meta::Selector<bool, false>)
-    -> Measurer_absorption_time<Subject, Geometry, true, false>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, false>,
-                         meta::Selector<bool, true>, int)
-    -> Measurer_absorption_time<Subject, Geometry, false, true>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, false>,
-                         meta::Selector<bool, true>)
-    -> Measurer_absorption_time<Subject, Geometry, false, true>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, false>,
-                         meta::Selector<bool, false>, int)
-    -> Measurer_absorption_time<Subject, Geometry, false, false>;
-template <typename Subject, typename Geometry>
-Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
-                         std::string const &, meta::Selector<bool, false>,
-                         meta::Selector<bool, false>)
-    -> Measurer_absorption_time<Subject, Geometry, false, false>;
+}
 
+  void print_reinjections(State const &state) {
+    if constexpr (meta::has_reinjections_v<typename Subject::State::Info>) {
+      _output << std::setw(_column_widths[5]) << state.info.reinjections;
+    }
+  }
+  };
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, true>, int)
+    -> Measurer_absorption_time<Subject, Geometry, true, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, true>)
+    -> Measurer_absorption_time<Subject, Geometry, true, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, false>, int)
+    -> Measurer_absorption_time<Subject, Geometry, true, false>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, true>,
+                         meta::Selector<bool, false>)
+    -> Measurer_absorption_time<Subject, Geometry, true, false>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, true>, int)
+    -> Measurer_absorption_time<Subject, Geometry, false, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, true>)
+    -> Measurer_absorption_time<Subject, Geometry, false, true>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, false>, int)
+    -> Measurer_absorption_time<Subject, Geometry, false, false>;
+template <typename Subject, typename Geometry>
+Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
+                         std::string const &, meta::Selector<bool, false>,
+                         meta::Selector<bool, false>)
+    -> Measurer_absorption_time<Subject, Geometry, false, false>;
 } // namespace ptof
 
 #endif /* PTOF_MEASURER_H */

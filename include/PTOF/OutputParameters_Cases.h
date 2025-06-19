@@ -10,10 +10,10 @@
 
 #include "General/IO.h"
 #include "PTOF/Directories.h"
-#include "PTOF/EndCriterion.h"
+#include "PTOF/EndCriterionList.h"
 #include "PTOF/MeasurementList.h"
-#include "PTOF/MeasurementSpacing.h"
-#include "PTOF/TimeUnits.h"
+#include "PTOF/MeasurementSpacingList.h"
+#include "PTOF/TimeUnitsList.h"
 #include <cstddef>
 #include <fstream>
 #include <istream>
@@ -37,7 +37,7 @@ public:
   double time_unit_factor;
   std::string end_criterion_logical_combination;
   std::vector<std::string> end_criteria;
-  std::unordered_map<EndCriterion::Type, double> end_values;
+  std::unordered_map<EndCriterionList::Type, double> end_values;
   std::string measurement_spacing;
   double time_min;
   double time_max;
@@ -145,7 +145,7 @@ public:
     std::size_t param_index = 0;
     io::read(split_line, param_index, in_file + "Could not parse time units",
              time_units);
-    if (!TimeUnits::contains(time_units))
+    if (!TimeUnitsList::contains(time_units))
       throw std::runtime_error{in_file + "Not supported"};
     time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);
@@ -392,12 +392,12 @@ public:
       std::string const &end_criterion, std::string const &in_file = "") {
     std::string for_end_criterion =
         std::string{"End criterion "} + end_criterion + " : ";
-    if (!EndCriterion::contains(end_criterion))
+    if (!EndCriterionList::contains(end_criterion))
       throw std::runtime_error{for_end_criterion + end_criterion +
                                " Not supported"};
-    auto criterion_type = EndCriterion::type(end_criterion);
+    auto criterion_type = EndCriterionList::type(end_criterion);
     switch (criterion_type) {
-    case EndCriterion::Type::time: {
+    case EndCriterionList::Type::time: {
       end_values[criterion_type] =
           io::read<double>(split_line, param_index,
                            in_file + for_end_criterion +
@@ -405,20 +405,20 @@ public:
           time_unit_factor;
       break;
     }
-    case EndCriterion::Type::time_max:
+    case EndCriterionList::Type::time_max:
       break;
-    case EndCriterion::Type::mass_below:
-    case EndCriterion::Type::mass_above: {
+    case EndCriterionList::Type::mass_below:
+    case EndCriterionList::Type::mass_above: {
       end_values[criterion_type] = io::read<double>(
           split_line, param_index,
           in_file + for_end_criterion + "Could not parse mass threshold");
       break;
     }
-    case EndCriterion::Type::all_absorbed:
+    case EndCriterionList::Type::all_absorbed:
       break;
-    case EndCriterion::Type::one_absorbed:
+    case EndCriterionList::Type::one_absorbed:
       break;
-    case EndCriterion::Type::fraction_not_absorbed: {
+    case EndCriterionList::Type::fraction_not_absorbed: {
       end_values[criterion_type] =
           io::read<double>(split_line, param_index,
                            in_file + for_end_criterion +
@@ -445,15 +445,15 @@ public:
              measurement_spacing);
     std::string for_measurement_spacing =
         std::string{"Measurement spacing "} + measurement_spacing + " : ";
-    if (!MeasurementSpacing::contains(measurement_spacing))
+    if (!MeasurementSpacingList::contains(measurement_spacing))
       throw std::runtime_error{for_measurement_spacing + " Not supported"};
     io::read(split_line, param_index,
              in_file + for_measurement_spacing +
                  "Could not parse minimum measurement time",
              time_min);
     time_min *= time_unit_factor;
-    switch (MeasurementSpacing::type(measurement_spacing)) {
-    case MeasurementSpacing::Type::linear_step: {
+    switch (MeasurementSpacingList::type(measurement_spacing)) {
+    case MeasurementSpacingList::Type::linear_step: {
       io::read(split_line, param_index, in_file + "Could not parse time step",
                time_increment);
       time_increment *= time_unit_factor;
@@ -463,7 +463,7 @@ public:
                                  "Non-positive time increment"};
       break;
     }
-    case MeasurementSpacing::Type::log_step: {
+    case MeasurementSpacingList::Type::log_step: {
       io::read(split_line, param_index,
                in_file + for_measurement_spacing +
                    "Could not parse time step factor",
@@ -474,7 +474,7 @@ public:
                                  "Time increment factor not greater than one"};
       break;
     }
-    case MeasurementSpacing::Type::linear: {
+    case MeasurementSpacingList::Type::linear: {
       std::size_t nr_measurements;
       io::read(split_line, param_index,
                in_file + for_measurement_spacing +
@@ -490,7 +490,7 @@ public:
                                  "Non-positive time increment"};
       break;
     }
-    case MeasurementSpacing::Type::log: {
+    case MeasurementSpacingList::Type::log: {
       if (!(time_min > 0.))
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Non-positive minimum measurement time"};
@@ -578,8 +578,7 @@ public:
         break;
       }
       default:
-        measurements.emplace_back(
-            std::make_unique<Measurement>(name));
+        measurements.emplace_back(std::make_unique<Measurement>(name));
       }
 
       if (param_index < split_line.size())

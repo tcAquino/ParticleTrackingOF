@@ -1,22 +1,25 @@
 /**
-   \file PTOF/Reaction.h
+   \file PTOF/SurfaceReaction.h
    \author Tomás Aquino
    \date 10/03/2022
    \brief Objects and utilities for surface and bulk reactions.
 */
 
-#ifndef PTOF_REACTION_H
-#define PTOF_REACTION_H
+#ifndef PTOF_SURFACEREACTION_H
+#define PTOF_SURFACEREACTION_H
 
+#include "CTRW/TimeGenerator.h"
 #include "General/Constant.h"
 #include "General/IO.h"
 #include "General/Parallel.h"
 #include "PTOF/Useful.h"
+#include "Stochastic/Random.h"
 #include <cmath>
 #include <fieldTypes.H>
 #include <functional>
 #include <list>
 #include <ostream>
+#include <random>
 #include <set>
 #include <string>
 #include <type_traits>
@@ -77,8 +80,8 @@ nearest_boundary_face_dist(Foam::vector const &position,
 }
 
 /**
-   \class SurfaceReaction_AFluidPlusASolidtoASolid PTOF/Reaction.h
-   "PTOF/Reaction.h"
+   \class SurfaceReaction_AFluidPlusASolidtoASolid PTOF/SurfaceReaction.h
+   "PTOF/SurfaceReaction.h"
    \brief \f$A_F + A_S \to A_S\f$ surface reaction.
 */
 class SurfaceReaction_AFluidPlusASolidtoASolid {
@@ -142,8 +145,138 @@ public:
 };
 
 /**
-   \class SurfaceReaction_AFluidPlusASolidtoNothing PTOF/Reaction.h
-   "PTOF/Reaction.h"
+   \class SurfaceReaction_LinearSorption PTOF/SurfaceReaction.h
+   "PTOF/SurfaceReaction.h"
+   \brief \f$A_F + A_S \leftrightarrow A_S\f$ surface reaction with distributed
+   desorption (back-reaction) time.
+*/
+template <typename ParallelOption, typename TimeGenerator_Desorption,
+          typename Engine = std::mt19937>
+class SurfaceReaction_LinearSorption {
+public:
+  /** Container to hold reactant surface concentrations. */
+  using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
+
+  /**
+     \brief Constructor.
+     \param rate_constant Surface reaction rate per solid concentration.
+     \param diff_coeff Diffusion coefficient.
+     \param surface_concentrations Map of initial reactive surface
+     concentrations over mesh faces.
+     \param desorption_time Time generator object for desorption times.
+  */
+  SurfaceReaction_LinearSorption(double rate_constant, double diff_coeff,
+                                 SurfaceConcentrations surface_concentrations,
+                                 TimeGenerator_Desorption &&desorption_time)
+      : rate_constant{rate_constant}, diff_coeff{diff_coeff},
+        surface_concentrations{surface_concentrations},
+        _desorption_time{
+            std::forward<TimeGenerator_Desorption>(desorption_time)} {}
+
+  /**
+     \brief Constructor.
+     \param rate_constant Surface reaction rate per solid concentration.
+     \param diff_coeff Diffusion coefficient.
+     \param surface_concentrations Map of initial reactive surface
+     concentrations over mesh faces.
+     \param desorption_rate Exponential desorption time rate./
+  */
+  SurfaceReaction_LinearSorption(double rate_constant, double diff_coeff,
+                                 SurfaceConcentrations surface_concentrations,
+                                 double desorption_rate)
+      : SurfaceReaction_LinearSorption{
+            rate_constant, diff_coeff, surface_concentrations,
+            ctrw::TimeGenerator_Dist{
+                std::exponential_distribution<double>{desorption_rate},
+                ParallelOption{}}} {}
+
+  SurfaceReaction_LinearSorption(double rate_constant, double diff_coeff,
+                                 SurfaceConcentrations surface_concentrations,
+                                 TimeGenerator_Desorption &&desorption_time,
+                                 ParallelOption)
+      : SurfaceReaction_LinearSorption{
+            rate_constant, diff_coeff, surface_concentrations,
+            std::forward<TimeGenerator_Desorption>(desorption_time)} {}
+
+  SurfaceReaction_LinearSorption(double rate_constant, double diff_coeff,
+                                 SurfaceConcentrations surface_concentrations,
+                                 double desorption_rate, ParallelOption)
+      : SurfaceReaction_LinearSorption{rate_constant, diff_coeff,
+                                       surface_concentrations,
+                                       desorption_rate} {}
+
+  /**
+     \brief React over exposure time.
+     \param state State of particle to react.
+     \param state_old Previous state of particle.
+     \param face Mesh face index where reaction occurs.
+  */
+  template <typename State>
+  void operator()(State &state, State const &state_old, Foam::label face) {
+    double exposure_time = state.time - state_old.time;
+    double probability_first_order =
+        rate(face) * std::sqrt(cnst::pi * exposure_time / diff_coeff);
+    double probability_second_order =
+        probability_first_order / (1. + probability_first_order / 2.);
+    if (_uniform_dist(_rng) < probability_second_order){
+      state.info.adsorbed = true;
+    }
+  }
+
+  /**
+     \brief Desorb after distributed time.
+  */
+  template <typename State> void desorb(State &state) {
+    state.time += _desorption_time(state);
+    state.info.adsorbed = false;
+  }
+
+  /**
+     \param face Mesh face index.
+     \return Surface reaction rate at face.
+  */
+  double rate(Foam::label face) const {
+    if (surface_concentrations.count(face))
+      return rate_constant * surface_concentrations.at(face);
+    return 0.;
+  }
+
+  /**
+     \brief Output generic information about object.
+     \param output Output stream.
+  */
+  inline static std::ostream &info(std::ostream &output) {
+    return output << io::line() << "Surface reaction\n"
+                  << io::line() << "A_Fluid + A_Solid -> A_Solid\n"
+                  << io::line();
+  }
+
+  double rate_constant; /**< Surface reaction rate per solid concentration. */
+  double diff_coeff;    /**< Diffusion coefficient. */
+  SurfaceConcentrations
+      surface_concentrations; /**< Map of concentrations over reactive faces. */
+
+private:
+  TimeGenerator_Desorption _desorption_time;
+  std::uniform_real_distribution<double> _uniform_dist{0., 1.};
+  stochastic::RNGThreaded<ParallelOption> _rng{};
+};
+template <typename TimeGenerator_Desorption>
+SurfaceReaction_LinearSorption(double, double,
+                               std::unordered_map<Foam::label, double>,
+                               TimeGenerator_Desorption &&)
+    -> SurfaceReaction_LinearSorption<par::ParallelOptions::Serial,
+                                      TimeGenerator_Desorption, std::mt19937>;
+template <typename ParallelOption, typename TimeGenerator_Desorption>
+SurfaceReaction_LinearSorption(double, double,
+                               std::unordered_map<Foam::label, double>,
+                               TimeGenerator_Desorption &&, ParallelOption)
+    -> SurfaceReaction_LinearSorption<ParallelOption, TimeGenerator_Desorption,
+                                      std::mt19937>;
+
+/**
+   \class SurfaceReaction_AFluidPlusASolidtoNothing PTOF/SurfaceReaction.h
+   "PTOF/SurfaceReaction.h"
    \brief \f$A_F + A_S \to \emptyset\f$ surface reaction.
 */
 template <typename Locator, typename ParallelOption>
@@ -369,8 +502,8 @@ SurfaceReaction_AFluidPlusASolidtoNothing(
     -> SurfaceReaction_AFluidPlusASolidtoNothing<Locator, ParallelOption>;
 
 /**
-   \class SurfaceReaction_DoNothing PTOF/Reaction.h "PTOF/Reaction.h"
-   \brief Surface reaction that does nothing.
+   \class SurfaceReaction_DoNothing PTOF/SurfaceReaction.h
+   "PTOF/SurfaceReaction.h" \brief Surface reaction that does nothing.
 */
 class SurfaceReaction_DoNothing {
 public:
@@ -400,31 +533,6 @@ public:
                   << io::line();
   }
 };
-
-/**
-   \class BulkReaction_DoNothing PTOF/Reaction.h "PTOF/Reaction.h"
-   \brief Bulk reaction that does nothing.
-*/
-class BulkReaction_DoNothing {
-public:
-  /**
-     \brief React over exposure time (do nothing).
-     \param state State of particle to react (unused).
-     \param exposure_time Exposure time over which to react (unused).
-  */
-  template <typename State>
-  void operator()(State &state, double exposure_time) const {}
-
-  /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
-  inline static std::ostream &info(std::ostream &output) {
-    return output << io::line() << "Bulk reaction\n"
-                  << io::line() << "None\n"
-                  << io::line();
-  }
-};
 } // namespace ptof
 
-#endif /* PTOF_REACTION_H */
+#endif /* PTOF_SURFACEREACTION_H */

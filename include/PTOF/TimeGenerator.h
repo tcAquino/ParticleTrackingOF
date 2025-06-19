@@ -11,14 +11,16 @@
 #include "CTRW/Meta.h"
 #include "General/Constant.h"
 #include "General/Meta.h"
+#include "General/Useful.h"
 #include "PTOF/Field.h"
-#include "PTOF/Reaction.h"
+#include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
 #include <MinMax.H>
 #include <algorithm>
 #include <fieldTypes.H>
 #include <limits>
 #include <stdexcept>
+#include <type_traits>
 #include <zero.H>
 
 namespace ptof {
@@ -185,9 +187,8 @@ public:
             ? std::pow(_geometry.mesh().V()[cell_id] / _volume_factor,
                        1. / Geometry::dim)
             : 0.;
-    double local_advection_time =
-        _constrain_local_adv ? cell_side / Foam::mag(_velocity_field(state))
-                             : 1.;
+    double local_advection_time = advection_time(state, cell_side);
+
     double local_diffusion_time =
         _constrain_local_diff ? cell_side * cell_side / (2. * _diff_coeff) : 1.;
     double local_time_step =
@@ -260,6 +261,17 @@ private:
 
     return std::min(
         {global_time_step_adv, global_time_step_diff, global_time_step_react});
+  }
+
+  /** \brief Compute local advection time. */
+  template <typename State>
+  double advection_time(State const &state, double cell_side) const {
+    if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
+      return _constrain_local_adv
+                 ? cell_side / Foam::mag(_velocity_field(state))
+                 : 1.;
+    }
+    return std::numeric_limits<double>::infinity();
   }
 
   Geometry const &_geometry; /**< Domain geometry info and utilities. */

@@ -26,7 +26,7 @@ namespace ptof {
    "PTOF/Steppers.h"
    \brief Types to choose options of CTRW stepping mode.
 */
-struct CTRWStepper {
+struct CTRWSteppers {
   /**
      \struct Asynchronous PTOF/Steppers.h
      "PTOF/Steppers.h"
@@ -213,7 +213,7 @@ struct CTRWStepper {
                                     */
 };
 
-struct Stepper {
+struct Steppers {
   struct Euler {};
   struct RK2 {};
   struct RK4 {};
@@ -298,10 +298,11 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
       VelocityField &&velocity_field, Boundary &&boundary,
       TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Velocity{
           std::forward<VelocityField>(velocity_field), params_solvers.time_step,
           ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Velocity{
         std::forward<VelocityField>(velocity_field), 0., ParallelOption{}};
   }
@@ -320,10 +321,11 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
   static auto makeJumpGenerator_Diffusion(
       Boundary &&boundary, TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff,
                                            params_solvers.time_step, dim,
                                            ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff, 0., dim,
                                          ParallelOption{}};
   }
@@ -424,10 +426,11 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
       VelocityField &&velocity_field, Boundary &&boundary,
       TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Velocity_RK2{
           std::forward<VelocityField>(velocity_field), params_solvers.time_step,
           std::forward<Boundary>(boundary), ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Velocity_RK2{
         std::forward<VelocityField>(velocity_field), 0.,
         std::forward<Boundary>(boundary), ParallelOption{}};
@@ -447,10 +450,11 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
   static auto makeJumpGenerator_Diffusion(
       Boundary &&boundary, TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff,
                                            params_solvers.time_step, dim,
                                            ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff, 0., dim,
                                          ParallelOption{}};
   }
@@ -551,10 +555,11 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
       VelocityField &&velocity_field, Boundary &&boundary,
       TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Velocity_RK4{
           std::forward<VelocityField>(velocity_field), params_solvers.time_step,
           std::forward<Boundary>(boundary), ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Velocity_RK4{
         std::forward<VelocityField>(velocity_field), 0.,
         std::forward<Boundary>(boundary), ParallelOption{}};
@@ -574,10 +579,11 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
   static auto makeJumpGenerator_Diffusion(
       Boundary &&boundary, TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff,
                                            params_solvers.time_step, dim,
                                            ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff, 0., dim,
                                          ParallelOption{}};
   }
@@ -678,10 +684,11 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
       VelocityField &&velocity_field, Boundary &&boundary,
       TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Velocity_Heun{
           std::forward<VelocityField>(velocity_field), params_solvers.time_step,
           std::forward<Boundary>(boundary), ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Velocity_Heun{
         std::forward<VelocityField>(velocity_field), 0.,
         std::forward<Boundary>(boundary), ParallelOption{}};
@@ -701,10 +708,11 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
   static auto makeJumpGenerator_Diffusion(
       Boundary &&boundary, TransportParameters const &params_transport,
       SolverParameters const &params_solvers, std::size_t dim) {
-    if constexpr (meta::has_time_step_v<SolverParameters>)
+    if constexpr (meta::has_time_step_v<SolverParameters>) {
       return ctrw::JumpGenerator_Diffusion{params_transport.diff_coeff,
                                            params_solvers.time_step, dim,
                                            ParallelOption{}};
+    }
     return ctrw::JumpGenerator_Diffusion<ParallelOption>{
         params_transport.diff_coeff, 0., dim, ParallelOption{}};
   }

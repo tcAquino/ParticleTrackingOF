@@ -587,11 +587,10 @@ auto split_line(std::ifstream &input, std::string const &escape_sequence = "#",
 }
 
 /**
-   \brief Read and split next line, discarding escaped lines, appending result to
-   to \c tokens.
-   \tparam empty_entries Whether to keep empty entries between delimiting
-   characters.
-   \return \c true if an unescaped line was read, \c false otherwise. */
+   \brief Read and split next line, discarding escaped lines, appending result
+   to to \c tokens. \tparam empty_entries Whether to keep empty entries between
+   delimiting characters. \return \c true if an unescaped line was read, \c
+   false otherwise. */
 template <bool empty_entries = false>
 bool split_line(std::ifstream &input, std::vector<std::string> &tokens,
                 std::string const &escape_sequence = "#",
@@ -781,7 +780,7 @@ std::ostream &print(std::ostream &stream, Container const &container, int width,
 
 /**
    \struct Logger General/IO.h "General/IO.h"
-   \brief Base object to handle log messages
+   \brief Base object to handle log messages.
 */
 struct Logger {
   virtual void nonewline(std::string const &message) = 0;
@@ -790,7 +789,7 @@ struct Logger {
 
 /**
    \struct StreamLogger General/IO.h "General/IO.h"
-   \brief Logger object that uses provided stream
+   \brief Logger object that uses provided stream.
 */
 template <typename Stream = std::ostream &>
 struct StreamLogger : public Logger {
@@ -810,7 +809,7 @@ template <typename Stream> StreamLogger(Stream &&) -> StreamLogger<Stream>;
 
 /**
    \struct NullLogger General/IO.h "General/IO.h"
-   \brief Logger object that ignores messages
+   \brief Logger object that ignores messages.
 */
 struct NullLogger : public Logger {
   void nonewline(std::string const &) override{};
@@ -819,7 +818,7 @@ struct NullLogger : public Logger {
 
 /**
    \struct FileLogger General/IO.h "General/IO.h"
-   \brief Logger object that logs to a file
+   \brief Logger object that logs to a file.
 */
 struct FileLogger : public StreamLogger<std::ofstream> {
   FileLogger(std::string const &filename,
@@ -832,29 +831,11 @@ protected:
 
 /**
    \struct CoutLogger General/IO.h "General/IO.h"
-   \brief Logger object that output to standard output
+   \brief Logger object that outputs to standard output.
 */
 struct CoutLogger : public StreamLogger<> {
   CoutLogger() : StreamLogger{std::cout} {}
 };
-
-/**
-   \brief Output to specified stream, pass instance of meta::Empty for no output
-*/
-template <typename OStream>
-OStream &log(std::string const &message, OStream &stream) {
-  if constexpr (std::is_same_v<OStream, meta::Empty>)
-    return stream << message << std::endl;
-}
-
-/**
-   \brief Output to specified stream, pass instance of meta::Empty for no output
-*/
-template <typename OStream>
-OStream &nonewline(std::string const &message, OStream &stream) {
-  if constexpr (std::is_same_v<OStream, meta::Empty>)
-    return stream << message;
-}
 
 /** \brief Line of hyphens. */
 inline std::string line(std::size_t nr_characters = 80, bool endl = true) {

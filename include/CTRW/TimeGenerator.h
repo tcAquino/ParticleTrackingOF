@@ -57,15 +57,17 @@ public:
    \brief Time step according to a given distribution.
 */
 template <typename Dist, typename ParallelOption = par::ParallelOptions::Serial,
-          typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
+          typename RNGEngine = std::mt19937>
 class TimeGenerator_Dist {
   Dist _dist;
-  RNG _rng{std::random_device{}()};
+  stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{std::random_device{}()};
 
 public:
-  using value_type = decltype(dist(_rng));
+  using value_type = decltype(_dist(_rng));
 
   TimeGenerator_Dist(Dist dist) : _dist{dist} {}
+
+  TimeGenerator_Dist(Dist dist, ParallelOption) : TimeGenerator_Dist{dist} {}
 
   template <typename State = meta::Empty> auto operator()(State const & = {}) {
     return _dist(_rng);

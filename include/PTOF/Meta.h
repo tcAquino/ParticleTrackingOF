@@ -26,15 +26,46 @@ inline constexpr bool has_velocity_rescaling_factor_v =
     std::conjunction_v<has_member<velocity_rescaling_factor_t, X>,
                        is_same<velocity_rescaling_factor_t, X, double>>;
 
-/**\brief Type of \c X::face. */
-template <typename X> using face_t = decltype(std::declval<X>().face);
+/**\brief Type of \c X::type. */
+template <typename X> using type_t = decltype(std::declval<X>().type);
 /**
-   \brief Check if \c X has member <tt>Foam::label face</tt>.
+   \brief Check if \c X has member <tt>Foam::label type</tt>.
 */
 template <typename X>
-inline constexpr bool has_face_v =
-    std::conjunction_v<has_member<face_t, X>,
-                       is_same<face_t, X, Foam::label>>;
+inline constexpr bool has_type_v =
+    std::conjunction_v<has_member<type_t, X>, is_same<type_t, X, Foam::label>>;
+
+/**\brief Type of \c X::boundary_face. */
+template <typename X> using boundary_face_t = decltype(std::declval<X>().face);
+/**
+   \brief Check if \c X has member <tt>Foam::label boundary_face</tt>.
+*/
+template <typename X>
+inline constexpr bool has_boundary_face_v =
+    std::conjunction_v<has_member<boundary_face_t, X>,
+                       is_same<boundary_face_t, X, Foam::label>>;
+
+/**\brief Type of \c X::contact_point. */
+template <typename X>
+using contact_point_t = decltype(std::declval<X>().contact_point);
+/**
+   \brief Check if \c X has member <tt>Foam::label contact_point</tt>.
+*/
+template <typename X>
+inline constexpr bool has_contact_point_v =
+    std::conjunction_v<has_member<contact_point_t, X>,
+                       is_same<contact_point_t, X, Foam::label>>;
+
+/**\brief Type of \c X::reinjections. */
+template <typename X>
+using reinjections_t = decltype(std::declval<X>().reinjections);
+/**
+   \brief Check if \c X has member <tt>Foam::label reinjections</tt>.
+*/
+template <typename X>
+inline constexpr bool has_reinjections_v =
+    std::conjunction_v<has_member<reinjections_t, X>,
+                       is_same<reinjections_t, X, Foam::label>>;
 
 /**\brief Type of \c X::absorbed. */
 template <typename X> using absorbed_t = decltype(std::declval<X>().absorbed);

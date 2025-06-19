@@ -9,6 +9,7 @@
 #define PTOF_FIELD_H
 
 #include "General/Meta.h"
+#include "General/Useful.h"
 #include "PTOF/Useful.h"
 #include <Vector2D.H>
 #include <fieldTypes.H>
@@ -109,13 +110,15 @@ public:
               cell, position,
               "Assigning vector field value from nearest cell")) {
         cell = _locator.nearest_cell(position);
-        if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
+                                      meta::Empty>)
           return _field[cell] + _uninterpolated[cell];
         else
           return _field[cell];
       }
 
-    if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
+    if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
+                                  meta::Empty>)
       return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
 
     return _interpolant.interpolate(position, cell);
@@ -350,13 +353,15 @@ public:
               cell, position,
               "Assigning scalar field value from nearest cell")) {
         cell = _locator.nearest_cell(position);
-        if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
+                                      meta::Empty>)
           return _field[cell] + _uninterpolated[cell];
         else
           return _field[cell];
       }
 
-    if constexpr (!std::is_same_v<Uninterpolated, meta::Empty>)
+    if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
+                                  meta::Empty>)
       return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
 
     return _interpolant.interpolate(position, cell);

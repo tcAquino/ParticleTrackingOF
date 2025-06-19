@@ -12,7 +12,7 @@
 #include "General/Meta.h"
 #include "PTOF/Field.h"
 #include "PTOF/Meta.h"
-#include "PTOF/Reaction.h"
+#include "PTOF/SurfaceReaction.h"
 #include "PTOF/TimeGenerator.h"
 
 namespace ptof {
@@ -38,11 +38,11 @@ public:
     _bulk_reaction(state, state.time - time_old);
   }
 
-  auto const &transitions_transport() const { return _transitions_transport; }
+  auto &transitions_transport() const { return _transitions_transport; }
 
-  auto const &bulk_reaction() const { return _bulk_reaction; }
+  auto &bulk_reaction() const { return _bulk_reaction; }
 
-  auto const &surface_reaction() const { return _surface_reaction; }
+  auto &surface_reaction() const { return _surface_reaction; }
 
 private:
   Transitions_Transport _transitions_transport;

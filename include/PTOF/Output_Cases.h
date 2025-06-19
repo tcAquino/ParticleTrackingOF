@@ -14,11 +14,11 @@
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Criterion.h"
 #include "PTOF/Directories.h"
-#include "PTOF/EndCriterion.h"
+#include "PTOF/EndCriterionList.h"
 #include "PTOF/Field.h"
 #include "PTOF/InitialCondition_Cases.h"
 #include "PTOF/MeasurementList.h"
-#include "PTOF/MeasurementSpacing.h"
+#include "PTOF/MeasurementSpacingList.h"
 #include "PTOF/Measurer.h"
 #include "PTOF/MeasurerTime.h"
 #include "PTOF/NextMeasurement.h"
@@ -126,26 +126,26 @@ public:
 
   /** \brief Set time of next measurement. */
   void set_next_measurement_time() {
-    switch (MeasurementSpacing::type(parameters.measurement_spacing)) {
-    case MeasurementSpacing::Type::linear_step: {
+    switch (MeasurementSpacingList::type(parameters.measurement_spacing)) {
+    case MeasurementSpacingList::Type::linear_step: {
       _next_measurement = std::make_unique<
           NextMeasurementTime_linear_step<std::remove_reference_t<Parameters>>>(
           parameters);
       break;
     }
-    case MeasurementSpacing::Type::log_step: {
+    case MeasurementSpacingList::Type::log_step: {
       _next_measurement = std::make_unique<
           NextMeasurementTime_log_step<std::remove_reference_t<Parameters>>>(
           parameters);
       break;
     }
-    case MeasurementSpacing::Type::linear: {
+    case MeasurementSpacingList::Type::linear: {
       _next_measurement = std::make_unique<
           NextMeasurementTime_linear<std::remove_reference_t<Parameters>>>(
           parameters);
       break;
     }
-    case MeasurementSpacing::Type::log: {
+    case MeasurementSpacingList::Type::log: {
       _next_measurement = std::make_unique<
           NextMeasurementTime_log<std::remove_reference_t<Parameters>>>(
           parameters);
@@ -196,8 +196,8 @@ public:
            << "Maximum measurement time: ";
     bool time_end_criterion = false;
     for (auto const &end_criterion : parameters.end_criteria) {
-      auto criterion_type = EndCriterion::type(end_criterion);
-      if (criterion_type == EndCriterion::Type::time) {
+      auto criterion_type = EndCriterionList::type(end_criterion);
+      if (criterion_type == EndCriterionList::Type::time) {
         time_end_criterion = true;
         break;
       }
@@ -205,7 +205,7 @@ public:
     if (!time_end_criterion) {
       output << parameters.time_max << "\n";
     } else {
-      double time_end = parameters.end_values.at(EndCriterion::Type::time);
+      double time_end = parameters.end_values.at(EndCriterionList::Type::time);
       if (parameters.time_max < time_end) {
         throw std::runtime_error{
             "Last measurement time is lower than specified end time"};
@@ -222,7 +222,7 @@ public:
 
     for (auto const &end_criterion : parameters.end_criteria) {
       output << "End criterion: " << end_criterion << "\n";
-      auto criterion_type = EndCriterion::type(end_criterion);
+      auto criterion_type = EndCriterionList::type(end_criterion);
       if (parameters.end_values.count(criterion_type)) {
         output << "  - End value: " << parameters.end_values.at(criterion_type)
                << "\n";
@@ -265,6 +265,8 @@ private:
       std::vector<std::reference_wrapper<const Mask>> masks = {},
       std::vector<double> thresholds = {}) {
     for (auto const &measurement : parameters.measurements) {
+      std::string for_measurement_type =
+          std::string{"Measurement type "} + measurement->name + " : ";
       switch (MeasurementList::type(measurement->name)) {
       case MeasurementList::Type::position: {
         _output_time.emplace_back(
@@ -274,17 +276,16 @@ private:
         break;
       }
       case MeasurementList::Type::position_in_regions: {
-        if constexpr (!std::is_same_v<Mask, meta::Empty>)
+        if constexpr (!std::is_same_v<Mask, meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_in_regions<Subject, Geometry, Mask>>(
                   subject, geometry, directories, identifier, masks, thresholds,
                   measurement->precision));
-        else
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name +
-                                   " : "
+        } else {
+          throw std::runtime_error{for_measurement_type +
                                    "Region masks not provided"};
+        }
         break;
       }
       case MeasurementList::Type::position_mean: {
@@ -306,11 +307,10 @@ private:
         using Measurement =
             typename std::remove_reference_t<Parameters>::Measurement_Order;
         Measurement &measurement_derived = cast<Measurement>(measurement);
-        if (measurement_derived.order == 0)
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name +
-                                   " : "
+        if (measurement_derived.order == 0) {
+          throw std::runtime_error{for_measurement_type +
                                    "Moment order not provided"};
+        }
         _output_time.emplace_back(
             std::make_unique<
                 MeasurerTime_position_nth_moment<Subject, Geometry>>(
@@ -357,70 +357,73 @@ private:
         break;
       }
       case MeasurementList::Type::mass_in_regions: {
-        if constexpr (!std::is_same_v<Mask, meta::Empty>)
+        if constexpr (!std::is_same_v<Mask, meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_mass_in_regions<Subject, Geometry, Mask>>(
                   subject, geometry, directories, identifier, masks, thresholds,
                   measurement->precision));
-        else
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name +
-                                   " : "
+        } else {
+          throw std::runtime_error{for_measurement_type +
                                    "Region masks not provided"};
+        }
         break;
       }
       case MeasurementList::Type::velocity: {
-        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
+                                      meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_vector_field<
                   Subject, Geometry, VelocityField const &>>(
                   subject, std::forward<VelocityField>(velocity_field),
                   geometry, directories, identifier, "U",
                   measurement->precision));
-        else
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name + " : " +
+        } else {
+          throw std::runtime_error{for_measurement_type +
                                    "Velocity field not provided"};
+        }
         break;
       }
       case MeasurementList::Type::velocity_mean: {
-        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
+                                      meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_vector_field_mean<
                   Subject, Geometry, VelocityField const &>>(
                   subject, std::forward<VelocityField>(velocity_field),
                   geometry, directories, identifier, "U",
                   measurement->precision));
-        else
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name + " : " +
+        } else {
+          throw std::runtime_error{for_measurement_type +
                                    "Velocity field not provided"};
+        }
         break;
       }
       case MeasurementList::Type::velocity_gradient: {
-        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
+                                      meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_tensor_field<Subject, Geometry>>(
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
                   directories, identifier, "gradU", measurement->precision));
-        else
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name + " : " +
+        } else {
+          throw std::runtime_error{for_measurement_type +
                                    "Velocity field not provided"};
+        }
         break;
       }
       case MeasurementList::Type::velocity_gradient_mean: {
-        if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
+                                      meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_tensor_field_mean<Subject, Geometry>>(
                   subject, Foam::fvc::grad(velocity_field.field()), geometry,
                   directories, identifier, "gradU", measurement->precision));
-        else
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name + " : " +
+        } else {
+          throw std::runtime_error{for_measurement_type +
                                    "Velocity field not provided"};
+        }
         break;
       }
       case MeasurementList::Type::scalar_field: {
@@ -485,84 +488,82 @@ private:
       }
       case MeasurementList::Type::position_periodic: {
         if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>)
+                          typename Subject::Particle::State>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_periodic<Subject, Geometry>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
-        else
+        } else {
           throw std::runtime_error{
-              std::string{"Measurement type "} + measurement->name +
-              " : "
+              for_measurement_type +
               "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::position_in_regions_periodic: {
         if constexpr (meta::has_periodicity_v<
                           typename Subject::Particle::State> &&
-                      !std::is_same_v<Mask, meta::Empty>)
+                      !std::is_same_v<useful::remove_cvref_t<VelocityField>,
+                                      meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_in_regions_periodic<
                   Subject, Geometry, Mask>>(subject, geometry, directories,
                                             identifier, masks, thresholds,
                                             measurement->precision));
-        else {
+        } else {
           if constexpr (!meta::has_periodicity_v<
                             typename Subject::Particle::State>)
             throw std::runtime_error{
-                std::string{"Measurement type "} + measurement->name +
-                " : "
+                for_measurement_type +
                 "Particle state does not define periodicity"};
-          throw std::runtime_error{std::string{"Measurement type "} +
-                                   measurement->name +
-                                   " : "
+          throw std::runtime_error{for_measurement_type +
                                    "Region masks not provided"};
         }
         break;
       }
       case MeasurementList::Type::position_mean_periodic: {
         if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>)
+                          typename Subject::Particle::State>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_mean_periodic<Subject, Geometry>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
-        else
+        } else {
           throw std::runtime_error{
-              std::string{"Measurement type "} + measurement->name +
-              " : "
+              for_measurement_type +
               "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::position_second_moment_periodic: {
         if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>)
+                          typename Subject::Particle::State>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_second_moment_periodic<
                   Subject, Geometry>>(subject, geometry, directories,
                                       identifier, measurement->precision));
-        else
+        } else {
           throw std::runtime_error{
-              std::string{"Measurement type "} + measurement->name +
-              " : "
+              for_measurement_type +
               "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::position_variance_periodic: {
         if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>)
+                          typename Subject::Particle::State>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_variance_periodic<Subject, Geometry>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
-        else
+        } else {
           throw std::runtime_error{
-              std::string{"Measurement type "} + measurement->name +
-              " : "
+              for_measurement_type +
               "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::position_nth_moment_periodic: {
@@ -576,11 +577,11 @@ private:
                   MeasurerTime_position_nth_moment_periodic<Subject, Geometry>>(
                   subject, measurement_derived.order, geometry, directories,
                   identifier, measurement->precision));
-        } else
+        } else {
           throw std::runtime_error{
-              std::string{"Measurement type "} + measurement->name +
-              " : "
+              for_measurement_type +
               "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::position_moment_periodic: {
@@ -594,11 +595,11 @@ private:
                   MeasurerTime_position_moment_periodic<Subject, Geometry>>(
                   subject, measurement_derived.orders, geometry, directories,
                   identifier, measurement->precision));
-        } else
+        } else {
           throw std::runtime_error{
-              std::string{"Measurement type "} + measurement->name +
-              " : "
+              for_measurement_type +
               "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::first_crossing_time: {
@@ -673,11 +674,9 @@ private:
                 measurement->precision));
         break;
       }
-      default:
-        throw std::runtime_error{std::string{"Measurement type "} +
-                                 measurement->name +
-                                 " "
-                                 "not supported"};
+      default: {
+        throw std::runtime_error{for_measurement_type + "Not supported"};
+      }
       }
     }
   }
@@ -689,14 +688,14 @@ private:
 
     std::vector<std::unique_ptr<Criterion<Subject>>> end_criteria;
     for (auto const &end_criterion : parameters.end_criteria) {
-      auto criterion_type = EndCriterion::type(end_criterion);
+      auto criterion_type = EndCriterionList::type(end_criterion);
       switch (criterion_type) {
-      case EndCriterion::Type::time: {
+      case EndCriterionList::Type::time: {
         end_criteria.emplace_back(std::make_unique<Criterion_time<Subject>>(
             subject, parameters.end_values.at(criterion_type)));
         break;
       }
-      case EndCriterion::Type::time_max: {
+      case EndCriterionList::Type::time_max: {
         if (parameters.time_max == std::numeric_limits<double>::infinity()) {
           throw std::runtime_error{
               std::string{"Infinite maximum time with end criterion "} +
@@ -706,37 +705,38 @@ private:
             subject, parameters.time_max));
         break;
       }
-      case EndCriterion::Type::mass_below: {
+      case EndCriterionList::Type::mass_below: {
         end_criteria.emplace_back(
             std::make_unique<Criterion_mass_below<Subject>>(
                 subject, parameters.end_values.at(criterion_type)));
         break;
       }
-      case EndCriterion::Type::mass_above: {
+      case EndCriterionList::Type::mass_above: {
         end_criteria.emplace_back(
             std::make_unique<Criterion_mass_above<Subject>>(
                 subject, parameters.end_values.at(criterion_type)));
         break;
       }
-      case EndCriterion::Type::all_absorbed: {
+      case EndCriterionList::Type::all_absorbed: {
         end_criteria.emplace_back(
             std::make_unique<Criterion_all_absorbed<Subject>>(subject));
         break;
       }
-      case EndCriterion::Type::one_absorbed: {
+      case EndCriterionList::Type::one_absorbed: {
         end_criteria.emplace_back(
             std::make_unique<Criterion_one_absorbed<Subject>>(subject));
         break;
       }
-      case EndCriterion::Type::fraction_not_absorbed: {
+      case EndCriterionList::Type::fraction_not_absorbed: {
         end_criteria.emplace_back(
             std::make_unique<Criterion_fraction_not_absorbed<Subject>>(
                 subject, parameters.end_values.at(criterion_type)));
         break;
       }
-      default:
+      default: {
         throw std::runtime_error{std::string{"End criterion "} + end_criterion +
                                  " not supported"};
+      }
       }
     }
 

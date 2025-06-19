@@ -40,7 +40,7 @@ struct Info_absorbed_adsorbed {
 */
 struct Info_absorbed_face {
   bool absorbed;
-  Foam::label face;
+  Foam::label boundary_face;
 };
 
 /**
@@ -51,7 +51,7 @@ struct Info_absorbed_face {
 struct Info_absorbed_adsorbed_face {
   bool absorbed;
   bool adsorbed;
-  Foam::label face;
+  Foam::label boundary_face;
 };
 
 /**
@@ -69,7 +69,7 @@ struct Info_absorbed_reinjections {
 */
 struct Info_absorbed_face_reinjections {
   bool absorbed;
-  Foam::label face;
+  Foam::label boundary_face;
   std::size_t reinjections;
 };
 
@@ -80,7 +80,7 @@ struct Info_absorbed_face_reinjections {
 struct Info_absorbed_adsorbed_face_reinjections {
   bool absorbed;
   bool adsorbed;
-  Foam::label face;
+  Foam::label boundary_face;
   std::size_t reinjections;
 };
 

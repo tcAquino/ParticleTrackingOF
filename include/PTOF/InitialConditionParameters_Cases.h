@@ -11,7 +11,7 @@
 #include "General/IO.h"
 #include "PTOF/Directories.h"
 #include "PTOF/InitialConditionList.h"
-#include "PTOF/TimeUnits.h"
+#include "PTOF/TimeUnitsList.h"
 #include <fstream>
 #include <ostream>
 #include <stdexcept>
@@ -629,8 +629,7 @@ private:
   }
 
   /** \brief Read initial condition info from input stream. */
-  template <typename TransportParameters,
-            typename ReactionParameters>
+  template <typename TransportParameters, typename ReactionParameters>
   std::unique_ptr<InjectionParameters>
   set_injection_parameters(std::ifstream &input, std::string const &filename,
                            TransportParameters const &params_transport,
@@ -656,7 +655,7 @@ private:
         io::read<std::string>(split_line, param_index,
                               in_file + for_injection_continuity_type +
                                   "Could not parse injection time units");
-    if (!TimeUnits::contains(time_units))
+    if (!TimeUnitsList::contains(time_units))
       throw std::runtime_error{in_file + for_injection_continuity_type +
                                "Time units " + time_units + " not supported"};
     double time_unit_factor =

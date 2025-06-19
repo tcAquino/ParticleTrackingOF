@@ -1,4 +1,8 @@
 /*
 !.gitignore
 !Doxygen
-!Manual.pdf
+!Doxyegn/*
+!Doxygen/**
+!Manual
+!Manual/*
+!Manual/**

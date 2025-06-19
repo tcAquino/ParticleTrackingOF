@@ -11,8 +11,9 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Operation.h"
+#include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Directories.h"
-#include "PTOF/Reaction.h"
+#include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
 #include <algorithm>
 #include <cstddef>
@@ -20,11 +21,11 @@
 #include <fstream>
 #include <iterator>
 #include <limits>
-#include <map>
 #include <point.H>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -61,7 +62,7 @@ void boundary_reflecting(State &state, Foam::point const &contact_point,
 */
 inline auto get_boundary_conditions(std::string const &filename,
                                     std::string const &delims = "\t,| ") {
-  std::map<std::string, std::string> boundary_conditions;
+  std::unordered_map<std::string, std::string> boundary_conditions;
 
   auto input = io::open_read(filename);
   std::string in_file = std::string{"In file "} + filename + " : ";
@@ -100,17 +101,17 @@ auto get_boundary_conditions(Directories const &directories,
    \param boundary_conditions Container of pairs of patch names and boundary
    condition types.
    \param mesh Mesh object.
-   \param implemented Information about implemented boundary conditions.
 */
-template <typename BoundaryCondition, typename Mesh, typename Implemented>
+template <typename BoundaryCondition, typename Mesh,
+          typename BoundaryConditionList>
 void verify_boundary_conditions(BoundaryCondition const &boundary_conditions,
                                 Mesh const &mesh,
-                                Implemented const &implemented) {
+                                meta::Selector_t<BoundaryConditionList>) {
   for (auto const &bc : boundary_conditions)
     mesh.boundaryMesh().findPatchID(bc.first, false);
 
   for (auto const &bc : boundary_conditions)
-    if (!implemented.contains(bc.second))
+    if (BoundaryConditionList::contains(bc.second))
       throw std::runtime_error{"Boundary condition type " + bc.second +
                                " not supported"};
 }

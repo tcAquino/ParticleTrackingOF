@@ -61,7 +61,8 @@ public:
         _boundary{std::forward<Boundary>(boundary)} {}
 
   template <typename State> void operator()(State &state) {
-    if constexpr (std::is_same_v<Boundary, geom::Boundary_DoNothing>) {
+    if constexpr (std::is_same_v<useful::remove_cvref_t<Boundary>,
+                                 geom::Boundary_DoNothing>) {
       double time_step = _time_generator(state);
       if constexpr (meta::has_time_step_setter_v<JumpGenerator>)
         _jump_generator.time_step(time_step);

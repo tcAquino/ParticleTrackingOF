@@ -12,6 +12,7 @@
 #include "General/Useful.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Info.h"
+#include "PTOF/Meta.h"
 
 namespace ptof {
 /**
@@ -24,40 +25,12 @@ struct BoundaryInfo_Nothing {
      \note The boundary condition type is selected at compile time through the
      type of meta::Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
-};
-
-/**
-   \struct BoundaryInfo_type PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
-   \brief Store info about latest boundary type.
-*/
-struct BoundaryInfo_type {
-  /**
-     \brief Store boundary type.
-     \note The boundary condition type is selected at compile time through the
-     type of meta::Selector<BoundaryConditionList::Type, type>.
-     \param state Current particle state.
-     \param state_old Previous particle state.
-     \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
-  */
-  template <typename State, typename Intersection,
-            BoundaryConditionList::Type type>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
-                  meta::Selector<BoundaryConditionList::Type, type>) const {
-    state.info.type = implemented.name(type);
-  }
 };
 
 /**
@@ -70,17 +43,13 @@ struct BoundaryInfo_face {
      \note The boundary condition type is selected at compile time through the
      type of meta::Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
-    state.info.face = intersection.index();
+    state.info.boundary_face = intersection.index();
   }
 };
 
@@ -94,17 +63,13 @@ struct BoundaryInfo_contact_point {
      \note The boundary condition type is selected at compile time through the
      type of meta::Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
-    state.info.contact_point = intersection.point();
+    state.info.contact_point = State::make_position(intersection.point());
   }
 };
 
@@ -118,15 +83,11 @@ struct BoundaryInfo_reinjections {
      \note The boundary condition type is selected at compile time through the
      type of meta::Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
 
   /**
@@ -134,14 +95,10 @@ struct BoundaryInfo_reinjections {
      \note The boundary condition type is selected at compile time through the
      type of Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
     state.info.reinjections++;
@@ -158,17 +115,13 @@ struct BoundaryInfo_face_reinjections {
      \note The boundary condition type is selected at compile time through the
      type of meta::Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
-    state.info.face = intersection.index();
+    generic(state, intersection);
   }
 
   /**
@@ -176,18 +129,69 @@ struct BoundaryInfo_face_reinjections {
      \note The boundary condition type is selected at compile time through the
      type of Selector<BoundaryConditionList::Type, type>.
      \param state Current particle state.
-     \param state_old Previous particle state.
      \param intersection Information about intersection with boundary.
-     \param implemented Information about implemented boundary conditions.
   */
   template <typename State, typename Intersection>
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  BoundaryConditionList const &implemented,
+  void operator()(State &state, Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
-    state.info.face = intersection.index();
-    state.info.reinjections++;
+    generic(state, intersection);
+  }
+
+  template <typename State, typename Intersection>
+  void generic(State &state, Intersection const &intersection) const {
+    state.info.boundary_face = intersection.index();
+  }
+};
+
+/**
+   \struct BoundaryInfo_IfPresent_type_face_contact_point_reinjections
+   PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
+   \brief Store each of face, contact point, and number of reinjections, if
+   present in State::Info.
+*/
+struct BoundaryInfo_IfPresent_face_contact_point_reinjections {
+  /**
+     \brief Store each of face and contact point, if present in State::Info.
+     \note The boundary condition type is selected at compile time through the
+     type of meta::Selector<BoundaryConditionList::Type, type>.
+     \param state Current particle state.
+     \param intersection Information about intersection with boundary.
+  */
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
+  void operator()(State &state, Intersection const &intersection,
+                  meta::Selector<BoundaryConditionList::Type, type>) const {
+    generic(state, intersection);
+  }
+
+  /**
+     \brief Store each of face, contact point, and number of reinjections, if
+     present in State::Info.
+     \note The boundary condition type is selected at compile time through the
+     type of meta::Selector<BoundaryConditionList::Type, type>.
+     \param state Current particle state.
+     \param intersection Information about intersection with boundary.
+  */
+  template <typename State, typename Intersection,
+            BoundaryConditionList::Type type>
+  void operator()(State &state, Intersection const &intersection,
+                  meta::Selector<BoundaryConditionList::Type,
+                                 BoundaryConditionList::Type::custom>) const {
+    generic(state, intersection);
+    if constexpr (meta::has_type_v<typename State::contact_point>) {
+      state.info.reinjections++;
+    }
+  }
+
+  template <typename State, typename Intersection>
+  void generic(State &state, Intersection const &intersection) const {
+    if constexpr (meta::has_boundary_face_v<typename State::Info>) {
+      state.info.boundary_face = intersection.index();
+    }
+    if constexpr (meta::has_contact_point_v<typename State::Info>) {
+      state.info.contact_point = State::make_position(intersection.point());
+    }
   }
 };
 } // namespace ptof

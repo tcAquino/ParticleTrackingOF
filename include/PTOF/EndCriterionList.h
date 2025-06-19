@@ -1,5 +1,5 @@
 /**
-   \file PTOF/EndCriterion.h
+   \file PTOF/EndCriterionList.h
    \author Tomás Aquino
    \date 08/05/2025
    \brief Criteria to stop dynamics.
@@ -9,15 +9,15 @@
 #include <stdexcept>
 #include <string>
 
-#ifndef PTOF_ENDCRITERION_H
-#define PTOF_ENDCRITERION_H
+#ifndef PTOF_ENDCRITERIONLIST_H
+#define PTOF_ENDCRITERIONLIST_H
 
 namespace ptof {
 /**
-   \struct EndCriterion PTOF/EndCriterion.h "PTOF/EndCriterion.h"
+   \struct EndCriterionList PTOF/EndCriterionList.h "PTOF/EndCriterionList.h"
    \brief Keep track of names and types of end criteria.
 */
-struct EndCriterion {
+struct EndCriterionList {
   /** \enum Type
    *  \brief Implemented types. */
   enum class Type {
@@ -63,4 +63,4 @@ struct EndCriterion {
 };
 } // namespace ptof
 
-#endif /* PTOF_CRITERION_H */
+#endif /* PTOF_CRITERIONLIST_H */
