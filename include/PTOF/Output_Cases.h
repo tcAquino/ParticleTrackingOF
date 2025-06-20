@@ -502,10 +502,9 @@ private:
         break;
       }
       case MeasurementList::Type::position_in_regions_periodic: {
-        if constexpr (meta::has_periodicity_v<
+        if constexpr (!meta::has_periodicity_v<
                           typename Subject::Particle::State> &&
-                      !std::is_same_v<useful::remove_cvref_t<VelocityField>,
-                                      meta::Empty>) {
+                      !std::is_same_v<Mask, meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_in_regions_periodic<
                   Subject, Geometry, Mask>>(subject, geometry, directories,

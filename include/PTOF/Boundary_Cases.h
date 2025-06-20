@@ -163,7 +163,7 @@ public:
       // Apply the approriate boundary and store associated info
       switch (BoundaryConditionList::type(type_name)) {
       case BoundaryConditionList::Type::reflecting: {
-        _store_info(state, intersection,
+        _store_info(state, state_old, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::reflecting>{});
         boundary_reflecting(state, intersection.point(),
@@ -188,14 +188,14 @@ public:
         break;
       }
       case BoundaryConditionList::Type::periodic: {
-        _store_info(state, intersection,
+        _store_info(state, state_old, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::periodic>{});
         had_effect += _boundary_periodic(state, intersection);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        _store_info(state, intersection,
+        _store_info(state, state_old, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
         state.info.absorbed = true;
@@ -204,7 +204,7 @@ public:
         break;
       }
       case BoundaryConditionList::Type::inlet: {
-        _store_info(state, intersection,
+        _store_info(state, state_old, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::absorbing>{});
         if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
@@ -220,7 +220,7 @@ public:
             break;
           }
         }
-        _store_info(state, intersection,
+        _store_info(state, state_old, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::reflecting>{});
         boundary_reflecting(state, intersection.point(),
@@ -229,7 +229,7 @@ public:
         break;
       }
       case BoundaryConditionList::Type::custom: {
-        _store_info(state, intersection,
+        _store_info(state, state_old, intersection,
                     meta::Selector<BoundaryConditionList::Type,
                                    BoundaryConditionList::Type::custom>{});
         had_effect += _boundary_custom(state, state_old, intersection);

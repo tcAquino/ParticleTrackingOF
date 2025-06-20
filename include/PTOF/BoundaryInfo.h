@@ -29,7 +29,8 @@ struct BoundaryInfo_Nothing {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
 };
 
@@ -47,7 +48,8 @@ struct BoundaryInfo_face {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
     state.info.boundary_face = intersection.index();
   }
@@ -67,7 +69,8 @@ struct BoundaryInfo_contact_point {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
     state.info.contact_point = State::make_position(intersection.point());
   }
@@ -87,7 +90,8 @@ struct BoundaryInfo_reinjections {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {}
 
   /**
@@ -98,7 +102,8 @@ struct BoundaryInfo_reinjections {
      \param intersection Information about intersection with boundary.
   */
   template <typename State, typename Intersection>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
     state.info.reinjections++;
@@ -119,7 +124,8 @@ struct BoundaryInfo_face_reinjections {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
     generic(state, intersection);
   }
@@ -132,14 +138,16 @@ struct BoundaryInfo_face_reinjections {
      \param intersection Information about intersection with boundary.
   */
   template <typename State, typename Intersection>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
     generic(state, intersection);
   }
 
   template <typename State, typename Intersection>
-  void generic(State &state, Intersection const &intersection) const {
+  void generic(State &state, State const &state_old,
+               Intersection const &intersection) const {
     state.info.boundary_face = intersection.index();
   }
 };
@@ -160,7 +168,8 @@ struct BoundaryInfo_IfPresent_face_contact_point_reinjections {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
     generic(state, intersection);
   }
@@ -175,7 +184,8 @@ struct BoundaryInfo_IfPresent_face_contact_point_reinjections {
   */
   template <typename State, typename Intersection,
             BoundaryConditionList::Type type>
-  void operator()(State &state, Intersection const &intersection,
+  void operator()(State &state, State const &state_old,
+                  Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
     generic(state, intersection);
@@ -185,7 +195,8 @@ struct BoundaryInfo_IfPresent_face_contact_point_reinjections {
   }
 
   template <typename State, typename Intersection>
-  void generic(State &state, Intersection const &intersection) const {
+  void generic(State &state, State const &state_old,
+               Intersection const &intersection) const {
     if constexpr (meta::has_boundary_face_v<typename State::Info>) {
       state.info.boundary_face = intersection.index();
     }
