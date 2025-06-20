@@ -127,7 +127,7 @@ struct BoundaryInfo_face_reinjections {
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
-    generic(state, intersection);
+    generic(state, state_old, intersection);
   }
 
   /**
@@ -142,7 +142,7 @@ struct BoundaryInfo_face_reinjections {
                   Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
-    generic(state, intersection);
+    generic(state, state_old, intersection);
   }
 
   template <typename State, typename Intersection>
@@ -171,7 +171,7 @@ struct BoundaryInfo_IfPresent_face_contact_point_reinjections {
   void operator()(State &state, State const &state_old,
                   Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type, type>) const {
-    generic(state, intersection);
+    generic(state, state_old, intersection);
   }
 
   /**
@@ -188,7 +188,7 @@ struct BoundaryInfo_IfPresent_face_contact_point_reinjections {
                   Intersection const &intersection,
                   meta::Selector<BoundaryConditionList::Type,
                                  BoundaryConditionList::Type::custom>) const {
-    generic(state, intersection);
+    generic(state, state_old, intersection);
     if constexpr (meta::has_type_v<typename State::contact_point>) {
       state.info.reinjections++;
     }
