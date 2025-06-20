@@ -173,7 +173,7 @@ public:
       }
       case BoundaryConditionList::Type::reacting_reflecting: {
         _store_info(
-            state, intersection,
+            state, state_old, intersection,
             meta::Selector<BoundaryConditionList::Type,
                            BoundaryConditionList::Type::reacting_reflecting>{});
         surface_reaction(state, state_old, intersection.index());
@@ -212,7 +212,7 @@ public:
           if (face_flux_outward(intersection.index(), _velocity_field,
                                 _locator) > 0.) {
             _store_info(
-                state, intersection,
+                state, state_old, intersection,
                 meta::Selector<BoundaryConditionList::Type,
                                BoundaryConditionList::Type::absorbing>{});
             state.set_position(intersection.point());
