@@ -211,23 +211,18 @@ private:
   }
 
   void print_state_position(State const &state) {
-  if constexpr (print_position) {
-    if constexpr (periodic_position) {
-      if constexpr (meta::has_periodicity_v<State>) {
+    if constexpr (print_position) {
+      if constexpr (periodic_position) {
         using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
         io::print(_output,
                   ctrw::Get_position_periodic<Boundary const &>{
                       this->_geometry.boundary_periodic}(state),
                   _column_widths[4]);
       } else {
-        throw std::runtime_error{"Requested periodicity-adjusted position "
-                                 "but state is not periodic"};
+        io::print(_output, state.position, _column_widths[4]);
       }
-    } else {
-      io::print(_output, state.position, _column_widths[4]);
     }
   }
-}
 
   void print_reinjections(State const &state) {
     if constexpr (meta::has_reinjections_v<typename Subject::State::Info>) {

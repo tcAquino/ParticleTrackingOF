@@ -625,10 +625,17 @@ private:
         break;
       }
       case MeasurementList::Type::position_adsorbed_periodic: {
-        _output_time.emplace_back(
-            std::make_unique<MeasurerTime_position_adsorbed<Subject, Geometry>>(
-                subject, geometry, directories, identifier,
-                measurement->precision));
+        if constexpr (meta::has_periodicity_v<State>) {
+          _output_time.emplace_back(
+              std::make_unique<
+                  MeasurerTime_position_adsorbed<Subject, Geometry>>(
+                  subject, geometry, directories, identifier,
+                  measurement->precision));
+        } else {
+          throw std::runtime_error{
+              for_measurement_type +
+              "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::surface_reacted_mass: {
@@ -645,17 +652,23 @@ private:
         break;
       }
       case MeasurementList::Type::surface_reacted_mass_periodic: {
-        using BoundaryInfo =
-            BoundaryInfo_Record_surface_reacted_mass_periodic<State>;
-        boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
-            std::make_unique<BoundaryInfo>()));
-        _output_time.emplace_back(
-            std::make_unique<
-                MeasurerTime_surface_reacted_mass_periodic<Subject, Geometry>>(
-                subject, geometry, directories, identifier,
-                dynamic_cast<BoundaryInfo const &>(
-                    boundary.boundary_infos_back()),
-                measurement->precision));
+        if constexpr (meta::has_periodicity_v<State>) {
+          using BoundaryInfo =
+              BoundaryInfo_Record_surface_reacted_mass_periodic<State>;
+          boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
+              std::make_unique<BoundaryInfo>()));
+          _output_time.emplace_back(
+              std::make_unique<MeasurerTime_surface_reacted_mass_periodic<
+                  Subject, Geometry>>(subject, geometry, directories,
+                                      identifier,
+                                      dynamic_cast<BoundaryInfo const &>(
+                                          boundary.boundary_infos_back()),
+                                      measurement->precision));
+        } else {
+          throw std::runtime_error{
+              for_measurement_type +
+              "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::absorption_time: {
@@ -689,19 +702,31 @@ private:
         break;
       }
       case MeasurementList::Type::absorption_time_position_periodic: {
-        _output.emplace_back(
-            std::make_unique<
-                Measurer_absorption_time<Subject, Geometry, false, true, true>>(
-                subject, geometry, directories, identifier,
-                measurement->precision));
+        if constexpr (meta::has_periodicity_v<State>) {
+          _output.emplace_back(
+              std::make_unique<Measurer_absorption_time<Subject, Geometry,
+                                                        false, true, true>>(
+                  subject, geometry, directories, identifier,
+                  measurement->precision));
+        } else {
+          throw std::runtime_error{
+              for_measurement_type +
+              "Particle state does not define periodicity"};
+        }
         break;
       }
       case MeasurementList::Type::absorption_time_patch_position_periodic: {
-        _output.emplace_back(
-            std::make_unique<
-                Measurer_absorption_time<Subject, Geometry, true, true, true>>(
-                subject, geometry, directories, identifier,
-                measurement->precision));
+        if constexpr (meta::has_periodicity_v<State>) {
+          _output.emplace_back(
+              std::make_unique<Measurer_absorption_time<Subject, Geometry, true,
+                                                        true, true>>(
+                  subject, geometry, directories, identifier,
+                  measurement->precision));
+        } else {
+          throw std::runtime_error{
+              for_measurement_type +
+              "Particle state does not define periodicity"};
+        }
         break;
       }
       default: {
