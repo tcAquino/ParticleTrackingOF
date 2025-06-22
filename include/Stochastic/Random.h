@@ -1,6 +1,6 @@
 /**
    \file Stochastic/Random.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 02/07/2015
    \brief Probability and random number generation.
 */

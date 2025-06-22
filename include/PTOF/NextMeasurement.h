@@ -1,6 +1,6 @@
 /**
    \file PTOF/NextMeasurement.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 29/09/2024
    \brief Handle setting up next measurement.
 */

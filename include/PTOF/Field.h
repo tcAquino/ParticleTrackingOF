@@ -1,6 +1,6 @@
 /**
    \file PTOF/Field.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 16/02/2022
    \brief Field objects with interpolation and other utilities.
 */

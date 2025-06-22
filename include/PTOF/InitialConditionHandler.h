@@ -1,6 +1,6 @@
 /**
    \file PTOF/InitialConditionHandler.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 04/02/2025
    \brief Initial condition helpers.
 */

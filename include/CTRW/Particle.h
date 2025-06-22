@@ -1,6 +1,6 @@
 /**
    \file CTRW/Particle.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 26/09/2017
    \brief Particle for CTRW dynamics.
 */

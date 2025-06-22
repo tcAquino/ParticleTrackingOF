@@ -1,6 +1,6 @@
 /**
    \file Geometry/Boundary.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/02/2019
 
    \brief Boundary-enforcing classes for particle tracking.

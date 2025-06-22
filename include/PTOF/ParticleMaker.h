@@ -1,6 +1,6 @@
 /**
    \file PTOF/ParticleMaker.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 06/03/2024
    \brief Objects to make particles.
 */

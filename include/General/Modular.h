@@ -1,6 +1,6 @@
 /**
    \file General/Modular.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/06/2019
    \brief Modular arithmetic, basis change, and similar operations
 */

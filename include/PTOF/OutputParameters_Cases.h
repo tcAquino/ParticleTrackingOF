@@ -1,6 +1,6 @@
 /**
    \file PTOF/OutputParameters_Cases.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/05/2025
    \brief Parameters for output.
 */
@@ -313,11 +313,16 @@ public:
            "    - Pass on same line:\n"
            "      - Dimension\n"
            "      - Crossing position along dimension\n"
-           "    - adsorbed_position\n"
-           "      - Time, tag, position, and mass of adsorbed particles"
-           "    - adsorbed_position_periodic\n"
-           "      - Time, tag, position accouting for periodicity, and mass\n"
-           "        of adsorbed particles"
+           "  - position_adsorbed\n"
+           "    - Time, tag, position, and mass of adsorbed particles"
+           "  - position_adsorbed_periodic\n"
+           "    - Time, tag, position accouting for periodicity, and mass\n"
+           "      of adsorbed particles"
+           "  - surface_reacted_mass\n"
+           "    - Time and net reacted mass at each boundary face\n"
+           "  - surface_reacted_mass_periodic\n"
+           "    -  Time and net reacted mass at each boundary face with\n"
+           "       periodicity info\n"
            "  - absorption_time\n"
            "    - Particle absorption times, particle tags and particle\n"
            "      masses at end of dynamics\n"

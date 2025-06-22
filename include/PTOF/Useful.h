@@ -1,6 +1,6 @@
 /**
    \file PTOF/Useful.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 2022/02/17
    \brief Miscelaneous objects and utilities.
 */
@@ -359,23 +359,17 @@ bool absorbed(Particle const &particle, double time) {
 }
 
 /**
-   \brief Check if a particle is adsorbed at time \c time
-   \details Checks Particle::State::Info for \c absorbed, returns \c false if it
-   does not exist.
-   \param particle Particle to interpolate between old and new state.
-   \param time Time to check.
+   \brief Check if a state is adsorbed.
+   \details Checks Particle::State::Info for \c absorbed, returns \c false if
+   it does not exist.
    \return \c true if \c absorbed is true, \c false otherwise.
-   \note
-   - Unlike the absorbed state, the absorbed state is checked like a normal
-   property and may be reversible.
-   - Particle states must define:
-   -# <tt>Info info</tt>
+   \note State must define:
+   - \c Info
 */
-template <typename Particle>
-bool adsorbed(Particle const &particle, double time) {
-  using Info = typename Particle::State::Info;
+template <typename State> bool adsorbed(State const &state) {
+  using Info = typename State::Info;
   if constexpr (meta::has_adsorbed_v<Info>) {
-    if (particle.state_old().info.adsorbed && brackets_time(particle, time)) {
+    if (state.info.adsorbed) {
       return true;
     }
   }
@@ -1149,7 +1143,7 @@ template <typename Subject>
 std::size_t nr_adsorbed(Subject const &subject, double time) {
   std::size_t adsorbed = 0;
   for (auto const &part : subject) {
-    if (ptof::adsorbed(part, time)) {
+    if (ptof::adsorbed(part.state_old) && brackets_time(part, time)) {
       ++adsorbed;
     }
   }
@@ -1167,7 +1161,10 @@ std::size_t nr_adsorbed(Subject const &subject, double time) {
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
   for (auto const &part : subject) {
-    if (!adsorbed(part, time) && brackets_time(part, time)) {
+    if (adsorbed(part.state_old())) {
+      continue;
+    }
+    if (brackets_time(part, time)) {
       mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(part.state_new(),
                                                        part.state_old());
     }
@@ -1187,7 +1184,7 @@ template <typename Subject>
 auto mass_adsorbed(Subject const &subject, double time) {
   double mass = 0.;
   for (auto const &part : subject) {
-    if (adsorbed(part, time)) {
+    if (adsorbed(part.state_old()) && brackets_time(part, time)) {
       mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(part.state_new(),
                                                        part.state_old());
     }
@@ -1233,12 +1230,14 @@ auto mass(Subject const &subject, double time,
           std::vector<double> thresholds) {
   std::vector<double> masses(masks.size(), 0.);
   for (auto const &part : subject) {
+    if (adsorbed(part.state_old())) {
+      continue;
+    }
     auto const &state_new = part.state_new();
     auto const &state_old = part.state_old();
     auto cell_new = state_new.cell;
     auto cell_old = state_old.cell;
-    if (!outside(cell_new) && !outside(cell_old) && !adsorbed(part, time) &&
-        brackets_time(part, time)) {
+    if (!outside(cell_new) && !outside(cell_old) && brackets_time(part, time)) {
       for (std::size_t ii = 0; ii < masks.size(); ++ii)
         if (masks[ii].get()[cell_new] >= thresholds[ii] &&
             masks[ii].get()[cell_old] >= thresholds[ii])
@@ -1266,7 +1265,10 @@ auto position_mean(Subject const &subject, double time,
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position position_mean = Foam::zero{};
   for (auto const &part : subject) {
-    if (!adsorbed(part, time) && brackets_time(part, time)) {
+    if (adsorbed(part.state_old())) {
+      continue;
+    }
+    if (brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       position_mean +=
@@ -1293,7 +1295,10 @@ auto position_second_moment(Subject const &subject, double time,
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position second_moment = Foam::zero{};
   for (auto const &part : subject) {
-    if (!adsorbed(part, time) && brackets_time(part, time)) {
+    if (adsorbed(part.state_old())) {
+      continue;
+    }
+    if (brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       second_moment +=
@@ -1322,7 +1327,10 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
   decltype(getter_position(subject.particles(0).state_new())) moment =
       Foam::zero{};
   for (auto const &part : subject) {
-    if (!adsorbed(part, time) && brackets_time(part, time)) {
+    if (adsorbed(part.state_old())) {
+      continue;
+    }
+    if (brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       moment +=
@@ -1364,7 +1372,10 @@ template <typename Subject, typename Field>
 auto mean(Subject const &subject, double time, Field const &field) {
   decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
   for (auto const &part : subject) {
-    if (!adsorbed(part, time) && brackets_time(part, time)) {
+    if (adsorbed(part.state_old())) {
+      continue;
+    }
+    if (brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       field_mean +=
@@ -1568,8 +1579,7 @@ template <typename Subject>
 void info_fraction_not_absorbed(std::ostream &output, Subject const &subject,
                                 double time) {
   output << "Fraction not absorbed: "
-         << 1. - double(ptof::nr_absorbed(subject, time)) / subject.size()
-         << "\n";
+         << 1. - double(nr_absorbed(subject, time)) / subject.size() << "\n";
 }
 
 /** \return Identifier string for output file names. */

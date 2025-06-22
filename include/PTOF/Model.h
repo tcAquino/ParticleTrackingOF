@@ -1,6 +1,6 @@
 /**
    \file PTOF/Model.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 22/02/2022
    \brief Type definitions to implement models.
 */
@@ -19,7 +19,7 @@
 #include "PTOF/Solvers.h"
 #include "PTOF/State.h"
 #include "PTOF/Steppers.h"
-#include "PTOF/Transport.h"
+#include "PTOF/TransportHandler.h"
 #include <string>
 
 /** \namespace ptof Objects and methods for ParticleTrackingOF. */
@@ -46,10 +46,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -71,10 +71,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -95,10 +95,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -122,10 +122,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -150,10 +150,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -178,10 +178,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -205,11 +205,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -232,11 +232,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -260,11 +260,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -288,11 +288,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -316,11 +316,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -343,11 +343,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -372,10 +372,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -398,10 +398,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -424,10 +424,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -454,10 +454,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -484,10 +484,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -514,10 +514,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -543,11 +543,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -572,11 +572,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -602,11 +602,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -631,11 +631,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -661,11 +661,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -690,11 +690,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -716,10 +716,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -741,10 +741,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -766,10 +766,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -793,10 +793,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -820,10 +820,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -848,10 +848,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -875,11 +875,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -902,11 +902,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -930,11 +930,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -957,11 +957,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -985,11 +985,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1012,11 +1012,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1041,10 +1041,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1067,10 +1067,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1093,10 +1093,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1123,10 +1123,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1153,10 +1153,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1183,10 +1183,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1212,11 +1212,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1241,11 +1241,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1271,11 +1271,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1300,11 +1300,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1330,11 +1330,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1359,11 +1359,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1387,10 +1387,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1413,10 +1413,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1439,10 +1439,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1469,10 +1469,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1499,10 +1499,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1529,10 +1529,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1558,11 +1558,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1587,11 +1587,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1617,11 +1617,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1646,11 +1646,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1676,11 +1676,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1706,11 +1706,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1736,10 +1736,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1763,10 +1763,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1790,10 +1790,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1820,10 +1820,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1850,10 +1850,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1880,10 +1880,10 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction = ReactionHandler_NoBulk_NoSurface;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler = ReactionHandler_NoBulk_NoSurface;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1910,11 +1910,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1940,11 +1940,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, false, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -1971,11 +1971,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -2001,11 +2001,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
                                       CTRWSteppers::Asynchronous>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceAdsorption<Geometry, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -2032,11 +2032,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 
@@ -2063,11 +2063,11 @@ struct Model {
       using CTRW = ctrw::CTRW<State, ParallelOption>;
       using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
                                       CTRWSteppers::ParticleTime>;
-      using Transport = Transport_Generic<Solvers>;
-      using Reaction =
+      using TransportHandler = TransportHandler_Generic<Solvers>;
+      using ReactionHandler =
           ReactionHandler_NoBulk_SurfaceDecay<Geometry, true, ParallelOption>;
-      using InitialCondition = InitialConditionHandler_Generic;
-      using Output = OutputHandler_Generic;
+      using InitialConditionHandler = InitialConditionHandler_Generic;
+      using OutputHandler = OutputHandler_Generic;
     };
   };
 };

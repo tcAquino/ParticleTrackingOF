@@ -1,6 +1,6 @@
 /**
    \file PTOF/Criterion.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 07/03/2022
    \brief Criteria to check for different scenarios.
 */

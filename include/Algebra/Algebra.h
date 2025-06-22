@@ -1,6 +1,6 @@
 /**
    \file Algebra/Algebra.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/06/2019
    \brief Linear algebra algorithms
 */

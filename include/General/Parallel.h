@@ -1,6 +1,6 @@
 /**
    \file General/Parallel.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 14/05/2024
    \brief Definitions and algorithms for serial and parallel implementations.
 */

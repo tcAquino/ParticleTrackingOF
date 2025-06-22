@@ -1,6 +1,6 @@
 /**
    \file PTOF/BulkReaction.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 10/03/2022
    \brief Objects and utilities for surface and bulk reactions.
 */

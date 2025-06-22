@@ -1,6 +1,6 @@
 /**
    \file PTOF/ReactionHandler.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 10/03/2022
    \brief Objects for handling surface and bulk reactions.
 */

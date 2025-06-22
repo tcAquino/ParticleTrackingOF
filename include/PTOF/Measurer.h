@@ -1,6 +1,6 @@
 /**
    \file PTOF/Measurer.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 07/03/2022
    \brief Objects to measure and output quantities.
 */
@@ -201,12 +201,10 @@ private:
       Foam::label face;
       if constexpr (meta::has_boundary_face_v<typename State::Info>) {
         face = state.info.boundary_face;
-
       } else {
         face = this->_geometry.mesh_search().findNearestBoundaryFace(
             make_point(state.position), state.cell);
       }
-
       _output << std::setw(_column_widths[3])
               << _patch_names[ptof::patch_id(face, this->_geometry.mesh())];
     }

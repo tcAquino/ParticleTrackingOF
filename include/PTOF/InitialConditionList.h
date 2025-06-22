@@ -1,6 +1,6 @@
 /**
    \file PTOF/InitialConditionList.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 29/09/2024
    \brief Initial condition types.
 */

@@ -1,7 +1,7 @@
 //
 //  ParticleTrackingOF.cpp
 //
-//  Created by Tomás Aquino on 16/02/2022.
+//  Created by Tomas Aquino on 16/02/2022.
 //
 
 #include "General/IO.h"
@@ -70,18 +70,19 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::bcc_symmetryplanes_diffusion_surface_order2decay;
+  using Model = ptof::Model::periodic_cartesian_advection_diffusion_2d;
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;
   std::cout << ExecutableInfo<ParallelOption>::banner() << "\n";
   Model::info(std::cout);
 
-  if (ptof::options_help<ExecutableInfo<ParallelOption>, Definitions::Geometry,
-                         ptof::DirectoriesOF, Definitions::Transport,
-                         meta::Empty, Definitions::Reaction,
-                         Definitions::Solvers, Definitions::InitialCondition,
-                         Definitions::Output>(std::cout, argc, argv))
+  if (ptof::options_help<
+          ExecutableInfo<ParallelOption>, Definitions::Geometry,
+          ptof::DirectoriesOF, Definitions::TransportHandler, meta::Empty,
+          Definitions::ReactionHandler, Definitions::Solvers,
+          Definitions::InitialConditionHandler, Definitions::OutputHandler>(
+          std::cout, argc, argv))
     return 0;
   if (argc != ExecutableInfo<ParallelOption>::nr_parameters + 1)
     throw io::bad_parameters_help();
@@ -139,7 +140,7 @@ int main(int argc, char *argv[]) {
             << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field =
-      Definitions::Transport::makeVelocityInterpolator(geometry);
+      Definitions::TransportHandler::makeVelocityInterpolator(geometry);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -149,7 +150,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing transport parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  Definitions::Transport::Parameters params_transport{
+  Definitions::TransportHandler::Parameters params_transport{
       directories, params_transport_name, geometry, velocity_field};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -160,7 +161,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing reaction parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  Definitions::Reaction::Parameters params_reaction{
+  Definitions::ReactionHandler::Parameters params_reaction{
       directories, params_reaction_name, geometry, params_transport};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -183,9 +184,9 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up reaction..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto bulk_reaction = Definitions::Reaction::makeBulkReaction(
+  auto bulk_reaction = Definitions::ReactionHandler::makeBulkReaction(
       geometry, params_reaction, params_transport, params_solvers);
-  auto surface_reaction = Definitions::Reaction::makeSurfaceReaction(
+  auto surface_reaction = Definitions::ReactionHandler::makeSurfaceReaction(
       geometry, params_reaction, params_transport, params_solvers);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -196,7 +197,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing initial condition parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  Definitions::InitialCondition::Parameters params_initial_condition{
+  Definitions::InitialConditionHandler::Parameters params_initial_condition{
       directories, params_initial_condition_name, geometry, params_transport,
       params_reaction};
   execution_end = std::chrono::high_resolution_clock::now();
@@ -208,9 +209,10 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up initial condition...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto initial_condition = Definitions::InitialCondition::makeInitialCondition<
-      Definitions::CTRW::Particle>(geometry, velocity_field,
-                                   params_initial_condition, params_solvers);
+  auto initial_condition =
+      Definitions::InitialConditionHandler::makeInitialCondition<
+          Definitions::CTRW::Particle>(
+          geometry, velocity_field, params_initial_condition, params_solvers);
   initial_condition.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -221,7 +223,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up boundary conditions...\n";
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto boundary = geometry.makeBoundary(
+  auto boundary = geometry.makeBoundary<Definitions::State>(
       directories, params_transport, params_reaction, params_solvers,
       velocity_field, surface_reaction, initial_condition);
   boundary.info_runtime(std::cout);
@@ -235,7 +237,7 @@ int main(int argc, char *argv[]) {
             << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::CTRW ctrw{initial_condition()};
-  auto transitions = ptof::makeTransitions<Definitions::Transport>(
+  auto transitions = ptof::makeTransitions<Definitions::TransportHandler>(
       velocity_field, geometry, boundary, params_transport, params_reaction,
       params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
@@ -247,7 +249,7 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing output parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  Definitions::Output::Parameters params_output{
+  Definitions::OutputHandler::Parameters params_output{
       directories,      params_output_name, geometry,
       params_transport, params_reaction,    params_solvers};
   execution_end = std::chrono::high_resolution_clock::now();
@@ -265,9 +267,9 @@ int main(int argc, char *argv[]) {
         params_reaction_name, params_solvers_name,
         params_initial_condition_name, params_output_name);
   filename_output_identifier += (io::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
-  auto output = Definitions::Output::makeOutput(ctrw, velocity_field, geometry,
-                                                directories, params_output,
-                                                filename_output_identifier);
+  auto output = Definitions::OutputHandler::makeOutput(
+      ctrw, velocity_field, geometry, boundary, directories, params_output,
+      filename_output_identifier);
   output.info_runtime(std::cout);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -300,8 +302,8 @@ int main(int argc, char *argv[]) {
         [&bulk_reaction, &surface_reaction](Definitions::CTRW ctrw,
                                             Definitions::State::Time new_time,
                                             Definitions::State::Time old_time) {
-          Definitions::Reaction::update(bulk_reaction, surface_reaction, ctrw,
-                                        new_time, old_time);
+          Definitions::ReactionHandler::update(bulk_reaction, surface_reaction,
+                                               ctrw, new_time, old_time);
         });
     std::cout << "Measurement required...\n";
     ptof::info_time(std::cout, params_output, current_time);

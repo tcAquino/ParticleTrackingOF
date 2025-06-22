@@ -1,6 +1,6 @@
 /**
    \file PTOF/Geometry.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 09/03/2022
    \brief Objects to handle domain geometry and boundaries.
 */
@@ -48,9 +48,6 @@ struct Geometry_Generic {
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator = Locator_Cell<Geometry_Generic,
                                SearchOption>; /**< Locate positions in mesh.*/
-  using BoundaryInfo =
-      BoundaryInfo_IfPresent_face_contact_point_reinjections; /**< What to
-                                        store upon hitting a boundary. */
 
   /**
      \brief Constructor.
@@ -92,9 +89,10 @@ struct Geometry_Generic {
      dynamics).
      \return Boundary object.
   */
-  template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters, typename VelocityField,
-            typename SurfaceReaction, typename InitialCondition = meta::Empty>
+  template <typename State, typename TransportParameters,
+            typename ReactionParameters, typename SolverParameters,
+            typename VelocityField, typename SurfaceReaction,
+            typename InitialCondition = meta::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
@@ -117,18 +115,18 @@ struct Geometry_Generic {
 
     if constexpr (dynamics == Dynamics::Type::transport)
       return ptof::Boundary_Cases{
+          meta::Selector_t<State>{},
           boundary_conditions,
           locator,
-          BoundaryInfo{},
           std::forward<VelocityField>(velocity_field),
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
+          meta::Selector_t<State>{},
           boundary_conditions,
           locator,
-          BoundaryInfo{},
           std::forward<VelocityField>(velocity_field),
           Boundary_DoNothing{},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
@@ -225,10 +223,6 @@ struct Geometry_Periodic_Cartesian {
                                SearchOption>; /**< Locate positions in mesh.*/
   using BoundaryPeriodic =
       geom::Boundary_Periodic_WithOutsideInfo; /**< Periodic boundary. */
-  using BoundaryInfo =
-      BoundaryInfo_IfPresent_face_contact_point_reinjections; /**< What to
-                                                              store upon hitting
-                                                              a boundary. */
 
   /**
      \brief Constructor.
@@ -272,9 +266,10 @@ struct Geometry_Periodic_Cartesian {
      dynamics).
      \return Boundary object.
   */
-  template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters, typename VelocityField,
-            typename SurfaceReaction, typename InitialCondition = meta::Empty>
+  template <typename State, typename TransportParameters,
+            typename ReactionParameters, typename SolverParameters,
+            typename VelocityField, typename SurfaceReaction,
+            typename InitialCondition = meta::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
@@ -293,18 +288,18 @@ struct Geometry_Periodic_Cartesian {
 
     if constexpr (dynamics == Dynamics::Type::transport)
       return ptof::Boundary_Cases{
+          meta::Selector_t<State>{},
           boundary_conditions,
           locator,
-          BoundaryInfo{},
           std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
+          meta::Selector_t<State>{},
           boundary_conditions,
           locator,
-          BoundaryInfo{},
           std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
@@ -421,9 +416,6 @@ struct Geometry_Bcc {
                          geom::Boundary_Periodic_SymmetryPlanes_WithOutsideInfo<
                              geom::SymmetryPlanes_Bcc>>; /**< Periodic boundary
                                                             type. */
-  using BoundaryInfo =
-      BoundaryInfo_IfPresent_face_contact_point_reinjections; /**< What to
-                                        store upon hitting a boundary. */
 
   /**
      \brief Constructor.
@@ -476,9 +468,10 @@ struct Geometry_Bcc {
      \param initial_condition Initial condition object for reinjection (for
      FPT dynamics).
   */
-  template <typename TransportParameters, typename ReactionParameters,
-            typename SolverParameters, typename VelocityField,
-            typename SurfaceReaction, typename InitialCondition = meta::Empty>
+  template <typename State, typename TransportParameters,
+            typename ReactionParameters, typename SolverParameters,
+            typename VelocityField, typename SurfaceReaction,
+            typename InitialCondition = meta::Empty>
   auto makeBoundary(Directories const &directories,
                     TransportParameters const &params_transport,
                     ReactionParameters const &params_reaction,
@@ -497,18 +490,18 @@ struct Geometry_Bcc {
 
     if constexpr (dynamics == Dynamics::Type::transport)
       return ptof::Boundary_Cases{
+          meta::Selector_t<State>{},
           boundary_conditions,
           locator,
-          BoundaryInfo{},
           std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     if constexpr (dynamics == Dynamics::Type::firstpassage)
       return ptof::Boundary_Cases{
+          meta::Selector_t<State>{},
           boundary_conditions,
           locator,
-          BoundaryInfo{},
           std::forward<VelocityField>(velocity_field),
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),

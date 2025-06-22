@@ -1,6 +1,6 @@
 /**
    \file PTOF/State.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 21/02/2022
    \brief Particle states.
 */

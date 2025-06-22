@@ -1,6 +1,6 @@
 /**
  \file General/Meta.h
- \author Tomás Aquino
+ \author Tomas Aquino
  \date 23/03/2023
  \brief Template metamagic utilities.
 */

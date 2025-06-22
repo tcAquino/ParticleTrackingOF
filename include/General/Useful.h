@@ -1,6 +1,6 @@
 /**
  \file General/Useful.h
- \author Tomás Aquino
+ \author Tomas Aquino
  \date 03/15/2011
  \brief Miscelaneous collection of useful objects and algorithms.
 */
@@ -199,13 +199,27 @@ template <class T> struct remove_cvref {
   using type = std::remove_cv_t<std::remove_reference_t<T>>;
 };
 
-/** \brief Same as std::remo_cvref_t (only available from C++20). */
+/** \brief Same as std::remove_cvref_t (only available from C++20). */
 template <class T> using remove_cvref_t = typename remove_cvref<T>::type;
 
 /** \brief Combine \p seed with the hash of an object \p v. */
 template <typename T> void hash_combine(std::size_t &seed, T const &vv) {
-  std::hash<T> hasher;
-  seed ^= hasher(vv) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  if constexpr (meta::has_begin_v<T>) {
+    std::hash<typename T::value_type> hasher;
+    for (auto const &val : vv) {
+      seed ^= hasher(val) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
+  } else {
+    std::hash<T> hasher;
+    seed ^= hasher(vv) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  }
+}
+
+/** \brief Combine \p seed with the hash of an object \p v. */
+template <typename T1, typename T2>
+void hash_combine(std::size_t &seed, std::pair<T1, T2> const &vv) {
+  hash_combine(seed, vv.first);
+  hash_combine(seed, vv.second);
 }
 
 /**
@@ -215,8 +229,33 @@ template <typename T> void hash_combine(std::size_t &seed, T const &vv) {
 template <typename S, typename T> struct Hash_pair {
   std::size_t operator()(std::pair<S, T> const &vv) const {
     std::size_t seed = 0;
-    hash_combine(seed, vv.first);
-    hash_combine(seed, vv.second);
+    hash_combine(seed, vv);
+    return seed;
+  }
+};
+
+/**
+   \class Hash_container General/Useful.h "General/Useful.h"
+   \brief Hash for a container
+*/
+template <typename Container> struct Hash_container {
+  std::size_t operator()(Container const &vv) const {
+    std::size_t seed = 0;
+    for (auto const &val : vv) {
+      hash_combine(seed, vv);
+    }
+    return seed;
+  }
+};
+
+/**
+   \class Hash_combine General/Useful.h "General/Useful.h"
+   \brief Hash for combining types.
+*/
+template <typename... T> struct Hash_combine {
+  std::size_t operator()(T... args) const {
+    std::size_t seed = 0;
+    (hash_combine(seed, args), ...);
     return seed;
   }
 };
@@ -227,13 +266,14 @@ template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 /** \brief If \p to_replace is NaN, replace it with \p replace_with. */
 template <typename T> T &deNaN(T &to_replace, T replace_with = T()) {
   if constexpr (meta::has_begin_v<T>) {
-    for (auto const &val : to_replace)
+    for (auto const &val : to_replace) {
       denan(val, replace_with);
+    }
   } else {
-    if (to_replace != to_replace)
+    if (to_replace != to_replace) {
       to_replace = replace_with;
+    }
   }
-
   return to_replace;
 }
 

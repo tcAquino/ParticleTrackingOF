@@ -1,6 +1,6 @@
 /**
    \file PTOF/Directories.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 22/02/2022
    \brief Handle input and output directories.
 */

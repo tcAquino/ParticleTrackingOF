@@ -1,6 +1,6 @@
 /**
    \file CTRW/TimeGenerator.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 10/23/2019
 
    \brief Objects to generate time increments for particle tracking.

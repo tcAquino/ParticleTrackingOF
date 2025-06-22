@@ -1,6 +1,6 @@
 /**
    \file PTOF/InitialCondition_Cases.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 24/02/2022
    \brief Create particles according to different initial conditions.
 */

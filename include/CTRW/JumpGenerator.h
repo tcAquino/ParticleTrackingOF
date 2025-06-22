@@ -1,6 +1,6 @@
 /**
    \file CTRW/JumpGenerator.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 20/01/2018
 
    \brief Jump generators for particle tracking.

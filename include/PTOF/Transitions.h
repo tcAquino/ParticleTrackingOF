@@ -1,6 +1,6 @@
 /**
    \file PTOF/Transitions.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 09/03/2022
    \brief Objects to handle particle dynamics.
 */

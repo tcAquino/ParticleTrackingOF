@@ -1,6 +1,6 @@
 /**
    \file PTOF/Info.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 03/09/2022
    \brief Objects and utilities to store information in particle states.
 */

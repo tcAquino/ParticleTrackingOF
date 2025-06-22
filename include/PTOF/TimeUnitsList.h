@@ -1,6 +1,6 @@
 /**
    \file PTOF/TimeUnitsList.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 30/09/2024
    \brief Time unit types.
 */

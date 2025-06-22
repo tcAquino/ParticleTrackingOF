@@ -1,6 +1,6 @@
 /**
    \file CTRW/State.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 09/26/2017
    \brief Particle states.
 */

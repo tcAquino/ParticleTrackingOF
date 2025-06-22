@@ -1,6 +1,6 @@
 /**
    \file PTOF/Boundary.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 17/02/2022
    \brief Objects and utilities to enforce boundary conditions.
 */

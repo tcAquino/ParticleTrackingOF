@@ -1,6 +1,6 @@
 /**
    \file PTOF/InitialConditionParameters_Cases.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/05/2025
    \brief Parameters for initial condition.
 */

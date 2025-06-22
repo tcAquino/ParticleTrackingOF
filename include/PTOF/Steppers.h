@@ -1,6 +1,6 @@
 /**
    \file PTOF/Steppers.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 09/03/2022
    \brief Objects and utilities to handle time stepping along advective and
    diffusive trajectories.

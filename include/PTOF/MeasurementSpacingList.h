@@ -1,6 +1,6 @@
 /**
    \file PTOF/MeasurementSpacingList.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 07/03/2022
    \brief Measurement spacing types condition types.
 */

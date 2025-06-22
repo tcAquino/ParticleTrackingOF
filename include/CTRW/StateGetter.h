@@ -1,6 +1,6 @@
 /**
    \file CTRW/StateGetter.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 17/05/2020
    \brief Handlers to extract information from particles and particle states.
 */

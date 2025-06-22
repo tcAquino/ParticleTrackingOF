@@ -1,6 +1,6 @@
 /**
    \file General/Constant.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 22/08/2015
    \brief Mathematical and physical constants.
 */

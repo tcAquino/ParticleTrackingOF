@@ -1,6 +1,6 @@
 /**
    \file PTOF/Output_Cases.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 07/03/2022
    \brief Handle different types of output measurements.
 */
@@ -12,6 +12,7 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "PTOF/BoundaryConditionList.h"
+#include "PTOF/BoundaryInfo.h"
 #include "PTOF/Criterion.h"
 #include "PTOF/Directories.h"
 #include "PTOF/EndCriterionList.h"
@@ -55,6 +56,7 @@ public:
      \param subject CTRW object to measure.
      \param velocity_field Velocity field as a function of state.
      \param geometry Domain geometry info and utilities.
+     \param boundary Boundary condition enforcer.
      \param directories Current case directory information.
      \param params_output Output parameters.
      \param identifier String to include in names of output files.
@@ -62,14 +64,20 @@ public:
      \param thresholds Thresholds for each mask, such that cells where a mask is
      above or equal to the threshold are considered.
   */
-  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
+  template <typename Boundary, typename VelocityField = meta::Empty,
+            typename Mask = meta::Empty>
   Output_Cases(Subject const &subject, VelocityField const &velocity_field,
-               Geometry const &geometry, Directories const &directories,
-               Parameters &&params_output, std::string const &identifier,
+               Geometry const &geometry, Boundary &boundary,
+               Directories const &directories, Parameters &&params_output,
+               std::string const &identifier,
                std::vector<std::reference_wrapper<const Mask>> masks = {},
                std::vector<double> thresholds = {})
       : parameters{std::forward<Parameters>(params_output)} {
-    set_measurement_types(subject, geometry, directories, identifier,
+    using BoundaryInfo =
+        BoundaryInfo_IfPresent_face_contact_point_reinjections<State>;
+    boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
+        std::make_unique<BoundaryInfo>()));
+    set_measurement_types(subject, geometry, boundary, directories, identifier,
                           velocity_field, masks, thresholds);
     set_end_criterion(subject);
     set_next_measurement_time();
@@ -79,10 +87,12 @@ public:
      \brief Constructor.
      \details Overload for initializer list arguments.
   */
-  template <typename VelocityField = meta::Empty, typename Mask>
+  template <typename Boundary, typename VelocityField = meta::Empty,
+            typename Mask>
   Output_Cases(Subject const &subject, VelocityField const &velocity_field,
-               Geometry const &geometry, Directories const &directories,
-               Parameters &&params_output, std::string const &identifier,
+               Geometry const &geometry, Boundary &boundary,
+               Directories const &directories, Parameters &&params_output,
+               std::string const &identifier,
                std::initializer_list<std::reference_wrapper<const Mask>> masks,
                std::initializer_list<double> thresholds = {})
       : Output_Cases(subject, velocity_field, geometry, directories,
@@ -94,10 +104,12 @@ public:
      \brief Constructor.
      \details Overload for initializer list arguments.
   */
-  template <typename VelocityField = meta::Empty, typename Mask>
+  template <typename Boundary, typename VelocityField = meta::Empty,
+            typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
-               Geometry const &geometry, Directories const &directories,
-               Parameters &&params_output, std::string const &identifier,
+               Geometry const &geometry, Boundary &boundary,
+               Directories const &directories, Parameters &&params_output,
+               std::string const &identifier,
                std::vector<std::reference_wrapper<const Mask>> masks,
                std::initializer_list<double> thresholds = {})
       : Output_Cases(subject, velocity_field, geometry, directories,
@@ -108,10 +120,12 @@ public:
      \brief Constructor.
      \details Overload for initializer list arguments.
   */
-  template <typename VelocityField = meta::Empty, typename Mask>
+  template <typename Boundary, typename VelocityField = meta::Empty,
+            typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
-               Geometry const &geometry, Directories const &directories,
-               Parameters &&params_output, std::string const &identifier,
+               Geometry const &geometry, Boundary &boundary,
+               Directories const &directories, Parameters &&params_output,
+               std::string const &identifier,
                std::initializer_list<std::reference_wrapper<const Mask>> masks,
                std::vector<double> thresholds = {})
       : Output_Cases(subject, velocity_field, geometry, directories,
@@ -251,15 +265,17 @@ private:
      \param subject CTRW object to measure.
      \param directories Current case directory information.
      \param geometry Domain geometry info and utilities.
+     \param boundary Boundary condition enforcer.
      \param identifier String to include in names of output files.
      \param velocity_field Velocity field as a function of state.
      \param masks Scalar field reference wrappers.
      \param thresholds Thresholds for each mask, such that cells where a mask
      is above or equal to the threshold are considered.
   */
-  template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
+  template <typename Boundary, typename VelocityField = meta::Empty,
+            typename Mask = meta::Empty>
   void set_measurement_types(
-      Subject const &subject, Geometry const &geometry,
+      Subject const &subject, Geometry const &geometry, Boundary &boundary,
       Directories const &directories, std::string const &identifier,
       VelocityField &&velocity_field = {},
       std::vector<std::reference_wrapper<const Mask>> masks = {},
@@ -307,10 +323,6 @@ private:
         using Measurement =
             typename std::remove_reference_t<Parameters>::Measurement_Order;
         Measurement &measurement_derived = cast<Measurement>(measurement);
-        if (measurement_derived.order == 0) {
-          throw std::runtime_error{for_measurement_type +
-                                   "Moment order not provided"};
-        }
         _output_time.emplace_back(
             std::make_unique<
                 MeasurerTime_position_nth_moment<Subject, Geometry>>(
@@ -487,8 +499,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_periodic: {
-        if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>) {
+        if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_periodic<Subject, Geometry>>(
@@ -502,8 +513,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_in_regions_periodic: {
-        if constexpr (!meta::has_periodicity_v<
-                          typename Subject::Particle::State> &&
+        if constexpr (!meta::has_periodicity_v<State> &&
                       !std::is_same_v<Mask, meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_in_regions_periodic<
@@ -511,8 +521,7 @@ private:
                                             identifier, masks, thresholds,
                                             measurement->precision));
         } else {
-          if constexpr (!meta::has_periodicity_v<
-                            typename Subject::Particle::State>)
+          if constexpr (!meta::has_periodicity_v<State>)
             throw std::runtime_error{
                 for_measurement_type +
                 "Particle state does not define periodicity"};
@@ -522,8 +531,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_mean_periodic: {
-        if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>) {
+        if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_mean_periodic<Subject, Geometry>>(
@@ -537,8 +545,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_second_moment_periodic: {
-        if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>) {
+        if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_second_moment_periodic<
                   Subject, Geometry>>(subject, geometry, directories,
@@ -551,8 +558,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_variance_periodic: {
-        if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>) {
+        if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_variance_periodic<Subject, Geometry>>(
@@ -566,8 +572,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_nth_moment_periodic: {
-        if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>) {
+        if constexpr (meta::has_periodicity_v<State>) {
           using Measurement =
               typename std::remove_reference_t<Parameters>::Measurement_Order;
           Measurement &measurement_derived = cast<Measurement>(measurement);
@@ -584,8 +589,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_moment_periodic: {
-        if constexpr (meta::has_periodicity_v<
-                          typename Subject::Particle::State>) {
+        if constexpr (meta::has_periodicity_v<State>) {
           using Measurement =
               typename std::remove_reference_t<Parameters>::Measurement_Orders;
           Measurement &measurement_derived = cast<Measurement>(measurement);
@@ -613,17 +617,44 @@ private:
                 measurement->precision));
         break;
       }
-      case MeasurementList::Type::adsorbed_position: {
+      case MeasurementList::Type::position_adsorbed: {
         _output_time.emplace_back(
-            std::make_unique<MeasurerTime_adsorbed_position<Subject, Geometry>>(
+            std::make_unique<MeasurerTime_position_adsorbed<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
                 measurement->precision));
         break;
       }
-      case MeasurementList::Type::adsorbed_position_periodic: {
+      case MeasurementList::Type::position_adsorbed_periodic: {
         _output_time.emplace_back(
-            std::make_unique<MeasurerTime_adsorbed_position<Subject, Geometry>>(
+            std::make_unique<MeasurerTime_position_adsorbed<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::surface_reacted_mass: {
+        using BoundaryInfo = BoundaryInfo_Record_surface_reacted_mass<State>;
+        boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
+            std::make_unique<BoundaryInfo>()));
+        _output_time.emplace_back(
+            std::make_unique<
+                MeasurerTime_surface_reacted_mass<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                dynamic_cast<BoundaryInfo const &>(
+                    boundary.boundary_infos_back()),
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::surface_reacted_mass_periodic: {
+        using BoundaryInfo =
+            BoundaryInfo_Record_surface_reacted_mass_periodic<State>;
+        boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
+            std::make_unique<BoundaryInfo>()));
+        _output_time.emplace_back(
+            std::make_unique<
+                MeasurerTime_surface_reacted_mass_periodic<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                dynamic_cast<BoundaryInfo const &>(
+                    boundary.boundary_infos_back()),
                 measurement->precision));
         break;
       }
@@ -758,6 +789,7 @@ private:
     return dynamic_cast<Measurement &>(*measurement.get());
   }
 
+  using State = typename Subject::Particle::State;
   std::unique_ptr<Criterion<Subject>>
       _end_criterion; /**< To check if end criterion is met. */
   std::unique_ptr<NextMeasurementTime<std::remove_reference_t<Parameters>>>
@@ -768,47 +800,54 @@ private:
       _output; /**< Handle each output type given nothing. */
 };
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField, typename Mask>
+          typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
              std::vector<std::reference_wrapper<const Mask>>,
              std::vector<double>)
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField, typename Mask>
+          typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
              std::vector<std::reference_wrapper<const Mask>>)
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField>
+          typename Boundary, typename VelocityField>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &)
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &)
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField, typename Mask>
+          typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
              std::initializer_list<std::reference_wrapper<const Mask>>,
              std::initializer_list<double>)
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField, typename Mask>
+          typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
              std::initializer_list<std::reference_wrapper<const Mask>>)
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField, typename Mask>
+          typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
              std::vector<std::reference_wrapper<const Mask>>,
              std::initializer_list<double>)
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
-          typename VelocityField, typename Mask>
+          typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Directories const &, Parameters &&, std::string const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
              std::initializer_list<std::reference_wrapper<const Mask>>,
              std::vector<double>)
     -> Output_Cases<Subject, Geometry, Parameters>;

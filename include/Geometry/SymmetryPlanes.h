@@ -1,6 +1,6 @@
 /**
    \file Geometry/SymmetryPlanes.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 13/05/2020
 
    \brief Symmetry planes to describe general symmetries.

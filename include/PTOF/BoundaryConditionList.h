@@ -1,6 +1,6 @@
 /**
    \file PTOF/BoundaryConditionList.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 29/09/2024
    \brief Boundary condition types.
 */
@@ -23,15 +23,14 @@ struct BoundaryConditionList {
      \brief Implemented types.
   */
   enum class Type {
-    reflecting, /**< Reflecting                                         */
-    reacting_reflecting, /**< Reacting and reflecting                   */
-    periodic,  /**< Periodic                                            */
-    absorbing, /**< Absorbing                                           */
-    info,      /**< Information upon hitting                            */
-    inlet, /**< Reflecting for non-negative flow velocities, absorbing otherwise
+    reflecting, /**< Reflecting. */
+    reacting,   /**< Reacting. */
+    periodic,   /**< Periodic. */
+    absorbing,  /**< Absorbing. */
+    inlet, /**< Reflecting for non-outward flow velocities, absorbing otherwise.
             */
-    custom, /**< Enforced by custom Boundary object                  */
-    empty   /**< No effect (default for unspecified patches in mesh) */
+    custom, /**< Enforced by custom Boundary object. */
+    empty   /**< No effect (default for unspecified patches in mesh). */
   };
 
   /**
@@ -60,18 +59,17 @@ struct BoundaryConditionList {
   /** \brief Map names to types. */
   inline static const std::map<std::string, Type> name_to_type{
       {"reflecting", Type::reflecting},
-      {"reacting_reflecting", Type::reacting_reflecting},
+      {"reacting", Type::reacting},
       {"periodic", Type::periodic},
       {"absorbing", Type::absorbing},
       {"inlet", Type::inlet},
       {"custom", Type::custom},
-      {"empty", Type::empty},
-  };
+      {"empty", Type::empty}};
 
   /** \brief Map types to names. */
   inline static const std::map<Type, std::string> type_to_name{
       {Type::reflecting, "reflecting"},
-      {Type::reacting_reflecting, "reacting_reflecting"},
+      {Type::reacting, "reacting"},
       {Type::periodic, "periodic"},
       {Type::absorbing, "absorbing"},
       {Type::inlet, "inlet"},

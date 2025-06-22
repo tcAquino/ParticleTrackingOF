@@ -1,6 +1,6 @@
 /**
    \file General/MultiArray.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 28/09/2017
    \brief Multidimensional array.
 */

@@ -1,6 +1,6 @@
 /**
    \file PTOF/Phase.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/02/2024
    \brief Definitions and utilities to handle VOF-type phase fields (saturation)
    and transport in two-phase flow.

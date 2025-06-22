@@ -1,6 +1,6 @@
 /**
    \file PTOF/SurfaceReaction.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 10/03/2022
    \brief Objects and utilities for surface and bulk reactions.
 */
@@ -218,7 +218,7 @@ public:
         rate(face) * std::sqrt(cnst::pi * exposure_time / diff_coeff);
     double probability_second_order =
         probability_first_order / (1. + probability_first_order / 2.);
-    if (_uniform_dist(_rng) < probability_second_order){
+    if (_uniform_dist(_rng) < probability_second_order) {
       state.info.adsorbed = true;
     }
   }
@@ -497,8 +497,10 @@ private:
 };
 template <typename Locator, typename ParallelOption>
 SurfaceReaction_AFluidPlusASolidtoNothing(
-    double, double, double, std::unordered_map<Foam::label, double>, Locator &&,
-    ParallelOption)
+    double, double, double,
+    typename SurfaceReaction_AFluidPlusASolidtoNothing<
+        Locator, ParallelOption>::SurfaceConcentrations,
+    Locator &&, ParallelOption)
     -> SurfaceReaction_AFluidPlusASolidtoNothing<Locator, ParallelOption>;
 
 /**

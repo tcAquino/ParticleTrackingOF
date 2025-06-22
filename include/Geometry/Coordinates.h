@@ -1,6 +1,6 @@
 /**
    \file Geometry/Coordinates.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 17/11/2020
    \brief Coordinate changes.
 */

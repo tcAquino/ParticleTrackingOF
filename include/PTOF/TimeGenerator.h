@@ -1,6 +1,6 @@
 /**
    \file PTOF/TimeGenerator.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 09/26/2017
    \brief Objects time increment generation.
 */

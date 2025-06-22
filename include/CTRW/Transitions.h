@@ -1,6 +1,6 @@
 /**
    \file CTRW/Transitions.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/06/2018
 
    \brief Objects to handle state transitions in particle tracking.

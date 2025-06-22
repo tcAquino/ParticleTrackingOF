@@ -1,6 +1,6 @@
 /**
    \file PTOF/MeasurementList.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 07/03/2022
    \brief Measurement types.
 */
@@ -63,10 +63,15 @@ struct MeasurementList {
                                    for periodicity. */
     first_crossing_time, /**< First crossing time, tag, and mass for specified
                             position along specified dimension. */
-    adsorbed_position, /**< Time, tag, position, and mass of adsorbed particles.
-                        */
-    adsorbed_position_periodic, /**< Time, tag, position, and mass of adsorbed
+    position_adsorbed,   /**< Time, tag, position, and mass of adsorbed
+                          * particles.
+                          */
+    position_adsorbed_periodic, /**< Time, tag, position, and mass of adsorbed
                                    particles. */
+    surface_reacted_mass, /**< Time and net reacted mass at each boundary face.
+                           */
+    surface_reacted_mass_periodic, /**< Time and net reacted mass at each
+                                   boundary face with periodicity info. */
     absorption_time, /**< Particle absorption times, tags, and masses at end of
                        dynamics. */
     absorption_time_patch,    /**< Particle absorption times, particle tags,
@@ -142,8 +147,10 @@ struct MeasurementList {
       {"position_moment_periodic", Type::position_moment_periodic},
       {"position_variance_periodic", Type::position_variance_periodic},
       {"first_crossing_time", Type::first_crossing_time},
-      {"adsorbed_position", Type::adsorbed_position},
-      {"adsorbed_position_periodic", Type::adsorbed_position_periodic},
+      {"position_adsorbed", Type::position_adsorbed},
+      {"position_adsorbed_periodic", Type::position_adsorbed_periodic},
+      {"surface_reacted_mass", Type::surface_reacted_mass},
+      {"surface_reacted_mass_periodic", Type::surface_reacted_mass_periodic},
       {"absorption_time", Type::absorption_time},
       {"absorption_time_patch", Type::absorption_time_patch},
       {"absorption_time_position", Type::absorption_time_position},
@@ -185,8 +192,10 @@ struct MeasurementList {
       {Type::position_moment_periodic, "position_moment_periodic"},
       {Type::position_variance_periodic, "position_variance_periodic"},
       {Type::first_crossing_time, "first_crossing_time"},
-      {Type::adsorbed_position, "adsorbed_position"},
-      {Type::adsorbed_position_periodic, "adsorbed_position_periodic"},
+      {Type::position_adsorbed, "position_adsorbed"},
+      {Type::position_adsorbed_periodic, "position_adsorbed_periodic"},
+      {Type::surface_reacted_mass, "surface_reacted_mass"},
+      {Type::surface_reacted_mass_periodic, "surface_reacted_mass_periodic"},
       {Type::absorption_time, "absorption_time"},
       {Type::absorption_time_patch, "absorption_time_patch"},
       {Type::absorption_time_position, "absorption_time_position"},

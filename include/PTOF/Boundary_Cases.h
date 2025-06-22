@@ -1,6 +1,6 @@
 /**
    \file PTOF/Boundary_Cases.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 17/02/2022
    \brief Enforce different types of boundary condition depending on patch.
 */
@@ -14,6 +14,7 @@
 #include "Geometry/Boundary.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/BoundaryConditionList.h"
+#include "PTOF/BoundaryInfo.h"
 #include "PTOF/Meta.h"
 #include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
@@ -28,19 +29,31 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 namespace ptof {
 /**
    \class Boundary_Cases PTOF/Boundary_Cases.h "PTOF/Boundary_Cases.h"
    \brief Boundary object to handle implemented boundary types.
 */
-template <typename Locator, typename BoundaryInfo, typename VelocityField,
+template <typename State, typename Locator, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom,
           typename SurfaceReaction>
 class Boundary_Cases {
 public:
-  /** \brief Container type to hold patch names and associated bc type names. */
-  using BCs = std::unordered_map<std::string, std::string>;
+  using BoundaryInfo = BoundaryInfo_Base<State>; /**< Boundary-related info. */
+  using Intersection =
+      typename BoundaryInfo::Intersection; /**< Object to handle
+                 boundary point collision information. */
+  using BoundaryInfoContainer = std::vector<std::unique_ptr<
+      BoundaryInfo>>; /**< To hold multiple boundary-related info handlers. */
+  /**< Container type to hold patch names and associated bc type names.
+   */
+  using BCs =
+      std::unordered_map<std::string,
+                         std::string>; /**< Container type to hold patch names
+                                        * and associated bc type names.
+                                        */
   const BCs
       boundary_conditions; /**< Patch names and associated bc type names. */
 
@@ -49,22 +62,38 @@ public:
      \param boundary_conditions Patch names and associated boundary condition
      types.
      \param locator Object to locate positions in mesh.
-     \param store_info Object to handle storing of information upon hitting a
-     boundary.
      \param velocity_field Velocity field as a function of state.
      \param boundary_periodic Periodic boundary condition enforcer.
      \param boundary_custom Custom boundary condition enforcer.
      \param surface_reaction Surface Reaction.
   */
   Boundary_Cases(
-      BCs boundary_conditions, Locator &&locator, BoundaryInfo &&store_info,
+      BCs boundary_conditions, Locator &&locator,
       VelocityField &&velocity_field,
       Boundary_Periodic &&boundary_periodic = Boundary_DoNothing{},
       Boundary_Custom &&boundary_custom = Boundary_DoNothing{},
       SurfaceReaction &&surface_reaction = SurfaceReaction_DoNothing{})
       : boundary_conditions{boundary_conditions},
         _locator{std::forward<Locator>(locator)},
-        _store_info{std::forward<BoundaryInfo>(store_info)},
+        _velocity_field{std::forward<VelocityField>(velocity_field)},
+        _boundary_periodic{std::forward<Boundary_Periodic>(boundary_periodic)},
+        _boundary_custom{std::forward<Boundary_Custom>(boundary_custom)},
+        _patch_names{_locator.mesh().boundaryMesh().names()},
+        surface_reaction{std::forward<SurfaceReaction>(surface_reaction)} {
+    add_unspecified_patches(boundary_conditions, _patch_names);
+    verify_boundary_conditions(boundary_conditions, _locator.mesh(),
+                               meta::Selector_t<BoundaryConditionList>{});
+  }
+
+  /** \brief Constructor. */
+  Boundary_Cases(
+      meta::Selector_t<State>, BCs boundary_conditions, Locator &&locator,
+      VelocityField &&velocity_field,
+      Boundary_Periodic &&boundary_periodic = Boundary_DoNothing{},
+      Boundary_Custom &&boundary_custom = Boundary_DoNothing{},
+      SurfaceReaction &&surface_reaction = SurfaceReaction_DoNothing{})
+      : boundary_conditions{boundary_conditions},
+        _locator{std::forward<Locator>(locator)},
         _velocity_field{std::forward<VelocityField>(velocity_field)},
         _boundary_periodic{std::forward<Boundary_Periodic>(boundary_periodic)},
         _boundary_custom{std::forward<Boundary_Custom>(boundary_custom)},
@@ -94,7 +123,6 @@ public:
      \param state_old Previous particle state (should be in bounds).
      \return \c true if some boundary had an effect, \c false otherwise.
   */
-  template <typename State>
   bool operator()(State &state, State const &state_old) {
     // Note: The code flow is chosen to avoid trying to locate particles which
     // are outside as much as possible, because it is expensive
@@ -163,19 +191,16 @@ public:
       // Apply the approriate boundary and store associated info
       switch (BoundaryConditionList::type(type_name)) {
       case BoundaryConditionList::Type::reflecting: {
-        _store_info(state, state_old, intersection,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::reflecting>{});
+        info<BoundaryConditionList::Type::reflecting>(state, state_old,
+                                                      intersection);
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
         had_effect = true;
         break;
       }
-      case BoundaryConditionList::Type::reacting_reflecting: {
-        _store_info(
-            state, state_old, intersection,
-            meta::Selector<BoundaryConditionList::Type,
-                           BoundaryConditionList::Type::reacting_reflecting>{});
+      case BoundaryConditionList::Type::reacting: {
+        info<BoundaryConditionList::Type::reacting>(state, state_old,
+                                                    intersection);
         surface_reaction(state, state_old, intersection.index());
         if constexpr (meta::has_adsorbed_v<typename State::Info>) {
           if (state.info.adsorbed) {
@@ -188,54 +213,48 @@ public:
         break;
       }
       case BoundaryConditionList::Type::periodic: {
-        _store_info(state, state_old, intersection,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::periodic>{});
+        info<BoundaryConditionList::Type::periodic>(state, state_old,
+                                                    intersection);
         had_effect += _boundary_periodic(state, intersection);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        _store_info(state, state_old, intersection,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::absorbing>{});
+        info<BoundaryConditionList::Type::absorbing>(state, state_old,
+                                                     intersection);
         state.info.absorbed = true;
         state.set_position(intersection.point());
         had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::inlet: {
-        _store_info(state, state_old, intersection,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::absorbing>{});
         if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
                                       meta::Empty>) {
           if (face_flux_outward(intersection.index(), _velocity_field,
                                 _locator) > 0.) {
-            _store_info(
-                state, state_old, intersection,
-                meta::Selector<BoundaryConditionList::Type,
-                               BoundaryConditionList::Type::absorbing>{});
+            info<BoundaryConditionList::Type::absorbing>(state, state_old,
+                                                         intersection);
             state.set_position(intersection.point());
             had_effect = true;
             break;
           }
         }
-        _store_info(state, state_old, intersection,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::reflecting>{});
+        info<BoundaryConditionList::Type::reflecting>(state, state_old,
+                                                      intersection);
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
         had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::custom: {
-        _store_info(state, state_old, intersection,
-                    meta::Selector<BoundaryConditionList::Type,
-                                   BoundaryConditionList::Type::custom>{});
+        info<BoundaryConditionList::Type::custom>(state, state_old,
+                                                  intersection);
         had_effect += _boundary_custom(state, state_old, intersection);
         break;
       }
       case BoundaryConditionList::Type::empty: {
+        info<BoundaryConditionList::Type::empty>(state, state_old,
+                                                 intersection);
+        break;
       }
       default: {
         throw std::runtime_error{"Boundary condition type " + type_name +
@@ -335,10 +354,23 @@ public:
     return output;
   }
 
+  auto const &boundary_info(std::size_t ii) const {
+    return *_boundary_infos[ii].get();
+  }
+
+  auto const &boundary_infos_back() const {
+    return *_boundary_infos.back().get();
+  }
+
+  void add_boundary_info(std::unique_ptr<BoundaryInfo> boundary_info) {
+    _boundary_infos.push_back(std::move(boundary_info));
+  }
+
 private:
-  Locator _locator;         /**< Object to locate positions in mesh. */
-  BoundaryInfo _store_info; /**< Object to handle boundary-related info storing
-                               in states. */
+  Locator _locator; /**< Object to locate positions in mesh. */
+  std::vector<std::unique_ptr<BoundaryInfo>>
+      _boundary_infos; /**< Container of objects to handle boundary-related info
+                          storing. */
   VelocityField _velocity_field;
   Boundary_Periodic
       _boundary_periodic; /**< Boundary object to handle 'periodic' bc type. */
@@ -393,49 +425,60 @@ private:
      \param state Final state before new intersection.
      \return \c true if beyond final position, \c false otherwise.
   */
-  template <typename Intersection, typename State>
   auto next_intersection_is_beyond_final_point(
       Intersection const &next_intersection,
-      Foam::point const &old_intersection_point, State const &state) {
+      Foam::point const &old_intersection_point, State const &state) const {
     return next_intersection.hit() &&
            ((next_intersection.point() - old_intersection_point) &
             (make_point(state.position) - next_intersection.point())) < 0.;
   }
+
+  template <BoundaryConditionList::Type boundary_condition_type>
+  void info(State &state, State const &state_old,
+            Intersection const &intersection) {
+    for (auto &info : _boundary_infos) {
+      (*info)(state, state_old, intersection,
+              meta::Selector<BoundaryConditionList::Type,
+                             BoundaryConditionList::Type::custom>{});
+    }
+  }
 };
-template <typename Locator, typename BoundaryInfo, typename VelocityField,
+template <typename State, typename Locator, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom,
           typename Surface_Reaction>
-Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
-                                       Boundary_Periodic, Boundary_Custom,
-                                       Surface_Reaction>::BCs,
-               Locator &&, BoundaryInfo &&, VelocityField &&,
-               Boundary_Periodic &&, Boundary_Custom &&, Surface_Reaction &&)
-    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_Periodic,
+Boundary_Cases(
+    meta::Selector_t<State>,
+    typename Boundary_Cases<State, Locator, VelocityField, Boundary_Periodic,
+                            Boundary_Custom, Surface_Reaction>::BCs,
+    Locator &&, VelocityField &&, Boundary_Periodic &&, Boundary_Custom &&,
+    Surface_Reaction &&)
+    -> Boundary_Cases<State, Locator, VelocityField, Boundary_Periodic,
                       Boundary_Custom, Surface_Reaction>;
-template <typename Locator, typename BoundaryInfo, typename VelocityField,
+template <typename State, typename Locator, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom>
-Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
-                                       Boundary_Periodic, Boundary_Custom,
-                                       SurfaceReaction_DoNothing>::BCs,
-               Locator &&, BoundaryInfo &&, VelocityField &&,
-               Boundary_Periodic &&, Boundary_Custom &&)
-    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_Periodic,
+Boundary_Cases(
+    meta::Selector_t<State>,
+    typename Boundary_Cases<State, Locator, VelocityField, Boundary_Periodic,
+                            Boundary_Custom, SurfaceReaction_DoNothing>::BCs,
+    Locator &&, VelocityField &&, Boundary_Periodic &&, Boundary_Custom &&)
+    -> Boundary_Cases<State, Locator, VelocityField, Boundary_Periodic,
                       Boundary_Custom, SurfaceReaction_DoNothing>;
-template <typename Locator, typename BoundaryInfo, typename VelocityField,
+template <typename State, typename Locator, typename VelocityField,
           typename Boundary_Periodic>
-Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
-                                       Boundary_Periodic, Boundary_DoNothing,
-                                       SurfaceReaction_DoNothing>::BCs,
-               Locator &&, BoundaryInfo &&, VelocityField &&,
-               Boundary_Periodic &&)
-    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_Periodic,
+Boundary_Cases(
+    meta::Selector_t<State>,
+    typename Boundary_Cases<State, Locator, VelocityField, Boundary_Periodic,
+                            Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
+    Locator &&, VelocityField &&, Boundary_Periodic &&)
+    -> Boundary_Cases<State, Locator, VelocityField, Boundary_Periodic,
                       Boundary_DoNothing, SurfaceReaction_DoNothing>;
-template <typename Locator, typename BoundaryInfo, typename VelocityField>
-Boundary_Cases(typename Boundary_Cases<Locator, BoundaryInfo, VelocityField,
-                                       Boundary_DoNothing, Boundary_DoNothing,
-                                       SurfaceReaction_DoNothing>::BCs,
-               Locator &&, BoundaryInfo &&, VelocityField &&)
-    -> Boundary_Cases<Locator, BoundaryInfo, VelocityField, Boundary_DoNothing,
+template <typename State, typename Locator, typename VelocityField>
+Boundary_Cases(
+    meta::Selector_t<State>,
+    typename Boundary_Cases<State, Locator, VelocityField, Boundary_DoNothing,
+                            Boundary_DoNothing, SurfaceReaction_DoNothing>::BCs,
+    Locator &&, VelocityField &&)
+    -> Boundary_Cases<State, Locator, VelocityField, Boundary_DoNothing,
                       Boundary_DoNothing, SurfaceReaction_DoNothing>;
 } // namespace ptof
 

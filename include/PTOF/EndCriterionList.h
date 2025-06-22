@@ -1,6 +1,6 @@
 /**
    \file PTOF/EndCriterionList.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/05/2025
    \brief Criteria to stop dynamics.
 */

@@ -1,6 +1,6 @@
 /**
    \file General/Operation.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 08/06/2019
 
    \brief  Miscelaneous operations on containers.

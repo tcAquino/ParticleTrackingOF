@@ -1,6 +1,6 @@
 /**
  \file General/IO.h
- \author Tomás Aquino
+ \author Tomas Aquino
  \date 29/03/2024
  \brief Utilities for input and output.
 */
@@ -749,7 +749,7 @@ template <typename Container>
 std::ostream &print(std::ostream &stream, Container const &container,
                     bool delimit_first = false, std::string delimiter = "\t") {
   // TODO: Choose this specialization when stream << container exists
-  if constexpr (std::is_pod<Container>::value) {
+  if constexpr (std::is_scalar_v<Container>) {
     if (delimit_first)
       stream << delimiter;
     stream << container;
@@ -770,7 +770,7 @@ std::ostream &print(std::ostream &stream, Container const &container, int width,
   io::StreamScopeFormat guard{stream};
   stream << alignment;
   // TODO: Choose this specialization when stream << container exists
-  if constexpr (std::is_pod<Container>::value)
+  if constexpr (std::is_scalar_v<Container>)
     stream << std::setw(width) << container;
   else
     for (auto const &val : container)

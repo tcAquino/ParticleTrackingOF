@@ -1,6 +1,6 @@
 /**
    \file PTOF/Solvers.h
-   \author Tomás Aquino
+   \author Tomas Aquino
    \date 19/01/2025
    \brief Solver parameters and utilities.
 */
