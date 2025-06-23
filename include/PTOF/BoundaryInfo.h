@@ -13,6 +13,7 @@
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Info.h"
 #include "PTOF/Meta.h"
+#include "PTOF/Useful.h"
 #include <pointIndexHit.H>
 #include <utility>
 #include <vector>
@@ -163,11 +164,11 @@ struct BoundaryInfo_Nothing final : public BoundaryInfo_Base<State> {
 };
 
 /**
-   \class BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
+   \class BoundaryInfo_boundary_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about latest boundary face.
 */
 template <typename State>
-struct BoundaryInfo_face final : public BoundaryInfo_Base<State> {
+struct BoundaryInfo_boundary_face final : public BoundaryInfo_Base<State> {
   using Intersection = typename BoundaryInfo_Base<State>::Intersection;
 
   void generic(State &state, State const &state_old,
@@ -177,7 +178,7 @@ struct BoundaryInfo_face final : public BoundaryInfo_Base<State> {
 };
 
 /**
-   \class BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
+   \class BoundaryInfo_contact_point PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about latest contact point.
 */
 template <typename State>
@@ -191,7 +192,7 @@ struct BoundaryInfo_contact_point final : public BoundaryInfo_Base<State> {
 };
 
 /**
-   \class BoundaryInfo_face PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
+   \class reinjections PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store info about number of reinjections.
 */
 template <typename State>
@@ -211,12 +212,13 @@ struct BoundaryInfo_reinjections final : public BoundaryInfo_Base<State> {
 };
 
 /**
-   \class BoundaryInfo_face_reinjections PTOF/BoundaryInfo.h
+   \class BoundaryInfo_boundary_face_reinjections PTOF/BoundaryInfo.h
    "PTOF/BoundaryInfo.h"
    \brief Store info about face and number of reinjections.
 */
 template <typename State>
-struct BoundaryInfo_face_reinjections final : public BoundaryInfo_Base<State> {
+struct BoundaryInfo_boundary_face_reinjections final
+    : public BoundaryInfo_Base<State> {
   using Intersection = typename BoundaryInfo_Base<State>::Intersection;
 
   void generic(State &state, State const &state_old,
@@ -234,13 +236,13 @@ struct BoundaryInfo_face_reinjections final : public BoundaryInfo_Base<State> {
 };
 
 /**
-   \class BoundaryInfo_IfPresent_type_face_contact_point_reinjections
+   \class BoundaryInfo_IfPresent_type_boundary_face_contact_point_reinjections
    PTOF/BoundaryInfo.h "PTOF/BoundaryInfo.h"
    \brief Store each of face, contact point, and number of reinjections, if
    present in State::Info.
 */
 template <typename State>
-struct BoundaryInfo_IfPresent_face_contact_point_reinjections final
+struct BoundaryInfo_IfPresent_boundary_face_contact_point_reinjections final
     : public BoundaryInfo_Base<State> {
   using Intersection = typename BoundaryInfo_Base<State>::Intersection;
 
@@ -297,7 +299,8 @@ private:
 /**
    \class BoundaryInfo_Record_surface_reacted_mass_periodic PTOF/BoundaryInfo.h
    "PTOF/BoundaryInfo.h"
-   \brief Record info about net mass consumed at reactive boundaries.
+   \brief Record info about net mass consumed at reactive boundaries, accounting
+   for periodicity.
 */
 template <typename State>
 struct BoundaryInfo_Record_surface_reacted_mass_periodic final

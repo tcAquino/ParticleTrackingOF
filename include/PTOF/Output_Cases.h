@@ -74,7 +74,7 @@ public:
                std::vector<double> thresholds = {})
       : parameters{std::forward<Parameters>(params_output)} {
     using BoundaryInfo =
-        BoundaryInfo_IfPresent_face_contact_point_reinjections<State>;
+        BoundaryInfo_IfPresent_boundary_face_contact_point_reinjections<State>;
     boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
         std::make_unique<BoundaryInfo>()));
     set_measurement_types(subject, geometry, boundary, directories, identifier,
@@ -180,23 +180,27 @@ public:
      measurement.
   */
   void operator()(double time) {
-    for (auto const &output : _output_time)
-      output->operator()(time);
+    for (auto const &output : _output_time) {
+      (*output)(time);
+    }
     _next_measurement->advance();
   }
 
   /** \brief Output current information. */
   void operator()() {
-    for (auto const &output : _output)
+    for (auto const &output : _output) {
       output->print();
-    for (auto const &output : _output_time)
+    }
+    for (auto const &output : _output_time) {
       output->print();
+    }
   }
 
   /** \brief Update internal state. */
   void update(double time, double time_of_change) {
-    for (auto const &output : _output_time)
+    for (auto const &output : _output_time) {
       output->update(time, time_of_change);
+    }
   }
 
   /** \brief Output information about current object. */
@@ -235,8 +239,7 @@ public:
     }
 
     for (auto const &end_criterion : parameters.end_criteria) {
-      output << "\n"
-             << "End criterion: " << end_criterion << "\n";
+      output << "End criterion: " << end_criterion << "\n";
       auto criterion_type = EndCriterionList::type(end_criterion);
       if (parameters.end_values.count(criterion_type)) {
         output << "  - End value: " << parameters.end_values.at(criterion_type)
@@ -639,6 +642,28 @@ private:
         }
         break;
       }
+      case MeasurementList::Type::mass_adsorbed_face: {
+        _output_time.emplace_back(
+            std::make_unique<
+                MeasurerTime_mass_adsorbed_face<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
+      case MeasurementList::Type::mass_adsorbed_face_periodic: {
+        if constexpr (meta::has_periodicity_v<State>) {
+          _output_time.emplace_back(
+              std::make_unique<
+                  MeasurerTime_mass_adsorbed_face_periodic<Subject, Geometry>>(
+                  subject, geometry, directories, identifier,
+                  measurement->precision));
+        } else {
+          throw std::runtime_error{
+              for_measurement_type +
+              "Particle state does not define periodicity"};
+        }
+        break;
+      }
       case MeasurementList::Type::surface_reacted_mass: {
         using BoundaryInfo = BoundaryInfo_Record_surface_reacted_mass<State>;
         boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
@@ -648,7 +673,7 @@ private:
                 MeasurerTime_surface_reacted_mass<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
                 dynamic_cast<BoundaryInfo const &>(
-                    boundary.boundary_infos_back()),
+                    boundary.boundary_info_back()),
                 measurement->precision));
         break;
       }
@@ -663,7 +688,7 @@ private:
                   Subject, Geometry>>(subject, geometry, directories,
                                       identifier,
                                       dynamic_cast<BoundaryInfo const &>(
-                                          boundary.boundary_infos_back()),
+                                          boundary.boundary_info_back()),
                                       measurement->precision));
         } else {
           throw std::runtime_error{

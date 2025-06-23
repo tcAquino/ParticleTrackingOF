@@ -34,21 +34,21 @@ struct Info_absorbed_adsorbed {
 };
 
 /**
-   \struct Info_absorbed_face PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_boundary_face PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and boundary face where absorption
    happened.
 */
-struct Info_absorbed_face {
+struct Info_absorbed_boundary_face {
   bool absorbed;
   Foam::label boundary_face;
 };
 
 /**
-   \struct Info_absorbed_adsorbed_face PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_adsorbed_boundary_face PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and boundary face where absorption
    happened.
 */
-struct Info_absorbed_adsorbed_face {
+struct Info_absorbed_adsorbed_boundary_face {
   bool absorbed;
   bool adsorbed;
   Foam::label boundary_face;
@@ -64,7 +64,7 @@ struct Info_absorbed_reinjections {
 };
 
 /**
-   \struct Info_absorbed_face_reinjections PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_boundary_face_reinjections PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and number of reinjections.
 */
 struct Info_absorbed_face_reinjections {
@@ -74,10 +74,11 @@ struct Info_absorbed_face_reinjections {
 };
 
 /**
-   \struct Info_absorbed_adsorbed_face_reinjections PTOF/Info.h "PTOF/Info.h"
+   \struct Info_absorbed_adsorbed_boundary_face_reinjections PTOF/Info.h
+   "PTOF/Info.h"
    \brief Information about absorption and number of reinjections.
 */
-struct Info_absorbed_adsorbed_face_reinjections {
+struct Info_absorbed_adsorbed_boundary_face_reinjections {
   bool absorbed;
   bool adsorbed;
   Foam::label boundary_face;

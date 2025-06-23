@@ -64,10 +64,12 @@ struct MeasurementList {
     first_crossing_time, /**< First crossing time, tag, and mass for specified
                             position along specified dimension. */
     position_adsorbed,   /**< Time, tag, position, and mass of adsorbed
-                          * particles.
-                          */
+                            particles. */
     position_adsorbed_periodic, /**< Time, tag, position, and mass of adsorbed
                                    particles. */
+    mass_adsorbed_face, /**< Time and adsorbed mass at each boundary face. */
+    mass_adsorbed_face_periodic, /**< Time and adsorbed mass at each boundary
+                                    face, accouting for periodicity. */
     surface_reacted_mass, /**< Time and net reacted mass at each boundary face.
                            */
     surface_reacted_mass_periodic, /**< Time and net reacted mass at each
@@ -149,6 +151,8 @@ struct MeasurementList {
       {"first_crossing_time", Type::first_crossing_time},
       {"position_adsorbed", Type::position_adsorbed},
       {"position_adsorbed_periodic", Type::position_adsorbed_periodic},
+      {"mass_adsorbed_face", Type::mass_adsorbed_face},
+      {"mass_adsorbed_face_periodic", Type::mass_adsorbed_face_periodic},
       {"surface_reacted_mass", Type::surface_reacted_mass},
       {"surface_reacted_mass_periodic", Type::surface_reacted_mass_periodic},
       {"absorption_time", Type::absorption_time},
@@ -194,6 +198,8 @@ struct MeasurementList {
       {Type::first_crossing_time, "first_crossing_time"},
       {Type::position_adsorbed, "position_adsorbed"},
       {Type::position_adsorbed_periodic, "position_adsorbed_periodic"},
+      {Type::mass_adsorbed_face, "mass_adsorbed_face"},
+      {Type::mass_adsorbed_face_periodic, "mass_adsorbed_face_periodic"},
       {Type::surface_reacted_mass, "surface_reacted_mass"},
       {Type::surface_reacted_mass_periodic, "surface_reacted_mass_periodic"},
       {Type::absorption_time, "absorption_time"},

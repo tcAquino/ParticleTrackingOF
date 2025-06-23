@@ -191,38 +191,43 @@ public:
       // Apply the approriate boundary and store associated info
       switch (BoundaryConditionList::type(type_name)) {
       case BoundaryConditionList::Type::reflecting: {
-        info<BoundaryConditionList::Type::reflecting>(state, state_old,
-                                                      intersection);
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
+        info<BoundaryConditionList::Type::reflecting>(state, state_old,
+                                                      intersection);
         had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::reacting: {
-        info<BoundaryConditionList::Type::reacting>(state, state_old,
-                                                    intersection);
         surface_reaction(state, state_old, intersection.index());
         if constexpr (meta::has_adsorbed_v<typename State::Info>) {
           if (state.info.adsorbed) {
             state.set_position(intersection.point());
+            info<BoundaryConditionList::Type::reacting>(state, state_old,
+                                                        intersection);
+            had_effect = true;
+            break;
           }
         }
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
+        info<BoundaryConditionList::Type::reacting>(state, state_old,
+                                                    intersection);
         had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::periodic: {
+        _boundary_periodic(state, intersection);
         info<BoundaryConditionList::Type::periodic>(state, state_old,
                                                     intersection);
-        had_effect += _boundary_periodic(state, intersection);
+        had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        info<BoundaryConditionList::Type::absorbing>(state, state_old,
-                                                     intersection);
         state.info.absorbed = true;
         state.set_position(intersection.point());
+        info<BoundaryConditionList::Type::absorbing>(state, state_old,
+                                                     intersection);
         had_effect = true;
         break;
       }
@@ -231,24 +236,24 @@ public:
                                       meta::Empty>) {
           if (face_flux_outward(intersection.index(), _velocity_field,
                                 _locator) > 0.) {
+            state.set_position(intersection.point());
             info<BoundaryConditionList::Type::absorbing>(state, state_old,
                                                          intersection);
-            state.set_position(intersection.point());
             had_effect = true;
             break;
           }
         }
-        info<BoundaryConditionList::Type::reflecting>(state, state_old,
-                                                      intersection);
         boundary_reflecting(state, intersection.point(),
                             reflection_normal(intersection.index()));
+        info<BoundaryConditionList::Type::reflecting>(state, state_old,
+                                                      intersection);
         had_effect = true;
         break;
       }
       case BoundaryConditionList::Type::custom: {
+        had_effect += _boundary_custom(state, state_old, intersection);
         info<BoundaryConditionList::Type::custom>(state, state_old,
                                                   intersection);
-        had_effect += _boundary_custom(state, state_old, intersection);
         break;
       }
       case BoundaryConditionList::Type::empty: {
@@ -358,7 +363,7 @@ public:
     return *_boundary_infos[ii].get();
   }
 
-  auto const &boundary_infos_back() const {
+  auto const &boundary_info_back() const {
     return *_boundary_infos.back().get();
   }
 

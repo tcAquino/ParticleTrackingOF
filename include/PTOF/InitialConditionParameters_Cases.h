@@ -1,5 +1,5 @@
 /**
-   \File PTOF/InitialConditionParameters_Cases.h
+   \file PTOF/InitialConditionParameters_Cases.h
    \author Tomas Aquino
    \date 08/05/2025
    \brief Parameters for initial condition.

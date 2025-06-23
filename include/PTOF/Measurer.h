@@ -86,7 +86,9 @@ protected:
 
 /**
    \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
-   \brief Output absorption times, tags, and masses of absorbed particles.
+   \brief Output absorption time, tag, mass, patch (optional), and
+   position (optional, optionally accounting for periodicity) of absorbed
+   particles.
 */
 template <typename Subject, typename Geometry, bool print_patch = false,
           bool print_position = false, bool periodic_position = false>
@@ -99,7 +101,8 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
                                     directories,
                                     std::string{"absorption_time"} +
                                         (print_patch ? "_patch" : "") +
-                                        (print_position ? "_position" : ""),
+                                        (print_position ? "_position" : "") +
+                                        (periodic_position ? "_periodic" : ""),
                                     identifier,
                                     precision},
         _column_widths{
@@ -182,7 +185,7 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
                 << std::setw(_column_widths[2]) << state.mass;
         print_state_patch(state);
         print_state_position(state);
-        print_reinjections(state);
+        print_state_reinjections(state);
         _output << "\n";
       }
     }
@@ -203,7 +206,7 @@ private:
         face = state.info.boundary_face;
       } else {
         face = this->_geometry.mesh_search().findNearestBoundaryFace(
-            make_point(state.position), state.cell);
+            make_point(state.position));
       }
       _output << std::setw(_column_widths[3])
               << _patch_names[ptof::patch_id(face, this->_geometry.mesh())];
@@ -224,7 +227,7 @@ private:
     }
   }
 
-  void print_reinjections(State const &state) {
+  void print_state_reinjections(State const &state) {
     if constexpr (meta::has_reinjections_v<typename Subject::State::Info>) {
       _output << std::setw(_column_widths[5]) << state.info.reinjections;
     }
