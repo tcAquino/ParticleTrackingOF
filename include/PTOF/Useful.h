@@ -271,7 +271,8 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
     } else {
       output << "\n"
                 "Help option "
-             << option << " not supported\n";
+             << option << " : "
+             << "Not supported\n";
     }
   }
 

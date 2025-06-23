@@ -431,8 +431,7 @@ public:
       break;
     }
     default:
-      throw std::runtime_error{std::string{"End criterion "} + end_criterion +
-                               " not supported"};
+      throw std::runtime_error{in_file + for_end_criterion + "Not supported"};
     }
   }
 
@@ -451,7 +450,8 @@ public:
     std::string for_measurement_spacing =
         std::string{"Measurement spacing "} + measurement_spacing + " : ";
     if (!MeasurementSpacingList::contains(measurement_spacing))
-      throw std::runtime_error{for_measurement_spacing + " Not supported"};
+      throw std::runtime_error{in_file + for_measurement_spacing +
+                               "Not supported"};
     io::read(split_line, param_index,
              in_file + for_measurement_spacing +
                  "Could not parse minimum measurement time",
@@ -535,7 +535,8 @@ public:
       std::string for_measurement_type =
           std::string{"Measurement type "} + name + " : ";
       if (!MeasurementList::contains(name))
-        throw std::runtime_error{for_measurement_type + " Not supported"};
+        throw std::runtime_error{in_file + for_measurement_type +
+                                 "Not supported"};
       switch (MeasurementList::type(name)) {
       case (MeasurementList::Type::scalar_field):
       case (MeasurementList::Type::vector_field):

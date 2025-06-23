@@ -156,9 +156,8 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
         average_surface_concentration =
             op::sum(op::times(surface_concentrations, areas)) / op::sum(areas);
       } else {
-        throw std::runtime_error{
-            std::string{"Initial surface reactant distribution type "} +
-            initial_distribution + " not supported"};
+        throw std::runtime_error{in_file + for_initial_distribution +
+                                 "Not supported"};
       }
 
       split_line = io::split_line(input);
@@ -206,9 +205,8 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
         reaction_time = params_transport.lengthscale /
                         (average_surface_concentration * rate_constant);
       } else {
-        throw std::runtime_error{
-            std::string{"Initial surface reactant distribution type "} +
-            initial_distribution + " not supported"};
+        throw std::runtime_error{in_file + for_rate_distribution +
+                                 "Not supported"};
       }
     }
 
@@ -375,9 +373,8 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
         average_surface_concentration =
             op::sum(op::times(surface_concentrations, areas)) / op::sum(areas);
       } else {
-        throw std::runtime_error{
-            std::string{"Initial surface reactant distribution type "} +
-            initial_distribution + " not supported"};
+        throw std::runtime_error{in_file + for_initial_distribution +
+                                 "Not supported"};
       }
 
       split_line = io::split_line(input);
@@ -428,9 +425,8 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
         reaction_time = params_transport.lengthscale /
                         (average_surface_concentration * rate_constant);
       } else {
-        throw std::runtime_error{
-            std::string{"Initial surface reactant distribution type "} +
-            initial_distribution + " not supported"};
+        throw std::runtime_error{in_file + for_rate_distribution +
+                                 "Not supported"};
       }
     }
 

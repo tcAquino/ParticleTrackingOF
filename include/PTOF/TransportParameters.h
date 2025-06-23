@@ -95,11 +95,12 @@ public:
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh());
+    rescale(velocity_field, geometry.mesh(), in_file + for_peclet_option);
   }
 
   template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh) {
+  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+               std::string const &in_file_for_peclet_option) {
     double current_mean = magnitude_of_average(velocity_field.field(), mesh);
     if (peclet_option == "rescale_velocity_to_peclet" ||
         peclet_option == "rescale_velocity_to_mean" ||
@@ -119,8 +120,7 @@ public:
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       advection_time = lengthscale / mean_velocity;
     } else
-      throw std::runtime_error{"Peclet number setting option " + peclet_option +
-                               " not supported"};
+      throw std::runtime_error{in_file_for_peclet_option + " Not supported"};
   }
 
   /**
@@ -231,11 +231,13 @@ public:
                                "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh());
+    rescale(velocity_field, geometry.mesh(),
+            in_file + for_rescale_velocity_option);
   }
 
   template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh) {
+  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+               std::string const &in_file_for_rescale_velocity_option) {
     double current_mean = magnitude_of_average(velocity_field.field(), mesh);
     if (rescale_velocity_option == "rescale_velocity_to_mean" ||
         rescale_velocity_option == "rescale_velocity_to_advection_time") {
@@ -246,8 +248,8 @@ public:
       advection_time = lengthscale / current_mean;
       mean_velocity = lengthscale / advection_time;
     } else
-      throw std::runtime_error{"Flow velocity field rescaling option " +
-                               rescale_velocity_option + " not supported"};
+      throw std::runtime_error{in_file_for_rescale_velocity_option +
+                               "Not supported"};
   }
 
   /**
@@ -431,11 +433,12 @@ public:
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh());
+    rescale(velocity_field, geometry.mesh(), in_file + for_peclet_option);
   }
 
   template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh) {
+  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+               std::string const &in_file_for_peclet_option) {
     double current_mean = magnitude_of_average(velocity_field.field(), mesh);
     if (peclet_option == "rescale_velocity_to_peclet" ||
         peclet_option == "rescale_velocity_to_mean" ||
@@ -455,8 +458,7 @@ public:
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       advection_time = lengthscale / mean_velocity;
     } else {
-      throw std::runtime_error{"Peclet number setting option " + peclet_option +
-                               " not supported"};
+      throw std::runtime_error{in_file_for_peclet_option + "Not supported"};
     }
   }
 
@@ -574,8 +576,8 @@ public:
                lengthscale);
       lengthscale = std::stod(split_line[param_index++]);
     } else {
-      throw std::runtime_error{"Lengthscale definition option " +
-                               lengthscale_option + " not supported"};
+      throw std::runtime_error{in_file + for_lengthscale_option +
+                               "Not supported"};
     }
 
     split_line = io::split_line(input);
@@ -605,11 +607,13 @@ public:
                                "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh());
+    rescale(velocity_field, geometry.mesh(),
+            in_file + for_rescale_velocity_option);
   }
 
   template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh) {
+  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+               std::string const &in_file_for_rescale_velocity_option) {
     double current_mean = magnitude_of_average(velocity_field.field(), mesh);
     if (rescale_velocity_option == "rescale_velocity_to_mean" ||
         rescale_velocity_option == "rescale_velocity_to_advection_time") {
@@ -620,8 +624,8 @@ public:
       advection_time = lengthscale / current_mean;
       mean_velocity = lengthscale / advection_time;
     } else
-      throw std::runtime_error{"Flow velocity field rescaling option " +
-                               rescale_velocity_option + " not supported"};
+      throw std::runtime_error{in_file_for_rescale_velocity_option +
+                               "Not supported"};
   }
 
   /**
@@ -712,8 +716,8 @@ public:
                lengthscale);
       lengthscale = std::stod(split_line[param_index++]);
     } else {
-      throw std::runtime_error{"Lengthscale definition option " +
-                               lengthscale_option + " not supported"};
+      throw std::runtime_error{in_file + for_lengthscale_option +
+                               "Not supported"};
     }
 
     split_line = io::split_line(input);

@@ -82,7 +82,7 @@ public:
         surface_reaction{std::forward<SurfaceReaction>(surface_reaction)} {
     add_unspecified_patches(boundary_conditions, _patch_names);
     verify_boundary_conditions(boundary_conditions, _locator.mesh(),
-                               meta::Selector_t<BoundaryConditionList>{});
+                               BoundaryConditionList{});
   }
 
   /** \brief Constructor. */
@@ -101,7 +101,7 @@ public:
         surface_reaction{std::forward<SurfaceReaction>(surface_reaction)} {
     add_unspecified_patches(boundary_conditions, _patch_names);
     verify_boundary_conditions(boundary_conditions, _locator.mesh(),
-                               meta::Selector_t<BoundaryConditionList>{});
+                               BoundaryConditionList{});
   }
 
   /**
@@ -257,8 +257,8 @@ public:
         break;
       }
       default: {
-        throw std::runtime_error{"Boundary condition type " + type_name +
-                                 " not supported"};
+        throw std::runtime_error{std::string{"Boundary condition type "} +
+                                 type_name + " : " + "Not supported"};
       }
       }
 

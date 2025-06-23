@@ -101,19 +101,24 @@ struct Geometry_Generic {
                     SurfaceReaction &&surface_reaction,
                     InitialCondition &&initial_condition = {}) const {
     auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
-    for (auto const &bc : boundary_conditions)
-      if (bc.second == "periodic")
+    for (auto const &bc : boundary_conditions) {
+      if (bc.second == "periodic") {
         throw std::runtime_error{"Boundary conditions of type periodic not "
                                  "supported by Geometry type"};
-    if constexpr (dynamics != Dynamics::Type::firstpassage)
-      for (auto const &bc : boundary_conditions)
-        if (bc.second == "custom")
-          throw std::runtime_error{
-              std::string{
-                  "Boundary conditions of type custom not supported for "} +
-              Dynamics::name(dynamics) + " dynamics"};
+      }
+    }
+    if constexpr (dynamics != Dynamics::Type::firstpassage) {
+      for (auto const &bc : boundary_conditions) {
+        if (bc.second == "custom") {
+          throw std::runtime_error{std::string{"Boundary conditions for "} +
+                                   Dynamics::name(dynamics) + " : " +
+                                   "Boundary condition type custom" + " : " +
+                                   "Not supported"};
+        }
+      }
+    }
 
-    if constexpr (dynamics == Dynamics::Type::transport)
+    if constexpr (dynamics == Dynamics::Type::transport) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -122,7 +127,8 @@ struct Geometry_Generic {
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
-    if constexpr (dynamics == Dynamics::Type::firstpassage)
+    }
+    if constexpr (dynamics == Dynamics::Type::firstpassage) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -131,8 +137,12 @@ struct Geometry_Generic {
           Boundary_DoNothing{},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
-    throw std::runtime_error{std::string{"Boundary conditions for "} +
-                             Dynamics::name(dynamics) + " not supported"};
+    }
+    {
+      throw std::runtime_error{std::string{"Boundary conditions for "} +
+                               Dynamics::name(dynamics) + " : " +
+                               " Not supported"};
+    }
   }
 
   /**
@@ -154,9 +164,10 @@ struct Geometry_Generic {
                   "    - Reflection and surface reaction\n"
                   "  - absorbing\n"
                   "    - Absorbing\n";
-    if constexpr (dynamics != Dynamics::Type::firstpassage)
+    if constexpr (dynamics != Dynamics::Type::firstpassage) {
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
+    }
     output << "  - empty\n"
               "    - No effect (default for unspecified patches in mesh)\n"
            << io::line();
@@ -278,15 +289,18 @@ struct Geometry_Periodic_Cartesian {
                     SurfaceReaction &&surface_reaction,
                     InitialCondition &&initial_condition = {}) const {
     auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
-    if constexpr (dynamics != Dynamics::Type::firstpassage)
-      for (auto const &bc : boundary_conditions)
-        if (bc.second == "custom")
-          throw std::runtime_error{
-              std::string{
-                  "Boundary conditions of type custom not supported for "} +
-              Dynamics::name(dynamics) + " dynamics"};
+    if constexpr (dynamics != Dynamics::Type::firstpassage) {
+      for (auto const &bc : boundary_conditions) {
+        if (bc.second == "custom") {
+          throw std::runtime_error{std::string{"Boundary conditions for "} +
+                                   Dynamics::name(dynamics) + " : " +
+                                   "Boundary condition type custom" + " : " +
+                                   "Not supported"};
+        }
+      }
+    }
 
-    if constexpr (dynamics == Dynamics::Type::transport)
+    if constexpr (dynamics == Dynamics::Type::transport) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -295,7 +309,8 @@ struct Geometry_Periodic_Cartesian {
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
-    if constexpr (dynamics == Dynamics::Type::firstpassage)
+    }
+    if constexpr (dynamics == Dynamics::Type::firstpassage) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -304,8 +319,10 @@ struct Geometry_Periodic_Cartesian {
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
-    throw std::runtime_error{std::string{"Boundary conditions for "} +
-                             Dynamics::name(dynamics) + " not supported"};
+    }
+    throw std::runtime_error{
+        std::string{"Boundary conditions for dynamics type "} +
+        Dynamics::name(dynamics) + " : " + "Not supported"};
   }
 
   /** \brief Output generic information about object. */
@@ -326,9 +343,10 @@ struct Geometry_Periodic_Cartesian {
                   "    - Cartesian periodic, position extracted from mesh\n";
     output << "  - absorbing\n"
               "    - Absorbing\n";
-    if constexpr (dynamics != Dynamics::Type::firstpassage)
+    if constexpr (dynamics != Dynamics::Type::firstpassage) {
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
+    }
     output << "  - empty\n"
               "    - No effect (default for unspecified patches in mesh)\n"
            << io::line();
@@ -345,14 +363,17 @@ struct Geometry_Periodic_Cartesian {
            << io::line()
            << "Automatically extracted Cartesian periodic boundaries\n"
            << io::line();
-    if (boundary_periodic.boundaries.size() == 0)
+    if (boundary_periodic.boundaries.size() == 0) {
       output << "None";
-    for (std::size_t dd = 0; dd < boundary_periodic.boundaries.size(); ++dd)
+    }
+    for (std::size_t dd = 0; dd < boundary_periodic.boundaries.size(); ++dd) {
       if (boundary_periodic.boundaries[dd].second <
-          std::numeric_limits<double>::infinity())
+          std::numeric_limits<double>::infinity()) {
         output << "Dimension " << dd << " at "
                << boundary_periodic.boundaries[dd].first << " and "
                << boundary_periodic.boundaries[dd].second << "\n";
+      }
+    }
     output << io::line();
     return output;
   }
@@ -480,15 +501,18 @@ struct Geometry_Bcc {
                     SurfaceReaction &&surface_reaction,
                     InitialCondition &&initial_condition = {}) const {
     auto boundary_conditions = get_boundary_conditions<dynamics>(directories);
-    if constexpr (dynamics != Dynamics::Type::firstpassage)
-      for (auto const &bc : boundary_conditions)
-        if (bc.second == "custom")
+    if constexpr (dynamics != Dynamics::Type::firstpassage) {
+      for (auto const &bc : boundary_conditions) {
+        if (bc.second == "custom") {
           throw std::runtime_error{
-              std::string{
-                  "Boundary conditions of type custom not supported for "} +
-              Dynamics::name(dynamics) + " dynamics"};
+              std::string{"Boundary conditions for dynamics type "} +
+              Dynamics::name(dynamics) + " : " +
+              "Boundary condition type custom" + " : " + "Not supported"};
+        }
+      }
+    }
 
-    if constexpr (dynamics == Dynamics::Type::transport)
+    if constexpr (dynamics == Dynamics::Type::transport) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -497,7 +521,8 @@ struct Geometry_Bcc {
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
-    if constexpr (dynamics == Dynamics::Type::firstpassage)
+    }
+    if constexpr (dynamics == Dynamics::Type::firstpassage) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -506,8 +531,10 @@ struct Geometry_Bcc {
           Boundary_Periodic{boundary_periodic, locator},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
-    throw std::runtime_error{std::string{"Boundary conditions for "} +
-                             Dynamics::name(dynamics) + " not supported"};
+    }
+    throw std::runtime_error{
+        std::string{"Boundary conditions for dynamics type "} +
+        Dynamics::name(dynamics) + " : " + "Not supported"};
   }
 
   /** \brief Output generic information about object. */
@@ -530,9 +557,10 @@ struct Geometry_Bcc {
                    : "    - Periodic in the minimal unit cell\n")
            << "  - absorbing\n"
               "    - Absorbing\n";
-    if constexpr (dynamics == Dynamics::Type::firstpassage)
+    if constexpr (dynamics == Dynamics::Type::firstpassage) {
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
+    }
     output << "  - empty\n"
               "    - No effect (default for unspecified patches in mesh)\n"
            << io::line();

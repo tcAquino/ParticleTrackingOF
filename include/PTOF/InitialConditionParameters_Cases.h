@@ -1,5 +1,5 @@
 /**
-   \file PTOF/InitialConditionParameters_Cases.h
+   \File PTOF/InitialConditionParameters_Cases.h
    \author Tomas Aquino
    \date 08/05/2025
    \brief Parameters for initial condition.
@@ -491,12 +491,12 @@ private:
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse initial condition type", name);
-    if (!InitialConditionList::contains(name))
-      throw std::runtime_error{"Initial condition type " + name +
-                               " not supported"};
-    type = InitialConditionList::type(name);
     std::string for_initial_condition_type =
         "Initial condition type " + name + " : ";
+    if (!InitialConditionList::contains(name))
+      throw std::runtime_error{in_file + for_initial_condition_type +
+                               "Not supported"};
+    type = InitialConditionList::type(name);
     switch (type) {
     case (InitialConditionList::Type::point): {
       return std::make_unique<SpecificParameters_Position>(io::read<double>(
@@ -657,7 +657,8 @@ private:
                                   "Could not parse injection time units");
     if (!TimeUnitsList::contains(time_units))
       throw std::runtime_error{in_file + for_injection_continuity_type +
-                               "Time units " + time_units + " not supported"};
+                               "Time units " + time_units + " : " +
+                               "Not supported"};
     double time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);
 
@@ -689,10 +690,12 @@ private:
           split_line, param_index,
           in_file + for_injection_continuity_type +
               "Could not parse time discretization option");
+      std::string for_time_discretization_option =
+          "Time discretization option " + name + " : ";
       double injection_time_step;
       if (discretization_option == "time_step") {
         io::read(split_line, param_index,
-                 in_file + for_injection_continuity_type +
+                 in_file + for_injection_continuity_type + for_time_discretization_option +
                      "Could not parse discretization time step",
                  injection_time_step);
         injection_time_step *= time_unit_factor;
@@ -700,6 +703,7 @@ private:
         double time_step_adv, time_step_diff, time_step_react;
         io::read(split_line, param_index,
                  in_file + for_injection_continuity_type +
+                     for_time_discretization_option +
                      "Could not parse time step in units of advective, "
                      "diffusive, and reactive time",
                  time_step_adv, time_step_diff, time_step_react);
@@ -708,8 +712,9 @@ private:
                       time_step_diff * params_transport.diffusion_time,
                       time_step_react * params_reaction.reaction_time});
       } else {
-        throw std::runtime_error{std::string{"Injection continuity type "} +
-                                 continuity + " not supported"};
+        throw std::runtime_error{in_file + for_injection_continuity_type +
+                                 for_time_discretization_option +
+                                 "Not supported"};
       }
 
       if (type != InitialConditionList::Type::prescribed_positions_masses &&
@@ -725,8 +730,8 @@ private:
       return std::make_unique<InjectionParameters_ContinuousNoMass>(
           injection_time_start, injection_time_end, injection_time_step);
     } else {
-      throw std::runtime_error{std::string{"Injection continuity type "} +
-                               continuity + " not supported"};
+      throw std::runtime_error{in_file + for_injection_continuity_type +
+                               "Not supported"};
     }
   }
 };

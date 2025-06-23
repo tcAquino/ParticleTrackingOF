@@ -282,12 +282,11 @@ private:
       using SpecificParameters = Parameters::SpecificParameters_Patches;
       SpecificParameters &specific_parameters =
           downcast_specific_parameters<SpecificParameters>();
-      return set_injection(
-          InitialCondition{
-              _particle_maker, geometry,
-              patch_face_ids_masked(specific_parameters.patch_names, geometry,
-                                    mask, threshold)},
-          parameters);
+      return set_injection(InitialCondition{_particle_maker, geometry,
+                                            patch_face_ids_masked(
+                                                specific_parameters.patch_names,
+                                                geometry, mask, threshold)},
+                           parameters);
     }
     case InitialConditionList::Type::fluxweighted_patch_faces: {
       using InitialCondition = InitialCondition_FluxweightedFaceCenters<
@@ -299,8 +298,8 @@ private:
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
-                patch_face_ids_masked(specific_parameters.patch_names,
-                                      geometry, mask, threshold),
+                patch_face_ids_masked(specific_parameters.patch_names, geometry,
+                                      mask, threshold),
                 velocity_field},
             parameters);
       else
@@ -335,8 +334,8 @@ private:
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
-                patch_face_ids_masked(specific_parameters.patch_names,
-                                      geometry, mask, threshold),
+                patch_face_ids_masked(specific_parameters.patch_names, geometry,
+                                      mask, threshold),
                 velocity_field, specific_parameters.distance,
                 specific_parameters.nr_tries},
             parameters);
@@ -478,7 +477,7 @@ private:
     default:
       throw std::runtime_error{std::string{"Initial condition type "} +
                                InitialConditionList::name(parameters.type) +
-                               " not supported"};
+                               " : " + "Not supported"};
     }
   }
 

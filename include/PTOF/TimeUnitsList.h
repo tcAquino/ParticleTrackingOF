@@ -86,8 +86,8 @@ double time_unit_factor(std::string const &time_units,
     return 1.;
   }
   default:
-    throw std::runtime_error{std::string("Time units ") + time_units +
-                             " not supported"};
+    throw std::runtime_error{std::string("Time units ") + time_units + " : " +
+                             "Not supported"};
   }
 }
 } // namespace ptof

@@ -9,7 +9,6 @@
 #define PTOF_BOUNDARY_H
 
 #include "General/IO.h"
-#include "General/Meta.h"
 #include "General/Operation.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Directories.h"
@@ -105,15 +104,17 @@ auto get_boundary_conditions(Directories const &directories,
 template <typename BoundaryCondition, typename Mesh,
           typename BoundaryConditionList>
 void verify_boundary_conditions(BoundaryCondition const &boundary_conditions,
-                                Mesh const &mesh,
-                                meta::Selector_t<BoundaryConditionList>) {
-  for (auto const &bc : boundary_conditions)
+                                Mesh const &mesh, BoundaryConditionList) {
+  for (auto const &bc : boundary_conditions) {
     mesh.boundaryMesh().findPatchID(bc.first, false);
+  }
 
-  for (auto const &bc : boundary_conditions)
-    if (BoundaryConditionList::contains(bc.second))
-      throw std::runtime_error{"Boundary condition type " + bc.second +
-                               " not supported"};
+  for (auto const &bc : boundary_conditions) {
+    if (!BoundaryConditionList::contains(bc.second)) {
+      throw std::runtime_error{std::string{"Boundary condition type "} +
+                               bc.second + " : " + "Not supported"};
+    }
+  }
 }
 
 /**

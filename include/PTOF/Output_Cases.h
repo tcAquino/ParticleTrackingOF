@@ -166,9 +166,9 @@ public:
       break;
     }
     default:
-      throw std::runtime_error{"Measurement spacing " +
-                               parameters.measurement_spacing +
-                               " not supported"};
+      throw std::runtime_error{std::string{"Measurement spacing "} +
+                               parameters.measurement_spacing + " : " +
+                               "Not supported"};
     }
   }
 
@@ -235,7 +235,8 @@ public:
     }
 
     for (auto const &end_criterion : parameters.end_criteria) {
-      output << "End criterion: " << end_criterion << "\n";
+      output << "\n"
+             << "End criterion: " << end_criterion << "\n";
       auto criterion_type = EndCriterionList::type(end_criterion);
       if (parameters.end_values.count(criterion_type)) {
         output << "  - End value: " << parameters.end_values.at(criterion_type)
@@ -790,7 +791,7 @@ private:
       }
       default: {
         throw std::runtime_error{std::string{"End criterion "} + end_criterion +
-                                 " not supported"};
+                                 " : " + "Not supported"};
       }
       }
     }
