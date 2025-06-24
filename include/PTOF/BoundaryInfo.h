@@ -226,10 +226,11 @@ struct BoundaryInfo_boundary_face_reinjections final
     state.info.boundary_face = intersection.index();
   }
 
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  meta::Selector<BoundaryConditionList::Type,
-                                 BoundaryConditionList::Type::custom>) const {
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::custom>) override {
     generic(state, state_old, intersection);
     state.info.reinjections++;
   }
@@ -256,12 +257,13 @@ struct BoundaryInfo_IfPresent_boundary_face_contact_point_reinjections final
     }
   }
 
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  meta::Selector<BoundaryConditionList::Type,
-                                 BoundaryConditionList::Type::custom>) const {
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::custom>) override {
     generic(state, state_old, intersection);
-    if constexpr (meta::has_type_v<typename State::contact_point>) {
+    if constexpr (meta::has_reinjections_v<typename State::Info>) {
       state.info.reinjections++;
     }
   }
@@ -279,10 +281,11 @@ struct BoundaryInfo_Record_surface_reacted_mass final
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {}
 
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  meta::Selector<BoundaryConditionList::Type,
-                                 BoundaryConditionList::Type::reacting>) {
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::reacting>) override {
     double mass_change = state.mass - state_old.mass;
     auto it_inserted = _masses.insert({intersection.index(), mass_change});
     if (it_inserted.second) {
@@ -309,10 +312,11 @@ struct BoundaryInfo_Record_surface_reacted_mass_periodic final
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {}
 
-  void operator()(State &state, State const &state_old,
-                  Intersection const &intersection,
-                  meta::Selector<BoundaryConditionList::Type,
-                                 BoundaryConditionList::Type::reacting>) {
+  void
+  operator()(State &state, State const &state_old,
+             Intersection const &intersection,
+             meta::Selector<BoundaryConditionList::Type,
+                            BoundaryConditionList::Type::reacting>) override {
     double mass_change = state.mass - state_old.mass;
     auto it_inserted = _masses.insert(
         {{intersection.index(), state.periodicity}, mass_change});
