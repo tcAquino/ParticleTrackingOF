@@ -64,8 +64,9 @@ public:
     if constexpr (std::is_same_v<useful::remove_cvref_t<Boundary>,
                                  geom::Boundary_DoNothing>) {
       double time_step = _time_generator(state);
-      if constexpr (meta::has_time_step_setter_v<JumpGenerator>)
+      if constexpr (meta::has_time_step_setter_v<JumpGenerator>) {
         _jump_generator.time_step(time_step);
+      }
       op::plus_inplace(state.position, _jump_generator(state));
       state.time += time_step;
     } else {

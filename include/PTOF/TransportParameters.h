@@ -29,12 +29,13 @@ public:
   double peclet;
   double mean_velocity;
   double velocity_rescaling_factor;
+  bool time_dependent_bcs{false};
 
-  template <typename Geometry, typename VelocityField>
+  template <typename Geometry, typename VelocityData>
   TransportParameters_AdvectionDiffusion(Directories const &directories,
                                          std::string const &parameter_set_name,
                                          Geometry const &geometry,
-                                         VelocityField &velocity_field) {
+                                         VelocityData &velocity_data) {
     std::string filename = directories.dir_parameters +
                            "/parameters_transport_" + parameter_set_name +
                            ".dat";
@@ -95,18 +96,29 @@ public:
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh(), in_file + for_peclet_option);
+    split_line = io::split_line(input);
+    if (!split_line.empty()) {
+      param_index = 0;
+      io::read(split_line, param_index,
+               in_file + "Could not parse whether boundary conditions are time "
+                         "dependent",
+               time_dependent_bcs);
+    }
+
+    rescale(velocity_data, geometry.mesh(), in_file + for_peclet_option);
   }
 
-  template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+  template <typename VelocityData, typename Mesh>
+  void rescale(VelocityData &velocity_data, Mesh const &mesh,
                std::string const &in_file_for_peclet_option) {
-    double current_mean = magnitude_of_average(velocity_field.field(), mesh);
+    double current_mean = magnitude_of_average(velocity_data, mesh);
     if (peclet_option == "rescale_velocity_to_peclet" ||
         peclet_option == "rescale_velocity_to_mean" ||
         peclet_option == "rescale_velocity_to_advection_time") {
       velocity_rescaling_factor = mean_velocity / current_mean;
-      velocity_field.rescale(velocity_rescaling_factor);
+      velocity_data *= velocity_rescaling_factor;
+      velocity_data.boundaryFieldRef() ==
+          velocity_rescaling_factor *velocity_data.boundaryField();
     } else if (peclet_option == "compute_from_diff_coeff" ||
                peclet_option == "compute_from_diff_time") {
       velocity_rescaling_factor = 1.;
@@ -138,9 +150,13 @@ public:
            "  - Mean velocity is defined as the absolute value of mean\n"
            "    velocity vector\n"
            "  - Peclet number is defined as [lenghscale] * [mean velocity]\n"
-           "      / [diffusion coefficient])\n"
+           "    / [diffusion coefficient])\n"
            "- Reference lengthscale\n"
            "- How to set the Peclet number:\n"
+           "  (Note:"
+           "    - Options that involve rescaling the velocity field are\n"
+           "      expensive for simulations with time-dependent flow fields\n"
+           "      because they require recomputing the interpolator)\n"
            "  - compute_from_diff_coeff\n"
            "    - Compute from given diffusion coefficient (do not\n"
            "      rescale velocity field)\n"
@@ -172,6 +188,8 @@ public:
            "      - Advection time, based on absolute value of mean\n"
            "        velocity vector\n"
            "      - Diffusion coefficient\n"
+           "- Whether boundary conditions are time-dependent (only used for\n"
+           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -187,12 +205,13 @@ public:
   const double peclet{std::numeric_limits<double>::infinity()};
   double mean_velocity;
   double velocity_rescaling_factor;
+  bool time_dependent_bcs{false};
 
-  template <typename Geometry, typename VelocityField>
+  template <typename Geometry, typename VelocityData>
   TransportParameters_Advection(Directories const &directories,
                                 std::string const &parameter_set_name,
                                 Geometry const &geometry,
-                                VelocityField &velocity_field) {
+                                VelocityData &velocity_data) {
     std::string filename = directories.dir_parameters +
                            "/parameters_transport_" + parameter_set_name +
                            ".dat";
@@ -231,18 +250,29 @@ public:
                                "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh(),
+    split_line = io::split_line(input);
+    if (!split_line.empty()) {
+      param_index = 0;
+      io::read(split_line, param_index,
+               in_file + "Could not parse whether boundary conditions are time "
+                         "dependent",
+               time_dependent_bcs);
+    }
+
+    rescale(velocity_data, geometry.mesh(),
             in_file + for_rescale_velocity_option);
   }
 
-  template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+  template <typename VelocityData, typename Mesh>
+  void rescale(VelocityData &velocity_data, Mesh const &mesh,
                std::string const &in_file_for_rescale_velocity_option) {
-    double current_mean = magnitude_of_average(velocity_field.field(), mesh);
+    double current_mean = magnitude_of_average(velocity_data, mesh);
     if (rescale_velocity_option == "rescale_velocity_to_mean" ||
         rescale_velocity_option == "rescale_velocity_to_advection_time") {
       velocity_rescaling_factor = mean_velocity / current_mean;
-      velocity_field.rescale(velocity_rescaling_factor);
+      velocity_data *= velocity_rescaling_factor;
+      velocity_data.boundaryFieldRef() ==
+          velocity_rescaling_factor *velocity_data.boundaryField();
     } else if (rescale_velocity_option == "no_rescale_velocity") {
       velocity_rescaling_factor = 1.;
       advection_time = lengthscale / current_mean;
@@ -266,6 +296,10 @@ public:
            "    velocity vector)\n"
            "- Reference lengthscale\n"
            "- Whether and how to rescale velocity field:\n"
+           "  (Note:"
+           "    - Options that involve rescaling the velocity field are\n"
+           "      expensive for simulations with time-dependent flow fields\n"
+           "      because they require recomputing the interpolator)\n"
            "  - rescale_velocity_to_mean\n"
            "    - Rescale according to given mean\n"
            "    - Pass on same line:\n"
@@ -277,6 +311,8 @@ public:
            "        velocity vector\n"
            "  - no_rescale_velocity\n"
            "    - Do not rescale\n"
+           "- Whether boundary conditions are time-dependent (only used for\n"
+           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -290,12 +326,13 @@ public:
   double advection_time{std::numeric_limits<double>::infinity()};
   const double peclet{0.};
   double mean_velocity{0.};
+  bool time_dependent_bcs{false};
 
-  template <typename Geometry, typename VelocityField>
-  TransportParameters_Diffusion(
-      Directories const &directories, std::string const &parameter_set_name,
-      Geometry const &geometry,
-      VelocityField &&velocity_field = meta::Empty{}) {
+  template <typename Geometry, typename VelocityData>
+  TransportParameters_Diffusion(Directories const &directories,
+                                std::string const &parameter_set_name,
+                                Geometry const &geometry,
+                                VelocityData &velocity_data) {
     std::string filename = directories.dir_parameters +
                            "/parameters_transport_" + parameter_set_name +
                            ".dat";
@@ -311,6 +348,15 @@ public:
     param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse diffusion coefficient", diff_coeff);
+
+    split_line = io::split_line(input);
+    if (!split_line.empty()) {
+      param_index = 0;
+      io::read(split_line, param_index,
+               in_file + "Could not parse whether boundary conditions are time "
+                         "dependent",
+               time_dependent_bcs);
+    }
   }
 
   /**
@@ -318,14 +364,17 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << io::line() << "Transport parameters\n"
-           << io::line()
-           << "(Note:"
-              "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
-              "    [diffusion coefficient]))\n"
-              "- Reference lengthscale\n"
-              "- Diffusion coefficient\n"
-           << io::line();
+    output
+        << io::line() << "Transport parameters\n"
+        << io::line()
+        << "(Note:"
+           "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
+           "    [diffusion coefficient]))\n"
+           "- Reference lengthscale\n"
+           "- Diffusion coefficient\n"
+           "- Whether boundary conditions are time-dependent (only used for\n"
+           "  time-dependent simulations) [false]\n"
+        << io::line();
     return output;
   }
 };
@@ -340,15 +389,15 @@ public:
   double diffusion_time;
   double mean_velocity;
   double velocity_rescaling_factor;
-
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
   double advection_time;
+  bool time_dependent_bcs{false};
 
-  template <typename Geometry, typename VelocityField>
+  template <typename Geometry, typename VelocityData>
   TransportParameters_AdvectionDiffusion_Bcc(
       Directories const &directories, std::string const &parameter_set_name,
-      Geometry const &geometry, VelocityField &velocity_field) {
+      Geometry const &geometry, VelocityData &velocity_data) {
     std::string filename = directories.dir_parameters +
                            "/parameters_transport_" + parameter_set_name +
                            ".dat";
@@ -433,18 +482,29 @@ public:
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh(), in_file + for_peclet_option);
+    split_line = io::split_line(input);
+    if (!split_line.empty()) {
+      param_index = 0;
+      io::read(split_line, param_index,
+               in_file + "Could not parse whether boundary conditions are time "
+                         "dependent",
+               time_dependent_bcs);
+    }
+
+    rescale(velocity_data, geometry.mesh(), in_file + for_peclet_option);
   }
 
-  template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+  template <typename VelocityData, typename Mesh>
+  void rescale(VelocityData &velocity_data, Mesh const &mesh,
                std::string const &in_file_for_peclet_option) {
-    double current_mean = magnitude_of_average(velocity_field.field(), mesh);
+    double current_mean = magnitude_of_average(velocity_data, mesh);
     if (peclet_option == "rescale_velocity_to_peclet" ||
         peclet_option == "rescale_velocity_to_mean" ||
         peclet_option == "rescale_velocity_to_advection_time") {
       velocity_rescaling_factor = mean_velocity / current_mean;
-      velocity_field.rescale(velocity_rescaling_factor);
+      velocity_data *= velocity_rescaling_factor;
+      velocity_data.boundaryFieldRef() ==
+          velocity_rescaling_factor *velocity_data.boundaryField();
     } else if (peclet_option == "compute_from_diff_coeff" ||
                peclet_option == "compute_from_diff_time") {
       velocity_rescaling_factor = 1.;
@@ -477,7 +537,7 @@ public:
            "  - Mean velocity is defined as the absolute value of mean\n"
            "    velocity vector\n"
            "  - Peclet number is defined as [lenghscale] * [mean velocity]\n"
-           "      / [diffusion coefficient])\n"
+           "    / [diffusion coefficient])\n"
            "- How to set the reference lengthscale:\n"
            "  - radius\n"
            "    - Equal to bead radius\n"
@@ -490,6 +550,10 @@ public:
            "    - Pass on same line:\n"
            "      - Reference lengthscale value\n"
            "- How to set the Peclet number:\n"
+           "  (Note:"
+           "    - Options that involve rescaling the velocity field are\n"
+           "      expensive for simulations with time-dependent flow fields\n"
+           "      because they require recomputing the interpolator)\n"
            "  - compute_from_diff_coeff\n"
            "    - Compute from given diffusion coefficient (do not\n"
            "      rescale velocity field)\n"
@@ -521,6 +585,8 @@ public:
            "      - Advection time, based on absolute value of mean\n"
            "        velocity vector\n"
            "      - Diffusion coefficient\n"
+           "- Whether boundary conditions are time-dependent (only used for\n"
+           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -536,16 +602,16 @@ public:
   const double peclet{std::numeric_limits<double>::infinity()};
   double mean_velocity;
   double velocity_rescaling_factor;
-
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
   double advection_time;
+  bool time_dependent_bcs{false};
 
-  template <typename Geometry, typename VelocityField>
+  template <typename Geometry, typename VelocityData>
   TransportParameters_Advection_Bcc(Directories const &directories,
                                     std::string const &parameter_set_name,
                                     Geometry const &geometry,
-                                    VelocityField &velocity_field) {
+                                    VelocityData &velocity_data) {
     std::string filename = directories.dir_parameters +
                            "/parameters_transport_" + parameter_set_name +
                            ".dat";
@@ -607,18 +673,29 @@ public:
                                "Not supported"};
     }
 
-    rescale(velocity_field, geometry.mesh(),
+    split_line = io::split_line(input);
+    if (!split_line.empty()) {
+      param_index = 0;
+      io::read(split_line, param_index,
+               in_file + "Could not parse whether boundary conditions are time "
+                         "dependent",
+               time_dependent_bcs);
+    }
+
+    rescale(velocity_data, geometry.mesh(),
             in_file + for_rescale_velocity_option);
   }
 
-  template <typename VelocityField, typename Mesh>
-  void rescale(VelocityField &velocity_field, Mesh const &mesh,
+  template <typename VelocityData, typename Mesh>
+  void rescale(VelocityData &velocity_data, Mesh const &mesh,
                std::string const &in_file_for_rescale_velocity_option) {
-    double current_mean = magnitude_of_average(velocity_field.field(), mesh);
+    double current_mean = magnitude_of_average(velocity_data, mesh);
     if (rescale_velocity_option == "rescale_velocity_to_mean" ||
         rescale_velocity_option == "rescale_velocity_to_advection_time") {
       velocity_rescaling_factor = mean_velocity / current_mean;
-      velocity_field.rescale(velocity_rescaling_factor);
+      velocity_data *= velocity_rescaling_factor;
+      velocity_data.boundaryFieldRef() ==
+          velocity_rescaling_factor *velocity_data.boundaryField();
     } else if (rescale_velocity_option == "no_rescale_velocity") {
       velocity_rescaling_factor = 1.;
       advection_time = lengthscale / current_mean;
@@ -652,6 +729,10 @@ public:
            "    - Pass on same line:\n"
            "      - Reference lengthscale value\n"
            "- Whether and how to rescale velocity field:\n"
+           "  (Note:"
+           "    - Options that involve rescaling the velocity field are\n"
+           "      expensive for simulations with time-dependent flow fields\n"
+           "      because they require recomputing the interpolator)\n"
            "  - rescale_velocity_to_mean\n"
            "    - Rescale according to given mean\n"
            "    - Pass on same line:\n"
@@ -663,6 +744,8 @@ public:
            "        velocity vector\n"
            "  - no_rescale_velocity\n"
            "    - Do not rescale\n"
+           "- Whether boundary conditions are time-dependent (only used for\n"
+           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -676,16 +759,15 @@ public:
   const double diffusion_time;
   const double peclet{0.};
   double mean_velocity{0.};
-
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
   double advection_time{std::numeric_limits<double>::infinity()};
+  bool time_dependent_bcs{false};
 
-  template <typename Geometry, typename VelocityField>
+  template <typename Geometry, typename VelocityData>
   TransportParameters_Diffusion_Bcc(
       Directories const &directories, std::string const &parameter_set_name,
-      Geometry const &geometry,
-      VelocityField &&velocity_field = meta::Empty{}) {
+      Geometry const &geometry, VelocityData &&velocity_data = meta::Empty{}) {
     std::string filename = directories.dir_parameters +
                            "/parameters_transport_" + parameter_set_name +
                            ".dat";
@@ -724,6 +806,15 @@ public:
     param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse diffusion coefficient", diff_coeff);
+
+    split_line = io::split_line(input);
+    if (!split_line.empty()) {
+      param_index = 0;
+      io::read(split_line, param_index,
+               in_file + "Could not parse whether boundary conditions are time "
+                         "dependent",
+               time_dependent_bcs);
+    }
   }
 
   /**
@@ -731,24 +822,27 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output << io::line() << "Transport parameters\n"
-           << io::line()
-           << "(Note:"
-              "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
-              "    [diffusion coefficient]))\n"
-              "- How to set the reference lengthscale:\n"
-              "  - radius\n"
-              "    - Equal to bead radius\n"
-              "  - diameter\n"
-              "    - Equal to bead diameter\n"
-              "  - cell_side\n"
-              "    - Equal to primitive cell side\n"
-              "  - custom\n"
-              "    - Equal to specified value\n"
-              "    - Pass on same line:\n"
-              "      - Reference lengthscale value\n"
-              "- Diffusion coefficient"
-           << io::line();
+    output
+        << io::line() << "Transport parameters\n"
+        << io::line()
+        << "(Note:"
+           "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
+           "    [diffusion coefficient]))\n"
+           "- How to set the reference lengthscale:\n"
+           "  - radius\n"
+           "    - Equal to bead radius\n"
+           "  - diameter\n"
+           "    - Equal to bead diameter\n"
+           "  - cell_side\n"
+           "    - Equal to primitive cell side\n"
+           "  - custom\n"
+           "    - Equal to specified value\n"
+           "    - Pass on same line:\n"
+           "      - Reference lengthscale value\n"
+           "- Diffusion coefficient"
+           "- Whether boundary conditions are time-dependent (only used for\n"
+           "  time-dependent simulations) [false]\n"
+        << io::line();
     return output;
   }
 };

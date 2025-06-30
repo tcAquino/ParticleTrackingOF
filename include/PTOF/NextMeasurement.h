@@ -97,7 +97,6 @@ struct NextMeasurementTime_linear final : NextMeasurementTime<Parameters> {
                   NextMeasurementTime<Parameters>::_next_measurement *
                       NextMeasurementTime<Parameters>::_parameters
                           .time_increment;
-    ;
   }
 };
 

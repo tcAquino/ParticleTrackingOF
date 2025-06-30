@@ -91,7 +91,8 @@ template <typename Type, typename ParallelOption> struct Threaded {
 
   Threaded() : _vals(get_num_threads(ParallelOption{})) {}
 
-  Type &operator()() { return _vals[get_thread_num(ParallelOption{})]; }
+  Type &operator()() {
+    return _vals[get_thread_num(ParallelOption{})]; }
 
 private:
   std::vector<Type> _vals;

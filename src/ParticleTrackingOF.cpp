@@ -8,6 +8,7 @@
 #include "General/Meta.h"
 #include "General/Parallel.h"
 #include "General/Useful.h"
+#include "PTOF/Advection.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Model.h"
 #include "PTOF/Transitions.h"
@@ -70,7 +71,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_diffusion_2d;
+  using Model = ptof::Model::advection_3d;
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;
@@ -137,10 +138,9 @@ int main(int argc, char *argv[]) {
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
-            << "Setting up velocity interpolation..." << std::endl;
+            << "Importing velocity data..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field =
-      Definitions::TransportHandler::makeVelocityInterpolator(geometry);
+  auto velocity_data = ptof::get_velocity_data(geometry);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -151,7 +151,18 @@ int main(int argc, char *argv[]) {
             << "Importing transport parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::TransportHandler::Parameters params_transport{
-      directories, params_transport_name, geometry, velocity_field};
+      directories, params_transport_name, geometry, velocity_data};
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+
+  std::cout << "\n"
+            << "Setting up velocity interpolation..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  auto velocity_field = Definitions::TransportHandler::makeVelocityInterpolator(
+      geometry, std::move(velocity_data));
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

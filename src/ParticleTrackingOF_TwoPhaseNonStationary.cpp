@@ -25,8 +25,7 @@
 #include <memory>
 #include <string>
 
-    template <typename ParallelOption>
-    struct ExecutableInfo {
+template <typename ParallelOption> struct ExecutableInfo {
   inline static std::string banner() {
     return io::line() + "ParticleTrackingOF_TwoPhaseNonStationary\n" +
            io::line();
@@ -80,7 +79,7 @@
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::bcc_symmetryplanes_advection;
+  using Model = ptof::Model::advection_3d;
   using Phase = ptof::Phase;
   using Definitions = Model::Definitions<ParallelOption>;
 
@@ -142,10 +141,9 @@ int main(int argc, char *argv[]) {
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
-            << "Setting up velocity interpolation..." << std::endl;
+            << "Importing velocity data..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = Definitions::TransportHandler::
-      makeVelocityInterpolator_WithUninterpolated(geometry);
+  auto velocity_data = ptof::get_velocity_data(geometry);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -156,7 +154,19 @@ int main(int argc, char *argv[]) {
             << "Importing transport parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::TransportHandler::Parameters params_transport{
-      directories, params_transport_name, geometry, velocity_field};
+      directories, params_transport_name, geometry, velocity_data};
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
+  std::cout << " (";
+  useful::display_duration(std::cout, execution_begin, execution_end);
+  std::cout << ")" << std::endl;
+
+  std::cout << "\n"
+            << "Setting up velocity interpolation..." << std::endl;
+  execution_begin = std::chrono::high_resolution_clock::now();
+  auto velocity_field = Definitions::TransportHandler::
+      makeVelocityInterpolator_WithUninterpolated(geometry,
+                                                  std::move(velocity_data));
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

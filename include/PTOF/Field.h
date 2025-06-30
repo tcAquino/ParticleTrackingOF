@@ -14,7 +14,9 @@
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <interpolationCellPoint.H>
+#include <memory>
 #include <point.H>
+#include <stdexcept>
 #include <type_traits>
 #include <vector.H>
 
@@ -93,10 +95,8 @@ public:
       VectorField_LinearInterpolation_OF const &) = delete;
 
   /** \brief Move constructor. */
-  VectorField_LinearInterpolation_OF(VectorField_LinearInterpolation_OF &&field)
-      : _field{std::move(field._field)}, _locator{std::move(field._locator)},
-        _interpolant{this->_field}, _uninterpolated{
-                                        std::move(field._uninterpolated)} {}
+  VectorField_LinearInterpolation_OF(
+      VectorField_LinearInterpolation_OF &&field) = default;
 
   /**
      \brief Interpolate field.
@@ -119,9 +119,9 @@ public:
 
     if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
                                   meta::Empty>)
-      return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
+      return _interpolant->interpolate(position, cell) + _uninterpolated[cell];
 
-    return _interpolant.interpolate(position, cell);
+    return _interpolant->interpolate(position, cell);
   }
 
   /**
@@ -205,17 +205,33 @@ public:
   /** \return Underlying boundary field. */
   auto &boundaryFieldRef() const { return _field.boundaryFieldRef(); }
 
+  /** \brief Recompute interpolator. */
+  void recompute_interpolator() {
+    _interpolant.reset(new Foam::interpolationCellPoint<Vector>{_field});
+  }
+
   /**
      \brief Rescale underlying field.
      \param factor Scaling factor.
   */
-  void rescale(double factor) { _field *= factor; }
+  void rescale(double factor) {
+    _field *= factor;
+    _field.boundaryFieldRef() == factor *_field.boundaryField();
+    recompute_interpolator();
+  }
 
   /**
      \brief Rescale underlying uninterpolated field.
      \param factor Scaling factor.
   */
-  void rescale_uninterpolated(double factor) { _uninterpolated *= factor; }
+  void rescale_uninterpolated(double factor) {
+    _uninterpolated *= factor;
+    if constexpr (meta::has_boundaryField_v<
+                      useful::remove_cvref_t<Uninterpolated>>) {
+      _uninterpolated.boundaryFieldRef() ==
+          factor *_uninterpolated.boundaryField();
+    }
+  }
 
   /**
      \brief Sum to underlying field.
@@ -248,8 +264,9 @@ public:
 private:
   Field _field;     /**< Vector field cell data to interpolate. */
   Locator _locator; /**< Locator to find positions in mesh. */
-  Foam::interpolationCellPoint<Vector> _interpolant{
-      _field}; /**< Interpolation object. */
+  std::unique_ptr<Foam::interpolationCellPoint<Vector>> _interpolant{
+      std::make_unique<Foam::interpolationCellPoint<Vector>>(
+          _field)}; /**< Interpolation object. */
   Uninterpolated
       _uninterpolated; /** Uninterpolated field to add to interpolated field. */
 };
@@ -336,10 +353,8 @@ public:
       ScalarField_LinearInterpolation_OF const &) = delete;
 
   /** \brief Move constructor. */
-  ScalarField_LinearInterpolation_OF(ScalarField_LinearInterpolation_OF &&field)
-      : _field{std::move(field._field)}, _locator{std::move(field._locator)},
-        _interpolant{this->_field}, _uninterpolated{
-                                        std::move(field._uninterpolated)} {}
+  ScalarField_LinearInterpolation_OF(
+      ScalarField_LinearInterpolation_OF &&field) = default;
 
   /**
      \brief Interpolate field.
@@ -362,9 +377,9 @@ public:
 
     if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
                                   meta::Empty>)
-      return _interpolant.interpolate(position, cell) + _uninterpolated[cell];
+      return _interpolant->interpolate(position, cell) + _uninterpolated[cell];
 
-    return _interpolant.interpolate(position, cell);
+    return _interpolant->interpolate(position, cell);
   }
 
   /**
@@ -446,17 +461,33 @@ public:
   /** \return Underlying boundary field. */
   auto &boundaryFieldRef() const { return _field.boundaryFieldRef(); }
 
+  /** \brief Recompute interpolator. */
+  void recompute_interpolator() {
+    _interpolant.reset(new Foam::interpolationCellPoint<Scalar>{_field});
+  }
+
   /**
      \brief Rescale underlying field.
      \param factor Scaling factor.
   */
-  void rescale(double factor) { _field *= factor; }
+  void rescale(double factor) {
+    _field *= factor;
+    _field.boundaryFieldRef() == factor *_field.boundaryField();
+    recompute_interpolator();
+  }
 
   /**
      \brief Rescale underlying uninterpolated field.
      \param factor Scaling factor.
   */
-  void rescale_uninterpolated(double factor) { _uninterpolated *= factor; }
+  void rescale_uninterpolated(double factor) {
+    _uninterpolated *= factor;
+    if constexpr (meta::has_boundaryField_v<
+                      useful::remove_cvref_t<Uninterpolated>>) {
+      _uninterpolated.boundaryFieldRef() ==
+          factor *_uninterpolated.boundaryField();
+    }
+  }
 
   /**
      \brief Sum to underlying field.
@@ -489,8 +520,9 @@ public:
 private:
   Field _field;     /**< Scalar field cell data to interpolate.         */
   Locator _locator; /**< Locator to find positions in mesh. */
-  Foam::interpolationCellPoint<Scalar> _interpolant{
-      _field}; /**< Interpolation object. */
+  std::unique_ptr<Foam::interpolationCellPoint<Scalar>> _interpolant{
+      std::make_unique<Foam::interpolationCellPoint<Scalar>>(
+          _field)}; /**< Interpolation object. */
   Uninterpolated
       _uninterpolated; /** Uninterpolated field to add to interpolated field. */
 };

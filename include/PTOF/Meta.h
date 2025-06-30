@@ -10,6 +10,7 @@
 
 #include "General/Meta.h"
 #include <label.H>
+#include <point.H>
 #include <type_traits>
 #include <utility>
 
@@ -49,23 +50,23 @@ inline constexpr bool has_boundary_face_v =
 template <typename X>
 using contact_point_t = decltype(std::declval<X>().contact_point);
 /**
-   \brief Check if \c X has member <tt>Foam::label contact_point</tt>.
+   \brief Check if \c X has member <tt>Foam::point contact_point</tt>.
 */
 template <typename X>
 inline constexpr bool has_contact_point_v =
     std::conjunction_v<has_member<contact_point_t, X>,
-                       is_same<contact_point_t, X, Foam::label>>;
+                       is_same<contact_point_t, X, Foam::point>>;
 
 /**\brief Type of \c X::reinjections. */
 template <typename X>
 using reinjections_t = decltype(std::declval<X>().reinjections);
 /**
-   \brief Check if \c X has member <tt>Foam::label reinjections</tt>.
+   \brief Check if \c X has member <tt>std::size_t reinjections</tt>.
 */
 template <typename X>
 inline constexpr bool has_reinjections_v =
     std::conjunction_v<has_member<reinjections_t, X>,
-                       is_same<reinjections_t, X, Foam::label>>;
+                       is_same<reinjections_t, X, std::size_t>>;
 
 /**\brief Type of \c X::absorbed. */
 template <typename X> using absorbed_t = decltype(std::declval<X>().absorbed);
@@ -84,6 +85,16 @@ template <typename X> using adsorbed_t = decltype(std::declval<X>().adsorbed);
 template <typename X>
 inline constexpr bool has_adsorbed_v =
     std::conjunction_v<has_member<adsorbed_t, X>, is_same<adsorbed_t, X, bool>>;
+
+/**\brief Type of \c X::boundaryField(). */
+template <typename X>
+using boundaryField_t = decltype(std::declval<X>().banana());
+/**
+   \brief Check if \c X has member <tt>boundaryField()</tt>.
+*/
+template <typename X>
+inline constexpr bool has_boundaryField_v =
+    has_member<boundaryField_t, X>::value;
 } // namespace meta
 
 #endif /* PTOF_META_H */

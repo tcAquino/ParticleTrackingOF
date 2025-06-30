@@ -21,25 +21,12 @@ namespace ptof {
    \param mesh Mesh object.
    \return OpenFOAM velocity field data.
 */
-template <typename Mesh> auto get_velocity_data(Mesh const &mesh) {
+template <typename Geometry> auto get_velocity_data(Geometry const &geometry) {
+  auto const &mesh = geometry.mesh();
   return Foam::volVectorField{Foam::IOobject{"U", mesh.time().timeName(), mesh,
                                              Foam::IOobject::MUST_READ,
                                              Foam::IOobject::NO_WRITE},
                               mesh};
-}
-
-/**
-   \brief Get the velocity field U from the OpenFOAM case time associated with a
-   mesh and rescale it to a given average.
-   \param mesh Mesh object.
-   \param average Absolute value of velocity field average.
-   \return OpenFOAM velocity field data.
-*/
-template <typename Mesh>
-auto get_velocity_data_rescaled(Mesh const &mesh, double average) {
-  auto data = get_velocity_data(mesh);
-  rescale_to_average(data, mesh, average);
-  return data;
 }
 
 template <typename VelocityField, typename Geometry,
@@ -47,9 +34,12 @@ template <typename VelocityField, typename Geometry,
 static void update_velocity_field(VelocityField &velocity_field,
                                   Geometry const &geometry,
                                   TransportParameters const &params_transport) {
-  velocity_field.set(ptof::get_velocity_data(geometry.mesh()));
-  if (params_transport.velocity_rescaling_factor != 1.)
+  velocity_field.set(ptof::get_velocity_data(geometry));
+  if (params_transport.velocity_rescaling_factor != 1.) {
     velocity_field.rescale(params_transport.velocity_rescaling_factor);
+  } else if (params_transport.time_dependent_bcs) {
+    velocity_field.recompute_interpolator();
+  }
 }
 
 /**

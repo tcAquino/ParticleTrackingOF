@@ -177,10 +177,12 @@ public:
   */
   template <typename State> double operator()(State const &state) const {
     auto cell_id = state.cell;
-    if constexpr (check_if_outside)
-      if (outside<warn_if_outside>(state.cell, make_point(state.position),
-                                   "Using nearest cell."))
+    if constexpr (check_if_outside) {
+      if (outside<warn_if_outside>(cell_id, make_point(state.position),
+                                   "Using nearest cell.")) {
         cell_id = _geometry.locator.nearest_cell(state);
+      }
+    }
 
     double cell_side =
         (_constrain_local_adv || _constrain_local_diff)
@@ -201,22 +203,22 @@ public:
         double max_face_rate = 0.;
         for (auto face : faces) {
           double rate = _surface_reaction.rate(face);
-          if (rate > max_face_rate)
+          if (rate > max_face_rate) {
             max_face_rate = rate;
+          }
         }
         double local_reaction_time =
             _diff_coeff / (cnst::pi * max_face_rate * max_face_rate);
         local_time_step = std::min(local_time_step, _local_time_step_react *
                                                         local_reaction_time);
-      } else {
-        local_time_step = std::min(local_time_step, _local_time_step_react);
       }
     }
 
     double time_step = std::max(local_time_step, _global_time_step);
 
-    if constexpr (meta::has_time_step_setter_v<SurfaceReaction>)
+    if constexpr (meta::has_time_step_setter_v<SurfaceReaction>) {
       _surface_reaction.time_step(time_step);
+    }
 
     return time_step;
   }

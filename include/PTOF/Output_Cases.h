@@ -66,7 +66,7 @@ public:
   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask = meta::Empty>
-  Output_Cases(Subject const &subject, VelocityField const &velocity_field,
+  Output_Cases(Subject const &subject, VelocityField &&velocity_field,
                Geometry const &geometry, Boundary &boundary,
                Directories const &directories, Parameters &&params_output,
                std::string const &identifier,
@@ -89,13 +89,13 @@ public:
   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask>
-  Output_Cases(Subject const &subject, VelocityField const &velocity_field,
+  Output_Cases(Subject const &subject, VelocityField &&velocity_field,
                Geometry const &geometry, Boundary &boundary,
                Directories const &directories, Parameters &&params_output,
                std::string const &identifier,
                std::initializer_list<std::reference_wrapper<const Mask>> masks,
                std::initializer_list<double> thresholds = {})
-      : Output_Cases(subject, velocity_field, geometry, directories,
+      : Output_Cases(subject, velocity_field, geometry, boundary, directories,
                      std::forward<Parameters>(params_output), identifier,
                      std::vector<std::reference_wrapper<const Mask>>{masks},
                      std::vector<double>{thresholds}) {}
@@ -112,7 +112,7 @@ public:
                std::string const &identifier,
                std::vector<std::reference_wrapper<const Mask>> masks,
                std::initializer_list<double> thresholds = {})
-      : Output_Cases(subject, velocity_field, geometry, directories,
+      : Output_Cases(subject, velocity_field, geometry, boundary, directories,
                      std::forward<Parameters>(params_output), identifier, masks,
                      std::vector<double>{thresholds}) {}
 
@@ -128,7 +128,7 @@ public:
                std::string const &identifier,
                std::initializer_list<std::reference_wrapper<const Mask>> masks,
                std::vector<double> thresholds = {})
-      : Output_Cases(subject, velocity_field, geometry, directories,
+      : Output_Cases(subject, velocity_field, geometry, boundary, directories,
                      std::forward<Parameters>(params_output), identifier, masks,
                      std::vector<double>{thresholds}) {}
 
@@ -517,7 +517,7 @@ private:
         break;
       }
       case MeasurementList::Type::position_in_regions_periodic: {
-        if constexpr (!meta::has_periodicity_v<State> &&
+        if constexpr (meta::has_periodicity_v<State> &&
                       !std::is_same_v<Mask, meta::Empty>) {
           _output_time.emplace_back(
               std::make_unique<MeasurerTime_position_in_regions_periodic<
@@ -525,10 +525,11 @@ private:
                                             identifier, masks, thresholds,
                                             measurement->precision));
         } else {
-          if constexpr (!meta::has_periodicity_v<State>)
+          if constexpr (!meta::has_periodicity_v<State>) {
             throw std::runtime_error{
                 for_measurement_type +
                 "Particle state does not define periodicity"};
+          }
           throw std::runtime_error{for_measurement_type +
                                    "Region masks not provided"};
         }

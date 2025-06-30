@@ -39,21 +39,22 @@ struct TransportHandler_LinearInterp {
                                              params_solvers);
   }
 
-  template <typename Geometry>
-  static auto makeVelocityInterpolator(Geometry const &geometry) {
+  template <typename Geometry, typename VelocityData>
+  static auto makeVelocityInterpolator(Geometry const &geometry, VelocityData&& velocity_data) {
     if constexpr (Solvers::Parameters::advection)
-      return makeLinearVelocityInterpolator(geometry,
-                                            get_velocity_data(geometry.mesh()));
+      return makeLinearVelocityInterpolator(
+          geometry, std::forward<VelocityData>(velocity_data));
     else
       return meta::Empty{};
   }
 
-  template <typename Geometry, typename Uninterpolated>
+  template <typename Geometry, typename VelocityData, typename Uninterpolated>
   static auto makeVelocityInterpolator(Geometry const &geometry,
+                                       VelocityData &&velocity_data,
                                        Uninterpolated &&uninterpolated) {
     if constexpr (Solvers::Parameters::advection)
       return makeLinearVelocityInterpolator(
-          geometry, get_velocity_data(geometry.mesh()),
+          geometry, std::forward<VelocityData>(velocity_data),
           std::forward<Uninterpolated>(uninterpolated));
     else
       return makeLinearVelocityInterpolator(
@@ -62,12 +63,13 @@ struct TransportHandler_LinearInterp {
           Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}});
   }
 
-  template <typename Geometry>
+  template <typename Geometry, typename VelocityData>
   static auto
-  makeVelocityInterpolator_WithUninterpolated(Geometry const &geometry) {
+  makeVelocityInterpolator_WithUninterpolated(Geometry const &geometry,
+                                              VelocityData &&velocity_data) {
     if constexpr (Solvers::Parameters::advection)
       return makeLinearVelocityInterpolator(
-          geometry, get_velocity_data(geometry.mesh()),
+          geometry, std::forward<VelocityData>(velocity_data),
           Foam::volVectorField{
               Foam::IOobject{"", geometry.mesh().time().timeName(),
                              geometry.mesh(), Foam::IOobject::NO_READ,

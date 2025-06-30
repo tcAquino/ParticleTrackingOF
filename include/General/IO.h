@@ -59,8 +59,9 @@ inline std::string change_extension(std::string const &filename,
 
 /** \brief Remove \verbatim \r \endverbatim character */
 inline std::string &remove_carriage_return_in_place(std::string &str) {
-  if (!str.empty() && str.back() == '\r')
+  if (!str.empty() && str.back() == '\r') {
     str.pop_back();
+  }
   return str;
 }
 
@@ -84,8 +85,9 @@ template <bool check = true> std::string getenv(std::string const &name) {
 */
 template <> std::string getenv<true>(std::string const &name) {
   std::string env = getenv<false>(name);
-  if (env.empty())
+  if (env.empty()) {
     throw std::runtime_error{"$HOME environmental variable is undefined"};
+  }
   return env;
 }
 
@@ -97,8 +99,9 @@ template <bool check = true> std::string getenv_home() {
 /** \brief Expand ~ if present at the beginning of directory \c dir. */
 template <bool check = true>
 std::string &expand_home_dir_in_place(std::string &dir) {
-  if (dir[0] == '~')
+  if (dir[0] == '~') {
     dir.replace(0, 1, getenv_home<check>());
+  }
   return dir;
 }
 
@@ -171,11 +174,14 @@ inline std::string ordinal(std::size_t number) {
 
 /** \return Convert \p string to boolean. */
 inline bool stob(std::string const &string) {
-  if (string == "true" || string == "1" || string == "True" || string == "TRUE")
+  if (string == "true" || string == "1" || string == "True" ||
+      string == "TRUE") {
     return true;
+  }
   if (string == "false" || string == "0" || string == "False" ||
-      string == "FALSE")
+      string == "FALSE") {
     return false;
+  }
   throw std::runtime_error{std::string("Expected true or false, got") + string};
 }
 
@@ -187,10 +193,11 @@ inline bool stob(std::string const &string) {
 */
 inline std::string btos(bool val, bool boolalpha = true) {
   std::ostringstream stream;
-  if (boolalpha)
+  if (boolalpha) {
     stream << std::boolalpha;
-  else
+  } else {
     stream << std::noboolalpha;
+  }
   stream << val;
 
   return stream.str();
@@ -209,31 +216,31 @@ template <typename Type> Type &stotype(std::string const &str, Type &val) {
    \brief Convert string to type.
 */
 template <typename Type> Type stotype(std::string const &str) {
-  if constexpr (std::is_same_v<Type, double>)
+  if constexpr (std::is_same_v<Type, double>) {
     return std::stod(str);
-  else if constexpr (std::is_same_v<Type, int>)
+  } else if constexpr (std::is_same_v<Type, int>) {
     return std::stoi(str);
-  else if constexpr (std::is_same_v<Type, bool>)
+  } else if constexpr (std::is_same_v<Type, bool>) {
     return stob(str);
-  else if constexpr (std::is_same_v<Type, long>)
+  } else if constexpr (std::is_same_v<Type, long>) {
     return std::stol(str);
-  else if constexpr (std::is_same_v<Type, long long>)
+  } else if constexpr (std::is_same_v<Type, long long>) {
     return std::stoll(str);
-  else if constexpr (std::is_same_v<Type, float>)
+  } else if constexpr (std::is_same_v<Type, float>) {
     return std::stof(str);
-  else if constexpr (std::is_same_v<Type, long double>)
+  } else if constexpr (std::is_same_v<Type, long double>) {
     return std::stold(str);
-  else if constexpr (std::is_same_v<Type, long int>)
+  } else if constexpr (std::is_same_v<Type, long int>) {
     return std::stol(str);
-  else if constexpr (std::is_same_v<Type, unsigned long>)
+  } else if constexpr (std::is_same_v<Type, unsigned long>) {
     return std::stoul(str);
-  else if constexpr (std::is_same_v<Type, unsigned long long>)
+  } else if constexpr (std::is_same_v<Type, unsigned long long>) {
     return std::stoull(str);
-  else if constexpr (std::is_same_v<Type, unsigned>)
+  } else if constexpr (std::is_same_v<Type, unsigned>) {
     return static_cast<unsigned>(std::stoul(str));
-  else if constexpr (std::is_same_v<Type, std::string>)
+  } else if constexpr (std::is_same_v<Type, std::string>) {
     return str;
-  else {
+  } else {
     Type val;
     stotype(str, val);
     return val;
@@ -260,8 +267,9 @@ std::vector<std::string> &split(std::string const &str,
     end = position != std::string::npos ? position : str.length();
 
     std::string token = str.substr(start, end - start);
-    if (!token.empty())
+    if (!token.empty()) {
       tokens.push_back(token);
+    }
   }
 
   return tokens;
@@ -279,8 +287,9 @@ inline std::vector<std::string> &split<true>(std::string const &str,
   }
   if (str.empty() ||
       std::any_of(delims.begin(), delims.end(),
-                  [&str](auto const &delim) { return delim == str.back(); }))
+                  [&str](auto const &delim) { return delim == str.back(); })) {
     tokens.push_back("");
+  }
 
   return tokens;
 }
@@ -579,9 +588,11 @@ template <bool empty_entries = false>
 auto split_line(std::ifstream &input, std::string const &escape_sequence = "#",
                 std::string const &delims = "\t,|\r ") {
   std::string line;
-  while (std::getline(input, line))
-    if (line.find(escape_sequence) != 0)
+  while (std::getline(input, line)) {
+    if (line.find(escape_sequence) != 0) {
       break;
+    }
+  }
   clear_escape_in_place(remove_carriage_return_in_place(line), escape_sequence);
   return split<empty_entries>(line, delims);
 }

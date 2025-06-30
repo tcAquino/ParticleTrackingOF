@@ -1162,10 +1162,7 @@ std::size_t nr_adsorbed(Subject const &subject, double time) {
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
   for (auto const &part : subject) {
-    if (adsorbed(part.state_old())) {
-      continue;
-    }
-    if (brackets_time(part, time)) {
+    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       mass += ctrw::Get_interp{time, ctrw::Get_mass{}}(part.state_new(),
                                                        part.state_old());
     }
@@ -1231,19 +1228,22 @@ auto mass(Subject const &subject, double time,
           std::vector<double> thresholds) {
   std::vector<double> masses(masks.size(), 0.);
   for (auto const &part : subject) {
-    if (adsorbed(part.state_old())) {
+    auto const &state_old = part.state_old();
+    if (adsorbed(state_old) || !brackets_time(part, time)) {
       continue;
     }
     auto const &state_new = part.state_new();
-    auto const &state_old = part.state_old();
     auto cell_new = state_new.cell;
     auto cell_old = state_old.cell;
-    if (!outside(cell_new) && !outside(cell_old) && brackets_time(part, time)) {
-      for (std::size_t ii = 0; ii < masks.size(); ++ii)
-        if (masks[ii].get()[cell_new] >= thresholds[ii] &&
-            masks[ii].get()[cell_old] >= thresholds[ii])
-          masses[ii] +=
-              ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+    if (outside(cell_new) && outside(cell_old)) {
+      continue;
+    }
+    for (std::size_t ii = 0; ii < masks.size(); ++ii){
+      if (masks[ii].get()[cell_new] >= thresholds[ii] &&
+          masks[ii].get()[cell_old] >= thresholds[ii]) {
+        masses[ii] +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      }
     }
   }
   return masses;
@@ -1266,10 +1266,7 @@ auto position_mean(Subject const &subject, double time,
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position position_mean = Foam::zero{};
   for (auto const &part : subject) {
-    if (adsorbed(part.state_old())) {
-      continue;
-    }
-    if (brackets_time(part, time)) {
+    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       position_mean +=
@@ -1296,10 +1293,7 @@ auto position_second_moment(Subject const &subject, double time,
   using Position = decltype(getter_position(subject.particles(0).state_new()));
   Position second_moment = Foam::zero{};
   for (auto const &part : subject) {
-    if (adsorbed(part.state_old())) {
-      continue;
-    }
-    if (brackets_time(part, time)) {
+    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       second_moment +=
@@ -1328,10 +1322,7 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
   decltype(getter_position(subject.particles(0).state_new())) moment =
       Foam::zero{};
   for (auto const &part : subject) {
-    if (adsorbed(part.state_old())) {
-      continue;
-    }
-    if (brackets_time(part, time)) {
+    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
       moment +=
@@ -1373,12 +1364,9 @@ template <typename Subject, typename Field>
 auto mean(Subject const &subject, double time, Field const &field) {
   decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
   for (auto const &part : subject) {
-    if (adsorbed(part.state_old())) {
-      continue;
-    }
-    if (brackets_time(part, time)) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
+    auto const &state_old = part.state_old();
+    auto const &state_new = part.state_new();
+    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       field_mean +=
           ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
           ctrw::Get_interp{time, ctrw::Get_property{field}}(state_new,
@@ -1472,15 +1460,8 @@ template <typename Particle, typename Locator,
           typename Getter = ctrw::Get_position>
 auto interpolate_position(Particle const &particle, double time,
                           Locator const &locator, Getter &&get_position = {}) {
-  auto position = ctrw::Get_interp{time, ctrw::Get_position{}}(
-      particle.state_new(), particle.state_old());
-  auto cell_id = locator(position, particle.state_new().cell);
-  if (outside(cell_id)) {
-    auto nearest_cell_id = locator.nearest_cell(position);
-    return Particle::State::make_position(
-        cell_center(nearest_cell_id, locator.mesh()));
-  }
-  return position;
+  return interpolate_position(particle.state_new(), particle.state_old(), time,
+                              locator, get_position);
 }
 
 /**
@@ -1504,16 +1485,8 @@ template <typename Particle, typename Locator,
 auto interpolate_position_with_cell(Particle const &particle, double time,
                                     Locator const &locator,
                                     Getter &&get_position = {}) {
-  auto position = ctrw::Get_interp{time, ctrw::Get_position{}}(
-      particle.state_new(), particle.state_old());
-  auto cell_id = locator(position, particle.state_new().cell);
-  if (outside(cell_id)) {
-    auto nearest_cell_id = locator.nearest_cell(position);
-    return PositionAndCell{Particle::State::make_position(
-                               cell_center(nearest_cell_id, locator.mesh())),
-                           nearest_cell_id};
-  }
-  return PositionAndCell{position, cell_id};
+  return interpolate_position_with_cell(
+      particle.state_new(), particle.state_old(), time, locator, get_position);
 };
 
 /**
