@@ -81,9 +81,10 @@ struct Phase {
         carrier_phase = true;
       } else if (carrier_option == "excluded") {
         carrier_phase = false;
-      } else
+      } else {
         throw std::invalid_argument{in_file + for_carrier_option +
                                     "Not supported"};
+      }
 
       split_line = io::split_line(input);
       param_index = 0;
@@ -97,9 +98,10 @@ struct Phase {
         compute_gradient = true;
       } else if (gradient_option == "read") {
         compute_gradient = false;
-      } else
+      } else {
         throw std::invalid_argument{in_file + gradient_option +
                                     "Not supported"};
+      }
 
       split_line = io::split_line(input);
       param_index = 0;
@@ -143,13 +145,13 @@ struct Phase {
   template <typename Mesh>
   static PhaseField get_carrier_phase_data(Mesh const &mesh,
                                            Parameters const &parameters) {
-    if (parameters.carrier_phase)
+    if (parameters.carrier_phase) {
       return PhaseField{
           Foam::IOobject{std::string("alpha.") + parameters.phase_name,
                          mesh.time().timeName(), mesh,
                          Foam::IOobject::MUST_READ, Foam::IOobject::NO_WRITE},
           mesh};
-    else
+    } else {
       return static_cast<PhaseField>(
           1. - PhaseField{
                    Foam::IOobject{std::string("alpha.") + parameters.phase_name,
@@ -157,6 +159,7 @@ struct Phase {
                                   Foam::IOobject::MUST_READ,
                                   Foam::IOobject::NO_WRITE},
                    mesh});
+    }
   }
 
   /**
@@ -166,18 +169,19 @@ struct Phase {
   template <typename Mesh>
   static auto get_grad_carrier_phase_data(Mesh const &mesh,
                                           Parameters const &parameters) {
-    if (parameters.carrier_phase)
+    if (parameters.carrier_phase) {
       return GradPhaseField{
           Foam::IOobject{std::string("gradAlpha.") + parameters.phase_name,
                          mesh.time().timeName(), mesh,
                          Foam::IOobject::MUST_READ, Foam::IOobject::NO_WRITE},
           mesh};
-    else
+    } else {
       return static_cast<GradPhaseField>(-GradPhaseField{
           Foam::IOobject{std::string("gradAlpha.") + parameters.phase_name,
                          mesh.time().timeName(), mesh,
                          Foam::IOobject::MUST_READ, Foam::IOobject::NO_WRITE},
           mesh});
+    }
   }
 
   /**
@@ -188,10 +192,11 @@ struct Phase {
   template <typename Mesh>
   static auto grad_carrier_phase(Mesh const &mesh, Parameters const &parameters,
                                  PhaseField const &carrier_phase_field) {
-    if (parameters.compute_gradient)
+    if (parameters.compute_gradient) {
       return static_cast<GradPhaseField>(Foam::fvc::grad(carrier_phase_field));
-    else
+    } else {
       return get_grad_carrier_phase_data(mesh, parameters);
+    }
   }
 
   /**

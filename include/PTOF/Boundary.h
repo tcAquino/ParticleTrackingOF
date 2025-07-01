@@ -127,9 +127,11 @@ void verify_boundary_conditions(BoundaryCondition const &boundary_conditions,
 template <typename BoundaryCondition, typename Container>
 void add_unspecified_patches(BoundaryCondition &boundary_conditions,
                              Container const &patch_names) {
-  for (auto const &name : patch_names)
-    if (!boundary_conditions.count(name))
+  for (auto const &name : patch_names) {
+    if (!boundary_conditions.count(name)) {
       boundary_conditions[name] = "empty";
+    }
+  }
 }
 
 /**
@@ -247,8 +249,9 @@ auto periodic_intersection(State state_outside, State const &state_image,
     auto new_intersection = locator.mesh_search().intersection(
         make_point(state_outside.position) - offset,
         make_point(state_outside.position));
-    if (new_intersection.hit())
+    if (new_intersection.hit()) {
       return new_intersection;
+    }
   } while (iter++ < max_nr_doublings);
 
   return Intersection{};
@@ -291,10 +294,10 @@ template <typename Boundary, typename Locator> struct Boundary_Periodic {
     boundary_periodic(state);
     intersection = periodic_intersection(state_outside, state, intersection,
                                          boundary_periodic, locator);
-    if (!intersection.hit())
+    if (!intersection.hit()) {
       throw std::runtime_error{
           "Could not find image of periodic boundary intersection"};
-
+    }
     return true;
   }
 
@@ -369,50 +372,56 @@ auto extract_cartesian_periodic_boundaries(
     BoundaryCondition const &boundary_conditions, Mesh const &mesh,
     std::size_t dim) {
   std::vector<std::vector<double>> boundaries_dim(dim);
-  for (auto const &bc : boundary_conditions)
-    if (bc.second == "periodic") {
-      // Find average and variance of patch face centers.
-      auto const &patch_id = mesh.boundaryMesh().findPatchID(bc.first, false);
-      auto const &patch = mesh.boundaryMesh()[patch_id];
-      auto face_start = patch.start();
-      Foam::point average_face_center = Foam::point::zero;
-      Foam::point variance_face_center = Foam::point::zero;
-      Foam::scalar total_area = 0.;
-      for (auto face = face_start; face < face_start + patch.size(); ++face) {
-        auto area = face_area(face, mesh);
-        auto center = face_center(face, mesh);
-        auto weighted_center = area * center;
-        total_area += area;
-        average_face_center += weighted_center;
-        for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd)
-          variance_face_center[dd] += weighted_center[dd] * center[dd];
-      }
-      average_face_center /= total_area;
-      variance_face_center /= total_area;
-      for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd)
-        variance_face_center[dd] -=
-            average_face_center[dd] * average_face_center[dd];
-
-      // Choose dimension with least variance.
-      auto it_min = std::min_element(variance_face_center.begin(),
-                                     variance_face_center.end());
-      std::size_t dd = std::distance(variance_face_center.begin(), it_min);
-      boundaries_dim[dd].push_back(average_face_center[dd]);
+  for (auto const &bc : boundary_conditions) {
+    if (bc.second != "periodic") {
+      continue;
     }
+    // Find average and variance of patch face centers.
+    auto const &patch_id = mesh.boundaryMesh().findPatchID(bc.first, false);
+    auto const &patch = mesh.boundaryMesh()[patch_id];
+    auto face_start = patch.start();
+    Foam::point average_face_center = Foam::point::zero;
+    Foam::point variance_face_center = Foam::point::zero;
+    Foam::scalar total_area = 0.;
+    for (auto face = face_start; face < face_start + patch.size(); ++face) {
+      auto area = face_area(face, mesh);
+      auto center = face_center(face, mesh);
+      auto weighted_center = area * center;
+      total_area += area;
+      average_face_center += weighted_center;
+      for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
+        variance_face_center[dd] += weighted_center[dd] * center[dd];
+      }
+    }
+    average_face_center /= total_area;
+    variance_face_center /= total_area;
+    for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
+      variance_face_center[dd] -=
+          average_face_center[dd] * average_face_center[dd];
+    }
+
+    // Choose dimension with least variance.
+    auto it_min = std::min_element(variance_face_center.begin(),
+                                   variance_face_center.end());
+    std::size_t dd = std::distance(variance_face_center.begin(), it_min);
+    boundaries_dim[dd].push_back(average_face_center[dd]);
+  }
 
   // Check which dimensions have periodic BCs.
   // If a dimension has periodic BCs they must be exactly two.
   std::vector<bool> dim_has_periodic_bcs(dim, 0);
-  for (std::size_t dd = 0; dd < dim; ++dd)
+  for (std::size_t dd = 0; dd < dim; ++dd) {
     if (boundaries_dim[dd].size() != 0) {
-      if (boundaries_dim[dd].size() != 2)
+      if (boundaries_dim[dd].size() != 2) {
         throw std::runtime_error{"Extracted " +
                                  std::to_string(boundaries_dim[dd].size()) +
                                  " periodic boundaries "
                                  "along cartesian dimension " +
                                  std::to_string(dd)};
+      }
       dim_has_periodic_bcs[dd] = 1;
     }
+  }
 
   // Periodic conditions are checked in order across Cartesian dimensions.
   // If there are periodic BCs in all dimensions starting from 0 up to some
@@ -425,8 +434,9 @@ auto extract_cartesian_periodic_boundaries(
       nonconsecutive_dims = 1;
       break;
     }
-    if (!periodic)
+    if (!periodic) {
       found_nonperiodic = 1;
+    }
   }
   std::vector<std::pair<double, double>> boundaries;
   boundaries.reserve(boundaries_dim.size());

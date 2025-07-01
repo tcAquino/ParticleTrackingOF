@@ -107,6 +107,7 @@ struct Geometry_Generic {
                                  "supported by Geometry type"};
       }
     }
+
     if constexpr (dynamics != Dynamics::Type::firstpassage) {
       for (auto const &bc : boundary_conditions) {
         if (bc.second == "custom") {
@@ -118,7 +119,8 @@ struct Geometry_Generic {
       }
     }
 
-    if constexpr (dynamics == Dynamics::Type::transport) {
+    switch (dynamics) {
+    case (Dynamics::Type::transport): {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -128,7 +130,7 @@ struct Geometry_Generic {
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     }
-    if constexpr (dynamics == Dynamics::Type::firstpassage) {
+    case (Dynamics::Type::firstpassage): {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -138,10 +140,11 @@ struct Geometry_Generic {
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
     }
-    {
+    default: {
       throw std::runtime_error{std::string{"Boundary conditions for "} +
                                Dynamics::name(dynamics) + " : " +
                                " Not supported"};
+    }
     }
   }
 
@@ -300,7 +303,8 @@ struct Geometry_Periodic_Cartesian {
       }
     }
 
-    if constexpr (dynamics == Dynamics::Type::transport) {
+    switch (dynamics) {
+    case (Dynamics::Type::transport): {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -310,7 +314,7 @@ struct Geometry_Periodic_Cartesian {
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     }
-    if constexpr (dynamics == Dynamics::Type::firstpassage) {
+    case (Dynamics::Type::firstpassage): {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -320,9 +324,12 @@ struct Geometry_Periodic_Cartesian {
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
     }
-    throw std::runtime_error{
-        std::string{"Boundary conditions for dynamics type "} +
-        Dynamics::name(dynamics) + " : " + "Not supported"};
+    default: {
+      throw std::runtime_error{
+          std::string{"Boundary conditions for dynamics type "} +
+          Dynamics::name(dynamics) + " : " + "Not supported"};
+    }
+    }
   }
 
   /** \brief Output generic information about object. */
@@ -512,7 +519,8 @@ struct Geometry_Bcc {
       }
     }
 
-    if constexpr (dynamics == Dynamics::Type::transport) {
+    switch (dynamics) {
+    case (Dynamics::Type::transport): {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -522,7 +530,7 @@ struct Geometry_Bcc {
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     }
-    if constexpr (dynamics == Dynamics::Type::firstpassage) {
+    case (Dynamics::Type::firstpassage): {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -532,9 +540,12 @@ struct Geometry_Bcc {
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
     }
-    throw std::runtime_error{
-        std::string{"Boundary conditions for dynamics type "} +
-        Dynamics::name(dynamics) + " : " + "Not supported"};
+    default: {
+      throw std::runtime_error{
+          std::string{"Boundary conditions for dynamics type "} +
+          Dynamics::name(dynamics) + " : " + "Not supported"};
+    }
+    }
   }
 
   /** \brief Output generic information about object. */

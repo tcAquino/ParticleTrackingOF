@@ -136,8 +136,9 @@ private:
     std::size_t param_index = 0;
     auto dir = io::read<std::string>(split_line, param_index,
                                      in_file + "Could not parse directory");
-    if (io::is_empty(dir))
+    if (io::is_empty(dir)) {
       dir = "${FOAM_RUN}";
+    }
     io::expand_env_in_place(io::expand_home_dir_in_place(dir));
 
     split_line = io::split_line(input);

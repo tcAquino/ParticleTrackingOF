@@ -37,7 +37,7 @@ struct Locator_Cell {
   */
   Locator_Cell(Geometry const &geometry) : _geometry{geometry} {}
 
-  Locator_Cell(Geometry&&) = delete;
+  Locator_Cell(Geometry &&) = delete;
 
   /** \return Mesh search object. */
   MeshSearch const &mesh_search() const { return _geometry.mesh_search(); }
@@ -52,23 +52,30 @@ struct Locator_Cell {
   */
   auto operator()(Point const &position, Index hint = -1) const {
     if (!outside(hint)) {
-      if constexpr (SearchOption::neighbor_check_level >= 0)
-        if (mesh().pointInCell(position, hint))
+      if constexpr (SearchOption::neighbor_check_level >= 0) {
+        if (mesh().pointInCell(position, hint)) {
           return hint;
-
-      if constexpr (SearchOption::neighbor_check_level >= 1)
-        for (auto cell_index : mesh().cellCells()[hint])
-          if (mesh().pointInCell(position, cell_index))
+        }
+      }
+      if constexpr (SearchOption::neighbor_check_level >= 1) {
+        for (auto cell_index : mesh().cellCells()[hint]) {
+          if (mesh().pointInCell(position, cell_index)) {
             return cell_index;
-
+          }
+        }
+      }
       if constexpr (SearchOption::neighbor_check_level >= 2) {
         std::set<Index> second_neighbors;
-        for (auto cell_index_1 : mesh().cellCells()[hint])
-          for (auto cell_index : mesh().cellCells()[cell_index_1])
+        for (auto cell_index_1 : mesh().cellCells()[hint]) {
+          for (auto cell_index : mesh().cellCells()[cell_index_1]) {
             second_neighbors.insert(cell_index);
-        for (auto cell_index : second_neighbors)
-          if (mesh().pointInCell(position, cell_index))
+          }
+        }
+        for (auto cell_index : second_neighbors) {
+          if (mesh().pointInCell(position, cell_index)) {
             return cell_index;
+          }
+        }
       }
     }
 

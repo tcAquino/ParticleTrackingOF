@@ -40,34 +40,37 @@ struct TransportHandler_LinearInterp {
   }
 
   template <typename Geometry, typename VelocityData>
-  static auto makeVelocityInterpolator(Geometry const &geometry, VelocityData&& velocity_data) {
-    if constexpr (Solvers::Parameters::advection)
+  static auto makeVelocityInterpolator(Geometry const &geometry,
+                                       VelocityData &&velocity_data) {
+    if constexpr (Solvers::Parameters::advection) {
       return makeLinearVelocityInterpolator(
           geometry, std::forward<VelocityData>(velocity_data));
-    else
+    } else {
       return meta::Empty{};
+    }
   }
 
   template <typename Geometry, typename VelocityData, typename Uninterpolated>
   static auto makeVelocityInterpolator(Geometry const &geometry,
                                        VelocityData &&velocity_data,
                                        Uninterpolated &&uninterpolated) {
-    if constexpr (Solvers::Parameters::advection)
+    if constexpr (Solvers::Parameters::advection) {
       return makeLinearVelocityInterpolator(
           geometry, std::forward<VelocityData>(velocity_data),
           std::forward<Uninterpolated>(uninterpolated));
-    else
+    } else {
       return makeLinearVelocityInterpolator(
           geometry,
           Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}},
           Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}});
+    }
   }
 
   template <typename Geometry, typename VelocityData>
   static auto
   makeVelocityInterpolator_WithUninterpolated(Geometry const &geometry,
                                               VelocityData &&velocity_data) {
-    if constexpr (Solvers::Parameters::advection)
+    if constexpr (Solvers::Parameters::advection) {
       return makeLinearVelocityInterpolator(
           geometry, std::forward<VelocityData>(velocity_data),
           Foam::volVectorField{
@@ -77,11 +80,12 @@ struct TransportHandler_LinearInterp {
                              Foam::IOobject::NO_REGISTER},
               geometry.mesh(),
               Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}}});
-    else
+    } else {
       return makeLinearVelocityInterpolator(
           geometry,
           Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}},
           Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}});
+    }
   }
 
   /**

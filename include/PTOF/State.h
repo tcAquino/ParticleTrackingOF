@@ -135,12 +135,13 @@ struct State2D {
   /** \brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
-    if (position.size() > 1)
+    if (position.size() > 1) {
       return {position[0], position[1]};
-    else if (position.size() > 0)
+    } else if (position.size() > 0) {
       return {position[0], 0.};
-    else
+    } else {
       return {0., 0.};
+    }
   }
 };
 
@@ -192,12 +193,13 @@ struct State3D {
   /** \brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
-    if (position.size() > 2)
+    if (position.size() > 2) {
       return {position[0], position[1], position[2]};
-    else if (position.size() > 1)
+    } else if (position.size() > 1) {
       return {position[0], 0., 0.};
-    else
+    } else {
       return {0., 0., 0.};
+    }
   }
 };
 
@@ -212,8 +214,9 @@ make_state(Foam::scalar position, Info const &info, Locator const &locator,
            Foam::label hint = -1, Time time = {}, Mass const &mass = {},
            Tag tag = {}) {
   Foam::label cell_id = locator(position, hint);
-  if (outside(cell_id))
+  if (outside(cell_id)) {
     throw std::runtime_error{"Particle initialized outside mesh"};
+  }
   return {position, cell_id, info, time, mass, tag};
 }
 
@@ -228,8 +231,9 @@ make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
            Locator const &locator, Foam::label hint = -1, Time time = {},
            Mass mass = {}, Tag tag = {}) {
   Foam::label cell_id = locator(position, hint);
-  if (outside(cell_id))
+  if (outside(cell_id)) {
     throw std::runtime_error{"Particle initialized outside mesh"};
+  }
   return {position, cell_id, info, time, mass, tag};
 }
 
@@ -244,8 +248,9 @@ make_state(Foam::vector const &position, Info const &info,
            Locator const &locator, Foam::label hint = -1, Time time = {},
            Mass const &mass = {}, Tag tag = {}) {
   Foam::label cell_id = locator(position, hint);
-  if (outside(cell_id))
+  if (outside(cell_id)) {
     throw std::runtime_error{"Particle initialized outside mesh"};
+  }
   return {position, cell_id, info, time, mass, tag};
 }
 
@@ -350,10 +355,11 @@ struct State1D_Periodic {
   /** \brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
-    if (position.size() > 0)
+    if (position.size() > 0) {
       return position[0];
-    else
+    } else {
       return 0.;
+    }
   }
 };
 
@@ -418,12 +424,13 @@ struct State2D_Periodic {
   /** \brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
-    if (position.size() > 1)
+    if (position.size() > 1) {
       return {position[0], position[1]};
-    else if (position.size() > 0)
+    } else if (position.size() > 0) {
       return {position[0], 0.};
-    else
+    } else {
       return {0., 0.};
+    }
   }
 };
 
@@ -480,12 +487,13 @@ struct State3D_Periodic {
   /** \brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
-    if (position.size() > 2)
+    if (position.size() > 2) {
       return {position[0], position[1], position[2]};
-    else if (position.size() > 1)
+    } else if (position.size() > 1) {
       return {position[0], 0., 0.};
-    else
+    } else {
       return {0., 0., 0.};
+    }
   }
 };
 
@@ -500,8 +508,9 @@ make_state(Foam::scalar position, int periodicity, Info const &info,
            Locator const &locator, Foam::label hint = -1, Time time = {},
            Mass const &mass = {}, Tag tag = {}) {
   Foam::label cell_id = locator(position, hint);
-  if (outside(cell_id))
+  if (outside(cell_id)) {
     throw std::runtime_error{"Particle initialized outside mesh"};
+  }
   return {position, periodicity, cell_id, info, time, mass, tag};
 }
 
@@ -517,8 +526,9 @@ make_state(Foam::Vector2D<Foam::scalar> const &position,
            Locator const &locator, Foam::label hint = -1, Time time = {},
            Mass const &mass = {}, Tag tag = {}) {
   Foam::label cell_id = locator(position, hint);
-  if (outside(cell_id))
+  if (outside(cell_id)) {
     throw std::runtime_error{"Particle initialized outside mesh"};
+  }
   return {position, periodicity, cell_id, info, time, mass, tag};
 }
 
@@ -533,8 +543,9 @@ make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
            Info const &info, Locator const &locator, Foam::label hint = -1,
            Time time = {}, Mass const &mass = {}, Tag tag = {}) {
   Foam::label cell_id = locator(position, hint);
-  if (outside(cell_id))
+  if (outside(cell_id)) {
     throw std::runtime_error{"Particle initialized outside mesh"};
+  }
   return {position, periodicity, cell_id, info, time, mass, tag};
 }
 

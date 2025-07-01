@@ -85,9 +85,10 @@ double time_unit_factor(std::string const &time_units,
   case TimeUnitsList::Type::arbitrary: {
     return 1.;
   }
-  default:
+  default: {
     throw std::runtime_error{std::string("Time units ") + time_units + " : " +
                              "Not supported"};
+  }
   }
 }
 } // namespace ptof

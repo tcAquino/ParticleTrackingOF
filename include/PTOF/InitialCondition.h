@@ -86,9 +86,9 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   virtual ParticleContainer make_particles(std::size_t nr_particles) {
     ParticleContainer particles;
     particles.reserve(nr_particles);
-    for (std::size_t pp = 0; pp < nr_particles; ++pp)
+    for (std::size_t pp = 0; pp < nr_particles; ++pp) {
       particles.emplace_back(make_particle());
-
+    }
     return particles;
   };
 
@@ -100,9 +100,9 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   virtual PositionContainer make_positions(std::size_t nr_positions) {
     PositionContainer positions;
     positions.reserve(nr_positions);
-    for (std::size_t pp = 0; pp < nr_positions; ++pp)
+    for (std::size_t pp = 0; pp < nr_positions; ++pp) {
       positions.emplace_back(make_position());
-
+    }
     return positions;
   };
 
@@ -191,9 +191,10 @@ public:
       : IC{std::forward<ParticleMaker>(particle_maker),
            std::forward<Geometry>(geometry)},
         _position{position} {
-    if (outside(_cell_id))
+    if (outside(_cell_id)) {
       throw std::runtime_error{
           "Point initial condition position is outside mesh"};
+    }
   }
 
   typename IC::PositionAndCell make_position_and_cell() override {
@@ -202,7 +203,7 @@ public:
 
 protected:
   stochastic::RNGThreaded<
-      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      typename std::remove_reference_t<Geometry>::ParallelOption>
       _rng;
   typename IC::Position _position;
   Foam::label _cell_id{this->_geometry.locator(_position)};
@@ -238,17 +239,17 @@ public:
     for (std::size_t ii = 0; ii < _nr_tries; ++ii) {
       auto position = IC::Particle::State::make_position(_dist(_rng));
       auto cell_id = this->_geometry.locator(position);
-      if (!ptof::outside(cell_id))
+      if (!ptof::outside(cell_id)) {
         return {position, cell_id};
+      }
     }
-
     throw std::runtime_error{"Failed to make position inside mesh after " +
                              std::to_string(_nr_tries) + " tries"};
   }
 
 protected:
   stochastic::RNGThreaded<
-      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      typename std::remove_reference_t<Geometry>::ParallelOption>
       _rng;
   Distribution _dist;
   std::size_t _nr_tries;
@@ -283,8 +284,9 @@ public:
            std::forward<Geometry>(geometry)},
         _cell_ids{std::forward<CellIdContainer>(cell_ids)},
         _dist{std::forward<Distribution>(dist)} {
-    if (_cell_ids.size() == 0)
+    if (_cell_ids.size() == 0) {
       throw std::runtime_error{"No cells provided for initial condition"};
+    }
   }
 
   typename IC::PositionAndCell make_position_and_cell() override {
@@ -296,7 +298,7 @@ public:
 
 protected:
   stochastic::RNGThreaded<
-      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      typename std::remove_reference_t<Geometry>::ParallelOption>
       _rng;
   CellIdContainer _cell_ids;
   Distribution _dist;
@@ -332,8 +334,9 @@ public:
            std::forward<Geometry>(geometry)},
         _face_ids{std::forward<FaceIdContainer>(face_ids)},
         _dist{std::forward<Distribution>(dist)} {
-    if (_face_ids.size() == 0)
+    if (_face_ids.size() == 0) {
       throw std::runtime_error{"No faces provided for initial condition"};
+    }
   }
 
   /**
@@ -351,7 +354,7 @@ public:
 
 protected:
   stochastic::RNGThreaded<
-      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      typename std::remove_reference_t<Geometry>::ParallelOption>
       _rng;
   FaceIdContainer _face_ids;
   Distribution _dist;
@@ -532,13 +535,15 @@ public:
 
   typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
-    if (split_line.size() < std::remove_reference_t<Geometry>::dim)
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim) {
       throw std::runtime_error{"Could not parse particle position in file " +
                                _filename};
+    }
     Foam::point pos;
-    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim;
+         ++dd) {
       pos[dd] = std::stod(split_line[dd]);
-
+    }
     auto position = IC::Particle::State::make_position(pos);
     auto cell_id = this->_geometry.locator(position);
     if constexpr (check_if_outside) {
@@ -600,15 +605,17 @@ public:
 
   typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
-    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1)
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1) {
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
+    }
     Foam::point pos;
-    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim;
+         ++dd) {
       pos[dd] = std::stod(split_line[dd]);
+    }
     this->_particle_maker.mass =
         std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
-
     auto position = IC::Particle::State::make_position(pos);
     auto cell_id = this->_geometry.locator(position);
     if constexpr (check_if_outside) {
@@ -619,8 +626,6 @@ public:
             cell_center(cell_id, this->_geometry.locator.mesh()));
       }
     }
-    return {position, cell_id};
-
     return {position, cell_id};
   }
 
@@ -675,17 +680,19 @@ public:
 
   typename IC::PositionAndCell make_position_and_cell() override {
     auto split_line = io::split_line(_input);
-    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2)
+    if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2) {
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
+    }
     Foam::point pos;
-    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim;
+         ++dd) {
       pos[dd] = std::stod(split_line[dd]);
+    }
     this->_particle_maker.mass =
         std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
     this->_particle_maker.tag =
         std::stoul(split_line[std::remove_reference_t<Geometry>::dim + 1]);
-
     auto position = IC::Particle::State::make_position(pos);
     auto cell_id = this->_geometry.locator(position);
     if constexpr (check_if_outside) {
@@ -696,8 +703,6 @@ public:
             cell_center(cell_id, this->_geometry.locator.mesh()));
       }
     }
-    return {position, cell_id};
-
     return {position, cell_id};
   }
 
@@ -715,7 +720,6 @@ InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&, Geometry &&,
                                                std::string, CheckOption)
     -> InitialCondition_PrescribedPositionsMassesTags<ParticleMaker, Geometry,
                                                       CheckOption>;
-
 /**
    \class InitialCondition_PrescribedPositionsMassesTagsTimes
    PTOF/InitialCondition.h "CTRW/InitialCondition.h"
@@ -751,7 +755,6 @@ public:
         std::stoul(split_line[std::remove_reference_t<Geometry>::dim + 1]);
     this->_particle_maker.time =
         std::stod(split_line[std::remove_reference_t<Geometry>::dim + 2]);
-
     return {IC::Particle::State::make_position(position), -1};
   }
 
@@ -802,14 +805,15 @@ public:
                       _distance * unit_normal_inward(face_id, mesh);
       auto owner_cell = mesh.faceOwner()[face_id];
       auto cell_id = locator(position, owner_cell);
-      if (outside(cell_id))
+      if (outside(cell_id)) {
         continue;
+      }
       auto nearest_face_id =
           locator.mesh_search().findNearestBoundaryFace(position, face_id);
-      if (nearest_face_id == face_id)
+      if (nearest_face_id == face_id) {
         return {IC::Particle::State::make_position(position), cell_id};
+      }
     }
-
     throw std::runtime_error{"Failed to make position inside mesh and nearest "
                              "to a selected face after " +
                              std::to_string(_nr_tries) + " tries"};
@@ -817,7 +821,7 @@ public:
 
 protected:
   stochastic::RNGThreaded<
-      typename std::remove_reference_t<Geometry>::ParallelOption, std::mt19937>
+      typename std::remove_reference_t<Geometry>::ParallelOption>
       _rng;
   FaceIdContainer _face_ids;
   Distribution _dist;

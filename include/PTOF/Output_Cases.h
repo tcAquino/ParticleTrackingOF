@@ -165,10 +165,11 @@ public:
           parameters);
       break;
     }
-    default:
+    default: {
       throw std::runtime_error{std::string{"Measurement spacing "} +
                                parameters.measurement_spacing + " : " +
                                "Not supported"};
+    }
     }
   }
 
@@ -822,8 +823,9 @@ private:
       }
     }
 
-    if (end_criteria.empty())
+    if (end_criteria.empty()) {
       throw std::runtime_error{"No end criterion"};
+    }
 
     if (parameters.end_criterion_logical_combination == "single") {
       _end_criterion = std::move(end_criteria[0]);

@@ -263,17 +263,18 @@ private:
     case InitialConditionList::Type::fluxweighted_all_cells: {
       using InitialCondition = InitialCondition_FluxweightedCellCenters<
           ParticleMaker &, Geometry const &, std::vector<Foam::label>>;
-      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
         return set_injection(
             InitialCondition{_particle_maker, geometry,
                              cell_ids_masked(all_cell_ids(geometry.mesh()),
                                              geometry, mask, threshold),
                              velocity_field},
             parameters);
-      else
+      } else {
         throw std::runtime_error{std::string("Initial condition type ") +
                                  InitialConditionList::name(type) + ": " +
                                  "Velocity field not provided"};
+      }
     }
     case InitialConditionList::Type::uniform_patch_faces: {
       using InitialCondition =
@@ -294,7 +295,7 @@ private:
       using SpecificParameters = Parameters::SpecificParameters_Patches;
       SpecificParameters &specific_parameters =
           downcast_specific_parameters<SpecificParameters>();
-      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
@@ -302,10 +303,11 @@ private:
                                       mask, threshold),
                 velocity_field},
             parameters);
-      else
+      } else {
         throw std::runtime_error{std::string("Initial condition type ") +
                                  InitialConditionList::name(type) + ": " +
                                  "Velocity field not provided"};
+      }
     }
     case InitialConditionList::Type::uniform_near_patch: {
       using InitialCondition =
@@ -330,7 +332,7 @@ private:
           Parameters::SpecificParameters_Patches_Distance;
       SpecificParameters &specific_parameters =
           downcast_specific_parameters<SpecificParameters>();
-      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
@@ -339,10 +341,11 @@ private:
                 velocity_field, specific_parameters.distance,
                 specific_parameters.nr_tries},
             parameters);
-      else
+      } else {
         throw std::runtime_error{std::string("Initial condition type ") +
                                  InitialConditionList::name(type) + ": " +
                                  "Velocity field not provided"};
+      }
     }
     case InitialConditionList::Type::uniform_cartesian_cells: {
       using InitialCondition =
@@ -366,7 +369,7 @@ private:
       using SpecificParameters = Parameters::SpecificParameters_Boundaries;
       SpecificParameters &specific_parameters =
           downcast_specific_parameters<SpecificParameters>();
-      if constexpr (!std::is_same_v<VelocityField, meta::Empty>)
+      if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
         return set_injection(
             InitialCondition{
                 _particle_maker, geometry,
@@ -376,10 +379,11 @@ private:
                                 geometry, mask, threshold),
                 velocity_field},
             parameters);
-      else
+      } else {
         throw std::runtime_error{std::string("Initial condition type ") +
                                  InitialConditionList::name(type) + ": " +
                                  "Velocity field not provided"};
+      }
     }
     case InitialConditionList::Type::prescribed_positions: {
       using InitialCondition =
@@ -473,11 +477,11 @@ private:
                            specific_parameters.nr_tries},
           parameters);
     }
-
-    default:
+    default: {
       throw std::runtime_error{std::string{"Initial condition type "} +
                                InitialConditionList::name(parameters.type) +
                                " : " + "Not supported"};
+    }
     }
   }
 
@@ -492,9 +496,10 @@ private:
   template <typename Container, typename Mask = meta::Empty>
   auto patch_face_ids_masked(Container face_ids, Geometry const &geometry,
                              Mask const &mask = {}, double threshold = 0.) {
-    if constexpr (!std::is_same_v<Mask, meta::Empty>)
+    if constexpr (!std::is_same_v<Mask, meta::Empty>) {
       apply_mask_patch_faces_inplace(face_ids, geometry.mesh(), mask,
                                      threshold);
+    }
     return face_ids;
   }
 

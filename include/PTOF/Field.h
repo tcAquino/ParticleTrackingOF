@@ -105,22 +105,23 @@ public:
      \return interpolated field value.
   */
   auto operator()(Point const &position, Index cell) const {
-    if constexpr (check_if_outside)
+    if constexpr (check_if_outside) {
       if (outside<warn_if_outside>(
               cell, position,
               "Assigning vector field value from nearest cell")) {
         cell = _locator.nearest_cell(position);
         if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
-                                      meta::Empty>)
+                                      meta::Empty>) {
           return _field[cell] + _uninterpolated[cell];
-        else
-          return _field[cell];
+        }
+        return _field[cell];
       }
+    }
 
     if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
-                                  meta::Empty>)
+                                  meta::Empty>) {
       return _interpolant->interpolate(position, cell) + _uninterpolated[cell];
-
+    }
     return _interpolant->interpolate(position, cell);
   }
 
@@ -132,7 +133,6 @@ public:
   */
   auto operator()(Point2D const &position, Index cell) const {
     auto interp = (*this)(make_point(position), cell);
-
     return Vector2D{interp[0], interp[1]};
   }
 
@@ -363,22 +363,23 @@ public:
      \return interpolated field value.
   */
   auto operator()(Point const &position, Index cell) const {
-    if constexpr (check_if_outside)
+    if constexpr (check_if_outside) {
       if (outside<warn_if_outside>(
               cell, position,
               "Assigning scalar field value from nearest cell")) {
         cell = _locator.nearest_cell(position);
         if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
-                                      meta::Empty>)
+                                      meta::Empty>) {
           return _field[cell] + _uninterpolated[cell];
-        else
-          return _field[cell];
+        }
+        return _field[cell];
       }
+    }
 
     if constexpr (!std::is_same_v<useful::remove_cvref_t<Uninterpolated>,
-                                  meta::Empty>)
+                                  meta::Empty>) {
       return _interpolant->interpolate(position, cell) + _uninterpolated[cell];
-
+    }
     return _interpolant->interpolate(position, cell);
   }
 

@@ -40,8 +40,9 @@ template <typename Container, typename Mesh>
 void uniform_solid_reactant(
     Container const &face_ids, double surface_concentration, Mesh const &mesh,
     std::unordered_map<Foam::label, double> &surface_concentrations) {
-  for (auto face : face_ids)
+  for (auto face : face_ids) {
     surface_concentrations[face] = surface_concentration;
+  }
 }
 
 /**
@@ -56,10 +57,11 @@ auto uniform_solid_reactant(
     std::vector<std::string> const &patch_names,
     std::vector<double> const &surface_concentration_values, Mesh const &mesh) {
   std::unordered_map<Foam::label, double> surface_concentrations;
-  for (std::size_t ii = 0; ii < patch_names.size(); ++ii)
+  for (std::size_t ii = 0; ii < patch_names.size(); ++ii) {
     uniform_solid_reactant(patch_face_ids({patch_names[ii]}, mesh),
                            surface_concentration_values[ii], mesh,
                            surface_concentrations);
+  }
   return surface_concentrations;
 }
 
@@ -123,8 +125,9 @@ public:
      \return Surface reaction rate at face.
   */
   double rate(Foam::label face) const {
-    if (surface_concentrations.count(face))
+    if (surface_concentrations.count(face)) {
       return rate_constant * surface_concentrations.at(face);
+    }
     return 0.;
   }
 
@@ -236,8 +239,9 @@ public:
      \return Surface reaction rate at face.
   */
   double rate(Foam::label face) const {
-    if (surface_concentrations.count(face))
+    if (surface_concentrations.count(face)) {
       return rate_constant * surface_concentrations.at(face);
+    }
     return 0.;
   }
 
@@ -315,8 +319,9 @@ public:
   */
   template <typename State>
   void operator()(State &state, State const &state_old, Foam::label face) {
-    if (!surface_concentrations.count(face))
+    if (!surface_concentrations.count(face)) {
       return;
+    }
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Serial>) {
       update_mass_and_surface_concentration(state, state_old, face);
@@ -331,8 +336,9 @@ public:
      \return Surface reaction rate for fluid phase at face.
   */
   double rate(Foam::label face) const {
-    if (surface_concentrations.count(face))
+    if (surface_concentrations.count(face)) {
       return rate_constant * surface_concentrations.at(face);
+    }
     return 0.;
   }
 
@@ -341,8 +347,9 @@ public:
      \return Surface reaction rate for solid phase at face.
   */
   double solid_rate(Foam::label face) const {
-    if (surface_concentrations.count(face))
+    if (surface_concentrations.count(face)) {
       return solid_rate_constant * surface_concentrations.at(face);
+    }
     return 0.;
   }
 
@@ -375,8 +382,10 @@ public:
   template <typename CTRW>
   void update(CTRW &ctrw, typename CTRW::State::Time time_new,
               typename CTRW::State::Time time_old) {
-    if constexpr (std::is_same_v<ParallelOption, par::ParallelOptions::Serial>)
+    if constexpr (std::is_same_v<ParallelOption,
+                                 par::ParallelOptions::Serial>) {
       return;
+    }
 
     auto merged_face_to_tags_times = merge_and_clear_hits();
 #ifdef _OPENMP

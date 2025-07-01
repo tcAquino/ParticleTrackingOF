@@ -349,10 +349,11 @@ public:
     output << std::left;
     for (auto const &bc : boundary_conditions) {
       output << std::setw(width_patch) << bc.first;
-      if (bc.second == "custom")
+      if (bc.second == "custom") {
         output << std::setw(width_bc) << _boundary_custom.name();
-      else
+      } else {
         output << std::setw(width_bc) << bc.second;
+      }
       output << "\n";
     }
     output << io::line();

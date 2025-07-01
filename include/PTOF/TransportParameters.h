@@ -131,8 +131,9 @@ public:
       diff_coeff = lengthscale * mean_velocity / peclet;
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       advection_time = lengthscale / mean_velocity;
-    } else
+    } else {
       throw std::runtime_error{in_file_for_peclet_option + " Not supported"};
+    }
   }
 
   /**
@@ -277,9 +278,10 @@ public:
       velocity_rescaling_factor = 1.;
       advection_time = lengthscale / current_mean;
       mean_velocity = lengthscale / advection_time;
-    } else
+    } else {
       throw std::runtime_error{in_file_for_rescale_velocity_option +
                                "Not supported"};
+    }
   }
 
   /**
@@ -631,9 +633,9 @@ public:
     cell_side = 4. / std::sqrt(3.) * radius;
     if (lengthscale_option == "radius") {
       lengthscale = radius;
-    } else if (lengthscale_option == "diameter")
+    } else if (lengthscale_option == "diameter") {
       lengthscale = 2. * radius;
-    else if (lengthscale_option == "cell_side") {
+    } else if (lengthscale_option == "cell_side") {
       lengthscale = cell_side;
     } else if (lengthscale_option == "custom") {
       io::read(split_line, param_index,
@@ -700,9 +702,10 @@ public:
       velocity_rescaling_factor = 1.;
       advection_time = lengthscale / current_mean;
       mean_velocity = lengthscale / advection_time;
-    } else
+    } else {
       throw std::runtime_error{in_file_for_rescale_velocity_option +
                                "Not supported"};
+    }
   }
 
   /**

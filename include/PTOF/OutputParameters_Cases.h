@@ -145,8 +145,9 @@ public:
     std::size_t param_index = 0;
     io::read(split_line, param_index, in_file + "Could not parse time units",
              time_units);
-    if (!TimeUnitsList::contains(time_units))
+    if (!TimeUnitsList::contains(time_units)) {
       throw std::runtime_error{in_file + "Not supported"};
+    }
     time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);
     read_end_criteria(input, filename);
@@ -402,9 +403,10 @@ public:
       std::string const &end_criterion, std::string const &in_file = "") {
     std::string for_end_criterion =
         std::string{"End criterion "} + end_criterion + " : ";
-    if (!EndCriterionList::contains(end_criterion))
+    if (!EndCriterionList::contains(end_criterion)) {
       throw std::runtime_error{for_end_criterion + end_criterion +
                                " Not supported"};
+    }
     auto criterion_type = EndCriterionList::type(end_criterion);
     switch (criterion_type) {
     case EndCriterionList::Type::time: {
@@ -435,8 +437,9 @@ public:
                                "Could not parse absorbed fraction threshold");
       break;
     }
-    default:
+    default: {
       throw std::runtime_error{in_file + for_end_criterion + "Not supported"};
+    }
     }
   }
 
@@ -454,9 +457,10 @@ public:
              measurement_spacing);
     std::string for_measurement_spacing =
         std::string{"Measurement spacing "} + measurement_spacing + " : ";
-    if (!MeasurementSpacingList::contains(measurement_spacing))
+    if (!MeasurementSpacingList::contains(measurement_spacing)) {
       throw std::runtime_error{in_file + for_measurement_spacing +
                                "Not supported"};
+    }
     io::read(split_line, param_index,
              in_file + for_measurement_spacing +
                  "Could not parse minimum measurement time",
@@ -520,9 +524,10 @@ public:
                                  "Time increment factor not greater than one"};
       break;
     }
-    default:
+    default: {
       throw std::runtime_error{in_file + for_measurement_spacing +
                                "Not supported"};
+    }
     }
   }
 
@@ -539,9 +544,10 @@ public:
                                 in_file + "Could not parse measurement type");
       std::string for_measurement_type =
           std::string{"Measurement type "} + name + " : ";
-      if (!MeasurementList::contains(name))
+      if (!MeasurementList::contains(name)) {
         throw std::runtime_error{in_file + for_measurement_type +
                                  "Not supported"};
+      }
       switch (MeasurementList::type(name)) {
       case (MeasurementList::Type::scalar_field):
       case (MeasurementList::Type::vector_field):
@@ -561,10 +567,11 @@ public:
             io::read<double>(split_line, param_index,
                              in_file + for_measurement_type +
                                  "Could not parse crossing position");
-        if (dim >= Geometry::dim)
+        if (dim >= Geometry::dim) {
           throw std::runtime_error{
               in_file + for_measurement_type +
               "Crossing dimension higher than simulation dimension"};
+        }
         measurements.emplace_back(
             std::make_unique<Measurement_Dim_Position>(name, dim, position));
         break;
@@ -592,10 +599,11 @@ public:
         measurements.emplace_back(std::make_unique<Measurement>(name));
       }
 
-      if (param_index < split_line.size())
+      if (param_index < split_line.size()) {
         io::read(split_line, param_index,
                  in_file + for_measurement_type + "Could not parse precision",
                  measurements.back()->precision);
+      }
     }
   }
 };

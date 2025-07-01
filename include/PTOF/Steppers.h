@@ -156,16 +156,18 @@ struct CTRWSteppers {
       std::size_t nr_tags =
           std::min(tags_times.size(),
                    par::get_num_threads(typename CTRW::ParallelOption{}));
-      if (nr_tags == 0)
+      if (nr_tags == 0) {
         return {};
+      }
 
       std::vector<std::size_t> tags;
       tags.reserve(nr_tags);
       std::nth_element(tags_times.begin(), tags_times.begin() + nr_tags - 1,
                        tags_times.end());
 
-      for (auto const &tag_time : tags_times)
+      for (auto const &tag_time : tags_times) {
         tags.push_back(tag_time.first);
+      }
 
       return tags;
     }

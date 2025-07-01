@@ -114,8 +114,9 @@ struct SolverParameters_Generic {
       param_index = 0;
       auto time_units = io::read<std::string>(
           split_line, param_index, in_file + "Could not parse time units");
-      if (!TimeUnitsList::contains(time_units))
+      if (!TimeUnitsList::contains(time_units)) {
         throw std::runtime_error{in_file + "Not supported"};
+      }
       double time_unit_factor =
           ptof::time_unit_factor(time_units, params_transport, params_reaction);
       io::read(split_line, param_index,

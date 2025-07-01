@@ -120,9 +120,10 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
@@ -179,14 +180,17 @@ struct MeasurerTime_position_in_regions final
     _thresholds.resize(masks.size(), 0.);
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass";
-    if (_masks.size() > 1)
-      for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+    if (_masks.size() > 1) {
+      for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
         _output << std::setw(_column_widths[4])
                 << "In_region_" + std::to_string(ii);
+      }
+    }
     _output << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
@@ -206,10 +210,12 @@ struct MeasurerTime_position_in_regions final
         continue;
       }
       std::vector<int> in_region(_masks.size(), 0);
-      for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+      for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
         if (_masks[ii].get()[cell_new] >= _thresholds[ii] &&
-            _masks[ii].get()[cell_old] >= _thresholds[ii])
+            _masks[ii].get()[cell_old] >= _thresholds[ii]) {
           in_region[ii] = 1;
+        }
+      }
       if (std::any_of(in_region.begin(), in_region.end(),
                       [](int ii) { return ii > 0; })) {
         _output << std::setw(_column_widths[1]) << state_old.tag;
@@ -218,8 +224,9 @@ struct MeasurerTime_position_in_regions final
         _output << std::setw(_column_widths[3])
                 << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                             state_old);
-        if (_masks.size() > 1)
+        if (_masks.size() > 1) {
           io::print(_output, in_region, _column_widths[4]);
+        }
       }
     }
     _output << "\n";
@@ -249,9 +256,10 @@ struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(2 + std::string{"Position_mean_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_mean_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -289,9 +297,10 @@ struct MeasurerTime_position_second_moment final
                 9 + precision,
                 int(2 + std::string{"Position_second_moment_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_second_moment_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -329,9 +338,10 @@ struct MeasurerTime_position_nth_moment final
             std::max(9 + precision,
                      int(2 + std::string{"Position_moment_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_moment_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -381,9 +391,10 @@ struct MeasurerTime_position_moment_periodic final
     throw std::runtime_error{
         "Number of moment exponents is not the same as spatial dimension"};
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_moment_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -432,13 +443,15 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
                      int(2 + std::string{"Position_moment_"}.length()))} {
-    if (_exponents.size() != Geometry::dim)
+    if (_exponents.size() != Geometry::dim) {
       throw std::runtime_error{
           "Number of moment exponents is not the same as spatial dimension"};
+    }
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_moment_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -453,8 +466,9 @@ private:
   static std::string make_name(std::vector<double> const &exponents) {
     std::stringstream stream;
     stream << std::scientific << std::setprecision(2);
-    for (auto exp : exponents)
+    for (auto exp : exponents) {
       stream << "_" << exp;
+    }
     return std::string{"position_moment"} + stream.str();
   }
 
@@ -484,9 +498,10 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision,
                      int(2 + std::string{"Position_variance_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_variance_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -610,9 +625,10 @@ struct MeasurerTime_mass_in_regions final : MeasurerTime<Subject, Geometry> {
                      int(4 + std::string{"Mass_region_"}.length()))} {
     _thresholds.resize(masks.size(), 0.);
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t ii = 0; ii < masks.size(); ++ii)
+    for (std::size_t ii = 0; ii < masks.size(); ++ii) {
       _output << std::setw(_column_widths[1])
               << "Mass_region_" + std::to_string(ii);
+    }
     _output << "\n";
   }
 
@@ -706,13 +722,15 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
   }
 
   void update(double time, double time_of_change) override {
-    if constexpr (!std::is_reference_v<Field>)
-      if (time >= time_of_change)
+    if constexpr (!std::is_reference_v<Field>) {
+      if (time >= time_of_change) {
         _field.set(
             {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
                             _geometry.mesh(), Foam::IOobject::MUST_READ,
                             Foam::IOobject::NO_WRITE},
              _geometry.mesh()});
+      }
+    }
   }
 
 private:
@@ -779,9 +797,10 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << field_name + "_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
@@ -827,13 +846,15 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
   }
 
   void update(double time, double time_of_change) override {
-    if constexpr (!std::is_reference_v<Field>)
-      if (time >= time_of_change)
+    if constexpr (!std::is_reference_v<Field>) {
+      if (time >= time_of_change) {
         _field.set(
             {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
                             _geometry.mesh(), Foam::IOobject::MUST_READ,
                             Foam::IOobject::NO_WRITE},
              _geometry.mesh()});
+      }
+    }
   }
 
 private:
@@ -898,10 +919,12 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
-      for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
+    for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1) {
+      for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
         _output << std::setw(_column_widths[2])
                 << field_name + "_" + std::to_string(dd1) + std::to_string(dd2);
+      }
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
@@ -934,12 +957,13 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
       }
       auto const &state_new = part.state_new();
       _output << std::setw(_column_widths[1]) << state_old.tag;
-      if (outside(state_new.cell || outside(state_old.cell)))
-        for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      if (outside(state_new.cell) || outside(state_old.cell)) {
+        for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
           io::print(_output, std::vector<double>(Geometry::dim, 0.),
                     _column_widths[2]);
-      else
-        for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
+        }
+      } else {
+        for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1) {
           for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
             auto field_value =
                 ctrw::Get_interp{time, ctrw::Get_cell_arraystyleproperty{
@@ -947,6 +971,8 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
             _output << std::setw(_column_widths[2])
                     << field_value.row(dd1)[dd2];
           }
+        }
+      }
       _output << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
     }
     _output << "\n";
@@ -1052,13 +1078,15 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
   }
 
   void update(double time, double time_of_change) override {
-    if constexpr (!std::is_reference_v<Field>)
-      if (time >= time_of_change)
+    if constexpr (!std::is_reference_v<Field>) {
+      if (time >= time_of_change) {
         _field.set(
             {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
                             _geometry.mesh(), Foam::IOobject::MUST_READ,
                             Foam::IOobject::NO_WRITE},
              _geometry.mesh()});
+      }
+    }
   }
 
 private:
@@ -1125,9 +1153,10 @@ struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision,
                      int(2 + (field_name + "_mean_").length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << field_name + "_mean_" + std::to_string(dd) << "\n";
+    }
   }
 
   MeasurerTime_vector_field_mean(Subject const &subject,
@@ -1159,13 +1188,15 @@ struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
   }
 
   void update(double time, double time_of_change) override {
-    if constexpr (!std::is_reference_v<Field>)
-      if (time >= time_of_change)
+    if constexpr (!std::is_reference_v<Field>) {
+      if (time >= time_of_change) {
         _field.set(
             {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
                             _geometry.mesh(), Foam::IOobject::MUST_READ,
                             Foam::IOobject::NO_WRITE},
              _geometry.mesh()});
+      }
+    }
   }
 
 private:
@@ -1232,11 +1263,13 @@ struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision,
                      int(3 + (field_name + "_mean_").length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
-      for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
+    for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1) {
+      for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
         _output << std::setw(_column_widths[2])
                 << field_name + "_mean_" + std::to_string(dd1) +
                        std::to_string(dd2);
+      }
+    }
     _output << "\n";
   }
 
@@ -1263,20 +1296,24 @@ struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
     _output << std::setw(_column_widths[0]) << time;
     auto field_mean =
         mean(_subject, time, ctrw::Get_cell_arraystyleproperty{_field});
-    for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1)
-      for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2)
+    for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1) {
+      for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
         _output << std::setw(_column_widths[1]) << field_mean.row(dd1)[dd2];
+      }
+    }
     _output << "\n";
   }
 
   void update(double time, double time_of_change) override {
-    if constexpr (!std::is_reference_v<Field>)
-      if (time >= time_of_change)
+    if constexpr (!std::is_reference_v<Field>) {
+      if (time >= time_of_change) {
         _field = {Foam::IOobject{_field_name,
                                  _geometry.mesh().time().timeName(),
                                  _geometry.mesh(), Foam::IOobject::MUST_READ,
                                  Foam::IOobject::NO_WRITE},
                   _geometry.mesh()};
+      }
+    }
   }
 
 private:
@@ -1334,9 +1371,10 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
@@ -1401,14 +1439,17 @@ struct MeasurerTime_position_in_regions_periodic final
     _thresholds.resize(masks.size(), 0.);
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass";
-    if (_masks.size() > 1)
-      for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+    if (_masks.size() > 1) {
+      for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
         _output << std::setw(_column_widths[4])
                 << "In_region_" + std::to_string(ii);
+      }
+    }
     _output << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
             << "\n";
@@ -1428,22 +1469,24 @@ struct MeasurerTime_position_in_regions_periodic final
         continue;
       }
       std::vector<int> in_region(_masks.size(), 0);
-      for (std::size_t ii = 0; ii < _masks.size(); ++ii)
+      for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
         if (_masks[ii].get()[cell_new] >= _thresholds[ii] &&
-            _masks[ii].get()[cell_old] >= _thresholds[ii])
+            _masks[ii].get()[cell_old] >= _thresholds[ii]) {
           in_region[ii] = 1;
-      if (std::any_of(in_region.begin(), in_region.end(),
-                      [](int ii) { return ii > 0; })) {
-        _output << std::setw(_column_widths[1]) << state_old.tag;
-        io::print(
-            _output,
-            interpolate_position(part, time, this->_locator, _getter_position),
-            _column_widths[2]);
-        _output << std::setw(_column_widths[3])
-                << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
-                                                            state_old);
-        if (_masks.size() > 1)
-          io::print(_output, in_region, _column_widths[4]);
+        }
+        if (std::any_of(in_region.begin(), in_region.end(),
+                        [](int ii) { return ii > 0; })) {
+          _output << std::setw(_column_widths[1]) << state_old.tag;
+          io::print(_output,
+                    interpolate_position(part, time, this->_locator,
+                                         _getter_position),
+                    _column_widths[2]);
+          _output << std::setw(_column_widths[3])
+                  << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
+                                                              state_old);
+          if (_masks.size() > 1)
+            io::print(_output, in_region, _column_widths[4]);
+        }
       }
     }
     _output << "\n";
@@ -1481,9 +1524,10 @@ struct MeasurerTime_position_mean_periodic final
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(2 + std::string{"Position_mean_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_mean_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -1529,9 +1573,10 @@ struct MeasurerTime_position_second_moment_periodic final
                 9 + precision,
                 int(2 + std::string{"Position_second_moment_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_second_moment_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -1572,9 +1617,10 @@ struct MeasurerTime_position_nth_moment_periodic final
             std::max(9 + precision,
                      int(2 + std::string{"Position_nth_moment_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_nth_moment_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -1629,9 +1675,10 @@ struct MeasurerTime_position_variance_periodic final
             std::max(9 + precision,
                      int(2 + std::string{"Position_variance_"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[1])
               << "Position_variance_" + std::to_string(dd);
+    }
     _output << "\n";
   }
 
@@ -1751,9 +1798,10 @@ struct MeasurerTime_position_adsorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
@@ -1809,9 +1857,10 @@ struct MeasurerTime_position_adsorbed_periodic final
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
             << std::setw(_column_widths[2]) << "..."
@@ -1928,9 +1977,10 @@ struct MeasurerTime_surface_reacted_mass_periodic final
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
     _output << std::setw(_column_widths[1]) << "Face";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Periodicity_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
             << std::setw(_column_widths[2]) << "..."
@@ -1948,8 +1998,9 @@ struct MeasurerTime_surface_reacted_mass_periodic final
     for (auto const &faceperiodicity_mass : _boundary_info.masses()) {
       _output << std::setw(_column_widths[1])
               << faceperiodicity_mass.first.first;
-      for (auto const &val : faceperiodicity_mass.first.second)
+      for (auto const &val : faceperiodicity_mass.first.second) {
         _output << val;
+      }
       io::print(_output, faceperiodicity_mass.first.second, _column_widths[2]);
       _output << std::setw(_column_widths[3]) << faceperiodicity_mass.second;
     }
@@ -2059,9 +2110,10 @@ struct MeasurerTime_mass_adsorbed_face_periodic final
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
     _output << std::setw(_column_widths[1]) << "Face";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Periodicity_" + std::to_string(dd);
+    }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
             << std::setw(_column_widths[2]) << "..."
@@ -2101,8 +2153,9 @@ struct MeasurerTime_mass_adsorbed_face_periodic final
     for (auto const &faceperiodicity_mass : masses) {
       _output << std::setw(_column_widths[1])
               << faceperiodicity_mass.first.first;
-      for (auto const &val : faceperiodicity_mass.first.second)
+      for (auto const &val : faceperiodicity_mass.first.second) {
         _output << val;
+      }
       io::print(_output, faceperiodicity_mass.first.second, _column_widths[2]);
       _output << std::setw(_column_widths[3]) << faceperiodicity_mass.second;
     }

@@ -129,9 +129,10 @@ struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
     if constexpr (print_position) {
       _column_widths[4] =
           std::max(9 + precision, int(2 + std::string{"Position_"}.length()));
-      for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
         _output << std::setw(_column_widths[4])
                 << "Position_" + std::to_string(dd);
+      }
     }
     if constexpr (meta::has_reinjections_v<typename State::Info>) {
       _column_widths[5] =
