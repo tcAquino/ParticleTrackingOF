@@ -47,7 +47,7 @@ public:
   /**
      \brief Constructor.
      \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field.
+     \param velocity_field Velocity field as a function of state.
      \param surface_reaction Surface reaction handler.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
@@ -98,7 +98,7 @@ public:
   /**
    \brief Constructor.
    \param geometry Domain geometry info and utilities.
-   \param velocity_field Velocity field.
+   \param velocity_field Velocity field as a function of state.
    \param surface_reaction Surface reaction handler.
    \param params_transport Transport parameters.
    \param params_reaction Reaction parameters.

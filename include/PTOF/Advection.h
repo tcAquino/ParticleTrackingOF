@@ -18,7 +18,7 @@ namespace ptof {
 /**
    \brief Get the velocity field U from the OpenFOAM case time associated with
    a mesh.
-   \param mesh Mesh object.
+   \param geometry Domain geometry info and utilities.
    \return OpenFOAM velocity field data.
 */
 template <typename Geometry> auto get_velocity_data(Geometry const &geometry) {
@@ -29,6 +29,12 @@ template <typename Geometry> auto get_velocity_data(Geometry const &geometry) {
                               mesh};
 }
 
+/**
+   \brief Update velocity data, and interpolator if needed.
+   \param velocity_field Velocity field as a function of state.
+   \param geometry Domain geometry info and utilities.
+   \param params_transport Transport parameters.
+*/
 template <typename VelocityField, typename Geometry,
           typename TransportParameters>
 static void update_velocity_field(VelocityField &velocity_field,

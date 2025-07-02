@@ -4,12 +4,12 @@ Particle tracking based on OpenFOAM-generated meshes and flow fields, including 
 
 ## Dependencies
 
-PTOF is meant to be used in a Linux system. It has mostly been tested under Ubuntu v22.04. It is also expected to work on MacOS but is less tested there.
+PTOF is meant to be used on a Linux system. It has mostly been tested under Ubuntu v22.04. It is also expected to work on MacOS but is less tested there.
 
 Required external libraries (free and open-source):
 - OpenFOAM : CFD software (https://www.openfoam.com/)
 
-A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5 are required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues. For compilation of parallel implementations with clang++, llvm's OpenMP must be installed (to install from the terminal, run "brew install libomp" on MacOS or "sudo apt install libomp-dev" on Linux).
+A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5 are required. Note that the same compiler used for OpenFOAM should be used to avoid (dynamic) linking issues. For compilation of parallel implementations with clang++, llvm's OpenMP must be installed (to install from the terminal, run "brew install libomp" on MacOS or "sudo apt install libomp-dev" on Linux Debian/Ubuntu)
 
 ## Documentation
 

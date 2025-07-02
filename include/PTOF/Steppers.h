@@ -234,7 +234,7 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
   /**
      \brief Adaptive time step generator.
      \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field.
+     \param velocity_field Velocity field as a function of state.
      \param boundary Boundary condition enforcer.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
@@ -362,7 +362,7 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
   /**
      \brief Adaptive time step generator.
      \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field.
+     \param velocity_field Velocity field as a function of state.
      \param boundary Boundary condition enforcer.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
@@ -491,7 +491,7 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
   /**
      \brief Adaptive time step generator.
      \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field.
+     \param velocity_field Velocity field as a function of state.
      \param boundary Boundary condition enforcer.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.
@@ -620,7 +620,7 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
   /**
      \brief Adaptive time step generator.
      \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field.
+     \param velocity_field Velocity field as a function of state.
      \param boundary Boundary condition enforcer.
      \param params_transport Transport parameters.
      \param params_reaction Reaction parameters.

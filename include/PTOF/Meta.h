@@ -88,7 +88,7 @@ inline constexpr bool has_adsorbed_v =
 
 /**\brief Type of \c X::boundaryField(). */
 template <typename X>
-using boundaryField_t = decltype(std::declval<X>().banana());
+using boundaryField_t = decltype(std::declval<X>().boundaryField());
 /**
    \brief Check if \c X has member <tt>boundaryField()</tt>.
 */

@@ -117,7 +117,7 @@ class JumpGenerator_Velocity {
 public:
   /**
      \brief Constructor.
-     \param velocity_field Velocity field (as a function of state)
+     \param velocity_field Velocity field as a function of state.
      \param time_step Time step.
   */
   JumpGenerator_Velocity(VelocityField &&velocity_field, double time_step)
@@ -178,8 +178,7 @@ class JumpGenerator_Velocity_RK2 {
 public:
   /**
      \brief Constructor.
-     \param velocity_field the time step, and the boundary to enforce boundary
-     conditions.
+     \param velocity_field Velocity field as a function of state.
      \param time_step Time step.
      \param boundary Object to apply boundary conditions to current state given
      current state and previous state.
@@ -255,8 +254,7 @@ class JumpGenerator_Velocity_RK4 {
 public:
   /**
      \brief Constructor.
-     \param velocity_field the time step, and the boundary to enforce boundary
-     conditions.
+     \param velocity_field Velocity field as a function of state.
      \param time_step Time step.
      \param boundary Object to apply boundary conditions to current state given
      current state and previous state.
@@ -348,8 +346,7 @@ class JumpGenerator_Velocity_Heun {
 public:
   /**
      \brief Constructor.
-     \param velocity_field the time step, and the boundary to enforce boundary
-     conditions.
+     \param velocity_field Velocity field as a function of state.
      \param time_step Time step.
      \param boundary Object to apply boundary conditions to current state given
      current state and previous state.
