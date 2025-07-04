@@ -182,16 +182,16 @@ public:
                                     JumpGenerator &&jump_generator,
                                     VelocityField &&velocity_field,
                                     Boundary &&boundary)
-      : _step_length{step_length}, _jump_generator{std::forward<JumpGenerator>(
-                                       jump_generator)},
+      : _step_length{step_length},
+        _jump_generator{std::forward<JumpGenerator>(jump_generator)},
         _velocity_field{std::forward<VelocityField>(velocity_field)},
         _boundary{std::forward<Boundary>(boundary)} {}
 
   Transitions_Position_VelocityStep(double step_length,
                                     JumpGenerator &&jump_generator,
                                     Boundary &&boundary = {})
-      : _step_length{step_length}, _jump_generator{std::forward<JumpGenerator>(
-                                       jump_generator)},
+      : _step_length{step_length},
+        _jump_generator{std::forward<JumpGenerator>(jump_generator)},
         _velocity_field{VelocityFromGenerator{this->jump_generator}},
         _boundary{std::forward<Boundary>(boundary)} {}
 
@@ -273,8 +273,8 @@ public:
   Transitions_PTRW_FlowField_Diff(std::vector<double> const &diff,
                                   double time_step, FlowField &&flow_field,
                                   Boundary &&boundary = {})
-      : _time_generator{time_step}, _diff_generators{make_diff_generators(
-                                        diff, time_step)},
+      : _time_generator{time_step},
+        _diff_generators{make_diff_generators(diff, time_step)},
         _flow_field{std::forward<FlowField>(flow_field)},
         _boundary{std::forward<Boundary>(boundary)} {}
 
@@ -867,14 +867,14 @@ public:
   Transitions_Velocity_Acceleration(double time_step,
                                     Acceleration &&acceleration,
                                     Boundary &&boundary)
-      : _time_step{time_step}, _acceleration{std::forward<Acceleration>(
-                                   acceleration)},
+      : _time_step{time_step},
+        _acceleration{std::forward<Acceleration>(acceleration)},
         _boundary{std::forward<Boundary>(boundary)} {}
 
   Transitions_Velocity_Acceleration(double time_step,
                                     Acceleration &&acceleration)
-      : _time_step{time_step}, _acceleration{std::forward<Acceleration>(
-                                   acceleration)},
+      : _time_step{time_step},
+        _acceleration{std::forward<Acceleration>(acceleration)},
         _boundary{meta::Empty{}} {}
 
   template <typename State> void operator()(State &state) {

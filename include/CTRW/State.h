@@ -9,8 +9,6 @@
 #define CTRW_STATE_H
 
 #include "General/Meta.h"
-#include "General/Operation.h"
-#include <valarray>
 #include <vector>
 
 namespace ctrw {
@@ -41,8 +39,8 @@ struct State_Periodic {
 
   State_Periodic(Position position, Periodicity periodicity, Mass mass = 1,
                  Time_t time = 0, Tag_t tag = {})
-      : position{position},
-        periodicity{periodicity}, mass{mass}, time{time}, tag{tag} {}
+      : position{position}, periodicity{periodicity}, mass{mass}, time{time},
+        tag{tag} {}
 
   Position position;
   Periodicity periodicity;
@@ -197,8 +195,8 @@ struct State_RunTumble {
 
   State_RunTumble(Position position, Orientation orientation, bool run = 0,
                   Time time = {}, Tag tag = {})
-      : position{position},
-        orientation{orientation}, run{run}, time{time}, tag{tag} {}
+      : position{position}, orientation{orientation}, run{run}, time{time},
+        tag{tag} {}
 
   Position position{};
   Orientation orientation{};

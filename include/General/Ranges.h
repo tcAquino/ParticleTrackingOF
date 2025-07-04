@@ -10,7 +10,6 @@
 #define GENERAL_RANGES_H
 
 #include "General/Meta.h"
-#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 #include <type_traits>

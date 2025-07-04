@@ -16,7 +16,6 @@
 #include "PTOF/TimeUnitsList.h"
 #include <cstddef>
 #include <fstream>
-#include <istream>
 #include <memory>
 #include <ostream>
 #include <stdexcept>

@@ -8,17 +8,14 @@
 #ifndef PTOF_INITIALCONDITION_H
 #define PTOF_INITIALCONDITION_H
 
-#include "CTRW/Meta.h"
 #include "General/IO.h"
+#include "PTOF/CheckOptions.h"
 #include "PTOF/Useful.h"
 #include "Stochastic/Random.h"
-#include "fvMesh.H"
 #include <cmath>
 #include <cstddef>
 #include <fieldTypes.H>
 #include <fstream>
-#include <map>
-#include <ostream>
 #include <point.H>
 #include <random>
 #include <stdexcept>
@@ -111,8 +108,8 @@ protected:
   Geometry _geometry;
 };
 template <typename ParticleMaker, typename Geometry>
-InitialCondition(ParticleMaker &&, Geometry &&)
-    -> InitialCondition<ParticleMaker, Geometry>;
+InitialCondition(ParticleMaker &&,
+                 Geometry &&) -> InitialCondition<ParticleMaker, Geometry>;
 
 /**
    \class InitialCondition_Continuous PTOF/InitialCondition.h
@@ -130,8 +127,8 @@ public:
                               double injection_time_step)
       : IC{std::forward<IC>(initial_condition)},
         _injection_time{injection_time},
-        _injection_time_end{injection_time_end}, _injection_time_step{
-                                                     injection_time_step} {}
+        _injection_time_end{injection_time_end},
+        _injection_time_step{injection_time_step} {}
 
   virtual typename IC::ParticleContainer
   make_particles(std::size_t nr_particles) override {

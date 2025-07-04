@@ -8,8 +8,8 @@
 #ifndef PTOF_INITIALCONDITIONHANDLER_H
 #define PTOF_INITIALCONDITIONHANDLER_H
 
-#include "PTOF/InitialCondition_Cases.h"
 #include "General/Meta.h"
+#include "PTOF/InitialCondition_Cases.h"
 
 namespace ptof {
 struct InitialConditionHandler_Generic {

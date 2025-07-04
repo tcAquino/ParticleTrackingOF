@@ -27,8 +27,8 @@ struct OutputHandler_Generic {
              std::vector<std::reference_wrapper<const Mask>> masks = {},
              std::vector<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry,
-                        boundary,   directories,    params_output,
-                        identifier, masks,          thresholds};
+      boundary,   directories,    params_output,
+      identifier, masks,          thresholds};
   }
 
   template <typename Subject, typename VelocityField, typename Geometry,
@@ -41,8 +41,8 @@ struct OutputHandler_Generic {
              std::initializer_list<std::reference_wrapper<const Mask>> masks,
              std::initializer_list<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry,
-                        boundary,   directories,    params_output,
-                        identifier, masks,          thresholds};
+      boundary,   directories,    params_output,
+      identifier, masks,          thresholds};
   }
 
   template <typename Subject, typename VelocityField, typename Geometry,
@@ -55,8 +55,8 @@ struct OutputHandler_Generic {
              std::vector<std::reference_wrapper<const Mask>> masks,
              std::initializer_list<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry,
-                        boundary,   directories,    params_output,
-                        identifier, masks,          thresholds};
+      boundary,   directories,    params_output,
+      identifier, masks,          thresholds};
   }
 
   template <typename Subject, typename VelocityField, typename Geometry,
@@ -69,8 +69,8 @@ struct OutputHandler_Generic {
              std::initializer_list<std::reference_wrapper<const Mask>> masks,
              std::vector<double> thresholds = {}) {
     return Output_Cases{subject,    velocity_field, geometry,
-                        boundary,   directories,    params_output,
-                        identifier, masks,          thresholds};
+      boundary,   directories,    params_output,
+      identifier, masks,          thresholds};
   }
 };
 } // namespace ptof

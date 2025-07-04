@@ -11,8 +11,6 @@
 #include "CTRW/Meta.h"
 #include "General/IO.h"
 #include "General/Meta.h"
-#include "General/Operation.h"
-#include "PTOF/Boundary.h"
 #include "PTOF/InitialCondition.h"
 #include "PTOF/InitialConditionList.h"
 #include "PTOF/InitialConditionParameters_Cases.h"
@@ -23,12 +21,9 @@
 #include <cmath>
 #include <cstddef>
 #include <fieldTypes.H>
-#include <limits>
-#include <map>
 #include <memory>
 #include <ostream>
 #include <point.H>
-#include <random>
 #include <stdexcept>
 #include <string>
 #include <type_traits>

@@ -9,12 +9,13 @@
 #define PTOF_MODEL_H
 
 #include "CTRW/CTRW.h"
-#include "CTRW/Meta.h"
 #include "General/Meta.h"
+#include "PTOF/DynamicsList.h"
 #include "PTOF/Geometry.h"
 #include "PTOF/Info.h"
 #include "PTOF/InitialConditionHandler.h"
 #include "PTOF/OutputHandler.h"
+#include "PTOF/PeriodicityList.h"
 #include "PTOF/ReactionHandler.h"
 #include "PTOF/Solvers.h"
 #include "PTOF/State.h"
@@ -115,7 +116,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Generic<2, ParallelOption, Dynamics::Type::firstpassage>;
+          Geometry_Generic<2, ParallelOption, DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
@@ -143,7 +144,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Generic<2, ParallelOption, Dynamics::Type::firstpassage>;
+          Geometry_Generic<2, ParallelOption, DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
@@ -171,7 +172,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Generic<2, ParallelOption, Dynamics::Type::firstpassage>;
+          Geometry_Generic<2, ParallelOption, DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
@@ -447,7 +448,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Periodic_Cartesian<2, ParallelOption,
-                                      Dynamics::Type::firstpassage>;
+                                      DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -477,7 +478,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Periodic_Cartesian<2, ParallelOption,
-                                      Dynamics::Type::firstpassage>;
+                                      DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -507,7 +508,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Periodic_Cartesian<2, ParallelOption,
-                                      Dynamics::Type::firstpassage>;
+                                      DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -786,7 +787,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Generic<3, ParallelOption, Dynamics::Type::firstpassage>;
+          Geometry_Generic<3, ParallelOption, DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
@@ -813,7 +814,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Generic<3, ParallelOption, Dynamics::Type::firstpassage>;
+          Geometry_Generic<3, ParallelOption, DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
@@ -841,7 +842,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Generic<3, ParallelOption, Dynamics::Type::firstpassage>;
+          Geometry_Generic<3, ParallelOption, DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1116,7 +1117,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Periodic_Cartesian<3, ParallelOption,
-                                      Dynamics::Type::firstpassage>;
+                                      DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1146,7 +1147,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Periodic_Cartesian<3, ParallelOption,
-                                      Dynamics::Type::firstpassage>;
+                                      DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1176,7 +1177,7 @@ struct Model {
     template <typename ParallelOption> struct Definitions {
       using Geometry =
           Geometry_Periodic_Cartesian<3, ParallelOption,
-                                      Dynamics::Type::firstpassage>;
+                                      DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1461,8 +1462,8 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::cartesian,
-                       Dynamics::Type::firstpassage>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::cartesian,
+                       DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1491,8 +1492,8 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::cartesian,
-                       Dynamics::Type::firstpassage>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::cartesian,
+                       DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1521,8 +1522,8 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::cartesian,
-                       Dynamics::Type::firstpassage>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::cartesian,
+                       DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1729,7 +1730,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1756,7 +1757,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1783,7 +1784,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1812,8 +1813,8 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes,
-                       Dynamics::Type::firstpassage>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes,
+                       DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1842,8 +1843,8 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes,
-                       Dynamics::Type::firstpassage>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes,
+                       DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1872,8 +1873,8 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes,
-                       Dynamics::Type::firstpassage>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes,
+                       DynamicsList::Type::firstpassage>;
       using Info = Info_absorbed_reinjections;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1903,7 +1904,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1933,7 +1934,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1964,7 +1965,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed_adsorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -1994,7 +1995,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed_adsorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -2025,7 +2026,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
@@ -2056,7 +2057,7 @@ struct Model {
 
     template <typename ParallelOption> struct Definitions {
       using Geometry =
-          Geometry_Bcc<ParallelOption, Periodicity::Type::symmetryplanes>;
+          Geometry_Bcc<ParallelOption, PeriodicityList::Type::symmetryplanes>;
       using Info = Info_absorbed;
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;

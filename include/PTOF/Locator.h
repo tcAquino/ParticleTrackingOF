@@ -8,8 +8,8 @@
 #ifndef PTOF_LOCATOR_H
 #define PTOF_LOCATOR_H
 
-#include "General/Parallel.h"
 #include "PTOF/Useful.h"
+#include "PTOF/SearchOptions.h"
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <point.H>

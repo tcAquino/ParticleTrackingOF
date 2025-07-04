@@ -8,7 +8,6 @@
 #ifndef PTOF_MEASUREMENTSPACINGLIST_H
 #define PTOF_MEASUREMENTSPACINGLIST_H
 
-#include "General/Useful.h"
 #include <map>
 #include <string>
 

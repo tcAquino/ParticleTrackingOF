@@ -8,7 +8,6 @@
 #ifndef PTOF_MEASURER_H
 #define PTOF_MEASURER_H
 
-#include "CTRW/Meta.h"
 #include "CTRW/StateGetter.h"
 #include "General/IO.h"
 #include "General/Meta.h"
@@ -233,7 +232,7 @@ private:
       _output << std::setw(_column_widths[5]) << state.info.reinjections;
     }
   }
-  };
+};
 template <typename Subject, typename Geometry>
 Measurer_absorption_time(Subject const &, Geometry const &, Directories const &,
                          std::string const &, meta::Selector<bool, true>,

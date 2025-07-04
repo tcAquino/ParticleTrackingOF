@@ -30,7 +30,7 @@ gram_schmidt(std::vector<std::vector<double>> const &input) {
     for (std::size_t jj = 0; jj < ii; ++jj)
       op::minus_inplace(output[ii],
                         op::times_scalar(op::dot(output[jj], output[ii]) /
-                                         op::abs_sq(output[jj]),
+                                             op::abs_sq(output[jj]),
                                          output[jj]));
     op::div_scalar_inplace(output[ii], op::abs(output[ii]));
   }

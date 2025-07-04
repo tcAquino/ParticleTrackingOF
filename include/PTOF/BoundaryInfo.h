@@ -11,12 +11,9 @@
 #include "General/Meta.h"
 #include "General/Useful.h"
 #include "PTOF/BoundaryConditionList.h"
-#include "PTOF/Info.h"
 #include "PTOF/Meta.h"
-#include "PTOF/Useful.h"
 #include <pointIndexHit.H>
 #include <utility>
-#include <vector>
 
 namespace ptof {
 /**

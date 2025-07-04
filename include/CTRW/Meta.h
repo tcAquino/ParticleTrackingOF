@@ -9,7 +9,6 @@
 #define CTRW_META_H
 
 #include "General/Meta.h"
-#include "General/Useful.h"
 #include <type_traits>
 #include <utility>
 
@@ -98,7 +97,9 @@ inline constexpr bool has_time_v = has_member<time_t, X>::value;
 
 /** \class Parameters_or_empty General/Meta.h "General/Meta.h"
     \brief  Get Parameters type for true or Empty type for false. */
-template <bool, typename> struct Parameters_or_empty { using type = Empty; };
+template <bool, typename> struct Parameters_or_empty {
+  using type = Empty;
+};
 template <typename T> struct Parameters_or_empty<true, T> {
   using type = typename T::Parameters;
 };

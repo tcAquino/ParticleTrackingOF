@@ -11,11 +11,8 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "PTOF/Advection.h"
-#include "PTOF/Directories.h"
 #include "PTOF/Transitions.h"
 #include "PTOF/TransportParameters.h"
-#include <limits>
-#include <string>
 #include <type_traits>
 #include <utility>
 

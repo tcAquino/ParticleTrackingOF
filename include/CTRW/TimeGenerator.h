@@ -60,7 +60,8 @@ template <typename Dist, typename ParallelOption = par::ParallelOptions::Serial,
           typename RNGEngine = std::mt19937>
 class TimeGenerator_Dist {
   Dist _dist;
-  stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{std::random_device{}()};
+  stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{
+      std::random_device{}()};
 
 public:
   using value_type = decltype(_dist(_rng));

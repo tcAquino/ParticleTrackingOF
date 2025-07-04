@@ -9,11 +9,7 @@
 #define PTOF_TRANSITIONS_H
 
 #include "CTRW/Transitions.h"
-#include "General/Meta.h"
-#include "PTOF/Field.h"
 #include "PTOF/Meta.h"
-#include "PTOF/SurfaceReaction.h"
-#include "PTOF/TimeGenerator.h"
 
 namespace ptof {
 template <typename Transitions_Transport, typename BulkReaction,

@@ -23,7 +23,9 @@ namespace meta {
    \class types General/Meta.h "General/Meta.h"
    \brief Bundle of types.
 */
-template <typename...> struct types { using type = types; };
+template <typename...> struct types {
+  using type = types;
+};
 
 /**
    \class has_member_impl General/Meta.h "General/Meta.h"
@@ -161,9 +163,9 @@ inline constexpr bool can_call_abs_v = can_call_abs<void, Args...>::value;
 /** \brief Check whether classes can be used with binary operator. */
 template <typename X, typename Y, typename Op> struct op_valid {
   template <typename U, typename L, typename R>
-  static auto test(int)
-      -> decltype(std::declval<U>()(std::declval<L>(), std::declval<R>()),
-                  void(), std::true_type());
+  static auto test(int) -> decltype(std::declval<U>()(std::declval<L>(),
+                                                      std::declval<R>()),
+                                    void(), std::true_type());
 
   template <typename U, typename L, typename R>
   static auto test(...) -> std::false_type;
@@ -438,13 +440,17 @@ template <std::size_t... Indices> struct indices {
    \class Selector_t General/Meta.h "General/Meta.h"
    \brief Type for selecting function implementations at compile time.
 */
-template <typename TT> struct Selector_t { using type = TT; };
+template <typename TT> struct Selector_t {
+  using type = TT;
+};
 
 /**
    \class Selector General/Meta.h "General/Meta.h"
    \brief Type for selecting function implementations at compile time.
 */
-template <typename TT, TT val> struct Selector { using type = TT; };
+template <typename TT, TT val> struct Selector {
+  using type = TT;
+};
 
 /** \brief Type-dependent expression that is always false. */
 template <typename> constexpr bool dependent_false_v = false;

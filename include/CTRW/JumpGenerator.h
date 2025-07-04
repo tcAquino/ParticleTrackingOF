@@ -32,11 +32,8 @@
 #include "General/Parallel.h"
 #include "Geometry/Boundary.h"
 #include "Stochastic/Random.h"
-#include <algorithm>
 #include <cmath>
-#include <iterator>
 #include <random>
-#include <type_traits>
 #include <utility>
 
 namespace ctrw {
@@ -76,8 +73,8 @@ public:
   */
   JumpGenerator_Add(JumpGenerator_1 jump_generator_1,
                     JumpGenerator_2 jump_generator_2)
-      : _jump_generator_1{jump_generator_1}, _jump_generator_2{
-                                                 jump_generator_2} {}
+      : _jump_generator_1{jump_generator_1},
+        _jump_generator_2{jump_generator_2} {}
 
   /**
      \param state Particle state (unused).

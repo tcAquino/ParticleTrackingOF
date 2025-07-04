@@ -16,7 +16,6 @@
 #include "Stochastic/Random.h"
 #include <cmath>
 #include <fieldTypes.H>
-#include <functional>
 #include <list>
 #include <ostream>
 #include <random>

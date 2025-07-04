@@ -6,7 +6,6 @@
 */
 
 #include <map>
-#include <stdexcept>
 #include <string>
 
 #ifndef PTOF_ENDCRITERIONLIST_H

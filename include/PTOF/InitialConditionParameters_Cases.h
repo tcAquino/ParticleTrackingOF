@@ -695,7 +695,8 @@ private:
       double injection_time_step;
       if (discretization_option == "time_step") {
         io::read(split_line, param_index,
-                 in_file + for_injection_continuity_type + for_time_discretization_option +
+                 in_file + for_injection_continuity_type +
+                     for_time_discretization_option +
                      "Could not parse discretization time step",
                  injection_time_step);
         injection_time_step *= time_unit_factor;

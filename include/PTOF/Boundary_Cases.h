@@ -11,7 +11,6 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Useful.h"
-#include "Geometry/Boundary.h"
 #include "PTOF/Boundary.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/BoundaryInfo.h"

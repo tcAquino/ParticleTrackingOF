@@ -14,10 +14,8 @@
 #include "General/Meta.h"
 #include "General/Parallel.h"
 #include "PTOF/TimeGenerator.h"
-#include "PTOF/Useful.h"
 #include <algorithm>
 #include <cstddef>
-#include <type_traits>
 #include <utility>
 
 namespace ptof {

@@ -8,6 +8,7 @@
 #ifndef PTOF_ADVECTION_H
 #define PTOF_ADVECTION_H
 
+#include "PTOF/CheckOptions.h"
 #include "PTOF/Field.h"
 #include <IOobject.H>
 #include <fieldTypes.H>
@@ -57,8 +58,7 @@ static void update_velocity_field(VelocityField &velocity_field,
 template <typename Geometry, typename Field>
 auto makeLinearVelocityInterpolator(Geometry const &geometry, Field &&field) {
   return ptof::VectorField_LinearInterpolation_OF{
-      std::forward<Field>(field), geometry.locator,
-      CheckOptions::Warn{}};
+      std::forward<Field>(field), geometry.locator, CheckOptions::Warn{}};
 };
 
 /**
@@ -74,8 +74,7 @@ auto makeLinearVelocityInterpolator(Geometry const &geometry, Field &&field,
                                     Uninterpolated &&uninterpolated) {
   return ptof::VectorField_LinearInterpolation_OF{
       std::forward<Field>(field), geometry.locator,
-      std::forward<Uninterpolated>(uninterpolated),
-      CheckOptions::Warn{}};
+      std::forward<Uninterpolated>(uninterpolated), CheckOptions::Warn{}};
 };
 } // namespace ptof
 

@@ -9,21 +9,17 @@
 #define PTOF_BOUNDARY_H
 
 #include "General/IO.h"
-#include "General/Operation.h"
-#include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Directories.h"
-#include "PTOF/SurfaceReaction.h"
+#include "PTOF/DynamicsList.h"
 #include "PTOF/Useful.h"
 #include <algorithm>
 #include <cstddef>
 #include <fieldTypes.H>
-#include <fstream>
 #include <iterator>
 #include <limits>
 #include <point.H>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -85,12 +81,12 @@ inline auto get_boundary_conditions(std::string const &filename,
    \param delims Possible delimiters between patch names and boundary condition
    types.
 */
-template <Dynamics::Type dynamics>
+template <DynamicsList::Type dynamics>
 auto get_boundary_conditions(Directories const &directories,
                              std::string const &delims = "\t,| ") {
   return get_boundary_conditions(directories.dir_boundaryconditions +
                                      "/boundary_conditions_" +
-                                     Dynamics::name(dynamics) + ".dat",
+                                     DynamicsList::name(dynamics) + ".dat",
                                  delims);
 }
 
@@ -305,8 +301,8 @@ template <typename Boundary, typename Locator> struct Boundary_Periodic {
   Locator locator;            /**< Object to locate positions in mesh. */
 };
 template <typename Boundary, typename Locator>
-Boundary_Periodic(Boundary &&, Locator &&)
-    -> Boundary_Periodic<Boundary, Locator>;
+Boundary_Periodic(Boundary &&,
+                  Locator &&) -> Boundary_Periodic<Boundary, Locator>;
 
 /**
    \class Boundary_Reinject PTOF/Boundary.h "PTOF/Boundary.h"
@@ -347,8 +343,8 @@ struct Boundary_Reinject {
   Locator locator; /**< Object to locate positions in mesh. */
 };
 template <typename InitialCondition, typename Locator>
-Boundary_Reinject(InitialCondition &&, Locator &&)
-    -> Boundary_Reinject<InitialCondition, Locator>;
+Boundary_Reinject(InitialCondition &&,
+                  Locator &&) -> Boundary_Reinject<InitialCondition, Locator>;
 
 /**
    \brief For boundaries conditions indicated as type \c periodic, extract the

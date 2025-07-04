@@ -13,9 +13,7 @@
 #include "General/Operation.h"
 #include "PTOF/BulkReaction.h"
 #include "PTOF/Directories.h"
-#include "PTOF/Meta.h"
 #include "PTOF/SurfaceReaction.h"
-#include <exception>
 #include <limits>
 #include <ostream>
 #include <random>

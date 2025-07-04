@@ -789,11 +789,10 @@ public:
   */
   Boundary_Periodic_SymmetryPlanes(double scale = 1.,
                                    std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale}, origin{
-                                             origin.size() == 0.
-                                                 ? std::vector<double>(
-                                                       symmetry_planes.dim, 0.)
-                                                 : origin} {}
+      : symmetry_planes{}, scale{scale},
+        origin{origin.size() == 0.
+                   ? std::vector<double>(symmetry_planes.dim, 0.)
+                   : origin} {}
 
   /**
      \brief Check if position is out of bounds.
@@ -879,11 +878,10 @@ public:
   */
   Boundary_Periodic_SymmetryPlanes_WithOutsideInfo(
       double scale = 1., std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale}, origin{
-                                             origin.size() == 0.
-                                                 ? std::vector<double>(
-                                                       symmetry_planes.dim, 0.)
-                                                 : origin} {}
+      : symmetry_planes{}, scale{scale},
+        origin{origin.size() == 0.
+                   ? std::vector<double>(symmetry_planes.dim, 0.)
+                   : origin} {}
 
   /**
      \brief Check if position is out of bounds.

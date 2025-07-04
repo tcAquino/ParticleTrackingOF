@@ -11,13 +11,10 @@
 #include "CTRW/Meta.h"
 #include "General/IO.h"
 #include "General/Meta.h"
-#include "PTOF/BoundaryConditionList.h"
 #include "PTOF/BoundaryInfo.h"
 #include "PTOF/Criterion.h"
 #include "PTOF/Directories.h"
 #include "PTOF/EndCriterionList.h"
-#include "PTOF/Field.h"
-#include "PTOF/InitialCondition_Cases.h"
 #include "PTOF/MeasurementList.h"
 #include "PTOF/MeasurementSpacingList.h"
 #include "PTOF/Measurer.h"
@@ -26,19 +23,15 @@
 #include "PTOF/OutputParameters_Cases.h"
 #include <algorithm>
 #include <cmath>
-#include <cstddef>
-#include <fstream>
 #include <functional>
 #include <fvcGrad.H>
 #include <initializer_list>
-#include <iterator>
 #include <limits>
 #include <memory>
 #include <ostream>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
-#include <typeinfo>
 #include <vector>
 
 namespace ptof {
@@ -855,12 +848,11 @@ private:
 };
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Boundary &, Directories const &, Parameters &&,
-             std::string const &,
-             std::vector<std::reference_wrapper<const Mask>>,
-             std::vector<double>)
-    -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(
+    Subject const &, VelocityField const &, Geometry const &, Boundary &,
+    Directories const &, Parameters &&, std::string const &,
+    std::vector<std::reference_wrapper<const Mask>>,
+    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
@@ -899,12 +891,11 @@ Output_Cases(Subject const &, VelocityField const &, Geometry const &,
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Boundary &, Directories const &, Parameters &&,
-             std::string const &,
-             std::initializer_list<std::reference_wrapper<const Mask>>,
-             std::vector<double>)
-    -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(
+    Subject const &, VelocityField const &, Geometry const &, Boundary &,
+    Directories const &, Parameters &&, std::string const &,
+    std::initializer_list<std::reference_wrapper<const Mask>>,
+    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
 } // namespace ptof
 
 #endif /* PTOF_OUTPUT_CASES_H */

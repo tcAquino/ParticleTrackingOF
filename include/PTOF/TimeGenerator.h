@@ -11,8 +11,7 @@
 #include "CTRW/Meta.h"
 #include "General/Constant.h"
 #include "General/Meta.h"
-#include "General/Useful.h"
-#include "PTOF/Field.h"
+#include "PTOF/CheckOptions.h"
 #include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
 #include <MinMax.H>

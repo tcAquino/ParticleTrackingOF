@@ -17,7 +17,6 @@
 #include <point.H>
 #include <stdexcept>
 #include <type_traits>
-#include <vector>
 
 namespace ptof {
 /**

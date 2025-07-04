@@ -18,7 +18,6 @@
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <iostream>
-#include <map>
 #include <point.H>
 #include <random>
 #include <set>
@@ -27,139 +26,6 @@
 #include <type_traits>
 
 namespace ptof {
-/**
-   \struct CheckOptions PTOF/Useful.h "PTOF/Useful.h"
-   \brief Options for checking conditions.
-*/
-struct CheckOptions {
-  /**
-     \struct CheckOptions::NoCheck PTOF/Useful.h "PTOF/Useful.h"
-     \brief No bounds checking.
-  */
-  struct NoCheck {};
-
-  /**
-     \struct CheckOptions::Check PTOF/Useful.h "PTOF/Useful.h"
-     \brief Bounds checking, no warning.
-  */
-  struct Check {};
-
-  /**
-     \struct CheckOptions::Warn PTOF/Useful.h "PTOF/Useful.h"
-     \brief Bounds checking and warning.
-  */
-  struct Warn {};
-};
-
-/**
-   \struct SearchOptions PTOF/Useful.h "PTOF/Useful.h"
-   \brief Options for mesh searching.
-*/
-struct SearchOptions {
-  /**
-     \class SearchOptions::NeighborPrecheck PTOF/Useful.h "PTOF/Useful.h"
-     \brief Level of neighbors to check before searching mesh for position.
-  */
-  template <int level> struct NeighborPrecheck {
-    static constexpr int neighbor_check_level{level};
-  };
-
-  /**
-     \brief Dot not check neighbors, even self, before searching mesh for
-     position.
-  */
-  using NoNeighborPrecheck = NeighborPrecheck<-1>;
-
-  /**
-     \brief Check if position is in given cell before searching mesh for
-     position.
-  */
-  using ZeroNeighborPrecheck = NeighborPrecheck<0>;
-
-  /**
-     \brief Check if position is in given cell and in first orthogonal neighbors
-     before searching mesh for position.
-  */
-  using FirstNeighborPrecheck = NeighborPrecheck<1>;
-
-  /**
-     \brief Check if position is in given cell and in first and second
-     orthogonal neighbors before searching mesh for position.
-  */
-  using SecondNeighborPrecheck = NeighborPrecheck<2>;
-};
-
-/**
-   \struct Dynamics PTOF/Useful.h "PTOF/Useful.h"
-   \brief Keep track of names of dynamics types for different types of
-   simulations.
-*/
-struct Dynamics {
-  /**
-     \enum Type PTOF/Useful.h "PTOF/Useful.h"
-     \brief Implemented dynamics types.
-  */
-  enum class Type {
-    transport,    /**< No parameters, custom boundary does nothing.   */
-    firstpassage, /**< Parameters should hold InitialCondition object.*/
-  };
-
-  /** \brief Get type from name. */
-  static auto type(std::string const &name) { return name_to_type.at(name); }
-
-  /** \brief Get name from type. */
-  static auto name(Type type) { return type_to_name.at(type); }
-
-  /** \brief Check if name exists. */
-  static bool contains(std::string const &name) {
-    return name_to_type.count(name);
-  }
-
-  /** \brief Map names to types. */
-  inline static const std::map<std::string, Type> name_to_type{
-      {"transport", Type::transport},
-      {"firstpassage", Type::firstpassage},
-  };
-
-  /** \brief Map types to names. */
-  inline static const std::map<Type, std::string> type_to_name{
-      {Type::transport, "transport"},
-      {Type::firstpassage, "firstpassage"},
-  };
-};
-
-/**
-   \struct Periodicity PTOF/Useful.h "PTOF/Useful.h"
-   \brief Keep track of names of periodicity types for boundary conditions.
-*/
-struct Periodicity {
-  /** \enum Type PTOF/Useful.h "PTOF/Useful.h"
-   *  \brief Implemented periodicity types. */
-  enum class Type {
-    cartesian,     /**< Cartesian periodicity.                         */
-    symmetryplanes /**< Periodicity according to symmetry planes.      */
-  };
-
-  /** \brief Get type from name. */
-  static auto type(std::string const &name) { return name_to_type.at(name); }
-
-  /** \brief Get name from type. */
-  static auto name(Type type) { return type_to_name.at(type); }
-
-  /** \brief Check if name exists. */
-  static bool contains(std::string const &name) {
-    return name_to_type.count(name);
-  }
-
-  /** \brief Map names to types. */
-  inline static const std::map<std::string, Type> name_to_type{
-      {"cartesian", Type::cartesian}, {"symmetryplanes", Type::symmetryplanes}};
-
-  /** \brief Map types to names. */
-  inline static const std::map<Type, std::string> type_to_name{
-      {Type::cartesian, "cartesian"}, {Type::symmetryplanes, "symmetryplanes"}};
-};
-
 /**
    \class PositionAndCell PTOF/Useful.h "PTOF/Useful.h"
    \brief Object to hold a position and a cell for its location in the mesh.
@@ -271,8 +137,7 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
     } else {
       output << "\n"
                 "Help option "
-             << option << " : "
-             << "Not supported\n";
+             << option << " : " << "Not supported\n";
     }
   }
 
@@ -307,9 +172,8 @@ bool outside(Foam::label cell, Foam::point const &position,
              std::string const &extra_warning_info = {}) {
   if (cell < 0) {
     if constexpr (warn_if_outside) {
-      std::cerr << "Warning: Requested cell at position "
-                << "(" << position[0] << ", " << position[1] << ", "
-                << position[2] << ")"
+      std::cerr << "Warning: Requested cell at position " << "(" << position[0]
+                << ", " << position[1] << ", " << position[2] << ")"
                 << " outside mesh.";
       if (!extra_warning_info.empty()) {
         std::cerr << " " << extra_warning_info << "\n";
@@ -644,9 +508,8 @@ auto adjusted_face_center(Foam::label face, Locator const &locator) {
     return face_center(face, mesh);
   } else {
     auto center = face_center(face, mesh);
-    std::cerr << "Warning: Face center of face " << face << " at "
-              << "(" << center[0] << ", " << center[1] << ", " << center[2]
-              << ")"
+    std::cerr << "Warning: Face center of face " << face << " at " << "("
+              << center[0] << ", " << center[1] << ", " << center[2] << ")"
               << " is not within owner cell. "
               << "Replacing face center by owner cell center\n";
     return cell_center(mesh.faceOwner()[face], mesh);
@@ -1238,7 +1101,7 @@ auto mass(Subject const &subject, double time,
     if (outside(cell_new) && outside(cell_old)) {
       continue;
     }
-    for (std::size_t ii = 0; ii < masks.size(); ++ii){
+    for (std::size_t ii = 0; ii < masks.size(); ++ii) {
       if (masks[ii].get()[cell_new] >= thresholds[ii] &&
           masks[ii].get()[cell_old] >= thresholds[ii]) {
         masses[ii] +=
@@ -1535,8 +1398,7 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
 template <typename ParametersOutput>
 void info_time(std::ostream &output, ParametersOutput const &params,
                double time) {
-  output << "Time "
-         << "[" << params.time_units
+  output << "Time " << "[" << params.time_units
          << " time units]: " << time / params.time_unit_factor << "\n";
 }
 

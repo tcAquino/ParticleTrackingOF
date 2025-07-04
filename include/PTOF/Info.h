@@ -8,12 +8,9 @@
 #ifndef PTOF_INFO_H
 #define PTOF_INFO_H
 
-#include "General/Useful.h"
-#include "PTOF/Meta.h"
 #include <cstddef>
 #include <fieldTypes.H>
 #include <point.H>
-#include <string>
 
 namespace ptof {
 /**

@@ -50,11 +50,10 @@ template <typename Particle_t, typename Locator> struct ParticleMaker_Generic {
   Info info;       /**< Particle state info.                       */
 };
 template <typename Particle, typename Locator>
-ParticleMaker_Generic(meta::Selector_t<Particle>, Locator &&locator,
-                      typename Particle::State::Time,
-                      typename Particle::State::Mass,
-                      typename Particle::State::Tag)
-    -> ParticleMaker_Generic<Particle, Locator>;
+ParticleMaker_Generic(
+    meta::Selector_t<Particle>, Locator &&locator,
+    typename Particle::State::Time, typename Particle::State::Mass,
+    typename Particle::State::Tag) -> ParticleMaker_Generic<Particle, Locator>;
 template <typename Particle, typename Locator>
 ParticleMaker_Generic(meta::Selector_t<Particle>, Locator &&locator,
                       typename Particle::State::Time,
