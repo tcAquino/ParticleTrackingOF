@@ -40,8 +40,8 @@ struct DynamicsList {
 
   /** \brief Map names to types. */
   inline static const std::map<std::string, Type> name_to_type{
-      {"transport", Type::transport},
-      {"firstpassage", Type::firstpassage},
+      {"transport", Type::firstpassage},
+      {"transportema", Type::firstpassage},
   };
 
   /** \brief Map types to names. */

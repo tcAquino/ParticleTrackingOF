@@ -2,7 +2,7 @@
    \file PTOF/PeriodicityList.h
    \author Tomas Aquino
    \date 2022/02/17
-   \brief Helpers for choosing
+   \brief Helpers for choosing periodicity type.
 */
 
 #ifndef PTOF_PERIODICITYLIST_H
