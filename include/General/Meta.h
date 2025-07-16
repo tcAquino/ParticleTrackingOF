@@ -8,7 +8,6 @@
 #ifndef GENERAL_META_H
 #define GENERAL_META_H
 
-#include <bits/utility.h>
 #include <cmath>
 #include <functional>
 #include <iostream>
