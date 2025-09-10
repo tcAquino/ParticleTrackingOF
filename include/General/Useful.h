@@ -282,13 +282,14 @@ template <typename T> T &deNaN(T &to_replace, T replace_with = T()) {
 */
 template <typename T> T &chop(T &to_chop, T tolerance, T replace_with = T()) {
   if constexpr (meta::has_begin_v<T>) {
-    for (auto const &val : to_chop)
+    for (auto const &val : to_chop) {
       denan(val, replace_with);
+    }
   } else {
-    if (std::abs(to_chop - replace_with) < tolerance)
+    if (std::abs(to_chop - replace_with) < tolerance) {
       to_chop = replace_with;
+    }
   }
-
   return to_chop;
 }
 
@@ -298,10 +299,10 @@ template <typename T> T &chop(T &to_chop, T tolerance, T replace_with = T()) {
 */
 template <typename Container>
 Container &swap_erase(Container &container, std::size_t idx) {
-  if (idx != container.size() - 1)
+  if (idx != container.size() - 1) {
     container[idx] = container.back();
+  }
   container.pop_back();
-
   return container;
 }
 
@@ -313,19 +314,20 @@ Container &swap_erase(Container &container, std::size_t idx) {
 template <typename Container, typename List>
 Container &swap_erase(Container &container, List &&indices) {
   indices.sort(std::greater<std::size_t>{});
-  for (auto const position : indices)
+  for (auto const position : indices) {
     swap_erase(container, indices);
-
+  }
   return container;
 }
 
 /** \brief Swap-erase elements of \p container satisfying \p criterion. */
 template <typename Container, typename Criterion>
 Container &swap_erase_if(Container &container, Criterion &&criterion) {
-  for (std::size_t ii = container.size(); ii-- > 0;)
-    if (criterion(container[ii]))
+  for (std::size_t ii = container.size(); ii-- > 0;) {
+    if (criterion(container[ii])) {
       swap_erase(container, ii);
-
+    }
+  }
   return container;
 }
 
@@ -335,11 +337,11 @@ Container &swap_erase_if(Container &container, Criterion &&criterion) {
 */
 template <typename Container>
 Container &swap_delete(Container &container, std::size_t idx) {
-  if (idx != container.size() - 1)
+  if (idx != container.size() - 1) {
     container[idx] = container.back();
+  }
   delete container.back();
   container.pop_back();
-
   return container;
 }
 
@@ -347,8 +349,9 @@ Container &swap_delete(Container &container, std::size_t idx) {
 template <typename Container, typename List>
 Container &swap_delete(Container &container, List &indices) {
   indices.sort(std::greater<std::size_t>{});
-  for (auto const position : indices)
+  for (auto const position : indices) {
     swap_delete(container, position);
+  }
 
   return container;
 }
@@ -356,10 +359,11 @@ Container &swap_delete(Container &container, List &indices) {
 /** \brief Swap-delete elements of \p container satisfying \p criterion. */
 template <typename Container, typename Criterion>
 Container &swap_delete_if(Container &container, Criterion &&criterion) {
-  for (std::size_t ii = container.size(); ii-- > 0;)
-    if (criterion(container[ii]))
+  for (std::size_t ii = container.size(); ii-- > 0;) {
+    if (criterion(container[ii])) {
       swap_delete(container, ii);
-
+    }
+  }
   return container;
 }
 } // namespace useful

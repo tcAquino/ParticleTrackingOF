@@ -88,7 +88,6 @@ public:
   std::vector<std::size_t> computeIndexes(std::size_t index) const {
     std::vector<std::size_t> indexes;
     computeIndexes(index, indexes);
-
     return indexes;
   }
 

@@ -29,13 +29,15 @@ namespace op {
 template <typename Container> auto sum(Container const &input) {
   if constexpr (meta::has_begin_v<Container>) {
     std::decay_t<decltype(*input.begin())> output{0};
-    for (auto const &val : input)
+    for (auto const &val : input) {
       output += val;
+    }
     return output;
   } else {
     std::decay_t<decltype(Container()[0])> output{};
-    for (std::size_t ii = 0; ii < input.size(); ++ii)
+    for (std::size_t ii = 0; ii < input.size(); ++ii) {
       output += input[ii];
+    }
     return output;
   }
 }
@@ -53,13 +55,15 @@ inline auto sum(std::size_t input) { return input; }
 template <typename Container> auto prod(Container const &input) {
   if constexpr (meta::has_begin_v<Container>) {
     std::decay_t<decltype(*input.begin())> output{1};
-    for (auto const &val : input)
+    for (auto const &val : input) {
       output *= val;
+    }
     return output;
   } else {
     std::decay_t<decltype(Container()[0])> output{1};
-    for (std::size_t ii = 0; ii < input.size(); ++ii)
+    for (std::size_t ii = 0; ii < input.size(); ++ii) {
       output *= input[ii];
+    }
     return output;
   }
 }
@@ -76,19 +80,24 @@ inline auto prod(std::size_t input) { return input; }
 /** \brief Element-wise sum of scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 auto &plus_scalar(Container const &input, Scalar cc, Container_out &output) {
-  if constexpr (meta::is_convertible_from_plus_v<Container, Scalar, Container>)
+  if constexpr (meta::is_convertible_from_plus_v<Container, Scalar,
+                                                 Container>) {
     output = input + cc;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input[ii] + cc;
+    }
+  }
   return output;
 }
 
 /** \brief Element-wise sum of scalar. */
 template <typename Container, typename Scalar>
 auto plus_scalar(Container const &input, Scalar cc) {
-  if constexpr (meta::is_convertible_from_plus_v<Container, Scalar, Container>)
+  if constexpr (meta::is_convertible_from_plus_v<Container, Scalar,
+                                                 Container>) {
     return input + cc;
+  }
   if constexpr (meta::is_constructible_from_size_v<Container>) {
     Container output(input.size());
     plus_scalar(input, cc, output);
@@ -111,11 +120,12 @@ template <typename Container_1, typename Container_2, typename Container_out>
 auto &plus(Container_1 const &input_1, Container_2 const &input_2,
            Container_out &output) {
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
-                                                 Container_out>)
+                                                 Container_out>) {
     output = input_1 + input_2;
-  else {
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input_1[ii] + input_2[ii];
+    }
   }
   return output;
 }
@@ -124,9 +134,9 @@ auto &plus(Container_1 const &input_1, Container_2 const &input_2,
 template <typename Container_1, typename Container_2>
 auto plus(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
-                                                 Container_1>)
+                                                 Container_1>) {
     return input_1 + input_2;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
       Container_1 output(input_1.size());
       plus(input_1, input_2, output);
@@ -149,20 +159,23 @@ auto &plus_inplace(Container_1 &input_1, Container_2 const &input_2) {
 template <typename Container, typename Scalar, typename Container_out>
 auto &minus_scalar(Container const &input, Scalar cc, Container_out &output) {
   if constexpr (meta::is_convertible_from_minus_v<Container, Scalar,
-                                                  Container_out>)
+                                                  Container_out>) {
     output = input - cc;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input[ii] - cc;
+    }
+  }
   return output;
 }
 
 /** \brief Element-wise subtraction of scalar. */
 template <typename Container, typename Scalar>
 auto minus_scalar(Container const &input, Scalar cc) {
-  if constexpr (meta::is_convertible_from_minus_v<Container, Scalar, Container>)
+  if constexpr (meta::is_convertible_from_minus_v<Container, Scalar,
+                                                  Container>) {
     return input - cc;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
       minus_scalar(input, cc, output);
@@ -185,11 +198,12 @@ auto &minus_scalar_inplace(Container &input, Scalar cc) {
 template <typename Container, typename Scalar, typename Container_out>
 auto &scalar_minus(Scalar cc, Container const &input, Container_out &output) {
   if constexpr (meta::is_convertible_from_minus_v<Scalar, Container,
-                                                  Container_out>)
+                                                  Container_out>) {
     output = cc - input;
-  else {
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = cc - input[ii];
+    }
   }
   return output;
 }
@@ -197,9 +211,10 @@ auto &scalar_minus(Scalar cc, Container const &input, Container_out &output) {
 /** \brief Element-wise subtraction from scalar. */
 template <typename Container, typename Scalar>
 auto scalar_minus(Scalar cc, Container const &input) {
-  if constexpr (meta::is_convertible_from_minus_v<Scalar, Container, Container>)
+  if constexpr (meta::is_convertible_from_minus_v<Scalar, Container,
+                                                  Container>) {
     return cc - input;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
       scalar_minus(cc, input, input);
@@ -223,11 +238,12 @@ template <typename Container_1, typename Container_2, typename Container_out>
 auto &minus(Container_1 const &input_1, Container_2 const &input_2,
             Container_out &output) {
   if constexpr (meta::is_convertible_from_minus_v<Container_1, Container_2,
-                                                  Container_out>)
+                                                  Container_out>) {
     output = input_1 - input_2;
-  else {
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input_1[ii] - input_2[ii];
+    }
   }
   return output;
 }
@@ -236,9 +252,9 @@ auto &minus(Container_1 const &input_1, Container_2 const &input_2,
 template <typename Container_1, typename Container_2>
 auto minus(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_minus_v<Container_1, Container_2,
-                                                  Container_1>)
+                                                  Container_1>) {
     return input_1 - input_2;
-  else {
+  } else {
     Container_1 output = input_1;
     minus(input_1, input_2, output);
     return output;
@@ -256,11 +272,13 @@ template <typename Container, typename Scalar, typename Container_out>
 auto &times_scalar(Scalar lambda, Container const &input,
                    Container_out &output) {
   if constexpr (meta::is_convertible_from_multiplies_v<Scalar, Container,
-                                                       Container_out>)
+                                                       Container_out>) {
     output = lambda * input;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = lambda * input[ii];
+    }
+  }
   return output;
 }
 
@@ -292,11 +310,13 @@ template <typename Container_1, typename Container_2, typename Container_out>
 auto &times(Container_1 const &input_1, Container_2 const &input_2,
             Container_out &output) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container_1, Container_2,
-                                                       Container_out>)
+                                                       Container_out>) {
     output = input_1 * input_2;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input_1[ii] * input_2[ii];
+    }
+  }
   return output;
 }
 
@@ -304,9 +324,9 @@ auto &times(Container_1 const &input_1, Container_2 const &input_2,
 template <typename Container_1, typename Container_2>
 auto times(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container_1, Container_2,
-                                                       Container_1>)
+                                                       Container_1>) {
     return input_1 * input_2;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
       Container_1 output(input_1.size());
       times(input_1, input_2, output);
@@ -329,11 +349,13 @@ auto &times_inplace(Container_1 &input_1, Container_2 const &input_2) {
 template <typename Container, typename Scalar, typename Container_out>
 auto &div_scalar(Container const &input, Scalar lambda, Container_out &output) {
   if constexpr (meta::is_convertible_from_divides_v<Container, Scalar,
-                                                    Container_out>)
+                                                    Container_out>) {
     output = input / lambda;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input[ii] / lambda;
+    }
+  }
   return output;
 }
 
@@ -341,9 +363,9 @@ auto &div_scalar(Container const &input, Scalar lambda, Container_out &output) {
 template <typename Container, typename Scalar>
 auto div_scalar(Container const &input, Scalar lambda) {
   if constexpr (meta::is_convertible_from_divides_v<Container, Scalar,
-                                                    Container>)
+                                                    Container>) {
     return input / lambda;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
       div_scalar(input, lambda, output);
@@ -367,11 +389,12 @@ template <typename Container_1, typename Container_2, typename Container_out>
 auto &div(Container_1 const &input_1, Container_2 const &input_2,
           Container_out &output) {
   if constexpr (meta::is_convertible_from_divides_v<Container_1, Container_2,
-                                                    Container_out>)
+                                                    Container_out>) {
     output = input_1 / input_2;
-  else {
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input_1[ii] / input_2[ii];
+    }
   }
   return output;
 }
@@ -380,9 +403,9 @@ auto &div(Container_1 const &input_1, Container_2 const &input_2,
 template <typename Container_1, typename Container_2>
 auto div(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_divides_v<Container_1, Container_2,
-                                                    Container_1>)
+                                                    Container_1>) {
     return input_1 / input_2;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
       Container_1 output(input_1.size());
       div(input_1, input_2, output);
@@ -411,11 +434,13 @@ auto &linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
                 meta::is_convertible_from_multiplies_v<Scalar_2, Container_2,
                                                        Container_2> &&
                 meta::is_convertible_from_plus_v<Container_1, Container_2,
-                                                 Container_out>)
+                                                 Container_out>) {
     output = lambda_1 * input_1 + lambda_2 * input_2;
-  else
-    for (size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = lambda_1 * input_1[ii] + lambda_2 * input_2[ii];
+    }
+  }
   return output;
 }
 
@@ -429,9 +454,9 @@ auto linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
                 meta::is_convertible_from_multiplies_v<Scalar_2, Container_2,
                                                        Container_2> &&
                 meta::is_convertible_from_plus_v<Container_1, Container_2,
-                                                 Container_1>)
+                                                 Container_1>) {
     return lambda_1 * input_1 + lambda_2 * input_2;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
       Container_1 output(input_1.size());
       linearop(lambda_1, input_1, lambda_2, input_2, output);
@@ -460,11 +485,13 @@ auto &linearop(Scalar lambda, Container_1 const &input_1,
   if constexpr (meta::is_convertible_from_multiplies_v<Scalar, Container_1,
                                                        Container_1> &&
                 meta::is_convertible_from_plus_v<Container_1, Container_2,
-                                                 Container_out>)
+                                                 Container_out>) {
     output = lambda * input_1 + input_2;
-  else
-    for (size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = lambda * input_1[ii] + input_2[ii];
+    }
+  }
   return output;
 }
 
@@ -473,9 +500,9 @@ template <typename Container_1, typename Type, typename Container_2>
 auto linearop(Type lambda, Container_1 const &input_1,
               Container_2 const &input_2) {
   if constexpr (meta::has_multiplies_v<Type, Container_1> &&
-                meta::has_plus_v<Container_1, Container_2>)
+                meta::has_plus_v<Container_1, Container_2>) {
     return lambda * input_1 + input_2;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
       Container_1 output(input_1.size());
       linearop(lambda, input_1, input_2, output);
@@ -499,20 +526,22 @@ auto &linearop_inplace(Type lambda, Container_1 &input_1,
 template <typename Container, typename Container_out>
 auto &square(Container const &input, Container_out &output) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
-                                                       Container_out>)
+                                                       Container_out>) {
     output = input * input;
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = input[ii] * input[ii];
+    }
+  }
   return output;
 }
 
 /** \brief Element-wise square. */
 template <typename Container> auto square(Container const &input) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
-                                                       Container>)
+                                                       Container>) {
     return input * input;
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
       square(input, output);
@@ -535,15 +564,18 @@ template <typename Container, typename Container2, typename Container_out>
 auto &pow(Container const &input, Container2 const &exponents,
           Container_out &output) {
   if constexpr (meta::is_convertible_from_pow_v<Container, Container2,
-                                                Container_out>)
+                                                Container_out>) {
     output = std::pow(input, exponents);
-  else {
-    if constexpr (std::is_arithmetic_v<Container2>)
-      for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    if constexpr (std::is_arithmetic_v<Container2>) {
+      for (std::size_t ii = 0; ii < output.size(); ++ii) {
         output[ii] = std::pow(input[ii], exponents);
-    else
-      for (std::size_t ii = 0; ii < output.size(); ++ii)
+      }
+    } else {
+      for (std::size_t ii = 0; ii < output.size(); ++ii) {
         output[ii] = std::pow(input[ii], exponents[ii]);
+      }
+    }
   }
   return output;
 }
@@ -552,9 +584,9 @@ auto &pow(Container const &input, Container2 const &exponents,
 template <typename Container, typename Container2>
 auto pow(Container const &input, Container2 const &exponents) {
   if constexpr (meta::is_convertible_from_pow_v<Container, Container2,
-                                                Container>)
+                                                Container>) {
     return std::pow(input, exponents);
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
       pow(input, exponents, output);
@@ -576,19 +608,21 @@ auto &pow_inplace(Container &input, Container2 const &exponents) {
 /** \brief Element-wise square root. */
 template <typename Container, typename Container_out>
 auto &sqrt(Container const &input, Container_out &output) {
-  if constexpr (meta::is_convertible_from_sqrt_v<Container, Container_out>)
+  if constexpr (meta::is_convertible_from_sqrt_v<Container, Container_out>) {
     output = std::sqrt(input);
-  else
-    for (std::size_t ii = 0; ii < output.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < output.size(); ++ii) {
       output[ii] = std::sqrt(input[ii]);
+    }
+  }
   return output;
 }
 
 /** \brief Element-wise square root. */
 template <typename Container> auto sqrt(Container const &input) {
-  if constexpr (meta::is_convertible_from_sqrt_v<Container, Container>)
+  if constexpr (meta::is_convertible_from_sqrt_v<Container, Container>) {
     return std::sqrt(input);
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container>) {
       Container output(input.size());
       sqrt(input, output);
@@ -613,11 +647,12 @@ auto &mean(Container_1 const &input_1, Container_2 const &input_2,
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
                                                  Container_1> &&
                 meta::is_convertible_from_multiplies_v<double, Container_1,
-                                                       Container_out>)
+                                                       Container_out>) {
     output = 0.5 * (input_1 + input_2);
-  else {
-    for (std::size_t ii = 0; ii < input_1.size(); ++ii)
+  } else {
+    for (std::size_t ii = 0; ii < input_1.size(); ++ii) {
       output[ii] = 0.5 * (input_1[ii] + input_2[ii]);
+    }
   }
   return output;
 }
@@ -628,9 +663,9 @@ auto mean(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
                                                  Container_1> &&
                 meta::is_convertible_from_multiplies_v<double, Container_1,
-                                                       Container_1>)
+                                                       Container_1>) {
     return 0.5 * (input_1 + input_2);
-  else {
+  } else {
     if constexpr (meta::is_constructible_from_size_v<Container_1>) {
       Container_1 output(input_1.size());
       mean(input_1, input_2, output);
@@ -655,23 +690,26 @@ template <typename Container> auto abs_sq(Container const &input) {
     return abs * abs;
   } else if constexpr (meta::has_begin_v<Container>) {
     std::decay_t<decltype(*input.begin())> abs_sq{0};
-    for (auto const &val : input)
+    for (auto const &val : input) {
       abs_sq += val * val;
+    }
     return abs_sq;
   } else {
     std::decay_t<decltype(Container()[0])> abs_sq{0};
-    for (std::size_t ii = 0; ii < input.size(); ++ii)
+    for (std::size_t ii = 0; ii < input.size(); ++ii) {
       abs_sq += input[ii] * input[ii];
+    }
     return abs_sq;
   }
 }
 
 /** \brief Euclidean norm. */
 template <typename Container> auto abs(Container const &input) {
-  if constexpr (meta::is_convertible_from_abs_v<Container, double>)
+  if constexpr (meta::is_convertible_from_abs_v<Container, double>) {
     return std::abs(input);
-  else
+  } else {
     return std::sqrt(abs_sq(input));
+  }
 }
 
 template <typename Container> auto normalize(Container const &input) {
@@ -708,8 +746,9 @@ adjacent_difference(InputIterator first, InputIterator last,
 /** \brief Averages of adjacent elements. */
 template <typename Container>
 auto &midpoints(Container const &input, Container &output) {
-  for (size_t ii = 0; ii < output.size() - 1; ++ii)
+  for (size_t ii = 0; ii < output.size() - 1; ++ii) {
     output[ii] = (input[ii + 1] + input[ii]) / 2.;
+  }
   return output;
 }
 
@@ -729,8 +768,9 @@ template <typename Container> auto midpoints(Container const &input) {
 /** \brief Differences of adjacent elements. */
 template <typename Container>
 auto &diff(Container const &input, Container &output) {
-  for (size_t ii = 0; ii < output.size() - 1; ++ii)
+  for (size_t ii = 0; ii < output.size() - 1; ++ii) {
     output[ii] = input[ii + 1] - input[ii];
+  }
   return output;
 }
 
@@ -751,28 +791,32 @@ template <template <typename...> typename Container = std::vector,
           typename Scalar = double, typename... Args>
 auto bin_widths(Container<Scalar, Args...> const &values, Scalar minimum) {
   Container<Scalar, Args...> widths;
-  if constexpr (meta::has_reserve_v<Container<Scalar, Args...>>)
+  if constexpr (meta::has_reserve_v<Container<Scalar, Args...>>) {
     widths.reserve(values.size());
-  else if constexpr (meta::is_constructible_from_size_v<
-                         Container<Scalar, Args...>>)
+  } else if constexpr (meta::is_constructible_from_size_v<
+                           Container<Scalar, Args...>>) {
     widths = Container<Scalar, Args...>(values.size());
+  }
   double left_edge = minimum;
-  if constexpr (meta::has_push_back_v<Container<Scalar, Args...>>)
+  if constexpr (meta::has_push_back_v<Container<Scalar, Args...>>) {
     for (auto const &val : values) {
       widths.push_back(2. * (val - left_edge));
-      if (widths.back() < 0.)
+      if (widths.back() < 0.) {
         throw std::runtime_error{
             "Bad minimum value, could not determine bin widths"};
+      }
       left_edge += widths.back();
     }
-  else
+  } else {
     for (std::size_t ii = 0; ii < values.size(); ++ii) {
       widths[ii] = 2. * (values[ii] - left_edge);
-      if (widths[ii] < 0.)
+      if (widths[ii] < 0.) {
         throw std::runtime_error{
             "Bad minimum value, could not determine bin widths"};
+      }
       left_edge += widths[ii];
     }
+  }
   return widths;
 }
 
@@ -786,9 +830,10 @@ auto bin_widths(Container<Scalar, Args...> const &values, Scalar minimum) {
 */
 template <typename Container = std::vector<double>>
 auto bin_widths(Container const &values) {
-  if (values.size() < 2)
+  if (values.size() < 2) {
     throw std::runtime_error{
         "Less than two values, could not determine bin widths"};
+  }
   double midpoint = (values[1] + values[0]) / 2.;
   return get_bin_widths(values, values[0] - (midpoint - values[0]));
 }
@@ -797,8 +842,9 @@ auto bin_widths(Container const &values) {
 template <typename Container>
 auto dot(Container const &input_1, Container const &input_2) {
   typename std::decay_t<decltype(input_1[0])> result{};
-  for (size_t ii = 0; ii < input_1.size(); ++ii)
+  for (size_t ii = 0; ii < input_1.size(); ++ii) {
     result += input_1[ii] * input_2[ii];
+  }
   return result;
 }
 
@@ -821,8 +867,9 @@ template <typename Container_outer, typename Container_inner>
 auto &dot(Container_outer const &input_1, Container_inner const &input_2,
           Container_inner &output) {
   std::size_t counter = 0;
-  for (auto const &vec : input_1)
+  for (auto const &vec : input_1) {
     output[counter++] = dot(vec, input_2);
+  }
   return output;
 }
 
@@ -838,8 +885,9 @@ auto dot(Container_outer const &input_1, Container_inner const &input_2) {
     return output;
   } else {
     typename std::decay_t<decltype(input_1[0])> output{};
-    for (size_t ii = 0; ii < input_1.size(); ++ii)
+    for (size_t ii = 0; ii < input_1.size(); ++ii) {
       output += input_1[ii] * input_2[ii];
+    }
     return output;
   }
 }
@@ -859,7 +907,6 @@ template <typename Container>
 auto rotate(Container const &input, double theta) {
   Container output(input.size());
   rotate(input, theta, output);
-
   return output;
 }
 
@@ -873,12 +920,15 @@ auto &rotate_inplace(Container &input, double theta) {
 template <template <class> class Container_outer, typename Container_inner>
 std::size_t nr_elements(Container_outer<Container_inner> const &vv) {
   std::size_t nr_elements = 0;
-  if constexpr (meta::has_begin_v<Container_outer<Container_inner>>)
-    for (auto const &cont : vv)
+  if constexpr (meta::has_begin_v<Container_outer<Container_inner>>) {
+    for (auto const &cont : vv) {
       nr_elements += cont.size();
-  else
-    for (std::size_t ii = 0; ii < vv.size(); ++vv)
+    }
+  } else {
+    for (std::size_t ii = 0; ii < vv.size(); ++vv) {
       nr_elements += vv[ii].size();
+    }
+  }
   return nr_elements;
 }
 
@@ -887,8 +937,9 @@ template <typename Container>
 auto convolution(Container const &cont_1, Container const &cont_2,
                  std::size_t idx_start, std::size_t idx_end) {
   typename std::decay_t<decltype(cont_1[0])> res{};
-  for (std::size_t ii = idx_start; ii < idx_end; ++ii)
+  for (std::size_t ii = idx_start; ii < idx_end; ++ii) {
     res += cont_1[ii] * cont_2[idx_end - 1 - ii];
+  }
   return res;
 }
 
@@ -899,8 +950,9 @@ auto convolution_trap(Container const &cont_1, Container const &cont_2,
   typename std::decay_t<decltype(cont_1[0])> res{};
   res += 0.5 * (cont_1[idx_start] * cont_2[idx_end] +
                 cont_1[idx_end] * cont_2[idx_start]);
-  for (std::size_t ii = idx_start + 1; ii < idx_end; ++ii)
+  for (std::size_t ii = idx_start + 1; ii < idx_end; ++ii) {
     res += cont_1[ii] * cont_2[idx_end - ii];
+  }
   return res;
 }
 
@@ -910,8 +962,9 @@ auto hamming(Container const &vec, Container const &other_vec) {
   typename std::decay_t<decltype(vec[0])> hamming{};
   auto it = vec.begin();
   auto other_it = other_vec.begin();
-  for (; it != vec.end(); it++, other_it++)
+  for (; it != vec.end(); it++, other_it++) {
     hamming += *it > *other_it ? *it - *other_it : *other_it - *it;
+  }
   return hamming;
 }
 
@@ -979,8 +1032,9 @@ inline std::size_t factorial(std::size_t nn) {
 inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
   std::size_t result = 1.;
   ++nn;
-  for (std::size_t ii = 0; ii < mm && nn-- > 0; ++ii)
+  for (std::size_t ii = 0; ii < mm && nn-- > 0; ++ii) {
     result *= nn;
+  }
   return result;
 }
 
@@ -1002,8 +1056,9 @@ cartesian_power(Set const &set, std::size_t power) {
     modular::increment(index, set.size());
     result.push_back({});
     result.back().reserve(power);
-    for (std::size_t jj = 0; jj < power; ++jj)
+    for (std::size_t jj = 0; jj < power; ++jj) {
       result.back().push_back(set[index[jj]]);
+    }
   }
 
   return result;
@@ -1018,8 +1073,9 @@ std::vector<std::vector<double>> outer_product(Container1 const &input_1,
   for (auto const &row_val : input_1) {
     output.emplace_back();
     output.back().reserve(input_2.size());
-    for (auto const &col_val : input_2)
+    for (auto const &col_val : input_2) {
       output.back().push_back(row_val * col_val);
+    }
   }
 
   return output;
@@ -1033,15 +1089,18 @@ Container2 &apply(Op &&operation, Container1 const &input, Container2 &output) {
     std::transform(input.begin(), input.end(), output.begin(), operation);
   } else if constexpr (meta::has_begin_v<Container1>) {
     std::size_t ii = 0;
-    for (auto const &val : input)
+    for (auto const &val : input) {
       output[ii++] = operation(val);
+    }
   } else if constexpr (meta::has_begin_v<Container2>) {
     std::size_t ii = 0;
-    for (auto &val : output)
+    for (auto &val : output) {
       val = operation(input[ii++]);
+    }
   } else {
-    for (std::size_t ii = 0; ii < input.size(); ++ii)
+    for (std::size_t ii = 0; ii < input.size(); ++ii) {
       output[ii] = operation(input[ii]);
+    }
   }
 
   return output;
@@ -1071,7 +1130,6 @@ Container apply(Op &&operation, Container &input) {
     return output;
   }
 }
-
 } // namespace op
 
 #endif /* GENERAL_OPERATION_H */

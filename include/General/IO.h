@@ -141,8 +141,9 @@ inline std::string &
 clear_escape_in_place(std::string &str,
                       std::string const &escape_sequence = "#") {
   std::size_t pos = str.find(escape_sequence);
-  if (pos != std::string::npos)
+  if (pos != std::string::npos) {
     str.erase(pos);
+  }
   return str;
 }
 
@@ -160,14 +161,18 @@ inline bool is_empty(std::string const &str) {
 /** \return Ordinal string (1st, 2nd, 3rd, 4th, ...) for unsigned integer. */
 inline std::string ordinal(std::size_t number) {
   switch (number) {
-  case 1:
+  case 1: {
     return "1st";
-  case 2:
+  }
+  case 2: {
     return "2nd";
-  case 3:
+  }
+  case 3: {
     return "3rd";
-  default:
+  }
+  default: {
     return std::to_string(number) + "th";
+  }
   }
 }
 
@@ -198,7 +203,6 @@ inline std::string btos(bool val, bool boolalpha = true) {
     stream << std::noboolalpha;
   }
   stream << val;
-
   return stream.str();
 }
 
@@ -270,7 +274,6 @@ std::vector<std::string> &split(std::string const &str,
       tokens.push_back(token);
     }
   }
-
   return tokens;
 }
 
@@ -289,7 +292,6 @@ inline std::vector<std::string> &split<true>(std::string const &str,
                   [&str](auto const &delim) { return delim == str.back(); })) {
     tokens.push_back("");
   }
-
   return tokens;
 }
 
@@ -360,9 +362,9 @@ inline auto bad_parameters_help() {
 /** \brief Open file for reading. */
 inline std::ifstream open_read(std::string const &filename) {
   std::ifstream file(filename);
-  if (!file.is_open())
+  if (!file.is_open()) {
     throw open_read_error(filename);
-
+  }
   return file;
 }
 
@@ -371,9 +373,9 @@ inline std::ofstream
 open_write(std::string const &filename,
            std::ios_base::openmode mode = std::ios_base::out) {
   std::ofstream file(filename, mode);
-  if (!file.is_open())
+  if (!file.is_open()) {
     throw open_write_error(filename);
-
+  }
   return file;
 }
 
@@ -392,16 +394,18 @@ Type &read_first_from_line(Type &val, std::ifstream &input,
                            std::string const &escape_sequence = "#",
                            std::string const &delims = "\t,|\r ") {
   std::string line;
-  while (std::getline(input, line))
-    if (line.find(escape_sequence) != 0)
+  while (std::getline(input, line)) {
+    if (line.find(escape_sequence) != 0) {
       break;
+    }
+  }
   clear_escape_in_place(remove_carriage_return_in_place(line), escape_sequence);
+
   auto split_line = split(line, delims);
-  if (split_line.empty())
+  if (split_line.empty()) {
     throw std::runtime_error{"Could not read value"};
-
+  }
   val = stotype<Type>(split_line[0]);
-
   return val;
 }
 
@@ -422,9 +426,9 @@ Type read_first_from_line(std::ifstream &input,
 /** \brief Read next value from file. */
 template <typename Type> Type &read(std::ifstream &input, Type &val) {
   input >> val;
-  if (input.fail())
+  if (input.fail()) {
     throw std::runtime_error{"Could not read value"};
-
+  }
   return val;
 }
 
@@ -432,13 +436,15 @@ template <typename Type> Type &read(std::ifstream &input, Type &val) {
 template <typename Type = double>
 std::vector<Type> read(std::string const &filename) {
   std::ifstream file{filename};
-  if (!file.is_open())
+  if (!file.is_open()) {
     throw open_read_error(filename);
+  }
+
   std::vector<Type> vals;
   Type val;
-  while (file >> val)
+  while (file >> val) {
     vals.push_back(val);
-
+  }
   return vals;
 }
 
@@ -504,8 +510,9 @@ std::vector<Type> read(std::vector<std::string> const &strings,
                        std::string const &error = "") {
   std::vector<Type> result;
   result.reserve(nr_to_read);
-  for (std::size_t ii = 0; ii < nr_to_read; ++ii)
+  for (std::size_t ii = 0; ii < nr_to_read; ++ii) {
     result.push_back(read<Type>(strings, index, error));
+  }
   return result;
 }
 
@@ -539,8 +546,9 @@ template <typename Type>
 std::vector<Type> &read(std::vector<std::string> const &strings,
                         std::size_t &index, std::string const &error,
                         std::vector<Type> &result) {
-  for (auto &val : result)
+  for (auto &val : result) {
     read(strings, index, error, val);
+  }
   return result;
 }
 
@@ -559,8 +567,9 @@ std::vector<Type> &read(std::vector<std::string> const &strings,
                         std::size_t &index, std::size_t nr_to_read,
                         std::string const &error, std::vector<Type> &result) {
   result.reserve(result.size() + nr_to_read);
-  for (std::size_t ii = 0; ii < nr_to_read; ++ii)
+  for (std::size_t ii = 0; ii < nr_to_read; ++ii) {
     result.push_back(read<Type>(strings, index, error));
+  }
   return result;
 }
 
@@ -607,13 +616,15 @@ bool split_line(std::ifstream &input, std::vector<std::string> &tokens,
                 std::string const &delims = "\t,|\r ") {
   std::string line;
   bool read = false;
-  while (std::getline(input, line))
+  while (std::getline(input, line)) {
     if (line.find(escape_sequence) != 0) {
       read = true;
       break;
     }
-  if (!read)
+  }
+  if (!read) {
     return false;
+  }
   clear_escape_in_place(remove_carriage_return_in_place(line), escape_sequence);
   split<empty_entries>(line, tokens, delims);
   return true;
@@ -627,9 +638,9 @@ inline std::size_t nr_numbers_in_first_line(std::string const &filename) {
   std::stringstream stream(line);
   double number;
   std::size_t nr_numbers = 0;
-  while (stream >> number)
+  while (stream >> number) {
     ++nr_numbers;
-
+  }
   return nr_numbers;
 }
 
@@ -644,14 +655,16 @@ inline auto load_1(std::string const &filename, std::size_t nr_estimate = 0,
 
   auto file = open_read(filename);
   std::string line;
-  for (std::size_t ll = 0; ll < header_lines; ++ll)
+  for (std::size_t ll = 0; ll < header_lines; ++ll) {
     std::getline(file, line);
+  }
 
   while (std::getline(file, line)) {
     remove_carriage_return_in_place(line);
     std::vector<std::string> split_line = split(line, delims);
-    if (split_line.size() != 1)
+    if (split_line.size() != 1) {
       throw parse_error(filename, line);
+    }
     values.push_back(std::stod(split_line[0]));
   }
 
@@ -670,15 +683,16 @@ inline auto load_2(std::string const &filename, std::size_t nr_estimate = 0,
 
   auto file = open_read(filename);
   std::string line;
-  for (std::size_t ll = 0; ll < header_lines; ++ll)
+  for (std::size_t ll = 0; ll < header_lines; ++ll) {
     std::getline(file, line);
+  }
 
   while (std::getline(file, line)) {
     remove_carriage_return_in_place(line);
     std::vector<std::string> split_line = split(line, delims);
-    if (split_line.size() != 2)
+    if (split_line.size() != 2) {
       throw parse_error(filename, line);
-
+    }
     values.first.push_back(std::stod(split_line[0]));
     values.second.push_back(std::stod(split_line[1]));
   }
@@ -711,8 +725,9 @@ inline auto load_pair_1(std::string const &filename,
   while (std::getline(file, line)) {
     remove_carriage_return_in_place(line);
     std::vector<std::string> split_line = split(line, delims);
-    if (split_line.size() != 3)
+    if (split_line.size() != 3) {
       throw parse_error(filename, line);
+    }
 
     std::get<0>(output).push_back(
         {std::stod(split_line[0]), std::stod(split_line[1])});
@@ -729,22 +744,26 @@ inline auto load(std::string const &filename, std::size_t nr_columns,
   using Value = double;
   using Container = std::vector<Value>;
   std::vector<Container> values(nr_columns);
-  for (auto &val : values)
+  for (auto &val : values) {
     val.reserve(nr_estimate);
+  }
 
   auto file = open_read(filename);
   std::string line;
-  for (std::size_t ll = 0; ll < header_lines; ++ll)
+  for (std::size_t ll = 0; ll < header_lines; ++ll) {
     std::getline(file, line);
+  }
 
   while (std::getline(file, line)) {
     remove_carriage_return_in_place(line);
     std::vector<std::string> split_line = split(line, delims);
-    if (split_line.size() != nr_columns)
+    if (split_line.size() != nr_columns) {
       throw parse_error(filename, line);
+    }
 
-    for (std::size_t cc = 0; cc < nr_columns; ++cc)
+    for (std::size_t cc = 0; cc < nr_columns; ++cc) {
       values[cc].push_back(std::stod(split_line[cc]));
+    }
   }
 
   return values;
@@ -760,8 +779,9 @@ std::ostream &print(std::ostream &stream, Container const &container,
                     bool delimit_first = false, std::string delimiter = "\t") {
   // TODO: Choose this specialization when stream << container exists
   if constexpr (std::is_scalar_v<Container>) {
-    if (delimit_first)
+    if (delimit_first) {
       stream << delimiter;
+    }
     stream << container;
   } else {
     std::string delim = delimit_first ? delimiter : "";
@@ -780,11 +800,13 @@ std::ostream &print(std::ostream &stream, Container const &container, int width,
   io::StreamScopeFormat guard{stream};
   stream << alignment;
   // TODO: Choose this specialization when stream << container exists
-  if constexpr (std::is_scalar_v<Container>)
+  if constexpr (std::is_scalar_v<Container>) {
     stream << std::setw(width) << container;
-  else
-    for (auto const &val : container)
+  } else {
+    for (auto const &val : container) {
       stream << std::setw(width) << val;
+    }
+  }
   return stream;
 }
 

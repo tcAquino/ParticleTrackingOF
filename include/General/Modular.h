@@ -50,7 +50,6 @@ auto convert(Container const &to_convert, std::size_t basis) {
     converted += to_convert[pos] * power;
     power *= basis;
   }
-
   return converted;
 }
 
@@ -81,7 +80,6 @@ template <typename Integer_Type>
 std::vector<Integer_Type> convert(Integer_Type to_convert, Integer_Type basis) {
   std::vector<Integer_Type> converted(std::size_t(std::log2(to_convert) + 1));
   convert(to_convert, basis, converted);
-
   return converted;
 }
 
@@ -103,7 +101,6 @@ std::vector<std::size_t> convert(Integer_Type to_convert, Integer_Type basis,
     to_convert /= basis;
     converted[pos] = to_convert_old - to_convert * basis;
   }
-
   return converted;
 }
 
@@ -136,7 +133,6 @@ auto indexToPosition(IntegerType idx, Container const &nr_points) {
     position.push_back(idx % nr_points[dd]);
     idx /= nr_points[dd];
   }
-
   return position;
 }
 
@@ -154,7 +150,6 @@ auto positionToIndex(Container const &position, Container const &nr_points) {
     idx += offset * position[dd];
     offset *= nr_points[dd];
   }
-
   return idx;
 }
 
@@ -170,8 +165,9 @@ void increment(Container &num, IntegerType basis) {
   for (size_t dig = 0; dig < num.size(); ++dig) {
     carry = ++num[dig] / basis;
     num[dig] %= basis;
-    if (!carry)
+    if (!carry) {
       break;
+    }
   }
 }
 
@@ -188,8 +184,9 @@ void increment(Container &num, Container const &basis) {
   for (size_t dig = 0; dig < num.size(); ++dig) {
     carry = ++num[dig] / basis[dig];
     num[dig] %= basis[dig];
-    if (!carry)
+    if (!carry) {
       break;
+    }
   }
 }
 
@@ -202,8 +199,9 @@ void increment(Container &num, Container const &basis) {
 */
 template <typename Container>
 void increment(Container &num, Container const &basis, std::size_t inc) {
-  for (std::size_t ii = 0; ii < inc; ++ii)
+  for (std::size_t ii = 0; ii < inc; ++ii) {
     increment(num, basis);
+  }
 }
 } // namespace modular
 

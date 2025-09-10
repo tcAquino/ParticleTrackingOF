@@ -109,8 +109,9 @@ struct RNGThreaded {
   RNGThreaded(std::vector<std::size_t> const &seeds) : RNGThreaded{} {
     std::size_t num_threads = get_num_threads(ParallelOption{});
     _rngs.reserve(num_threads);
-    for (std::size_t ii = 0; ii < num_threads; ++ii)
+    for (std::size_t ii = 0; ii < num_threads; ++ii) {
       _rngs.emplace_back(seeds[ii]);
+    }
   }
 
   auto operator()() { return _rngs[get_thread_num(ParallelOption{})](); }
@@ -192,7 +193,6 @@ public:
     double ss = std::pow(std::cos((1. - alpha) * uu - alpha * xi) /
                              _exponential_dist(rng),
                          (1. - alpha) / alpha);
-
     return sigma * vv * tt * ss + mu;
   }
 
@@ -328,8 +328,9 @@ public:
 
   template <typename Generator> result_type operator()(Generator &rng) {
     result_type val;
-    for (std::size_t dd = 0; dd < _dim; ++dd)
+    for (std::size_t dd = 0; dd < _dim; ++dd) {
       val.push_back(_normal_dist(rng));
+    }
     op::normalize_inplace(val);
     return val;
   }
@@ -398,9 +399,9 @@ private:
   auto make_discrete_dist() {
     std::vector<double> weights;
     weights.reserve(_dist_base.size());
-    for (std::size_t ii = 0; ii < _dist_base.size(); ++ii)
+    for (std::size_t ii = 0; ii < _dist_base.size(); ++ii) {
       weights.push_back(_dist_base.bin_probability(ii));
-
+    }
     return std::discrete_distribution<std::size_t>{weights.begin(),
                                                    weights.end()};
   }
@@ -446,8 +447,9 @@ private:
     for (std::size_t jj = 0; jj < _dist_base.size(); ++jj) {
       std::vector<double> weights;
       weights.reserve(_dist_base.size());
-      for (std::size_t ii = 0; ii < _dist_base.size(); ++ii)
+      for (std::size_t ii = 0; ii < _dist_base.size(); ++ii) {
         weights.push_back(_dist_base.bin_probability(ii, jj));
+      }
       discrete_dists.push_back({weights.begin(), weights.end()});
     }
 
@@ -526,9 +528,10 @@ public:
   template <typename Generator> result_type operator()(Generator &rng) {
     result_type result;
     result.reserve(params.corner.size());
-    for (std::size_t dd = 0; dd < params.corner.size(); ++dd)
+    for (std::size_t dd = 0; dd < params.corner.size(); ++dd) {
       op::plus_inplace(result,
                        op::times_scalar(_uniform_dist(rng), params.sides[dd]));
+    }
     op::plus_inplace(result, params.corner);
     return result;
   }
@@ -584,10 +587,11 @@ std::size_t pick(Container const &probs, Engine_t &rng) {
   typename Container::value_type rnd =
       probs.back() * std::uniform_real_distribution<double>{}(rng);
 
-  for (std::size_t ev = 0; ev < probs.size(); ++ev)
-    if (rnd < probs[ev])
+  for (std::size_t ev = 0; ev < probs.size(); ++ev) {
+    if (rnd < probs[ev]) {
       return ev;
-
+    }
+  }
   throw std::runtime_error("Nothing picked!");
 }
 
@@ -600,8 +604,9 @@ void randSubset(std::size_t total, std::vector<std::size_t> &subset,
                 Engine_t &rng) {
   std::vector<std::size_t> set;
   set.reserve(total);
-  for (std::size_t ii = 0; ii < total; ++ii)
+  for (std::size_t ii = 0; ii < total; ++ii) {
     set.push_back(ii);
+  }
 
   std::size_t picked;
   for (auto &ii : subset) {
@@ -620,7 +625,6 @@ std::vector<std::size_t> randSubset(std::size_t total, std::size_t subset_size,
                                     Engine_t &rng) {
   std::vector<std::size_t> subset(subset_size);
   RandSubset(total, subset, rng);
-
   return subset;
 }
 
@@ -646,15 +650,17 @@ auto cdf(Container &samples, double min_edge, double max_edge,
   std::sort(samples);
 
   std::vector<double> edges;
-  if constexpr (std::is_same<Spacing, Logspacing>::value)
+  if constexpr (std::is_same<Spacing, Logspacing>::value) {
     edges = range::logspace(min_edge, max_edge, nr_bins + 1);
-  else if constexpr (std::is_same<Spacing, Logspacing>::value)
+  } else if constexpr (std::is_same<Spacing, Logspacing>::value) {
     edges = range::linspace(min_edge, max_edge, nr_bins + 1);
-  else
+  } else {
     throw io::bad_parameters();
+  }
 
-  for (std::size_t ii = 1; ii < edges.size(); ++ii)
+  for (std::size_t ii = 1; ii < edges.size(); ++ii) {
     cdf.first.push_back(edges[ii] + edges[ii - 1] / 2.);
+  }
 
   auto start =
       std::lower_bound(std::begin(samples), std::end(samples), edges[0]);
@@ -694,15 +700,17 @@ auto cdf(Container &samples, std::size_t nr_bins, double min_factor = 0.9,
   double max_edge = max_factor * samples[samples.size() - 1];
 
   std::vector<double> edges;
-  if constexpr (std::is_same<Spacing, Logspacing>::value)
+  if constexpr (std::is_same<Spacing, Logspacing>::value) {
     edges = range::logspace(min_edge, max_edge, nr_bins + 1);
-  else if constexpr (std::is_same<Spacing, Linspacing>::value)
+  } else if constexpr (std::is_same<Spacing, Linspacing>::value) {
     edges = range::linspace(min_edge, max_edge, nr_bins + 1);
-  else
+  } else {
     throw io::bad_parameters();
+  }
 
-  for (std::size_t ii = 1; ii < edges.size(); ++ii)
+  for (std::size_t ii = 1; ii < edges.size(); ++ii) {
     cdf.first.push_back((edges[ii] + edges[ii - 1]) / 2.);
+  }
 
   for (std::size_t ii = 1; ii < edges.size(); ++ii) {
     double freq = double(std::lower_bound(std::begin(samples),
@@ -723,7 +731,6 @@ auto cdf_tail(Container &samples, double min_edge, double max_edge,
               std::size_t nr_bins) {
   auto cdf_tail = cdf<Spacing>(samples, min_edge, max_edge, nr_bins);
   op::scalar_minus_inplace(1., cdf_tail.second);
-
   return cdf_tail;
 }
 
