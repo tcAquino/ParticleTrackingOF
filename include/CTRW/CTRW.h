@@ -166,8 +166,9 @@ public:
   */
   template <typename Transformation>
   void transform(Transformation &&transformation) {
-    for (auto &particle : _particles)
+    for (auto &particle : _particles) {
       particle.transform(transformation);
+    }
   }
 
   /**
@@ -186,8 +187,9 @@ public:
   */
   template <typename Transformation>
   void transform_both(Transformation &&transformation) {
-    for (auto &particle : _particles)
+    for (auto &particle : _particles) {
       particle.transform_both(transformation);
+    }
   }
 
   /**
@@ -195,8 +197,9 @@ public:
      \param criterion Criterion to apply to each particle.
   */
   template <typename Criterion> void remove(Criterion &&criterion) {
-    for (std::size_t part = size(); part-- > 0;)
+    for (std::size_t part = size(); part-- > 0;) {
       remove(part, criterion);
+    }
   }
 
   /**
@@ -205,8 +208,9 @@ public:
   */
   template <typename IntegerType> void remove(std::list<IntegerType> &list) {
     list.sort(std::greater<IntegerType>{});
-    for (auto const &part : list)
+    for (auto const &part : list) {
       remove(part);
+    }
   }
 
   /** \brief Remove all particles. */
@@ -258,13 +262,16 @@ public:
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < size(); ++part)
+      for (std::size_t part = 0; part < size(); ++part) {
         while (criterion(_particles[part]))
           _particles[part].transition(transitions);
+      }
     } else {
-      for (auto &part : _particles)
-        while (criterion(part))
+      for (auto &part : _particles) {
+        while (criterion(part)) {
           part.transition(transitions);
+        }
+      }
     }
   }
 
@@ -279,13 +286,14 @@ public:
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < size(); ++part)
+      for (std::size_t part = 0; part < size(); ++part) {
         _particles[part].transition(transitions);
+      }
     } else {
-      for (auto &part : _particles)
+      for (auto &part : _particles) {
         part.transition(transitions);
+      }
     }
-
     return size();
   }
 
@@ -302,19 +310,20 @@ public:
 #ifdef _OPENMP
 #pragma omp parallel for reduction(+ : nr_stepped)
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < size(); ++part)
+      for (std::size_t part = 0; part < size(); ++part) {
         if (criterion(_particles[part])) {
           _particles[part].transition(transitions);
           ++nr_stepped;
         }
+      }
     } else {
-      for (auto &part : _particles)
+      for (auto &part : _particles) {
         if (criterion(part)) {
           part.transition(transitions);
           ++nr_stepped;
         }
+      }
     }
-
     return nr_stepped;
   }
 
@@ -331,13 +340,14 @@ public:
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-      for (std::size_t part = 0; part < tags.size(); ++part)
+      for (std::size_t part = 0; part < tags.size(); ++part) {
         _particles[tags[part]].transition(transitions);
+      }
     } else {
-      for (auto tag : tags)
+      for (auto tag : tags) {
         _particles[tag].transition(transitions);
+      }
     }
-
     return tags.size();
   }
 
@@ -375,8 +385,9 @@ private:
   */
   template <typename Criterion>
   void remove(std::size_t part, Criterion &&criterion) {
-    if (criterion(_particles[part]))
+    if (criterion(_particles[part])) {
       remove(part);
+    }
   }
 
   /**

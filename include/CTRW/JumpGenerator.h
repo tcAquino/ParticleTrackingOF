@@ -96,10 +96,12 @@ public:
 
   /** \param time_step Time step to set. */
   void time_step(double time_step) {
-    if constexpr (meta::has_time_step_setter_v<JumpGenerator_1>)
+    if constexpr (meta::has_time_step_setter_v<JumpGenerator_1>) {
       _jump_generator_1.time_step(time_step);
-    if constexpr (meta::has_time_step_setter_v<JumpGenerator_2>)
+    }
+    if constexpr (meta::has_time_step_setter_v<JumpGenerator_2>) {
       _jump_generator_2.time_step(time_step);
+    }
   }
 
 private:
@@ -207,11 +209,9 @@ public:
   */
   template <typename State> auto operator()(State const &state) {
     auto state_intermediate = state;
-
     op::linearop(_time_step() / 2., velocity(state), state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
-
     return op::times_scalar(_time_step(), velocity(state_intermediate));
   }
 
@@ -289,7 +289,6 @@ public:
     op::linearop(_time_step() / 2., k1, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
-
     auto k2 = velocity(state_intermediate);
     op::linearop(_time_step() / 2., k2, state.position,
                  state_intermediate.position);
@@ -300,6 +299,7 @@ public:
     _boundary(state_intermediate, state);
 
     auto k4 = velocity(state_intermediate);
+
     auto jump = op::plus(k1, k4);
     op::linearop(2., k2, jump, jump);
     op::linearop(2., k3, jump, jump);
@@ -481,8 +481,9 @@ public:
   JumpGenerator_Diffusion(std::vector<double> const &diff_coeffs,
                           double time_step) {
     _jump_generator.reserve(diff_coeffs.size());
-    for (auto diff_coeff : diff_coeffs)
+    for (auto diff_coeff : diff_coeffs) {
       _jump_generator.emplace_back(diff_coeff, time_step);
+    }
   }
 
   /**
@@ -494,8 +495,9 @@ public:
   JumpGenerator_Diffusion(double diff_coeff, double time_step,
                           std::size_t dim) {
     _jump_generator.reserve(dim);
-    for (std::size_t dd = 0; dd < dim; ++dd)
+    for (std::size_t dd = 0; dd < dim; ++dd) {
       _jump_generator.emplace_back(diff_coeff, time_step);
+    }
   }
 
   JumpGenerator_Diffusion(std::vector<double> const &diff_coeffs,
@@ -508,22 +510,25 @@ public:
 
   /** \param time_step Time step to set. */
   void time_step(double time_step) {
-    for (std::size_t dd = 0; dd < dim(); ++dd)
+    for (std::size_t dd = 0; dd < dim(); ++dd) {
       _jump_generator[dd].time_step(time_step);
+    }
   }
 
   /**
      \param diff_coeff Diffusion coefficient to set (same for all dimensions).
   */
   void diff(double diff_coeff) {
-    for (std::size_t dd = 0; dd < dim(); ++dd)
+    for (std::size_t dd = 0; dd < dim(); ++dd) {
       _jump_generator[dd].diff(diff_coeff);
+    }
   }
 
   /** \param diff_coeffs Diffusion coefficients to set for each dimension. */
   void diff(std::vector<double> const &diff_coeffs) {
-    for (std::size_t dd = 0; dd < dim(); ++dd)
+    for (std::size_t dd = 0; dd < dim(); ++dd) {
       _jump_generator[dd].diff(diff_coeffs[dd]);
+    }
   }
 
   /** \return Time step. */
@@ -545,9 +550,9 @@ public:
   template <typename State = meta::Empty>
   auto operator()(State const &state = {}) {
     auto jump = state.position;
-    for (std::size_t dd = 0; dd < dim(); ++dd)
+    for (std::size_t dd = 0; dd < dim(); ++dd) {
       jump[dd] = _jump_generator[dd](state);
-
+    }
     return jump;
   }
 
@@ -731,8 +736,9 @@ public:
     std::vector<double> gradient_val = _gradient(state);
 
     // If local gradient is zero jump in a random direction
-    if (op::abs(gradient_val) == 0.)
+    if (op::abs(gradient_val) == 0.) {
       return cnst::pi * (2. * _dist(_rng) - 1.);
+    }
 
     // Orient mean jump direction along gradient if below preferred
     // concentration, or along opposite direction of gradient if above

@@ -72,8 +72,9 @@ public:
     } else {
       auto state_old = state;
       double time_step = _time_generator(state);
-      if constexpr (meta::has_time_step_setter_v<JumpGenerator>)
+      if constexpr (meta::has_time_step_setter_v<JumpGenerator>) {
         _jump_generator.time_step(time_step);
+      }
       op::plus_inplace(state.position, _jump_generator(state));
       state.time += time_step;
       _boundary(state, state_old);
@@ -182,16 +183,16 @@ public:
                                     JumpGenerator &&jump_generator,
                                     VelocityField &&velocity_field,
                                     Boundary &&boundary)
-      : _step_length{step_length},
-        _jump_generator{std::forward<JumpGenerator>(jump_generator)},
+      : _step_length{step_length}, _jump_generator{std::forward<JumpGenerator>(
+                                       jump_generator)},
         _velocity_field{std::forward<VelocityField>(velocity_field)},
         _boundary{std::forward<Boundary>(boundary)} {}
 
   Transitions_Position_VelocityStep(double step_length,
                                     JumpGenerator &&jump_generator,
                                     Boundary &&boundary = {})
-      : _step_length{step_length},
-        _jump_generator{std::forward<JumpGenerator>(jump_generator)},
+      : _step_length{step_length}, _jump_generator{std::forward<JumpGenerator>(
+                                       jump_generator)},
         _velocity_field{VelocityFromGenerator{this->jump_generator}},
         _boundary{std::forward<Boundary>(boundary)} {}
 
@@ -263,9 +264,9 @@ private:
     std::vector<JumpGenerator_Diffusion_1d<ParallelOption, RNG>>
         diff_generators;
     diff_generators.reserve(diff.size());
-    for (auto const &diff_val : diff)
+    for (auto const &diff_val : diff) {
       diff_generators.emplace_back(diff_val, time_step);
-
+    }
     return diff_generators;
   }
 
@@ -273,8 +274,8 @@ public:
   Transitions_PTRW_FlowField_Diff(std::vector<double> const &diff,
                                   double time_step, FlowField &&flow_field,
                                   Boundary &&boundary = {})
-      : _time_generator{time_step},
-        _diff_generators{make_diff_generators(diff, time_step)},
+      : _time_generator{time_step}, _diff_generators{make_diff_generators(
+                                        diff, time_step)},
         _flow_field{std::forward<FlowField>(flow_field)},
         _boundary{std::forward<Boundary>(boundary)} {}
 
@@ -297,12 +298,14 @@ public:
   template <typename State> void operator()(State &state) {
     auto state_old = state;
     std::vector<double> jump(state.position.size());
-    for (std::size_t dd = 0; dd < jump.size(); ++dd)
+    for (std::size_t dd = 0; dd < jump.size(); ++dd) {
       jump[dd] = _diff_generators[dd]();
+    }
     jump[0] += _velocity(state) * _time_generator.time_step();
 
-    for (std::size_t dd = 0; dd < jump.size(); ++dd)
+    for (std::size_t dd = 0; dd < jump.size(); ++dd) {
       state.position[dd] += jump[dd];
+    }
 
     _boundary(state, state_old);
   }
@@ -313,8 +316,9 @@ public:
 
   void time_step(double time_step) {
     _time_generator.time_step(time_step);
-    for (auto &gen : _diff_generators)
+    for (auto &gen : _diff_generators) {
       gen.time_step(time_step);
+    }
   }
 
   void diff(std::size_t dd, double diff) {
@@ -797,23 +801,29 @@ public:
   template <typename State> void operator()(State &state) {
     auto const &state_old = state;
     switch (state.state) {
-    case 0:
+    case 0: {
       op::plus_inplace(state.position, _jump_generator(state));
       if (!boundary(state, state_old))
         state.state = _state_switcher.run(state);
       break;
-    case 1:
+    }
+    case 1: {
       state.state = _state_switcher.tumble(state);
-      if (state.state == 0)
+      if (state.state == 0) {
         op::plus_inplace(state.orientation, _orientation_generator(state));
+      }
       break;
-    case 2:
+    }
+    case 2: {
       state.state = _state_switcher.wall_tumble(state);
-      if (state.state == 0)
+      if (state.state == 0) {
         op::plus_inplace(state.orientation, _orientation_generator_wall(state));
+      }
       break;
-    default:
+    }
+    default: {
       break;
+    }
     }
   }
 
@@ -867,14 +877,14 @@ public:
   Transitions_Velocity_Acceleration(double time_step,
                                     Acceleration &&acceleration,
                                     Boundary &&boundary)
-      : _time_step{time_step},
-        _acceleration{std::forward<Acceleration>(acceleration)},
+      : _time_step{time_step}, _acceleration{std::forward<Acceleration>(
+                                   acceleration)},
         _boundary{std::forward<Boundary>(boundary)} {}
 
   Transitions_Velocity_Acceleration(double time_step,
                                     Acceleration &&acceleration)
-      : _time_step{time_step},
-        _acceleration{std::forward<Acceleration>(acceleration)},
+      : _time_step{time_step}, _acceleration{std::forward<Acceleration>(
+                                   acceleration)},
         _boundary{meta::Empty{}} {}
 
   template <typename State> void operator()(State &state) {

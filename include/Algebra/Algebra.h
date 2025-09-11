@@ -27,11 +27,12 @@ gram_schmidt(std::vector<std::vector<double>> const &input) {
   output.push_back(op::div_scalar(input[0], op::abs(input[0])));
   for (std::size_t ii = 1; ii < nr_vectors; ++ii) {
     output.push_back(input[ii]);
-    for (std::size_t jj = 0; jj < ii; ++jj)
+    for (std::size_t jj = 0; jj < ii; ++jj) {
       op::minus_inplace(output[ii],
                         op::times_scalar(op::dot(output[jj], output[ii]) /
                                              op::abs_sq(output[jj]),
                                          output[jj]));
+    }
     op::div_scalar_inplace(output[ii], op::abs(output[ii]));
   }
 
@@ -55,8 +56,9 @@ gram_schmidt(std::vector<double> const &input) {
   std::vector<double> basis_vector(dim);
   for (std::size_t dd = 0; dd < dim && input_vecs.size() < dim; ++dd) {
     basis_vector[dd] = 1.;
-    if (input_vecs.front() != basis_vector)
+    if (input_vecs.front() != basis_vector) {
       input_vecs.push_back(basis_vector);
+    }
     basis_vector[dd] = 0.;
   }
 
@@ -76,11 +78,12 @@ rotation_matrix_align(Container1 const &to_align,
       op::plus(op::normalize(to_align), op::normalize(align_with));
   auto axis_norm = op::abs(axis_direction);
   auto rotation = op::outer_product(axis_direction, axis_direction);
-  for (auto &row : rotation)
+  for (auto &row : rotation) {
     op::times_scalar_inplace(2. / axis_norm, row);
-  for (std::size_t ii = 0; ii < rotation.size(); ++ii)
+  }
+  for (std::size_t ii = 0; ii < rotation.size(); ++ii) {
     rotation[ii][ii] -= 1.;
-
+  }
   return rotation;
 }
 
@@ -108,8 +111,9 @@ inline void solve_tridiag(std::vector<double> const &l_diag,
   // Back-substitution
   sol.back() = ind_new.back();
 
-  for (size_t ii = dim - 2; ii != 0; ii--)
+  for (size_t ii = dim - 2; ii != 0; ii--) {
     sol[ii] = ind_new[ii] - u_diag_new[ii] * sol[ii + 1];
+  }
 }
 
 /**
@@ -140,8 +144,9 @@ inline void solve_cyclic_tridiag(double alpha, double beta,
   double factor = (sol[0] + beta * sol.back() / gamma) /
                   (1 + zz[0] + beta * zz.back() / gamma);
 
-  for (size_t ii = 0; ii < nr_points; ++ii)
+  for (size_t ii = 0; ii < nr_points; ++ii) {
     sol[ii] -= factor * zz[ii];
+  }
 }
 
 /**

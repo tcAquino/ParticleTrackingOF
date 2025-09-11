@@ -81,10 +81,11 @@ double boundary_reflecting(double position,
   double box_size = boundaries.second - boundaries.first;
   double pos = position - boundaries.first;
   double nr_boxes_jumped = std::trunc(pos / box_size);
-  if (int(nr_boxes_jumped) % 2 == 0)
+  if (int(nr_boxes_jumped) % 2 == 0) {
     return -pos + std::abs(pos - nr_boxes_jumped * box_size);
-  else
+  } else {
     return -pos + box_size - std::abs(pos - nr_boxes_jumped * box_size);
+  }
 }
 
 /**
@@ -105,10 +106,11 @@ bool out_of_bounds_box(double position,
 template <typename Position = std::vector<double>,
           typename Boundaries = std::vector<std::pair<double, double>>>
 bool out_of_bounds_box(Position const &position, Boundaries const &boundaries) {
-  for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
-    if (out_of_bounds_box(position[dd], boundaries[dd]))
+  for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+    if (out_of_bounds_box(position[dd], boundaries[dd])) {
       return true;
-
+    }
+  }
   return false;
 }
 
@@ -174,8 +176,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
     state.position += boundary_periodic(state.position, boundaries);
     return true;
   }
@@ -232,11 +235,13 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
-    for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
+    }
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
       state.position[dd] +=
           boundary_periodic(state.position[dd], boundaries[dd]);
+    }
     return true;
   }
 
@@ -248,8 +253,9 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
     auto increment = op::times(domain_dimensions, projections);
-    for (std::size_t dd = 0; dd < increment.size(); ++dd)
+    for (std::size_t dd = 0; dd < increment.size(); ++dd) {
       position[dd] += increment[dd];
+    }
   }
 
 private:
@@ -261,8 +267,9 @@ private:
   std::vector<double> make_dimensions(
       std::vector<std::pair<double, double>> const &boundaries) const {
     std::vector<double> dimensions;
-    for (auto const &val : boundaries)
+    for (auto const &val : boundaries) {
       dimensions.push_back(val.second - val.first);
+    }
 
     return dimensions;
   }
@@ -314,8 +321,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
     state.position[dd] += boundary_periodic(state.position[dd], boundaries);
     return true;
   }
@@ -365,8 +373,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
     for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
       auto change_outside = boundary_periodic_with_outside_info(
           state.position[dd], boundaries[dd]);
@@ -384,8 +393,9 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
     auto increment = op::times(domain_dimensions, projections);
-    for (std::size_t dd = 0; dd < increment.size(); ++dd)
+    for (std::size_t dd = 0; dd < increment.size(); ++dd) {
       position[dd] += increment[dd];
+    }
   }
 
 private:
@@ -397,9 +407,9 @@ private:
   std::vector<double> make_dimensions(
       std::vector<std::pair<double, double>> const &boundaries) const {
     std::vector<double> dimensions;
-    for (auto const &val : boundaries)
+    for (auto const &val : boundaries) {
       dimensions.push_back(val.second - val.first);
-
+    }
     return dimensions;
   }
 };
@@ -440,8 +450,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
     state.position += boundary_reflecting(state.position, boundaries);
     return true;
   }
@@ -484,11 +495,13 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
-    for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
+    }
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
       state.position[dd] +=
           boundary_reflecting(state.position[dd], boundaries[dd]);
+    }
     return true;
   }
 };
@@ -533,8 +546,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
     state.position[dd] += boundary_reflecting(state.position[dd], boundaries);
     return true;
   }
@@ -574,8 +588,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
 
     auto position_old = state_old.position;
     std::vector<double> jump = op::minus(state.position, position_old);
@@ -599,8 +614,9 @@ public:
       }
 
       // Place old position at contact
-      for (std::size_t dd = 0; dd < 2; ++dd)
+      for (std::size_t dd = 0; dd < 2; ++dd) {
         position_old[dd] += alpha * jump[dd];
+      }
 
       // Tangent to boundary at contact
       tangent_at_contact[0] = position_old[1] / radius;
@@ -619,8 +635,9 @@ public:
       op::plus(position_old, jump, state.position);
 
       // If inside boundary, done
-      if (!out_of_bounds(state.position))
+      if (!out_of_bounds(state.position)) {
         break;
+      }
     }
 
     return true;
@@ -672,8 +689,9 @@ public:
   */
   template <typename State>
   bool operator()(State &state, State const &state_old) const {
-    if (!out_of_bounds(state.position))
+    if (!out_of_bounds(state.position)) {
       return false;
+    }
 
     std::vector<double> position_radial_old(2);
     std::vector<double> jump_radial(2);
@@ -705,15 +723,17 @@ public:
             std::inner_product(state.position.cbegin() + _begin_transverse,
                                state.position.cbegin() + _begin_transverse + 2,
                                state.position.cbegin() + _begin_transverse, 0.);
-        for (std::size_t dd = 0; dd < 2; ++dd)
+        for (std::size_t dd = 0; dd < 2; ++dd) {
           state.position[dd + _begin_transverse] *=
               radius / std::sqrt(radial_pos_sq);
+        }
         break;
       }
 
       // Place old position at contact
-      for (std::size_t dd = 0; dd < 2; ++dd)
+      for (std::size_t dd = 0; dd < 2; ++dd) {
         position_radial_old[dd] += alpha * jump_radial[dd];
+      }
 
       // Tangent to boundary at contact
       tangent_at_contact[0] = position_radial_old[1] / radius;
@@ -731,13 +751,15 @@ public:
       op::times_scalar_inplace(1. - alpha, jump_radial);
 
       // Place particle at reflected position
-      for (std::size_t dd = 0; dd < 2; ++dd)
+      for (std::size_t dd = 0; dd < 2; ++dd) {
         state.position[dd + _begin_transverse] =
             position_radial_old[dd] + jump_radial[dd];
+      }
 
-      // If inside boundary, done
-      if (!out_of_bounds(state.position))
+      // If inside, done
+      if (!out_of_bounds(state.position)) {
         break;
+      }
     }
 
     return true;
@@ -789,10 +811,11 @@ public:
   */
   Boundary_Periodic_SymmetryPlanes(double scale = 1.,
                                    std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale},
-        origin{origin.size() == 0.
-                   ? std::vector<double>(symmetry_planes.dim, 0.)
-                   : origin} {}
+      : symmetry_planes{}, scale{scale}, origin{
+                                             origin.size() == 0.
+                                                 ? std::vector<double>(
+                                                       symmetry_planes.dim, 0.)
+                                                 : origin} {}
 
   /**
      \brief Check if position is out of bounds.
@@ -801,10 +824,12 @@ public:
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
-    for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+    for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
       if (std::floor(project(position, symmetry_planes, dd, scale, origin)) !=
-          0.)
+          0.) {
         return 1;
+      }
+    }
     return 0;
   }
 
@@ -819,10 +844,11 @@ public:
     auto projections =
         place_in_unit_cell(state.position, symmetry_planes, scale, origin);
 
-    for (auto const &val : projections)
-      if (val != 0)
+    for (auto const &val : projections) {
+      if (val != 0) {
         return 1;
-
+      }
+    }
     return 0;
   }
 
@@ -878,10 +904,11 @@ public:
   */
   Boundary_Periodic_SymmetryPlanes_WithOutsideInfo(
       double scale = 1., std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale},
-        origin{origin.size() == 0.
-                   ? std::vector<double>(symmetry_planes.dim, 0.)
-                   : origin} {}
+      : symmetry_planes{}, scale{scale}, origin{
+                                             origin.size() == 0.
+                                                 ? std::vector<double>(
+                                                       symmetry_planes.dim, 0.)
+                                                 : origin} {}
 
   /**
      \brief Check if position is out of bounds.
@@ -890,10 +917,12 @@ public:
   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
-    for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+    for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
       if (std::floor(project(position, symmetry_planes, dd, scale, origin)) !=
-          0.)
+          0.) {
         return 1;
+      }
+    }
     return 0;
   }
 
@@ -908,11 +937,11 @@ public:
     auto projections =
         place_in_unit_cell(state.position, symmetry_planes, scale, origin);
     op::plus_inplace(state.periodicity, projections);
-
-    for (auto const &val : projections)
-      if (val != 0)
+    for (auto const &val : projections) {
+      if (val != 0) {
         return 1;
-
+      }
+    }
     return 0;
   }
 

@@ -106,8 +106,9 @@ auto project(Position const &position, SymmetryPlanes const &symmetry_planes,
              double scale) {
   Position projections;
   projections.reserve(symmetry_planes.dim);
-  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
     projections.push_back(project(position, symmetry_planes, dd, scale));
+  }
   return projections;
 }
 
@@ -151,10 +152,11 @@ template <typename Position, typename SymmetryPlanes,
           typename Projections = std::vector<double>>
 void translate(Position &position, SymmetryPlanes const &symmetry_planes,
                Projections const &projections, double scale) {
-  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
     op::plus_inplace(position,
                      op::times_scalar(scale * projections[dd],
                                       symmetry_planes.translation[dd]));
+  }
 }
 
 /**
@@ -168,10 +170,11 @@ template <typename Position, typename SymmetryPlanes,
           typename Projections = std::vector<double>>
 void translate_back(Position &position, SymmetryPlanes const &symmetry_planes,
                     Projections const &projections, double scale) {
-  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
     op::minus_inplace(position,
                       op::times_scalar(scale * projections[dd],
                                        symmetry_planes.translation[dd]));
+  }
 }
 
 /**
@@ -186,9 +189,10 @@ auto place_in_unit_cell(Position &position,
                         SymmetryPlanes const &symmetry_planes, double scale) {
   std::vector<int> projections;
   projections.reserve(symmetry_planes.dim);
-  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
     projections.push_back(
         std::floor(project(position, symmetry_planes, dd, scale)));
+  }
   translate_back(position, symmetry_planes, projections, scale);
 
   return projections;
@@ -208,9 +212,10 @@ auto place_in_unit_cell(Position &position,
                         Origin const &origin) {
   std::vector<int> projections;
   projections.reserve(symmetry_planes.dim);
-  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd)
+  for (std::size_t dd = 0; dd < symmetry_planes.dim; ++dd) {
     projections.push_back(
         std::floor(project(position, symmetry_planes, dd, scale, origin)));
+  }
   translate_back(position, symmetry_planes, projections, scale);
 
   return projections;
@@ -237,8 +242,9 @@ void add_periodic_images(Points &points, Velocities &velocities,
                          double fraction,
                          Boundary_Periodic const &boundary_periodic) {
   std::size_t nr_points = points.size();
-  if (nr_points == 0)
+  if (nr_points == 0) {
     return;
+  }
 
   std::size_t dim = points.back().size();
   std::vector<std::vector<int>> projections_forward(dim, std::vector<int>(dim));

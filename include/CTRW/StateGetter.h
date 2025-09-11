@@ -326,8 +326,8 @@ struct Get_position_periodic_cartesian_projection {
   Get_position_periodic_cartesian_projection(
       std::vector<double> domain_dimensions,
       std::vector<double> const &direction)
-      : _get_position{domain_dimensions},
-        direction{op::div_scalar(direction, op::abs(direction))} {}
+      : _get_position{domain_dimensions}, direction{op::div_scalar(
+                                              direction, op::abs(direction))} {}
 
   template <typename State> auto operator()(State const &state) const {
     return op::dot(_get_position(state), direction);
@@ -370,8 +370,8 @@ Get_position_periodic(Boundary &&) -> Get_position_periodic<Boundary>;
 */
 template <typename Getter> struct Get_projection {
   Get_projection(Getter &&get, std::vector<double> const &direction)
-      : _get{std::forward<Getter>(get)},
-        direction{op::div_scalar(direction, op::abs(direction))} {}
+      : _get{std::forward<Getter>(get)}, direction{op::div_scalar(
+                                             direction, op::abs(direction))} {}
 
   template <typename State> auto operator()(State const &state) const {
     return op::dot(_get(state), direction);
@@ -384,8 +384,8 @@ public:
   std::vector<double> direction;
 };
 template <typename Getter>
-Get_projection(Getter &&,
-               std::vector<double> const &) -> Get_projection<Getter>;
+Get_projection(Getter &&, std::vector<double> const &)
+    -> Get_projection<Getter>;
 
 /**
    \struct Get_tag CTRW/StateGetter.h "CTRW/StateGetter.h"
@@ -445,8 +445,9 @@ template <typename Getter> struct Get_interp {
   auto operator()(State const &state_new, State const &state_old) const {
     auto dt_state = state_new.time - state_old.time;
     auto value_old = get(state_old);
-    if (dt_state == 0.)
+    if (dt_state == 0.) {
       return value_old;
+    }
 
     auto delta_t = time - state_old.time;
     auto value_new = get(state_new);
@@ -503,8 +504,8 @@ struct Get_time_interp_velocity {
 
   Get_time_interp_velocity(double position, Getter_velocity &&get_velocity = {},
                            Getter_position &&get_position = {})
-      : position{position},
-        get_velocity{std::forward<Getter_velocity>(get_velocity)},
+      : position{position}, get_velocity{std::forward<Getter_velocity>(
+                                get_velocity)},
         get_position{std::forward<Getter_position>(get_position)} {}
 
   template <typename State>
@@ -528,14 +529,15 @@ template <typename Getter_position = Get_position> struct Get_time_interp {
   Getter_position get_position;
 
   Get_time_interp(double position, Getter_position &&get_position = {})
-      : position{position},
-        get_position{std::forward<Getter_position>(get_position)} {}
+      : position{position}, get_position{
+                                std::forward<Getter_position>(get_position)} {}
 
   template <typename State>
   auto operator()(State const &state_new, State const &state_old) const {
     auto dt_state = state_new.time - state_old.time;
-    if (dt_state == 0.)
+    if (dt_state == 0.) {
       return state_old.time;
+    }
     double delta_x = std::abs(position - get_position(state_old));
     double vel =
         std::abs(get_position(state_new) - get_position(state_old)) / dt_state;
