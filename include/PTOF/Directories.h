@@ -80,10 +80,11 @@ public:
   */
   DirectoriesOF(Directories const &directories)
       : time{makeRunTime(directories)} {
-    if (io::is_empty(_time_name))
+    if (io::is_empty(_time_name)) {
       time.setTime(time.times().last(), 0);
-    else
+    } else {
       time.setTime(Foam::instant(std::stod(_time_name)), 0);
+    }
   }
 
   /** \brief Deleted copy constructor. */

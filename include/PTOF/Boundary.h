@@ -301,8 +301,8 @@ template <typename Boundary, typename Locator> struct Boundary_Periodic {
   Locator locator;            /**< Object to locate positions in mesh. */
 };
 template <typename Boundary, typename Locator>
-Boundary_Periodic(Boundary &&,
-                  Locator &&) -> Boundary_Periodic<Boundary, Locator>;
+Boundary_Periodic(Boundary &&, Locator &&)
+    -> Boundary_Periodic<Boundary, Locator>;
 
 /**
    \class Boundary_Reinject PTOF/Boundary.h "PTOF/Boundary.h"
@@ -343,8 +343,8 @@ struct Boundary_Reinject {
   Locator locator; /**< Object to locate positions in mesh. */
 };
 template <typename InitialCondition, typename Locator>
-Boundary_Reinject(InitialCondition &&,
-                  Locator &&) -> Boundary_Reinject<InitialCondition, Locator>;
+Boundary_Reinject(InitialCondition &&, Locator &&)
+    -> Boundary_Reinject<InitialCondition, Locator>;
 
 /**
    \brief For boundaries conditions indicated as type \c periodic, extract the

@@ -108,8 +108,8 @@ protected:
   Geometry _geometry;
 };
 template <typename ParticleMaker, typename Geometry>
-InitialCondition(ParticleMaker &&,
-                 Geometry &&) -> InitialCondition<ParticleMaker, Geometry>;
+InitialCondition(ParticleMaker &&, Geometry &&)
+    -> InitialCondition<ParticleMaker, Geometry>;
 
 /**
    \class InitialCondition_Continuous PTOF/InitialCondition.h
@@ -127,8 +127,8 @@ public:
                               double injection_time_step)
       : IC{std::forward<IC>(initial_condition)},
         _injection_time{injection_time},
-        _injection_time_end{injection_time_end},
-        _injection_time_step{injection_time_step} {}
+        _injection_time_end{injection_time_end}, _injection_time_step{
+                                                     injection_time_step} {}
 
   virtual typename IC::ParticleContainer
   make_particles(std::size_t nr_particles) override {
@@ -744,8 +744,10 @@ public:
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
     Foam::point position;
-    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim; ++dd)
+    for (std::size_t dd = 0; dd < std::remove_reference_t<Geometry>::dim;
+         ++dd) {
       position[dd] = std::stod(split_line[dd]);
+    }
     this->_particle_maker.mass =
         std::stod(split_line[std::remove_reference_t<Geometry>::dim]);
     this->_particle_maker.tag =
@@ -789,8 +791,9 @@ public:
         _face_ids{std::forward<FaceIdContainer>(face_ids)},
         _dist{std::forward<Distribution>(dist)}, _distance{distance},
         _nr_tries{nr_tries} {
-    if (_face_ids.size() == 0)
+    if (_face_ids.size() == 0) {
       throw std::runtime_error{"No faces provided for initial condition"};
+    }
   }
 
   typename IC::PositionAndCell make_position_and_cell() override {

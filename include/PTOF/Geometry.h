@@ -120,7 +120,7 @@ struct Geometry_Generic {
       }
     }
 
-    if constexpr (dynamics == DynamicsList::Type::transport)
+    if constexpr (dynamics == DynamicsList::Type::transport) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -129,7 +129,8 @@ struct Geometry_Generic {
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
-    if constexpr (dynamics == DynamicsList::Type::firstpassage)
+    }
+    if constexpr (dynamics == DynamicsList::Type::firstpassage) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -138,6 +139,7 @@ struct Geometry_Generic {
           Boundary_DoNothing{},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
+    }
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              DynamicsList::name(dynamics) + " not supported"};
   }
@@ -297,7 +299,7 @@ struct Geometry_Periodic_Cartesian {
       }
     }
 
-    if constexpr (dynamics == DynamicsList::Type::transport)
+    if constexpr (dynamics == DynamicsList::Type::transport) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -306,7 +308,8 @@ struct Geometry_Periodic_Cartesian {
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
-    if constexpr (dynamics == DynamicsList::Type::firstpassage)
+    }
+    if constexpr (dynamics == DynamicsList::Type::firstpassage) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -315,6 +318,7 @@ struct Geometry_Periodic_Cartesian {
           Boundary_DoNothing{},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
+    }
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              DynamicsList::name(dynamics) + " not supported"};
   }
@@ -507,7 +511,7 @@ struct Geometry_Bcc {
       }
     }
 
-    if constexpr (dynamics == DynamicsList::Type::transport)
+    if constexpr (dynamics == DynamicsList::Type::transport) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -516,7 +520,8 @@ struct Geometry_Bcc {
           Boundary_DoNothing{},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
-    if constexpr (dynamics == DynamicsList::Type::firstpassage)
+    }
+    if constexpr (dynamics == DynamicsList::Type::firstpassage) {
       return ptof::Boundary_Cases{
           meta::Selector_t<State>{},
           boundary_conditions,
@@ -525,6 +530,7 @@ struct Geometry_Bcc {
           Boundary_DoNothing{},
           Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
                             locator}};
+    }
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              DynamicsList::name(dynamics) + " not supported"};
   }

@@ -52,8 +52,8 @@ public:
      \param locator Mesh locator.
   */
   VectorField_LinearInterpolation_OF(Field &&field, Locator &&locator)
-      : _field{std::forward<Field>(field)},
-        _locator{std::forward<Locator>(locator)} {}
+      : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
+                                                locator)} {}
 
   /**
      \brief Constructor.
@@ -63,8 +63,8 @@ public:
   */
   VectorField_LinearInterpolation_OF(Field &&field, Locator &&locator,
                                      Uninterpolated &&uninterpolated)
-      : _field{std::forward<Field>(field)},
-        _locator{std::forward<Locator>(locator)},
+      : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
+                                                locator)},
         _uninterpolated{std::forward<Uninterpolated>(uninterpolated)} {}
 
   /**
@@ -310,8 +310,8 @@ public:
      \param locator Mesh locator.
    */
   ScalarField_LinearInterpolation_OF(Field &&field, Locator &&locator)
-      : _field{std::forward<Field>(field)},
-        _locator{std::forward<Locator>(locator)} {}
+      : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
+                                                locator)} {}
 
   /**
      \brief Constructor.
@@ -321,8 +321,8 @@ public:
   */
   ScalarField_LinearInterpolation_OF(Field &&field, Locator &&locator,
                                      Uninterpolated &&uninterpolated)
-      : _field{std::forward<Field>(field)},
-        _locator{std::forward<Locator>(locator)},
+      : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
+                                                locator)},
         _uninterpolated{std::forward<Uninterpolated>(uninterpolated)} {}
 
   /**
