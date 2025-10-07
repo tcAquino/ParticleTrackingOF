@@ -89,7 +89,7 @@ bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
    method.
 */
 template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
-          typename Transport, typename Phase, typename Reaction,
+          typename TransportHandler, typename Phase, typename ReactionHandler,
           typename Solvers, typename InitialCondition, typename Output>
 bool options_help(std::ostream &output, int argc, const char *const *argv) {
   if (!io::check_options_help(argc, argv)) {
@@ -108,9 +108,9 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
       info += print_static_info<ExecutableInfo>(output);
       info += print_static_info<Geometry>(output);
       info += print_static_info<DirectoriesOF>(output);
-      info += print_static_info<Transport>(output);
+      info += print_static_info<TransportHandler>(output);
       info += print_static_info<Phase>(output);
-      info += print_static_info<Reaction>(output);
+      info += print_static_info<ReactionHandler>(output);
       info += print_static_info<Solvers>(output);
       info += print_static_info<InitialCondition>(output);
       info += print_static_info<Output>(output);
@@ -124,11 +124,11 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
     } else if (option == "-d" || option == "--directories-of") {
       print_static_info<DirectoriesOF>(output, true, "-d / --directories-of");
     } else if (option == "-t" || option == "--transport") {
-      print_static_info<Transport>(output, true, "-t / --transport");
+      print_static_info<TransportHandler>(output, true, "-t / --transport");
     } else if (option == "-p" || option == "--phase") {
       print_static_info<Phase>(output, true, "-p / --phase");
     } else if (option == "-r" || option == "--reaction") {
-      print_static_info<Reaction>(output, true, "-r / --reaction");
+      print_static_info<ReactionHandler>(output, true, "-r / --reaction");
     } else if (option == "-s" || option == "--solvers") {
       print_static_info<Solvers>(output, true, "-s / --solvers");
     } else if (option == "-i" || option == "--initial-condition") {

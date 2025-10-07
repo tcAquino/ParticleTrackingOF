@@ -212,7 +212,7 @@ public:
     op::linearop(_time_step() / 2., velocity(state), state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
-    state_intermediate += _time_step() / 2.;
+    state_intermediate.time += _time_step() / 2.;
 
     return op::times_scalar(_time_step(), velocity(state_intermediate));
   }
@@ -387,7 +387,7 @@ public:
     op::linearop(_time_step(), vel_state, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
-    state_intermediate += _time_step();
+    state_intermediate.time += _time_step();
 
     return op::times_scalar(_time_step() / 2.,
                             op::plus(vel_state, velocity(state_intermediate)));
@@ -409,9 +409,18 @@ private:
   par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
   Boundary _boundary; /**< Boundary conditions.             */
 };
+template <typename VelocityField>
+JumpGenerator_Velocity_Heun(VelocityField &&, double)
+    -> JumpGenerator_Velocity_Heun<VelocityField, geom::Boundary_DoNothing,
+                                   par::ParallelOptions::Serial>;
 template <typename VelocityField, typename Boundary>
 JumpGenerator_Velocity_Heun(VelocityField &&, double, Boundary &&)
-    -> JumpGenerator_Velocity_Heun<VelocityField, Boundary>;
+    -> JumpGenerator_Velocity_Heun<VelocityField, Boundary,
+                                   par::ParallelOptions::Serial>;
+template <typename VelocityField, typename Boundary, typename ParallelOption>
+JumpGenerator_Velocity_Heun(VelocityField &&, double, Boundary &&,
+                            ParallelOption)
+    -> JumpGenerator_Velocity_Heun<VelocityField, Boundary, ParallelOption>;
 
 /**
    \class JumpGenerator_Diffusion_1d CTRW/JumpGenerator.h "CTRW/JumpGenerator.h"

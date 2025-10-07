@@ -100,20 +100,27 @@ struct Solvers_Generic {
   makeJumpGenerator(VelocityField &&velocity_field, Boundary &&boundary,
                     TransportParameters const &params_transport,
                     Parameters const &params_solvers, std::size_t dim) {
-    if constexpr (Parameters::advection && Parameters::diffusion)
+    if constexpr (!std::is_same_v<std::remove_const_t<
+                                      std::remove_reference_t<VelocityField>>,
+                                  meta::Empty> &&
+                  Parameters::diffusion) {
       return Steppers_Transport::template makeJumpGenerator<ParallelOption>(
           std::forward<VelocityField>(velocity_field),
           std::forward<Boundary>(boundary), params_transport, params_solvers,
           dim);
-    else if constexpr (Parameters::advection)
+    } else if constexpr (!std::is_same_v<
+                             std::remove_const_t<
+                                 std::remove_reference_t<VelocityField>>,
+                             meta::Empty>) {
       return Steppers_Transport::template makeJumpGenerator_Advection<
           ParallelOption>(std::forward<VelocityField>(velocity_field),
                           std::forward<Boundary>(boundary), params_transport,
                           params_solvers, dim);
-    else if constexpr (Parameters::diffusion)
+    } else if constexpr (Parameters::diffusion) {
       return Steppers_Transport::template makeJumpGenerator_Diffusion<
           ParallelOption>(std::forward<Boundary>(boundary), params_transport,
                           params_solvers, dim);
+    }
   }
 };
 } // namespace ptof

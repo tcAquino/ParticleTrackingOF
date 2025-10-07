@@ -75,20 +75,21 @@ auto makeTransportTransitions(
    \brief Make Transitions object to handle transport and reaction.
    \details Conservative transitions and reaction are determined from template
    parameters that must be explicitly specified:
-   - \tparam Transport Conservative transport information.
+   - \tparam TransportHandler Conservative transport information.
    - \tparam ReactionHandler Reaction information.
 */
-template <typename Transport, typename ReactionHandler, typename VelocityField,
-          typename Geometry, typename Boundary>
+template <typename TransportHandler, typename ReactionHandler,
+          typename VelocityField, typename Geometry, typename Boundary>
 auto makeTransitions(
     VelocityField const &velocity_field, Geometry const &geometry,
-    Boundary &boundary, typename Transport::Parameters const &params_transport,
+    Boundary &boundary,
+    typename TransportHandler::Parameters const &params_transport,
     typename ReactionHandler::Parameters const &params_reaction,
-    typename Transport::Solvers::Parameters const &params_solvers) {
+    typename TransportHandler::Solvers::Parameters const &params_solvers) {
   return Transitions_Transport_Reaction{
-      Transport::makeTransitions(velocity_field, geometry, boundary,
-                                 params_transport, params_reaction,
-                                 params_solvers),
+      TransportHandler::makeTransitions(velocity_field, geometry, boundary,
+                                        params_transport, params_reaction,
+                                        params_solvers),
       boundary.surface_reaction,
       ReactionHandler::makeBulkReaction(geometry, params_reaction,
                                         params_transport, params_solvers)};
@@ -98,20 +99,21 @@ auto makeTransitions(
    \brief Make Transitions object to handle transport and reaction.
    \details Conservative transitions are determined from template parameters
    that must be explicitly specified:
-   - \tparam Transport Conservative transport information.
+   - \tparam TransportHandler Conservative transport information.
 */
-template <typename Transport, typename VelocityField, typename Geometry,
+template <typename TransportHandler, typename VelocityField, typename Geometry,
           typename Boundary, typename ReactionParameters, typename BulkReaction>
 auto makeTransitions(
     VelocityField const &velocity_field, Geometry const &geometry,
-    Boundary &boundary, typename Transport::Parameters const &params_transport,
+    Boundary &boundary,
+    typename TransportHandler::Parameters const &params_transport,
     ReactionParameters const &params_reaction,
-    typename Transport::Solvers::Parameters const &params_solvers,
+    typename TransportHandler::Solvers::Parameters const &params_solvers,
     BulkReaction &bulk_reaction) {
   return Transitions_Transport_Reaction{
-      Transport::makeTransitions(velocity_field, geometry, boundary,
-                                 params_transport, params_reaction,
-                                 params_solvers),
+      TransportHandler::makeTransitions(velocity_field, geometry, boundary,
+                                        params_transport, params_reaction,
+                                        params_solvers),
       bulk_reaction, boundary.surface_reaction};
 }
 } // namespace ptof
