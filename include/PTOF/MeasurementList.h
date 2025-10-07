@@ -25,6 +25,7 @@ struct MeasurementList {
     position_in_regions,    /**< Time, particle tags, positions, and masses in
                                regions specified by masks. */
     position_mean,          /**< Time and mean position. */
+    position_abs_mean,      /**< Time and mean of absolute value of position. */
     position_second_moment, /**< Time and position second moment. */
     position_nth_moment,    /**< Time and position nth moment. */
     position_moment,   /**< Time and position moment with specified exponents
@@ -51,8 +52,10 @@ struct MeasurementList {
     position_in_regions_periodic, /**< Time, particle tags, true positions
                                      accounting for periodicity, and masses in
                                      regions specified by masks. */
-    position_mean_periodic, /**< Time and true mean position accounting for
-                               periodicity. */
+    position_mean_periodic,     /**< Time and true mean position accounting for
+                                   periodicity. */
+    position_abs_mean_periodic, /**< Time and true mean of absolute value of
+                                   position accounting for periodicity. */
     position_second_moment_periodic, /**< Time and true position second moment
                                         accounting for periodicity. */
     position_nth_moment_periodic,    /**< Time and true position nth moment
@@ -122,6 +125,7 @@ struct MeasurementList {
       {"position", Type::position},
       {"position_in_regions", Type::position_in_regions},
       {"position_mean", Type::position_mean},
+      {"position_abs_mean", Type::position_abs_mean},
       {"position_second_moment", Type::position_second_moment},
       {"position_nth_moment", Type::position_nth_moment},
       {"position_moment", Type::position_moment},
@@ -143,6 +147,7 @@ struct MeasurementList {
       {"position_periodic", Type::position_periodic},
       {"position_in_regions_periodic", Type::position_in_regions_periodic},
       {"position_mean_periodic", Type::position_mean_periodic},
+      {"position_abs_mean_periodic", Type::position_abs_mean_periodic},
       {"position_second_moment_periodic",
        Type::position_second_moment_periodic},
       {"position_nth_moment_periodic", Type::position_nth_moment},
@@ -169,6 +174,7 @@ struct MeasurementList {
       {Type::position, "position"},
       {Type::position_in_regions, "position_in_regions"},
       {Type::position_mean, "position_mean"},
+      {Type::position_abs_mean, "position_abs_mean"},
       {Type::position_second_moment, "position_second_moment"},
       {Type::position_nth_moment, "position_nth_moment"},
       {Type::position_moment, "position_moment"},
@@ -190,6 +196,7 @@ struct MeasurementList {
       {Type::position_periodic, "position_periodic"},
       {Type::position_in_regions_periodic, "position_in_regions_periodic"},
       {Type::position_mean_periodic, "position_mean_periodic"},
+      {Type::position_abs_mean_periodic, "position_abs_mean_periodic"},
       {Type::position_second_moment_periodic,
        "position_second_moment_periodic"},
       {Type::position_nth_moment_periodic, "position_nth_moment_periodic"},

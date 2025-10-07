@@ -242,7 +242,7 @@ private:
 
 /**
    \class MeasurerTime_position_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief  Output time and mean position (weighted by mass).
+   \brief Output time and mean position (weighted by mass).
 */
 template <typename Subject, typename Geometry>
 struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
@@ -266,6 +266,49 @@ struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, position_mean(_subject, time), _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  std::array<int, 2> _column_widths;
+};
+
+/**
+   \class MeasurerTime_position_abs_mean PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and mean of absolute value of position (weighted by mass).
+*/
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_abs_mean(Subject const &subject,
+                                 Geometry const &geometry,
+                                 Directories const &directories,
+                                 std::string const &identifier,
+                                 int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, "position_mean",
+                                        identifier,  precision},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(2 + std::string{"Position_abs_mean_"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
+      _output << std::setw(_column_widths[1])
+              << "Position_abs_mean_" + std::to_string(dd);
+    }
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    io::print(_output,
+              position_mean(_subject, time,
+                            [](auto const &state) {
+                              return op::abs(ctrw::Get_position{}(state));
+                            }),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1532,6 +1575,54 @@ struct MeasurerTime_position_mean_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output, position_mean(_subject, time, _getter_position),
+              _column_widths[1]);
+    _output << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
+  ctrw::Get_position_periodic<Boundary const &> _getter_position;
+  std::array<int, 2> _column_widths;
+};
+
+/**
+   \class MeasurerTime_position_mean_periodic PTOF/MeasurerTime.h
+   "PTOF/MeasurerTime.h"
+   \brief Output time and mean position (weighted by mass), with positions
+   accounting for periodicity.
+*/
+template <typename Subject, typename Geometry>
+struct MeasurerTime_position_abs_mean_periodic final
+    : MeasurerTime<Subject, Geometry> {
+  MeasurerTime_position_abs_mean_periodic(Subject const &subject,
+                                          Geometry const &geometry,
+                                          Directories const &directories,
+                                          std::string const &identifier,
+                                          int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, "position_mean_periodic",
+                                        identifier,  precision},
+        _getter_position{geometry.boundary_periodic},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(2 + std::string{"Position_abs_mean_"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
+      _output << std::setw(_column_widths[1])
+              << "Position_abs_mean_" + std::to_string(dd);
+    }
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    io::print(_output,
+              position_mean(_subject, time,
+                            [this](auto const &state) {
+                              return op::abs(_getter_position(state));
+                            }),
               _column_widths[1]);
     _output << "\n";
   }

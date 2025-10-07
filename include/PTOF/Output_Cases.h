@@ -310,6 +310,13 @@ private:
                 measurement->precision));
         break;
       }
+      case MeasurementList::Type::position_abs_mean: {
+        _output_time.emplace_back(
+            std::make_unique<MeasurerTime_position_abs_mean<Subject, Geometry>>(
+                subject, geometry, directories, identifier,
+                measurement->precision));
+        break;
+      }
       case MeasurementList::Type::position_second_moment: {
         _output_time.emplace_back(
             std::make_unique<
@@ -508,6 +515,20 @@ private:
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_position_mean_periodic<Subject, Geometry>>(
+                  subject, geometry, directories, identifier,
+                  measurement->precision));
+        } else {
+          throw std::runtime_error{
+              for_measurement_type +
+              "Particle state does not define periodicity"};
+        }
+        break;
+      }
+      case MeasurementList::Type::position_abs_mean_periodic: {
+        if constexpr (meta::has_periodicity_v<State>) {
+          _output_time.emplace_back(
+              std::make_unique<
+                  MeasurerTime_position_abs_mean_periodic<Subject, Geometry>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
