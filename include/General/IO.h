@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <ostream>
 #include <regex>
 #include <sstream>
 #include <stdexcept>
@@ -844,8 +845,8 @@ template <typename Stream> StreamLogger(Stream &&) -> StreamLogger<Stream>;
    \brief Logger object that ignores messages.
 */
 struct NullLogger : public Logger {
-  void nonewline(std::string const &) override {};
-  void operator()(std::string const &) override {};
+  void nonewline(std::string const &) override{};
+  void operator()(std::string const &) override{};
 };
 
 /**

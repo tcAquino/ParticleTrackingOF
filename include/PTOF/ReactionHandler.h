@@ -119,7 +119,7 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
       std::string in_file = std::string{"In file "} + filename + " : ";
 
       double average_surface_concentration = 0.;
-      auto split_line = io::split_line(input);
+      auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
       std::size_t param_index = 0;
       io::read(split_line, param_index,
                in_file +
@@ -158,7 +158,7 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                                  "Not supported"};
       }
 
-      split_line = io::split_line(input);
+      split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
       param_index = 0;
       auto rate_distribution = io::read<std::string>(
           split_line, param_index,
@@ -336,7 +336,7 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
       std::string in_file = std::string{"In file "} + filename + " : ";
 
       double average_surface_concentration = 0.;
-      auto split_line = io::split_line(input);
+      auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
       std::size_t param_index = 0;
       io::read(split_line, param_index,
                in_file +
@@ -375,7 +375,7 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
                                  "Not supported"};
       }
 
-      split_line = io::split_line(input);
+      split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
       param_index = 0;
       auto rate_distribution = io::read<std::string>(
           split_line, param_index,

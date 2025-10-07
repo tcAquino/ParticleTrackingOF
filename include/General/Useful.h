@@ -18,6 +18,7 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -159,17 +160,83 @@ template <typename T> struct Creator {
    \class Forward General/Useful.h "General/Useful.h"
    \brief Functor to forward an argument.
 */
-template <typename Object_Type> struct Forward {
-  Object_Type operator()(Object_Type const &object) { return object; }
+template <typename Object> struct Forward {
+  Object operator()(Object const &object) { return object; }
 };
 
 /**
    \class Forward_ref General/Useful.h "General/Useful.h"
    \brief Functor to forward a const reference.
 */
-template <typename Object_Type> struct Forward_ref {
-  Object_Type const &operator()(Object_Type const &object) { return object; }
+template <typename Object> struct Forward_ref {
+  Object const &operator()(Object const &object) { return object; }
 };
+
+/**
+   \class SquareBracketsToRoundBrackets General/Useful.h "General/Useful.h"
+   \brief Convert <tt>()</tt> to <tt>[]</tt>.
+*/
+template <typename Object> struct SquareBracketsToRoundBrackets {
+  SquareBracketsToRoundBrackets(Object &&object)
+      : _object{std::forward<Object>(object)} {}
+
+  template <typename TT> auto operator()(TT val) { return _object[val]; }
+
+private:
+  Object _object;
+};
+template <typename Object>
+SquareBracketsToRoundBrackets(Object) -> SquareBracketsToRoundBrackets<Object>;
+
+/**
+   \class SquareBracketsToRoundBracketsConst General/Useful.h "General/Useful.h"
+   \brief Convert <tt>() const</tt> to <tt>[] const</tt>.
+*/
+template <typename Object> struct SquareBracketsToRoundBracketsConst {
+  SquareBracketsToRoundBracketsConst(Object &&object)
+      : _object{std::forward<Object>(object)} {}
+
+  template <typename TT> auto operator()(TT val) const { return _object[val]; }
+
+private:
+  Object _object;
+};
+template <typename Object>
+SquareBracketsToRoundBracketsConst(Object)
+    -> SquareBracketsToRoundBracketsConst<Object>;
+
+/**
+   \class SquareBracketsToRoundBrackets General/Useful.h "General/Useful.h"
+   \brief Convert <tt>()</tt> to <tt>[]</tt>.
+*/
+template <typename Object> struct RoundBracketsToSquareBrackets {
+  RoundBracketsToSquareBrackets(Object &&object)
+      : _object{std::forward<Object>(object)} {}
+
+  template <typename TT> auto operator[](TT val) { return _object(val); }
+
+private:
+  Object _object;
+};
+template <typename Object>
+RoundBracketsToSquareBrackets(Object) -> RoundBracketsToSquareBrackets<Object>;
+
+/**
+   \class SquareBracketsToRoundBrackets General/Useful.h "General/Useful.h"
+   \brief Convert <tt>() const</tt> to <tt>[] const</tt>.
+*/
+template <typename Object> struct RoundBracketsToSquareBracketsConst {
+  RoundBracketsToSquareBracketsConst(Object &&object)
+      : _object{std::forward<Object>(object)} {}
+
+  template <typename TT> auto operator[](TT val) const { return _object(val); }
+
+private:
+  Object _object;
+};
+template <typename Object>
+RoundBracketsToSquareBracketsConst(Object)
+    -> RoundBracketsToSquareBracketsConst<Object>;
 
 /**
    \class hash_container General/Useful.h "General/Useful.h"
@@ -365,6 +432,14 @@ Container &swap_delete_if(Container &container, Criterion &&criterion) {
     }
   }
   return container;
+}
+
+/** \brief Check if string represents a number. */
+bool is_numeric(std::string const &str) {
+  double result{};
+  auto val = std::istringstream(str);
+  val >> result;
+  return !val.fail() && val.eof();
 }
 } // namespace useful
 

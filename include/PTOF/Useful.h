@@ -14,7 +14,10 @@
 #include "General/Operation.h"
 #include "General/Ranges.h"
 #include "General/Useful.h"
+#include "PTOF/Directories.h"
 #include "PTOF/Meta.h"
+#include "scalar.H"
+#include "scalarField.H"
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <iostream>
@@ -31,7 +34,6 @@ namespace ptof {
    \brief Object to hold a position and a cell for its location in the mesh.
 */
 template <typename Position> struct PositionAndCell {
-
   PositionAndCell(Position position, Foam::label cell = -1)
       : position{position}, cell{cell} {}
 
@@ -137,7 +139,8 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
     } else {
       output << "\n"
                 "Help option "
-             << option << " : " << "Not supported\n";
+             << option << " : "
+             << "Not supported\n";
     }
   }
 
@@ -172,8 +175,9 @@ bool outside(Foam::label cell, Foam::point const &position,
              std::string const &extra_warning_info = {}) {
   if (cell < 0) {
     if constexpr (warn_if_outside) {
-      std::cerr << "Warning: Requested cell at position " << "(" << position[0]
-                << ", " << position[1] << ", " << position[2] << ")"
+      std::cerr << "Warning: Requested cell at position "
+                << "(" << position[0] << ", " << position[1] << ", "
+                << position[2] << ")"
                 << " outside mesh.";
       if (!extra_warning_info.empty()) {
         std::cerr << " " << extra_warning_info << "\n";
@@ -317,8 +321,9 @@ template <typename Container, typename Mesh>
 auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
   std::vector<double> volumes;
   volumes.reserve(cell_ids.size());
-  for (auto cell : cell_ids)
+  for (auto cell : cell_ids) {
     volumes.push_back(cell_volume(cell, mesh));
+  }
   return volumes;
 }
 
@@ -338,8 +343,9 @@ template <typename Container, typename Mesh>
 auto face_areas(Container const &face_ids, Mesh const &mesh) {
   std::vector<double> areas;
   areas.reserve(face_ids.size());
-  for (auto face : face_ids)
+  for (auto face : face_ids) {
     areas.push_back(face_area(face, mesh));
+  }
   return areas;
 }
 
@@ -347,8 +353,9 @@ auto face_areas(Container const &face_ids, Mesh const &mesh) {
 template <typename Container, typename Mesh>
 auto face_area(std::vector<Foam::label> const &face_ids, Mesh const &mesh) {
   double area = 0.;
-  for (auto const &face : face_ids)
+  for (auto const &face : face_ids) {
     area += face_area(face, mesh);
+  }
   return area;
 }
 
@@ -359,8 +366,10 @@ auto patch_area(std::string const &patch_name, Mesh const &mesh) {
   Foam::label patch_id = mesh.boundary().findPatchID(patch_name);
   auto const &patch = mesh.boundaryMesh()[patch_id];
   Foam::label start = patch.start();
-  for (std::size_t idx = 0; idx < static_cast<std::size_t>(patch.size()); ++idx)
+  for (std::size_t idx = 0; idx < static_cast<std::size_t>(patch.size());
+       ++idx) {
     area += face_area(start + idx, mesh);
+  }
   return area;
 }
 
@@ -368,8 +377,9 @@ auto patch_area(std::string const &patch_name, Mesh const &mesh) {
 template <typename Mesh>
 auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
   double area = 0.;
-  for (auto const &patch : patch_names)
+  for (auto const &patch : patch_names) {
     area += patch_area(patch, mesh);
+  }
   return area;
 }
 
@@ -378,8 +388,9 @@ template <typename Mesh>
 auto patch_areas(std::vector<std::string> const &patch_names,
                  Mesh const &mesh) {
   std::vector<double> areas;
-  for (auto const &patch : patch_names)
+  for (auto const &patch : patch_names) {
     areas.push_back(patch_area(patch, mesh));
+  }
   return areas;
 }
 
@@ -389,39 +400,82 @@ auto patch_areas(std::vector<std::string> const &patch_names,
 */
 template <typename VectorField, typename Mesh>
 auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
-               Mesh const &mesh) {
+               Mesh const &mesh, Foam::scalar time) {
   return cell_volume(cell_id, mesh) *
-         Foam::mag(vector_field(cell_center(cell_id, mesh)));
+         Foam::mag(evaluate(vector_field, cell_id, time));
+}
+
+/**
+   \brief Cell volume weighted by magnitude of vector field value at cell
+   center.
+*/
+template <typename VectorField, typename Mesh>
+auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
+               Mesh const &mesh) {
+  return cell_flux(cell_id, vector_field, mesh.time().value());
 }
 
 /**
    \brief Face area weighted by outward-normal component of vector field at face
-   center. */
+   center.
+*/
 template <typename VectorField, typename Locator>
 auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
-                       Locator const &locator) {
+                       Locator const &locator, Foam::scalar time) {
   auto const &mesh = locator.mesh();
   auto patch_id = ptof::patch_id(face_id, mesh);
   auto const &patch = mesh.boundaryMesh()[patch_id];
   Foam::label start = patch.start();
 
   return area_outward(face_id, mesh) &
-         vector_field.boundaryField()[patch_id][face_id - start];
+         evaluate_boundary_field(vector_field, patch_id, face_id - start, time);
+}
+
+/**
+   \brief Face area weighted by outward-normal component of vector field at face
+   center.
+*/
+template <typename VectorField, typename Locator>
+auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
+                       Locator const &locator) {
+  return face_flux_outward(face_id, vector_field, locator,
+                           locator.mesh().time().value());
 }
 
 /**
    \brief Face area weighted by inward-normal component of vector field at face
-   center. */
+   center.
+*/
+template <typename VectorField, typename Locator>
+auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
+                      Locator const &locator, Foam::scalar time) {
+  return -face_flux_outward(face_id, vector_field, locator, time);
+}
+
+/**
+   \brief Face area weighted by inward-normal component of vector field at face
+   center.
+*/
 template <typename VectorField, typename Locator>
 auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
                       Locator const &locator) {
-  auto const &mesh = locator.mesh();
-  auto patch_id = ptof::patch_id(face_id, mesh);
-  auto const &patch = mesh.boundaryMesh()[patch_id];
-  Foam::label start = patch.start();
+  return face_flux_inward(face_id, vector_field, locator,
+                          locator.mesh().time().value());
+}
 
-  return area_inward(face_id, mesh) &
-         vector_field.boundaryField()[patch_id][face_id - start];
+/**
+   \brief Cell volumes weighted by magnitude of vector field value at cell
+   centers.
+*/
+template <typename Container, typename VectorField, typename Mesh>
+auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
+                 Mesh const &mesh, Foam::scalar time) {
+  std::vector<double> fluxes;
+  fluxes.reserve(cell_ids.size());
+  for (auto cell : cell_ids) {
+    fluxes.push_back(cell_flux(cell, vector_field, mesh, time));
+  }
+  return fluxes;
 }
 
 /**
@@ -431,10 +485,21 @@ auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
 template <typename Container, typename VectorField, typename Mesh>
 auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
                  Mesh const &mesh) {
+  return cell_fluxes(cell_ids, vector_field, mesh, mesh.time().value());
+}
+
+/**
+   \brief Face areas weighted by outward-normal component of vector field at
+   face center. */
+template <typename Container, typename VectorField, typename Locator>
+auto face_fluxes_outward(Container const &face_ids,
+                         VectorField const &vector_field,
+                         Locator const &locator, Foam::scalar time) {
   std::vector<double> fluxes;
-  fluxes.reserve(cell_ids.size());
-  for (auto cell : cell_ids)
-    fluxes.push_back(cell_flux(cell, vector_field, mesh));
+  fluxes.reserve(face_ids.size());
+  for (auto face : face_ids) {
+    fluxes.push_back(face_flux_outward(face, vector_field, locator, time));
+  }
   return fluxes;
 }
 
@@ -445,10 +510,22 @@ template <typename Container, typename VectorField, typename Locator>
 auto face_fluxes_outward(Container const &face_ids,
                          VectorField const &vector_field,
                          Locator const &locator) {
+  return face_fluxes_outward(face_ids, vector_field, locator,
+                             locator.mesh().time().value());
+}
+
+/**
+   \brief Face areas weighted by inward-normal component of vector field at
+   face center. */
+template <typename Container, typename VectorField, typename Locator>
+auto face_fluxes_inward(Container const &face_ids,
+                        VectorField const &vector_field, Locator const &locator,
+                        Foam::scalar time) {
   std::vector<double> fluxes;
   fluxes.reserve(face_ids.size());
-  for (auto face : face_ids)
-    fluxes.push_back(face_flux_outward(face, vector_field, locator));
+  for (auto face : face_ids) {
+    fluxes.push_back(face_flux_inward(face, vector_field, locator, time));
+  }
   return fluxes;
 }
 
@@ -459,11 +536,8 @@ template <typename Container, typename VectorField, typename Locator>
 auto face_fluxes_inward(Container const &face_ids,
                         VectorField const &vector_field,
                         Locator const &locator) {
-  std::vector<double> fluxes;
-  fluxes.reserve(face_ids.size());
-  for (auto face : face_ids)
-    fluxes.push_back(face_flux_inward(face, vector_field, locator));
-  return fluxes;
+  return face_fluxes_inward(face_ids, vector_field, locator,
+                            locator.mesh().time().value());
 }
 
 /**
@@ -508,8 +582,9 @@ auto adjusted_face_center(Foam::label face, Locator const &locator) {
     return face_center(face, mesh);
   } else {
     auto center = face_center(face, mesh);
-    std::cerr << "Warning: Face center of face " << face << " at " << "("
-              << center[0] << ", " << center[1] << ", " << center[2] << ")"
+    std::cerr << "Warning: Face center of face " << face << " at "
+              << "(" << center[0] << ", " << center[1] << ", " << center[2]
+              << ")"
               << " is not within owner cell. "
               << "Replacing face center by owner cell center\n";
     return cell_center(mesh.faceOwner()[face], mesh);
@@ -524,7 +599,6 @@ Foam::vector offset_face(Foam::label face, Foam::vector const &direction,
   Foam::label owner_cell = mesh.faceOwner()[face];
   Foam::point const &cell_center = mesh.cellCentres()[owner_cell];
   Foam::scalar typ_dim = Foam::mag(cell_center - face_center(face, mesh));
-
   return locator.mesh_search().tol_ * typ_dim * direction /
          Foam::mag(direction);
 }
@@ -582,7 +656,6 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
     offset /= 2.;
     point = begin + offset;
   }
-
   return point;
 }
 
@@ -668,7 +741,6 @@ Foam::vector offset_cell(Foam::point const &begin, Foam::label cell,
                          Locator const &locator) {
   Foam::point const &center = locator.mesh().cellCentres()[cell];
   Foam::scalar typ_dim = Foam::mag(center - begin);
-
   return locator.mesh_search().tol_ * typ_dim * direction /
          Foam::mag(direction);
 }
@@ -776,8 +848,10 @@ void patch_face_ids(std::string const &patch_name, Mesh const &mesh,
   auto const &patch = mesh.boundaryMesh()[patch_id];
   face_ids.reserve(face_ids.size() + patch.size());
   Foam::label start = patch.start();
-  for (std::size_t idx = 0; idx < static_cast<std::size_t>(patch.size()); ++idx)
+  for (std::size_t idx = 0; idx < static_cast<std::size_t>(patch.size());
+       ++idx) {
     face_ids.push_back(start + idx);
+  }
 }
 
 /**
@@ -789,8 +863,9 @@ template <typename Mesh>
 auto patch_face_ids(std::vector<std::string> const &patch_names,
                     Mesh const &mesh) {
   std::vector<Foam::label> face_ids;
-  for (auto const &name : patch_names)
+  for (auto const &name : patch_names) {
     patch_face_ids(name, mesh, face_ids);
+  }
   return face_ids;
 }
 
@@ -838,11 +913,13 @@ auto cell_ids_region_cartesian(
     // but with components along the degenerate dimension
     // equal to the prescribed value. If it is in the
     // mesh, include it in the region
-    for (auto dd : degenerate_dimensions)
+    for (auto dd : degenerate_dimensions) {
       center[dd] = degenerate_dimensions[dd];
+    }
     auto cell_id = locator(center);
-    if (!outside(cell_id))
+    if (!outside(cell_id)) {
       cell_ids.insert(cell_id);
+    }
   }
 
   std::vector<Foam::label> cells(cell_ids.begin(), cell_ids.end());
@@ -859,7 +936,7 @@ template <typename Container, typename Mask>
 void apply_mask_cells_inplace(Container &cell_ids, Mask const &mask,
                               double threshold = 0.) {
   useful::swap_erase_if(cell_ids, [&mask, threshold](Foam::label face_id) {
-    return mask[face_id] < threshold;
+    return evaluate(mask, face_id) < threshold;
   });
 }
 
@@ -876,7 +953,6 @@ auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
                       double threshold = 0.) {
   auto masked_ids = cell_ids;
   apply_mask_cells_inplace(masked_ids, mask, threshold);
-
   return masked_ids;
 }
 
@@ -890,11 +966,13 @@ auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
 template <typename Container, typename Mesh, typename Mask>
 void apply_mask_patch_faces_inplace(Container &face_ids, Mesh const &mesh,
                                     Mask const &mask, double threshold = 0.) {
-  useful::swap_erase_if(
-      face_ids, [&mask, &mesh, threshold](Foam::label face_id) {
-        Foam::label patch_id = mesh.boundaryMesh().whichPatch(face_id);
-        return mask.boundaryField()[patch_id][face_id] < threshold;
-      });
+  useful::swap_erase_if(face_ids, [&mask, &mesh,
+                                   threshold](Foam::label face_id) {
+    auto patch_id = ptof::patch_id(face_id, mesh);
+    auto const &patch = mesh.boundaryMesh()[patch_id];
+    Foam::label start = patch.start();
+    return evaluate_boundary_field(mask, patch_id, face_id - start) < threshold;
+  });
 }
 
 /**
@@ -911,7 +989,6 @@ auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
                             Mask const &mask, double threshold = 0.) {
   auto masked_ids = face_ids;
   apply_mask_patch_faces_inplace(masked_ids, mask, threshold);
-
   return masked_ids;
 }
 
@@ -946,15 +1023,49 @@ auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
    \param cell_ids Container with mesh cell indices.
    \param vector_field Vector field.
    \param mesh Mesh object.
+   \param time Time
+*/
+template <typename Container, typename VectorField, typename Mesh>
+auto fluxweighted_cell_distribution(Container const &cell_ids,
+                                    VectorField const &vector_field,
+                                    Mesh const &mesh, Foam::scalar time) {
+  auto weights = cell_fluxes(cell_ids, vector_field, mesh, time);
+  if (op::sum(weights) == 0.)
+    throw std::runtime_error{"Cannot define flux-weighted distribution because "
+                             "all cells have zero flux"};
+  return std::discrete_distribution<std::size_t>{weights.begin(),
+                                                 weights.end()};
+}
+
+/**
+   \brief Distribution for random number generation of cell indices weighted by
+   cell volumes multiplied by vector field magnitude at cell center.
+   \param cell_ids Container with mesh cell indices.
+   \param vector_field Vector field.
+   \param mesh Mesh object.
 */
 template <typename Container, typename VectorField, typename Mesh>
 auto fluxweighted_cell_distribution(Container const &cell_ids,
                                     VectorField const &vector_field,
                                     Mesh const &mesh) {
-  auto weights = cell_fluxes(cell_ids, vector_field, mesh);
+  return fluxweighted_cell_distribution(cell_ids, vector_field, mesh,
+                                        mesh.time().value());
+}
+
+/**
+   \brief Distribution for random number generation of face indices weighted by
+   face areas multiplied by vector field component along inward normal.
+   \note Faces with vector field pointing outward have weight zero.
+*/
+template <typename Container, typename VectorField, typename Locator>
+auto fluxweighted_face_distribution(Container const &face_ids,
+                                    VectorField const &vector_field,
+                                    Locator const &locator, Foam::scalar time) {
+  auto weights = face_fluxes_inward(face_ids, vector_field, locator, time);
+  op::apply([](auto val) { return std::max(0., val); }, weights);
   if (op::sum(weights) == 0.)
     throw std::runtime_error{"Cannot define flux-weighted distribution because "
-                             "all cells have zero flux"};
+                             "all faces have zero flux"};
   return std::discrete_distribution<std::size_t>{weights.begin(),
                                                  weights.end()};
 }
@@ -968,13 +1079,8 @@ template <typename Container, typename VectorField, typename Locator>
 auto fluxweighted_face_distribution(Container const &face_ids,
                                     VectorField const &vector_field,
                                     Locator const &locator) {
-  auto weights = face_fluxes_inward(face_ids, vector_field, locator);
-  op::apply([](auto val) { return std::max(0., val); }, weights);
-  if (op::sum(weights) == 0.)
-    throw std::runtime_error{"Cannot define flux-weighted distribution because "
-                             "all faces have zero flux"};
-  return std::discrete_distribution<std::size_t>{weights.begin(),
-                                                 weights.end()};
+  return fluxweighted_face_distribution(face_ids, vector_field, locator,
+                                        locator.mesh().time().value());
 }
 
 /**
@@ -989,8 +1095,9 @@ template <typename Subject>
 std::size_t nr_absorbed(Subject const &subject, double time) {
   std::size_t absorbed = 0;
   for (auto const &part : subject) {
-    if (ptof::absorbed(part, time))
+    if (ptof::absorbed(part, time)) {
       ++absorbed;
+    }
   }
   return absorbed;
 }
@@ -1096,14 +1203,12 @@ auto mass(Subject const &subject, double time,
       continue;
     }
     auto const &state_new = part.state_new();
-    auto cell_new = state_new.cell;
-    auto cell_old = state_old.cell;
-    if (outside(cell_new) && outside(cell_old)) {
+    if (outside(state_new.cell) && outside(state_old.cell)) {
       continue;
     }
     for (std::size_t ii = 0; ii < masks.size(); ++ii) {
-      if (masks[ii].get()[cell_new] >= thresholds[ii] &&
-          masks[ii].get()[cell_old] >= thresholds[ii]) {
+      if (evaluate(masks[ii].get(), state_new) >= thresholds[ii] &&
+          evaluate(masks[ii].get(), state_old) >= thresholds[ii]) {
         masses[ii] +=
             ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
       }
@@ -1398,7 +1503,8 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
 template <typename ParametersOutput>
 void info_time(std::ostream &output, ParametersOutput const &params,
                double time) {
-  output << "Time " << "[" << params.time_units
+  output << "Time "
+         << "[" << params.time_units
          << " time units]: " << time / params.time_unit_factor << "\n";
 }
 
@@ -1481,6 +1587,77 @@ inline std::string identifier(std::string const &model_name,
                     params_solvers_name, params_initial_condition_name,
                     params_output_name) +
          "_RUN_" + std::to_string(run_nr);
+}
+
+auto closest_time_index(Foam::instantList const &flow_times,
+                        Foam::scalar time) {
+  return std::distance(
+      flow_times.cbegin(),
+      std::min_element(
+          flow_times.cbegin(), flow_times.cend(), [time](auto xx, auto yy) {
+            if (xx.name() == "constant" || yy.name() == "constant") {
+              return true;
+            } else {
+              return std::abs(xx.value() - time) < std::abs(yy.value() - time);
+            }
+          }));
+}
+
+auto closest_time_index(DirectoriesOF const &directories_of,
+                        Foam::scalar time) {
+  return closest_time_index(directories_of.time.times(), time);
+}
+
+template <typename Mesh>
+auto closest_time_index(Mesh const &mesh, Foam::scalar time) {
+  return closest_time_index(mesh.time().times(), time);
+}
+
+auto closest_time(Foam::instantList const &flow_times, Foam::scalar time) {
+  return flow_times[closest_time_index(flow_times, time)].value();
+}
+
+auto closest_time(DirectoriesOF const &directories_of, Foam::scalar time) {
+  return closest_time(directories_of.time.times(), time);
+}
+
+template <typename Mesh>
+auto closest_time(Mesh const &mesh, Foam::scalar time) {
+  return closest_time(mesh.time().times(), time);
+}
+
+auto closest_time_name(DirectoriesOF const &directories_of, Foam::scalar time) {
+  return directories_of.time.timeName(
+      closest_time(directories_of.time.times(), time));
+}
+
+template <typename Mesh>
+auto closest_time_name(Mesh const &mesh, Foam::scalar time) {
+  return mesh.time().timeName(closest_time(mesh, time));
+}
+
+template <typename Field>
+auto evaluate(Field const &field, Foam::label cell_id, Foam::scalar time = 0.) {
+  if constexpr (meta::has_square_brackets_of_label_v<Field>) {
+    return field[cell_id];
+  } else {
+    return field(cell_id, time);
+  }
+}
+
+template <typename Field, typename State>
+auto evaluate(Field const &field, State const &state) {
+  return evaluate(field, state.cell, state.time);
+}
+
+template <typename Field>
+auto evaluate_boundary_field(Field const &field, Foam::label patch_id,
+                             Foam::label face_id, Foam::scalar time = 0.) {
+  if constexpr (meta::has_boundaryField_of_void_v<Field>) {
+    return field.boundaryField()[patch_id][face_id];
+  } else {
+    return field.boundaryField(patch_id, face_id, time);
+  }
 }
 } // namespace ptof
 

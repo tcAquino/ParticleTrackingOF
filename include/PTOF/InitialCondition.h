@@ -190,7 +190,7 @@ public:
         _position{position} {
     if (outside(_cell_id)) {
       throw std::runtime_error{
-          "Point initial condition position is outside mesh"};
+        "Point initial condition position is outside mesh"};
     }
   }
 
@@ -531,7 +531,7 @@ public:
                                              filename} {}
 
   typename IC::PositionAndCell make_position_and_cell() override {
-    auto split_line = io::split_line(_input);
+    auto split_line = io::split_line(_input, "#", "\t,|\r()[]{} ");
     if (split_line.size() < std::remove_reference_t<Geometry>::dim) {
       throw std::runtime_error{"Could not parse particle position in file " +
                                _filename};
@@ -601,7 +601,7 @@ public:
                                                    filename} {}
 
   typename IC::PositionAndCell make_position_and_cell() override {
-    auto split_line = io::split_line(_input);
+    auto split_line = io::split_line(_input, "#", "\t,|\r()[]{} ");
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 1) {
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
@@ -676,7 +676,7 @@ public:
                                                        filename} {}
 
   typename IC::PositionAndCell make_position_and_cell() override {
-    auto split_line = io::split_line(_input);
+    auto split_line = io::split_line(_input, "#", "\t,|\r()[]{} ");
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 2) {
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};
@@ -739,7 +739,7 @@ public:
         _filename{filename} {}
 
   typename IC::PositionAndCell make_position_and_cell() override {
-    auto split_line = io::split_line(_input);
+    auto split_line = io::split_line(_input, "#", "\t,|\r()[]{} ");
     if (split_line.size() < std::remove_reference_t<Geometry>::dim + 3)
       throw std::runtime_error{
           "Could not parse particle position and mass in file " + _filename};

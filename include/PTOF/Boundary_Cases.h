@@ -235,6 +235,7 @@ public:
                                       meta::Empty>) {
           if (face_flux_outward(intersection.index(), _velocity_field,
                                 _locator) > 0.) {
+            state.info.absorbed = true;
             state.set_position(intersection.point());
             info<BoundaryConditionList::Type::absorbing>(state, state_old,
                                                          intersection);

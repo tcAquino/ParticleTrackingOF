@@ -9,6 +9,7 @@
 #define PTOF_BOUNDARY_H
 
 #include "General/IO.h"
+#include "General/Operation.h"
 #include "PTOF/Directories.h"
 #include "PTOF/DynamicsList.h"
 #include "PTOF/Useful.h"
@@ -347,7 +348,7 @@ Boundary_Reinject(InitialCondition &&, Locator &&)
     -> Boundary_Reinject<InitialCondition, Locator>;
 
 /**
-   \brief For boundaries conditions indicated as type \c periodic, extract the
+   \brief For boundary conditions indicated as type \c periodic, extract the
    corresponding boundary positions.
    \param boundary_conditions Associative container of patch names and
    associated boundary condition types.
@@ -373,11 +374,11 @@ auto extract_cartesian_periodic_boundaries(
       continue;
     }
     // Find average and variance of patch face centers.
-    auto const &patch_id = mesh.boundaryMesh().findPatchID(bc.first, false);
+    auto patch_id = mesh.boundaryMesh().findPatchID(bc.first, false);
     auto const &patch = mesh.boundaryMesh()[patch_id];
     auto face_start = patch.start();
-    Foam::point average_face_center = Foam::point::zero;
-    Foam::point variance_face_center = Foam::point::zero;
+    Foam::point average_face_center = Foam::zero{};
+    std::vector<double> variance_face_center(dim, 0.);
     Foam::scalar total_area = 0.;
     for (auto face = face_start; face < face_start + patch.size(); ++face) {
       auto area = face_area(face, mesh);
@@ -390,7 +391,8 @@ auto extract_cartesian_periodic_boundaries(
       }
     }
     average_face_center /= total_area;
-    variance_face_center /= total_area;
+    op::div_scalar_inplace(variance_face_center, total_area);
+
     for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
       variance_face_center[dd] -=
           average_face_center[dd] * average_face_center[dd];

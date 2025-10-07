@@ -212,6 +212,8 @@ public:
     op::linearop(_time_step() / 2., velocity(state), state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
+    state_intermediate += _time_step() / 2.;
+
     return op::times_scalar(_time_step(), velocity(state_intermediate));
   }
 
@@ -289,6 +291,8 @@ public:
     op::linearop(_time_step() / 2., k1, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
+    state_intermediate.time += time_step() / 2.;
+
     auto k2 = velocity(state_intermediate);
     op::linearop(_time_step() / 2., k2, state.position,
                  state_intermediate.position);
@@ -297,6 +301,7 @@ public:
     auto k3 = velocity(state_intermediate);
     op::linearop(_time_step(), k3, state.position, state_intermediate.position);
     _boundary(state_intermediate, state);
+    state_intermediate.time += time_step() / 2.;
 
     auto k4 = velocity(state_intermediate);
 
@@ -382,6 +387,7 @@ public:
     op::linearop(_time_step(), vel_state, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
+    state_intermediate += _time_step();
 
     return op::times_scalar(_time_step() / 2.,
                             op::plus(vel_state, velocity(state_intermediate)));

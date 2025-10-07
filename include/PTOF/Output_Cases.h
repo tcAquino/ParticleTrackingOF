@@ -20,7 +20,7 @@
 #include "PTOF/Measurer.h"
 #include "PTOF/MeasurerTime.h"
 #include "PTOF/NextMeasurement.h"
-#include "PTOF/OutputParameters_Cases.h"
+#include "PTOF/OutputParameters.h"
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -191,9 +191,10 @@ public:
   }
 
   /** \brief Update internal state. */
-  void update(double time, double time_of_change) {
+  void update(double time, Foam::instant const &previous_time_of_change,
+              Foam::instant const &next_time_of_change) {
     for (auto const &output : _output_time) {
-      output->update(time, time_of_change);
+      output->update(time, previous_time_of_change, next_time_of_change);
     }
   }
 
@@ -403,33 +404,6 @@ private:
                   subject, std::forward<VelocityField>(velocity_field),
                   geometry, directories, identifier, "U",
                   measurement->precision));
-        } else {
-          throw std::runtime_error{for_measurement_type +
-                                   "Velocity field not provided"};
-        }
-        break;
-      }
-      case MeasurementList::Type::velocity_gradient: {
-        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
-                                      meta::Empty>) {
-          _output_time.emplace_back(
-              std::make_unique<MeasurerTime_tensor_field<Subject, Geometry>>(
-                  subject, Foam::fvc::grad(velocity_field.field()), geometry,
-                  directories, identifier, "gradU", measurement->precision));
-        } else {
-          throw std::runtime_error{for_measurement_type +
-                                   "Velocity field not provided"};
-        }
-        break;
-      }
-      case MeasurementList::Type::velocity_gradient_mean: {
-        if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
-                                      meta::Empty>) {
-          _output_time.emplace_back(
-              std::make_unique<
-                  MeasurerTime_tensor_field_mean<Subject, Geometry>>(
-                  subject, Foam::fvc::grad(velocity_field.field()), geometry,
-                  directories, identifier, "gradU", measurement->precision));
         } else {
           throw std::runtime_error{for_measurement_type +
                                    "Velocity field not provided"};

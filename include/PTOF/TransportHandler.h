@@ -13,6 +13,7 @@
 #include "PTOF/Advection.h"
 #include "PTOF/Transitions.h"
 #include "PTOF/TransportParameters.h"
+#include <memory>
 #include <type_traits>
 #include <utility>
 
@@ -47,41 +48,22 @@ struct TransportHandler_LinearInterp {
     }
   }
 
-  template <typename Geometry, typename VelocityData, typename Uninterpolated>
-  static auto makeVelocityInterpolator(Geometry const &geometry,
-                                       VelocityData &&velocity_data,
-                                       Uninterpolated &&uninterpolated) {
-    if constexpr (Solvers::Parameters::advection) {
-      return makeLinearVelocityInterpolator(
-          geometry, std::forward<VelocityData>(velocity_data),
-          std::forward<Uninterpolated>(uninterpolated));
-    } else {
-      return makeLinearVelocityInterpolator(
-          geometry,
-          Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}},
-          Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}});
-    }
-  }
-
   template <typename Geometry, typename VelocityData>
-  static auto
-  makeVelocityInterpolator_WithUninterpolated(Geometry const &geometry,
-                                              VelocityData &&velocity_data) {
+  static auto makeVelocityTimeInterpolator(Geometry const &geometry,
+                                           VelocityData &&velocity_data_new,
+                                           VelocityData &&velocity_data_old,
+                                           double time_new, double time_old) {
     if constexpr (Solvers::Parameters::advection) {
-      return makeLinearVelocityInterpolator(
-          geometry, std::forward<VelocityData>(velocity_data),
-          Foam::volVectorField{
-              Foam::IOobject{"", geometry.mesh().time().timeName(),
-                             geometry.mesh(), Foam::IOobject::NO_READ,
-                             Foam::IOobject::NO_WRITE,
-                             Foam::IOobject::NO_REGISTER},
-              geometry.mesh(),
-              Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}}});
+      using Type = decltype(makeVelocityInterpolator(
+          geometry, std::forward<VelocityData>(velocity_data_new)));
+      return ptof::Field_TimeInterpolation{
+          std::unique_ptr<Type>{new Type{makeVelocityInterpolator(
+              geometry, std::forward<VelocityData>(velocity_data_new))}},
+          std::unique_ptr<Type>{new Type{makeVelocityInterpolator(
+              geometry, std::forward<VelocityData>(velocity_data_old))}},
+          time_new, time_old};
     } else {
-      return makeLinearVelocityInterpolator(
-          geometry,
-          Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}},
-          Foam::dimensionedVector{"", Foam::dimVelocity, Foam::zero{}});
+      return meta::Empty{};
     }
   }
 
@@ -108,7 +90,7 @@ struct TransportHandler_LinearInterp {
     output << io::line();
     return output;
   }
-};
+  };
 
 template <typename Solvers>
 using TransportHandler_Generic = TransportHandler_LinearInterp<

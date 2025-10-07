@@ -13,7 +13,7 @@
 #include "General/Meta.h"
 #include "PTOF/InitialCondition.h"
 #include "PTOF/InitialConditionList.h"
-#include "PTOF/InitialConditionParameters_Cases.h"
+#include "PTOF/InitialConditionParameters.h"
 #include "PTOF/ParticleMaker.h"
 #include "PTOF/Useful.h"
 #include "Stochastic/Random.h"

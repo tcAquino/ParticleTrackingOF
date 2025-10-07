@@ -8,8 +8,10 @@
 #ifndef PTOF_ADVECTION_H
 #define PTOF_ADVECTION_H
 
+#include "General/Meta.h"
 #include "PTOF/CheckOptions.h"
 #include "PTOF/Field.h"
+#include "PTOF/Useful.h"
 #include <IOobject.H>
 #include <fieldTypes.H>
 #include <utility>
@@ -18,16 +20,44 @@
 namespace ptof {
 /**
    \brief Get the velocity field U from the OpenFOAM case time associated with
-   a mesh.
-   \param geometry Domain geometry info and utilities.
+   a mesh, at a prescribed time.
    \return OpenFOAM velocity field data.
 */
-template <typename Geometry> auto get_velocity_data(Geometry const &geometry) {
-  auto const &mesh = geometry.mesh();
-  return Foam::volVectorField{Foam::IOobject{"U", mesh.time().timeName(), mesh,
-                                             Foam::IOobject::MUST_READ,
-                                             Foam::IOobject::NO_WRITE},
-                              mesh};
+template <typename Mesh, bool empty = false>
+auto get_velocity_data(
+    Mesh const &mesh, Foam::word const &timeName,
+    meta::Selector<bool, empty> = meta::Selector<bool, false>{}) {
+  if constexpr (!empty) {
+    return Foam::volVectorField{Foam::IOobject{"U", timeName, mesh,
+                                               Foam::IOobject::MUST_READ,
+                                               Foam::IOobject::NO_WRITE},
+                                mesh};
+  } else {
+    return meta::Empty{};
+  }
+}
+
+/**
+   \brief Get the velocity field U from the OpenFOAM case time associated with
+   a mesh, at a prescribed time.
+   \return OpenFOAM velocity field data.
+*/
+template <typename Mesh, bool empty = false>
+auto get_velocity_data(
+    Mesh const &mesh, Foam::scalar time,
+    meta::Selector<bool, empty> = meta::Selector<bool, false>{}) {
+  return get_velocity_data<Mesh, empty>(mesh, closest_time_name(mesh, time));
+}
+
+/**
+   \brief Get the velocity field U from the OpenFOAM case time associated with
+   a mesh.
+   \return OpenFOAM velocity field data.
+*/
+template <typename Mesh, bool empty = false>
+auto get_velocity_data(Mesh const &mesh, meta::Selector<bool, empty> =
+                                             meta::Selector<bool, false>{}) {
+  return get_velocity_data(mesh, mesh.time().timeName());
 }
 
 /**
@@ -41,10 +71,11 @@ template <typename VelocityField, typename Geometry,
 static void update_velocity_field(VelocityField &velocity_field,
                                   Geometry const &geometry,
                                   TransportParameters const &params_transport) {
-  velocity_field.set(ptof::get_velocity_data(geometry));
+  velocity_field.set(ptof::get_velocity_data(geometry.mesh()));
   if (params_transport.velocity_rescaling_factor != 1.) {
     velocity_field.rescale(params_transport.velocity_rescaling_factor);
-  } else if (params_transport.time_dependent_bcs) {
+  }
+  if (params_transport.time_dependent_bcs) {
     velocity_field.recompute_interpolator();
   }
 }
@@ -57,24 +88,9 @@ static void update_velocity_field(VelocityField &velocity_field,
 */
 template <typename Geometry, typename Field>
 auto makeLinearVelocityInterpolator(Geometry const &geometry, Field &&field) {
-  return ptof::VectorField_LinearInterpolation_OF{
-      std::forward<Field>(field), geometry.locator, CheckOptions::Warn{}};
-};
-
-/**
-   \brief Make a linear interpolator for a field using OpenFOAM interpolation.
-   \param geometry Domain geometry info and utilities.
-   \param field OpenFOAM vector field data.
-   \param uninterpolated OpenFOAM vector field data to be added to \c field
-   without interpolation.
-   \return Vector field interpolator.
-*/
-template <typename Geometry, typename Field, typename Uninterpolated>
-auto makeLinearVelocityInterpolator(Geometry const &geometry, Field &&field,
-                                    Uninterpolated &&uninterpolated) {
-  return ptof::VectorField_LinearInterpolation_OF{
+  return ptof::VectorField_Interpolation{
       std::forward<Field>(field), geometry.locator,
-      std::forward<Uninterpolated>(uninterpolated), CheckOptions::Warn{}};
+      InterpolationTypes::Linear{}, CheckOptions::Warn{}};
 };
 } // namespace ptof
 

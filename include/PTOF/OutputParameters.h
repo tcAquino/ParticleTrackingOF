@@ -1,12 +1,12 @@
 /**
-   \file PTOF/OutputParameters_Cases.h
+   \file PTOF/OutputParameters.h
    \author Tomas Aquino
    \date 08/05/2025
    \brief Parameters for output.
 */
 
-#ifndef PTOF_OUTPUTPARAMETERS_CASES_H
-#define PTOF_OUTPUTPARAMETERS_CASES_H
+#ifndef PTOF_OUTPUTPARAMETERS_H
+#define PTOF_OUTPUTPARAMETERS_H
 
 #include "General/IO.h"
 #include "PTOF/Directories.h"
@@ -26,8 +26,8 @@
 
 namespace ptof {
 /**
-   \struct OutputParameters_Cases PTOF/OutputParameters_Cases.h
-   "PTOF/OutputParameters_Cases.h"
+   \struct OutputParameters_Cases PTOF/OutputParameters.h
+   "PTOF/OutputParameters.h"
    \brief Parameters for output.
 */
 struct OutputParameters_Cases {
@@ -140,7 +140,7 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index, in_file + "Could not parse time units",
              time_units);
@@ -256,11 +256,6 @@ public:
            "    - Time, particle tags, local velocities, and particle masses\n"
            "  - velocity_mean\n"
            "    - Time and mean of velocity field over particles\n"
-           "  - velocity_gradient\n"
-           "    - Time, particle tags, local velocity gradient, and particle\n"
-           "      masses\n"
-           "  - velocity_gradient_mean\n"
-           "    - Time and mean of velocity gradient field over particles\n"
            "  - scalar_field\n"
            "    - Time, particle tags, local scalar field values, and\n"
            "      particle masses\n"
@@ -356,7 +351,7 @@ public:
   /** \brief Read all end criteria from input stream. */
   void read_end_criteria(std::ifstream &input, std::string const &filename) {
     std::string in_file = std::string{"In file "} + filename + " : ";
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     auto criterion = io::read<std::string>(
         split_line, param_index, in_file + "Could not parse end criterion");
@@ -370,7 +365,7 @@ public:
           in_file + for_end_criterion +
               "Could not parse number of end criteria to combine");
       for (std::size_t ii = 0; ii < nr_criteria; ++ii) {
-        auto split_line = io::split_line(input);
+        auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
         std::size_t param_index = 0;
         io::read(split_line, param_index, 1,
                  in_file + "Could not parse end criterion", end_criteria);
@@ -449,7 +444,7 @@ public:
                                 TransportParameters const &params_transport,
                                 ReactionParameters const &params_reaction) {
     std::string in_file = std::string{"In file "} + filename + " : ";
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse measurement spacing",
@@ -535,7 +530,8 @@ public:
   void read_measurement_types(std::ifstream &input, std::string const &filename,
                               Geometry const &geometry) {
     std::string in_file = std::string{"In file "} + filename + " : ";
-    for (std::vector<std::string> split_line; io::split_line(input, split_line);
+    for (std::vector<std::string> split_line;
+         io::split_line(input, split_line, "#", "\t,|\r()[]{} ");
          split_line.clear()) {
       std::size_t param_index = 0;
       auto name =
@@ -608,4 +604,4 @@ public:
 };
 } // namespace ptof
 
-#endif /* PTOF_OUTPUT_CASES_H */
+#endif /* PTOF_OUTPUTPARAMETERS_H */

@@ -13,6 +13,7 @@
 #include "PTOF/Model.h"
 #include "PTOF/Transitions.h"
 #include "PTOF/Useful.h"
+#include "volFieldsFwd.H"
 #include <chrono>
 #include <cstddef>
 #include <iomanip>
@@ -71,7 +72,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::bcc_symmetryplanes_diffusion_surface_order2decay;
+  using Model = ptof::Model::periodic_cartesian_advection_diffusion_2d;
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;
@@ -83,10 +84,12 @@ int main(int argc, char *argv[]) {
           ptof::DirectoriesOF, Definitions::TransportHandler, meta::Empty,
           Definitions::ReactionHandler, Definitions::Solvers,
           Definitions::InitialConditionHandler, Definitions::OutputHandler>(
-          std::cout, argc, argv))
+          std::cout, argc, argv)) {
     return 0;
-  if (argc != ExecutableInfo<ParallelOption>::nr_parameters + 1)
+  }
+  if (argc != ExecutableInfo<ParallelOption>::nr_parameters + 1) {
     throw io::bad_parameters_help();
+  }
 
   std::size_t arg = 1;
   std::string dir = argv[arg++];
@@ -109,7 +112,7 @@ int main(int argc, char *argv[]) {
         << "\n"
            "--------------------------------------------------------------\n";
   }
-  if (!io::is_empty(run_nr))
+  if (!io::is_empty(run_nr)) {
     std::cout
         << "\n"
         << "--------------------------------------------------------------\n"
@@ -117,7 +120,8 @@ int main(int argc, char *argv[]) {
         << std::stoul(run_nr)
         << "\n"
            "--------------------------------------------------------------\n";
-
+  }
+  
   ptof::Directories directories{dir, case_name, dir_output};
   std::cout << "\n";
   directories.info_runtime(std::cout);
@@ -140,7 +144,9 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing velocity data..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_data = ptof::get_velocity_data(geometry);
+  auto velocity_data = ptof::get_velocity_data(
+      geometry.mesh(),
+      meta::Selector<bool, Definitions::Solvers::Parameters::advection>{});
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -272,11 +278,12 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  if (io::is_empty(filename_output_identifier))
+  if (io::is_empty(filename_output_identifier)) {
     filename_output_identifier = ptof::identifier(
         Model::name, case_name, directories_of.case_name, params_transport_name,
         params_reaction_name, params_solvers_name,
         params_initial_condition_name, params_output_name);
+  }
   filename_output_identifier += (io::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
   auto output = Definitions::OutputHandler::makeOutput(
       ctrw, velocity_field, geometry, boundary, directories, params_output,

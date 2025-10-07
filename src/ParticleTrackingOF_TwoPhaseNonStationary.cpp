@@ -6,10 +6,12 @@
 //
 
 #include "General/IO.h"
+#include "General/Meta.h"
 #include "General/Parallel.h"
 #include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Directories.h"
+#include "PTOF/Field.h"
 #include "PTOF/Model.h"
 #include "PTOF/Phase.h"
 #include "PTOF/Transitions.h"
@@ -79,7 +81,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_3d;
+  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
   using Phase = ptof::Phase;
   using Definitions = Model::Definitions<ParallelOption>;
 
@@ -116,10 +118,11 @@ int main(int argc, char *argv[]) {
               << "\n"
               << io::line();
   }
-  if (!io::is_empty(run_nr))
+  if (!io::is_empty(run_nr)) {
     std::cout << "\n"
               << io::line() << "Run number: " << std::stoul(run_nr) << "\n"
               << io::line();
+  }
 
   ptof::Directories directories{dir, case_name, dir_output};
   std::cout << "\n";
@@ -143,7 +146,24 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing velocity data..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_data = ptof::get_velocity_data(geometry);
+  Foam::scalar start_time_value = directories_of.time.value();
+  Foam::word start_time_name = directories_of.time.timeName();
+  auto velocity_data_old = ptof::get_velocity_data(
+      geometry.mesh(),
+      meta::Selector<bool, Definitions::Solvers::Parameters::advection>{});
+  auto const &flow_times = directories_of.time.times();
+  Foam::label next_time_index =
+      ptof::closest_time_index(flow_times, start_time_value) + 1;
+  Foam::instant next_flow_time{std::numeric_limits<double>::infinity()};
+  if (next_time_index < flow_times.size()) {
+    next_flow_time = flow_times[next_time_index];
+  }
+  auto velocity_data_new = ptof::get_velocity_data(
+      geometry.mesh(),
+      next_flow_time.value() < std::numeric_limits<double>::infinity()
+          ? next_flow_time.name()
+          : directories_of.time.name(),
+      meta::Selector<bool, Definitions::Solvers::Parameters::advection>{});
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -154,7 +174,8 @@ int main(int argc, char *argv[]) {
             << "Importing transport parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::TransportHandler::Parameters params_transport{
-      directories, params_transport_name, geometry, velocity_data};
+      directories, params_transport_name, geometry, velocity_data_old};
+  ptof::rescale(velocity_data_new, params_transport.velocity_rescaling_factor);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -164,10 +185,11 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = Definitions::TransportHandler::
-      makeVelocityInterpolator_WithUninterpolated(geometry,
-                                                  std::move(velocity_data));
-  execution_end = std::chrono::high_resolution_clock::now();
+  auto velocity_field_base =
+      Definitions::TransportHandler::makeVelocityTimeInterpolator(
+          geometry, std::move(velocity_data_new), std::move(velocity_data_old),
+          next_flow_time.value(), start_time_value);
+  std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
@@ -186,10 +208,21 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up phases..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto carrier_phase_field = Phase::makePhaseField(geometry, params_phase);
-  Phase::update_effective_velocity_field(carrier_phase_field, velocity_field,
-                                         geometry, params_transport,
-                                         params_phase);
+  auto carrier_phase_field = Phase::makeCarrierPhaseTimeInterpolator(
+      geometry,
+      Phase::get_carrier_phase_data(geometry.mesh(), start_time_name,
+                                    params_phase),
+      Phase::get_carrier_phase_data(
+          geometry.mesh(),
+          next_flow_time.value() < std::numeric_limits<double>::infinity()
+              ? next_flow_time.name()
+              : start_time_name,
+          params_phase),
+      next_flow_time.value(), start_time_value);
+  auto velocity_field = Phase::EffectiveVelocity(
+      velocity_field_base, carrier_phase_field, params_transport, params_phase);
+  execution_end = std::chrono::high_resolution_clock::now();
+  std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
@@ -298,12 +331,13 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up output..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  if (io::is_empty(filename_output_identifier))
+  if (io::is_empty(filename_output_identifier)) {
     filename_output_identifier = ptof::identifier(
         "TwoPhaseNonStationary_" + Model::name, case_name,
         directories_of.case_name, params_transport_name, params_phase_name,
         params_reaction_name, params_solvers_name,
         params_initial_condition_name, params_output_name);
+  }
   filename_output_identifier += (io::is_empty(run_nr) ? "" : "_RUN_" + run_nr);
   auto output = Definitions::OutputHandler::makeOutput(
       ctrw, velocity_field, geometry, boundary, directories, params_output,
@@ -318,28 +352,11 @@ int main(int argc, char *argv[]) {
 
   std::cout << "\n"
             << "Starting dynamics..." << std::endl;
+
   execution_begin = std::chrono::high_resolution_clock::now();
-  double start_time = directories_of.time.value();
-  double previous_time = start_time;
-  double current_time = start_time;
+  double previous_time = start_time_value;
+  double current_time = start_time_value;
   ptof::info_time(std::cout, params_output, current_time);
-  auto const &flow_times = directories_of.time.times();
-  auto closest_time_index = [&flow_times](auto value) {
-    return std::distance(
-        flow_times.cbegin(),
-        std::min_element(
-            flow_times.cbegin(), flow_times.cend(), [value](auto xx, auto yy) {
-              if (xx.name() == "constant" || yy.name() == "constant")
-                return true;
-              else
-                return std::abs(xx.value() - value) <
-                       std::abs(yy.value() - value);
-            }));
-  };
-  Foam::label time_index = closest_time_index(start_time);
-  double next_flow_time = std::numeric_limits<double>::infinity();
-  if (time_index < flow_times.size() - 1)
-    next_flow_time = flow_times[time_index + 1].value();
   while (output.next_measurement_time() <= current_time) {
     std::cout << "Measurement required...\n";
     ptof::info_time(std::cout, params_output, output.next_measurement_time());
@@ -350,33 +367,36 @@ int main(int argc, char *argv[]) {
   }
   while (current_time < std::numeric_limits<double>::infinity() &&
          !output.done(current_time)) {
-    if (time_index < flow_times.size() - 1) {
-      bool velocity_field_needs_update = false;
-      while (time_index < flow_times.size() - 1 &&
-             current_time >= next_flow_time) {
-        ++time_index;
-        next_flow_time = flow_times[time_index].value();
-        directories_of.time.setTime(next_flow_time, 0);
-        velocity_field_needs_update = true;
-      }
-      if (velocity_field_needs_update) {
-        std::cout << "Field updates required...\n";
-        ptof::info_time(std::cout, params_output, current_time);
-        std::cout << "Updating velocity and phase fields...\n";
-        Phase::update_phase_and_velocity_field(carrier_phase_field,
-                                               velocity_field, geometry,
-                                               params_transport, params_phase);
-        std::cout << "Done!\n";
-        std::cout << "Updating output handlers...\n";
-        output.update(current_time, next_flow_time);
-        std::cout << "Done!\n";
-        std::cout << "Done!\n";
-      }
+    bool fields_need_update = false;
+    while (next_time_index < flow_times.size() &&
+           current_time >= next_flow_time.value()) {
+      directories_of.time.setTime(next_flow_time, 0);
+      next_flow_time = flow_times[++next_time_index];
+      fields_need_update = true;
+    }
+    if (next_time_index == flow_times.size()) {
+      next_flow_time.value() = std::numeric_limits<double>::infinity();
+    }
+    if (fields_need_update) {
+      std::cout << "Field updates required...\n";
+      ptof::info_time(std::cout, params_output, current_time);
+      velocity_field.update(geometry,
+                            next_flow_time.value() <
+                                    std::numeric_limits<double>::infinity()
+                                ? next_flow_time
+                                : flow_times[next_time_index - 1],
+                            params_transport, params_phase);
+      output.update(current_time, flow_times[next_time_index - 1],
+                    next_flow_time.value() <
+                            std::numeric_limits<double>::infinity()
+                        ? next_flow_time
+                        : flow_times[next_time_index - 1]);
+      std::cout << "Done!\n";
     }
     previous_time = current_time;
     current_time =
-        next_flow_time > current_time
-            ? std::min(output.next_measurement_time(), next_flow_time)
+        next_flow_time.value() > current_time
+            ? std::min(output.next_measurement_time(), next_flow_time.value())
             : output.next_measurement_time();
     Definitions::Solvers::evolve(
         ctrw, transitions, params_solvers, current_time, previous_time,

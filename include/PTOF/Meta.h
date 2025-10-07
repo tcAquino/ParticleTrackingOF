@@ -86,7 +86,7 @@ template <typename X>
 inline constexpr bool has_adsorbed_v =
     std::conjunction_v<has_member<adsorbed_t, X>, is_same<adsorbed_t, X, bool>>;
 
-/**\brief Type of \c X::boundaryField(). */
+/**\brief Type of <tt>X::boundaryField()</tt>. */
 template <typename X>
 using boundaryField_t = decltype(std::declval<X>().boundaryField());
 /**
@@ -95,6 +95,27 @@ using boundaryField_t = decltype(std::declval<X>().boundaryField());
 template <typename X>
 inline constexpr bool has_boundaryField_v =
     has_member<boundaryField_t, X>::value;
+
+/**\brief Type of <tt>X::operator[](Foam::label)</tt>. */
+template <typename X>
+using square_brackets_of_label_t =
+    decltype(std::declval<X>()[std::declval<Foam::label>()]);
+/**
+   \brief Check if \c X has member <tt>operator[](Foam::label)</tt>.
+*/
+template <typename X>
+inline constexpr bool has_square_brackets_of_label_v =
+    has_member<square_brackets_of_label_t, X>::value;
+
+/**\brief Type of <tt>X::boundaryField()</tt>. */
+template <typename X>
+using boundaryField_of_void_t = decltype(std::declval<X>().boundaryField());
+/**
+   \brief Check if \c X has member <tt>boundaryField()</tt>.
+*/
+template <typename X>
+inline constexpr bool has_boundaryField_of_void_v =
+    has_member<boundaryField_of_void_t, X>::value;
 } // namespace meta
 
 #endif /* PTOF_META_H */

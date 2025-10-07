@@ -1,12 +1,12 @@
 /**
-   \file PTOF/InitialConditionParameters_Cases.h
+   \file PTOF/InitialConditionParameters.h
    \author Tomas Aquino
    \date 08/05/2025
    \brief Parameters for initial condition.
 */
 
-#ifndef PTOF_INITIALCONDITIONPARAMETERS_CASES_H
-#define PTOF_INITIALCONDITIONPARAMETERS_CASES_H
+#ifndef PTOF_INITIALCONDITIONPARAMETERS_H
+#define PTOF_INITIALCONDITIONPARAMETERS_H
 
 #include "General/IO.h"
 #include "PTOF/Directories.h"
@@ -20,8 +20,8 @@
 
 namespace ptof {
 /**
- \class InitialConditionParameters_Cases PTOF/InitialCondition_Cases.h
- "PTOF/InitialCondition_Cases.h"
+ \class InitialConditionParameters_Cases PTOF/InitialCondition.h
+ "PTOF/InitialCondition.h"
  \brief Initial condition condition parameters to handle all initial condition
  types in \c InitialCondition_Cases.
 */
@@ -487,7 +487,7 @@ private:
                           TransportParameters const &params_transport,
                           ReactionParameters const &params_reaction) {
     std::string in_file = std::string{"In file "} + filename + " : ";
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse initial condition type", name);
@@ -641,7 +641,7 @@ private:
     }
 
     std::string in_file = std::string{"In file "} + filename + " : ";
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              std::string{"In file "} + filename +
@@ -738,4 +738,4 @@ private:
 };
 } // namespace ptof
 
-#endif /* PTOF_INITIALCONDITIONPARAMETERS_CASES_H */
+#endif /* PTOF_INITIALCONDITIONPARAMETERS_H */

@@ -50,10 +50,11 @@ template <typename Particle_t, typename Locator> struct ParticleMaker_Generic {
   Info info;       /**< Particle state info.                       */
 };
 template <typename Particle, typename Locator>
-ParticleMaker_Generic(
-    meta::Selector_t<Particle>, Locator &&locator,
-    typename Particle::State::Time, typename Particle::State::Mass,
-    typename Particle::State::Tag) -> ParticleMaker_Generic<Particle, Locator>;
+ParticleMaker_Generic(meta::Selector_t<Particle>, Locator &&locator,
+                      typename Particle::State::Time,
+                      typename Particle::State::Mass,
+                      typename Particle::State::Tag)
+    -> ParticleMaker_Generic<Particle, Locator>;
 template <typename Particle, typename Locator>
 ParticleMaker_Generic(meta::Selector_t<Particle>, Locator &&locator,
                       typename Particle::State::Time,
@@ -81,26 +82,23 @@ struct ParticleMaker_Periodic {
   using Info = typename State::Info;
 
   ParticleMaker_Periodic(meta::Selector_t<Particle>, Locator &&locator,
-                         Boundary &&boundary, Mass mass = {}, Time time = {},
+                         Boundary &&boundary, Time time = {}, Mass mass = {},
                          Tag tag = {}, Info info = {})
       : locator{std::forward<Locator>(locator)},
         boundary{std::forward<Boundary>(boundary)}, time{time}, mass{mass},
         tag{tag}, info{info} {}
-
-  template <typename Position>
-  Particle operator()(Position const &position, Foam::label hint = -1) {
-    typename Particle::State state{make_state(State::make_position(position),
-                                              {}, info, locator, hint, time,
-                                              mass, tag++)};
-    boundary(state);
-    return state;
-  }
 
   Particle operator()(Position const &position, Foam::label hint = -1) {
     typename Particle::State state{
         make_state(position, {}, info, locator, hint, time, mass, tag++)};
     boundary(state);
     return state;
+  }
+
+  template <typename Position>
+  Particle operator()(Position const &position, Foam::label hint = -1) {
+    return (*this)(State::make_position(position), {}, info, locator, hint,
+                   time, mass, tag++);
   }
 
   Locator locator;   /**< Locator to locate particle states in mesh.  */

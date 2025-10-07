@@ -30,7 +30,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-#include <volFieldsFwd.H>
+#include <volFields.H>
 
 namespace ptof {
 /**
@@ -48,10 +48,11 @@ template <typename Subject, typename Geometry> struct MeasurerTime {
   virtual void operator()(double time) = 0;
 
   /** \brief Output stored information (do nothing if not overriden). */
-  virtual void print() {};
+  virtual void print(){};
 
   /** \brief Update internal state. */
-  virtual void update(double time, double time_of_change) {}
+  virtual void update(double time, Foam::instant const &previous_time_of_change,
+                      Foam::instant const &next_time_of_change) {}
 
 protected:
   /**
@@ -127,7 +128,8 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -192,7 +194,8 @@ struct MeasurerTime_position_in_regions final
       }
     }
     _output << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -203,15 +206,13 @@ struct MeasurerTime_position_in_regions final
         continue;
       }
       auto const &state_new = part.state_new();
-      auto cell_new = state_new.cell;
-      auto cell_old = state_old.cell;
-      if (outside(cell_new) || outside(cell_old)) {
+      if (outside(state_new.cell) || outside(state_old.cell)) {
         continue;
       }
       std::vector<int> in_region(_masks.size(), 0);
       for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
-        if (_masks[ii].get()[cell_new] >= _thresholds[ii] &&
-            _masks[ii].get()[cell_old] >= _thresholds[ii]) {
+        if (evaluate(_masks[ii].get(), state_new) >= _thresholds[ii] &&
+            evaluate(_masks[ii].get(), state_old) >= _thresholds[ii]) {
           in_region[ii] = 1;
         }
       }
@@ -529,7 +530,8 @@ struct MeasurerTime_mass final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -557,7 +559,8 @@ struct MeasurerTime_mass_absorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -586,7 +589,8 @@ struct MeasurerTime_mass_adsorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -649,9 +653,9 @@ private:
 \brief Output time, tags, and scalar field values.
 */
 template <typename Subject, typename Geometry,
-          typename Field = ScalarField_LinearInterpolation_OF<
+          typename Field = ScalarField_Interpolation<
               Foam::volScalarField, typename Geometry::Locator const &,
-              CheckOptions::Check>>
+              InterpolationTypes::Linear, CheckOptions::Check>>
 struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_scalar_field(Subject const &subject, Field &&field,
                             Geometry const &geometry,
@@ -676,7 +680,8 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
             << std::setw(_column_widths[2]) << field_name
             << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   MeasurerTime_scalar_field(Subject const &subject, Geometry const &geometry,
@@ -685,9 +690,9 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
                             std::string const &field_name, int precision = 8)
       : MeasurerTime_scalar_field{
             subject,
-            ScalarField_LinearInterpolation_OF<
+            ScalarField_Interpolation<
                 Foam::volScalarField, typename Geometry::Locator const &,
-                CheckOptions::Check>{
+                InterpolationTypes::Linear, CheckOptions::Check>{
                 {Foam::IOobject{field_name, geometry.mesh().time().timeName(),
                                 geometry.mesh(), Foam::IOobject::MUST_READ,
                                 Foam::IOobject::NO_WRITE},
@@ -716,15 +721,15 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
-  void update(double time, double time_of_change) override {
+  void update(double time = 0.,
+              Foam::instant const &previous_time_of_change = {},
+              Foam::instant const &next_time_of_change = {}) override {
     if constexpr (!std::is_reference_v<Field>) {
-      if (time >= time_of_change) {
-        _field.set(
-            {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
-                            _geometry.mesh(), Foam::IOobject::MUST_READ,
-                            Foam::IOobject::NO_WRITE},
-             _geometry.mesh()});
-      }
+      _field.set(
+          {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
+                          _geometry.mesh(), Foam::IOobject::MUST_READ,
+                          Foam::IOobject::NO_WRITE},
+           _geometry.mesh()});
     }
   }
 
@@ -752,25 +757,25 @@ MeasurerTime_scalar_field(Subject const &, Geometry const &,
                           std::string const &, int)
     -> MeasurerTime_scalar_field<
         Subject, Geometry,
-        ScalarField_LinearInterpolation_OF<Foam::volScalarField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        ScalarField_Interpolation<
+            Foam::volScalarField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 template <typename Subject, typename Geometry>
 MeasurerTime_scalar_field(Subject const &, Geometry const &,
                           Directories const &, std::string const &,
                           std::string const &)
     -> MeasurerTime_scalar_field<
         Subject, Geometry,
-        ScalarField_LinearInterpolation_OF<Foam::volScalarField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        ScalarField_Interpolation<
+            Foam::volScalarField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 
 /** \class MeasurerTime_vector_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time, tags, and vector field values. */
 template <typename Subject, typename Geometry,
-          typename Field = VectorField_LinearInterpolation_OF<
+          typename Field = VectorField_Interpolation<
               Foam::volVectorField, typename Geometry::Locator const &,
-              CheckOptions::Check>>
+              InterpolationTypes::Linear, CheckOptions::Check>>
 struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_vector_field(Subject const &subject, Field &&field,
                             Geometry const &geometry,
@@ -798,7 +803,8 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   MeasurerTime_vector_field(Subject const &subject, Geometry const &geometry,
@@ -807,9 +813,9 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
                             std::string const &field_name, int precision = 8)
       : MeasurerTime_vector_field{
             subject,
-            VectorField_LinearInterpolation_OF<
+            VectorField_Interpolation<
                 Foam::volVectorField, typename Geometry::Locator const &,
-                CheckOptions::Check>{
+                InterpolationTypes::Linear, CheckOptions::Check>{
                 {Foam::IOobject{field_name, geometry.mesh().time().timeName(),
                                 geometry.mesh(), Foam::IOobject::MUST_READ,
                                 Foam::IOobject::NO_WRITE},
@@ -839,15 +845,15 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
-  void update(double time, double time_of_change) override {
+  void update(double time = 0.,
+              Foam::instant const &previous_time_of_change = {},
+              Foam::instant const &next_time_of_change = {}) override {
     if constexpr (!std::is_reference_v<Field>) {
-      if (time >= time_of_change) {
-        _field.set(
-            {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
-                            _geometry.mesh(), Foam::IOobject::MUST_READ,
-                            Foam::IOobject::NO_WRITE},
-             _geometry.mesh()});
-      }
+      _field.set(
+          {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
+                          _geometry.mesh(), Foam::IOobject::MUST_READ,
+                          Foam::IOobject::NO_WRITE},
+           _geometry.mesh()});
     }
   }
 
@@ -875,18 +881,18 @@ MeasurerTime_vector_field(Subject const &, Geometry const &,
                           std::string const &, int)
     -> MeasurerTime_vector_field<
         Subject, Geometry,
-        VectorField_LinearInterpolation_OF<Foam::volVectorField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        VectorField_Interpolation<
+            Foam::volVectorField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 template <typename Subject, typename Geometry>
 MeasurerTime_vector_field(Subject const &, Geometry const &,
                           Directories const &, std::string const &,
                           std::string const &)
     -> MeasurerTime_vector_field<
         Subject, Geometry,
-        VectorField_LinearInterpolation_OF<Foam::volVectorField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        VectorField_Interpolation<
+            Foam::volVectorField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 
 /** \class MeasurerTime_tensor_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time, tag, and tensor field values. */
@@ -921,7 +927,8 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   MeasurerTime_tensor_field(Subject const &subject, Geometry const &geometry,
@@ -971,14 +978,15 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
-  void update(double time, double time_of_change) override {
-    if constexpr (!std::is_reference_v<Field>)
-      if (time >= time_of_change)
-        _field = {Foam::IOobject{_field_name,
-                                 _geometry.mesh().time().timeName(),
-                                 _geometry.mesh(), Foam::IOobject::MUST_READ,
-                                 Foam::IOobject::NO_WRITE},
-                  _geometry.mesh()};
+  void update(double time = 0.,
+              Foam::instant const &previous_time_of_change = {},
+              Foam::instant const &next_time_of_change = {}) override {
+    if constexpr (!std::is_reference_v<Field>) {
+      _field = {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
+                               _geometry.mesh(), Foam::IOobject::MUST_READ,
+                               Foam::IOobject::NO_WRITE},
+                _geometry.mesh()};
+    }
   }
 
 private:
@@ -1016,9 +1024,9 @@ MeasurerTime_tensor_field(Subject const &, Geometry const &,
    \brief Output time and mean of scalar field over particles.
 */
 template <typename Subject, typename Geometry,
-          typename Field = ScalarField_LinearInterpolation_OF<
+          typename Field = ScalarField_Interpolation<
               Foam::volScalarField, typename Geometry::Locator const &,
-              CheckOptions::Check>>
+              InterpolationTypes::Linear, CheckOptions::Check>>
 struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_scalar_field_mean(Subject const &subject, Field &&field,
                                  Geometry const &geometry,
@@ -1030,7 +1038,7 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
                      Geometry>{subject,
                                geometry,
                                directories,
-                               std::string{"scalar_field_"} + field_name,
+                               std::string{"scalar_field_mean_"} + field_name,
                                identifier,
                                precision},
         _field_name{field_name}, _field{std::forward<Field>(field)},
@@ -1038,7 +1046,8 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_mean").length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << field_name + "_mean" << "\n";
+            << std::setw(_column_widths[1]) << field_name + "_mean"
+            << "\n";
   }
 
   MeasurerTime_scalar_field_mean(Subject const &subject,
@@ -1049,9 +1058,9 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
                                  int precision = 8)
       : MeasurerTime_scalar_field_mean{
             subject,
-            ScalarField_LinearInterpolation_OF<
+            ScalarField_Interpolation<
                 Foam::volScalarField, typename Geometry::Locator const &,
-                CheckOptions::Check>{
+                InterpolationTypes::Linear, CheckOptions::Check>{
                 {Foam::IOobject{field_name, geometry.mesh().time().timeName(),
                                 geometry.mesh(), Foam::IOobject::MUST_READ,
                                 Foam::IOobject::NO_WRITE},
@@ -1069,15 +1078,15 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
             << "\n";
   }
 
-  void update(double time, double time_of_change) override {
+  void update(double time = 0.,
+              Foam::instant const &previous_time_of_change = {},
+              Foam::instant const &next_time_of_change = {}) override {
     if constexpr (!std::is_reference_v<Field>) {
-      if (time >= time_of_change) {
-        _field.set(
-            {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
-                            _geometry.mesh(), Foam::IOobject::MUST_READ,
-                            Foam::IOobject::NO_WRITE},
-             _geometry.mesh()});
-      }
+      _field.set(
+          {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
+                          _geometry.mesh(), Foam::IOobject::MUST_READ,
+                          Foam::IOobject::NO_WRITE},
+           _geometry.mesh()});
     }
   }
 
@@ -1105,26 +1114,26 @@ MeasurerTime_scalar_field_mean(Subject const &, Geometry const &,
                                std::string const &, int)
     -> MeasurerTime_scalar_field_mean<
         Subject, Geometry,
-        ScalarField_LinearInterpolation_OF<Foam::volScalarField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        ScalarField_Interpolation<
+            Foam::volScalarField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 template <typename Subject, typename Geometry>
 MeasurerTime_scalar_field_mean(Subject const &, Geometry const &,
                                Directories const &, std::string const &,
                                std::string const &)
     -> MeasurerTime_scalar_field_mean<
         Subject, Geometry,
-        ScalarField_LinearInterpolation_OF<Foam::volScalarField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        ScalarField_Interpolation<
+            Foam::volScalarField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 
 /** \class MeasurerTime_vector_field_mean PTOF/MeasurerTime.h
  * "PTOF/MeasurerTime.h" \brief  Output time and mean of vector field over
  * particles. */
 template <typename Subject, typename Geometry,
-          typename Field = VectorField_LinearInterpolation_OF<
+          typename Field = VectorField_Interpolation<
               Foam::volVectorField, typename Geometry::Locator const &,
-              CheckOptions::Check>>
+              InterpolationTypes::Linear, CheckOptions::Check>>
 struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
   MeasurerTime_vector_field_mean(Subject const &subject, Field &&field,
                                  Geometry const &geometry,
@@ -1136,7 +1145,7 @@ struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
                      Geometry>{subject,
                                geometry,
                                directories,
-                               std::string{"vector_field_"} + field_name,
+                               std::string{"vector_field_mean_"} + field_name,
                                identifier,
                                precision},
         _field{std::forward<Field>(field)},
@@ -1159,9 +1168,9 @@ struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
                                  int precision = 8)
       : MeasurerTime_vector_field_mean{
             subject,
-            VectorField_LinearInterpolation_OF<
+            VectorField_Interpolation<
                 Foam::volVectorField, typename Geometry::Locator const &,
-                CheckOptions::Check>{
+                InterpolationTypes::Linear, CheckOptions::Check>{
                 {Foam::IOobject{field_name, geometry.mesh().time().timeName(),
                                 geometry.mesh(), Foam::IOobject::MUST_READ,
                                 Foam::IOobject::NO_WRITE},
@@ -1179,15 +1188,15 @@ struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
-  void update(double time, double time_of_change) override {
+  void update(double time = 0.,
+              Foam::instant const &previous_time_of_change = {},
+              Foam::instant const &next_time_of_change = {}) override {
     if constexpr (!std::is_reference_v<Field>) {
-      if (time >= time_of_change) {
-        _field.set(
-            {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
-                            _geometry.mesh(), Foam::IOobject::MUST_READ,
-                            Foam::IOobject::NO_WRITE},
-             _geometry.mesh()});
-      }
+      _field.set(
+          {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
+                          _geometry.mesh(), Foam::IOobject::MUST_READ,
+                          Foam::IOobject::NO_WRITE},
+           _geometry.mesh()});
     }
   }
 
@@ -1215,18 +1224,18 @@ MeasurerTime_vector_field_mean(Subject const &, Geometry const &,
                                std::string const &, int)
     -> MeasurerTime_vector_field_mean<
         Subject, Geometry,
-        VectorField_LinearInterpolation_OF<Foam::volVectorField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        VectorField_Interpolation<
+            Foam::volVectorField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 template <typename Subject, typename Geometry>
 MeasurerTime_vector_field_mean(Subject const &, Geometry const &,
                                Directories const &, std::string const &,
                                std::string const &)
     -> MeasurerTime_vector_field_mean<
         Subject, Geometry,
-        VectorField_LinearInterpolation_OF<Foam::volVectorField,
-                                           typename Geometry::Locator const &,
-                                           CheckOptions::Check>>;
+        VectorField_Interpolation<
+            Foam::volVectorField, typename Geometry::Locator const &,
+            InterpolationTypes::Linear, CheckOptions::Check>>;
 
 /**
    \class MeasurerTime_tensor_field_mean PTOF/MeasurerTime.h
@@ -1246,7 +1255,7 @@ struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
                      Geometry>{subject,
                                geometry,
                                directories,
-                               std::string{"tensor_field_"} + field_name,
+                               std::string{"tensor_field_mean_"} + field_name,
                                identifier,
                                precision},
         _field{std::forward<Field>(field)},
@@ -1296,15 +1305,14 @@ struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
-  void update(double time, double time_of_change) override {
+  void update(double time = 0.,
+              Foam::instant const &previous_time_of_change = {},
+              Foam::instant const &next_time_of_change = {}) override {
     if constexpr (!std::is_reference_v<Field>) {
-      if (time >= time_of_change) {
-        _field = {Foam::IOobject{_field_name,
-                                 _geometry.mesh().time().timeName(),
-                                 _geometry.mesh(), Foam::IOobject::MUST_READ,
-                                 Foam::IOobject::NO_WRITE},
-                  _geometry.mesh()};
-      }
+      _field = {Foam::IOobject{_field_name, _geometry.mesh().time().timeName(),
+                               _geometry.mesh(), Foam::IOobject::MUST_READ,
+                               Foam::IOobject::NO_WRITE},
+                _geometry.mesh()};
     }
   }
 
@@ -1369,7 +1377,8 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1442,7 +1451,8 @@ struct MeasurerTime_position_in_regions_periodic final
       }
     }
     _output << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1453,15 +1463,13 @@ struct MeasurerTime_position_in_regions_periodic final
         continue;
       }
       auto const &state_new = part.state_new();
-      auto cell_new = state_new.cell;
-      auto cell_old = state_old.cell;
-      if (outside(cell_new) || outside(cell_old)) {
+      if (outside(state_new.cell) || outside(state_new.cell)) {
         continue;
       }
       std::vector<int> in_region(_masks.size(), 0);
       for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
-        if (_masks[ii].get()[cell_new] >= _thresholds[ii] &&
-            _masks[ii].get()[cell_old] >= _thresholds[ii]) {
+        if (evaluate(_masks[ii].get(), state_new) >= _thresholds[ii] &&
+            evaluate(_masks[ii].get(), state_old) >= _thresholds[ii]) {
           in_region[ii] = 1;
         }
         if (std::any_of(in_region.begin(), in_region.end(),
@@ -1716,7 +1724,8 @@ struct MeasurerTime_first_crossing_time final
         dimension{dimension}, position{position} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass" << "\n";
+            << std::setw(_column_widths[2]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1793,7 +1802,8 @@ struct MeasurerTime_position_adsorbed final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1851,7 +1861,8 @@ struct MeasurerTime_position_adsorbed_periodic final
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1908,7 +1919,8 @@ struct MeasurerTime_surface_reacted_mass final
             << std::setw(_column_widths[1]) << "Face"
             << std::setw(_column_widths[2]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   MeasurerTime_surface_reacted_mass(Subject const &, Geometry const &,
@@ -1969,7 +1981,8 @@ struct MeasurerTime_surface_reacted_mass_periodic final
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   MeasurerTime_surface_reacted_mass_periodic(Subject const &, Geometry const &,
@@ -2025,7 +2038,8 @@ struct MeasurerTime_mass_adsorbed_face final : MeasurerTime<Subject, Geometry> {
             << std::setw(_column_widths[1]) << "Face"
             << std::setw(_column_widths[2]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -2100,7 +2114,8 @@ struct MeasurerTime_mass_adsorbed_face_periodic final
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            << std::setw(_column_widths[2]) << "..."
+            << "\n";
   }
 
   void operator()(double time) override {

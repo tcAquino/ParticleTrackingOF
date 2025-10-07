@@ -9,8 +9,10 @@
 #define PTOF_DIRECTORIES_H
 
 #include "General/IO.h"
+#include "General/Useful.h"
 #include <Time.H>
 #include <ostream>
+#include <stdexcept>
 #include <string>
 
 namespace ptof {
@@ -67,7 +69,8 @@ struct Directories {
    \brief Object to handle OpenFOAM case directories.
 */
 struct DirectoriesOF {
-  std::string _time_name; /**< Information about time directory. */
+private:
+  std::string _start_time_name;
 
 public:
   std::string case_name; /**< OpenFOAM case name.       */
@@ -80,10 +83,15 @@ public:
   */
   DirectoriesOF(Directories const &directories)
       : time{makeRunTime(directories)} {
-    if (io::is_empty(_time_name)) {
-      time.setTime(time.times().last(), 0);
-    } else {
-      time.setTime(Foam::instant(std::stod(_time_name)), 0);
+    if (time.times().size() == 0) {
+      throw std::runtime_error{"No OpenFOAM time folders"};
+    }
+    if (_start_time_name == "start") {
+      time.setTime(time.startTime(), 0);
+    } else if (_start_time_name == "last") {
+      time.setTime(time.times().back(), 0);
+    } else if (useful::is_numeric(_start_time_name)) {
+      time.setTime(Foam::instant(std::stod(_start_time_name)), 0);
     }
   }
 
@@ -150,8 +158,15 @@ private:
 
     split_line = io::split_line(input);
     param_index = 0;
-    io::read(split_line, param_index, in_file + "Could not parse time name",
-             _time_name);
+    io::read(split_line, param_index, in_file + "Could not parse start time",
+             _start_time_name);
+    if (_start_time_name != "start" && _start_time_name != "last" &&
+        !useful::is_numeric(_start_time_name)) {
+      throw std::runtime_error{
+          in_file +
+          "Expected first, last, or a numeric value for start time, got " +
+          _start_time_name};
+    }
 
     return {Foam::Time::controlDictName, dir, case_name};
   }

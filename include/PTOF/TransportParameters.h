@@ -39,12 +39,12 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse reference lengthscale", lengthscale);
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse Peclet setting option", peclet_option);
@@ -74,18 +74,18 @@ public:
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       peclet = 2. * diffusion_time / advection_time;
       mean_velocity = lengthscale / advection_time;
-    } else if (peclet_option == "compute_from_diff_coeff") {
+    } else if (peclet_option == "compute_from_diffusion_coefficient") {
       io::read(split_line, param_index,
                in_file + for_peclet_option +
                    "Could not parse diffusion coefficient",
                diff_coeff);
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
-    } else if (peclet_option == "compute_from_diff_time") {
+    } else if (peclet_option == "compute_from_diffusion_time") {
       io::read(split_line, param_index,
                in_file + for_peclet_option + "Could not parse diffusion time",
                diffusion_time);
       diff_coeff = lengthscale * lengthscale / (2. * diffusion_time);
-    } else if (peclet_option == "set_diff_coeff") {
+    } else if (peclet_option == "compute_diffusion_coefficient") {
       io::read(split_line, param_index,
                in_file + for_peclet_option + "Could not parse Peclet number",
                peclet);
@@ -93,7 +93,7 @@ public:
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     if (!split_line.empty()) {
       param_index = 0;
       io::read(split_line, param_index,
@@ -116,13 +116,13 @@ public:
       velocity_data *= velocity_rescaling_factor;
       velocity_data.boundaryFieldRef() ==
           velocity_rescaling_factor *velocity_data.boundaryField();
-    } else if (peclet_option == "compute_from_diff_coeff" ||
-               peclet_option == "compute_from_diff_time") {
+    } else if (peclet_option == "compute_from_diffusion_coefficient" ||
+               peclet_option == "compute_from_diffusion_time") {
       velocity_rescaling_factor = 1.;
       mean_velocity = current_mean;
       advection_time = lengthscale / mean_velocity;
       peclet = 2. * diffusion_time / advection_time;
-    } else if (peclet_option == "set_diff_coeff") {
+    } else if (peclet_option == "compute_diffusion_coefficient") {
       velocity_rescaling_factor = 1.;
       mean_velocity = current_mean;
       diff_coeff = lengthscale * mean_velocity / peclet;
@@ -141,7 +141,7 @@ public:
     output
         << io::line() << "Transport parameters\n"
         << io::line()
-        << "(Note:"
+        << "(Note:\n"
            "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
            "    [diffusion coefficient])\n"
            "  - Advection time is defined as [lenghscale] / [mean velocity]\n"
@@ -151,21 +151,21 @@ public:
            "    / [diffusion coefficient])\n"
            "- Reference lengthscale\n"
            "- How to set the Peclet number:\n"
-           "  (Note:"
+           "  (Note:\n"
            "    - Options that involve rescaling the velocity field are\n"
            "      expensive for simulations with time-dependent flow fields\n"
            "      because they require recomputing the interpolator)\n"
-           "  - compute_from_diff_coeff\n"
+           "  - compute_from_diffusion_coefficient\n"
            "    - Compute from given diffusion coefficient (do not\n"
            "      rescale velocity field)\n"
            "    - Pass on same line:\n"
            "      - Diffusion coefficient\n"
-           "  - set_diff_coeff\n"
-           "    - Set diffusion coefficient to impose given Peclet number\n"
+           "  - compute_diffusion_coefficient\n"
+           "    - Compute diffusion coefficient to impose given Peclet number\n"
            "      (do not rescale velocity field)\n"
            "    - Pass on same line:\n"
            "      - Peclet number\n"
-           "  - compute_from_diff_time\n"
+           "  - compute_from_diffusion_time\n"
            "    - Compute from given diffusion time (do not rescale\n"
            "      velocity field)\n"
            "    - Pass on same line:\n"
@@ -216,12 +216,12 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse reference length scale", lengthscale);
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not flow velocity field rescaling option",
@@ -248,7 +248,7 @@ public:
                                "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     if (!split_line.empty()) {
       param_index = 0;
       io::read(split_line, param_index,
@@ -289,13 +289,13 @@ public:
     output
         << io::line() << "Transport parameters\n"
         << io::line()
-        << "(Note:"
+        << "(Note:\n"
            "  - Advection time is defined as [lenghscale] / [mean velocity]\n"
            "  - Mean velocity is defined as the absolute value of mean\n"
            "    velocity vector)\n"
            "- Reference lengthscale\n"
            "- Whether and how to rescale velocity field:\n"
-           "  (Note:"
+           "  (Note:\n"
            "    - Options that involve rescaling the velocity field are\n"
            "      expensive for simulations with time-dependent flow fields\n"
            "      because they require recomputing the interpolator)\n"
@@ -322,10 +322,11 @@ public:
   double lengthscale;
   double diff_coeff;
   double diffusion_time;
-  double advection_time{std::numeric_limits<double>::infinity()};
-  const double peclet{0.};
-  double mean_velocity{0.};
   bool time_dependent_bcs{false};
+  const double advection_time{std::numeric_limits<double>::infinity()};
+  const double peclet{0.};
+  const double mean_velocity{0.};
+  const double velocity_rescaling_factor{1.};
 
   template <typename Geometry, typename VelocityData>
   TransportParameters_Diffusion(Directories const &directories,
@@ -338,17 +339,36 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse reference length scale", lengthscale);
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
-    io::read(split_line, param_index,
-             in_file + "Could not parse diffusion coefficient", diff_coeff);
+    auto diffusion_option = io::read<std::string>(
+        split_line, param_index,
+        in_file + "Could not parse diffusion coefficient setting option");
+    std::string for_diffusion_option =
+        std::string{"Diff option "} + diffusion_option + " : ";
+    if (diffusion_option == "set_value") {
+      io::read(split_line, param_index,
+               in_file + for_diffusion_option +
+                   "Could not parse diffusion coefficient",
+               diff_coeff);
+      diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
+    } else if (diffusion_option == "compute_from_diffusion_time") {
+      io::read(split_line, param_index,
+               in_file + for_diffusion_option +
+                   "Could not parse diffusion time",
+               diffusion_time);
+      diff_coeff = lengthscale * lengthscale / (2. * diffusion_time);
+    } else {
+      throw std::runtime_error{in_file + for_diffusion_option +
+                               "Not supported"};
+    }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     if (!split_line.empty()) {
       param_index = 0;
       io::read(split_line, param_index,
@@ -366,11 +386,19 @@ public:
     output
         << io::line() << "Transport parameters\n"
         << io::line()
-        << "(Note:"
+        << "(Note:\n"
            "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
            "    [diffusion coefficient]))\n"
            "- Reference lengthscale\n"
-           "- Diffusion coefficient\n"
+           "- How to set the diffusion coefficient:\n"
+           "  - set_value\n"
+           "    - Set given value\n"
+           "    - Pass on same line:\n"
+           "      - Diffusion coefficient\n"
+           "  - compute_from_diffusion_time\n"
+           "    - Compute from given diffusion time\n"
+           "    - Pass on same line:\n"
+           "      - Diffusion time\n"
            "- Whether boundary conditions are time-dependent (only used for\n"
            "  time-dependent simulations) [false]\n"
         << io::line();
@@ -403,7 +431,7 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file +
@@ -432,7 +460,7 @@ public:
                                "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse Peclet setting option", peclet_option);
@@ -462,18 +490,18 @@ public:
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
       peclet = 2. * diffusion_time / advection_time;
       mean_velocity = lengthscale / advection_time;
-    } else if (peclet_option == "compute_from_diff_coeff") {
+    } else if (peclet_option == "compute_from_diffusion_coefficient") {
       io::read(split_line, param_index,
                in_file + for_peclet_option +
                    "Could not parse diffusion coefficient",
                diff_coeff);
       diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
-    } else if (peclet_option == "compute_from_diff_time") {
+    } else if (peclet_option == "compute_from_diffusion_time") {
       io::read(split_line, param_index,
                in_file + for_peclet_option + "Could not parse diffusion time",
                diffusion_time);
       diff_coeff = lengthscale * lengthscale / (2. * diffusion_time);
-    } else if (peclet_option == "set_diff_coeff") {
+    } else if (peclet_option == "compute_diffusion_coefficient") {
       io::read(split_line, param_index,
                in_file + for_peclet_option + "Could not parse Peclet number",
                peclet);
@@ -481,7 +509,7 @@ public:
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     if (!split_line.empty()) {
       param_index = 0;
       io::read(split_line, param_index,
@@ -504,13 +532,13 @@ public:
       velocity_data *= velocity_rescaling_factor;
       velocity_data.boundaryFieldRef() ==
           velocity_rescaling_factor *velocity_data.boundaryField();
-    } else if (peclet_option == "compute_from_diff_coeff" ||
-               peclet_option == "compute_from_diff_time") {
+    } else if (peclet_option == "compute_from_diffusion_coefficient" ||
+               peclet_option == "compute_from_diffusion_time") {
       velocity_rescaling_factor = 1.;
       mean_velocity = current_mean;
       advection_time = lengthscale / mean_velocity;
       peclet = 2. * diffusion_time / advection_time;
-    } else if (peclet_option == "set_diff_coeff") {
+    } else if (peclet_option == "compute_diffusion_coefficient") {
       velocity_rescaling_factor = 1.;
       mean_velocity = current_mean;
       diff_coeff = lengthscale * mean_velocity / peclet;
@@ -529,7 +557,7 @@ public:
     output
         << io::line() << "Transport parameters\n"
         << io::line()
-        << "(Note:"
+        << "(Note:\n"
            "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
            "    [diffusion coefficient])\n"
            "  - Advection time is defined as [lenghscale] / [mean velocity]\n"
@@ -549,21 +577,21 @@ public:
            "    - Pass on same line:\n"
            "      - Reference lengthscale value\n"
            "- How to set the Peclet number:\n"
-           "  (Note:"
+           "  (Note:\n"
            "    - Options that involve rescaling the velocity field are\n"
            "      expensive for simulations with time-dependent flow fields\n"
            "      because they require recomputing the interpolator)\n"
-           "  - compute_from_diff_coeff\n"
+           "  - compute_from_diffusion_coefficient\n"
            "    - Compute from given diffusion coefficient (do not\n"
            "      rescale velocity field)\n"
            "    - Pass on same line:\n"
            "      - Diffusion coefficient\n"
-           "  - set_diff_coeff\n"
-           "    - Set diffusion coefficient to impose given Peclet number\n"
+           "  - compute_diffusion_coefficient\n"
+           "    - Compute diffusion coefficient to impose given Peclet number\n"
            "      (do not rescale velocity field)\n"
            "    - Pass on same line:\n"
            "      - Peclet number\n"
-           "  - compute_from_diff_time\n"
+           "  - compute_from_diffusion_time\n"
            "    - Compute from given diffusion time (do not rescale\n"
            "      velocity field)\n"
            "    - Pass on same line:\n"
@@ -617,7 +645,7 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse lengthscale definition option",
@@ -645,7 +673,7 @@ public:
                                "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not flow velocity field rescaling option",
@@ -672,7 +700,7 @@ public:
                                "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     if (!split_line.empty()) {
       param_index = 0;
       io::read(split_line, param_index,
@@ -713,7 +741,7 @@ public:
     output
         << io::line() << "Transport parameters\n"
         << io::line()
-        << "(Note:"
+        << "(Note:\n"
            "  - Advection time is defined as [lenghscale] / [mean velocity]\n"
            "  - Mean velocity is defined as the absolute value of mean\n"
            "    velocity vector)\n"
@@ -729,7 +757,7 @@ public:
            "    - Pass on same line:\n"
            "      - Reference lengthscale value\n"
            "- Whether and how to rescale velocity field:\n"
-           "  (Note:"
+           "  (Note:\n"
            "    - Options that involve rescaling the velocity field are\n"
            "      expensive for simulations with time-dependent flow fields\n"
            "      because they require recomputing the interpolator)\n"
@@ -755,14 +783,15 @@ struct TransportParameters_Diffusion_Bcc {
 public:
   std::string lengthscale_option;
   double lengthscale;
-  const double diff_coeff;
-  const double diffusion_time;
-  const double peclet{0.};
-  double mean_velocity{0.};
+  double diff_coeff;
+  double diffusion_time;
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
-  double advection_time{std::numeric_limits<double>::infinity()};
   bool time_dependent_bcs{false};
+  const double peclet{0.};
+  const double mean_velocity{0.};
+  const double velocity_rescaling_factor{1.};
+  const double advection_time{std::numeric_limits<double>::infinity()};
 
   template <typename Geometry, typename VelocityData>
   TransportParameters_Diffusion_Bcc(
@@ -774,7 +803,7 @@ public:
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
-    auto split_line = io::split_line(input);
+    auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     std::size_t param_index = 0;
     io::read(split_line, param_index,
              in_file + "Could not parse lengthscale definition option",
@@ -802,12 +831,31 @@ public:
                                "Not supported"};
     }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
-    io::read(split_line, param_index,
-             in_file + "Could not parse diffusion coefficient", diff_coeff);
+    auto diffusion_option = io::read<std::string>(
+        split_line, param_index,
+        in_file + "Could not parse diffusion coefficient setting option");
+    std::string for_diffusion_option =
+        std::string{"Diffusion option "} + diffusion_option + " : ";
+    if (diffusion_option == "set_value") {
+      io::read(split_line, param_index,
+               in_file + for_diffusion_option +
+                   "Could not parse diffusion coefficient",
+               diff_coeff);
+      diffusion_time = lengthscale * lengthscale / (2. * diff_coeff);
+    } else if (diffusion_option == "compute_from_diffusion_time") {
+      io::read(split_line, param_index,
+               in_file + for_diffusion_option +
+                   "Could not parse diffusion time",
+               diffusion_time);
+      diff_coeff = lengthscale * lengthscale / (2. * diffusion_time);
+    } else {
+      throw std::runtime_error{in_file + for_diffusion_option +
+                               "Not supported"};
+    }
 
-    split_line = io::split_line(input);
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     if (!split_line.empty()) {
       param_index = 0;
       io::read(split_line, param_index,
@@ -825,7 +873,7 @@ public:
     output
         << io::line() << "Transport parameters\n"
         << io::line()
-        << "(Note:"
+        << "(Note:\n"
            "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
            "    [diffusion coefficient]))\n"
            "- How to set the reference lengthscale:\n"
@@ -839,7 +887,15 @@ public:
            "    - Equal to specified value\n"
            "    - Pass on same line:\n"
            "      - Reference lengthscale value\n"
-           "- Diffusion coefficient"
+           "- How to set the diffusion coefficient:\n"
+           "  - set_value\n"
+           "    - Set given value\n"
+           "    - Pass on same line:\n"
+           "      - Diffusion coefficient\n"
+           "  - compute_from_diffusion_time\n"
+           "    - Compute from given diffusion time\n"
+           "    - Pass on same line:\n"
+           "      - Diffusion time\n"
            "- Whether boundary conditions are time-dependent (only used for\n"
            "  time-dependent simulations) [false]\n"
         << io::line();
