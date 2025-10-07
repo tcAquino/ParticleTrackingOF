@@ -385,14 +385,9 @@ struct Phase {
       if constexpr (!std::is_same_v<std::remove_reference_t<
                                         std::remove_const_t<VelocityField>>,
                                     meta::Empty>) {
-        std::cout << "OLA2!!!";
-        io::print(std::cout, _effective_drift(position, cell, time))
-            << std::endl;
         return _velocity_field(position, cell, time) +
                _effective_drift(position, cell, time);
       } else {
-        std::cout << "OLA!!!";
-        io::print(std::cout, _effective_drift(position, cell, time)) << std::endl;
         return _effective_drift(position, cell, time);
       }
     }
