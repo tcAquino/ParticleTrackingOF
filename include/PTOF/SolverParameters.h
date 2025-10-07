@@ -123,12 +123,12 @@ struct SolverParameters_Generic {
         io::read(split_line, param_index,
                  in_file + "Could not parse global diffusive and reactive time "
                            "step accuracy",
-                 local_time_step_diff, local_time_step_react);
+                 global_time_step_diff, global_time_step_react);
       } else {
         io::read(split_line, param_index,
                  in_file +
                      "Could not parse global diffusive time step accuracy",
-                 local_time_step_diff);
+                 global_time_step_diff);
       }
     }
 
