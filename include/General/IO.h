@@ -778,7 +778,6 @@ inline auto load(std::string const &filename, std::size_t nr_columns,
 template <typename Container>
 std::ostream &print(std::ostream &stream, Container const &container,
                     bool delimit_first = false, std::string delimiter = "\t") {
-  // TODO: Choose this specialization when stream << container exists
   if constexpr (std::is_scalar_v<Container>) {
     if (delimit_first) {
       stream << delimiter;
@@ -800,7 +799,6 @@ std::ostream &print(std::ostream &stream, Container const &container, int width,
                     std::ios_base &(*alignment)(std::ios_base &) = std::right) {
   io::StreamScopeFormat guard{stream};
   stream << alignment;
-  // TODO: Choose this specialization when stream << container exists
   if constexpr (std::is_scalar_v<Container>) {
     stream << std::setw(width) << container;
   } else {

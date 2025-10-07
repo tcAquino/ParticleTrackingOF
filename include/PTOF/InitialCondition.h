@@ -18,6 +18,7 @@
 #include <fstream>
 #include <point.H>
 #include <random>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -189,8 +190,10 @@ public:
            std::forward<Geometry>(geometry)},
         _position{position} {
     if (outside(_cell_id)) {
-      throw std::runtime_error{
-        "Point initial condition position is outside mesh"};
+      std::ostringstream stream;
+      io::print(stream, position, ", ");
+      throw std::runtime_error{"Point initial condition position (" +
+                               stream.str() + ") is outside mesh"};
     }
   }
 
