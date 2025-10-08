@@ -288,7 +288,7 @@ struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
                                  std::string const &identifier,
                                  int precision = 8)
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_mean",
+                                        directories, "position_abs_mean",
                                         identifier,  precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
@@ -1602,7 +1602,7 @@ struct MeasurerTime_position_abs_mean_periodic final
                                           std::string const &identifier,
                                           int precision = 8)
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_mean_periodic",
+                                        directories, "position_abs_mean_periodic",
                                         identifier,  precision},
         _getter_position{geometry.boundary_periodic},
         _column_widths{
