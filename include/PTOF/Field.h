@@ -63,14 +63,14 @@ class VectorField_Interpolation {
       "InterpolationType::Linear");
 
 public:
-  using Point = Foam::point;                     /**> 3D point. */
-  using Point2D = Foam::Vector2D<Foam::scalar>;  /**> 2D point. */
-  using Vector = Foam::vector;                   /**> 3D vector. */
-  using Vector2D = Foam::Vector2D<Foam::scalar>; /**> 2D vector. */
-  using Scalar = Foam::scalar;                   /**> Scalar (also 1D point). */
-  using Index = Foam::label;                     /**> Cell index. */
-  using Field = Field_t;                         /**> Underlying field type. */
-  using Locator = Locator_t;                     /**> Locator type. */
+  using Point = Foam::point;                     /**< 3D point. */
+  using Point2D = Foam::Vector2D<Foam::scalar>;  /**< 2D point. */
+  using Vector = Foam::vector;                   /**< 3D vector. */
+  using Vector2D = Foam::Vector2D<Foam::scalar>; /**< 2D vector. */
+  using Scalar = Foam::scalar;                   /**< Scalar (also 1D point). */
+  using Index = Foam::label;                     /**< Cell index. */
+  using Field = Field_t;                         /**< Underlying field type. */
+  using Locator = Locator_t;                     /**< Locator type. */
 
   /** Whether to check if requested positions are outside of mesh. */
   static constexpr bool check_if_outside =
@@ -182,6 +182,9 @@ public:
   /** \brief Field at cell center. */
   auto operator[](Foam::label cell_id) const { return _field[cell_id]; }
 
+  /** \brief Field at cell center. */
+  auto operator()(Foam::label cell_id) const { return _field[cell_id]; }
+
   /**
      \brief Locate a state in the mesh.
      \param state Particle state to locate.
@@ -237,8 +240,6 @@ public:
   */
   void set(Field field) { _field = field; }
 
-  auto interp_size() const { return _interpolator->psi().size(); }
-
 private:
   Field _field;     /**< Vector field cell data to interpolate. */
   Locator _locator; /**< Locator to find positions in mesh. */
@@ -283,12 +284,12 @@ class ScalarField_Interpolation {
       "InterpolationType::Linear");
 
 public:
-  using Point = Foam::point;                    /**> 3D point. */
-  using Point2D = Foam::Vector2D<Foam::scalar>; /**> 2D point. */
-  using Scalar = Foam::scalar;                  /**> Scalar (also 1D point). */
-  using Index = Foam::label;                    /**> Cell index. */
-  using Field = Field_t;                        /**> Underlying field type. */
-  using Locator = Locator_t;                    /**> Locator type. */
+  using Point = Foam::point;                    /**< 3D point. */
+  using Point2D = Foam::Vector2D<Foam::scalar>; /**< 2D point. */
+  using Scalar = Foam::scalar;                  /**< Scalar (also 1D point). */
+  using Index = Foam::label;                    /**< Cell index. */
+  using Field = Field_t;                        /**< Underlying field type. */
+  using Locator = Locator_t;                    /**< Locator type. */
 
   /** Whether to check if requested positions are outside of mesh. */
   static constexpr bool check_if_outside =
@@ -399,6 +400,9 @@ public:
   /** \brief Field at cell center. */
   auto operator[](Foam::label cell_id) const { return _field[cell_id]; }
 
+  /** \brief Field at cell center. */
+  auto operator()(Foam::label cell_id) const { return _field[cell_id]; }
+
   /**
      \brief Locate a state in the mesh.
      \param state Particle state to locate.
@@ -454,8 +458,6 @@ public:
   */
   void set(Field field) { _field = field; }
 
-  auto interp_size() const { return _interpolator->psi().size(); }
-
 private:
   Field _field;     /**< Scalar field cell data to interpolate.         */
   Locator _locator; /**< Locator to find positions in mesh. */
@@ -482,16 +484,16 @@ ScalarField_Interpolation(Field &&, Locator &&, InterpolationType, CheckOption)
 */
 template <typename Field_t> class Field_TimeInterpolation {
 public:
-  using Point = Foam::point;                     /**> 3D point. */
-  using Point2D = Foam::Vector2D<Foam::scalar>;  /**> 2D point. */
-  using Vector = Foam::vector;                   /**> 3D vector. */
-  using Vector2D = Foam::Vector2D<Foam::scalar>; /**> 2D vector. */
-  using Scalar = Foam::scalar;                   /**> Scalar (also 1D point). */
-  using Index = Foam::label;                     /**> Cell index. */
-  using Field = Field_t;                         /**> Underlying field type. */
-  using Time = Foam::scalar;                     /**> Time type. */
+  using Point = Foam::point;                     /**< 3D point. */
+  using Point2D = Foam::Vector2D<Foam::scalar>;  /**< 2D point. */
+  using Vector = Foam::vector;                   /**< 3D vector. */
+  using Vector2D = Foam::Vector2D<Foam::scalar>; /**< 2D vector. */
+  using Scalar = Foam::scalar;                   /**< Scalar (also 1D point). */
+  using Index = Foam::label;                     /**< Cell index. */
+  using Field = Field_t;                         /**< Underlying field type. */
+  using Time = Foam::scalar;                     /**< Time type. */
   using FieldPtr =
-      std::unique_ptr<Field>; /**> Pointer to underlying field type. */
+      std::unique_ptr<Field>; /**< Pointer to underlying field type. */
 
   /**
      \brief Constructor.
@@ -520,7 +522,6 @@ public:
     if (time >= _time_new) {
       return (*_field_new)(position, cell);
     }
-
     return interpolate((*_field_new)(position, cell),
                        (*_field_old)(position, cell), time);
   }
@@ -540,7 +541,7 @@ public:
      \return interpolated field value.
   */
   auto operator()(Point const &position, Time time) const {
-    return (*this)(position, locate(position, time));
+    return (*this)(position, locate(position), time);
   }
 
   /**
@@ -559,13 +560,19 @@ public:
      \param time Interpolation time.
      \return interpolated field value.
   */
-  auto operator()(Scalar const &position, Time time) const {
+  auto operator()(Scalar position, Time time) const {
     return (*this)(position, locate(position), time);
   }
 
   /** \brief Field at cell center. */
-  auto operator()(Foam::label cell_id, Time time) {
-    return interpolate(_field_new[cell_id], _field_old[cell_id], time);
+  auto operator()(Foam::label cell_id, Time time) const {
+    if (_time_new <= _time_old || time <= _time_old) {
+      return (*_field_old)(cell_id);
+    }
+    if (time >= _time_new) {
+      return (*_field_new)(cell_id);
+    }
+    return interpolate((*_field_new)(cell_id), (*_field_old)(cell_id), time);
   }
 
   /**
@@ -588,13 +595,18 @@ public:
     if (time >= _time_new) {
       return _field_new->field();
     }
-
     return static_cast<Field>(
         interpolate(_field_new->field(), _field_old->field()), time);
   }
 
   /** \return Underlying boundary field. */
   auto boundaryField(Time time) const {
+    if (_time_new <= _time_old || time <= _time_old) {
+      return _field_old->boundaryField();
+    }
+    if (time >= _time_new) {
+      return _field_new->boundaryField();
+    }
     return interpolate(_field_new->boundaryField(), _field_old->boundaryField(),
                        time);
   }
@@ -602,14 +614,13 @@ public:
   /** \return Underlying boundary field at patch. */
   auto boundaryField(Foam::label patch_id, Time time) const {
     if (_time_new <= _time_old || time <= _time_old) {
-      return _field_old->boundaryField()[patch_id];
+      return _field_old->boundaryField(patch_id);
     }
     if (time >= _time_new) {
-      return _field_new->boundaryField()[patch_id];
+      return _field_new->boundaryField(patch_id);
     }
-
-    return interpolate(_field_new->boundaryField()[patch_id],
-                       _field_old->boundaryField()[patch_id], time);
+    return interpolate(_field_new->boundaryField(patch_id),
+                       _field_old->boundaryField(patch_id), time);
   }
 
   /**
@@ -620,14 +631,13 @@ public:
   auto boundaryField(Foam::label patch_id, Foam::label face_in_patch,
                      Time time) const {
     if (_time_new <= _time_old || time <= _time_old) {
-      return _field_old->boundaryField()[patch_id][face_in_patch];
+      return _field_old->boundaryField(patch_id, face_in_patch);
     }
     if (time >= _time_new) {
-      return _field_new->boundaryField()[patch_id][face_in_patch];
+      return _field_new->boundaryField(patch_id, face_in_patch);
     }
-
-    return interpolate(_field_new->boundaryField()[patch_id][face_in_patch],
-                       _field_old->boundaryField()[patch_id][face_in_patch],
+    return interpolate(_field_new->boundaryField(patch_id, face_in_patch),
+                       _field_old->boundaryField(patch_id, face_in_patch),
                        time);
   }
 
@@ -689,9 +699,6 @@ public:
     _field_new->rescale(factor);
     _field_old->rescale(factor);
   }
-
-  auto interp_size_new() const { return field_new().interp_size(); }
-  auto interp_size_old() const { return field_old().interp_size(); }
 
 private:
   FieldPtr _field_new; /**< Field at new time. */

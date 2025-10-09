@@ -902,6 +902,18 @@ public:
     return output;
   }
 };
+
+template <bool advection, bool diffusion>
+using TransportParameters_Generic = std::conditional_t<
+    advection && diffusion, TransportParameters_AdvectionDiffusion,
+    std::conditional_t<advection, TransportParameters_Advection,
+                       TransportParameters_Diffusion>>;
+
+template <bool advection, bool diffusion>
+using TransportParameters_Bcc = std::conditional_t<
+    advection && diffusion, TransportParameters_AdvectionDiffusion_Bcc,
+    std::conditional_t<advection, TransportParameters_Advection_Bcc,
+                       TransportParameters_Diffusion_Bcc>>;
 } // namespace ptof
 
 #endif /* PTOF_TRANSPORTPARAMETERS_H */

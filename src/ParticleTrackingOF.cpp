@@ -72,7 +72,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::periodic_cartesian_advection_diffusion_2d;
+  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
         << "\n"
            "--------------------------------------------------------------\n";
   }
-  
+
   ptof::Directories directories{dir, case_name, dir_output};
   std::cout << "\n";
   directories.info_runtime(std::cout);
@@ -167,8 +167,8 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  auto velocity_field = Definitions::TransportHandler::makeVelocityInterpolator(
-      geometry, std::move(velocity_data));
+  auto velocity_field = Definitions::TransportHandler::makeVelocityInterpolator<
+      Definitions::Solvers>(geometry, std::move(velocity_data));
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -254,7 +254,8 @@ int main(int argc, char *argv[]) {
             << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::CTRW ctrw{initial_condition()};
-  auto transitions = ptof::makeTransitions<Definitions::TransportHandler>(
+  auto transitions = ptof::makeTransitions<Definitions::TransportHandler,
+                                           Definitions::Solvers>(
       velocity_field, geometry, boundary, params_transport, params_reaction,
       params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();

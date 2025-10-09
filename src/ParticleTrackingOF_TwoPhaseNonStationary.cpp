@@ -14,7 +14,9 @@
 #include "PTOF/Field.h"
 #include "PTOF/Model.h"
 #include "PTOF/Phase.h"
+#include "PTOF/Solvers.h"
 #include "PTOF/Transitions.h"
+#include "PTOF/TransportHandler.h"
 #include "PTOF/Useful.h"
 #include <algorithm>
 #include <chrono>
@@ -26,6 +28,7 @@
 #include <limits>
 #include <memory>
 #include <string>
+#include <type_traits>
 
 template <typename ParallelOption> struct ExecutableInfo {
   inline static std::string banner() {
@@ -81,23 +84,39 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
+  using Model = ptof::Model::periodic_cartesian_advection_diffusion_2d;
   using Phase = ptof::Phase;
   using Definitions = Model::Definitions<ParallelOption>;
+
+  constexpr bool advection = Definitions::Solvers::Parameters::advection;
+  using Solvers = std::conditional_t<
+      advection, Definitions::Solvers,
+      ptof::Solvers_Generic<ptof::Steppers::Euler,
+                            Definitions::Solvers::Stepper_Diffusion,
+                            Definitions::Solvers::Stepper_CTRW>>;
 
   std::cout << std::setprecision(2) << std::scientific;
   std::cout << ExecutableInfo<ParallelOption>::banner() << "\n";
   Model::info(std::cout);
+  if (!advection) {
+    std::cout
+        << "\n"
+        << io::line()
+        << "Note: Turning on advection with forward Euler stepping to apply\n"
+           "      chemical potential at phase interface\n"
+        << io::line();
+  }
 
-  if (ptof::options_help<
-          ExecutableInfo<ParallelOption>, Definitions::Geometry,
-          ptof::DirectoriesOF, Definitions::TransportHandler, Phase,
-          Definitions::ReactionHandler, Definitions::Solvers,
-          Definitions::InitialConditionHandler, Definitions::OutputHandler>(
-          std::cout, argc, argv))
+  if (ptof::options_help<ExecutableInfo<ParallelOption>, Definitions::Geometry,
+                         ptof::DirectoriesOF, Definitions::TransportHandler,
+                         Phase, Definitions::ReactionHandler, Solvers,
+                         Definitions::InitialConditionHandler,
+                         Definitions::OutputHandler>(std::cout, argc, argv)) {
     return 0;
-  if (argc != ExecutableInfo<ParallelOption>::nr_parameters + 1)
+  }
+  if (argc != ExecutableInfo<ParallelOption>::nr_parameters + 1) {
     throw io::bad_parameters_help();
+  }
 
   std::size_t arg = 1;
   std::string dir = argv[arg++];
@@ -149,8 +168,7 @@ int main(int argc, char *argv[]) {
   Foam::scalar start_time_value = directories_of.time.value();
   Foam::word start_time_name = directories_of.time.timeName();
   auto velocity_data_old = ptof::get_velocity_data(
-      geometry.mesh(),
-      meta::Selector<bool, Definitions::Solvers::Parameters::advection>{});
+      geometry.mesh(), meta::Selector<bool, advection>{});
   auto const &flow_times = directories_of.time.times();
   Foam::label next_time_index =
       ptof::closest_time_index(flow_times, start_time_value) + 1;
@@ -163,7 +181,7 @@ int main(int argc, char *argv[]) {
       next_flow_time.value() < std::numeric_limits<double>::infinity()
           ? next_flow_time.name()
           : directories_of.time.name(),
-      meta::Selector<bool, Definitions::Solvers::Parameters::advection>{});
+      meta::Selector<bool, advection>{});
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -186,7 +204,7 @@ int main(int argc, char *argv[]) {
             << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field_base =
-      Definitions::TransportHandler::makeVelocityTimeInterpolator(
+      Definitions::TransportHandler::makeVelocityTimeInterpolator<Solvers>(
           geometry, std::move(velocity_data_new), std::move(velocity_data_old),
           next_flow_time.value(), start_time_value);
   std::chrono::high_resolution_clock::now();
@@ -241,9 +259,8 @@ int main(int argc, char *argv[]) {
   std::cout << "\n"
             << "Importing solver parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
-  Definitions::Solvers::Parameters params_solvers{
-      directories, params_solvers_name, geometry, params_transport,
-      params_reaction};
+  Solvers::Parameters params_solvers{directories, params_solvers_name, geometry,
+                                     params_transport, params_reaction};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -307,9 +324,10 @@ int main(int argc, char *argv[]) {
             << "Setting up dynamics..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::CTRW ctrw{initial_condition()};
-  auto transitions = ptof::makeTransitions<Definitions::TransportHandler>(
-      velocity_field, geometry, boundary, params_transport, params_reaction,
-      params_solvers, bulk_reaction);
+  auto transitions =
+      ptof::makeTransitions<Definitions::TransportHandler, Solvers>(
+          velocity_field, geometry, boundary, params_transport, params_reaction,
+          params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -344,7 +362,8 @@ int main(int argc, char *argv[]) {
       filename_output_identifier, {std::cref(carrier_phase_field)},
       {params_phase.phase_tolerance});
   output.info_runtime(std::cout);
-  execution_end = std::chrono::high_resolution_clock::now();
+  auto masks = std::vector{std::cref(carrier_phase_field)};
+  execution_end = std::chrono::high_resolution_clock::now();  
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);
@@ -352,7 +371,6 @@ int main(int argc, char *argv[]) {
 
   std::cout << "\n"
             << "Starting dynamics..." << std::endl;
-
   execution_begin = std::chrono::high_resolution_clock::now();
   double previous_time = start_time_value;
   double current_time = start_time_value;
@@ -398,7 +416,7 @@ int main(int argc, char *argv[]) {
         next_flow_time.value() > current_time
             ? std::min(output.next_measurement_time(), next_flow_time.value())
             : output.next_measurement_time();
-    Definitions::Solvers::evolve(
+    Solvers::evolve(
         ctrw, transitions, params_solvers, current_time, previous_time,
         [&bulk_reaction, &surface_reaction](Definitions::CTRW ctrw,
                                             Definitions::State::Time new_time,

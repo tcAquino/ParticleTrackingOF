@@ -18,26 +18,25 @@
 #include <utility>
 
 namespace ptof {
-template <typename Solvers_t, typename Parameters_t>
-struct TransportHandler_LinearInterp {
+template <typename Parameters_t> struct TransportHandler_LinearInterp {
   TransportHandler_LinearInterp() = delete;
 
-  using Solvers = Solvers_t;
   using Parameters = Parameters_t;
 
-  template <typename VelocityField, typename Geometry, typename Boundary,
-            typename ReactionParameters>
-  static auto
-  makeTransitions(VelocityField const &velocity_field, Geometry const &geometry,
-                  Boundary &boundary, Parameters const &params_transport,
-                  ReactionParameters const &params_reaction,
-                  typename Solvers::Parameters const &params_solvers) {
+  template <typename Solvers, typename VelocityField, typename Geometry,
+            typename Boundary, typename ReactionParameters,
+            typename SolverParameters>
+  static auto makeTransitions(VelocityField const &velocity_field,
+                              Geometry const &geometry, Boundary &boundary,
+                              Parameters const &params_transport,
+                              ReactionParameters const &params_reaction,
+                              SolverParameters const &params_solvers) {
     return makeTransportTransitions<Solvers>(velocity_field, geometry, boundary,
                                              params_transport, params_reaction,
                                              params_solvers);
   }
 
-  template <typename Geometry, typename VelocityData>
+  template <typename Solvers, typename Geometry, typename VelocityData>
   static auto makeVelocityInterpolator(Geometry const &geometry,
                                        VelocityData &&velocity_data) {
     if constexpr (Solvers::Parameters::advection) {
@@ -48,18 +47,18 @@ struct TransportHandler_LinearInterp {
     }
   }
 
-  template <typename Geometry, typename VelocityData>
+  template <typename Solvers, typename Geometry, typename VelocityData>
   static auto makeVelocityTimeInterpolator(Geometry const &geometry,
                                            VelocityData &&velocity_data_new,
                                            VelocityData &&velocity_data_old,
                                            double time_new, double time_old) {
     if constexpr (Solvers::Parameters::advection) {
-      using Type = decltype(makeVelocityInterpolator(
+      using Type = decltype(makeVelocityInterpolator<Solvers>(
           geometry, std::forward<VelocityData>(velocity_data_new)));
       return ptof::Field_TimeInterpolation{
-          std::unique_ptr<Type>{new Type{makeVelocityInterpolator(
+          std::unique_ptr<Type>{new Type{makeVelocityInterpolator<Solvers>(
               geometry, std::forward<VelocityData>(velocity_data_new))}},
-          std::unique_ptr<Type>{new Type{makeVelocityInterpolator(
+          std::unique_ptr<Type>{new Type{makeVelocityInterpolator<Solvers>(
               geometry, std::forward<VelocityData>(velocity_data_old))}},
           time_new, time_old};
     } else {
@@ -71,6 +70,7 @@ struct TransportHandler_LinearInterp {
      \brief Output generic information about object.
      \param output Output stream.
   */
+  template <typename Solvers>
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport\n" << io::line() << "Advection: ";
     if constexpr (Solvers::Parameters::advection) {
@@ -90,28 +90,7 @@ struct TransportHandler_LinearInterp {
     output << io::line();
     return output;
   }
-  };
-
-template <typename Solvers>
-using TransportHandler_Generic = TransportHandler_LinearInterp<
-    Solvers,
-    std::conditional_t<Solvers::Parameters::advection &&
-                           Solvers::Parameters::diffusion,
-                       TransportParameters_AdvectionDiffusion,
-                       std::conditional_t<Solvers::Parameters::advection,
-                                          TransportParameters_Advection,
-                                          TransportParameters_Diffusion>>>;
-
-template <typename Solvers>
-using TransportHandler_Bcc = TransportHandler_LinearInterp<
-    Solvers,
-    std::conditional_t<Solvers::Parameters::advection &&
-                           Solvers::Parameters::diffusion,
-                       TransportParameters_AdvectionDiffusion_Bcc,
-                       std::conditional_t<Solvers::Parameters::advection,
-                                          TransportParameters_Advection_Bcc,
-                                          TransportParameters_Diffusion_Bcc>>>;
-
+};
 } // namespace ptof
 
 #endif /* PTOF_TRANSPORTHANDLER_H */

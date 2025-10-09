@@ -1194,8 +1194,8 @@ auto mass_absorbed(Subject const &subject, double time) {
 */
 template <typename Subject, typename Mask>
 auto mass(Subject const &subject, double time,
-          std::vector<std::reference_wrapper<const Mask>> masks,
-          std::vector<double> thresholds) {
+          std::vector<std::reference_wrapper<const Mask>> const &masks,
+          std::vector<double> const &thresholds) {
   std::vector<double> masses(masks.size(), 0.);
   for (auto const &part : subject) {
     auto const &state_old = part.state_old();
@@ -1203,7 +1203,7 @@ auto mass(Subject const &subject, double time,
       continue;
     }
     auto const &state_new = part.state_new();
-    if (outside(state_new.cell) && outside(state_old.cell)) {
+    if (outside(state_new.cell) || outside(state_old.cell)) {
       continue;
     }
     for (std::size_t ii = 0; ii < masks.size(); ++ii) {

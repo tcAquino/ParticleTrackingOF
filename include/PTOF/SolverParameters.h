@@ -14,6 +14,7 @@
 #include "PTOF/Steppers.h"
 #include "PTOF/TimeUnitsList.h"
 #include <ostream>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -28,6 +29,7 @@ struct SolverParameters_Generic {
       !std::is_same_v<Stepper_Diffusion, meta::Empty>;
 
   std::size_t nr_particles;
+  bool min_global_local;
   double local_time_step_adv = std::numeric_limits<double>::infinity();
   double local_time_step_diff = std::numeric_limits<double>::infinity();
   double local_time_step_react = std::numeric_limits<double>::infinity();
@@ -52,6 +54,23 @@ struct SolverParameters_Generic {
     io::read(split_line, param_index,
              in_file + "Could not parse number of particles", nr_particles);
 
+    std::string min_or_max_global_local;
+    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
+    param_index = 0;
+    io::read(split_line, param_index,
+             in_file + "Could not parse whether to use minimum or maximum of "
+                       "local and global time step constraints",
+             min_or_max_global_local);
+    std::string for_min_or_max_global_local =
+        std::string{"Minimum or maximum of local and global time step "
+                    "constraints option "} +
+        min_or_max_global_local + " : ";
+    if (min_or_max_global_local != "min" && min_or_max_global_local != "max") {
+      throw std::runtime_error{in_file + for_min_or_max_global_local +
+                               "Expected min or max"};
+    }
+    min_global_local = min_or_max_global_local == "min" ? true : false;
+
     split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
     if constexpr (advection && diffusion) {
@@ -70,8 +89,8 @@ struct SolverParameters_Generic {
     } else if constexpr (advection) {
       if (split_line.size() >= 2) {
         io::read(split_line, param_index,
-                 in_file + "Could not parse local advective and reactive "
-                           "time step accuracy",
+                 in_file + "Could not parse local advective and reactive time "
+                           "step accuracy",
                  local_time_step_adv, local_time_step_react);
       } else {
         io::read(split_line, param_index,
@@ -132,6 +151,8 @@ struct SolverParameters_Generic {
       }
     }
 
+    check_constraints(in_file);    
+
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
       param_index = 0;
@@ -149,6 +170,53 @@ struct SolverParameters_Generic {
     }
   }
 
+  void check_constraints(std::string const &in_file) {
+    if (!(local_time_step_adv >= 0. && local_time_step_diff >= 0. &&
+          local_time_step_react >= 0. && global_time_step_adv >= 0. &&
+          global_time_step_diff >= 0. && global_time_step_react >= 0.)) {
+      throw std::runtime_error{in_file +
+                               "Time step constraints should be non-negative"};
+    }
+
+    bool local_constraints_are_zero =
+        (local_time_step_adv == 0. || local_time_step_diff == 0. ||
+         local_time_step_react == 0.);
+    bool local_transport_constraints_are_inf =
+        (local_time_step_adv == std::numeric_limits<double>::infinity() &&
+         local_time_step_diff && std::numeric_limits<double>::infinity());
+
+    bool global_constraints_are_zero =
+        (global_time_step_adv == 0. || global_time_step_diff == 0. ||
+         global_time_step_react == 0.);
+    bool global_transport_constraints_are_inf =
+        (global_time_step_adv == std::numeric_limits<double>::infinity() &&
+         global_time_step_diff && std::numeric_limits<double>::infinity());
+
+    if (local_constraints_are_zero && global_constraints_are_zero) {
+      throw std::runtime_error{in_file +
+                               "Local and global transport-related time "
+                               "step constraints are zero"};
+    }
+    if (local_transport_constraints_are_inf &&
+        global_transport_constraints_are_inf) {
+      throw std::runtime_error{in_file +
+                               "All local and global transport-related time "
+                               "step constraints are infinite"};
+    }
+    if (min_global_local &&
+        (local_constraints_are_zero || global_constraints_are_zero)) {
+      throw std::runtime_error{
+          in_file + "Either local or global transport-related time "
+                    "step constraints are zero and minimum is required"};
+    }
+    if (!min_global_local && (local_transport_constraints_are_inf ||
+                              global_transport_constraints_are_inf)) {
+      throw std::runtime_error{
+          in_file + "Either all local or all global transport-related time "
+                    "step constraints are infinite and maximum is required"};
+    }
+  }
+
   /**
      \brief Output generic information about object.
      \param output Output stream.
@@ -158,32 +226,28 @@ struct SolverParameters_Generic {
         << io::line() << "Solver parameters\n"
         << io::line()
         << "- Number of Lagrangian particles in each injection step\n"
+           "- How to combine local and global time step constraints\n"
+           "  - min"
+           "    - Use minimum of local and global constraints"
+           "  - max"
+           "    - Use maximum of local and global constraints"
            "- Local time step accuracy:\n"
            "  (Note:\n"
-           "    - Minimum between processes is used\n"
            "    - Pass inf to deactivate specific constraints; pass at least\n"
-           "      one 0 to deactivate all global constraints\n"
-           "    - At least one local or one global constraint must be active)\n"
+           "      one 0 to deactivate all local constraints with maximum)\n"
            "  - Pass on same line:\n"
            "    - Time step accuracy with respect to local advection time\n"
-           "      (pass only if there is advection)\n"
            "    - Time step accuracy with respect to local diffusion time\n"
-           "      (pass only if there is diffusion)\n"
            "    - Time step accuracy with respect to local reaction time\n"
            "      (optional)\n"
            "- Global time step accuracy:\n"
            "  (Note:\n"
-           "    - Minimum between processes is used\n"
-           "    - Initial values (e.g., of flow) are used\n"
-           "    - Maximum between local and global is used\n"
+           "    - Initial values, e.g., of flow are used\n"
            "    - Pass inf to deactivate specific constraints; pass at least\n"
-           "      one 0 to deactivate all global constraints\n"
-           "    - At least one local or one global constraint must be active)\n"
+           "      one 0 to deactivate all global constraints with maximum)\n"
            "  - Pass on same line:\n"
            "    - Time step accuracy with respect to global advection time\n"
-           "      (pass only if there is advection)\n"
            "    - Time step accuracy with respect to global diffusion time\n"
-           "      (pass only if there is diffusion)\n"
            "    - Time step accuracy with respect to global reaction time\n"
            "      (optional)\n";
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {

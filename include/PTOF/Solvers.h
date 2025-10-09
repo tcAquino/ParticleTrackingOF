@@ -45,14 +45,14 @@ struct Solvers_Generic {
       "Currently only no advection, forward Euler, RK2, RK4, or Heun stepping "
       "are supported for advection");
   using Steppers_Transport = std::conditional_t<
-      std::is_same_v<Stepper_Advection, Steppers::Euler>,
-      Steppers_Advection_Euler_Diffusion_Euler,
+      std::is_same_v<Stepper_Advection, Steppers::Heun>,
+      Steppers_Advection_Heun_Diffusion_Euler,
       std::conditional_t<
           std::is_same_v<Stepper_Advection, Steppers::RK2>,
           Steppers_Advection_RK2_Diffusion_Euler,
           std::conditional_t<std::is_same_v<Stepper_Advection, Steppers::RK4>,
                              Steppers_Advection_RK4_Diffusion_Euler,
-                             Steppers_Advection_Heun_Diffusion_Euler>>>;
+                             Steppers_Advection_Euler_Diffusion_Euler>>>;
 
   /**
      \brief Output generic information about object.
@@ -100,18 +100,12 @@ struct Solvers_Generic {
   makeJumpGenerator(VelocityField &&velocity_field, Boundary &&boundary,
                     TransportParameters const &params_transport,
                     Parameters const &params_solvers, std::size_t dim) {
-    if constexpr (!std::is_same_v<std::remove_const_t<
-                                      std::remove_reference_t<VelocityField>>,
-                                  meta::Empty> &&
-                  Parameters::diffusion) {
+    if constexpr (Parameters::advection && Parameters::diffusion) {
       return Steppers_Transport::template makeJumpGenerator<ParallelOption>(
           std::forward<VelocityField>(velocity_field),
           std::forward<Boundary>(boundary), params_transport, params_solvers,
           dim);
-    } else if constexpr (!std::is_same_v<
-                             std::remove_const_t<
-                                 std::remove_reference_t<VelocityField>>,
-                             meta::Empty>) {
+    } else if constexpr (Parameters::advection) {
       return Steppers_Transport::template makeJumpGenerator_Advection<
           ParallelOption>(std::forward<VelocityField>(velocity_field),
                           std::forward<Boundary>(boundary), params_transport,

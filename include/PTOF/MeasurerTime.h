@@ -292,12 +292,9 @@ struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
                                         identifier,  precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(2 + std::string{"Position_abs_mean_"}.length()))} {
+            std::max(12, int(1 + std::string{"Position_abs_mean"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_abs_mean_" + std::to_string(dd);
-    }
+    _output << std::setw(_column_widths[1]) << "Position_abs_mean";
     _output << "\n";
   }
 
@@ -1607,12 +1604,9 @@ struct MeasurerTime_position_abs_mean_periodic final
         _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(2 + std::string{"Position_abs_mean_"}.length()))} {
+            std::max(12, int(1 + std::string{"Position_abs_mean"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_abs_mean_" + std::to_string(dd);
-    }
+    _output << std::setw(_column_widths[1]) << "Position_abs_mean";
     _output << "\n";
   }
 

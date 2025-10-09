@@ -338,13 +338,13 @@ struct Phase {
   template <typename VelocityField, typename PhaseField>
   class EffectiveVelocity {
   public:
-    using Point = Foam::point;                     /**> 3D point. */
-    using Point2D = Foam::Vector2D<Foam::scalar>;  /**> 2D point. */
-    using Vector = Foam::vector;                   /**> 3D vector. */
-    using Vector2D = Foam::Vector2D<Foam::scalar>; /**> 2D vector. */
-    using Scalar = Foam::scalar; /**> Scalar (also 1D point). */
-    using Index = Foam::label;   /**> Cell index. */
-    using Time = Foam::scalar;   /**> Time type. */
+    using Point = Foam::point;                     /**< 3D point. */
+    using Point2D = Foam::Vector2D<Foam::scalar>;  /**< 2D point. */
+    using Vector = Foam::vector;                   /**< 3D vector. */
+    using Vector2D = Foam::Vector2D<Foam::scalar>; /**< 2D vector. */
+    using Scalar = Foam::scalar; /**< Scalar (also 1D point). */
+    using Index = Foam::label;   /**< Cell index. */
+    using Time = Foam::scalar;   /**< Time type. */
 
     template <typename TransportParameters>
     EffectiveVelocity(VelocityField &&velocity_field,
@@ -534,6 +534,7 @@ struct Phase {
   private:
     VelocityField _velocity_field;
     PhaseField _carrier_phase_field;
+    double _diff_coeff;
     using DriftVelocityField = ptof::VectorField_Interpolation<
         Foam::volVectorField, decltype(_carrier_phase_field.locator()),
         InterpolationTypes::Cell, CheckOptions::Check>;

@@ -78,21 +78,22 @@ auto makeTransportTransitions(
    - \tparam TransportHandler Conservative transport information.
    - \tparam ReactionHandler Reaction information.
 */
-template <typename TransportHandler, typename ReactionHandler,
+template <typename TransportHandler, typename Solvers, typename ReactionHandler,
           typename VelocityField, typename Geometry, typename Boundary>
 auto makeTransitions(
     VelocityField const &velocity_field, Geometry const &geometry,
     Boundary &boundary,
     typename TransportHandler::Parameters const &params_transport,
     typename ReactionHandler::Parameters const &params_reaction,
-    typename TransportHandler::Solvers::Parameters const &params_solvers) {
+    typename Solvers::Parameters const &params_solvers) {
   return Transitions_Transport_Reaction{
-      TransportHandler::makeTransitions(velocity_field, geometry, boundary,
-                                        params_transport, params_reaction,
-                                        params_solvers),
-      boundary.surface_reaction,
+      TransportHandler::template makeTransitions<Solvers>(
+          velocity_field, geometry, boundary, params_transport, params_reaction,
+          params_solvers),
       ReactionHandler::makeBulkReaction(geometry, params_reaction,
-                                        params_transport, params_solvers)};
+                                        params_transport, params_solvers),
+      boundary.surface_reaction,
+  };
 }
 
 /**
@@ -101,19 +102,20 @@ auto makeTransitions(
    that must be explicitly specified:
    - \tparam TransportHandler Conservative transport information.
 */
-template <typename TransportHandler, typename VelocityField, typename Geometry,
-          typename Boundary, typename ReactionParameters, typename BulkReaction>
+template <typename TransportHandler, typename Solvers, typename VelocityField,
+          typename Geometry, typename Boundary, typename ReactionParameters,
+          typename BulkReaction>
 auto makeTransitions(
     VelocityField const &velocity_field, Geometry const &geometry,
     Boundary &boundary,
     typename TransportHandler::Parameters const &params_transport,
     ReactionParameters const &params_reaction,
-    typename TransportHandler::Solvers::Parameters const &params_solvers,
+    typename Solvers::Parameters const &params_solvers,
     BulkReaction &bulk_reaction) {
   return Transitions_Transport_Reaction{
-      TransportHandler::makeTransitions(velocity_field, geometry, boundary,
-                                        params_transport, params_reaction,
-                                        params_solvers),
+      TransportHandler::template makeTransitions<Solvers>(
+          velocity_field, geometry, boundary, params_transport, params_reaction,
+          params_solvers),
       bulk_reaction, boundary.surface_reaction};
 }
 } // namespace ptof
