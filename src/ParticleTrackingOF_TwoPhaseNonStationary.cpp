@@ -84,7 +84,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::periodic_cartesian_advection_diffusion_2d;
+  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
   using Phase = ptof::Phase;
   using Definitions = Model::Definitions<ParallelOption>;
 
@@ -204,9 +204,10 @@ int main(int argc, char *argv[]) {
             << "Setting up velocity interpolation..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field_base =
-      Definitions::TransportHandler::makeVelocityTimeInterpolator<Solvers>(
-          geometry, std::move(velocity_data_new), std::move(velocity_data_old),
-          next_flow_time.value(), start_time_value);
+      Definitions::TransportHandler::makeVelocityTimeInterpolator<
+          Definitions::Solvers>(geometry, std::move(velocity_data_new),
+                                std::move(velocity_data_old),
+                                next_flow_time.value(), start_time_value);
   std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -363,7 +364,7 @@ int main(int argc, char *argv[]) {
       {params_phase.phase_tolerance});
   output.info_runtime(std::cout);
   auto masks = std::vector{std::cref(carrier_phase_field)};
-  execution_end = std::chrono::high_resolution_clock::now();  
+  execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
   useful::display_duration(std::cout, execution_begin, execution_end);

@@ -32,10 +32,10 @@ struct SolverParameters_Generic {
   bool min_global_local;
   double local_time_step_adv = std::numeric_limits<double>::infinity();
   double local_time_step_diff = std::numeric_limits<double>::infinity();
-  double local_time_step_react = std::numeric_limits<double>::infinity();
+  double local_time_step_surf_react = std::numeric_limits<double>::infinity();
   double global_time_step_adv = std::numeric_limits<double>::infinity();
   double global_time_step_diff = std::numeric_limits<double>::infinity();
-  double global_time_step_react = std::numeric_limits<double>::infinity();
+  double global_time_step_surf_react = std::numeric_limits<double>::infinity();
   double ctrw_time_step = 0.;
 
   template <typename Geometry, typename TransportParameters,
@@ -43,7 +43,7 @@ struct SolverParameters_Generic {
   SolverParameters_Generic(
       Directories const &directories, std::string const &parameter_set_name,
       Geometry const &geometry, TransportParameters const &params_transport,
-      ReactionParameters const &params_reaction = meta::Empty{}) {
+      ReactionParameters const &params_surf_reaction = meta::Empty{}) {
     std::string filename = directories.dir_parameters + "/parameters_solvers_" +
                            parameter_set_name + ".dat";
     auto input = io::open_read(filename);
@@ -79,7 +79,7 @@ struct SolverParameters_Generic {
                  in_file + "Could not parse local advective, diffusive, and "
                            "reactive time step accuracy",
                  local_time_step_adv, local_time_step_diff,
-                 local_time_step_react);
+                 local_time_step_surf_react);
       } else {
         io::read(split_line, param_index,
                  in_file + "Could not parse local advective and diffusive time "
@@ -91,7 +91,7 @@ struct SolverParameters_Generic {
         io::read(split_line, param_index,
                  in_file + "Could not parse local advective and reactive time "
                            "step accuracy",
-                 local_time_step_adv, local_time_step_react);
+                 local_time_step_adv, local_time_step_surf_react);
       } else {
         io::read(split_line, param_index,
                  in_file + "Could not parse local advective time step accuracy",
@@ -102,7 +102,7 @@ struct SolverParameters_Generic {
         io::read(split_line, param_index,
                  in_file + "Could not parse local diffusive and reactive "
                            "time step accuracy",
-                 local_time_step_diff, local_time_step_react);
+                 local_time_step_diff, local_time_step_surf_react);
       } else {
         io::read(split_line, param_index,
                  in_file + "Could not parse local diffusive time step accuracy",
@@ -118,7 +118,7 @@ struct SolverParameters_Generic {
                  in_file + "Could not parse global advective, diffusive, and "
                            "reactive time step accuracy",
                  global_time_step_adv, global_time_step_diff,
-                 global_time_step_react);
+                 global_time_step_surf_react);
       } else {
         io::read(split_line, param_index,
                  in_file + "Could not parse global advective and diffusive "
@@ -130,7 +130,7 @@ struct SolverParameters_Generic {
         io::read(split_line, param_index,
                  in_file + "Could not parse global advective and reactive time "
                            "step accuracy",
-                 global_time_step_adv, global_time_step_react);
+                 global_time_step_adv, global_time_step_surf_react);
       } else {
         io::read(split_line, param_index,
                  in_file +
@@ -142,7 +142,7 @@ struct SolverParameters_Generic {
         io::read(split_line, param_index,
                  in_file + "Could not parse global diffusive and reactive time "
                            "step accuracy",
-                 global_time_step_diff, global_time_step_react);
+                 global_time_step_diff, global_time_step_surf_react);
       } else {
         io::read(split_line, param_index,
                  in_file +
@@ -151,7 +151,7 @@ struct SolverParameters_Generic {
       }
     }
 
-    check_constraints(in_file);    
+    check_constraints(in_file);
 
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
@@ -161,8 +161,8 @@ struct SolverParameters_Generic {
       if (!TimeUnitsList::contains(time_units)) {
         throw std::runtime_error{in_file + "Not supported"};
       }
-      double time_unit_factor =
-          ptof::time_unit_factor(time_units, params_transport, params_reaction);
+      double time_unit_factor = ptof::time_unit_factor(
+          time_units, params_transport, params_surf_reaction);
       io::read(split_line, param_index,
                in_file + "Could not parse time step for synchronizing CTRW",
                ctrw_time_step);
@@ -172,22 +172,22 @@ struct SolverParameters_Generic {
 
   void check_constraints(std::string const &in_file) {
     if (!(local_time_step_adv >= 0. && local_time_step_diff >= 0. &&
-          local_time_step_react >= 0. && global_time_step_adv >= 0. &&
-          global_time_step_diff >= 0. && global_time_step_react >= 0.)) {
+          local_time_step_surf_react >= 0. && global_time_step_adv >= 0. &&
+          global_time_step_diff >= 0. && global_time_step_surf_react >= 0.)) {
       throw std::runtime_error{in_file +
                                "Time step constraints should be non-negative"};
     }
 
     bool local_constraints_are_zero =
         (local_time_step_adv == 0. || local_time_step_diff == 0. ||
-         local_time_step_react == 0.);
+         local_time_step_surf_react == 0.);
     bool local_transport_constraints_are_inf =
         (local_time_step_adv == std::numeric_limits<double>::infinity() &&
          local_time_step_diff && std::numeric_limits<double>::infinity());
 
     bool global_constraints_are_zero =
         (global_time_step_adv == 0. || global_time_step_diff == 0. ||
-         global_time_step_react == 0.);
+         global_time_step_surf_react == 0.);
     bool global_transport_constraints_are_inf =
         (global_time_step_adv == std::numeric_limits<double>::infinity() &&
          global_time_step_diff && std::numeric_limits<double>::infinity());

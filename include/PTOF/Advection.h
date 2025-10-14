@@ -23,11 +23,11 @@ namespace ptof {
    a mesh, at a prescribed time.
    \return OpenFOAM velocity field data.
 */
-template <typename Mesh, bool empty = false>
+template <typename Mesh, bool advection = true>
 auto get_velocity_data(
     Mesh const &mesh, Foam::word const &timeName,
-    meta::Selector<bool, empty> = meta::Selector<bool, false>{}) {
-  if constexpr (!empty) {
+    meta::Selector<bool, advection> = meta::Selector<bool, true>{}) {
+  if constexpr (advection) {
     return Foam::volVectorField{Foam::IOobject{"U", timeName, mesh,
                                                Foam::IOobject::MUST_READ,
                                                Foam::IOobject::NO_WRITE},
@@ -42,11 +42,11 @@ auto get_velocity_data(
    a mesh, at a prescribed time.
    \return OpenFOAM velocity field data.
 */
-template <typename Mesh, bool empty = false>
-auto get_velocity_data(
-    Mesh const &mesh, Foam::scalar time,
-    meta::Selector<bool, empty> = meta::Selector<bool, false>{}) {
-  return get_velocity_data<Mesh, empty>(mesh, closest_time_name(mesh, time));
+template <typename Mesh, bool advection = true>
+auto get_velocity_data(Mesh const &mesh, Foam::scalar time,
+                       meta::Selector<bool, advection> get_velocity =
+                           meta::Selector<bool, true>{}) {
+  return get_velocity_data(mesh, closest_time_name(mesh, time), get_velocity);
 }
 
 /**
@@ -54,10 +54,11 @@ auto get_velocity_data(
    a mesh.
    \return OpenFOAM velocity field data.
 */
-template <typename Mesh, bool empty = false>
-auto get_velocity_data(Mesh const &mesh, meta::Selector<bool, empty> =
-                                             meta::Selector<bool, false>{}) {
-  return get_velocity_data(mesh, mesh.time().timeName());
+template <typename Mesh, bool advection = true>
+auto get_velocity_data(Mesh const &mesh,
+                       meta::Selector<bool, advection> get_velocity =
+                           meta::Selector<bool, true>{}) {
+  return get_velocity_data(mesh, mesh.time().timeName(), get_velocity);
 }
 
 /**
