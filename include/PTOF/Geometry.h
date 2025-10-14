@@ -357,8 +357,9 @@ struct Geometry_Periodic_Cartesian {
            << io::line() << "Cells: " << mesh().nCells() << "\n"
            << "Faces: " << mesh().nFaces() << "\n"
            << "Edges: " << mesh().nEdges() << "\n"
-           << io::line() << "\n"
-           << io::line()
+           << io::line();
+
+    output << io::line()
            << "Automatically extracted Cartesian periodic boundaries\n"
            << io::line();
     if (boundary_periodic.boundaries.size() == 0) {
@@ -373,6 +374,7 @@ struct Geometry_Periodic_Cartesian {
       }
     }
     output << io::line();
+
     return output;
   }
 

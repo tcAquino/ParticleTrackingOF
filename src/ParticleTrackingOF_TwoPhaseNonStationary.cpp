@@ -55,8 +55,9 @@ template <typename ParallelOption> struct ExecutableInfo {
               "- Output file identifier [Based on parameter set names]\n"
               "- Run number (nonnegative integer to index output) [None]\n";
     if constexpr (std::is_same_v<ParallelOption,
-                                 par::ParallelOptions::Parallel>)
+                                 par::ParallelOptions::Parallel>) {
       output << "- Number of parallel threads\n";
+    }
     output << io::line();
     return output;
   }
@@ -96,11 +97,10 @@ int main(int argc, char *argv[]) {
                             Definitions::Solvers::Stepper_CTRW>>;
 
   std::cout << std::setprecision(2) << std::scientific;
-  std::cout << ExecutableInfo<ParallelOption>::banner() << "\n";
+  std::cout << ExecutableInfo<ParallelOption>::banner();
   Model::info(std::cout);
   if (!advection) {
     std::cout
-        << "\n"
         << io::line()
         << "Note: Turning on advection with forward Euler stepping to apply\n"
            "      chemical potential at phase interface\n"
@@ -138,17 +138,14 @@ int main(int argc, char *argv[]) {
               << io::line();
   }
   if (!io::is_empty(run_nr)) {
-    std::cout << "\n"
-              << io::line() << "Run number: " << std::stoul(run_nr) << "\n"
+    std::cout << io::line() << "Run number: " << std::stoul(run_nr) << "\n"
               << io::line();
   }
 
   ptof::Directories directories{dir, case_name, dir_output};
-  std::cout << "\n";
   directories.info_runtime(std::cout);
 
   ptof::DirectoriesOF directories_of{directories};
-  std::cout << "\n";
   directories_of.info_runtime(std::cout);
 
   std::cout << "\n"

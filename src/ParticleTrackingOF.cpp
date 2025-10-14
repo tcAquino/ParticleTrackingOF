@@ -46,8 +46,10 @@ template <typename ParallelOption> struct ExecutableInfo {
               "- Output directory [<Case directory>/output]\n"
               "- Output file identifier [Based on parameter set names]\n"
               "- Run number (nonnegative integer to index output) [None]\n";
-    if constexpr (!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>)
+    if constexpr (!std::is_same_v<ParallelOption,
+                                  par::ParallelOptions::Serial>) {
       output << "- Number of parallel threads\n";
+    }
     output << io::line();
     return output;
   }
@@ -76,7 +78,7 @@ int main(int argc, char *argv[]) {
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;
-  std::cout << ExecutableInfo<ParallelOption>::banner() << "\n";
+  std::cout << ExecutableInfo<ParallelOption>::banner();
   Model::info(std::cout);
 
   if (ptof::options_help<
@@ -104,30 +106,20 @@ int main(int argc, char *argv[]) {
   std::string run_nr = argv[arg++];
   if constexpr (!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>) {
     omp_set_num_threads(atoi(argv[arg++]));
-    std::cout
-        << "\n"
-        << "--------------------------------------------------------------\n"
-           "Number of threads: "
-        << par::get_num_threads(ParallelOption{})
-        << "\n"
-           "--------------------------------------------------------------\n";
+    std::cout << io::line()
+              << "Number of threads: " << par::get_num_threads(ParallelOption{})
+              << "\n"
+              << io::line();
   }
   if (!io::is_empty(run_nr)) {
-    std::cout
-        << "\n"
-        << "--------------------------------------------------------------\n"
-           "Run number: "
-        << std::stoul(run_nr)
-        << "\n"
-           "--------------------------------------------------------------\n";
+    std::cout << io::line() << "Run number: " << std::stoul(run_nr) << "\n"
+              << io::line();
   }
 
   ptof::Directories directories{dir, case_name, dir_output};
-  std::cout << "\n";
   directories.info_runtime(std::cout);
 
   ptof::DirectoriesOF directories_of{directories};
-  std::cout << "\n";
   directories_of.info_runtime(std::cout);
 
   std::cout << "\n"
