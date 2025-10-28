@@ -11,10 +11,9 @@
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "PTOF/Advection.h"
+#include "PTOF/Field.h"
 #include "PTOF/Transitions.h"
-#include "PTOF/TransportParameters.h"
 #include <memory>
-#include <type_traits>
 #include <utility>
 
 namespace ptof {
@@ -47,20 +46,22 @@ template <typename Parameters_t> struct TransportHandler_LinearInterp {
     }
   }
 
-  template <typename Solvers, typename Geometry, typename VelocityData>
+  template <typename Solvers, typename Geometry, typename VelocityData,
+            typename InterpolationType = InterpolationTypes::Linear>
   static auto makeVelocityTimeInterpolator(Geometry const &geometry,
                                            VelocityData &&velocity_data_new,
                                            VelocityData &&velocity_data_old,
-                                           double time_new, double time_old) {
+                                           double time_new, double time_old,
+                                           InterpolationType = {}) {
     if constexpr (Solvers::Parameters::advection) {
       using Type = decltype(makeVelocityInterpolator<Solvers>(
           geometry, std::forward<VelocityData>(velocity_data_new)));
-      return ptof::Field_TimeInterpolation{
+      return Field_TimeInterpolation{
           std::unique_ptr<Type>{new Type{makeVelocityInterpolator<Solvers>(
               geometry, std::forward<VelocityData>(velocity_data_new))}},
           std::unique_ptr<Type>{new Type{makeVelocityInterpolator<Solvers>(
               geometry, std::forward<VelocityData>(velocity_data_old))}},
-          time_new, time_old};
+          time_new, time_old, InterpolationType{}};
     } else {
       return meta::Empty{};
     }

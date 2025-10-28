@@ -137,8 +137,7 @@ struct Geometry_Generic {
           locator,
           std::forward<VelocityField>(velocity_field),
           Boundary_DoNothing{},
-          Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
-                            locator}};
+          Boundary_Reinject{std::forward<InitialCondition>(initial_condition)}};
     }
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              DynamicsList::name(dynamics) + " not supported"};
@@ -305,7 +304,7 @@ struct Geometry_Periodic_Cartesian {
           boundary_conditions,
           locator,
           std::forward<VelocityField>(velocity_field),
-          Boundary_DoNothing{},
+          Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     }
@@ -315,9 +314,8 @@ struct Geometry_Periodic_Cartesian {
           boundary_conditions,
           locator,
           std::forward<VelocityField>(velocity_field),
-          Boundary_DoNothing{},
-          Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
-                            locator}};
+          Boundary_Periodic{boundary_periodic, locator},
+          Boundary_Reinject{std::forward<InitialCondition>(initial_condition)}};
     }
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              DynamicsList::name(dynamics) + " not supported"};
@@ -519,7 +517,7 @@ struct Geometry_Bcc {
           boundary_conditions,
           locator,
           std::forward<VelocityField>(velocity_field),
-          Boundary_DoNothing{},
+          Boundary_Periodic{boundary_periodic, locator},
           Boundary_DoNothing{},
           std::forward<SurfaceReaction>(surface_reaction)};
     }
@@ -529,9 +527,8 @@ struct Geometry_Bcc {
           boundary_conditions,
           locator,
           std::forward<VelocityField>(velocity_field),
-          Boundary_DoNothing{},
-          Boundary_Reinject{std::forward<InitialCondition>(initial_condition),
-                            locator}};
+          Boundary_Periodic{boundary_periodic, locator},
+          Boundary_Reinject{std::forward<InitialCondition>(initial_condition)}};
     }
     throw std::runtime_error{std::string{"Boundary conditions for "} +
                              DynamicsList::name(dynamics) + " not supported"};

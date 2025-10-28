@@ -34,21 +34,23 @@ namespace ctrw {
    \class TimeGenerator_Step CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
    \brief Deterministic time step.
 */
-template <typename val_type = double> class TimeGenerator_Step {
-  val_type _time_step;
+template <typename ParallelOption = par::ParallelOptions::Serial,
+          typename val_type = double>
+class TimeGenerator_Step {
+  par::Threaded<double, ParallelOption> _time_step; /**< Time step. */
 
 public:
   using value_type = val_type;
 
   TimeGenerator_Step(value_type time_step = 0.) : _time_step{time_step} {}
 
-  void time_step(value_type time_step) { _time_step = time_step; }
+  void time_step(value_type time_step) { _time_step() = time_step; }
 
-  value_type time_step() const { return _time_step; }
+  value_type time_step() const { return _time_step(); }
 
   template <typename State = meta::Empty>
   value_type operator()(State const & = {}) {
-    return _time_step;
+    return _time_step();
   }
 };
 

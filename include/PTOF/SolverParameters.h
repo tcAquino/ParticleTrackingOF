@@ -17,7 +17,6 @@
 #include <stdexcept>
 #include <string>
 #include <type_traits>
-#include <utility>
 
 namespace ptof {
 template <typename Stepper_Advection, typename Stepper_Diffusion,
@@ -227,10 +226,10 @@ struct SolverParameters_Generic {
         << io::line()
         << "- Number of Lagrangian particles in each injection step\n"
            "- How to combine local and global time step constraints\n"
-           "  - min"
-           "    - Use minimum of local and global constraints"
-           "  - max"
-           "    - Use maximum of local and global constraints"
+           "  - min\n"
+           "    - Use minimum of local and global constraints\n"
+           "  - max\n"
+           "    - Use maximum of local and global constraints\n"
            "- Local time step accuracy:\n"
            "  (Note:\n"
            "    - Pass inf to deactivate specific constraints; pass at least\n"

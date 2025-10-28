@@ -2,7 +2,6 @@
 //  ParticleTrackingOF_TwoPhaseNonStationary.cpp
 //  PTOF
 //
-//  Created by Tomas Aquino on 07/02/2024.
 //
 
 #include "General/IO.h"
@@ -21,12 +20,10 @@
 #include <algorithm>
 #include <chrono>
 #include <cstddef>
-#include <exception>
 #include <fvcGrad.H>
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <memory>
 #include <string>
 #include <type_traits>
 
@@ -85,13 +82,21 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
-  using Phase = ptof::Phase;
+  using Model = ptof::Model::advection_diffusion_2d;
+  using ChemicalPotentialModel = ptof::ChemicalPotentialModels::None;
+  using TimeInterpolationType = ptof::InterpolationTypes::OldTime;
+  constexpr bool chemical_potential =
+      !std::is_same_v<ChemicalPotentialModel,
+                      ptof::ChemicalPotentialModels::None>;
+  constexpr bool hard_reflection = !chemical_potential;
+  using Phase = ptof::Phase<ChemicalPotentialModel, TimeInterpolationType,
+                            hard_reflection>;
   using Definitions = Model::Definitions<ParallelOption>;
 
   constexpr bool advection = Definitions::Solvers::Parameters::advection;
+  std::cout << "OLA " << advection << std::endl;
   using Solvers = std::conditional_t<
-      advection, Definitions::Solvers,
+      advection || chemical_potential, Definitions::Solvers,
       ptof::Solvers_Generic<ptof::Steppers::Euler,
                             Definitions::Solvers::Stepper_Diffusion,
                             Definitions::Solvers::Stepper_CTRW>>;
@@ -99,7 +104,7 @@ int main(int argc, char *argv[]) {
   std::cout << std::setprecision(2) << std::scientific;
   std::cout << ExecutableInfo<ParallelOption>::banner();
   Model::info(std::cout);
-  if (!advection) {
+  if (!advection && chemical_potential) {
     std::cout
         << io::line()
         << "Note: Turning on advection with forward Euler stepping to apply\n"
@@ -202,9 +207,9 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   auto velocity_field_base =
       Definitions::TransportHandler::makeVelocityTimeInterpolator<
-          Definitions::Solvers>(geometry, std::move(velocity_data_new),
-                                std::move(velocity_data_old),
-                                next_flow_time.value(), start_time_value);
+          Definitions::Solvers>(
+          geometry, std::move(velocity_data_new), std::move(velocity_data_old),
+          next_flow_time.value(), start_time_value, TimeInterpolationType{});
   std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -235,8 +240,8 @@ int main(int argc, char *argv[]) {
               : start_time_name,
           params_phase),
       next_flow_time.value(), start_time_value);
-  auto velocity_field = Phase::EffectiveVelocity(
-      velocity_field_base, carrier_phase_field, params_transport, params_phase);
+  auto velocity_field = Phase::EffectiveVelocity{
+      velocity_field_base, carrier_phase_field, params_transport, params_phase};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -312,6 +317,9 @@ int main(int argc, char *argv[]) {
       directories, params_transport, params_reaction, params_solvers,
       velocity_field, surface_reaction, initial_condition);
   boundary.info_runtime(std::cout);
+  auto boundary_plus_optional_hard_interface =
+      Phase::BoundaryPlusOptionalHardInterface(boundary, carrier_phase_field,
+                                               velocity_field, params_phase);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -324,8 +332,8 @@ int main(int argc, char *argv[]) {
   Definitions::CTRW ctrw{initial_condition()};
   auto transitions =
       ptof::makeTransitions<Definitions::TransportHandler, Solvers>(
-          velocity_field, geometry, boundary, params_transport, params_reaction,
-          params_solvers, bulk_reaction);
+          velocity_field, geometry, boundary_plus_optional_hard_interface,
+          params_transport, params_reaction, params_solvers, bulk_reaction);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
@@ -396,12 +404,12 @@ int main(int argc, char *argv[]) {
     if (fields_need_update) {
       std::cout << "Field updates required...\n";
       ptof::info_time(std::cout, params_output, current_time);
-      velocity_field.update(geometry,
-                            next_flow_time.value() <
-                                    std::numeric_limits<double>::infinity()
-                                ? next_flow_time
-                                : flow_times[next_time_index - 1],
-                            params_transport, params_phase);
+      Phase::update_effective_velocity_and_phase_field(
+          velocity_field, carrier_phase_field,
+          next_flow_time.value() < std::numeric_limits<double>::infinity()
+              ? next_flow_time
+              : flow_times[next_time_index - 1],
+          params_transport, params_phase);
       output.update(current_time, flow_times[next_time_index - 1],
                     next_flow_time.value() <
                             std::numeric_limits<double>::infinity()

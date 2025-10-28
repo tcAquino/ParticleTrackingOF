@@ -65,22 +65,6 @@ auto uniform_solid_reactant(
 }
 
 /**
-   \param position Spatial position.
-   \param locator Object to locate positions in mesh.
-   \return Pair of nearest boundary face index and distance to it.
-*/
-template <typename Locator>
-std::pair<Foam::label, double>
-nearest_boundary_face_dist(Foam::vector const &position,
-                           Locator const &locator) {
-  auto const &mesh = locator.mesh();
-  // Do not use hint because this can get stuck in local minima
-  auto face_id = locator.mesh_search().findNearestBoundaryFace(position);
-  auto dist = Foam::mag(position - mesh.faces()[face_id].centre(mesh.points()));
-  return {face_id, dist};
-}
-
-/**
    \class SurfaceReaction_AFluidPlusASolidtoASolid PTOF/SurfaceReaction.h
    "PTOF/SurfaceReaction.h"
    \brief \f$A_F + A_S \to A_S\f$ surface reaction.

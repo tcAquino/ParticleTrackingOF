@@ -16,8 +16,6 @@
 #include "General/Useful.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Meta.h"
-#include "scalar.H"
-#include "scalarField.H"
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <iostream>
@@ -1376,6 +1374,32 @@ auto interpolate_position(State const &state_new, State const &state_old,
 }
 
 /**
+   \param position Spatial position.
+   \param locator Object to locate positions in mesh.
+   \return Nearest boundary face index.
+*/
+template <typename Position, typename Locator>
+auto nearest_boundary_face(Position const &position, Locator const &locator) {
+  // Do not use hint because this can get stuck in local minima
+  return locator.mesh_search().findNearestBoundaryFace(make_point(position));
+}
+
+/**
+   \param position Spatial position.
+   \param locator Object to locate positions in mesh.
+   \return Pair of nearest boundary face index and distance to it.
+*/
+template <typename Locator>
+std::pair<Foam::label, double>
+nearest_boundary_face_dist(Foam::vector const &position,
+                           Locator const &locator) {
+  auto const &mesh = locator.mesh();
+  auto face_id = nearest_boundary_face(position, locator);
+  auto dist = Foam::mag(position - mesh.faces()[face_id].centre(mesh.points()));
+  return {face_id, dist};
+}
+
+/**
    \brief Interpolate position between two particle states.
    \details Linearly interpolates between the two state positions according to
    \c time and state times. If interpolated position would be outside mesh, use
@@ -1613,8 +1637,21 @@ auto closest_time_index(Mesh const &mesh, Foam::scalar time) {
   return closest_time_index(mesh.time().times(), time);
 }
 
+auto closest_instant(Foam::instantList const &flow_times, Foam::scalar time) {
+  return flow_times[closest_time_index(flow_times, time)];
+}
+
+auto closest_instant(DirectoriesOF const &directories_of, Foam::scalar time) {
+  return closest_instant(directories_of.time.times(), time);
+}
+
+template <typename Mesh>
+auto closest_instant(Mesh const &mesh, Foam::scalar time) {
+  return closest_instant(mesh.time().times(), time);
+}
+
 auto closest_time(Foam::instantList const &flow_times, Foam::scalar time) {
-  return flow_times[closest_time_index(flow_times, time)].value();
+  return closest_instant(flow_times, time).value();
 }
 
 auto closest_time(DirectoriesOF const &directories_of, Foam::scalar time) {
@@ -1657,6 +1694,46 @@ auto evaluate_boundary_field(Field const &field, Foam::label patch_id,
     return field.boundaryField()[patch_id][face_id];
   } else {
     return field.boundaryField(patch_id, face_id, time);
+  }
+}
+
+/**
+   \brief Compute magnitude of average of volumetric field (set of values
+   associated with mesh cells).
+*/
+template <typename Field, typename Mesh>
+auto magnitude_of_average(Field &field, Mesh const &mesh) {
+  Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
+  auto average_weighted_data = Foam::sum(field * mesh.cellVolumes());
+  return Foam::mag(average_weighted_data) / mesh_volume;
+}
+
+/**
+   \brief Rescale field by a given factor, including boundary values if
+   applicable.
+*/
+template <typename Field>
+bool rescale(Field &field, Foam::scalar rescaling_factor) {
+  if constexpr (!std::is_same_v<Field, meta::Empty>) {
+    if (rescaling_factor != 1.) {
+      field *= rescaling_factor;
+      if constexpr (meta::has_boundaryField_v<useful::remove_cvref_t<Field>>) {
+        field.boundaryFieldRef() == (rescaling_factor * field.boundaryField());
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+   \brief Rescale a volumetric field (set of values associated with mesh cells)
+   to a given average value.
+*/
+template <typename Field, typename Mesh>
+void rescale_to_average(Field &field, Mesh const &mesh, double average) {
+  if constexpr (!std::is_same_v<Field, meta::Empty>) {
+    field *= average / magnitude_of_average(field, mesh);
   }
 }
 } // namespace ptof

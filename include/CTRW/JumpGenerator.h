@@ -32,11 +32,8 @@
 #include "General/Parallel.h"
 #include "Geometry/Boundary.h"
 #include "Stochastic/Random.h"
-#include <algorithm>
 #include <cmath>
-#include <iterator>
 #include <random>
-#include <type_traits>
 #include <utility>
 
 namespace ctrw {
@@ -76,8 +73,8 @@ public:
   */
   JumpGenerator_Add(JumpGenerator_1 jump_generator_1,
                     JumpGenerator_2 jump_generator_2)
-      : _jump_generator_1{jump_generator_1}, _jump_generator_2{
-                                                 jump_generator_2} {}
+      : _jump_generator_1{jump_generator_1},
+        _jump_generator_2{jump_generator_2} {}
 
   /**
      \param state Particle state (unused).
@@ -142,7 +139,7 @@ public:
      \return Jump increment.
   */
   template <typename State> auto operator()(State const &state) {
-    return op::times_scalar(_time_step(), velocity(state));
+    return op::times_scalar(time_step(), velocity(state));
   }
 
   /**
@@ -209,12 +206,12 @@ public:
   */
   template <typename State> auto operator()(State const &state) {
     auto state_intermediate = state;
-    op::linearop(_time_step() / 2., velocity(state), state.position,
+    op::linearop(time_step() / 2., velocity(state), state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
-    state_intermediate.time += _time_step() / 2.;
+    state_intermediate.time += time_step() / 2.;
 
-    return op::times_scalar(_time_step(), velocity(state_intermediate));
+    return op::times_scalar(time_step(), velocity(state_intermediate));
   }
 
   /**
@@ -288,18 +285,18 @@ public:
     auto state_intermediate = state;
 
     auto k1 = velocity(state);
-    op::linearop(_time_step() / 2., k1, state.position,
+    op::linearop(time_step() / 2., k1, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
     state_intermediate.time += time_step() / 2.;
 
     auto k2 = velocity(state_intermediate);
-    op::linearop(_time_step() / 2., k2, state.position,
+    op::linearop(time_step() / 2., k2, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
 
     auto k3 = velocity(state_intermediate);
-    op::linearop(_time_step(), k3, state.position, state_intermediate.position);
+    op::linearop(time_step(), k3, state.position, state_intermediate.position);
     _boundary(state_intermediate, state);
     state_intermediate.time += time_step() / 2.;
 
@@ -308,7 +305,7 @@ public:
     auto jump = op::plus(k1, k4);
     op::linearop(2., k2, jump, jump);
     op::linearop(2., k3, jump, jump);
-    op::times_scalar_inplace(_time_step() / 6., jump);
+    op::times_scalar_inplace(time_step() / 6., jump);
 
     return jump;
   }
@@ -384,12 +381,12 @@ public:
     auto state_intermediate = state;
 
     auto vel_state = velocity(state);
-    op::linearop(_time_step(), vel_state, state.position,
+    op::linearop(time_step(), vel_state, state.position,
                  state_intermediate.position);
     _boundary(state_intermediate, state);
-    state_intermediate.time += _time_step();
+    state_intermediate.time += time_step();
 
-    return op::times_scalar(_time_step() / 2.,
+    return op::times_scalar(time_step() / 2.,
                             op::plus(vel_state, velocity(state_intermediate)));
   }
 
@@ -433,7 +430,7 @@ class JumpGenerator_Diffusion_1d {
   double _diff_coeff; /**< Diffusion coefficient.*/
 
   par::Threaded<double, ParallelOption> _diff_aux{
-      std::sqrt(2. * _diff_coeff * _time_step())}; /**< Typical jump size. */
+      std::sqrt(2. * _diff_coeff * time_step())}; /**< Typical jump size. */
   stochastic::RNGThreaded<ParallelOption, RNGEngine> _rng{
       std::random_device{}()}; /**< Random number generator. */
   std::normal_distribution<double> _normal_dist{
@@ -455,13 +452,13 @@ public:
   /** \param time_step Time step to set. */
   void time_step(double time_step) {
     _time_step() = time_step;
-    _diff_aux() = std::sqrt(2. * _diff_coeff * _time_step());
+    _diff_aux() = std::sqrt(2. * _diff_coeff * time_step);
   }
 
   /** \param diff_coeff Diffusion coefficient to set. */
   void diff_coeff(double diff_coeff) {
     _diff_coeff = diff_coeff;
-    _diff_aux() = std::sqrt(2. * _diff_coeff * _time_step());
+    _diff_aux() = std::sqrt(2. * _diff_coeff * time_step());
   }
 
   /** \return Time step. */

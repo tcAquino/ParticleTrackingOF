@@ -26,7 +26,6 @@ public:
   double peclet;
   double mean_velocity;
   double velocity_rescaling_factor;
-  bool time_dependent_bcs{false};
 
   template <typename Geometry, typename VelocityData>
   TransportParameters_AdvectionDiffusion(Directories const &directories,
@@ -91,15 +90,6 @@ public:
                peclet);
     } else {
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
-    }
-
-    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
-    if (!split_line.empty()) {
-      param_index = 0;
-      io::read(split_line, param_index,
-               in_file + "Could not parse whether boundary conditions are time "
-                         "dependent",
-               time_dependent_bcs);
     }
 
     rescale(velocity_data, geometry.mesh(), in_file + for_peclet_option);
@@ -186,8 +176,6 @@ public:
            "      - Advection time, based on absolute value of mean\n"
            "        velocity vector\n"
            "      - Diffusion coefficient\n"
-           "- Whether boundary conditions are time-dependent (only used for\n"
-           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -203,7 +191,6 @@ public:
   const double peclet{std::numeric_limits<double>::infinity()};
   double mean_velocity;
   double velocity_rescaling_factor;
-  bool time_dependent_bcs{false};
 
   template <typename Geometry, typename VelocityData>
   TransportParameters_Advection(Directories const &directories,
@@ -246,15 +233,6 @@ public:
     } else {
       throw std::runtime_error{in_file + for_rescale_velocity_option +
                                "Not supported"};
-    }
-
-    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
-    if (!split_line.empty()) {
-      param_index = 0;
-      io::read(split_line, param_index,
-               in_file + "Could not parse whether boundary conditions are time "
-                         "dependent",
-               time_dependent_bcs);
     }
 
     rescale(velocity_data, geometry.mesh(),
@@ -310,8 +288,6 @@ public:
            "        velocity vector\n"
            "  - no_rescale_velocity\n"
            "    - Do not rescale\n"
-           "- Whether boundary conditions are time-dependent (only used for\n"
-           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -322,7 +298,6 @@ public:
   double lengthscale;
   double diff_coeff;
   double diffusion_time;
-  bool time_dependent_bcs{false};
   const double advection_time{std::numeric_limits<double>::infinity()};
   const double peclet{0.};
   const double mean_velocity{0.};
@@ -367,15 +342,6 @@ public:
       throw std::runtime_error{in_file + for_diffusion_option +
                                "Not supported"};
     }
-
-    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
-    if (!split_line.empty()) {
-      param_index = 0;
-      io::read(split_line, param_index,
-               in_file + "Could not parse whether boundary conditions are time "
-                         "dependent",
-               time_dependent_bcs);
-    }
   }
 
   /**
@@ -383,25 +349,22 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Transport parameters\n"
-        << io::line()
-        << "(Note:\n"
-           "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
-           "    [diffusion coefficient]))\n"
-           "- Reference lengthscale\n"
-           "- How to set the diffusion coefficient:\n"
-           "  - set_value\n"
-           "    - Set given value\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion coefficient\n"
-           "  - compute_from_diffusion_time\n"
-           "    - Compute from given diffusion time\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion time\n"
-           "- Whether boundary conditions are time-dependent (only used for\n"
-           "  time-dependent simulations) [false]\n"
-        << io::line();
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "(Note:\n"
+              "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
+              "    [diffusion coefficient]))\n"
+              "- Reference lengthscale\n"
+              "- How to set the diffusion coefficient:\n"
+              "  - set_value\n"
+              "    - Set given value\n"
+              "    - Pass on same line:\n"
+              "      - Diffusion coefficient\n"
+              "  - compute_from_diffusion_time\n"
+              "    - Compute from given diffusion time\n"
+              "    - Pass on same line:\n"
+              "      - Diffusion time\n"
+           << io::line();
     return output;
   }
 };
@@ -419,7 +382,6 @@ public:
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
   double advection_time;
-  bool time_dependent_bcs{false};
 
   template <typename Geometry, typename VelocityData>
   TransportParameters_AdvectionDiffusion_Bcc(
@@ -507,15 +469,6 @@ public:
                peclet);
     } else {
       throw std::runtime_error{in_file + for_peclet_option + "Not supported"};
-    }
-
-    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
-    if (!split_line.empty()) {
-      param_index = 0;
-      io::read(split_line, param_index,
-               in_file + "Could not parse whether boundary conditions are time "
-                         "dependent",
-               time_dependent_bcs);
     }
 
     rescale(velocity_data, geometry.mesh(), in_file + for_peclet_option);
@@ -612,8 +565,6 @@ public:
            "      - Advection time, based on absolute value of mean\n"
            "        velocity vector\n"
            "      - Diffusion coefficient\n"
-           "- Whether boundary conditions are time-dependent (only used for\n"
-           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -632,7 +583,6 @@ public:
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
   double advection_time;
-  bool time_dependent_bcs{false};
 
   template <typename Geometry, typename VelocityData>
   TransportParameters_Advection_Bcc(Directories const &directories,
@@ -700,15 +650,6 @@ public:
                                "Not supported"};
     }
 
-    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
-    if (!split_line.empty()) {
-      param_index = 0;
-      io::read(split_line, param_index,
-               in_file + "Could not parse whether boundary conditions are time "
-                         "dependent",
-               time_dependent_bcs);
-    }
-
     rescale(velocity_data, geometry.mesh(),
             in_file + for_rescale_velocity_option);
   }
@@ -772,8 +713,6 @@ public:
            "        velocity vector\n"
            "  - no_rescale_velocity\n"
            "    - Do not rescale\n"
-           "- Whether boundary conditions are time-dependent (only used for\n"
-           "  time-dependent simulations) [false]\n"
         << io::line();
     return output;
   }
@@ -787,7 +726,6 @@ public:
   double diffusion_time;
   double cell_side;
   std::vector<std::pair<double, double>> primitive_cell_boundaries;
-  bool time_dependent_bcs{false};
   const double peclet{0.};
   const double mean_velocity{0.};
   const double velocity_rescaling_factor{1.};
@@ -854,15 +792,6 @@ public:
       throw std::runtime_error{in_file + for_diffusion_option +
                                "Not supported"};
     }
-
-    split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
-    if (!split_line.empty()) {
-      param_index = 0;
-      io::read(split_line, param_index,
-               in_file + "Could not parse whether boundary conditions are time "
-                         "dependent",
-               time_dependent_bcs);
-    }
   }
 
   /**
@@ -870,35 +799,32 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Transport parameters\n"
-        << io::line()
-        << "(Note:\n"
-           "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
-           "    [diffusion coefficient]))\n"
-           "- How to set the reference lengthscale:\n"
-           "  - radius\n"
-           "    - Equal to bead radius\n"
-           "  - diameter\n"
-           "    - Equal to bead diameter\n"
-           "  - cell_side\n"
-           "    - Equal to primitive cell side\n"
-           "  - custom\n"
-           "    - Equal to specified value\n"
-           "    - Pass on same line:\n"
-           "      - Reference lengthscale value\n"
-           "- How to set the diffusion coefficient:\n"
-           "  - set_value\n"
-           "    - Set given value\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion coefficient\n"
-           "  - compute_from_diffusion_time\n"
-           "    - Compute from given diffusion time\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion time\n"
-           "- Whether boundary conditions are time-dependent (only used for\n"
-           "  time-dependent simulations) [false]\n"
-        << io::line();
+    output << io::line() << "Transport parameters\n"
+           << io::line()
+           << "(Note:\n"
+              "  - Diffusion time is defined as [lenghscale]^2 / (2 *\n"
+              "    [diffusion coefficient]))\n"
+              "- How to set the reference lengthscale:\n"
+              "  - radius\n"
+              "    - Equal to bead radius\n"
+              "  - diameter\n"
+              "    - Equal to bead diameter\n"
+              "  - cell_side\n"
+              "    - Equal to primitive cell side\n"
+              "  - custom\n"
+              "    - Equal to specified value\n"
+              "    - Pass on same line:\n"
+              "      - Reference lengthscale value\n"
+              "- How to set the diffusion coefficient:\n"
+              "  - set_value\n"
+              "    - Set given value\n"
+              "    - Pass on same line:\n"
+              "      - Diffusion coefficient\n"
+              "  - compute_from_diffusion_time\n"
+              "    - Compute from given diffusion time\n"
+              "    - Pass on same line:\n"
+              "      - Diffusion time\n"
+           << io::line();
     return output;
   }
 };

@@ -56,6 +56,13 @@ public:
   const BCs
       boundary_conditions; /**< Patch names and associated bc type names. */
 
+  struct CollisionInfo {
+    Intersection intersection{};
+    double time{};
+
+    operator bool() const { return intersection.hit(); }
+  };
+
   /**
      \brief Constructor
      \param boundary_conditions Patch names and associated boundary condition
@@ -122,13 +129,19 @@ public:
      \param state_old Previous particle state (should be in bounds).
      \return \c true if some boundary had an effect, \c false otherwise.
   */
-  bool operator()(State &state, State const &state_old) {
+  auto operator()(State &state, State const &state_old) {
     // Note: The code flow is chosen to avoid trying to locate particles which
     // are outside as much as possible, because it is expensive
 
     // Find first intersection with boundary patch.
     auto intersection = _locator.mesh_search().intersection(
         make_point(state_old.position), make_point(state.position));
+
+    double jump_duration = state.time - state_old.time;
+    double displacement =
+        op::abs(op::minus(state.position, state_old.position));
+    double average_velocity =
+        displacement > 0. ? displacement / jump_duration : 0.;
 
     // When the start point is on a cell face,
     // sometimes the intersection with it is not found, and sometimes it is
@@ -148,7 +161,7 @@ public:
         if (!intersection.hit()) {
           state.cell = _locator.nearest_cell(state.position);
           state.set_position(cell_center(state.cell, _locator.mesh()));
-          return true;
+          return CollisionInfo{};
         }
       }
     } else if (((make_point(state.position) - intersection.point()) &
@@ -175,11 +188,13 @@ public:
       if (!intersection.hit() && outside(_locator(state))) {
         state.cell = _locator.nearest_cell(state.position);
         state.set_position(cell_center(state.cell, _locator.mesh()));
-        return true;
+        return CollisionInfo{};
       }
     }
 
-    bool had_effect = false;
+    auto old_intersection = intersection;
+    old_intersection.setPoint(make_point(state_old.position));
+    double collision_time = state_old.time;
 
     // While some patch is intersected
     while (intersection.hit()) {
@@ -194,7 +209,8 @@ public:
                             reflection_normal(intersection.index()));
         info<BoundaryConditionList::Type::reflecting>(state, state_old,
                                                       intersection);
-        had_effect = true;
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::reacting: {
@@ -204,7 +220,8 @@ public:
             state.set_position(intersection.point());
             info<BoundaryConditionList::Type::reacting>(state, state_old,
                                                         intersection);
-            had_effect = true;
+            collision_time += time_increment(intersection, old_intersection,
+                                             average_velocity);
             break;
           }
         }
@@ -212,14 +229,16 @@ public:
                             reflection_normal(intersection.index()));
         info<BoundaryConditionList::Type::reacting>(state, state_old,
                                                     intersection);
-        had_effect = true;
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::periodic: {
         _boundary_periodic(state, intersection);
         info<BoundaryConditionList::Type::periodic>(state, state_old,
                                                     intersection);
-        had_effect = true;
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
@@ -227,7 +246,8 @@ public:
         state.set_position(intersection.point());
         info<BoundaryConditionList::Type::absorbing>(state, state_old,
                                                      intersection);
-        had_effect = true;
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::inlet: {
@@ -239,7 +259,8 @@ public:
             state.set_position(intersection.point());
             info<BoundaryConditionList::Type::absorbing>(state, state_old,
                                                          intersection);
-            had_effect = true;
+            collision_time += time_increment(intersection, old_intersection,
+                                             average_velocity);
             break;
           }
         }
@@ -247,18 +268,23 @@ public:
                             reflection_normal(intersection.index()));
         info<BoundaryConditionList::Type::reflecting>(state, state_old,
                                                       intersection);
-        had_effect = true;
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::custom: {
-        had_effect += _boundary_custom(state, state_old, intersection);
+        _boundary_custom(state, state_old, intersection);
         info<BoundaryConditionList::Type::custom>(state, state_old,
                                                   intersection);
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::empty: {
         info<BoundaryConditionList::Type::empty>(state, state_old,
                                                  intersection);
+        collision_time +=
+            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       default: {
@@ -277,13 +303,13 @@ public:
           auto owner_cell = _locator.mesh().faceOwner()[intersection.index()];
           state.set_position(cell_center(owner_cell, _locator.mesh()),
                              owner_cell);
-          return true;
+          return CollisionInfo{intersection, collision_time};
         }
         break;
       }
 
       // Find the next intersection with a boundary patch
-      auto old_intersection = intersection;
+      old_intersection = intersection;
       intersection =
           next_intersection(intersection, make_point(state.position));
 
@@ -310,14 +336,14 @@ public:
                 _locator.mesh().faceOwner()[old_intersection.index()];
             state.set_position(cell_center(owner_cell, _locator.mesh()),
                                owner_cell);
-            return true;
+            return CollisionInfo{old_intersection, collision_time};
           }
         }
         break;
       }
     }
 
-    return had_effect;
+    return CollisionInfo{old_intersection, collision_time};
   }
 
   /**
@@ -447,6 +473,14 @@ private:
               meta::Selector<BoundaryConditionList::Type,
                              BoundaryConditionList::Type::custom>{});
     }
+  }
+
+  double time_increment(Intersection const &intersection,
+                        Intersection const &old_intersection,
+                        double average_velocity) {
+    double displacement =
+        op::abs(op::minus(intersection.point(), old_intersection.point()));
+    return displacement > 0. ? displacement / average_velocity : 0.;
   }
 };
 template <typename State, typename Locator, typename VelocityField,

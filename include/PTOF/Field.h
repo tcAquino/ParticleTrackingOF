@@ -8,9 +8,7 @@
 #ifndef PTOF_FIELD_H
 #define PTOF_FIELD_H
 
-#include "General/Meta.h"
 #include "General/Operation.h"
-#include "General/Useful.h"
 #include "PTOF/CheckOptions.h"
 #include "PTOF/Useful.h"
 #include <Vector2D.H>
@@ -19,6 +17,7 @@
 #include <interpolationCellPoint.H>
 #include <memory>
 #include <point.H>
+#include <stdexcept>
 #include <type_traits>
 #include <vector.H>
 
@@ -39,6 +38,12 @@ struct InterpolationTypes {
      \brief Linear interpolation.
   */
   struct Linear {};
+
+  /**
+     \struct PreviousTime PTOF/Field.h "PTOF/Field.h"
+     \brief Use value at previous time.
+  */
+  struct OldTime {};
 };
 
 /**
@@ -59,7 +64,7 @@ class VectorField_Interpolation {
       std::disjunction_v<
           std::is_same<InterpolationType, InterpolationTypes::Cell>,
           std::is_same<InterpolationType, InterpolationTypes::Linear>>,
-      "InterpolationType must be InterpolationTypes::Cell or "
+      "Interpolation type must be InterpolationTypes::Cell or "
       "InterpolationType::Linear");
 
 public:
@@ -217,8 +222,10 @@ public:
     return _field.boundaryField()[patch_id][face_in_patch];
   }
 
-  /** \brief Recompute interpolator. */
-  void recompute_interpolator() {
+  /** \brief Update interpolator. */
+  void update_interpolator() {
+    // Note: Not free, but OpenFOAM interpolators usually cash relevant data
+    // like weights.
     _interpolator.reset(new Interpolator{_field});
   }
 
@@ -226,19 +233,29 @@ public:
      \brief Rescale underlying field.
      \param factor Scaling factor.
   */
-  void rescale(double factor) { rescale(_field, factor); }
+  void rescale(double factor) {
+    if (ptof::rescale(_field, factor)) {
+      update_interpolator();
+    }
+  }
 
   /**
      \brief Sum to underlying field.
      \param field Field to sum.
   */
-  void sum(Field field) { _field += field; }
+  void sum(Field field) {
+    _field += field;
+    update_interpolator();
+  }
 
   /**
      \brief Change underlying field data.
      \param field Set field data to this field.
   */
-  void set(Field field) { _field = field; }
+  void set(Field field) {
+    _field = field;
+    update_interpolator();
+  }
 
 private:
   Field _field;     /**< Vector field cell data to interpolate. */
@@ -280,7 +297,7 @@ class ScalarField_Interpolation {
       std::disjunction_v<
           std::is_same<InterpolationType, InterpolationTypes::Cell>,
           std::is_same<InterpolationType, InterpolationTypes::Linear>>,
-      "InterpolationType must be InterpolationTypes::Cell or "
+      "Interpolation type must be InterpolationTypes::Cell or "
       "InterpolationType::Linear");
 
 public:
@@ -305,8 +322,8 @@ public:
      \param locator Mesh locator.
    */
   ScalarField_Interpolation(Field &&field, Locator &&locator)
-      : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
-                                                locator)} {}
+      : _field{std::forward<Field>(field)},
+        _locator{std::forward<Locator>(locator)} {}
 
   /**
      \brief Constructor.
@@ -435,8 +452,10 @@ public:
     return _field.boundaryField()[patch_id][face_in_patch];
   }
 
-  /** \brief Recompute interpolator. */
-  void recompute_interpolator() {
+  /** \brief Update interpolator. */
+  void update_interpolator() {
+    // Note: Not free, but OpenFOAM interpolators usually cash relevant data
+    // like weights.
     _interpolator.reset(new Interpolator{_field});
   }
 
@@ -444,13 +463,20 @@ public:
      \brief Rescale underlying field.
      \param factor Scaling factor.
   */
-  void rescale(double factor) { rescale(_field, factor); }
+  void rescale(double factor) {
+    if (ptof::rescale(_field, factor)) {
+      update_interpolator();
+    }
+  }
 
   /**
      \brief Sum to underlying field.
      \param field field to sum
   */
-  void sum(Field field) { _field += field; }
+  void sum(Field field) {
+    _field += field;
+    update_interpolator();
+  }
 
   /**
      \brief Change underlying field data.
@@ -482,7 +508,8 @@ ScalarField_Interpolation(Field &&, Locator &&, InterpolationType, CheckOption)
    \class VectorField_Interpolation PTOF/Field.h "PTOF/Field.h"
    \brief Interpolation of vector field cell data based on OpenFOAM routines.
 */
-template <typename Field_t> class Field_TimeInterpolation {
+template <typename Field_t, typename TimeInterpolationType>
+class Field_TimeInterpolation {
 public:
   using Point = Foam::point;                     /**< 3D point. */
   using Point2D = Foam::Vector2D<Foam::scalar>;  /**< 2D point. */
@@ -494,6 +521,13 @@ public:
   using Time = Foam::scalar;                     /**< Time type. */
   using FieldPtr =
       std::unique_ptr<Field>; /**< Pointer to underlying field type. */
+
+  static_assert(
+      std::disjunction_v<
+          std::is_same<TimeInterpolationType, InterpolationTypes::Linear>,
+          std::is_same<TimeInterpolationType, InterpolationTypes::OldTime>>,
+      "Interpolation type must be InterpolationTypes::Linear or "
+      "InterpolationType::OldTime");
 
   /**
      \brief Constructor.
@@ -508,6 +542,19 @@ public:
         _time_new{time_new}, _time_old{time_old} {}
 
   /**
+     \brief Constructor.
+     \param field_new Field at new time.
+     \param field_old Field at old time.
+     \param time_new Time of new field.
+     \param time_old Time of old field.
+  */
+  Field_TimeInterpolation(FieldPtr field_new, FieldPtr field_old,
+                          double time_new, double time_old,
+                          TimeInterpolationType)
+      : _field_new{std::move(field_new)}, _field_old{std::move(field_old)},
+        _time_new{time_new}, _time_old{time_old} {}
+
+  /**
      \brief Interpolate field.
      \param position Position.
      \param cell Mesh cell index position is in.
@@ -516,12 +563,6 @@ public:
   */
   template <typename Position>
   auto operator()(Position const &position, Index cell, Time time) const {
-    if (_time_new <= _time_old || time <= _time_old) {
-      return (*_field_old)(position, cell);
-    }
-    if (time >= _time_new) {
-      return (*_field_new)(position, cell);
-    }
     return interpolate((*_field_new)(position, cell),
                        (*_field_old)(position, cell), time);
   }
@@ -566,12 +607,6 @@ public:
 
   /** \brief Field at cell center. */
   auto operator()(Foam::label cell_id, Time time) const {
-    if (_time_new <= _time_old || time <= _time_old) {
-      return (*_field_old)(cell_id);
-    }
-    if (time >= _time_new) {
-      return (*_field_new)(cell_id);
-    }
     return interpolate((*_field_new)(cell_id), (*_field_old)(cell_id), time);
   }
 
@@ -589,36 +624,17 @@ public:
 
   /** \return Full field of underlying field type. */
   auto field(Time time) const {
-    if (_time_new <= _time_old || time <= _time_old) {
-      return _field_old->field();
-    }
-    if (time >= _time_new) {
-      return _field_new->field();
-    }
-    return static_cast<Field>(
-        interpolate(_field_new->field(), _field_old->field()), time);
+    return interpolate(_field_new->field(), _field_old->field(), time);
   }
 
   /** \return Underlying boundary field. */
   auto boundaryField(Time time) const {
-    if (_time_new <= _time_old || time <= _time_old) {
-      return _field_old->boundaryField();
-    }
-    if (time >= _time_new) {
-      return _field_new->boundaryField();
-    }
     return interpolate(_field_new->boundaryField(), _field_old->boundaryField(),
                        time);
   }
 
   /** \return Underlying boundary field at patch. */
   auto boundaryField(Foam::label patch_id, Time time) const {
-    if (_time_new <= _time_old || time <= _time_old) {
-      return _field_old->boundaryField(patch_id);
-    }
-    if (time >= _time_new) {
-      return _field_new->boundaryField(patch_id);
-    }
     return interpolate(_field_new->boundaryField(patch_id),
                        _field_old->boundaryField(patch_id), time);
   }
@@ -630,12 +646,6 @@ public:
   */
   auto boundaryField(Foam::label patch_id, Foam::label face_in_patch,
                      Time time) const {
-    if (_time_new <= _time_old || time <= _time_old) {
-      return _field_old->boundaryField(patch_id, face_in_patch);
-    }
-    if (time >= _time_new) {
-      return _field_new->boundaryField(patch_id, face_in_patch);
-    }
     return interpolate(_field_new->boundaryField(patch_id, face_in_patch),
                        _field_old->boundaryField(patch_id, face_in_patch),
                        time);
@@ -652,18 +662,6 @@ public:
 
   /** \return Time of old field. */
   auto time_old() const { return _time_old; }
-
-  /**
-     \brief Update underlying field.
-     \param field Set new field to this field.
-     \param time_new Time of new field.
-  */
-  void update(FieldPtr field, Time time_new) {
-    _field_old = std::move(_field_new);
-    _field_new = std::move(field);
-    _time_old = _time_new;
-    _time_new = time_new;
-  }
 
   /**
      \brief Set new field data.
@@ -692,13 +690,37 @@ public:
   }
 
   /**
+     \brief Update underlying field.
+     \param field Set new field to this field.
+     \param time_new Time of new field.
+  */
+  void update(FieldPtr field, Time time_new) {
+    _field_old = std::move(_field_new);
+    _field_new = std::move(field);
+    _time_old = _time_new;
+    _time_new = time_new;
+  }
+
+  /**
      \brief Rescale underlying field.
      \param factor Scaling factor.
   */
   void rescale(double factor) {
-    _field_new->rescale(factor);
-    _field_old->rescale(factor);
+    rescale_new(factor);
+    rescale_old(factor);
   }
+
+  /**
+       \brief Rescale underlying field.
+       \param factor Scaling factor.
+    */
+  void rescale_new(double factor) { _field_new->rescale(factor); }
+
+  /**
+         \brief Rescale underlying field.
+         \param factor Scaling factor.
+      */
+  void rescale_old(double factor) { _field_old->rescale(factor); }
 
 private:
   FieldPtr _field_new; /**< Field at new time. */
@@ -709,45 +731,29 @@ private:
   template <typename FieldVal>
   auto interpolate(FieldVal const &field_new, FieldVal const &field_old,
                    Time time) const {
-    return op::plus(field_old, op::times_scalar(
-                                   (time - _time_old) / (_time_new - _time_old),
-                                   op::minus(field_new, field_old)));
+    if constexpr (std::is_same_v<TimeInterpolationType,
+                                 InterpolationTypes::Linear>) {
+      if (_time_new <= _time_old || time <= _time_old) {
+        return field_old;
+      }
+      if (time >= _time_new) {
+        return field_new;
+      }
+      return static_cast<FieldVal>(op::plus(
+          field_old,
+          op::times_scalar((time - _time_old) / (_time_new - _time_old),
+                           op::minus(field_new, field_old))));
+    }
+    if constexpr (std::is_same_v<TimeInterpolationType,
+                                 InterpolationTypes::OldTime>) {
+      return field_old;
+    }
+    throw std::runtime_error{
+        "Field_TimeInterpolation : Interpolation type must "
+        "be InterpolationTypes::Linear or "
+        "InterpolationType::OldTime"};
   }
 };
-
-/**
-   \brief Compute magnitude of average of volumetric field (set of values
-   associated with mesh cells).
-*/
-template <typename Field, typename Mesh>
-auto magnitude_of_average(Field &field, Mesh const &mesh) {
-  Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
-  auto average_weighted_data = Foam::sum(field * mesh.cellVolumes());
-  return Foam::mag(average_weighted_data) / mesh_volume;
-}
-
-/**
-   \brief Rescale a volumetric field (set of values associated with mesh cells)
-   to a given average value.
-*/
-template <typename Field, typename Mesh>
-void rescale_to_average(Field &field, Mesh const &mesh, double average) {
-  if constexpr (!std::is_same_v<Field, meta::Empty>) {
-    field *= average / magnitude_of_average(field, mesh);
-  }
-}
-
-template <typename Field>
-void rescale(Field &field, Foam::scalar rescaling_factor) {
-  if constexpr (!std::is_same_v<Field, meta::Empty>) {
-    if (rescaling_factor != 1.) {
-      field *= rescaling_factor;
-      if constexpr (meta::has_boundaryField_v<useful::remove_cvref_t<Field>>) {
-        field.boundaryFieldRef() == (rescaling_factor * field.boundaryField());
-      }
-    }
-  }
-}
 } // namespace ptof
 
 #endif /* PTOF_FIELD_H */

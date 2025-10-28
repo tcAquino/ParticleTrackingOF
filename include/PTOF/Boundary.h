@@ -240,8 +240,7 @@ auto periodic_intersection(State state_outside, State const &state_image,
   // being found. Avoid breaking by repeatedly doubling the size of the interval
   // until the intersection is found or too many tries have been made.
   std::size_t max_nr_doublings = 20;
-  std::size_t iter = 0;
-  do {
+  for (std::size_t iter = 0; iter < max_nr_doublings; ++iter) {
     offset *= 2;
     auto new_intersection = locator.mesh_search().intersection(
         make_point(state_outside.position) - offset,
@@ -249,9 +248,11 @@ auto periodic_intersection(State state_outside, State const &state_image,
     if (new_intersection.hit()) {
       return new_intersection;
     }
-  } while (iter++ < max_nr_doublings);
+  }
 
-  return Intersection{};
+  // If finding the intersection failed, take the closest boundary face center
+  auto face_id = nearest_boundary_face(state_image.position, locator);
+  return Intersection(true, face_center(face_id, locator.mesh()), face_id);
 }
 
 /**
@@ -310,16 +311,14 @@ Boundary_Periodic(Boundary &&, Locator &&)
    \brief Boundary object that reinjects particles according to prescribed
    initial condition.
 */
-template <typename InitialCondition, typename Locator>
-struct Boundary_Reinject {
+template <typename InitialCondition> struct Boundary_Reinject {
   /**
      \brief Constructor.
      \param initial_condition Initial condition object.
      \param locator Object to locate positions in mesh.
   */
-  Boundary_Reinject(InitialCondition &&initial_condition, Locator &&locator)
-      : initial_condition{std::forward<InitialCondition>(initial_condition)},
-        locator(std::forward<Locator>(locator)) {}
+  Boundary_Reinject(InitialCondition &&initial_condition)
+      : initial_condition{std::forward<InitialCondition>(initial_condition)} {}
 
   /**
      \brief Enforce boundary condition.
@@ -341,11 +340,9 @@ struct Boundary_Reinject {
 
   InitialCondition initial_condition; /**< Initial condition according to which
                                          to reinject. */
-  Locator locator; /**< Object to locate positions in mesh. */
 };
-template <typename InitialCondition, typename Locator>
-Boundary_Reinject(InitialCondition &&, Locator &&)
-    -> Boundary_Reinject<InitialCondition, Locator>;
+template <typename InitialCondition>
+Boundary_Reinject(InitialCondition &&) -> Boundary_Reinject<InitialCondition>;
 
 /**
    \brief For boundary conditions indicated as type \c periodic, extract the

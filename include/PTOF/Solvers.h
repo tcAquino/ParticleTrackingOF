@@ -10,12 +10,9 @@
 
 #include "General/IO.h"
 #include "General/Meta.h"
-#include "PTOF/Directories.h"
 #include "PTOF/SolverParameters.h"
 #include "PTOF/Steppers.h"
-#include "PTOF/TimeUnitsList.h"
 #include <ostream>
-#include <string>
 #include <type_traits>
 #include <utility>
 

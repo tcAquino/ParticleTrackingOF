@@ -73,12 +73,7 @@ static void update_velocity_field(VelocityField &velocity_field,
                                   Geometry const &geometry,
                                   TransportParameters const &params_transport) {
   velocity_field.set(ptof::get_velocity_data(geometry.mesh()));
-  if (params_transport.velocity_rescaling_factor != 1.) {
     velocity_field.rescale(params_transport.velocity_rescaling_factor);
-  }
-  if (params_transport.time_dependent_bcs) {
-    velocity_field.recompute_interpolator();
-  }
 }
 
 /**

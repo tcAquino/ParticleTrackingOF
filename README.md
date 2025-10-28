@@ -21,7 +21,7 @@ Basic information on code structure, compilation, and execution is given in doc/
 - Parallel simulations employ parallelization over particles across the whole spatial domain. This means that parallel OpenFOAM cases must be reconstructed before using PTOF, and that each thread must have access to the full mesh. OpenFOAM is not designed with this type of parallelization in mind. Demand-driven mesh and mesh search tool data must be precomputed in serial before being used in parallel. When implementing extensions, be careful to verify that all necessary data is precomputed.
 - Attempting to compile different models or parallel settings corresponding to the same cpp file at the same time is not safe, as it can lead to concurrent modifications to the same file.
 - Output positions are usually interpolated linearly and corrected to the nearest cell center if outside mesh. Still, it is possible that whether an output position is in the mesh depends on the precision of output. In practice, this is usually fine.
-- When using openFOAM's findCell, it is sometimes possible for a position to be considered within the mesh when a hint is not used, but outside the mesh when certain hints are used. This is handled carefully in the code as provided but should be kept in mind for developmment and postprocessing. Similarly, in some meshes, face centers may be considered outside the mesh.
+- When using openFOAM's findCell, it is sometimes possible for a position to be considered within the mesh when a hint is not used, but outside the mesh when certain hints are used. This is handled carefully in PTOF as provided but should be kept in mind for developmment and postprocessing. Similarly, in some meshes, face centers may be considered outside the mesh.
 
 ## Citations
 

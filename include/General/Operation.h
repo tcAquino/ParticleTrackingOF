@@ -713,16 +713,22 @@ template <typename Container> auto abs(Container const &input) {
 }
 
 template <typename Container> auto normalize(Container const &input) {
-  return op::div_scalar(input, op::abs(input));
+  auto norm = op::abs(input);
+  return norm != 0. ? op::div_scalar(input, op::abs(input))
+                    : times_scalar(0., input);
 }
 
 template <typename Container, typename Container_out>
 auto &normalize(Container const &input, Container_out &output) {
-  return op::div_scalar(input, op::abs(input), output);
+  auto norm = op::abs(input);
+  return norm != 0. ? op::div_scalar(input, op::abs(input), output)
+                    : op::times_scalar(0., input, output);
 }
 
 template <typename Container> auto &normalize_inplace(Container &input) {
-  return op::div_scalar_inplace(input, op::abs(input));
+  auto norm = op::abs(input);
+  return norm != 0. ? op::div_scalar_inplace(input, op::abs(input))
+                    : times_scalar_inplace(0., input);
 }
 
 /** \brief Like \c std::adjacent_difference but without the first element. */

@@ -18,7 +18,6 @@
 #include <algorithm>
 #include <fieldTypes.H>
 #include <limits>
-#include <stdexcept>
 #include <type_traits>
 #include <zero.H>
 
