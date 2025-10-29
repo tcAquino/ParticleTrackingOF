@@ -108,15 +108,15 @@ public:
            << io::line()
            << "- OpenFOAM cases directory [${FOAM_RUN}]\n"
               "- OpenFOAM case name\n"
-              "- OpenFOAM case time [last]:\n"
+              "- OpenFOAM case time:\n"
               "  - last\n"
-              "    - Use OpenFOAM case last available time"
+              "    - Use OpenFOAM case last available time\n"
               "  - start\n"
-              "    - Use OpenFOAM case start time"
+              "    - Use OpenFOAM case start time\n"
               "  - end\n"
-              "    - Use OpenFOAM case end time"
+              "    - Use OpenFOAM case end time\n"
               "  - Numeric value\n"
-              "    - Use given numeric value as start time name"
+              "    - Use given numeric value as start time name\n"
            << io::line();
     return output;
   }
