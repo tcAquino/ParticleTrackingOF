@@ -85,11 +85,12 @@ public:
       : time{makeRunTime(directories)} {
     if (time.times().size() == 0) {
       throw std::runtime_error{"No OpenFOAM time folders"};
-    }
-    if (_start_time_name == "start") {
-      time.setTime(time.startTime(), 0);
     } else if (_start_time_name == "last") {
       time.setTime(time.times().back(), 0);
+    } else if (_start_time_name == "start") {
+      time.setTime(time.startTime(), 0);
+    } else if (_start_time_name == "end") {
+      time.setTime(time.endTime(), 0);
     } else if (useful::is_numeric(_start_time_name)) {
       time.setTime(Foam::instant(std::stod(_start_time_name)), 0);
     }
@@ -105,9 +106,17 @@ public:
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "OpenFOAM directories (pass '' for default in [])\n"
            << io::line()
-           << "OpenFOAM cases directory [$FOAM_RUN]\n"
-              "OpenFOAM case name\n"
-              "OpenFOAM case time [last OpenFOAM case time]\n"
+           << "- OpenFOAM cases directory [${FOAM_RUN}]\n"
+              "- OpenFOAM case name\n"
+              "- OpenFOAM case time [last]:\n"
+              "  - last\n"
+              "    - Use OpenFOAM case last available time"
+              "  - start\n"
+              "    - Use OpenFOAM case start time"
+              "  - end\n"
+              "    - Use OpenFOAM case end time"
+              "  - Numeric value\n"
+              "    - Use given numeric value as start time name"
            << io::line();
     return output;
   }
@@ -137,7 +146,7 @@ private:
     // constructed; this restricts them to the local scope
     io::StreamScopeFormat guard{std::cout};
 
-    std::string filename = directories.dir_parameters + "/of.dat";
+    std::string filename = directories.dir_parameters + "/of.param";
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -160,11 +169,11 @@ private:
     param_index = 0;
     io::read(split_line, param_index, in_file + "Could not parse start time",
              _start_time_name);
-    if (_start_time_name != "start" && _start_time_name != "last" &&
-        !useful::is_numeric(_start_time_name)) {
+    if (_start_time_name != "last" && _start_time_name != "start" &&
+        _start_time_name != "end" && !useful::is_numeric(_start_time_name)) {
       throw std::runtime_error{
           in_file +
-          "Expected first, last, or a numeric value for start time, got " +
+          "Expected last, start, end, or a numeric value for start time, got " +
           _start_time_name};
     }
 

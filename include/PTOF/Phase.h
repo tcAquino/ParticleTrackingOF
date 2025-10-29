@@ -87,7 +87,7 @@ public:
     Parameters(Directories const &directories, std::string const &name,
                Geometry const &geometry) {
       std::string filename =
-          directories.dir_parameters + "/parameters_phase_" + name + ".dat";
+          directories.dir_parameters + "/phase_" + name + ".param";
       auto input = io::open_read(filename);
       std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -376,7 +376,7 @@ public:
   template <typename VelocityField, typename PhaseField,
             typename TransportParameters>
   class EffectiveVelocity {
-   public:
+  public:
     using Point = Foam::point;                     /**< 3D point. */
     using Point2D = Foam::Vector2D<Foam::scalar>;  /**< 2D point. */
     using Vector = Foam::vector;                   /**< 3D vector. */
@@ -387,16 +387,16 @@ public:
 
     static_assert(
         std::is_same_v<ChemicalPotentialModel, ChemicalPotentialModels::AGG> ||
-        std::is_same_v<ChemicalPotentialModel,
-        ChemicalPotentialModels::JM> ||
-        std::is_same_v<ChemicalPotentialModel,
-        ChemicalPotentialModels::None>,
+            std::is_same_v<ChemicalPotentialModel,
+                           ChemicalPotentialModels::JM> ||
+            std::is_same_v<ChemicalPotentialModel,
+                           ChemicalPotentialModels::None>,
         "Phase : Effective drift: Only chemical potential models "
         "AGG, JM, or None are supported");
 
     static constexpr bool has_base_velocity = !std::is_same_v<
-      std::remove_reference_t<std::remove_const_t<VelocityField>>,
-      meta::Empty>;
+        std::remove_reference_t<std::remove_const_t<VelocityField>>,
+        meta::Empty>;
     static constexpr bool has_chemical_potential =
         !std::is_same_v<ChemicalPotentialModel, ChemicalPotentialModels::None>;
 

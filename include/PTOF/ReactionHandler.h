@@ -112,9 +112,8 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
     Parameters(Directories const &directories,
                std::string const &parameter_set_name, Geometry const &geometry,
                TransportParameters const &params_transport) {
-      std::string filename = directories.dir_parameters +
-                             "/parameters_reaction_" + parameter_set_name +
-                             ".dat";
+      std::string filename = directories.dir_parameters + "/reaction_" +
+                             parameter_set_name + ".param";
       auto input = io::open_read(filename);
       std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -329,9 +328,8 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
     Parameters(Directories const &directories,
                std::string const &parameter_set_name, Geometry const &geometry,
                TransportParameters const &params_transport) {
-      std::string filename = directories.dir_parameters +
-                             "/parameters_reaction_" + parameter_set_name +
-                             ".dat";
+      std::string filename = directories.dir_parameters + "/reaction_" +
+                             parameter_set_name + ".param";
       auto input = io::open_read(filename);
       std::string in_file = std::string{"In file "} + filename + " : ";
 

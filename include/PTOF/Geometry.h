@@ -158,7 +158,7 @@ struct Geometry_Generic {
                   "Boundary condition types:\n"
                   "  - reflecting\n"
                   "    - Reflecting\n"
-                  "  - reacting_reflecting\n"
+                  "  - reacting\n"
                   "    - Reflection and surface reaction\n"
                   "  - absorbing\n"
                   "    - Absorbing\n";
@@ -333,7 +333,7 @@ struct Geometry_Periodic_Cartesian {
                   "Boundary condition types:\n"
                   "  - reflecting\n"
                   "    - Reflecting\n"
-                  "  - reacting_reflecting\n"
+                  "  - reacting\n"
                   "    - Reflection and surface reaction\n"
                   "  - periodic\n"
                   "    - Cartesian periodic, position extracted from mesh\n";
@@ -546,7 +546,7 @@ struct Geometry_Bcc {
                   "Boundary condition types:\n"
                   "  - reflecting:\n"
                   "    - Reflecting\n"
-                  "  - reacting_reflecting\n"
+                  "  - reacting\n"
                   "    - Reflection and surface reaction\n"
                   "  - periodic\n"
            << (PeriodicityList::name(periodicity) == "cartesian"

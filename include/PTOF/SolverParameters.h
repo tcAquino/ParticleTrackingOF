@@ -43,8 +43,8 @@ struct SolverParameters_Generic {
       Directories const &directories, std::string const &parameter_set_name,
       Geometry const &geometry, TransportParameters const &params_transport,
       ReactionParameters const &params_surf_reaction = meta::Empty{}) {
-    std::string filename = directories.dir_parameters + "/parameters_solvers_" +
-                           parameter_set_name + ".dat";
+    std::string filename = directories.dir_parameters + "/solvers_" +
+                           parameter_set_name + ".param";
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 

@@ -135,8 +135,8 @@ public:
                          TransportParameters const &params_transport,
                          ReactionParameters const &params_reaction,
                          SolverParameters const &params_solvers) {
-    std::string filename = directories.dir_parameters + "/parameters_output_" +
-                           parameter_set_name + ".dat";
+    std::string filename =
+        directories.dir_parameters + "/output_" + parameter_set_name + ".param";
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 

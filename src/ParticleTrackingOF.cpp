@@ -13,7 +13,6 @@
 #include "PTOF/Model.h"
 #include "PTOF/Transitions.h"
 #include "PTOF/Useful.h"
-#include "volFieldsFwd.H"
 #include <chrono>
 #include <cstddef>
 #include <iomanip>
@@ -74,7 +73,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
+  using Model = ptof::Model::advection_diffusion_surface_decay_2d;
   using Definitions = Model::Definitions<ParallelOption>;
 
   std::cout << std::setprecision(2) << std::scientific;

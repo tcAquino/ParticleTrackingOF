@@ -320,9 +320,8 @@ public:
                                    Geometry const &geometry,
                                    TransportParameters const &params_transport,
                                    ReactionParameters const &params_reaction) {
-    std::string filename = directories.dir_parameters +
-                           "/parameters_initial_condition_" +
-                           parameter_set_name + ".dat";
+    std::string filename = directories.dir_parameters + "/initialcondition_" +
+                           parameter_set_name + ".param";
     auto input = io::open_read(filename);
     specific_parameters =
         set_specific_parameters(input, filename, directories, geometry,
