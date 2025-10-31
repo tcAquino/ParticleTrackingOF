@@ -82,9 +82,10 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_diffusion_2d;
-  using ChemicalPotentialModel = ptof::ChemicalPotentialModels::None;
-  using TimeInterpolationType = ptof::InterpolationTypes::OldTime;
+  using Model = ptof::Model::periodic_cartesian_diffusion_2d;
+  using ChemicalPotentialModel = ptof::ChemicalPotentialModels::AGG;
+  using TimeInterpolationType = ptof::InterpolationTypes::Linear;
+
   constexpr bool chemical_potential =
       !std::is_same_v<ChemicalPotentialModel,
                       ptof::ChemicalPotentialModels::None>;

@@ -628,10 +628,10 @@ public:
                     std::is_same_v<ChemicalPotentialModel,
                                    ChemicalPotentialModels::None>) {
         return chemical_force(meta::Empty{}, params_phase);
+      } else {
+        // Otherwise compute field
+        return chemical_force(_carrier_phase_field.field(time), params_phase);
       }
-
-      // Otherwise compute field
-      return chemical_force(_carrier_phase_field.field(time), params_phase);
     }
 
     template <typename PhaseFieldSpatialInterp>
