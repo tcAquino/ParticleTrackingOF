@@ -182,14 +182,16 @@ struct SolverParameters_Generic {
          local_time_step_surf_react == 0.);
     bool local_transport_constraints_are_inf =
         (local_time_step_adv == std::numeric_limits<double>::infinity() &&
-         local_time_step_diff && std::numeric_limits<double>::infinity());
+         local_time_step_diff == std::numeric_limits<double>::infinity() &&
+         std::numeric_limits<double>::infinity());
 
     bool global_constraints_are_zero =
         (global_time_step_adv == 0. || global_time_step_diff == 0. ||
          global_time_step_surf_react == 0.);
     bool global_transport_constraints_are_inf =
         (global_time_step_adv == std::numeric_limits<double>::infinity() &&
-         global_time_step_diff && std::numeric_limits<double>::infinity());
+         global_time_step_diff == std::numeric_limits<double>::infinity() &&
+         std::numeric_limits<double>::infinity());
 
     if (local_constraints_are_zero && global_constraints_are_zero) {
       throw std::runtime_error{in_file +
