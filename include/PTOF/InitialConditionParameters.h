@@ -26,7 +26,6 @@ namespace ptof {
  types in \c InitialCondition_Cases.
 */
 struct InitialConditionParameters_Cases {
-public:
   std::string name;
   InitialConditionList::Type type;
   std::string continuity;
@@ -48,8 +47,9 @@ public:
     std::ostream &info_runtime(std::ostream &output) const override {
       SpecificParameters::info_runtime(output);
       output << "Patches:\n";
-      for (auto const &patch : patch_names)
+      for (auto const &patch : patch_names) {
         output << "  - " << patch << "\n";
+      }
       return output;
     }
   };
@@ -77,8 +77,9 @@ public:
                                         double distance, std::size_t nr_tries)
         : SpecificParameters_Patches{patch_names}, distance{distance},
           nr_tries{nr_tries} {
-      if (distance < 0.)
+      if (distance < 0.) {
         throw std::runtime_error{"Negative distance to patches"};
+      }
     }
 
     std::ostream &info_runtime(std::ostream &output) const override {
@@ -107,17 +108,20 @@ public:
     SpecificParameters_Boundaries(
         std::vector<std::pair<double, double>> region_boundaries)
         : region_boundaries{region_boundaries} {
-      for (auto const &bounds : region_boundaries)
-        if (bounds.second < bounds.first)
+      for (auto const &bounds : region_boundaries) {
+        if (bounds.second < bounds.first) {
           throw std::runtime_error{
               "Cartesian region upper bounds smaller than lower bounds"};
+        }
+      }
     }
 
     std::ostream &info_runtime(std::ostream &output) const override {
       SpecificParameters::info_runtime(output);
       output << "Region boundaries:";
-      for (auto const &bounds : region_boundaries)
+      for (auto const &bounds : region_boundaries) {
         output << " (" << bounds.first << " " << bounds.second << ")";
+      }
       output << "\n";
       return output;
     }
@@ -135,8 +139,9 @@ public:
                                 std::size_t nr_tries, double inner_radius = 0.)
         : center_1{center_1}, center_2{center_2}, radius{radius},
           nr_tries{nr_tries}, inner_radius{inner_radius} {
-      if (inner_radius >= radius)
+      if (inner_radius >= radius) {
         throw std::runtime_error{"Inner radius not smaller than radius"};
+      }
     }
 
     std::ostream &info_runtime(std::ostream &output) const override {
@@ -147,8 +152,9 @@ public:
       io::print(output, center_2, false, " ") << "\n";
       output << "Radius: " << radius << "\n"
              << "Number of tries: " << nr_tries << "\n";
-      if (inner_radius != 0.)
+      if (inner_radius != 0.) {
         output << "Inner radius: " << inner_radius << "\n";
+      }
       return output;
     }
   };
@@ -189,8 +195,9 @@ public:
                               std::size_t nr_tries, double inner_radius = 0.)
         : center{center}, radius{radius}, nr_tries{nr_tries},
           inner_radius{inner_radius} {
-      if (inner_radius >= radius)
+      if (inner_radius >= radius) {
         throw std::runtime_error{"Inner radius not smaller than radius"};
+      }
     }
 
     std::ostream &info_runtime(std::ostream &output) const override {
@@ -199,8 +206,9 @@ public:
       io::print(output, center, false, " ") << "\n";
       output << "Radius: " << radius << "\n"
              << "Number of tries: " << nr_tries << "\n";
-      if (inner_radius != 0.)
+      if (inner_radius != 0.) {
         output << "Inner radius: " << inner_radius << "\n";
+      }
       return output;
     }
   };
@@ -252,11 +260,13 @@ public:
                                          double time_step)
         : InjectionParameters_PulseNoMass{time_start}, time_end{time_end},
           time_step{time_step} {
-      if (time_end <= time_start)
+      if (time_end <= time_start) {
         throw std::runtime_error{
             "Injection end time not larger than injection start time"};
-      if (time_step <= 0)
+      }
+      if (time_step <= 0) {
         throw std::runtime_error{"Injection time step not positive"};
+      }
     }
 
     InjectionParameters_ContinuousNoMass(
@@ -492,9 +502,10 @@ private:
              in_file + "Could not parse initial condition type", name);
     std::string for_initial_condition_type =
         "Initial condition type " + name + " : ";
-    if (!InitialConditionList::contains(name))
+    if (!InitialConditionList::contains(name)) {
       throw std::runtime_error{in_file + for_initial_condition_type +
                                "Not supported"};
+    }
     type = InitialConditionList::type(name);
     switch (type) {
     case (InitialConditionList::Type::point): {
@@ -505,14 +516,18 @@ private:
     case (InitialConditionList::Type::uniform_patch_faces):
     case (InitialConditionList::Type::fluxweighted_patch_faces): {
       std::size_t nr_patches = split_line.size() - param_index;
-      if (nr_patches == 0)
+      if (nr_patches == 0) {
         throw std::runtime_error{
             in_file + for_initial_condition_type +
             "Could not parse patch names(s) : At least one patch required"};
-      return std::make_unique<SpecificParameters_Patches>(io::read<std::string>(
+      }
+      auto patch_names = io::read<std::string>(
           split_line, param_index, split_line.size() - param_index,
-          in_file + for_initial_condition_type +
-              "Could not parse patch names"));
+          in_file + for_initial_condition_type + "Could not parse patch names");
+      for (auto const &patch : patch_names) {
+        geometry.mesh().boundaryMesh().findPatchID(patch, false);
+      }
+      return std::make_unique<SpecificParameters_Patches>(patch_names);
     }
     case (InitialConditionList::Type::uniform_near_patch):
     case (InitialConditionList::Type::fluxweighted_near_patch): {
@@ -524,14 +539,18 @@ private:
                                        in_file + for_initial_condition_type +
                                            "Could not parse distance to patch");
       std::size_t nr_patches = split_line.size() - param_index;
-      if (nr_patches == 0)
+      if (nr_patches == 0) {
         throw std::runtime_error{
             in_file + for_initial_condition_type +
             "Could not parse patch names(s) : At least one patch required"};
+      }
       auto patch_names =
           io::read<std::string>(split_line, param_index, nr_patches,
                                 in_file + for_initial_condition_type +
                                     "Could not parse patch name(s)");
+      for (auto const &patch : patch_names) {
+        geometry.mesh().boundaryMesh().findPatchID(patch, false);
+      }
       return std::make_unique<SpecificParameters_Patches_Distance>(
           patch_names, distance, nr_tries);
     }
@@ -566,11 +585,12 @@ private:
                                     "Could not parse number of tries");
       std::vector<std::vector<double>> centers;
       centers.reserve(Geometry::dim);
-      for (std::size_t ii = 0; ii < Geometry::dim; ++ii)
+      for (std::size_t ii = 0; ii < Geometry::dim; ++ii) {
         centers.push_back(io::read<double>(
             split_line, param_index, Geometry::dim,
             in_file + for_initial_condition_type + "Could not parse " +
                 io::ordinal(ii) + " center position"));
+      }
       auto radius = io::read<double>(split_line, param_index,
                                      in_file + for_initial_condition_type +
                                          "Could not parse radius");
@@ -593,11 +613,12 @@ private:
                                          "Could not parse corner");
       std::vector<std::vector<double>> sides;
       sides.reserve(Geometry::dim);
-      for (std::size_t dd = 0; dd < Geometry::dim; ++dd)
+      for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
         sides.push_back(io::read<double>(split_line, param_index, Geometry::dim,
                                          in_file + for_initial_condition_type +
                                              "Could not parse " +
                                              io::ordinal(dd) + " side"));
+      }
       return std::make_unique<SpecificParameters_Parallelipiped>(corner, sides,
                                                                  nr_tries);
     }
@@ -654,10 +675,11 @@ private:
         io::read<std::string>(split_line, param_index,
                               in_file + for_injection_continuity_type +
                                   "Could not parse injection time units");
-    if (!TimeUnitsList::contains(time_units))
+    if (!TimeUnitsList::contains(time_units)) {
       throw std::runtime_error{in_file + for_injection_continuity_type +
                                "Time units " + time_units + " : " +
                                "Not supported"};
+    }
     double time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);
 

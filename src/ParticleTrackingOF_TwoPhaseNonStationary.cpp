@@ -92,15 +92,15 @@ int main(int argc, char *argv[]) {
   constexpr bool hard_reflection = !chemical_potential;
   using Phase = ptof::Phase<ChemicalPotentialModel, TimeInterpolationType,
                             hard_reflection>;
-  using Definitions = Model::Definitions<ParallelOption>;
+  using Definitions = Model::Definitions<ParallelOption>;  
 
   constexpr bool advection = Definitions::Solvers::Parameters::advection;
-  std::cout << "OLA " << advection << std::endl;
   using Solvers = std::conditional_t<
-      advection || chemical_potential, Definitions::Solvers,
+      !advection && chemical_potential,
       ptof::Solvers_Generic<ptof::Steppers::Euler,
                             Definitions::Solvers::Stepper_Diffusion,
-                            Definitions::Solvers::Stepper_CTRW>>;
+                            Definitions::Solvers::Stepper_CTRW>,
+      Definitions::Solvers>;
 
   std::cout << std::setprecision(2) << std::scientific;
   std::cout << ExecutableInfo<ParallelOption>::banner();
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
     std::cout
         << io::line()
         << "Note: Turning on advection with forward Euler stepping to apply\n"
-           "      chemical potential at phase interface\n"
+           "      chemical potential\n"
         << io::line();
   }
 
