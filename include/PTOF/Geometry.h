@@ -161,7 +161,10 @@ struct Geometry_Generic {
                   "  - reacting\n"
                   "    - Reflection and surface reaction\n"
                   "  - absorbing\n"
-                  "    - Absorbing\n";
+                  "    - Absorbing\n"
+                  "  - inlet\n"
+                  "    - Absorbing for outward flow velocities,\n"
+                  "      reflecting otherwise\n";
     if constexpr (dynamics != DynamicsList::Type::firstpassage) {
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
@@ -339,7 +342,7 @@ struct Geometry_Periodic_Cartesian {
                   "    - Cartesian periodic, position extracted from mesh\n";
     output << "  - absorbing\n"
               "    - Absorbing\n";
-    if constexpr (dynamics != DynamicsList::Type::firstpassage) {
+    if constexpr (dynamics == DynamicsList::Type::firstpassage) {
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";
     }
@@ -553,7 +556,10 @@ struct Geometry_Bcc {
                    ? "    - Periodic in the primitive unit cell\n"
                    : "    - Periodic in the minimal unit cell\n")
            << "  - absorbing\n"
-              "    - Absorbing\n";
+              "    - Absorbing\n"
+              "  - inlet\n"
+              "    - Absorbing for outward flow velocities,\n"
+              "      reflecting otherwise\n";
     if constexpr (dynamics == DynamicsList::Type::firstpassage) {
       output << "  - custom\n"
                 "    - Reinject according to initial condition\n";

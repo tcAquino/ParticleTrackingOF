@@ -27,8 +27,8 @@ struct BoundaryConditionList {
     reacting,   /**< Reacting. */
     periodic,   /**< Periodic. */
     absorbing,  /**< Absorbing. */
-    inlet, /**< Reflecting for non-outward flow velocities, absorbing otherwise.
-            */
+    inlet,  /**< Absorbing for outward flow velocities, reflecting otherwise.
+             */
     custom, /**< Enforced by custom Boundary object. */
     empty   /**< No effect (default for unspecified patches in mesh). */
   };
