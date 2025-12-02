@@ -37,7 +37,8 @@ inline constexpr bool has_type_v =
     std::conjunction_v<has_member<type_t, X>, is_same<type_t, X, Foam::label>>;
 
 /**\brief Type of \c X::boundary_face. */
-template <typename X> using boundary_face_t = decltype(std::declval<X>().face);
+template <typename X>
+using boundary_face_t = decltype(std::declval<X>().boundary_face);
 /**
    \brief Check if \c X has member <tt>Foam::label boundary_face</tt>.
 */

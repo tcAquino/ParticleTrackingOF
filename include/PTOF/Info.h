@@ -64,7 +64,7 @@ struct Info_absorbed_reinjections {
    \struct Info_absorbed_boundary_face_reinjections PTOF/Info.h "PTOF/Info.h"
    \brief Information about absorption and number of reinjections.
 */
-struct Info_absorbed_face_reinjections {
+struct Info_absorbed_boundary_face_reinjections {
   bool absorbed;
   Foam::label boundary_face;
   std::size_t reinjections;

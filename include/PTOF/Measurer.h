@@ -205,6 +205,7 @@ private:
       if constexpr (meta::has_boundary_face_v<typename State::Info>) {
         face = state.info.boundary_face;
       } else {
+        // Note: This does not always find the correct face or even patch.        
         face = this->_geometry.mesh_search().findNearestBoundaryFace(
             make_point(state.position));
       }

@@ -332,6 +332,8 @@ public:
            "    - Particle absorption times, particle tags and particle\n"
            "      masses at end of dynamics\n"
            "  - absorption_time_patch\n"
+           "    (Note: Patch info is not guaranteed accurate unless particle\n"
+           "           states store "
            "    - Particle absorption times, particle tags, particle\n"
            "      masses, and absorption patch at end of dynamics\n"
            "  - absorption_time_position\n"
