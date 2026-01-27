@@ -315,7 +315,6 @@ template <typename InitialCondition> struct Boundary_Reinject {
   /**
      \brief Constructor.
      \param initial_condition Initial condition object.
-     \param locator Object to locate positions in mesh.
   */
   Boundary_Reinject(InitialCondition &&initial_condition)
       : initial_condition{std::forward<InitialCondition>(initial_condition)} {}

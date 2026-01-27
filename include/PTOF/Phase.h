@@ -35,7 +35,10 @@
 #include <volFields.H>
 
 namespace ptof {
-/** \struct */
+/**
+   \struct ChemicalPotentialModels PTOF/Phase.h "PTOF/Phase.h"
+   \brief Choice of interface chemical potential model.
+*/
 struct ChemicalPotentialModels {
   struct AGG;
   struct JM;
