@@ -48,7 +48,7 @@ template <typename Subject, typename Geometry> struct MeasurerTime {
   virtual void operator()(double time) = 0;
 
   /** \brief Output stored information (do nothing if not overriden). */
-  virtual void print(){};
+  virtual void print() {};
 
   /** \brief Update internal state. */
   virtual void update(double time, Foam::instant const &previous_time_of_change,
@@ -128,8 +128,7 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -141,7 +140,8 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
       }
       auto const &state_new = part.state_new();
       _output << std::setw(_column_widths[1]) << state_old.tag;
-      io::print(_output, interpolate_position(part, time, this->_locator),
+      io::print(_output,
+                interpolate_position_ensure_inside(part, time, this->_locator),
                 _column_widths[2]);
       _output << std::setw(_column_widths[3])
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
@@ -194,8 +194,7 @@ struct MeasurerTime_position_in_regions final
       }
     }
     _output << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -219,8 +218,10 @@ struct MeasurerTime_position_in_regions final
       if (std::any_of(in_region.begin(), in_region.end(),
                       [](int ii) { return ii > 0; })) {
         _output << std::setw(_column_widths[1]) << state_old.tag;
-        io::print(_output, interpolate_position(part, time, this->_locator),
-                  _column_widths[2]);
+        io::print(
+            _output,
+            interpolate_position_ensure_inside(part, time, this->_locator),
+            _column_widths[2]);
         _output << std::setw(_column_widths[3])
                 << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                             state_old);
@@ -570,8 +571,7 @@ struct MeasurerTime_mass final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[1]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -599,8 +599,7 @@ struct MeasurerTime_mass_absorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[1]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -629,8 +628,7 @@ struct MeasurerTime_mass_adsorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[1]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -720,8 +718,7 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
             << std::setw(_column_widths[2]) << field_name
             << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   MeasurerTime_scalar_field(Subject const &subject, Geometry const &geometry,
@@ -843,8 +840,7 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   MeasurerTime_vector_field(Subject const &subject, Geometry const &geometry,
@@ -967,8 +963,7 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   MeasurerTime_tensor_field(Subject const &subject, Geometry const &geometry,
@@ -1086,8 +1081,7 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_mean").length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << field_name + "_mean"
-            << "\n";
+            << std::setw(_column_widths[1]) << field_name + "_mean" << "\n";
   }
 
   MeasurerTime_scalar_field_mean(Subject const &subject,
@@ -1417,8 +1411,7 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -1430,10 +1423,10 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
       }
       auto const &state_new = part.state_new();
       _output << std::setw(_column_widths[1]) << state_old.tag;
-      io::print(
-          _output,
-          interpolate_position(part, time, this->_locator, _getter_position),
-          _column_widths[2]);
+      io::print(_output,
+                interpolate_position_ensure_inside(part, time, this->_locator,
+                                                   _getter_position),
+                _column_widths[2]);
       _output << std::setw(_column_widths[3])
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
     }
@@ -1491,8 +1484,7 @@ struct MeasurerTime_position_in_regions_periodic final
       }
     }
     _output << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -1516,8 +1508,8 @@ struct MeasurerTime_position_in_regions_periodic final
                         [](int ii) { return ii > 0; })) {
           _output << std::setw(_column_widths[1]) << state_old.tag;
           io::print(_output,
-                    interpolate_position(part, time, this->_locator,
-                                         _getter_position),
+                    interpolate_position_ensure_inside(
+                        part, time, this->_locator, _getter_position),
                     _column_widths[2]);
           _output << std::setw(_column_widths[3])
                   << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
@@ -1598,9 +1590,12 @@ struct MeasurerTime_position_abs_mean_periodic final
                                           Directories const &directories,
                                           std::string const &identifier,
                                           int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_abs_mean_periodic",
-                                        identifier,  precision},
+      : MeasurerTime<Subject, Geometry>{subject,
+                                        geometry,
+                                        directories,
+                                        "position_abs_mean_periodic",
+                                        identifier,
+                                        precision},
         _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
@@ -1809,8 +1804,7 @@ struct MeasurerTime_first_crossing_time final
         dimension{dimension}, position{position} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[2]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -1887,8 +1881,7 @@ struct MeasurerTime_position_adsorbed final : MeasurerTime<Subject, Geometry> {
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -1946,8 +1939,7 @@ struct MeasurerTime_position_adsorbed_periodic final
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -2004,8 +1996,7 @@ struct MeasurerTime_surface_reacted_mass final
             << std::setw(_column_widths[1]) << "Face"
             << std::setw(_column_widths[2]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   MeasurerTime_surface_reacted_mass(Subject const &, Geometry const &,
@@ -2066,8 +2057,7 @@ struct MeasurerTime_surface_reacted_mass_periodic final
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   MeasurerTime_surface_reacted_mass_periodic(Subject const &, Geometry const &,
@@ -2123,8 +2113,7 @@ struct MeasurerTime_mass_adsorbed_face final : MeasurerTime<Subject, Geometry> {
             << std::setw(_column_widths[1]) << "Face"
             << std::setw(_column_widths[2]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {
@@ -2199,8 +2188,7 @@ struct MeasurerTime_mass_adsorbed_face_periodic final
     }
     _output << std::setw(_column_widths[3]) << "Mass"
             << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..."
-            << "\n";
+            << std::setw(_column_widths[2]) << "..." << "\n";
   }
 
   void operator()(double time) override {

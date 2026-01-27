@@ -9,6 +9,7 @@
 #define PTOF_BULKREACTION_H
 
 #include "General/IO.h"
+#include <cmath>
 #include <ostream>
 
 namespace ptof {

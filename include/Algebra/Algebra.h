@@ -102,7 +102,7 @@ inline void solve_tridiag(std::vector<double> const &l_diag,
   u_diag_new[0] = u_diag[0] / diag[0];
   ind_new[0] = ind[0] / diag[0];
   double temp;
-  for (size_t ii = 1; ii < dim; ++ii) {
+  for (std::size_t ii = 1; ii < dim; ++ii) {
     temp = diag[ii] - l_diag[ii] * u_diag_new[ii - 1];
     u_diag_new[ii] = u_diag[ii] / temp;
     ind_new[ii] = (ind[ii] - l_diag[ii] * ind_new[ii - 1]) / temp;
@@ -144,7 +144,7 @@ inline void solve_cyclic_tridiag(double alpha, double beta,
   double factor = (sol[0] + beta * sol.back() / gamma) /
                   (1 + zz[0] + beta * zz.back() / gamma);
 
-  for (size_t ii = 0; ii < nr_points; ++ii) {
+  for (std::size_t ii = 0; ii < nr_points; ++ii) {
     sol[ii] -= factor * zz[ii];
   }
 }
@@ -160,7 +160,7 @@ inline double det_tridiag(std::vector<double> const &l_diag,
   double cont_1 = diag[0];
   double cont_2 = 0.;
 
-  for (size_t ii = 2; ii <= diag.size(); ++ii) {
+  for (std::size_t ii = 2; ii <= diag.size(); ++ii) {
     cont_2 = diag[ii - 1] * cont_1 - u_diag[ii - 2] * l_diag[ii - 1] * cont_0;
     cont_0 = cont_1;
     cont_1 = cont_2;

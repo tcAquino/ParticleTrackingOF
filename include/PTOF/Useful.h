@@ -1346,7 +1346,7 @@ auto mean(Subject const &subject, double time, Field const &field) {
    \brief Interpolate position between two particle states.
    \details Linearly interpolates between the two state positions according to
    \c time and state times. If interpolated position would be outside mesh, use
-   nearest cell center.
+   nearest position between new state and old state.
    \param state_new New particle state.
    \param state_old Old particle state.
    \param time Time (between state times) to interpolate to.
@@ -1360,13 +1360,15 @@ auto mean(Subject const &subject, double time, Field const &field) {
 */
 template <typename State, typename Locator,
           typename Getter = ctrw::Get_position>
-auto interpolate_position(State const &state_new, State const &state_old,
-                          double time, Locator const &locator,
-                          Getter &&get_position = {}) {
-  auto position =
-      ctrw::Get_interp{time, ctrw::Get_position{}}(state_new, state_old);
+auto interpolate_position_ensure_inside(State const &state_new,
+                                        State const &state_old, double time,
+                                        Locator const &locator,
+                                        Getter &&get_position = {}) {
+  auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
   auto cell_id = locator(position, state_new.cell);
   if (outside(cell_id)) {
+    auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
+
     auto nearest_cell_id = locator.nearest_cell(position);
     return State::make_position(cell_center(nearest_cell_id, locator.mesh()));
   }
@@ -1450,10 +1452,10 @@ auto interpolate_position_with_cell(State const &state_new,
 */
 template <typename Particle, typename Locator,
           typename Getter = ctrw::Get_position>
-auto interpolate_position(Particle const &particle, double time,
+auto interpolate_position_ensure_inside(Particle const &particle, double time,
                           Locator const &locator, Getter &&get_position = {}) {
-  return interpolate_position(particle.state_new(), particle.state_old(), time,
-                              locator, get_position);
+  return interpolate_position_ensure_inside(
+      particle.state_new(), particle.state_old(), time, locator, get_position);
 }
 
 /**
