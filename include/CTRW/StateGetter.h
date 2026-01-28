@@ -8,7 +8,9 @@
 #ifndef CTRW_STATEGETTER_H
 #define CTRW_STATEGETTER_H
 
+#include "General/Meta.h"
 #include "General/Operation.h"
+#include "General/Useful.h"
 #include <utility>
 
 namespace ctrw {
@@ -326,8 +328,8 @@ struct Get_position_periodic_cartesian_projection {
   Get_position_periodic_cartesian_projection(
       std::vector<double> domain_dimensions,
       std::vector<double> const &direction)
-      : _get_position{domain_dimensions}, direction{op::div_scalar(
-                                              direction, op::abs(direction))} {}
+      : _get_position{domain_dimensions},
+        direction{op::div_scalar(direction, op::abs(direction))} {}
 
   template <typename State> auto operator()(State const &state) const {
     return op::dot(_get_position(state), direction);
@@ -546,6 +548,20 @@ template <typename Getter_position = Get_position> struct Get_time_interp {
 };
 template <typename Getter_position>
 Get_time_interp(double, Getter_position &&) -> Get_time_interp<Getter_position>;
+
+/**
+   \return Getter for true position accounting for periodicity if
+   \tparam Boundary is not meta::Empty, otherwise getter for regular position.
+   \param boundary Boundary object.
+*/
+template <typename Boundary = meta::Empty>
+auto getter_position(Boundary &&boundary = {}) {
+  if constexpr (std::is_same_v<useful::remove_cvref_t<Boundary>, meta::Empty>) {
+    return ctrw::Get_position{};
+  } else {
+    return ctrw::Get_position_periodic{boundary};
+  }
+}
 } // namespace ctrw
 
 #endif /* CTRW_STATEGETTER_H */

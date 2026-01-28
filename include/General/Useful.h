@@ -160,15 +160,18 @@ template <typename T> struct Creator {
    \brief Functor to forward an argument.
 */
 template <typename Object> struct Forward {
-  Object operator()(Object const &object) { return object; }
-};
+  Object &&operator()(Object &&object) const {
+    return std::forward<Object>(object);
+  }
+};		
+		
 
 /**
    \class Forward_ref General/Useful.h "General/Useful.h"
    \brief Functor to forward a const reference.
 */
 template <typename Object> struct Forward_ref {
-  Object const &operator()(Object const &object) { return object; }
+  Object const &operator()(Object const &object) const { return object; }
 };
 
 /**

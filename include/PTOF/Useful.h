@@ -8,6 +8,7 @@
 #ifndef PTOF_USEFUL_H
 #define PTOF_USEFUL_H
 
+#include "CTRW/Meta.h"
 #include "CTRW/StateGetter.h"
 #include "General/IO.h"
 #include "General/Meta.h"
@@ -40,8 +41,8 @@ template <typename Position> struct PositionAndCell {
 };
 
 /**
-   \brief Print static info for \tparam Class and Class::Parameters, if
-   defined.
+   \brief Print static info for \tparam Class and <tt>Class::Parameters</tt>,
+   if defined.
    \param output Output stream to print info.
    \param notify_if_no_info Print notification if no info is available.
    \param help_option Information about requested info, to print if info is not
@@ -137,8 +138,7 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
     } else {
       output << "\n"
                 "Help option "
-             << option << " : "
-             << "Not supported\n";
+             << option << " : " << "Not supported\n";
     }
   }
 
@@ -173,9 +173,8 @@ bool outside(Foam::label cell, Foam::point const &position,
              std::string const &extra_warning_info = {}) {
   if (cell < 0) {
     if constexpr (warn_if_outside) {
-      std::cerr << "Warning: Requested cell at position "
-                << "(" << position[0] << ", " << position[1] << ", "
-                << position[2] << ")"
+      std::cerr << "Warning: Requested cell at position " << "(" << position[0]
+                << ", " << position[1] << ", " << position[2] << ")"
                 << " outside mesh.";
       if (!extra_warning_info.empty()) {
         std::cerr << " " << extra_warning_info << "\n";
@@ -268,27 +267,35 @@ Foam::point make_point(std::vector<double> const &point) {
   return {0., 0., 0.};
 }
 
-/** \brief Oriented area at boundary face, using right-hand-rule (outward for
-    boundary faces). */
+/**
+   \brief Oriented area at boundary face, using right-hand-rule (outward for
+    boundary faces).
+*/
 template <typename Mesh> auto area_outward(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].areaNormal(mesh.points());
 }
 
-/** \brief Oriented area at boundary face, using left-hand-rule (inward for
-  boundary faces). */
+/**
+   \brief Oriented area at boundary face, using left-hand-rule (inward for
+   boundary faces).
+*/
 template <typename Mesh> auto area_inward(Foam::label face, Mesh const &mesh) {
   return -area_outward(face, mesh);
 }
 
-/** \brief Unit normal at boundary face, using right-hand-rule (outward for
-    boundary faces). */
+/**
+   \brief Unit normal at boundary face, using right-hand-rule (outward for
+   boundary faces).
+*/
 template <typename Mesh>
 auto unit_normal_outward(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].unitNormal(mesh.points());
 }
 
-/** \brief Unit normal at boundary face, using left-hand-rule (inward for
-  boundary faces). */
+/**
+   \brief Unit normal at boundary face, using left-hand-rule (inward for
+   boundary faces).
+*/
 template <typename Mesh>
 auto unit_normal_inward(Foam::label face, Mesh const &mesh) {
   return -unit_normal_outward(face, mesh);
@@ -580,9 +587,8 @@ auto adjusted_face_center(Foam::label face, Locator const &locator) {
     return face_center(face, mesh);
   } else {
     auto center = face_center(face, mesh);
-    std::cerr << "Warning: Face center of face " << face << " at "
-              << "(" << center[0] << ", " << center[1] << ", " << center[2]
-              << ")"
+    std::cerr << "Warning: Face center of face " << face << " at " << "("
+              << center[0] << ", " << center[1] << ", " << center[2] << ")"
               << " is not within owner cell. "
               << "Replacing face center by owner cell center\n";
     return cell_center(mesh.faceOwner()[face], mesh);
@@ -1082,6 +1088,24 @@ auto fluxweighted_face_distribution(Container const &face_ids,
 }
 
 /**
+   \return Periodic boundary in geometry.
+*/
+template <typename Geometry,
+          typename = std::enable_if_t<meta::has_boundary_periodic_v<Geometry>>>
+auto const &boundary_periodic(Geometry const &geometry) {
+  return geometry.boundary_periodic;
+}
+
+/**
+   \return Empty periodic boundary, for when geometry does not define one.
+*/
+template <typename Geometry,
+          typename = std::enable_if_t<!meta::has_boundary_periodic_v<Geometry>>>
+auto boundary_periodic(Geometry const &geometry) {
+  return meta::Empty{};
+}
+
+/**
    \param subject CTRW object.
    \param time Current time.
    \return Number of absorbed particles.
@@ -1216,105 +1240,237 @@ auto mass(Subject const &subject, double time,
 }
 
 /**
+   \brief Interpolate position between two particle states.
+   \tparam ensure_inside If true, if interpolated position would be outside
+   mesh, use nearest position between new state and old state.
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
+   \param state_new New particle state.
+   \param state_old Old particle state.
+   \param time Time (between state times) to interpolate to.
+   \param geometry Domain geometry info and utilities.
+   \return Interpolated position.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <bool ensure_inside, bool periodic, typename State, typename Geometry>
+auto position_interpolated(State const &state_new, State const &state_old,
+                           double time, Geometry const &geometry) {
+  auto const &locator = geometry.locator;
+  auto const &boundary = boundary_periodic(geometry);
+  using Boundary = useful::remove_cvref_t<decltype(boundary)>;
+
+  auto get_position = ctrw::getter_position(boundary);
+  auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
+
+  if constexpr (ensure_inside) {
+    Foam::label cell_id;
+    if constexpr (std::is_same_v<Boundary, meta::Empty>) {
+      cell_id = locator(position, state_new.cell);
+    } else {
+      cell_id =
+          locator(boundary.position_in_unit_cell(position), state_new.cell);
+    }
+    if (outside(cell_id)) {
+      auto position_new = get_position(state_new);
+      auto position_old = get_position(state_old);
+      auto distance_sq_new = op::dist_sq(position, position_new);
+      auto distance_sq_old = op::dist_sq(position, position_old);
+      position =
+          distance_sq_new < distance_sq_old ? position_new : position_old;
+    }
+  }
+
+  if constexpr (!periodic && !std::is_same_v<Boundary, meta::Empty>) {
+    boundary.place_in_unit_cell(position);
+  }
+
+  return position;
+}
+
+/**
+   \brief Interpolate position between two particle states.
+   \details If interpolated position would be outside mesh, use nearest
+   position between new state and old state.
+   \param state_new New particle state.
+   \param state_old Old particle state.
+   \param time Time (between state times) to interpolate to.
+   \param geometry Domain geometry info and utilities.
+   \return Interpolated position and corresponding cell in mesh.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <typename State, typename Geometry>
+auto position_interpolated_with_cell(State const &state_new,
+                                     State const &state_old, double time,
+                                     Geometry const &geometry) {
+  auto const &locator = geometry.locator;
+  auto const &boundary = boundary_periodic(geometry);
+  using Boundary = useful::remove_cvref_t<decltype(boundary)>;
+
+  auto get_position = ctrw::getter_position(boundary);
+  auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
+
+  auto cell_id =
+      std::is_same_v<Boundary, meta::Empty>
+          ? locator(position, state_new.cell)
+          : locator(boundary.position_in_unit_cell(position), state_new.cell);
+  if (outside(cell_id)) {
+    auto position_new = get_position(state_new);
+    auto position_old = get_position(state_old);
+    auto distance_sq_new = op::dist_sq(position, position_new);
+    auto distance_sq_old = op::dist_sq(position, position_old);
+    position = distance_sq_new < distance_sq_old ? position_new : position_old;
+  }
+
+  if constexpr (!std::is_same_v<Boundary, meta::Empty>) {
+    boundary.place_in_unit_cell(position);
+  }
+
+  return PositionAndCell{position, cell_id};
+};
+
+/**
+   \brief Interpolate position between two particle states.
+   \tparam ensure_inside If true, if interpolated position would be outside
+   mesh, use nearest position between new state and old state.
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
+   \param particle Particle to interpolate between old and new state.
+   \param time Time (between state times) to interpolate to
+   \param geometry Domain geometry info and utilities.
+   \return Interpolated position.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <bool ensure_inside, bool periodic, typename Particle,
+          typename Geometry>
+auto position_interpolated(Particle const &particle, double time,
+                           Geometry const &geometry) {
+  return position_interpolated<ensure_inside, periodic>(
+      particle.state_new(), particle.state_old(), time, geometry);
+}
+
+/**
+   \brief Interpolate position between two particle states.
+   \tparam ensure_inside If true, if interpolated position would be outside
+   mesh, use nearest position between new state and old state.
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
+   \param particle Particle to interpolate between old and new state.
+   \param time Time (between state times) to interpolate to.
+   \param geometry Domain geometry info and utilities.
+   \return Interpolated position and corresponding cell in mesh.
+   \note Particle states must define:
+   - \c position
+   - \c time
+   - \c cell
+*/
+template <bool ensure_inside, bool periodic, typename Particle,
+          typename Geometry>
+auto position_interpolated_with_cell(Particle const &particle, double time,
+                                     Geometry const &geometry) {
+  return position_interpolated_with_cell<ensure_inside, periodic>(
+      particle.state_new(), particle.state_old(), time, geometry);
+};
+
+/**
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
    \param subject CTRW object.
    \param time Current time.
-   \param getter_position Get position from state, gets position directly by
-   default.
+   \param geometry Domain geometry info and utilities.
+   \param transform Transformation to apply to each position (identity by
+   default).
    \return Mean position (weighted by mass).
    \note Particle states must define:
-   - \c position [for default position getter]
+   - \c position
    - \c mass
    - \c time
 */
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
+template <
+    bool periodic, typename Subject, typename Geometry,
+    typename Transform = useful::Forward<typename Subject::State::Position>>
 auto position_mean(Subject const &subject, double time,
-                   GetterPosition getter_position = {}) {
-  using Position = decltype(getter_position(subject.particles(0).state_new()));
-  Position position_mean = Foam::zero{};
+                   Geometry const &geometry, Transform &&transform = {}) {
+  using Position =
+      decltype(transform(std::declval<typename Subject::State::Position>()));
+  Position mean = Foam::zero{};
   for (auto const &part : subject) {
     if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
-      position_mean +=
-          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-          ctrw::Get_interp{time, getter_position}(state_new, state_old);
+          mean += ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+                    transform(position_interpolated<false, periodic>(
+                        state_new, state_old, time, geometry));
     }
   }
-  return position_mean / mass(subject, time);
+  return mean / mass(subject, time);
 }
 
 /**
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
    \param subject CTRW object.
    \param time Current time.
-   \param getter_position Get position from state, gets position directly by
-   default.
+   \param geometry Domain geometry info and utilities.
    \return Second moment of position (weighted by mass).
    \note Particle states must define:
-   - \c position [for default positition getter]
+   - \c position
    - \c mass
 */
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
+template <bool periodic, typename Subject, typename Geometry>
 auto position_second_moment(Subject const &subject, double time,
-                            GetterPosition getter_position = {}) {
-  using Position = decltype(getter_position(subject.particles(0).state_new()));
-  Position second_moment = Foam::zero{};
-  for (auto const &part : subject) {
-    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      second_moment +=
-          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-          op::square(
-              ctrw::Get_interp{time, getter_position}(state_new, state_old));
-    }
-  }
-  return second_moment / mass(subject, time);
+                            Geometry const &geometry) {
+  return position_mean<periodic>(
+      subject, time, geometry,
+      [](auto const &position) { return op::square(position); });
 }
 
 /**
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
    \param subject CTRW object.
    \param exponents Order of moment or vector with order for each dimension.
    \param time Current time.
-   \param getter_position Get position from state, gets \c position directly
-   by default. \return Nth moment of position (weighted by mass). \note
+   \param geometry Domain geometry info and utilities.
+   \return Nth moment of position (weighted by mass). \note
    Particle states must define:
-   - \c position [for default positition getter]
+   - \c position
    - \c mass
 */
-template <typename Subject, typename Exponents,
-          typename GetterPosition = ctrw::Get_position>
+template <bool periodic, typename Subject, typename Exponents,
+          typename Geometry>
 auto position_moment(Subject const &subject, Exponents const &exponents,
-                     double time, GetterPosition getter_position = {}) {
-  decltype(getter_position(subject.particles(0).state_new())) moment =
-      Foam::zero{};
-  for (auto const &part : subject) {
-    if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
-      auto const &state_new = part.state_new();
-      auto const &state_old = part.state_old();
-      moment +=
-          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-          op::pow(ctrw::Get_interp{time, getter_position}(state_new, state_old),
-                  exponents);
-    }
-  }
-  return moment / mass(subject, time);
+                     double time, Geometry const &geometry) {
+  return position_mean<periodic>(subject, time, geometry,
+                                 [&exponents](auto const &position) {
+                                   return op::pow(position, exponents);
+                                 });
 }
 
 /**
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
    \param subject CTRW object.
    \param time Current time.
-   \param getter_position Get position from state, gets position directly by
-   default.
+   \param geometry Domain geometry info and utilities
    \return Position variance (weighted by mass).
    \note Particle states must define:
-   - \c position [for default positition getter]
+   - \c position
    - \c mass
 */
-template <typename Subject, typename GetterPosition = ctrw::Get_position>
+template <bool periodic, typename Subject, typename Geometry>
 auto position_variance(Subject const &subject, double time,
-                       GetterPosition getter_position = {}) {
-  return position_second_moment(subject, time, getter_position) -
-         op::square(position_mean(subject, time, getter_position));
+                       Geometry const &geometry) {
+  return position_second_moment<periodic>(subject, time, geometry) -
+         op::square(position_mean<periodic>(subject, time, geometry));
 }
 
 /**
@@ -1343,39 +1499,6 @@ auto mean(Subject const &subject, double time, Field const &field) {
 }
 
 /**
-   \brief Interpolate position between two particle states.
-   \details Linearly interpolates between the two state positions according to
-   \c time and state times. If interpolated position would be outside mesh, use
-   nearest position between new state and old state.
-   \param state_new New particle state.
-   \param state_old Old particle state.
-   \param time Time (between state times) to interpolate to.
-   \param locator Object to locate positions in mesh.
-   \param get_position Get position from state.
-   \return Interpolated position.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
-template <typename State, typename Locator,
-          typename Getter = ctrw::Get_position>
-auto interpolate_position_ensure_inside(State const &state_new,
-                                        State const &state_old, double time,
-                                        Locator const &locator,
-                                        Getter &&get_position = {}) {
-  auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
-  auto cell_id = locator(position, state_new.cell);
-  if (outside(cell_id)) {
-    auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
-
-    auto nearest_cell_id = locator.nearest_cell(position);
-    return State::make_position(cell_center(nearest_cell_id, locator.mesh()));
-  }
-  return position;
-}
-
-/**
    \param position Spatial position.
    \param locator Object to locate positions in mesh.
    \return Nearest boundary face index.
@@ -1400,88 +1523,6 @@ nearest_boundary_face_dist(Foam::vector const &position,
   auto dist = Foam::mag(position - mesh.faces()[face_id].centre(mesh.points()));
   return {face_id, dist};
 }
-
-/**
-   \brief Interpolate position between two particle states.
-   \details Linearly interpolates between the two state positions according to
-   \c time and state times. If interpolated position would be outside mesh, use
-   nearest cell center.
-   \param state_new New particle state.
-   \param state_old Old particle state.
-   \param time Time (between state times) to interpolate to.
-   \param locator Object to locate positions in mesh.n
-
-   \param get_position Get position from state.
-   \return Interpolated position and corresponding cell in mesh.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
-template <typename State, typename Locator,
-          typename Getter = ctrw::Get_position>
-auto interpolate_position_with_cell(State const &state_new,
-                                    State const &state_old, double time,
-                                    Locator const &locator,
-                                    Getter &&get_position = {}) {
-  auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
-  auto cell_id = locator(position, state_new.cell);
-  if (outside(cell_id)) {
-    auto nearest_cell_id = locator.nearest_cell(position);
-    return PositionAndCell{
-        State::make_position(cell_center(nearest_cell_id, locator.mesh())),
-        nearest_cell_id};
-  }
-  return PositionAndCell{position, cell_id};
-};
-
-/**
-   \brief Interpolate position between two particle states.
-   \details Linearly interpolates between the two state positions according to
-   \c time and state times. If interpolated position would be outside mesh, use
-   nearest cell center.
-   \param particle Particle to interpolate between old and new state.
-   \param time Time (between state times) to interpolate to.
-   \param locator Object to locate positions in mesh.
-   \param get_position Get position from state.
-   \return Interpolated position.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
-template <typename Particle, typename Locator,
-          typename Getter = ctrw::Get_position>
-auto interpolate_position_ensure_inside(Particle const &particle, double time,
-                          Locator const &locator, Getter &&get_position = {}) {
-  return interpolate_position_ensure_inside(
-      particle.state_new(), particle.state_old(), time, locator, get_position);
-}
-
-/**
-   \brief Interpolate position between two particle states.
-   \details Linearly interpolates between the two state positions according to
-   \c time and state times. If interpolated position would be outside mesh, use
-   nearest cell center.
-   \param particle Particle to interpolate between old and new state.
-   \param time Time (between state times) to interpolate to.
-   \param locator Object to locate positions in mesh.n
-
-   \param get_position Get position from state.
-   \return Interpolated position and corresponding cell in mesh.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
-template <typename Particle, typename Locator,
-          typename Getter = ctrw::Get_position>
-auto interpolate_position_with_cell(Particle const &particle, double time,
-                                    Locator const &locator,
-                                    Getter &&get_position = {}) {
-  return interpolate_position_with_cell(
-      particle.state_new(), particle.state_old(), time, locator, get_position);
-};
 
 /**
    \brief Compute demand-drived mesh data.
@@ -1529,8 +1570,7 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
 template <typename ParametersOutput>
 void info_time(std::ostream &output, ParametersOutput const &params,
                double time) {
-  output << "Time "
-         << "[" << params.time_units
+  output << "Time " << "[" << params.time_units
          << " time units]: " << time / params.time_unit_factor << "\n";
 }
 
@@ -1622,122 +1662,134 @@ auto closest_time_index(Foam::instantList const &flow_times,
       std::min_element(
           flow_times.cbegin(), flow_times.cend(), [time](auto xx, auto yy) {
             if (xx.name() == "constant" || yy.name() == "constant") {
-              return true;
-            } else {
-              return std::abs(xx.value() - time) < std::abs(yy.value() - time);
+                                       return true;
+                                     } else {
+                                       return std::abs(xx.value() - time) <
+                                              std::abs(yy.value() - time);
+                                     }
+                                   }));
             }
-          }));
-}
 
-auto closest_time_index(DirectoriesOF const &directories_of,
-                        Foam::scalar time) {
-  return closest_time_index(directories_of.time.times(), time);
-}
+            auto closest_time_index(DirectoriesOF const &directories_of,
+                                    Foam::scalar time) {
+              return closest_time_index(directories_of.time.times(), time);
+            }
 
-template <typename Mesh>
-auto closest_time_index(Mesh const &mesh, Foam::scalar time) {
-  return closest_time_index(mesh.time().times(), time);
-}
+            template <typename Mesh>
+            auto closest_time_index(Mesh const &mesh, Foam::scalar time) {
+              return closest_time_index(mesh.time().times(), time);
+            }
 
-auto closest_instant(Foam::instantList const &flow_times, Foam::scalar time) {
-  return flow_times[closest_time_index(flow_times, time)];
-}
+            auto closest_instant(Foam::instantList const &flow_times,
+                                 Foam::scalar time) {
+              return flow_times[closest_time_index(flow_times, time)];
+            }
 
-auto closest_instant(DirectoriesOF const &directories_of, Foam::scalar time) {
-  return closest_instant(directories_of.time.times(), time);
-}
+            auto closest_instant(DirectoriesOF const &directories_of,
+                                 Foam::scalar time) {
+              return closest_instant(directories_of.time.times(), time);
+            }
 
-template <typename Mesh>
-auto closest_instant(Mesh const &mesh, Foam::scalar time) {
-  return closest_instant(mesh.time().times(), time);
-}
+            template <typename Mesh>
+            auto closest_instant(Mesh const &mesh, Foam::scalar time) {
+              return closest_instant(mesh.time().times(), time);
+            }
 
-auto closest_time(Foam::instantList const &flow_times, Foam::scalar time) {
-  return closest_instant(flow_times, time).value();
-}
+            auto closest_time(Foam::instantList const &flow_times,
+                              Foam::scalar time) {
+              return closest_instant(flow_times, time).value();
+            }
 
-auto closest_time(DirectoriesOF const &directories_of, Foam::scalar time) {
-  return closest_time(directories_of.time.times(), time);
-}
+            auto closest_time(DirectoriesOF const &directories_of,
+                              Foam::scalar time) {
+              return closest_time(directories_of.time.times(), time);
+            }
 
-template <typename Mesh>
-auto closest_time(Mesh const &mesh, Foam::scalar time) {
-  return closest_time(mesh.time().times(), time);
-}
+            template <typename Mesh>
+            auto closest_time(Mesh const &mesh, Foam::scalar time) {
+              return closest_time(mesh.time().times(), time);
+            }
 
-auto closest_time_name(DirectoriesOF const &directories_of, Foam::scalar time) {
-  return directories_of.time.timeName(
-      closest_time(directories_of.time.times(), time));
-}
+            auto closest_time_name(DirectoriesOF const &directories_of,
+                                   Foam::scalar time) {
+              return directories_of.time.timeName(
+                  closest_time(directories_of.time.times(), time));
+            }
 
-template <typename Mesh>
-auto closest_time_name(Mesh const &mesh, Foam::scalar time) {
-  return mesh.time().timeName(closest_time(mesh, time));
-}
+            template <typename Mesh>
+            auto closest_time_name(Mesh const &mesh, Foam::scalar time) {
+              return mesh.time().timeName(closest_time(mesh, time));
+            }
 
-template <typename Field>
-auto evaluate(Field const &field, Foam::label cell_id, Foam::scalar time = 0.) {
-  if constexpr (meta::has_square_brackets_of_label_v<Field>) {
-    return field[cell_id];
-  } else {
-    return field(cell_id, time);
-  }
-}
+            template <typename Field>
+            auto evaluate(Field const &field, Foam::label cell_id,
+                          Foam::scalar time = 0.) {
+              if constexpr (meta::has_square_brackets_of_label_v<Field>) {
+                return field[cell_id];
+              } else {
+                return field(cell_id, time);
+              }
+            }
 
-template <typename Field, typename State>
-auto evaluate(Field const &field, State const &state) {
-  return evaluate(field, state.cell, state.time);
-}
+            template <typename Field, typename State>
+            auto evaluate(Field const &field, State const &state) {
+              return evaluate(field, state.cell, state.time);
+            }
 
-template <typename Field>
-auto evaluate_boundary_field(Field const &field, Foam::label patch_id,
-                             Foam::label face_id, Foam::scalar time = 0.) {
-  if constexpr (meta::has_boundaryField_of_void_v<Field>) {
-    return field.boundaryField()[patch_id][face_id];
-  } else {
-    return field.boundaryField(patch_id, face_id, time);
-  }
-}
+            template <typename Field>
+            auto evaluate_boundary_field(
+                Field const &field, Foam::label patch_id, Foam::label face_id,
+                Foam::scalar time = 0.) {
+              if constexpr (meta::has_boundaryField_of_void_v<Field>) {
+                return field.boundaryField()[patch_id][face_id];
+              } else {
+                return field.boundaryField(patch_id, face_id, time);
+              }
+            }
 
-/**
-   \brief Compute magnitude of average of volumetric field (set of values
-   associated with mesh cells).
-*/
-template <typename Field, typename Mesh>
-auto magnitude_of_average(Field &field, Mesh const &mesh) {
-  Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
-  auto average_weighted_data = Foam::sum(field * mesh.cellVolumes());
-  return Foam::mag(average_weighted_data) / mesh_volume;
-}
+            /**
+               \brief Compute magnitude of average of volumetric field (set of
+               values associated with mesh cells).
+            */
+            template <typename Field, typename Mesh>
+            auto magnitude_of_average(Field &field, Mesh const &mesh) {
+              Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
+              auto average_weighted_data =
+                  Foam::sum(field * mesh.cellVolumes());
+              return Foam::mag(average_weighted_data) / mesh_volume;
+            }
 
-/**
-   \brief Rescale field by a given factor, including boundary values if
-   applicable.
-*/
-template <typename Field>
-bool rescale(Field &field, Foam::scalar rescaling_factor) {
-  if constexpr (!std::is_same_v<Field, meta::Empty>) {
-    if (rescaling_factor != 1.) {
-      field *= rescaling_factor;
-      if constexpr (meta::has_boundaryField_v<useful::remove_cvref_t<Field>>) {
-        field.boundaryFieldRef() == (rescaling_factor * field.boundaryField());
-      }
-      return true;
-    }
-  }
-  return false;
-}
+            /**
+               \brief Rescale field by a given factor, including boundary values
+               if applicable.
+            */
+            template <typename Field>
+            bool rescale(Field &field, Foam::scalar rescaling_factor) {
+              if constexpr (!std::is_same_v<Field, meta::Empty>) {
+                if (rescaling_factor != 1.) {
+                  field *= rescaling_factor;
+                  if constexpr (meta::has_boundaryField_v<
+                                    useful::remove_cvref_t<Field>>) {
+                    field.boundaryFieldRef() ==
+                        (rescaling_factor * field.boundaryField());
+                  }
+                  return true;
+                }
+              }
+              return false;
+            }
 
-/**
-   \brief Rescale a volumetric field (set of values associated with mesh cells)
-   to a given average value.
-*/
-template <typename Field, typename Mesh>
-void rescale_to_average(Field &field, Mesh const &mesh, double average) {
-  if constexpr (!std::is_same_v<Field, meta::Empty>) {
-    field *= average / magnitude_of_average(field, mesh);
-  }
-}
+            /**
+               \brief Rescale a volumetric field (set of values associated with
+               mesh cells) to a given average value.
+            */
+            template <typename Field, typename Mesh>
+            void rescale_to_average(Field &field, Mesh const &mesh,
+                                    double average) {
+              if constexpr (!std::is_same_v<Field, meta::Empty>) {
+                field *= average / magnitude_of_average(field, mesh);
+              }
+            }
 } // namespace ptof
 
 #endif /* PTOF_USEFUL_H */

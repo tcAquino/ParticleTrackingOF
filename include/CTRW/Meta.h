@@ -95,6 +95,14 @@ template <typename X> using time_t = decltype(std::declval<X>().time);
 template <typename X>
 inline constexpr bool has_time_v = has_member<time_t, X>::value;
 
+/** \brief Type of \c X::boundary_periodic. */
+template <typename X>
+using boundary_periodic_t = decltype(std::declval<X>().boundary_periodic);
+/** \brief Check if \c X has member <tt>boundary_periodic</tt>. */
+template <typename X>
+inline constexpr bool has_boundary_periodic_v =
+    has_member<boundary_periodic_t, X>::value;
+
 /** \class Parameters_or_empty General/Meta.h "General/Meta.h"
     \brief  Get Parameters type for true or Empty type for false. */
 template <bool, typename> struct Parameters_or_empty {

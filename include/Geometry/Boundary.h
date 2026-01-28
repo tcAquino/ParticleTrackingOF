@@ -38,6 +38,7 @@
 #include "Geometry/SymmetryPlanes.h"
 #include <cmath>
 #include <numeric>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -131,7 +132,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC.
+     \param state State to apply BC.
      \param state_old Previous particle state (unused).
      \return \c false (no effect).
   */
@@ -164,13 +165,13 @@ public:
      \param position Position to check
      \return \c true if out of bounds, \c false otherwise.
   */
-  template <typename Position> bool out_of_bounds(Position position) const {
-    return OutOfBounds_Box(position, boundaries);
+  bool out_of_bounds(double position) const {
+    return out_of_bounds_box(position, boundaries);
   }
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -184,14 +185,45 @@ public:
   }
 
   /**
+     \brief Place position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  void place_in_unit_cell(double &position) const {
+    if (!out_of_bounds(position)) {
+      return;
+    }
+    position += boundary_periodic(position, boundaries);
+  }
+
+  /**
+     \return Position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  auto position_in_unit_cell(double position) const {
+    if (!out_of_bounds(position)) {
+      return position;
+    }
+    position += boundary_periodic(position, boundaries);
+    return position;
+  }
+
+  /**
      \brief Translate a position according to projection in periodic cell.
      \param position Position to translate.
      \param projection Position within periodic cell.
   */
-  template <typename Position, typename Projection = double>
-  void translate(Position &position, Projection projection) const {
-    op::plus_inplace(position,
-                     (boundaries.second - boundaries.first) * projection);
+  void translate(double &position, double projection) const {
+    position += (boundaries.second - boundaries.first) * projection;
+  }
+
+  /**
+     \brief Translate a position according to projection in periodic cell,
+     in the opposite direction of translate()
+     \param position Position to translate.
+     \param projection Position outside periodic cell.
+  */
+  void translate_back(double &position, double projection) const {
+    position -= (boundaries.second - boundaries.first) * projection;
   }
 };
 
@@ -199,7 +231,7 @@ public:
    \class Boundary_Periodic Geometry/Boundary.h "Geometry/Boundary.h"
    \brief  Periodic boundaries along each dimension.
    \note State must define:
-   - \c position [Container]
+   - \c position
 */
 class Boundary_Periodic {
 public:
@@ -229,7 +261,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -238,11 +270,52 @@ public:
     if (!out_of_bounds(state.position)) {
       return false;
     }
-    for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-      state.position[dd] +=
-          boundary_periodic(state.position[dd], boundaries[dd]);
+    if constexpr (std::is_same_v<typename State::Position, double>) {
+      state.position += boundary_periodic(state.position, boundaries[0]);
+    } else {
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        state.position[dd] +=
+            boundary_periodic(state.position[dd], boundaries[dd]);
+      }
     }
     return true;
+  }
+
+  /**
+     \brief Place position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  void place_in_unit_cell(Position &position) const {
+    if (!out_of_bounds(position)) {
+      return;
+    }
+    if constexpr (std::is_same_v<Position, double>) {
+      position += boundary_periodic(position, boundaries);
+    } else {
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        position[dd] += boundary_periodic(position[dd], boundaries[dd]);
+      }
+    }
+  }
+
+  /**
+     \return Position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  void position_in_unit_cell(Position position) const {
+    if (!out_of_bounds(position)) {
+      return position;
+    }
+    if constexpr (std::is_same_v<Position, double>) {
+      position += boundary_periodic(position, boundaries);
+    } else {
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        position[dd] += boundary_periodic(position[dd], boundaries[dd]);
+      }
+    }
+    return position;
   }
 
   /**
@@ -253,8 +326,31 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
     auto increment = op::times(domain_dimensions, projections);
-    for (std::size_t dd = 0; dd < increment.size(); ++dd) {
-      position[dd] += increment[dd];
+    if constexpr (std::is_same_v<Position, double>) {
+      position += increment;
+    } else {
+      for (std::size_t dd = 0; dd < increment.size(); ++dd) {
+        position[dd] += increment[dd];
+      }
+    }
+  }
+
+  /**
+     \brief Translate a position according to projection in periodic cell,
+     in the opposite direction of translate()
+     \param position Position to translate.
+     \param projection Position outside periodic cell.
+  */
+  template <typename Position, typename Projections = std::vector<double>>
+  void translate_back(Position &position,
+                      Projections const &projections) const {
+    auto increment = op::times(domain_dimensions, projections);
+    if constexpr (std::is_same_v<Position, double>) {
+      position -= increment;
+    } else {
+      for (std::size_t dd = 0; dd < increment.size(); ++dd) {
+        position[dd] -= increment[dd];
+      }
     }
   }
 
@@ -315,7 +411,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -327,6 +423,54 @@ public:
     state.position[dd] += boundary_periodic(state.position[dd], boundaries);
     return true;
   }
+
+  /**
+       \brief Place position within periodic domain.
+       \param position Position to place in unit cell.
+    */
+  template <typename Position>
+  void place_in_unit_cell(Position &position) const {
+    if (!out_of_bounds(position)) {
+      return;
+    }
+    position[dd] += boundary_periodic(position[dd], boundaries);
+  }
+
+  /**
+     \return Position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  auto position_in_unit_cell(Position position) const {
+    if (!out_of_bounds(position)) {
+      return position;
+    }
+    position += boundary_periodic(position, boundaries);
+    return position;
+  }
+
+  /**
+     \brief Translate a position according to projection in periodic cell.
+     \param position Position to translate.
+     \param projection Projection components in periodic cell.
+  */
+  template <typename Position>
+  void translate(Position &position, double projection) const {
+    auto increment = (boundaries.second - boundaries.first) * projection;
+    position[dd] += increment;
+  }
+
+  /**
+     \brief Translate a position according to projection in periodic cell,
+     in the opposite direction of translate()
+     \param position Position to translate.
+     \param projection Position outside periodic cell.
+  */
+  template <typename Position>
+  void translate_back(Position &position, double projection) const {
+    auto increment = (boundaries.second - boundaries.first) * projection;
+    position[dd] -= increment;
+  }
 };
 
 /**
@@ -335,9 +479,9 @@ public:
    \brief Periodic boundaries along each dimension with information about where
    position would be outside domain.
    \note State must define:
-   - \c position [Container]
-   - \c periodicity [Container of signed integers] (counting how many domains
-   have been traveled along each dimension)
+   - \c position [Container or scalar]
+   - \c periodicity [Container or scalar] (counting how many domains have been
+   traveled along each dimension)
 */
 class Boundary_Periodic_WithOutsideInfo {
 public:
@@ -367,7 +511,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -386,6 +530,58 @@ public:
   }
 
   /**
+     \brief Place position within periodic domain.
+     \param position Position to place in unit cell.
+     \return Periodicity information about \c position.
+  */
+  template <typename Position>
+  auto place_in_unit_cell(Position &position) const {
+    if (!out_of_bounds(position)) {
+      if constexpr (std::is_same_v<Position, double>) {
+        return 0;
+      } else {
+        return std::vector<int>(0, position.size());
+      }
+    }
+    if constexpr (std::is_same_v<Position, double>) {
+      auto change_outside =
+          boundary_periodic_with_outside_info(position, boundaries[0]);
+      position += change_outside.first;
+      return change_outside.second;
+    } else {
+      std::vector<int> periodicity(0, position.size());
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        auto change_outside =
+            boundary_periodic_with_outside_info(position[dd], boundaries[dd]);
+        position[dd] += change_outside.first;
+        periodicity[dd] = change_outside.second;
+      }
+      return periodicity;
+    }
+  }
+
+  /**
+     \return Position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  auto position_in_unit_cell(Position position) const {
+    if (!out_of_bounds(position)) {
+      return position;
+    }
+    if constexpr (std::is_same_v<Position, double>) {
+      position += boundary_periodic_with_outside_info(position, boundaries[0]);
+    } else {
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        position[dd] +=
+            boundary_periodic_with_outside_info(position[dd], boundaries[dd])
+                .second;
+      }
+    }
+    return position;
+  }
+
+  /**
      \brief Translate a position according to projection in periodic cell.
      \param position Position to translate.
      \param projections Projection components in periodic cell.
@@ -395,6 +591,21 @@ public:
     auto increment = op::times(domain_dimensions, projections);
     for (std::size_t dd = 0; dd < increment.size(); ++dd) {
       position[dd] += increment[dd];
+    }
+  }
+
+  /**
+   \brief Translate a position according to projection in periodic cell,
+   in the opposite direction of translate()
+   \param position Position to translate.
+   \param projections Position outside periodic cell.
+*/
+  template <typename Position, typename Projections = std::vector<double>>
+  void translate_back(Position &position,
+                      Projections const &projections) const {
+    auto increment = op::times(domain_dimensions, projections);
+    for (std::size_t dd = 0; dd < increment.size(); ++dd) {
+      position[dd] -= increment[dd];
     }
   }
 
@@ -444,7 +655,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -462,7 +673,7 @@ public:
    \class Boundary_Reflecting Geometry/Boundary.h "Geometry/Boundary.h"
    \brief Reflecting boundaries along along each dimension.
    \note State must define:
-   - \c position [Container]
+   - \c position [Container or scalar]
 */
 class Boundary_Reflecting {
 public:
@@ -489,7 +700,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -540,7 +751,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -582,7 +793,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state.
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -683,7 +894,7 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state.
      \return \c true if there was an effect, \c false otherwise.
   */
@@ -811,11 +1022,10 @@ public:
   */
   Boundary_Periodic_SymmetryPlanes(double scale = 1.,
                                    std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale}, origin{
-                                             origin.size() == 0.
-                                                 ? std::vector<double>(
-                                                       symmetry_planes.dim, 0.)
-                                                 : origin} {}
+      : symmetry_planes{}, scale{scale},
+        origin{origin.size() == 0.
+                   ? std::vector<double>(symmetry_planes.dim, 0.)
+                   : origin} {}
 
   /**
      \brief Check if position is out of bounds.
@@ -835,14 +1045,14 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    auto projections =
-        place_in_unit_cell(state.position, symmetry_planes, scale, origin);
+    auto projections = geom::place_in_unit_cell(state.position, symmetry_planes,
+                                                scale, origin);
 
     for (auto const &val : projections) {
       if (val != 0) {
@@ -853,6 +1063,25 @@ public:
   }
 
   /**
+     \brief Place position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  void place_in_unit_cell(Position &position) const {
+    geom::place_in_unit_cell(position, symmetry_planes, scale, origin);
+  }
+
+  /**
+     \return Position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  auto position_in_unit_cell(Position position) const {
+    geom::place_in_unit_cell(position, symmetry_planes, scale, origin);
+    return position;
+  }
+
+  /**
      \brief Translate a position according to projection in periodic cell.
      \param position Position to translate.
      \param projections Projection components in periodic cell.
@@ -860,6 +1089,18 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
     geom::translate(position, symmetry_planes, projections, scale);
+  }
+
+  /**
+     \brief Translate a position according to projection in periodic cell,
+     in the opposite direction of translate()
+     \param position Position to translate.
+     \param projections Position outside periodic cell.
+  */
+  template <typename Position, typename Projections = std::vector<double>>
+  void translate_back(Position &position,
+                      Projections const &projections) const {
+    geom::translate_back(position, symmetry_planes, projections, scale);
   }
 };
 
@@ -904,15 +1145,14 @@ public:
   */
   Boundary_Periodic_SymmetryPlanes_WithOutsideInfo(
       double scale = 1., std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale}, origin{
-                                             origin.size() == 0.
-                                                 ? std::vector<double>(
-                                                       symmetry_planes.dim, 0.)
-                                                 : origin} {}
+      : symmetry_planes{}, scale{scale},
+        origin{origin.size() == 0.
+                   ? std::vector<double>(symmetry_planes.dim, 0.)
+                   : origin} {}
 
   /**
      \brief Check if position is out of bounds.
-     \param position Position to check
+     \param position Position to check.
      \return \c true if out of bounds, \c false otherwise.
   */
   template <typename Position>
@@ -928,14 +1168,14 @@ public:
 
   /**
      \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
+     \param state State to apply BC to.
      \param state_old Previous particle state (unused).
      \return \c true if there was an effect, \c false otherwise.
   */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    auto projections =
-        place_in_unit_cell(state.position, symmetry_planes, scale, origin);
+    auto projections = geom::place_in_unit_cell(state.position, symmetry_planes,
+                                                scale, origin);
     op::plus_inplace(state.periodicity, projections);
     for (auto const &val : projections) {
       if (val != 0) {
@@ -946,6 +1186,26 @@ public:
   }
 
   /**
+     \brief Place position within periodic domain.
+     \param position Position to place in unit cell.
+     \return Periodicity information about \c position.
+  */
+  template <typename Position>
+  auto place_in_unit_cell(Position &position) const {
+    return geom::place_in_unit_cell(position, symmetry_planes, scale, origin);
+  }
+
+  /**
+     \return Position within periodic domain.
+     \param position Position to place in unit cell.
+  */
+  template <typename Position>
+  auto position_in_unit_cell(Position position) const {
+    geom::place_in_unit_cell(position, symmetry_planes, scale, origin);
+    return position;
+  }
+
+  /**
      \brief Translate a position according to projection in periodic cell.
      \param position Position to translate.
      \param projections Projection components in periodic cell.
@@ -953,6 +1213,18 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
     geom::translate(position, symmetry_planes, projections, scale);
+  }
+
+  /**
+     \brief Translate a position according to projection in periodic cell,
+     in the opposite direction of translate()
+     \param position Position to translate.
+     \param projections Position outside periodic cell.
+  */
+  template <typename Position, typename Projections = std::vector<double>>
+  void translate_back(Position &position,
+                      Projections const &projections) const {
+    geom::translate_back(position, symmetry_planes, projections, scale);
   }
 };
 } // namespace geom

@@ -141,7 +141,7 @@ struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
       auto const &state_new = part.state_new();
       _output << std::setw(_column_widths[1]) << state_old.tag;
       io::print(_output,
-                interpolate_position_ensure_inside(part, time, this->_locator),
+                position_interpolated<true, false>(part, time, this->_geometry),
                 _column_widths[2]);
       _output << std::setw(_column_widths[3])
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
@@ -220,7 +220,7 @@ struct MeasurerTime_position_in_regions final
         _output << std::setw(_column_widths[1]) << state_old.tag;
         io::print(
             _output,
-            interpolate_position_ensure_inside(part, time, this->_locator),
+            position_interpolated<true, false>(part, time, this->_geometry),
             _column_widths[2]);
         _output << std::setw(_column_widths[3])
                 << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
@@ -266,7 +266,8 @@ struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_mean(_subject, time), _column_widths[1]);
+    io::print(_output, position_mean<false>(_subject, time, this->_geometry),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -302,10 +303,9 @@ struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_mean(_subject, time,
-                            [](auto const &state) {
-                              return op::abs(ctrw::Get_position{}(state));
-                            }),
+              position_mean<false>(
+                  _subject, time, this->_geometry,
+                  [](auto const &position) { return op::abs(position); }),
               _column_widths[1]);
     _output << "\n";
   }
@@ -347,7 +347,8 @@ struct MeasurerTime_position_second_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_second_moment(_subject, time),
+    io::print(_output,
+              position_second_moment<false>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -388,7 +389,9 @@ struct MeasurerTime_position_nth_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_moment(_subject, _nn, time), _column_widths[1]);
+    io::print(_output,
+              position_moment<false>(_subject, _nn, time, this->_geometry),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -424,7 +427,7 @@ struct MeasurerTime_position_moment_periodic final
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
                                         directories, make_name(exponents),
                                         identifier,  precision},
-        _getter_position{geometry.boundary_periodic}, _exponents{exponents},
+        _exponents{exponents},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
@@ -441,9 +444,10 @@ struct MeasurerTime_position_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_moment(_subject, _exponents, time, _getter_position),
-              _column_widths[1]);
+    io::print(
+        _output,
+        position_moment<true>(_subject, _exponents, time, this->_geometry),
+        _column_widths[1]);
     _output << "\n";
   }
 
@@ -459,7 +463,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::vector<double> _exponents;
   std::array<int, 2> _column_widths;
 };
@@ -498,8 +501,10 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_moment(_subject, _exponents, time),
-              _column_widths[1]);
+    io::print(
+        _output,
+        position_moment<false>(_subject, _exponents, time, this->_geometry),
+        _column_widths[1]);
     _output << "\n";
   }
 
@@ -548,7 +553,9 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_variance(_subject, time), _column_widths[1]);
+    io::print(_output,
+              position_variance<false>(_subject, time, this->_geometry),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -1397,7 +1404,6 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
                                         directories, "position_periodic",
                                         identifier,  precision},
-        _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
@@ -1424,8 +1430,7 @@ struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
       auto const &state_new = part.state_new();
       _output << std::setw(_column_widths[1]) << state_old.tag;
       io::print(_output,
-                interpolate_position_ensure_inside(part, time, this->_locator,
-                                                   _getter_position),
+                position_interpolated<true, true>(part, time, this->_geometry),
                 _column_widths[2]);
       _output << std::setw(_column_widths[3])
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
@@ -1437,7 +1442,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::array<int, 4> _column_widths;
 };
 
@@ -1461,8 +1465,7 @@ struct MeasurerTime_position_in_regions_periodic final
                                         "position_in_regions_periodic",
                                         identifier,
                                         precision},
-        _getter_position{geometry.boundary_periodic}, _masks{masks},
-        _thresholds{thresholds},
+        _masks{masks}, _thresholds{thresholds},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
@@ -1507,10 +1510,10 @@ struct MeasurerTime_position_in_regions_periodic final
         if (std::any_of(in_region.begin(), in_region.end(),
                         [](int ii) { return ii > 0; })) {
           _output << std::setw(_column_widths[1]) << state_old.tag;
-          io::print(_output,
-                    interpolate_position_ensure_inside(
-                        part, time, this->_locator, _getter_position),
-                    _column_widths[2]);
+          io::print(
+              _output,
+              position_interpolated<true, true>(part, time, this->_geometry),
+              _column_widths[2]);
           _output << std::setw(_column_widths[3])
                   << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                               state_old);
@@ -1526,7 +1529,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::vector<std::reference_wrapper<const Mask>> _masks;
   std::vector<double> _thresholds;
   std::array<int, 5> _column_widths;
@@ -1549,7 +1551,6 @@ struct MeasurerTime_position_mean_periodic final
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
                                         directories, "position_mean_periodic",
                                         identifier,  precision},
-        _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(2 + std::string{"Position_mean_"}.length()))} {
@@ -1563,7 +1564,7 @@ struct MeasurerTime_position_mean_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_mean(_subject, time, _getter_position),
+    io::print(_output, position_mean<true>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1572,7 +1573,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::array<int, 2> _column_widths;
 };
 
@@ -1596,7 +1596,6 @@ struct MeasurerTime_position_abs_mean_periodic final
                                         "position_abs_mean_periodic",
                                         identifier,
                                         precision},
-        _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Position_abs_mean"}.length()))} {
@@ -1608,10 +1607,9 @@ struct MeasurerTime_position_abs_mean_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_mean(_subject, time,
-                            [this](auto const &state) {
-                              return op::abs(_getter_position(state));
-                            }),
+              position_mean<true>(
+                  _subject, time, this->_geometry,
+                  [](auto const &position) { return op::abs(position); }),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1620,7 +1618,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::array<int, 2> _column_widths;
 };
 
@@ -1644,7 +1641,6 @@ struct MeasurerTime_position_second_moment_periodic final
                                         "position_second_moment_periodic",
                                         identifier,
                                         precision},
-        _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(
@@ -1660,7 +1656,8 @@ struct MeasurerTime_position_second_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_second_moment(_subject, time, _getter_position),
+    io::print(_output,
+              position_second_moment<true>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1669,7 +1666,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::array<int, 2> _column_widths;
 };
 
@@ -1689,7 +1685,7 @@ struct MeasurerTime_position_nth_moment_periodic final
                                             int precision = 8)
       : MeasurerTime<Subject, Geometry>{subject,       geometry,   directories,
                                         make_name(nn), identifier, precision},
-        _getter_position{geometry.boundary_periodic}, _nn{nn},
+        _nn{nn},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
@@ -1704,7 +1700,8 @@ struct MeasurerTime_position_nth_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_moment(_subject, _nn, time, _getter_position),
+    io::print(_output,
+              position_moment<true>(_subject, _nn, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1722,7 +1719,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   double _nn;
   std::array<int, 2> _column_widths;
 };
@@ -1747,7 +1743,6 @@ struct MeasurerTime_position_variance_periodic final
                                         "position_variance_periodic",
                                         identifier,
                                         precision},
-        _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
@@ -1762,7 +1757,7 @@ struct MeasurerTime_position_variance_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_variance(_subject, time, _getter_position),
+    io::print(_output, position_variance<true>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1771,7 +1766,6 @@ private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
   std::array<int, 2> _column_widths;
 };
 
@@ -1926,6 +1920,7 @@ struct MeasurerTime_position_adsorbed_periodic final
                                         "position_adsorbed_periodic",
                                         identifier,
                                         precision},
+        _getter_position{geometry.boundary_periodic},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
