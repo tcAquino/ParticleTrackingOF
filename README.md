@@ -41,4 +41,4 @@ Tomás Aquino is a researcher at IDAEA-CSIC, Barcelona, Spain. He can be contact
 - Nolwenn Delouche (testing and original Doxygen documentation setup)
 - Yang Liu (testing)
 - Hui Wang (testing)
-- Daniel Domínguez-Vázquez
+- Daniel Domínguez-Vázquez (testing)
