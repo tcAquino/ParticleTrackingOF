@@ -549,7 +549,7 @@ public:
       position += change_outside.first;
       return change_outside.second;
     } else {
-      std::vector<int> periodicity(0, position.size());
+      std::vector<int> periodicity(position.size(), 0);
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
         auto change_outside =
             boundary_periodic_with_outside_info(position[dd], boundaries[dd]);
@@ -981,7 +981,7 @@ private:
       radius *
       radius}; /**< Domain radius along reflecting dimensions squared. */
   const std::size_t _begin_transverse{
-      dd_open == 0 ? 1 : 0}; /** First reflecting dimension. */
+      dd_open == 0 ? 1 : 0}; /**< First reflecting dimension. */
 };
 
 /**

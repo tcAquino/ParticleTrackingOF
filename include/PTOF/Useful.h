@@ -1261,17 +1261,18 @@ auto position_interpolated(State const &state_new, State const &state_old,
   auto const &locator = geometry.locator;
   auto const &boundary = boundary_periodic(geometry);
   using Boundary = useful::remove_cvref_t<decltype(boundary)>;
+  bool constexpr periodic_boundary = !std::is_same_v<Boundary, meta::Empty>;
 
   auto get_position = ctrw::getter_position(boundary);
   auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
 
   if constexpr (ensure_inside) {
     Foam::label cell_id;
-    if constexpr (std::is_same_v<Boundary, meta::Empty>) {
-      cell_id = locator(position, state_new.cell);
-    } else {
+    if constexpr (periodic_boundary) {
       cell_id =
           locator(boundary.position_in_unit_cell(position), state_new.cell);
+    } else {
+      cell_id = locator(position, state_new.cell);
     }
     if (outside(cell_id)) {
       auto position_new = get_position(state_new);
@@ -1283,7 +1284,7 @@ auto position_interpolated(State const &state_new, State const &state_old,
     }
   }
 
-  if constexpr (!periodic && !std::is_same_v<Boundary, meta::Empty>) {
+  if constexpr (!periodic && periodic_boundary) {
     boundary.place_in_unit_cell(position);
   }
 
@@ -1381,6 +1382,8 @@ auto position_interpolated_with_cell(Particle const &particle, double time,
 };
 
 /**
+   \tparam ensure_inside If true, if each interpolated position would be outside
+   mesh, use nearest position between new state and old state.
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
    \param subject CTRW object.
@@ -1395,7 +1398,7 @@ auto position_interpolated_with_cell(Particle const &particle, double time,
    - \c time
 */
 template <
-    bool periodic, typename Subject, typename Geometry,
+    bool ensure_inside, bool periodic, typename Subject, typename Geometry,
     typename Transform = useful::Forward<typename Subject::State::Position>>
 auto position_mean(Subject const &subject, double time,
                    Geometry const &geometry, Transform &&transform = {}) {
@@ -1406,15 +1409,17 @@ auto position_mean(Subject const &subject, double time,
     if (!adsorbed(part.state_old()) && brackets_time(part, time)) {
       auto const &state_new = part.state_new();
       auto const &state_old = part.state_old();
-          mean += ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
-                    transform(position_interpolated<false, periodic>(
-                        state_new, state_old, time, geometry));
+      mean += ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old) *
+              transform(position_interpolated<ensure_inside, periodic>(
+                  state_new, state_old, time, geometry));
     }
   }
   return mean / mass(subject, time);
 }
 
 /**
+   \tparam ensure_inside If true, if each interpolated position would be outside
+   mesh, use nearest position between new state and old state.
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
    \param subject CTRW object.
@@ -1425,15 +1430,17 @@ auto position_mean(Subject const &subject, double time,
    - \c position
    - \c mass
 */
-template <bool periodic, typename Subject, typename Geometry>
+template <bool ensure_inside, bool periodic, typename Subject, typename Geometry>
 auto position_second_moment(Subject const &subject, double time,
                             Geometry const &geometry) {
-  return position_mean<periodic>(
+  return position_mean<ensure_inside, periodic>(
       subject, time, geometry,
       [](auto const &position) { return op::square(position); });
 }
 
 /**
+   \tparam ensure_inside If true, if each interpolated position would be outside
+   mesh, use nearest position between new state and old state.
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
    \param subject CTRW object.
@@ -1445,17 +1452,19 @@ auto position_second_moment(Subject const &subject, double time,
    - \c position
    - \c mass
 */
-template <bool periodic, typename Subject, typename Exponents,
+template <bool ensure_inside, bool periodic, typename Subject, typename Exponents,
           typename Geometry>
 auto position_moment(Subject const &subject, Exponents const &exponents,
                      double time, Geometry const &geometry) {
-  return position_mean<periodic>(subject, time, geometry,
-                                 [&exponents](auto const &position) {
-                                   return op::pow(position, exponents);
-                                 });
+  return position_mean<ensure_inside, periodic>(
+      subject, time, geometry, [&exponents](auto const &position) {
+        return op::pow(position, exponents);
+      });
 }
 
 /**
+   \tparam ensure_inside If true, if each interpolated position would be outside
+   mesh, use nearest position between new state and old state.
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
    \param subject CTRW object.
@@ -1466,11 +1475,13 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
    - \c position
    - \c mass
 */
-template <bool periodic, typename Subject, typename Geometry>
+template <bool ensure_inside, bool periodic, typename Subject, typename Geometry>
 auto position_variance(Subject const &subject, double time,
                        Geometry const &geometry) {
-  return position_second_moment<periodic>(subject, time, geometry) -
-         op::square(position_mean<periodic>(subject, time, geometry));
+  return position_second_moment<ensure_inside, periodic>(subject, time,
+                                                         geometry) -
+         op::square(
+             position_mean<ensure_inside, periodic>(subject, time, geometry));
 }
 
 /**

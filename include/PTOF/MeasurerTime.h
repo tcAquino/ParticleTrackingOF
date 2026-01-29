@@ -266,7 +266,8 @@ struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_mean<false>(_subject, time, this->_geometry),
+    io::print(_output,
+              position_mean<true, false>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -303,7 +304,7 @@ struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_mean<false>(
+              position_mean<true, false>(
                   _subject, time, this->_geometry,
                   [](auto const &position) { return op::abs(position); }),
               _column_widths[1]);
@@ -347,9 +348,10 @@ struct MeasurerTime_position_second_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_second_moment<false>(_subject, time, this->_geometry),
-              _column_widths[1]);
+    io::print(
+        _output,
+        position_second_moment<true, false>(_subject, time, this->_geometry),
+        _column_widths[1]);
     _output << "\n";
   }
 
@@ -389,9 +391,10 @@ struct MeasurerTime_position_nth_moment final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_moment<false>(_subject, _nn, time, this->_geometry),
-              _column_widths[1]);
+    io::print(
+        _output,
+        position_moment<true, false>(_subject, _nn, time, this->_geometry),
+        _column_widths[1]);
     _output << "\n";
   }
 
@@ -444,10 +447,10 @@ struct MeasurerTime_position_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(
-        _output,
-        position_moment<true>(_subject, _exponents, time, this->_geometry),
-        _column_widths[1]);
+    io::print(_output,
+              position_moment<true, true>(_subject, _exponents, time,
+                                          this->_geometry),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -501,10 +504,10 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(
-        _output,
-        position_moment<false>(_subject, _exponents, time, this->_geometry),
-        _column_widths[1]);
+    io::print(_output,
+              position_moment<true, false>(_subject, _exponents, time,
+                                           this->_geometry),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -554,7 +557,7 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_variance<false>(_subject, time, this->_geometry),
+              position_variance<true, false>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1564,7 +1567,8 @@ struct MeasurerTime_position_mean_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_mean<true>(_subject, time, this->_geometry),
+    io::print(_output,
+              position_mean<true, true>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1607,7 +1611,7 @@ struct MeasurerTime_position_abs_mean_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_mean<true>(
+              position_mean<true, true>(
                   _subject, time, this->_geometry,
                   [](auto const &position) { return op::abs(position); }),
               _column_widths[1]);
@@ -1656,9 +1660,10 @@ struct MeasurerTime_position_second_moment_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_second_moment<true>(_subject, time, this->_geometry),
-              _column_widths[1]);
+    io::print(
+        _output,
+        position_second_moment<true, true>(_subject, time, this->_geometry),
+        _column_widths[1]);
     _output << "\n";
   }
 
@@ -1701,7 +1706,7 @@ struct MeasurerTime_position_nth_moment_periodic final
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_moment<true>(_subject, _nn, time, this->_geometry),
+              position_moment<true, true>(_subject, _nn, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -1757,7 +1762,8 @@ struct MeasurerTime_position_variance_periodic final
 
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output, position_variance<true>(_subject, time, this->_geometry),
+    io::print(_output,
+              position_variance<true, true>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
