@@ -205,7 +205,8 @@ public:
            << io::line();
     output << "Measurement time units: " << parameters.time_units << "\n"
            << "Measurement spacing: " << parameters.measurement_spacing << "\n"
-           << "Minimum measurement time: " << parameters.time_min << "\n"
+           << "Minimum measurement time: "
+           << parameters.time_min / parameters.time_unit_factor << "\n"
            << "Maximum measurement time: ";
     bool time_end_criterion = false;
     for (auto const &end_criterion : parameters.end_criteria) {
@@ -216,15 +217,18 @@ public:
       }
     }
     if (!time_end_criterion) {
-      output << parameters.time_max << "\n";
+      output << parameters.time_max;
     } else {
       double time_end = parameters.end_values.at(EndCriterionList::Type::time);
       if (parameters.time_max < time_end) {
         throw std::runtime_error{
             "Last measurement time is lower than specified end time"};
       }
-      output << time_end << "\n";
+      output << time_end;
     }
+    output << "\n"
+           << "Measurement time increment: "
+           << parameters.time_increment / parameters.time_unit_factor << "\n";
 
     if (parameters.end_criteria.size() > 1) {
       output << "Number of end criteria to combine: "
