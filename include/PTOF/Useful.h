@@ -58,12 +58,13 @@ bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
     Class::info(output);
     has_info = true;
   }
-  if constexpr (meta::has_parameters_type_v<Class>)
+  if constexpr (meta::has_parameters_type_v<Class>) {
     if constexpr (meta::has_static_info_v<typename Class::Parameters>) {
       output << "\n";
       Class::Parameters::info(output);
       has_info = true;
     }
+  }
 
   if (notify_if_no_info && !has_info) {
     output << "\n"
@@ -891,8 +892,9 @@ auto cell_ids_region_cartesian(
   for (std::size_t dd = 0; dd < boundaries.size(); ++dd)
     if (boundaries[dd].first == boundaries[dd].second) {
       degenerate_dimensions.push_back(dd);
-    } else
+    } else {
       non_degenerate_dimensions.push_back(dd);
+    }
 
   auto const &mesh = locator.mesh();
 
@@ -908,10 +910,12 @@ auto cell_ids_region_cartesian(
         break;
       }
     }
-    if (!cell_is_within_non_degenerate_boundaries)
+    if (!cell_is_within_non_degenerate_boundaries) {
       continue;
-    if (degenerate_dimensions.size() == 0)
+    }
+    if (degenerate_dimensions.size() == 0) {
       cell_ids.insert(cc);
+    }
 
     // Consider a position equal to the cell center of the candidate cell
     // but with components along the degenerate dimension
@@ -1034,9 +1038,10 @@ auto fluxweighted_cell_distribution(Container const &cell_ids,
                                     VectorField const &vector_field,
                                     Mesh const &mesh, Foam::scalar time) {
   auto weights = cell_fluxes(cell_ids, vector_field, mesh, time);
-  if (op::sum(weights) == 0.)
+  if (op::sum(weights) == 0.) {
     throw std::runtime_error{"Cannot define flux-weighted distribution because "
                              "all cells have zero flux"};
+  }
   return std::discrete_distribution<std::size_t>{weights.begin(),
                                                  weights.end()};
 }
@@ -1067,9 +1072,10 @@ auto fluxweighted_face_distribution(Container const &face_ids,
                                     Locator const &locator, Foam::scalar time) {
   auto weights = face_fluxes_inward(face_ids, vector_field, locator, time);
   op::apply([](auto val) { return std::max(0., val); }, weights);
-  if (op::sum(weights) == 0.)
+  if (op::sum(weights) == 0.) {
     throw std::runtime_error{"Cannot define flux-weighted distribution because "
                              "all faces have zero flux"};
+  }
   return std::discrete_distribution<std::size_t>{weights.begin(),
                                                  weights.end()};
 }
@@ -1430,7 +1436,8 @@ auto position_mean(Subject const &subject, double time,
    - \c position
    - \c mass
 */
-template <bool ensure_inside, bool periodic, typename Subject, typename Geometry>
+template <bool ensure_inside, bool periodic, typename Subject,
+          typename Geometry>
 auto position_second_moment(Subject const &subject, double time,
                             Geometry const &geometry) {
   return position_mean<ensure_inside, periodic>(
@@ -1452,8 +1459,8 @@ auto position_second_moment(Subject const &subject, double time,
    - \c position
    - \c mass
 */
-template <bool ensure_inside, bool periodic, typename Subject, typename Exponents,
-          typename Geometry>
+template <bool ensure_inside, bool periodic, typename Subject,
+          typename Exponents, typename Geometry>
 auto position_moment(Subject const &subject, Exponents const &exponents,
                      double time, Geometry const &geometry) {
   return position_mean<ensure_inside, periodic>(
@@ -1475,7 +1482,8 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
    - \c position
    - \c mass
 */
-template <bool ensure_inside, bool periodic, typename Subject, typename Geometry>
+template <bool ensure_inside, bool periodic, typename Subject,
+          typename Geometry>
 auto position_variance(Subject const &subject, double time,
                        Geometry const &geometry) {
   return position_second_moment<ensure_inside, periodic>(subject, time,
@@ -1673,134 +1681,122 @@ auto closest_time_index(Foam::instantList const &flow_times,
       std::min_element(
           flow_times.cbegin(), flow_times.cend(), [time](auto xx, auto yy) {
             if (xx.name() == "constant" || yy.name() == "constant") {
-                                       return true;
-                                     } else {
-                                       return std::abs(xx.value() - time) <
-                                              std::abs(yy.value() - time);
-                                     }
-                                   }));
+              return true;
+            } else {
+              return std::abs(xx.value() - time) < std::abs(yy.value() - time);
             }
+          }));
+}
 
-            auto closest_time_index(DirectoriesOF const &directories_of,
-                                    Foam::scalar time) {
-              return closest_time_index(directories_of.time.times(), time);
-            }
+auto closest_time_index(DirectoriesOF const &directories_of,
+                        Foam::scalar time) {
+  return closest_time_index(directories_of.time.times(), time);
+}
 
-            template <typename Mesh>
-            auto closest_time_index(Mesh const &mesh, Foam::scalar time) {
-              return closest_time_index(mesh.time().times(), time);
-            }
+template <typename Mesh>
+auto closest_time_index(Mesh const &mesh, Foam::scalar time) {
+  return closest_time_index(mesh.time().times(), time);
+}
 
-            auto closest_instant(Foam::instantList const &flow_times,
-                                 Foam::scalar time) {
-              return flow_times[closest_time_index(flow_times, time)];
-            }
+auto closest_instant(Foam::instantList const &flow_times, Foam::scalar time) {
+  return flow_times[closest_time_index(flow_times, time)];
+}
 
-            auto closest_instant(DirectoriesOF const &directories_of,
-                                 Foam::scalar time) {
-              return closest_instant(directories_of.time.times(), time);
-            }
+auto closest_instant(DirectoriesOF const &directories_of, Foam::scalar time) {
+  return closest_instant(directories_of.time.times(), time);
+}
 
-            template <typename Mesh>
-            auto closest_instant(Mesh const &mesh, Foam::scalar time) {
-              return closest_instant(mesh.time().times(), time);
-            }
+template <typename Mesh>
+auto closest_instant(Mesh const &mesh, Foam::scalar time) {
+  return closest_instant(mesh.time().times(), time);
+}
 
-            auto closest_time(Foam::instantList const &flow_times,
-                              Foam::scalar time) {
-              return closest_instant(flow_times, time).value();
-            }
+auto closest_time(Foam::instantList const &flow_times, Foam::scalar time) {
+  return closest_instant(flow_times, time).value();
+}
 
-            auto closest_time(DirectoriesOF const &directories_of,
-                              Foam::scalar time) {
-              return closest_time(directories_of.time.times(), time);
-            }
+auto closest_time(DirectoriesOF const &directories_of, Foam::scalar time) {
+  return closest_time(directories_of.time.times(), time);
+}
 
-            template <typename Mesh>
-            auto closest_time(Mesh const &mesh, Foam::scalar time) {
-              return closest_time(mesh.time().times(), time);
-            }
+template <typename Mesh>
+auto closest_time(Mesh const &mesh, Foam::scalar time) {
+  return closest_time(mesh.time().times(), time);
+}
 
-            auto closest_time_name(DirectoriesOF const &directories_of,
-                                   Foam::scalar time) {
-              return directories_of.time.timeName(
-                  closest_time(directories_of.time.times(), time));
-            }
+auto closest_time_name(DirectoriesOF const &directories_of, Foam::scalar time) {
+  return directories_of.time.timeName(
+      closest_time(directories_of.time.times(), time));
+}
 
-            template <typename Mesh>
-            auto closest_time_name(Mesh const &mesh, Foam::scalar time) {
-              return mesh.time().timeName(closest_time(mesh, time));
-            }
+template <typename Mesh>
+auto closest_time_name(Mesh const &mesh, Foam::scalar time) {
+  return mesh.time().timeName(closest_time(mesh, time));
+}
 
-            template <typename Field>
-            auto evaluate(Field const &field, Foam::label cell_id,
-                          Foam::scalar time = 0.) {
-              if constexpr (meta::has_square_brackets_of_label_v<Field>) {
-                return field[cell_id];
-              } else {
-                return field(cell_id, time);
-              }
-            }
+template <typename Field>
+auto evaluate(Field const &field, Foam::label cell_id, Foam::scalar time = 0.) {
+  if constexpr (meta::has_square_brackets_of_label_v<Field>) {
+    return field[cell_id];
+  } else {
+    return field(cell_id, time);
+  }
+}
 
-            template <typename Field, typename State>
-            auto evaluate(Field const &field, State const &state) {
-              return evaluate(field, state.cell, state.time);
-            }
+template <typename Field, typename State>
+auto evaluate(Field const &field, State const &state) {
+  return evaluate(field, state.cell, state.time);
+}
 
-            template <typename Field>
-            auto evaluate_boundary_field(
-                Field const &field, Foam::label patch_id, Foam::label face_id,
-                Foam::scalar time = 0.) {
-              if constexpr (meta::has_boundaryField_of_void_v<Field>) {
-                return field.boundaryField()[patch_id][face_id];
-              } else {
-                return field.boundaryField(patch_id, face_id, time);
-              }
-            }
+template <typename Field>
+auto evaluate_boundary_field(Field const &field, Foam::label patch_id,
+                             Foam::label face_id, Foam::scalar time = 0.) {
+  if constexpr (meta::has_boundaryField_of_void_v<Field>) {
+    return field.boundaryField()[patch_id][face_id];
+  } else {
+    return field.boundaryField(patch_id, face_id, time);
+  }
+}
 
-            /**
-               \brief Compute magnitude of average of volumetric field (set of
-               values associated with mesh cells).
-            */
-            template <typename Field, typename Mesh>
-            auto magnitude_of_average(Field &field, Mesh const &mesh) {
-              Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
-              auto average_weighted_data =
-                  Foam::sum(field * mesh.cellVolumes());
-              return Foam::mag(average_weighted_data) / mesh_volume;
-            }
+/**
+   \brief Compute magnitude of average of volumetric field (set of
+   values associated with mesh cells).
+*/
+template <typename Field, typename Mesh>
+auto magnitude_of_average(Field &field, Mesh const &mesh) {
+  Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
+  auto average_weighted_data = Foam::sum(field * mesh.cellVolumes());
+  return Foam::mag(average_weighted_data) / mesh_volume;
+}
 
-            /**
-               \brief Rescale field by a given factor, including boundary values
-               if applicable.
-            */
-            template <typename Field>
-            bool rescale(Field &field, Foam::scalar rescaling_factor) {
-              if constexpr (!std::is_same_v<Field, meta::Empty>) {
-                if (rescaling_factor != 1.) {
-                  field *= rescaling_factor;
-                  if constexpr (meta::has_boundaryField_v<
-                                    useful::remove_cvref_t<Field>>) {
-                    field.boundaryFieldRef() ==
-                        (rescaling_factor * field.boundaryField());
-                  }
-                  return true;
-                }
-              }
-              return false;
-            }
+/**
+   \brief Rescale field by a given factor, including boundary values
+   if applicable.
+*/
+template <typename Field>
+bool rescale(Field &field, Foam::scalar rescaling_factor) {
+  if constexpr (!std::is_same_v<Field, meta::Empty>) {
+    if (rescaling_factor != 1.) {
+      field *= rescaling_factor;
+      if constexpr (meta::has_boundaryField_v<useful::remove_cvref_t<Field>>) {
+        field.boundaryFieldRef() == (rescaling_factor * field.boundaryField());
+      }
+      return true;
+    }
+  }
+  return false;
+}
 
-            /**
-               \brief Rescale a volumetric field (set of values associated with
-               mesh cells) to a given average value.
-            */
-            template <typename Field, typename Mesh>
-            void rescale_to_average(Field &field, Mesh const &mesh,
-                                    double average) {
-              if constexpr (!std::is_same_v<Field, meta::Empty>) {
-                field *= average / magnitude_of_average(field, mesh);
-              }
-            }
+/**
+   \brief Rescale a volumetric field (set of values associated with
+   mesh cells) to a given average value.
+*/
+template <typename Field, typename Mesh>
+void rescale_to_average(Field &field, Mesh const &mesh, double average) {
+  if constexpr (!std::is_same_v<Field, meta::Empty>) {
+    field *= average / magnitude_of_average(field, mesh);
+  }
+}
 } // namespace ptof
 
 #endif /* PTOF_USEFUL_H */
