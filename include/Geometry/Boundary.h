@@ -52,7 +52,7 @@ namespace geom {
 double boundary_periodic(double position,
                          std::pair<double, double> const &boundaries) {
   double box_size = boundaries.second - boundaries.first;
-  double pos = position - boundaries.first;  
+  double pos = position - boundaries.first;
   return -std::floor(pos / box_size) * box_size;
 }
 
@@ -67,7 +67,9 @@ std::pair<double, int> boundary_periodic_with_outside_info(
     double position, std::pair<double, double> const &boundaries) {
   double box_size = boundaries.second - boundaries.first;
   double pos = position - boundaries.first;
+
   int outside = int(std::floor(pos / box_size));
+
   return {-outside * box_size, outside};
 }
 
