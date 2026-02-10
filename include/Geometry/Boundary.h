@@ -306,7 +306,7 @@ public:
      \param position Position to place in unit cell.
   */
   template <typename Position>
-  void position_in_unit_cell(Position position) const {
+  Position position_in_unit_cell(Position position) const {
     if (!out_of_bounds(position)) {
       return position;
     }
@@ -341,7 +341,7 @@ public:
      \brief Translate a position according to projection in periodic cell,
      in the opposite direction of translate()
      \param position Position to translate.
-     \param projection Position outside periodic cell.
+     \param projections Position outside periodic cell.
   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate_back(Position &position,
