@@ -65,6 +65,38 @@ auto uniform_solid_reactant(
 }
 
 /**
+   \brief Append surface concentrations over face ids to map.
+   \param face_ids Mesh face indices where to assign concentration.
+   \param surface_concentration_values Surface concentration values.
+   \param surface_concentrations Map of surface concentrations over given face
+   indices, to append result.
+*/
+template <typename Container>
+void solid_reactant(
+    Container const &face_ids,
+    std::vector<double> const &surface_concentration_values,
+    std::unordered_map<Foam::label, double> &surface_concentrations) {
+  for (std::size_t face = 0; face < surface_concentration_values.size();
+       ++face) {
+    surface_concentrations[face] = surface_concentration_values[face];
+  }
+}
+
+/**
+   \param face_ids Mesh face indices where to assign concentration.
+   \param surface_concentration_values Surface concentration values.
+   \return Map of homogeneous surface concentrations over patch face indices.
+*/
+template <typename Container>
+auto solid_reactant(Container const &face_ids,
+                    std::vector<double> const &surface_concentration_values) {
+  std::unordered_map<Foam::label, double> surface_concentrations;
+  solid_reactant(face_ids, surface_concentration_values,
+                 surface_concentrations);
+  return surface_concentrations;
+}
+
+/**
    \class SurfaceReaction_AFluidPlusASolidtoASolid PTOF/SurfaceReaction.h
    "PTOF/SurfaceReaction.h"
    \brief \f$A_F + A_S \to A_S\f$ surface reaction.

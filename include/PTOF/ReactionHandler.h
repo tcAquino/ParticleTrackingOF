@@ -99,14 +99,27 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
 
   struct Parameters {
   public:
-    double damkohler;
-    std::string initial_distribution;
-    std::vector<std::string> patch_names;
-    std::vector<double> surface_concentrations;
-    double rate_constant;
-    double reaction_time;
-
-    double rate_constant_ratio_solid_to_fluid = 0.;
+    double damkohler;                           /**< Damkohler number. */
+    std::string initial_distribution;           /**< Initial surface
+                                                 * concentration distribution
+                                                 * type. */
+    std::vector<std::string> patch_names;       /**< Names of reactive patches
+                                                 * for some surface
+                                                 * concentration distribution
+                                                 * types. */
+    std::vector<double> surface_concentrations; /**< Patch surface
+                                                 * concentrations for some
+                                                 * surface concentration
+                                                 * distribution types. */
+    std::string filename_data; /**< File name with data for some surface
+                                * concentration distribution types. */
+    double rate_constant;      /**< Reaction rate constant.
+                                * [length per solid (area)
+                                * concentration per time]. */
+    double reaction_time;      /**< Characteristic reaction
+                                * time. */
+    double rate_constant_ratio_solid_to_fluid = 0.; /**< Ratio of solid to fluid
+                                                     * rate constantes.*/
 
     template <typename TransportParameters>
     Parameters(Directories const &directories,
@@ -151,7 +164,24 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
         }
         auto areas = patch_areas(patch_names, geometry.mesh());
         average_surface_concentration =
-            op::sum(op::times(surface_concentrations, areas)) / op::sum(areas);
+            op::sum(op::times(areas, surface_concentrations)) / op::sum(areas);
+      } else if (initial_distribution == "prescribed_faces") {
+        io::read(split_line, param_index,
+                 in_file + for_initial_distribution +
+                     "Could not parse file name",
+                 filename_data);
+        auto dir =
+            param_index < split_line.size()
+                ? io::expand_env(io::expand_home_dir(io::read<std::string>(
+                      split_line, param_index,
+                      in_file + for_initial_distribution +
+                          "Could not parse file directory")))
+                : directories.dir_parameters;
+        filename_data = dir + "/" + filename_data;
+        auto [faces, concentrations] = io::load_2(filename_data);
+        auto areas = face_areas(faces, geometry.mesh());
+        average_surface_concentration =
+            op::sum(op::times(areas, concentrations)) / op::sum(areas);
       } else {
         throw std::runtime_error{in_file + for_initial_distribution +
                                  "Not supported"};
@@ -221,6 +251,12 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
              "    - Pass on same line:\n"
              "      - Pairs of boundary patch names and surface\n"
              "        concentrations\n"
+             "  - prescribed_faces\n"
+             "    - Prescribed values in specified boundary faces\n"
+             "    - Pass on same line:\n"
+             "      - Name of file with faces and surface concentration\n"
+             "        values (one face per line)"
+             "      - Path to file (optional [Parameters directory])\n"
              "- Rate specification type:\n"
              "  - uniform\n"
              "    - Homogeneous and the same in all boundary patches\n"
@@ -268,17 +304,15 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
           params_reaction.rate_constant,
           params_reaction.rate_constant_ratio_solid_to_fluid,
           params_transport.diff_coeff,
-          uniform_solid_reactant(params_reaction.patch_names,
-                                 params_reaction.surface_concentrations,
-                                 geometry.mesh()),
+          surface_concentrations(params_reaction, geometry.mesh()),
           geometry.locator,
           ParallelOption{}};
     } else {
       return SurfaceReaction{
-          params_reaction.rate_constant, params_transport.diff_coeff,
-          uniform_solid_reactant(params_reaction.patch_names,
-                                 params_reaction.surface_concentrations,
-                                 geometry.mesh())};
+          params_reaction.rate_constant,
+          params_transport.diff_coeff,
+          surface_concentrations(params_reaction, geometry.mesh()),
+      };
     }
   }
 
@@ -301,6 +335,32 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
       surface_reaction.update(ctrw, time_new, time_old);
     }
   }
+
+private:
+  template <typename Mesh>
+  static auto surface_concentrations(Parameters const &params_reaction,
+                                     Mesh const &mesh) {
+    if (params_reaction.initial_distribution == "uniform_patch") {
+      return uniform_solid_reactant(params_reaction.patch_names,
+                                    params_reaction.surface_concentrations,
+                                    mesh);
+    } else if (params_reaction.initial_distribution == "prescribed_faces") {
+      std::string in_file =
+          std::string{"In file "} + params_reaction.filename_data + " : ";
+      std::string for_initial_distribution =
+          std::string{"Initial surface reactant distribution type "} +
+          params_reaction.initial_distribution + " : ";
+      auto [faces, concentrations] = io::load_2(params_reaction.filename_data);
+      return solid_reactant(faces, concentrations);
+    } else {
+      throw std::runtime_error{
+          std::string{"Surface concentrations : Initial surface reactant "
+                      "distribution type"} +
+          params_reaction.initial_distribution +
+          " : "
+          "Not supported"};
+    }
+  }
 };
 
 template <typename Geometry, typename ParallelOption>
@@ -316,13 +376,27 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
 
   struct Parameters {
   public:
-    double damkohler;
-    std::string initial_distribution;
-    std::vector<std::string> patch_names;
-    std::vector<double> surface_concentrations;
-    double rate_constant;
-    double desorption_rate;
-    double reaction_time;
+    double damkohler;                           /**< Damkohler number. */
+    std::string initial_distribution;           /**< Initial surface
+                                                 * concentration distribution
+                                                 * type. */
+    std::vector<std::string> patch_names;       /**< Names of reactive patches
+                                                 * for some surface
+                                                 * concentration distribution
+                                                 * types. */
+    std::vector<double> surface_concentrations; /**< Patch surface
+                                                 * concentrations for some
+                                                 * surface concentration
+                                                 * distribution types. */
+    std::string filename_data;                  /**< File name with data for
+                                                 * some surface concentration
+                                                 * distribution types. */
+    double rate_constant;                       /**< Reaction rate constant.
+                                                 * [length per solid (area)
+                                                 * concentration per time]. */
+    double desorption_rate;                     /**< Desorption rate. */
+    double reaction_time;                       /**< Characteristic reaction
+                                                 * time. */
 
     template <typename TransportParameters>
     Parameters(Directories const &directories,
@@ -368,6 +442,24 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
         auto areas = patch_areas(patch_names, geometry.mesh());
         average_surface_concentration =
             op::sum(op::times(surface_concentrations, areas)) / op::sum(areas);
+      } else if (initial_distribution == "prescribed_faces") {
+        io::read(split_line, param_index,
+                 in_file + for_initial_distribution +
+                     "Could not parse file name",
+                 filename_data);
+        auto dir =
+            param_index < split_line.size()
+                ? io::expand_env(io::expand_home_dir(io::read<std::string>(
+                      split_line, param_index,
+                      in_file + for_initial_distribution +
+                          "Could not parse file directory")))
+                : directories.dir_parameters;
+        filename_data = dir + "/" + filename_data;
+        auto input = io::open_read(filename_data);
+        auto [faces, concentrations] = io::load_2(filename_data);
+        auto areas = face_areas(faces, geometry.mesh());
+        average_surface_concentration =
+            op::sum(op::times(areas, concentrations)) / op::sum(areas);
       } else {
         throw std::runtime_error{in_file + for_initial_distribution +
                                  "Not supported"};
@@ -440,6 +532,12 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
              "    - Pass on same line:\n"
              "      - Pairs of boundary patch names and surface\n"
              "        concentrations\n"
+             "  - prescribed_faces\n"
+             "    - Prescribed values in specified boundary faces\n"
+             "    - Pass on same line:\n"
+             "      - Name of file with faces and surface concentration\n"
+             "        values (one face per line)\n"
+             "      - Path to file (optional [Parameters directory])\n"
              "- Rate distribution type:\n"
              "  - uniform\n"
              "    - Homogeneous and the same in all boundary patches\n"
@@ -448,9 +546,11 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
              "        - damkohler\n"
              "          - Pass on same line:\n"
              "            - Damkohler number ([diffusion time] * [average\n"
-             "              surface concentration] * [surface rate constant]\n"
+             "              surface concentration] * [surface rate "
+             "constant]\n"
              "              / [lengthscale])\n"
-             "            - Desorption Damkohler number ([diffusion time] * \n"
+             "            - Desorption Damkohler number ([diffusion time] * "
+             "\n"
              "              [desorption rate])\n"
              "            (Note:\n"
              "              - Diffusion time is as defined in transport\n"
@@ -480,9 +580,7 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
                                   SolverParameters const &params_solvers) {
     return SurfaceReaction{
         params_reaction.rate_constant, params_transport.diff_coeff,
-        uniform_solid_reactant(params_reaction.patch_names,
-                               params_reaction.surface_concentrations,
-                               geometry.mesh()),
+        surface_concentrations(params_reaction, geometry.mesh()),
         params_reaction.desorption_rate};
   }
 
@@ -501,6 +599,31 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
                      SurfaceReaction &surface_reaction, CTRW &ctrw,
                      typename CTRW::State::Time time_new,
                      typename CTRW::State::Time time_old) {}
+
+  template <typename Mesh>
+  static auto surface_concentrations(Parameters const &params_reaction,
+                                     Mesh const &mesh) {
+    if (params_reaction.initial_distribution == "uniform_patch") {
+      return uniform_solid_reactant(params_reaction.patch_names,
+                                    params_reaction.surface_concentrations,
+                                    mesh);
+    } else if (params_reaction.initial_distribution == "prescribed_faces") {
+      std::string in_file =
+          std::string{"In file "} + params_reaction.filename_data + " : ";
+      std::string for_initial_distribution =
+          std::string{"Initial surface reactant distribution type "} +
+          params_reaction.initial_distribution + " : ";
+      auto [faces, concentrations] = io::load_2(params_reaction.filename_data);
+      return solid_reactant(faces, concentrations);
+    } else {
+      throw std::runtime_error{
+          std::string{"Surface concentrations : Initial surface reactant "
+                      "distribution type"} +
+          params_reaction.initial_distribution +
+          " : "
+          "Not supported"};
+    }
+  }
 };
 } // namespace ptof
 
