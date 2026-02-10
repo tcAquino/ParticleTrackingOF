@@ -573,7 +573,7 @@ private:
                      ? io::expand_env(io::expand_home_dir(io::read<std::string>(
                            split_line, param_index,
                            in_file + for_initial_condition_type +
-                               "Could not file directory")))
+                               "Could not parse file directory")))
                      : directories.dir_parameters;
       return std::make_unique<SpecificParameters_Filename>(dir + "/" +
                                                            filename_data);
