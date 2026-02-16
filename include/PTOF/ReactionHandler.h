@@ -264,9 +264,9 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
              "      - Rate specification format:\n"
              "        - damkohler\n"
              "          - Pass on same line:\n"
-             "            - Damkohler number ([diffusion time] * [average\n"
-             "              surface concentration] * [surface rate constant]\n"
-             "              / [lengthscale])\n";
+             "            - Damkohler number (<diffusion time> * <average\n"
+             "              surface concentration> * <surface rate constant>\n"
+             "              / <lengthscale>)\n";
       if constexpr (solid_decay) {
         output << "            - Ratio of solid to fluid rate constants\n";
       }
@@ -545,11 +545,11 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
              "      - Rate specification format:\n"
              "        - damkohler\n"
              "          - Pass on same line:\n"
-             "            - Damkohler number ([diffusion time] * [average\n"
-             "              surface concentration] * [surface rate constant]\n"
-             "              / [lengthscale])\n"
-             "            - Desorption Damkohler number ([diffusion time] *\n"
-             "              [desorption rate])\n"
+             "            - Damkohler number (<diffusion time> * <average\n"
+             "              surface concentration> * <surface rate constant>\n"
+             "              / <lengthscale>)\n"
+             "            - Desorption Damkohler number (<diffusion time> *\n"
+             "              <desorption rate>)\n"
              "            (Note:\n"
              "              - Diffusion time is as defined in transport\n"
              "                parameters)\n"

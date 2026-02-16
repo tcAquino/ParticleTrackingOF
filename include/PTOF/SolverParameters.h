@@ -240,7 +240,7 @@ struct SolverParameters_Generic {
            "    - Time step accuracy with respect to local advection time\n"
            "    - Time step accuracy with respect to local diffusion time\n"
            "    - Time step accuracy with respect to local reaction time\n"
-           "      (optional)\n"
+           "      (optional [Inf])\n"
            "- Global time step accuracy:\n"
            "  (Note:\n"
            "    - Initial values, e.g., of flow are used\n"
@@ -250,7 +250,7 @@ struct SolverParameters_Generic {
            "    - Time step accuracy with respect to global advection time\n"
            "    - Time step accuracy with respect to global diffusion time\n"
            "    - Time step accuracy with respect to global reaction time\n"
-           "      (optional)\n";
+           "      (optional [Inf])\n";
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       output << "- Time units for CTRW synchronization time step:\n"
                 "  - diffusion\n"
