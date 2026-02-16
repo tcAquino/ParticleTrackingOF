@@ -61,7 +61,7 @@ struct Geometry_Generic {
                    Directories const &directories,
                    io::Logger &&logger = io::NullLogger{})
       : _mesh(make_mesh(directories_of)),
-        _mesh_search(make_mesh_search(directories_of)) {
+        _mesh_search{_mesh} {
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Parallel>) {
       logger("Precomputing demand-driven mesh data...");
@@ -205,14 +205,6 @@ private:
                                directories_of.time, Foam::IOobject::MUST_READ}};
   }
 
-  /**
-     \param directories_of OpenFOAM case directory information.
-     \return Mesh search tools.
-  */
-  MeshSearch make_mesh_search(DirectoriesOF const &directories_of) const {
-    return MeshSearch{_mesh};
-  }
-
 public:
   Locator locator{*this}; /**< To locate positions in mesh.*/
 };
@@ -247,7 +239,7 @@ struct Geometry_Periodic_Cartesian {
                               Directories const &directories,
                               io::Logger &&logger = io::NullLogger{})
       : _mesh(make_mesh(directories_of)),
-        _mesh_search(make_mesh_search(directories_of)),
+        _mesh_search{_mesh},
         boundary_periodic{extract_cartesian_periodic_boundaries(
             get_boundary_conditions<dynamics>(directories), mesh(), dim)} {
     if constexpr (std::is_same_v<ParallelOption,
@@ -399,14 +391,6 @@ private:
                                directories_of.time, Foam::IOobject::MUST_READ}};
   }
 
-  /**
-     \param directories_of OpenFOAM case directory information.
-     \return Mesh search tools.
-  */
-  MeshSearch make_mesh_search(DirectoriesOF const &directories_of) {
-    return MeshSearch{_mesh};
-  }
-
 public:
   Locator locator{*this}; /**< To locate positions in mesh.*/
   BoundaryPeriodic
@@ -450,7 +434,7 @@ struct Geometry_Bcc {
                Directories const &directories,
                io::Logger &&logger = io::NullLogger{})
       : _mesh(make_mesh(directories_of)),
-        _mesh_search(make_mesh_search(directories_of)),
+        _mesh_search{_mesh},
         radius{periodicity == PeriodicityList::Type::cartesian
                    ? std::pow(sum(mesh().cellVolumes()) /
                                   (1. - std::sqrt(3.) * cnst::pi / 8.),
@@ -598,14 +582,6 @@ private:
     return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
                                directories_of.time.timeName(),
                                directories_of.time, Foam::IOobject::MUST_READ}};
-  }
-
-  /**
-     \param directories_of OpenFOAM case directory information.
-     \return Mesh search tools.
-  */
-  MeshSearch make_mesh_search(DirectoriesOF const &directories_of) const {
-    return MeshSearch{_mesh};
   }
 
 public:
