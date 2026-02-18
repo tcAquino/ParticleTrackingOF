@@ -527,7 +527,7 @@ public:
           std::is_same<TimeInterpolationType, InterpolationTypes::Linear>,
           std::is_same<TimeInterpolationType, InterpolationTypes::OldTime>>,
       "Interpolation type must be InterpolationTypes::Linear or "
-      "InterpolationType::OldTime");
+      "InterpolationTypes::OldTime");
 
   /**
      \brief Constructor.

@@ -18,17 +18,19 @@
 
 namespace ptof {
 template <typename Stepper_Advection_t, typename Stepper_Diffusion_t,
-          typename Stepper_CTRW_t>
+          bool reaction_v, typename Stepper_CTRW_t>
 struct Solvers_Generic {
   Solvers_Generic() = delete;
 
   using Stepper_Advection = Stepper_Advection_t;
   using Stepper_Diffusion = Stepper_Diffusion_t;
+  static constexpr bool reaction = reaction_v;
   using Stepper_CTRW = Stepper_CTRW_t;
-  using Parameters = SolverParameters_Generic<Stepper_Advection,
-                                              Stepper_Diffusion, Stepper_CTRW>;
+  using Parameters =
+      SolverParameters_Generic<Stepper_Advection, Stepper_Diffusion, reaction_v,
+                               Stepper_CTRW>;
   static_assert(Parameters::advection || Parameters::diffusion,
-                "No advection or diffusion must be present");
+                "Either advection or diffusion must be present");
   static_assert(!(Parameters::diffusion &&
                   !std::is_same_v<Stepper_Diffusion, Steppers::Euler>),
                 "Currently only no diffusion or stochastic forward Euler "

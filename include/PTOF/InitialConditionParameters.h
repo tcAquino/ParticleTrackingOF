@@ -391,33 +391,33 @@ struct InitialConditionParameters_Cases {
            "    - Prescribed particle positions\n"
            "    - Pass on same line:\n"
            "      - Name of file with positions (one particle per line)\n"
-           "      - Path to file (optional [Parameters directory])\n"
+           "      - Path to file [Parameters directory]\n"
            "  - prescribed_positions_masses\n"
            "    - Prescribed particle positions and masses\n"
            "    - Pass on same line:\n"
            "      - Name of file with positions and masses (one particle per\n"
            "        line)\n"
-           "      - Path to file (optional [Parameters directory])\n"
+           "      - Path to file [Parameters directory]\n"
            "  - prescribed_positions_masses_tags\n"
            "    - Prescribed particle positions and masses\n"
            "    - Pass on same line:\n"
            "      - Name of file with particle positions, masses, and tags\n"
            "        (one particle per line)\n"
            "        per line\n"
-           "      - Path to file (optional [Parameters directory])\n"
+           "      - Path to file [Parameters directory]\n"
            "  - prescribed_positions_masses_tags_times\n"
            "    - Prescribed particle positions and masses\n"
            "    - Pass on same line:\n"
            "      - File name for file with particle positions, masses, tags,\n"
            "        and times (one particle per line)\n"
-           "      - Path to file (optional [Parameters directory])\n"
+           "      - Path to file [Parameters directory]\n"
            "  - uniform_cylinder\n"
            "    - Homogeneous inside cylinder\n"
            "    - Pass on same line:\n"
            "      - Number of tries to place each particle in valid position\n"
            "      - Base centers\n"
            "      - Radius\n"
-           "      - Excluded inner radius (optional [0.])\n"
+           "      - Excluded inner radius [0.]\n"
            "  - uniform_parallelipiped\n"
            "    - Homogeneous inside parallelipiped\n"
            "    - Pass on same line:\n"
@@ -431,7 +431,7 @@ struct InitialConditionParameters_Cases {
            "      - Number of tries to place each particle in valid position\n"
            "      - Centers\n"
            "      - Radius\n"
-           "      - Excluded inner radius (optional [0.])\n"
+           "      - Excluded inner radius [0.]\n"
            "- Injection continuity type:\n"
            "  (Note:\n"
            "    - Line ignored if initial condition type prescribes times\n"
@@ -569,12 +569,10 @@ private:
       auto filename_data = io::read<std::string>(
           split_line, param_index,
           in_file + for_initial_condition_type + "Could not parse file name");
-      auto dir = param_index < split_line.size()
-                     ? io::expand_env(io::expand_home_dir(io::read<std::string>(
-                           split_line, param_index,
-                           in_file + for_initial_condition_type +
-                               "Could not parse file directory")))
-                     : directories.dir_parameters;
+      auto dir = io::expand_env(io::expand_home_dir(io::read_or_default(
+          split_line, param_index, directories.dir_parameters,
+          in_file + for_initial_condition_type +
+              "Could not parse file directory")));
       return std::make_unique<SpecificParameters_Filename>(dir + "/" +
                                                            filename_data);
     }
@@ -595,11 +593,9 @@ private:
                                      in_file + for_initial_condition_type +
                                          "Could not parse radius");
       auto inner_radius =
-          param_index < split_line.size()
-              ? io::read<double>(split_line, param_index,
-                                 in_file + for_initial_condition_type +
-                                     "Could not parse inner radius")
-              : 0.;
+          io::read_or_default(split_line, param_index, 0.,
+                              in_file + for_initial_condition_type +
+                                  "Could not parse inner radius");
       return std::make_unique<SpecificParameters_Cylinder>(
           centers[0], centers[1], radius, nr_tries, inner_radius);
     }
@@ -635,11 +631,9 @@ private:
                                          " : "
                                          "Could not parse radius");
       auto inner_radius =
-          param_index < split_line.size()
-              ? io::read<double>(split_line, param_index,
-                                 in_file + for_initial_condition_type +
-                                     "Could not parse inner radius")
-              : 0.;
+          io::read_or_default(split_line, param_index, 0.,
+                              in_file + for_initial_condition_type +
+                                  "Could not parse inner radius");
       return std::make_unique<SpecificParameters_Sphere>(
           center, radius, nr_tries, inner_radius);
     }

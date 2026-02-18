@@ -46,7 +46,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -73,7 +73,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -99,7 +99,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -128,7 +128,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -158,7 +158,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -188,7 +188,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -217,7 +217,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -246,7 +246,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -276,7 +276,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -306,7 +306,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -336,7 +336,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -365,7 +365,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -396,7 +396,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -424,7 +424,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -452,7 +452,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -484,7 +484,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -516,7 +516,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -548,7 +548,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -579,7 +579,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -610,7 +610,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -642,7 +642,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -673,7 +673,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -705,7 +705,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -736,7 +736,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -764,7 +764,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -791,7 +791,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -818,7 +818,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -847,7 +847,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -876,7 +876,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -906,7 +906,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -935,7 +935,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -964,7 +964,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -994,7 +994,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1023,7 +1023,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1053,7 +1053,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1082,7 +1082,7 @@ struct Model {
       using State =
           State_Generic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1113,7 +1113,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1141,7 +1141,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1169,7 +1169,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1201,7 +1201,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1233,7 +1233,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1265,7 +1265,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1296,7 +1296,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1327,7 +1327,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1359,7 +1359,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1390,7 +1390,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1422,7 +1422,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1453,7 +1453,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Generic<
@@ -1483,7 +1483,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1511,7 +1511,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1539,7 +1539,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1571,7 +1571,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1603,7 +1603,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1635,7 +1635,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1666,7 +1666,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1697,7 +1697,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1729,7 +1729,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1760,7 +1760,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1792,7 +1792,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1824,7 +1824,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1856,7 +1856,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1885,7 +1885,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1914,7 +1914,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1946,7 +1946,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -1978,7 +1978,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty,
+      using Solvers = Solvers_Generic<Steppers::RK4, meta::Empty, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2010,7 +2010,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, false,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2042,7 +2042,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2074,7 +2074,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2107,7 +2107,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2139,7 +2139,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler,
+      using Solvers = Solvers_Generic<meta::Empty, Steppers::Euler, true,
                                       CTRWSteppers::Asynchronous>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2172,7 +2172,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<
@@ -2205,7 +2205,7 @@ struct Model {
       using State =
           State_Periodic<Geometry::dim, Info, double, double, std::size_t>;
       using CTRW = ctrw::CTRW<State, ParallelOption>;
-      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler,
+      using Solvers = Solvers_Generic<Steppers::Euler, Steppers::Euler, true,
                                       CTRWSteppers::ParticleTime>;
       using TransportHandler =
           TransportHandler_LinearInterp<TransportParameters_Bcc<

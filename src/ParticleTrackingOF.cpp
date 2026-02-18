@@ -4,10 +4,10 @@
 //  Created by Tomas Aquino on 16/02/2022.
 //
 
+#include "General/Chrono.h"
 #include "General/IO.h"
 #include "General/Meta.h"
 #include "General/Parallel.h"
-#include "General/Useful.h"
 #include "PTOF/Advection.h"
 #include "PTOF/Directories.h"
 #include "PTOF/Model.h"
@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
   auto execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -187,7 +187,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -200,7 +200,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -239,7 +239,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -253,7 +253,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -265,7 +265,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -285,7 +285,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   std::cout << "\n"
@@ -332,7 +332,7 @@ int main(int argc, char *argv[]) {
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
-  useful::display_duration(std::cout, execution_begin, execution_end);
+  chrono::display_duration(std::cout, execution_begin, execution_end);
   std::cout << ")" << std::endl;
 
   return 0;

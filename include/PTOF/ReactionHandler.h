@@ -170,13 +170,10 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                  in_file + for_initial_distribution +
                      "Could not parse file name",
                  filename_data);
-        auto dir =
-            param_index < split_line.size()
-                ? io::expand_env(io::expand_home_dir(io::read<std::string>(
-                      split_line, param_index,
-                      in_file + for_initial_distribution +
-                          "Could not parse file directory")))
-                : directories.dir_parameters;
+        auto dir = io::expand_env(io::expand_home_dir(io::read_or_default(
+            split_line, param_index, directories.dir_parameters,
+            in_file + for_initial_distribution +
+                "Could not parse file directory")));
         filename_data = dir + "/" + filename_data;
         auto [faces, concentrations] = io::load_2(filename_data);
         auto areas = face_areas(faces, geometry.mesh());
@@ -256,7 +253,7 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
              "    - Pass on same line:\n"
              "      - Name of file with faces and surface concentration\n"
              "        values (one face per line)\n"
-             "      - Path to file (optional [Parameters directory])\n"
+             "      - Path to file [Parameters directory]\n"
              "- Rate distribution type:\n"
              "  - uniform\n"
              "    - Homogeneous and the same in all boundary patches\n"
@@ -447,13 +444,10 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
                  in_file + for_initial_distribution +
                      "Could not parse file name",
                  filename_data);
-        auto dir =
-            param_index < split_line.size()
-                ? io::expand_env(io::expand_home_dir(io::read<std::string>(
-                      split_line, param_index,
-                      in_file + for_initial_distribution +
-                          "Could not parse file directory")))
-                : directories.dir_parameters;
+        auto dir = io::expand_env(io::expand_home_dir(io::read_or_default(
+            split_line, param_index, directories.dir_parameters,
+            in_file + for_initial_distribution +
+                "Could not parse file directory")));
         filename_data = dir + "/" + filename_data;
         auto input = io::open_read(filename_data);
         auto [faces, concentrations] = io::load_2(filename_data);
@@ -537,7 +531,7 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
              "    - Pass on same line:\n"
              "      - Name of file with faces and surface concentration\n"
              "        values (one face per line)\n"
-             "      - Path to file (optional [Parameters directory])\n"
+             "      - Path to file [Parameters directory]\n"
              "- Rate distribution type:\n"
              "  - uniform\n"
              "    - Homogeneous and the same in all boundary patches\n"

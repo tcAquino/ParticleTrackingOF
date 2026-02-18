@@ -9,6 +9,7 @@
 #define GENERAL_IO_H
 
 #include "General/Meta.h"
+#include "General/Useful.h"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -244,6 +245,8 @@ template <typename Type> Type stotype(std::string const &str) {
     return static_cast<unsigned>(std::stoul(str));
   } else if constexpr (std::is_same_v<Type, std::string>) {
     return str;
+  } else if constexpr (std::is_same_v<Type, const char *>) {
+    return str.c_str();
   } else {
     Type val;
     stotype(str, val);
@@ -463,32 +466,100 @@ template <typename... Args> struct tuple_types {
 };
 
 /**
+   \brief Extract value from string.
+   \param string String to extract from.
+   \param error Base error message in case of failure.
+   \return Converted value.
+*/
+template <typename Type>
+Type read(std::string const &string, std::string const &error) {
+  try {
+    return stotype<Type>(string);
+  } catch (const std::exception &except) {
+    throw std::runtime_error{error.empty() ? except.what()
+                                           : error + " : " + except.what()};
+  }
+}
+
+/**
+   \brief Extract value from string or use default.
+   \param string String to extract from.
+   \param error Base error message in case of failure.
+   \param result Variable to place result.
+   \return Reference to result.
+*/
+template <typename Type>
+Type &read(std::string const &string, std::string const &error, Type &result) {
+  try {
+    stotype<Type>(string, result);
+  } catch (const std::exception &except) {
+    throw std::runtime_error{error.empty() ? except.what()
+                                           : error + " : " + except.what()};
+  }
+}
+
+/**
+   \brief Extract value from string or use default.
+   \param string String to extract from.
+   \param default_value Default value, used if \c string is empty according to
+   io::is_empty().
+   \param error Base error message in case of failure.
+   \return Converted value or default.
+*/
+template <typename Type>
+Type read_or_default(std::string const &string, Type default_value,
+                     std::string const &error) {
+  if (io::is_empty(string)) {
+    return default_value;
+  } else {
+    return read<Type>(string, error);
+  }
+}
+
+/**
+   \brief Extract value from string or use default.
+   \param string String to extract from.
+   \param default_value Default value, used if \c string is empty according to
+   io::is_empty().
+   \param error Base error message in case of failure.
+   \param result Variable to place result.
+   \return Reference to result.
+*/
+template <typename Type>
+Type &read_or_default(std::string const &string, Type default_value,
+                      std::string const &error, Type &result) {
+  if (io::is_empty(string)) {
+    result = default_value;
+  } else {
+    read<Type>(string, result, error);
+  }
+  return result;
+}
+
+/**
    \brief Extract value from container of strings and increment \p index.
    \param strings Strings to extract from.
-   \param index Index of first string to read; is incremented by one.
+   \param index Index of first string to read; is incremented by one per value
+   read.
    \param error Base error message in case of failure.
    \return Extracted value.
 */
 template <typename Type>
 Type read(std::vector<std::string> const &strings, std::size_t &index,
-          std::string const &error = "") {
-  auto check_size = [&strings, &index](std::size_t nr_to_read) {
-    if (strings.size() < index + nr_to_read)
-      throw std::runtime_error{"Not enough arguments"};
-  };
+          std::string const &error) {
   try {
     if constexpr (meta::is_instance_of_v<Type, std::pair>) {
-      check_size(2);
+      useful::check_size(strings, index, 2);
       std::size_t start = index;
       index += 2;
       return {stotype<typename Type::first_type>(strings[start]),
               stotype<typename Type::second_type>(strings[start + 1])};
     } else if constexpr (meta::is_instance_of_v<Type, std::tuple>) {
-      check_size(std::tuple_size_v<Type>);
+      useful::check_size(strings, index, std::tuple_size_v<Type>);
       return decltype(tuple_types(std::declval<Type>()))::read_tuple(strings,
                                                                      index);
     } else {
-      check_size(1);
+      useful::check_size(strings, index, 1);
       return stotype<Type>(strings[index++]);
     }
   } catch (const std::exception &except) {
@@ -498,9 +569,10 @@ Type read(std::vector<std::string> const &strings, std::size_t &index,
 }
 
 /**
-   \brief Extract value from container of strings and increment \p index.
+   \brief Extract value from container of strings.
    \param strings Strings to extract from.
-   \param index Index of first string to read; is incremented by one.
+   \param index Index of first string to read; is incremented by one per value
+   read.
    \param nr_to_read Number of elements to read.
    \param error Base error message in case of failure.
    \return Vector of extracted values.
@@ -508,7 +580,7 @@ Type read(std::vector<std::string> const &strings, std::size_t &index,
 template <typename Type>
 std::vector<Type> read(std::vector<std::string> const &strings,
                        std::size_t &index, std::size_t nr_to_read,
-                       std::string const &error = "") {
+                       std::string const &error) {
   std::vector<Type> result;
   result.reserve(nr_to_read);
   for (std::size_t ii = 0; ii < nr_to_read; ++ii) {
@@ -529,7 +601,76 @@ std::vector<Type> read(std::vector<std::string> const &strings,
 template <typename Type>
 Type &read(std::vector<std::string> const &strings, std::size_t &index,
            std::string const &error, Type &result) {
-  result = read<Type>(strings, index, error);
+  try {
+    if constexpr (meta::is_instance_of_v<Type, std::pair>) {
+      useful::check_size(strings, index, 2);
+      std::size_t start = index;
+      index += 2;
+      result = {stotype<typename Type::first_type>(strings[start]),
+                stotype<typename Type::second_type>(strings[start + 1])};
+    } else if constexpr (meta::is_instance_of_v<Type, std::tuple>) {
+      check_size(strings, index, std::tuple_size_v<Type>);
+      result = decltype(tuple_types(std::declval<Type>()))::read_tuple(strings,
+                                                                       index);
+    } else {
+      useful::check_size(strings, index, 1);
+      stotype<Type>(strings[index++], result);
+    }
+  } catch (const std::exception &except) {
+    throw std::runtime_error{error.empty() ? except.what()
+                                           : error + " : " + except.what()};
+  }
+
+  return result;
+}
+
+/**
+   \brief Extract value from container of strings or use default.
+   \param strings Strings to extract from.
+   \param index Index of first string to read; is incremented by one per value
+   read unless there are no more strings.
+   \param error Base error message in case of failure.
+   \param default_value Default value, used if not enough strings or read value
+   is empty according to io::is_empty().
+   \return Extracted value.
+*/
+template <typename Type>
+Type read_or_default(std::vector<std::string> const &strings,
+                     std::size_t &index, Type default_value,
+                     std::string const &error) {
+  std::string value = strings.size() < index + 1
+                          ? io::read<std::string>(strings, index, error)
+                          : "";
+  if (io::is_empty(value)) {
+    return default_value;
+  } else {
+    return read<Type>(strings, --index, error);
+  }
+}
+
+/**
+ \brief Extract value from container of strings and increment \p index.
+ \param strings Strings to extract from.
+ \param index Index of first string to read; is incremented by one per value
+ read unless there are no more strings.
+ \param error Base error message in case of failure.
+ \param result Variable to extract into, converting based on type.
+ \param default_value Default value, used if not enough strings or read value
+ is empty according to io::is_empty().
+ \return Reference to extracted value.
+*/
+template <typename Type>
+Type &read_or_default(std::vector<std::string> const &strings,
+                      std::size_t &index, Type default_value,
+                      std::string const &error, Type &result) {
+  std::string value = strings.size() < index + 1
+                          ? io::read<std::string>(strings, index, error)
+                          : "";
+  if (io::is_empty(value)) {
+    result = default_value;
+  } else {
+    read(strings, --index, error, result);
+  }
   return result;
 }
 

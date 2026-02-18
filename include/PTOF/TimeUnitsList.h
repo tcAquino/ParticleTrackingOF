@@ -8,6 +8,7 @@
 #ifndef PTOF_TIMEUNITS_H
 #define PTOF_TIMEUNITS_H
 
+#include <General/Meta.h>
 #include <map>
 #include <stdexcept>
 #include <string>

@@ -13,6 +13,7 @@
 #include "PTOF/Directories.h"
 #include "PTOF/Steppers.h"
 #include "PTOF/TimeUnitsList.h"
+#include <limits>
 #include <ostream>
 #include <stdexcept>
 #include <string>
@@ -20,29 +21,34 @@
 
 namespace ptof {
 template <typename Stepper_Advection, typename Stepper_Diffusion,
-          typename Stepper_CTRW>
+          bool reaction_v, typename Stepper_CTRW>
 struct SolverParameters_Generic {
   static constexpr bool advection =
       !std::is_same_v<Stepper_Advection, meta::Empty>;
   static constexpr bool diffusion =
       !std::is_same_v<Stepper_Diffusion, meta::Empty>;
+  static constexpr bool reaction = reaction_v;
 
   std::size_t nr_particles;
   bool min_global_local;
-  double local_time_step_adv = std::numeric_limits<double>::infinity();
-  double local_time_step_diff = std::numeric_limits<double>::infinity();
-  double local_time_step_surf_react = std::numeric_limits<double>::infinity();
-  double global_time_step_adv = std::numeric_limits<double>::infinity();
-  double global_time_step_diff = std::numeric_limits<double>::infinity();
-  double global_time_step_surf_react = std::numeric_limits<double>::infinity();
+  double local_step_factor_adv = std::numeric_limits<double>::infinity();
+  double local_step_factor_diff = std::numeric_limits<double>::infinity();
+  double local_step_factor_surf_react = std::numeric_limits<double>::infinity();
+  double local_step_factor_temporal_adv =
+      std::numeric_limits<double>::infinity();
+  double global_step_factor_adv = std::numeric_limits<double>::infinity();
+  double global_step_factor_diff = std::numeric_limits<double>::infinity();
+  double global_step_factor_surf_react =
+      std::numeric_limits<double>::infinity();
   double ctrw_time_step = 0.;
 
   template <typename Geometry, typename TransportParameters,
             typename ReactionParameters>
-  SolverParameters_Generic(
-      Directories const &directories, std::string const &parameter_set_name,
-      Geometry const &geometry, TransportParameters const &params_transport,
-      ReactionParameters const &params_surf_reaction = meta::Empty{}) {
+  SolverParameters_Generic(Directories const &directories,
+                           std::string const &parameter_set_name,
+                           Geometry const &geometry,
+                           TransportParameters const &params_transport,
+                           ReactionParameters const &params_reaction) {
     std::string filename = directories.dir_parameters + "/solvers_" +
                            parameter_set_name + ".param";
     auto input = io::open_read(filename);
@@ -72,82 +78,51 @@ struct SolverParameters_Generic {
 
     split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
-    if constexpr (advection && diffusion) {
-      if (split_line.size() >= 3) {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse local advective, diffusive, and "
-                           "reactive time step accuracy",
-                 local_time_step_adv, local_time_step_diff,
-                 local_time_step_surf_react);
-      } else {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse local advective and diffusive time "
-                           "step accuracy",
-                 local_time_step_adv, local_time_step_diff);
-      }
-    } else if constexpr (advection) {
-      if (split_line.size() >= 2) {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse local advective and reactive time "
-                           "step accuracy",
-                 local_time_step_adv, local_time_step_surf_react);
-      } else {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse local advective time step accuracy",
-                 local_time_step_adv);
-      }
-    } else {
-      if (split_line.size() >= 2) {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse local diffusive and reactive "
-                           "time step accuracy",
-                 local_time_step_diff, local_time_step_surf_react);
-      } else {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse local diffusive time step accuracy",
-                 local_time_step_diff);
-      }
+    if constexpr (advection) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file + "Could not parse local advective step accuracy",
+          local_step_factor_adv);
+    }
+    if constexpr (diffusion) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file + "Could not parse local diffusive step accuracy factor",
+          local_step_factor_diff);
+    }
+    if constexpr (reaction) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file + "Could not parse local reactive step accuracy factor",
+          local_step_factor_surf_react);
+    }
+    if constexpr (advection) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file +
+              "Could not parse local temporal advective step accuracy factor",
+          local_step_factor_temporal_adv);
     }
 
     split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
     param_index = 0;
-    if constexpr (advection && diffusion) {
-      if (split_line.size() >= 3) {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse global advective, diffusive, and "
-                           "reactive time step accuracy",
-                 global_time_step_adv, global_time_step_diff,
-                 global_time_step_surf_react);
-      } else {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse global advective and diffusive "
-                           "time step accuracy",
-                 global_time_step_adv, global_time_step_diff);
-      }
-    } else if constexpr (advection) {
-      if (split_line.size() >= 2) {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse global advective and reactive time "
-                           "step accuracy",
-                 global_time_step_adv, global_time_step_surf_react);
-      } else {
-        io::read(split_line, param_index,
-                 in_file +
-                     "Could not parse global diffusive time step accuracy",
-                 global_time_step_adv);
-      }
-    } else {
-      if (split_line.size() >= 2) {
-        io::read(split_line, param_index,
-                 in_file + "Could not parse global diffusive and reactive time "
-                           "step accuracy",
-                 global_time_step_diff, global_time_step_surf_react);
-      } else {
-        io::read(split_line, param_index,
-                 in_file +
-                     "Could not parse global diffusive time step accuracy",
-                 global_time_step_diff);
-      }
+    if constexpr (advection) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file + "Could not parse global advective step accuracy factor",
+          global_step_factor_adv);
+    }
+    if constexpr (diffusion) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file + "Could not parse global diffusive step accuracy factor",
+          global_step_factor_diff);
+    }
+    if constexpr (reaction) {
+      io::read_or_default(
+          split_line, param_index, std::numeric_limits<double>::infinity(),
+          in_file + "Could not parse global reactive step accuracy factor",
+          global_step_factor_surf_react);
     }
 
     check_constraints(in_file);
@@ -160,8 +135,8 @@ struct SolverParameters_Generic {
       if (!TimeUnitsList::contains(time_units)) {
         throw std::runtime_error{in_file + "Not supported"};
       }
-      double time_unit_factor = ptof::time_unit_factor(
-          time_units, params_transport, params_surf_reaction);
+      double time_unit_factor =
+          ptof::time_unit_factor(time_units, params_transport, params_reaction);
       io::read(split_line, param_index,
                in_file + "Could not parse time step for synchronizing CTRW",
                ctrw_time_step);
@@ -170,27 +145,29 @@ struct SolverParameters_Generic {
   }
 
   void check_constraints(std::string const &in_file) {
-    if (!(local_time_step_adv >= 0. && local_time_step_diff >= 0. &&
-          local_time_step_surf_react >= 0. && global_time_step_adv >= 0. &&
-          global_time_step_diff >= 0. && global_time_step_surf_react >= 0.)) {
+    if (!(local_step_factor_adv >= 0. && local_step_factor_diff >= 0. &&
+          local_step_factor_surf_react >= 0. &&
+          local_step_factor_temporal_adv >= 0. &&
+          global_step_factor_adv >= 0. && global_step_factor_diff >= 0. &&
+          global_step_factor_surf_react >= 0.)) {
       throw std::runtime_error{in_file +
                                "Time step constraints should be non-negative"};
     }
 
     bool local_constraints_are_zero =
-        (local_time_step_adv == 0. || local_time_step_diff == 0. ||
-         local_time_step_surf_react == 0.);
+        (local_step_factor_adv == 0. || local_step_factor_diff == 0. ||
+         local_step_factor_surf_react == 0.);
     bool local_transport_constraints_are_inf =
-        (local_time_step_adv == std::numeric_limits<double>::infinity() &&
-         local_time_step_diff == std::numeric_limits<double>::infinity() &&
+        (local_step_factor_adv == std::numeric_limits<double>::infinity() &&
+         local_step_factor_diff == std::numeric_limits<double>::infinity() &&
          std::numeric_limits<double>::infinity());
 
     bool global_constraints_are_zero =
-        (global_time_step_adv == 0. || global_time_step_diff == 0. ||
-         global_time_step_surf_react == 0.);
+        (global_step_factor_adv == 0. || global_step_factor_diff == 0. ||
+         global_step_factor_surf_react == 0.);
     bool global_transport_constraints_are_inf =
-        (global_time_step_adv == std::numeric_limits<double>::infinity() &&
-         global_time_step_diff == std::numeric_limits<double>::infinity() &&
+        (global_step_factor_adv == std::numeric_limits<double>::infinity() &&
+         global_step_factor_diff == std::numeric_limits<double>::infinity() &&
          std::numeric_limits<double>::infinity());
 
     if (local_constraints_are_zero && global_constraints_are_zero) {
@@ -232,25 +209,25 @@ struct SolverParameters_Generic {
            "    - Use minimum of local and global constraints\n"
            "  - max\n"
            "    - Use maximum of local and global constraints\n"
-           "- Local time step accuracy:\n"
+           "- Local step accuracy:\n"
            "  (Note:\n"
            "    - Pass inf to deactivate specific constraints; pass at least\n"
            "      one 0 to deactivate all local constraints with maximum)\n"
            "  - Pass on same line:\n"
-           "    - Time step accuracy with respect to local advection time\n"
-           "    - Time step accuracy with respect to local diffusion time\n"
-           "    - Time step accuracy with respect to local reaction time\n"
-           "      (optional [Inf])\n"
-           "- Global time step accuracy:\n"
+           "    - Local step accuracy factor with respect to advection [Inf]\n"
+           "    - Local step accuracy factor with respect to diffusion [Inf]\n"
+           "    - Local step accuracy factor with respect to reaction [Inf]\n"
+           "    - Local step accuracy with respect to temporal advection\n"
+           "      variability [Inf]\n"
+           "- Global step accuracy:\n"
            "  (Note:\n"
            "    - Initial values, e.g., of flow are used\n"
            "    - Pass inf to deactivate specific constraints; pass at least\n"
            "      one 0 to deactivate all global constraints with maximum)\n"
            "  - Pass on same line:\n"
-           "    - Time step accuracy with respect to global advection time\n"
-           "    - Time step accuracy with respect to global diffusion time\n"
-           "    - Time step accuracy with respect to global reaction time\n"
-           "      (optional [Inf])\n";
+           "    - Global step accuracy factor with respect to advection [Inf]\n"
+           "    - Global step accuracy factor with respect to diffusion [Inf]\n"
+           "    - Global step accuracy factor with respect to reaction [Inf]\n";
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       output << "- Time units for CTRW synchronization time step:\n"
                 "  - diffusion\n"

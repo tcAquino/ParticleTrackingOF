@@ -117,6 +117,15 @@ using boundaryField_of_void_t = decltype(std::declval<X>().boundaryField());
 template <typename X>
 inline constexpr bool has_boundaryField_of_void_v =
     has_member<boundaryField_of_void_t, X>::value;
+
+/**\brief Type of \c X::time_new(). */
+template <typename X> using time_new_t = decltype(std::declval<X>().time_new());
+/**
+   \brief Check if \c X has member <tt>time_new()</tt> of arithmetic type.
+*/
+template <typename X>
+inline constexpr bool has_time_new_v =
+    std::conjunction_v<has_member<time_new_t, X>, is_arithmetic<time_new_t, X>>;
 } // namespace meta
 
 #endif /* PTOF_META_H */

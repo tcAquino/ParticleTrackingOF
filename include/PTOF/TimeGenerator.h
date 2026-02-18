@@ -63,10 +63,14 @@ public:
         _surface_reaction{surface_reaction}, _volume_factor{1.},
         _diff_coeff{params_transport.diff_coeff},
         _min_global_local{params_solvers.min_global_local},
-        _local_time_step_adv{params_solvers.local_time_step_adv},
-        _local_time_step_diff{params_solvers.local_time_step_diff},
-        _local_time_step_surf_react{params_solvers.local_time_step_surf_react},
-        _global_time_step{compute_global_time_step(
+        _local_step_factor_adv{params_solvers.local_step_factor_adv},
+        _local_step_factor_diff_sq{params_solvers.local_step_factor_diff *
+                                   params_solvers.local_step_factor_diff},
+        _local_step_factor_surf_react{
+            params_solvers.local_step_factor_surf_react},
+        _local_step_factor_temporal_adv{
+            params_solvers.local_step_factor_temporal_adv},
+        _global_time_step{global_time_step_constraint(
             params_transport, params_reaction, params_solvers)} {
     for (std::size_t dd = 2; dd-- > Geometry::dim;) {
       Foam::vector direction = Foam::zero{};
@@ -164,41 +168,7 @@ public:
      \return New time step.
   */
   template <typename State> double operator()(State const &state) const {
-    auto cell_id = state.cell;
-    if constexpr (check_if_outside) {
-      if (outside<warn_if_outside>(cell_id, make_point(state.position),
-                                   "Using nearest cell.")) {
-        cell_id = _geometry.locator.nearest_cell(state);
-      }
-    }
-    double cell_side =
-        (_constrain_local_adv || _constrain_local_diff)
-            ? std::pow(_geometry.mesh().V()[cell_id] / _volume_factor,
-                       1. / Geometry::dim)
-            : 0.;
-
-    double local_advection_time = advection_time(state, cell_side);
-    double local_diffusion_time = diffusion_time(state, cell_side);
-    double local_time_step =
-        std::min({_local_time_step_adv * local_advection_time,
-                  _local_time_step_diff * local_diffusion_time});
-    if constexpr (!std::is_same_v<SurfaceReaction, SurfaceReaction_DoNothing>) {
-      if (_constrain_local_surf_react) {
-        auto const &faces = _geometry.mesh().cells()[cell_id];
-        double max_face_rate = 0.;
-        for (auto face : faces) {
-          double rate = _surface_reaction.rate(face);
-          if (rate > max_face_rate) {
-            max_face_rate = rate;
-          }
-        }
-        double local_reaction_time =
-            _diff_coeff / (cnst::pi * max_face_rate * max_face_rate);
-        local_time_step = std::min(
-            local_time_step, _local_time_step_surf_react * local_reaction_time);
-      }
-    }
-
+    double local_time_step = local_time_step_constraint(state);
     double time_step = _min_global_local
                            ? std::min(local_time_step, _global_time_step)
                            : std::max(local_time_step, _global_time_step);
@@ -219,63 +189,122 @@ private:
   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
-  double compute_global_time_step(TransportParameters const &params_transport,
-                                  ReactionParameters const &params_reaction,
-                                  SolverParameters const &params_solvers) {
+  double
+  global_time_step_constraint(TransportParameters const &params_transport,
+                              ReactionParameters const &params_reaction,
+                              SolverParameters const &params_solvers) const {
     bool global_constraints_are_zero =
-        (params_solvers.global_time_step_adv == 0. ||
-         params_solvers.global_time_step_diff == 0. ||
-         params_solvers.global_time_step_surf_react == 0.);
-    // bool global_transport_constraints_are_inf =
-    //     (params_solvers.global_time_step_adv ==
-    //          std::numeric_limits<double>::infinity() &&
-    //      params_solvers.global_time_step_diff &&
-    //      std::numeric_limits<double>::infinity());
+        (params_solvers.global_step_factor_adv == 0. ||
+         params_solvers.global_step_factor_diff == 0. ||
+         params_solvers.global_step_factor_surf_react == 0.);
 
-    bool constrain_global_adv = (!global_constraints_are_zero &&
-                                 params_solvers.global_time_step_adv !=
-                                     std::numeric_limits<double>::infinity());
+    bool constrain_global_adv = !global_constraints_are_zero &&
+                                params_solvers.global_step_factor_adv !=
+                                    std::numeric_limits<double>::infinity();
     double global_time_step_adv = constrain_global_adv
-                                      ? params_solvers.global_time_step_adv *
+                                      ? params_solvers.global_step_factor_adv *
                                             params_transport.advection_time
-                                      : params_solvers.global_time_step_adv;
+                                      : params_solvers.global_step_factor_adv;
 
-    bool constrain_global_diff = (!global_constraints_are_zero &&
-                                  params_solvers.global_time_step_diff !=
-                                      std::numeric_limits<double>::infinity());
-    double global_time_step_diff = constrain_global_diff
-                                       ? params_solvers.global_time_step_diff *
-                                             params_transport.diffusion_time
-                                       : params_solvers.global_time_step_diff;
+    bool constrain_global_diff = !global_constraints_are_zero &&
+                                 params_solvers.global_step_factor_diff !=
+                                     std::numeric_limits<double>::infinity();
+    double global_time_step_diff =
+        constrain_global_diff ? params_solvers.global_step_factor_diff *
+                                    params_solvers.global_step_factor_diff *
+                                    params_transport.diffusion_time
+                              : params_solvers.global_step_factor_diff;
 
-    bool constrain_global_react = (!global_constraints_are_zero &&
-                                   params_solvers.global_time_step_surf_react !=
-                                       std::numeric_limits<double>::infinity());
+    bool constrain_global_react =
+        (!global_constraints_are_zero &&
+         params_solvers.global_step_factor_surf_react !=
+             std::numeric_limits<double>::infinity());
     double global_time_step_surf_react =
-        constrain_global_react ? params_solvers.global_time_step_surf_react *
+        constrain_global_react ? params_solvers.global_step_factor_surf_react *
                                      params_reaction.reaction_time
-                               : params_solvers.global_time_step_surf_react;
+                               : params_solvers.global_step_factor_surf_react;
 
     return std::min({global_time_step_adv, global_time_step_diff,
                      global_time_step_surf_react});
   }
 
-  /** \brief Compute local advection time. */
+  /** \brief Compute local time step constraint for state \c state. */
   template <typename State>
-  double advection_time(State const &state, double cell_side) const {
-    if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
-      return _constrain_local_adv
-                 ? cell_side / Foam::mag(_velocity_field(state))
-                 : 1.;
+  double local_time_step_constraint(State const &state) const {
+    auto cell_id = state.cell;
+    if constexpr (check_if_outside) {
+      if (outside<warn_if_outside>(cell_id, make_point(state.position),
+                                   "Using nearest cell.")) {
+        cell_id = _geometry.locator.nearest_cell(state);
+      }
     }
-    return std::numeric_limits<double>::infinity();
+    double cell_side =
+        (_constrain_local_adv || _constrain_local_diff)
+            ? std::pow(_geometry.mesh().V()[cell_id] / _volume_factor,
+                       1. / Geometry::dim)
+            : 0.;
+
+    double local_time_step =
+        _local_step_factor_diff_sq * diffusion_time(state, cell_side);
+
+    if constexpr (!std::is_same_v<VelocityField, meta::Empty>) {
+      local_time_step =
+          std::min(_local_step_factor_adv * advection_time(state, cell_side),
+                   local_time_step);
+    }
+
+    if constexpr (meta::has_time_new_v<VelocityField>) {
+      local_time_step = std::min(_local_step_factor_temporal_adv *
+                                     temporal_advection_time(state, cell_side),
+                                 local_time_step);
+    }
+
+    if constexpr (!std::is_same_v<SurfaceReaction, SurfaceReaction_DoNothing>) {
+      if (_constrain_local_surf_react) {
+        auto const &faces = _geometry.mesh().cells()[cell_id];
+        double max_face_rate = 0.;
+        for (auto face : faces) {
+          double rate = _surface_reaction.rate(face);
+          if (rate > max_face_rate) {
+            max_face_rate = rate;
+          }
+        }
+        double local_reaction_time =
+            _diff_coeff / (cnst::pi * max_face_rate * max_face_rate);
+        local_time_step =
+            std::min(local_time_step,
+                     _local_step_factor_surf_react * local_reaction_time);
+      }
+    }
+
+    return local_time_step;
   }
 
   /** \brief Compute local advection time. */
   template <typename State>
+  double advection_time(State const &state, double cell_side) const {
+    return _constrain_local_adv ? cell_side / Foam::mag(_velocity_field(state))
+                                : 1.;
+  }
+
+  /** \brief Compute local diffusion time. */
+  template <typename State>
   double diffusion_time(State const &state, double cell_side) const {
     return _constrain_local_diff ? cell_side * cell_side / (2. * _diff_coeff)
                                  : 1.;
+  }
+
+  /** \brief Compute local temporal advection variabiliy time. */
+  template <typename State>
+  double temporal_advection_time(State state, double cell_side) const {
+    if (_constrain_local_temporal_adv) {
+      auto state_copy = state;
+      state.time = _velocity_field.time_old();
+      state_copy.time = _velocity_field.time_new();
+      return cell_side /
+             Foam::mag(_velocity_field(state_copy) - _velocity_field(state));
+    }
+    return 1.;
   }
 
   Geometry const &_geometry; /**< Domain geometry info and utilities. */
@@ -286,37 +315,40 @@ private:
   double _diff_coeff;     /**< Diffusion coefficient. */
   bool _min_global_local; /**< Use minimum of local and global constraints if
                              true, otherwise use maximum. */
-  double _local_time_step_adv;  /**< Local advection time step constraint. */
-  double _local_time_step_diff; /**< Local diffusion time step constraint. */
-  double _local_time_step_surf_react; /**< Local surface reaction time step
+  double _local_step_factor_adv;        /**< Local advection step constraint. */
+  double _local_step_factor_diff_sq;    /**< Local diffusion step constraint. */
+  double _local_step_factor_surf_react; /**< Local surface reaction step
                                          constraint. */
-  double _global_time_step;           /**< Global time step constraint. */
+  double _local_step_factor_temporal_adv; /**< Local time-variable advection
+                                            step constraint. */
+  double _global_time_step;               /**< Global time step constraint. */
 
   bool _local_constraints_are_zero =
-      _local_time_step_adv == 0. || _local_time_step_diff == 0. ||
-      _local_time_step_surf_react ==
-          0.; /**< Whether local constraints are all zero. */
-  bool _local_transport_constraints_are_inf =
-      _local_time_step_adv == std::numeric_limits<double>::infinity() &&
-      _local_time_step_diff &&
-      std::numeric_limits<double>::infinity(); /**< Whether local transport
-                                                   constraints are all
-                                                   infinity. */
+      _local_step_factor_adv == 0. || _local_step_factor_diff_sq == 0. ||
+      _local_step_factor_surf_react == 0. ||
+      _local_step_factor_temporal_adv == 0.; /**< Whether some local constraints
+                                          are zero. */
   bool _constrain_local_adv =
       !_local_constraints_are_zero &&
-      _local_time_step_diff !=
+      _local_step_factor_adv !=
           std::numeric_limits<double>::infinity(); /**< Whether to constrain
                                                       local advection. */
   bool _constrain_local_diff =
       !_local_constraints_are_zero &&
-      _local_time_step_diff !=
+      _local_step_factor_diff_sq !=
           std::numeric_limits<double>::infinity(); /**< Whether to constrain
                                  local diffusion. */
   bool _constrain_local_surf_react =
       !_local_constraints_are_zero &&
-      _local_time_step_diff !=
+      _local_step_factor_surf_react !=
           std::numeric_limits<double>::infinity(); /**< Whether to constrain
                                  local surface reaction. */
+  bool _constrain_local_temporal_adv =
+      !_local_constraints_are_zero &&
+      _local_step_factor_temporal_adv !=
+          std::numeric_limits<double>::infinity(); /**< Whether to constrain
+                                                      local temporal advectio
+                                                      variability. */
 };
 template <typename Geometry, typename VelocityField, typename SurfaceReaction,
           typename TransportParameters, typename ReactionParameters,

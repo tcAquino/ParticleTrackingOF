@@ -35,13 +35,11 @@ struct Directories {
   */
   Directories(std::string const &dir, std::string const &case_name,
               std::string const &dir_output)
-      : dir_case{(io::is_empty(dir)
-                      ? "../cases"
-                      : io::expand_env(io::expand_home_dir(dir))) +
+      : dir_case{io::expand_env(io::expand_home_dir(
+                     io::read_or_default(dir, std::string{"../cases"}, ""))) +
                  "/" + case_name},
-        dir_output{io::is_empty(dir_output)
-                       ? dir_case + "/output"
-                       : io::expand_env(io::expand_home_dir(dir_output))},
+        dir_output{io::expand_env(io::expand_home_dir(
+            io::read_or_default(dir_output, dir_case + "/output", "")))},
         dir_parameters{dir_case + "/parameters"},
         dir_boundaryconditions{dir_case + "/boundary_conditions"} {}
 
@@ -152,11 +150,9 @@ private:
 
     auto split_line = io::split_line(input);
     std::size_t param_index = 0;
-    auto dir = io::read<std::string>(split_line, param_index,
-                                     in_file + "Could not parse directory");
-    if (io::is_empty(dir)) {
-      dir = "${FOAM_RUN}";
-    }
+    auto dir =
+        io::read_or_default(split_line, param_index, std::string{"${FOAM_RUN}"},
+                            in_file + "Could not parse directory");
     io::expand_env_in_place(io::expand_home_dir_in_place(dir));
 
     split_line = io::split_line(input);
