@@ -164,8 +164,7 @@ struct SolverParameters_Generic {
          local_step_factor_surf_react == 0.);
     bool local_transport_constraints_are_inf =
         (local_step_factor_adv == std::numeric_limits<double>::infinity() &&
-         local_step_factor_diff == std::numeric_limits<double>::infinity() &&
-         std::numeric_limits<double>::infinity());
+         local_step_factor_diff == std::numeric_limits<double>::infinity());
 
     bool global_constraints_are_zero =
         (global_step_factor_adv == 0. || global_step_factor_diff == 0. ||
