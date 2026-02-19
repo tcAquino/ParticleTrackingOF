@@ -40,7 +40,8 @@ struct SolverParameters_Generic {
   double global_step_factor_diff = std::numeric_limits<double>::infinity();
   double global_step_factor_surf_react =
       std::numeric_limits<double>::infinity();
-  double ctrw_time_step = 0.;
+  double global_time_step = std::numeric_limits<double>::infinity();
+  double ctrw_time_step;
 
   template <typename Geometry, typename TransportParameters,
             typename ReactionParameters>
@@ -124,6 +125,10 @@ struct SolverParameters_Generic {
           in_file + "Could not parse global reactive step accuracy factor",
           global_step_factor_surf_react);
     }
+    io::read_or_default(split_line, param_index,
+                        std::numeric_limits<double>::infinity(),
+                        in_file + "Could not parse global time step constraint",
+                        global_time_step);
 
     check_constraints(in_file);
 
@@ -164,11 +169,11 @@ struct SolverParameters_Generic {
 
     bool global_constraints_are_zero =
         (global_step_factor_adv == 0. || global_step_factor_diff == 0. ||
-         global_step_factor_surf_react == 0.);
+         global_step_factor_surf_react == 0. || global_time_step == 0.);
     bool global_transport_constraints_are_inf =
         (global_step_factor_adv == std::numeric_limits<double>::infinity() &&
          global_step_factor_diff == std::numeric_limits<double>::infinity() &&
-         std::numeric_limits<double>::infinity());
+         global_time_step == std::numeric_limits<double>::infinity());
 
     if (local_constraints_are_zero && global_constraints_are_zero) {
       throw std::runtime_error{in_file +
@@ -227,7 +232,8 @@ struct SolverParameters_Generic {
            "  - Pass on same line:\n"
            "    - Global step accuracy factor with respect to advection [inf]\n"
            "    - Global step accuracy factor with respect to diffusion [inf]\n"
-           "    - Global step accuracy factor with respect to reaction [inf]\n";
+           "    - Global step accuracy factor with respect to reaction [inf]\n"
+           "    - Global time step constraint in arbitrary units [inf]\n";
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
       output << "- Time units for CTRW synchronization time step:\n"
                 "  - diffusion\n"

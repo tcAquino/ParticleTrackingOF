@@ -225,7 +225,8 @@ private:
                                : params_solvers.global_step_factor_surf_react;
 
     return std::min({global_time_step_adv, global_time_step_diff,
-                     global_time_step_surf_react});
+                     global_time_step_surf_react,
+                     params_solvers.global_time_step});
   }
 
   /** \brief Compute local time step constraint for state \c state. */
