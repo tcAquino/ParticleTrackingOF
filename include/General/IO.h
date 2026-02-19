@@ -638,7 +638,7 @@ template <typename Type>
 Type read_or_default(std::vector<std::string> const &strings,
                      std::size_t &index, Type default_value,
                      std::string const &error) {
-  std::string value = strings.size() < index + 1
+  std::string value = index < strings.size()
                           ? io::read<std::string>(strings, index, error)
                           : "";
   if (io::is_empty(value)) {
@@ -663,7 +663,7 @@ template <typename Type>
 Type &read_or_default(std::vector<std::string> const &strings,
                       std::size_t &index, Type default_value,
                       std::string const &error, Type &result) {
-  std::string value = strings.size() < index + 1
+  std::string value = index < strings.size()
                           ? io::read<std::string>(strings, index, error)
                           : "";
   if (io::is_empty(value)) {
