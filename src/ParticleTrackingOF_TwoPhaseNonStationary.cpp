@@ -288,7 +288,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::InitialConditionHandler::Parameters params_initial_condition{
       directories, params_initial_condition_name, geometry, params_transport,
-      params_reaction};
+      params_reaction, params_solvers};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";

@@ -324,12 +324,13 @@ struct InitialConditionParameters_Cases {
   std::unique_ptr<InjectionParameters> injection_parameters;
 
   template <typename Geometry, typename TransportParameters,
-            typename ReactionParameters>
+            typename ReactionParameters, typename SolverParameters>
   InitialConditionParameters_Cases(Directories const &directories,
                                    std::string const &parameter_set_name,
                                    Geometry const &geometry,
                                    TransportParameters const &params_transport,
-                                   ReactionParameters const &params_reaction) {
+                                   ReactionParameters const &params_reaction,
+                                   SolverParameters const &params_solvers) {
     std::string filename = directories.dir_parameters + "/initialcondition_" +
                            parameter_set_name + ".param";
     auto input = io::open_read(filename);
@@ -337,7 +338,7 @@ struct InitialConditionParameters_Cases {
         set_specific_parameters(input, filename, directories, geometry,
                                 params_transport, params_reaction);
     injection_parameters = set_injection_parameters(
-        input, filename, params_transport, params_reaction);
+        input, filename, params_transport, params_reaction, params_solvers);
   }
 
   /**
@@ -441,12 +442,12 @@ struct InitialConditionParameters_Cases {
            "    - Instantaneous pulse injection\n"
            "    - Pass on same line:\n"
            "      - Time units for injection time:\n"
-           "        - diffusion\n"
-           "          - Diffusion time units\n"
            "        - advection\n"
-           "          - Advection time units\n"
+           "          - Advection time units (valid if there is advection)\n"
+           "        - diffusion\n"
+           "          - Diffusion time units (valid if there is diffusion)\n"
            "        - reaction\n"
-           "          - Reaction time units\n"
+           "          - Reaction time units (valid if there is reaction)\n"
            "        - arbitrary\n"
            "          - Arbitary units (no rescaling)\n"
            "      - Injection time\n"
@@ -455,12 +456,12 @@ struct InitialConditionParameters_Cases {
            "    - Continuous injection\n"
            "    - Pass on same line:\n"
            "      - Time units for injection-related times:\n"
-           "        - diffusion\n"
-           "          - Diffusion time units\n"
            "        - advection\n"
-           "          - Advection time units\n"
+           "          - Advection time units (valid if there is advection)\n"
+           "        - diffusion\n"
+           "          - Diffusion time units (valid if there is diffusion)\n"
            "        - reaction\n"
-           "          - Reaction time units\n"
+           "          - Reaction time units (valid if there is reaction)\n"
            "        - arbitrary\n"
            "          - Arbitary units (no rescaling)\n"
            "      - Injection start time\n"
@@ -643,11 +644,13 @@ private:
   }
 
   /** \brief Read initial condition info from input stream. */
-  template <typename TransportParameters, typename ReactionParameters>
+  template <typename TransportParameters, typename ReactionParameters,
+            typename SolverParameters>
   std::unique_ptr<InjectionParameters>
   set_injection_parameters(std::ifstream &input, std::string const &filename,
                            TransportParameters const &params_transport,
-                           ReactionParameters const &params_reaction) {
+                           ReactionParameters const &params_reaction,
+                           SolverParameters const &params_solvers) {
     if (type ==
         InitialConditionList::Type::prescribed_positions_masses_tags_times) {
       continuity = "prescribed";
@@ -665,14 +668,24 @@ private:
     std::string for_injection_continuity_type =
         std::string{"Injection continuity type "} + continuity + " : ";
 
-    auto time_units =
-        io::read<std::string>(split_line, param_index,
-                              in_file + for_injection_continuity_type +
-                                  "Could not parse injection time units");
+    auto time_units = io::read<std::string>(
+        split_line, param_index, in_file + "Could not parse time units");
+    std::string for_time_units =
+        std::string{"For time units "} + time_units + " : ";
     if (!TimeUnitsList::contains(time_units)) {
-      throw std::runtime_error{in_file + for_injection_continuity_type +
-                               "Time units " + time_units + " : " +
-                               "Not supported"};
+      throw std::runtime_error{in_file + for_time_units + "Not supported"};
+    }
+    if (TimeUnitsList::type(time_units) == TimeUnitsList::Type::advection &&
+        !params_solvers.advection) {
+      throw std::runtime_error{in_file + for_time_units + "No advection"};
+    }
+    if (TimeUnitsList::type(time_units) == TimeUnitsList::Type::diffusion &&
+        !params_solvers.diffusion) {
+      throw std::runtime_error{in_file + for_time_units + "No diffusion"};
+    }
+    if (TimeUnitsList::type(time_units) == TimeUnitsList::Type::reaction &&
+        !params_solvers.reaction) {
+      throw std::runtime_error{in_file + for_time_units + "No reaction"};
     }
     double time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);

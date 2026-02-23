@@ -144,8 +144,22 @@ public:
     std::size_t param_index = 0;
     io::read(split_line, param_index, in_file + "Could not parse time units",
              time_units);
+    std::string for_time_units =
+        std::string{"For time units "} + time_units + " : ";
     if (!TimeUnitsList::contains(time_units)) {
-      throw std::runtime_error{in_file + "Not supported"};
+      throw std::runtime_error{in_file + for_time_units + "Not supported"};
+    }
+    if (TimeUnitsList::type(time_units) == TimeUnitsList::Type::advection &&
+        !params_solvers.advection) {
+      throw std::runtime_error{in_file + for_time_units + "No advection"};
+    }
+    if (TimeUnitsList::type(time_units) == TimeUnitsList::Type::diffusion &&
+        !params_solvers.diffusion) {
+      throw std::runtime_error{in_file + for_time_units + "No diffusion"};
+    }
+    if (TimeUnitsList::type(time_units) == TimeUnitsList::Type::reaction &&
+        !params_solvers.reaction) {
+      throw std::runtime_error{in_file + for_time_units + "No reaction"};
     }
     time_unit_factor =
         ptof::time_unit_factor(time_units, params_transport, params_reaction);
@@ -161,19 +175,19 @@ public:
         << io::line() << "Output parameters\n"
         << io::line()
         << "- Time units for measurement times:\n"
-           "  - diffusion\n"
-           "    - Diffusion time units\n"
            "  - advection\n"
-           "    - Advection time units\n"
+           "    - Advection time units (valid only if there is advection)\n"
+           "  - diffusion\n"
+           "    - Diffusion time units (valid only if there is diffusion)\n"
            "  - reaction\n"
-           "    - Reaction time units\n"
+           "    - Reaction time units (valid only if there is reaction)\n"
            "  - arbitrary\n"
            "    - Arbitary units (no rescaling)\n"
            "- End criterion to finish dynamics:\n"
            "  (Note:\n"
-           "    - To combine criteria pass 'and' or 'or' on first line,\n"
-           "      followed by the number of criteria to combine on the same\n"
-           "      line, then specify one criterion per subsequent line)\n"
+           "    - To combine criteria pass 'and' or 'or', followed by the\n"
+           "      number of criteria to combine on the same line, then\n"
+           "      specify one criterion per subsequent line)\n"
            "  - time\n"
            "    - Specified time\n"
            "    - Pass on same line:\n"
@@ -333,7 +347,7 @@ public:
            "      masses at end of dynamics\n"
            "  - absorption_time_patch\n"
            "    (Note: Patch info is not guaranteed accurate unless particle\n"
-           "           states store boundary face\n"
+           "           states store boundary face)\n"
            "    - Particle absorption times, particle tags, particle\n"
            "      masses, and absorption patch at end of dynamics\n"
            "  - absorption_time_position\n"

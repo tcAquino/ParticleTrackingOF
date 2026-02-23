@@ -73,7 +73,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_diffusion_surface_decay_2d;
+  using Model = ptof::Model::advection_2d;
 
   using Definitions = Model::Definitions<ParallelOption>;
 
@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::InitialConditionHandler::Parameters params_initial_condition{
       directories, params_initial_condition_name, geometry, params_transport,
-      params_reaction};
+      params_reaction, params_solvers};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
   std::cout << " (";
