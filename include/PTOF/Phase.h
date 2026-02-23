@@ -590,6 +590,12 @@ public:
           instant.value());
     }
 
+    /** \return Time of new field. */
+    auto time_new() const { return _carrier_phase_field.time_new(); }
+
+    /** \return Time of old field. */
+    auto time_old() const { return _carrier_phase_field.time_old(); }
+
   private:
     VelocityField _velocity_field;
     PhaseField _carrier_phase_field;
