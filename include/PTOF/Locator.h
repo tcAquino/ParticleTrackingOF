@@ -66,9 +66,13 @@ struct Locator_Cell {
       }
       if constexpr (SearchOption::neighbor_check_level >= 2) {
         std::set<Index> second_neighbors;
-        for (auto cell_index_1 : mesh().cellCells()[hint]) {
+        auto const &first_neighbors = mesh().cellCells()[hint];
+        for (auto cell_index_1 : first_neighbors) {
           for (auto cell_index : mesh().cellCells()[cell_index_1]) {
-            second_neighbors.insert(cell_index);
+            if (std::find(first_neighbors.begin(), first_neighbors.end(),
+                          cell_index) == first_neighbors.end()) {
+              second_neighbors.insert(cell_index);
+            }
           }
         }
         for (auto cell_index : second_neighbors) {
