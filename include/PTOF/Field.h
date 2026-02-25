@@ -482,7 +482,10 @@ public:
      \brief Change underlying field data.
      \param field Set field data to this field.
   */
-  void set(Field field) { _field = field; }
+  void set(Field field) {
+    _field = field;
+    update_interpolator();
+  }
 
 private:
   Field _field;     /**< Scalar field cell data to interpolate.         */
@@ -749,9 +752,8 @@ private:
       return field_old;
     }
     throw std::runtime_error{
-        "Field_TimeInterpolation : Interpolation type must "
-        "be InterpolationTypes::Linear or "
-        "InterpolationType::OldTime"};
+        "Field_TimeInterpolation : Interpolation type must be "
+        "InterpolationTypes::Linear or InterpolationType::OldTime"};
   }
 };
 } // namespace ptof
