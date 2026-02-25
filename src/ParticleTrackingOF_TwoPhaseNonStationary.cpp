@@ -195,6 +195,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::TransportHandler::Parameters params_transport{
       directories, params_transport_name, geometry, velocity_data_old};
+  std::cout << params_transport.diff_coeff << std::endl;
   ptof::rescale(velocity_data_new, params_transport.velocity_rescaling_factor);
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
