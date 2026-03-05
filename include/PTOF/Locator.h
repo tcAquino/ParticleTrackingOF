@@ -21,7 +21,7 @@ namespace ptof {
    \brief Object to locate positions or states in mesh.
 */
 template <typename Geometry,
-          typename SearchOption = SearchOptions::FirstNeighborPrecheck>
+          typename SearchOption = SearchOptions::SecondNeighborPrecheck>
 struct Locator_Cell {
   using Point = Foam::point;                    /**< 3D point. */
   using Point2D = Foam::Vector2D<Foam::scalar>; /**< 2D point. */

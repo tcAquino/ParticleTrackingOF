@@ -73,7 +73,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_2d;
+  using Model = ptof::Model::advection_diffusion_2d;
 
   using Definitions = Model::Definitions<ParallelOption>;
 
@@ -328,6 +328,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Maximum measurement time reached before end criterion."
               << std::endl;
   }
+
   output();
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
