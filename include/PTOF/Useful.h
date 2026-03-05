@@ -20,6 +20,7 @@
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <iostream>
+#include <meshSearch.H>
 #include <point.H>
 #include <random>
 #include <set>
@@ -139,7 +140,8 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
     } else {
       output << "\n"
                 "Help option "
-             << option << " : " << "Not supported\n";
+             << option << " : "
+             << "Not supported\n";
     }
   }
 
@@ -174,8 +176,9 @@ bool outside(Foam::label cell, Foam::point const &position,
              std::string const &extra_warning_info = {}) {
   if (cell < 0) {
     if constexpr (warn_if_outside) {
-      std::cerr << "Warning: Requested cell at position " << "(" << position[0]
-                << ", " << position[1] << ", " << position[2] << ")"
+      std::cerr << "Warning: Requested cell at position "
+                << "(" << position[0] << ", " << position[1] << ", "
+                << position[2] << ")"
                 << " outside mesh.";
       if (!extra_warning_info.empty()) {
         std::cerr << " " << extra_warning_info << "\n";
@@ -588,8 +591,9 @@ auto adjusted_face_center(Foam::label face, Locator const &locator) {
     return face_center(face, mesh);
   } else {
     auto center = face_center(face, mesh);
-    std::cerr << "Warning: Face center of face " << face << " at " << "("
-              << center[0] << ", " << center[1] << ", " << center[2] << ")"
+    std::cerr << "Warning: Face center of face " << face << " at "
+              << "(" << center[0] << ", " << center[1] << ", " << center[2]
+              << ")"
               << " is not within owner cell. "
               << "Replacing face center by owner cell center\n";
     return cell_center(mesh.faceOwner()[face], mesh);
@@ -1342,7 +1346,7 @@ auto position_interpolated_with_cell(State const &state_new,
         position = position_new;
         cell_id = state_new.cell;
       } else {
-        position =  position_old;
+        position = position_old;
         cell_id = state_old.cell;
       }
     }
@@ -1603,7 +1607,8 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
 template <typename ParametersOutput>
 void info_time(std::ostream &output, ParametersOutput const &params,
                double time) {
-  output << "Time " << "[" << params.time_units
+  output << "Time "
+         << "[" << params.time_units
          << " time units]: " << time / params.time_unit_factor << "\n";
 }
 
@@ -1811,6 +1816,26 @@ void rescale_to_average(Field &field, Mesh const &mesh, double average) {
     field *= average / magnitude_of_average(field, mesh);
   }
 }
+
+/**
+   \class MeshTools PTOF/Useful.h "PTOF/Useful.h"
+   \brief Helper to handle mesh and mesh search tools.
+*/
+template <typename Mesh_t> struct MeshTools {
+  using Mesh = Mesh_t;
+  using MeshSearch = Foam::meshSearch;
+
+  MeshTools(Mesh const &mesh)
+      : _mesh{mesh}, _mesh_search{Foam::meshSearch{_mesh}} {}
+
+  auto const &mesh() const { return _mesh; }
+
+  auto const &mesh_search() const { return _mesh_search; }
+
+private:
+  Mesh const &_mesh;
+  MeshSearch _mesh_search;
+};
 } // namespace ptof
 
 #endif /* PTOF_USEFUL_H */
