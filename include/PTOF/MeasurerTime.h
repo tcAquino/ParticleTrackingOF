@@ -141,12 +141,11 @@ public:
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass"
-            << std::setw(_column_widths[3]) << "Cell";
+    _output << std::setw(_column_widths[0]) << "Tag"
+            << std::setw(_column_widths[1]) << "Mass"
+            << std::setw(_column_widths[2]) << "Cell";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[4])
+      _output << std::setw(_column_widths[3])
               << "Position_" + std::to_string(dd);
     }
     _output << "\n";
