@@ -79,22 +79,19 @@ struct MeasurementList {
                                    boundary face with periodicity info. */
     absorption_time, /**< Particle absorption times, tags, and masses at end of
                        dynamics. */
-    absorption_time_patch,    /**< Particle absorption times, particle tags,
-                  particle masses, and absorption patch at end of dynamics. */
-    absorption_time_position, /**< Particle absorption times, particle tags,
-       particle masses, and particle position at end of dynamics. */
-    absorption_time_patch_position,    /**< Particle absorption times, particle
-                                         tags, particle masses, closest boundary
-                                         patch, and particle position at end of
-                                         dynamics. */
-    absorption_time_position_periodic, /**< Particle absorption times, particle
-       tags, particle masses, and particle position accounting for periodicity
-       at end of dynamics. */
+    absorption_time_patch,             /**< Particle absorption times, tags,
+                          masses, and absorption patch at end of dynamics. */
+    absorption_time_position,          /**< Particle absorption times, tags,
+                masses, and particle position at end of dynamics. */
+    absorption_time_patch_position,    /**< Particle absorption tags, masses,
+                                         absorption patch, and particle position
+                                         at end of dynamics. */
+    absorption_time_position_periodic, /**< Particle absorption times, tags,
+       masses, and positions accounting for periodicity at end of dynamics. */
     absorption_time_patch_position_periodic /**< Particle absorption times,
-                                      particle tags, particle masses, closest
-                                      boundary patch, and particle position
-                                      accounting for periodicity at end of
-                                      dynamics. */
+                                      tags, masses, absorption patch, and
+                                      positions accounting for periodicity at
+                                      end of dynamics. */
   };
 
   /**

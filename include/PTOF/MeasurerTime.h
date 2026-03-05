@@ -10,6 +10,7 @@
 
 #include "CTRW/StateGetter.h"
 #include "General/IO.h"
+#include "General/Meta.h"
 #include "PTOF/BoundaryInfo.h"
 #include "PTOF/CheckOptions.h"
 #include "PTOF/Directories.h"
@@ -38,7 +39,8 @@ namespace ptof {
    \brief Abstract polymorphic output handler for outputting time and some
    quantity.
 */
-template <typename Subject, typename Geometry> struct MeasurerTime {
+template <typename Subject, typename Geometry> class MeasurerTime {
+public:
   /** \brief Destructor. */
   virtual ~MeasurerTime() = default;
 
@@ -48,7 +50,7 @@ template <typename Subject, typename Geometry> struct MeasurerTime {
   virtual void operator()(double time) = 0;
 
   /** \brief Output stored information (do nothing if not overriden). */
-  virtual void print() {};
+  virtual void print(){};
 
   /** \brief Update internal state. */
   virtual void update(double time, Foam::instant const &previous_time_of_change,
@@ -66,10 +68,11 @@ protected:
      scientific notation.
   */
   MeasurerTime(Subject const &subject, Geometry const &geometry,
-               Directories const &directories, std::string const &output_name,
+               Directories const &directories, std::string output_name,
                std::string const &identifier, int precision = 8)
       : _subject{subject}, _geometry{geometry}, _locator{geometry.locator},
-        _output{open_write(directories, output_name, identifier)} {
+        _output_name{output_name}, _output{open_write(directories, _output_name,
+                                                      identifier)} {
     _output << std::setprecision(precision) << std::scientific;
   }
 
@@ -85,7 +88,8 @@ protected:
   Subject const &_subject;   /**< CTRW object to measure. */
   Geometry const &_geometry; /**< Domain geometry info and utilities. */
   typename Geometry::Locator const
-      &_locator;         /**< Object to locate positions in mesh. */
+      &_locator; /**< Object to locate positions in mesh. */
+  std::string _output_name;
   std::ofstream _output; /**< Output stream. */
 
   /**
@@ -106,104 +110,173 @@ protected:
 
 /**
    \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Output time, tags, positions, and masses.
+   \brief Output tags, masses, cells, and positions, as well as times and number
+   of particles output per time to a separate file (with \t _times added to
+   output name).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position final : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position(Subject const &subject, Geometry const &geometry,
                         Directories const &directories,
                         std::string const &identifier, int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,    geometry,   directories,
-                                        "position", identifier, precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"position"} + (periodic ? "_periodic" : ""),
+                      identifier,
+                      precision},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(12 + precision, int(1 + std::string{"Cell"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_"}.length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
+            << std::setw(_column_widths[1]) << "Tag"
+            << std::setw(_column_widths[2]) << "Mass"
+            << std::setw(_column_widths[3]) << "Cell";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
+      _output << std::setw(_column_widths[4])
               << "Position_" + std::to_string(dd);
     }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+    _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_particles"
+                  << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position(Subject const &subject, Geometry const &geometry,
+                        Directories const &directories,
+                        std::string const &identifier,
+                        meta::Selector<bool, periodic_v>, int precision = 8)
+      : MeasurerTime_position<Subject, Geometry, periodic_v>{
+            subject, geometry, directories, identifier, precision} {}
+
   void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
+    std::size_t nr_particles = 0;
     for (auto const &part : _subject) {
       auto const &state_old = part.state_old();
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
+      ++nr_particles;
+
       auto const &state_new = part.state_new();
-      _output << std::setw(_column_widths[1]) << state_old.tag;
-      io::print(_output,
-                position_interpolated<true, false>(part, time, this->_geometry),
-                _column_widths[2]);
-      _output << std::setw(_column_widths[3])
+      auto [position, cell] = position_interpolated_with_cell<true, periodic>(
+          part, time, this->_geometry);
+      _output << std::setw(_column_widths[0]) << state_old.tag;
+      _output << std::setw(_column_widths[1])
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      _output << std::setw(_column_widths[2]) << cell;
+      io::print(_output, position, _column_widths[3]);
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
 private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   std::array<int, 4> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 
 /**
    \class MeasurerTime_position_in_regions PTOF/MeasurerTime.h
   "PTOF/MeasurerTime.h"
-  \brief Output time, tags, positions, and masses within regions specified by
-  masks.
+  \brief Output tags, masses, cells, and positions within regions specified by
+  masks, as well as times and number of particles output per time to a separate
+  file (with \t _times added to output name).
+  \tparam periodic If true, give position accounting for periodicity (possibly
+  outside domain).
 */
-template <typename Subject, typename Geometry, typename Mask>
-struct MeasurerTime_position_in_regions final
-    : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, typename Mask,
+          bool periodic = false>
+class MeasurerTime_position_in_regions final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_in_regions(
       Subject const &subject, Geometry const &geometry,
       Directories const &directories, std::string const &identifier,
       std::vector<std::reference_wrapper<const Mask>> masks,
       std::vector<double> thresholds = {}, int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_in_regions",
-                                        identifier,  precision},
+      : MeasurerTime<Subject, Geometry>{subject,
+                                        geometry,
+                                        directories,
+                                        std::string{"position_in_regions"} +
+                                            (periodic ? "_period"
+                                                        "ic"
+                                                      : ""),
+                                        identifier,
+                                        precision},
         _masks{masks}, _thresholds{thresholds},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
-            std::max(9, int(4 + std::string{"In_region_"}.length()))} {
+            std::max(12, int(1 + std::string{"Cell"}.length())),
+            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
+            std::max(9, int(4 + std::string{"In_region_"}.length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
     _thresholds.resize(masks.size(), 0.);
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
+    _output << std::setw(_column_widths[0]) << "Tag";
+    _output << std::setw(_column_widths[1]) << "Mass";
+    _output << std::setw(_column_widths[2]) << "Cell";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
+      _output << std::setw(_column_widths[3])
               << "Position_" + std::to_string(dd);
     }
-    _output << std::setw(_column_widths[3]) << "Mass";
     if (_masks.size() > 1) {
       for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
         _output << std::setw(_column_widths[4])
                 << "In_region_" + std::to_string(ii);
       }
     }
-    _output << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+    _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_particles"
+                  << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_in_regions(
+      Subject const &subject, Geometry const &geometry,
+      Directories const &directories, std::string const &identifier,
+      std::vector<std::reference_wrapper<const Mask>> masks,
+      meta::Selector<bool, periodic_v>, std::vector<double> thresholds = {},
+      int precision = 8)
+      : MeasurerTime_position_in_regions<Subject, Geometry, Mask, periodic_v>{
+            subject, geometry,   directories, identifier,
+            masks,   thresholds, precision} {}
+
   void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
+    std::size_t nr_particles = 0;
     for (auto const &part : _subject) {
       auto const &state_old = part.state_old();
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
+      ++nr_particles;
+
       auto const &state_new = part.state_new();
       if (outside(state_new.cell) || outside(state_old.cell)) {
         continue;
@@ -217,20 +290,23 @@ struct MeasurerTime_position_in_regions final
       }
       if (std::any_of(in_region.begin(), in_region.end(),
                       [](int ii) { return ii > 0; })) {
-        _output << std::setw(_column_widths[1]) << state_old.tag;
-        io::print(
-            _output,
-            position_interpolated<true, false>(part, time, this->_geometry),
-            _column_widths[2]);
-        _output << std::setw(_column_widths[3])
+        auto [position, cell] = position_interpolated_with_cell<true, periodic>(
+            part, time, this->_geometry);
+        _output << std::setw(_column_widths[0]) << state_old.tag;
+        _output << std::setw(_column_widths[1])
                 << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
                                                             state_old);
+        _output << std::setw(_column_widths[2]) << cell;
+        io::print(_output, position, _column_widths[3]);
         if (_masks.size() > 1) {
           io::print(_output, in_region, _column_widths[4]);
         }
       }
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
 private:
@@ -239,20 +315,31 @@ private:
   std::vector<std::reference_wrapper<const Mask>> _masks;
   std::vector<double> _thresholds;
   std::array<int, 5> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 
 /**
    \class MeasurerTime_position_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
    \brief Output time and mean position (weighted by mass).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_mean final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_mean(Subject const &subject, Geometry const &geometry,
                              Directories const &directories,
                              std::string const &identifier, int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_mean",
-                                        identifier,  precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"position_mean"} + (periodic ? "_periodic" : ""),
+                      identifier,
+                      precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(2 + std::string{"Position_mean_"}.length()))} {
@@ -264,10 +351,19 @@ struct MeasurerTime_position_mean final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_mean(Subject const &subject, Geometry const &geometry,
+                             Directories const &directories,
+                             std::string const &identifier,
+                             meta::Selector<bool, periodic_v>,
+                             int precision = 8)
+      : MeasurerTime_position_mean<Subject, Geometry, periodic_v>{
+            subject, geometry, directories, identifier, precision} {}
+
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_mean<false, false>(_subject, time, this->_geometry),
+              position_mean<false, periodic>(_subject, time, this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -282,17 +378,26 @@ private:
    \class MeasurerTime_position_abs_mean PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output time and mean of absolute value of position (weighted by mass).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_abs_mean final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_abs_mean(Subject const &subject,
                                  Geometry const &geometry,
                                  Directories const &directories,
                                  std::string const &identifier,
                                  int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_abs_mean",
-                                        identifier,  precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"position_abs_mean"} + (periodic ? "_periodic" : ""),
+                      identifier,
+                      precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Position_abs_mean"}.length()))} {
@@ -301,10 +406,20 @@ struct MeasurerTime_position_abs_mean final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_abs_mean(Subject const &subject,
+                                 Geometry const &geometry,
+                                 Directories const &directories,
+                                 std::string const &identifier,
+                                 meta::Selector<bool, periodic_v>,
+                                 int precision = 8)
+      : MeasurerTime_position_abs_mean<Subject, Geometry, periodic_v>{
+            subject, geometry, directories, identifier, precision} {}
+
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_mean<false, false>(
+              position_mean<false, periodic>(
                   _subject, time, this->_geometry,
                   [](auto const &position) { return op::abs(position); }),
               _column_widths[1]);
@@ -321,18 +436,25 @@ private:
    \class MeasurerTime_position_second_moment PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output time and second moment of position (weighted by mass).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_second_moment final
-    : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_second_moment final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_second_moment(Subject const &subject,
                                       Geometry const &geometry,
                                       Directories const &directories,
                                       std::string const &identifier,
                                       int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_second_moment",
-                                        identifier,  precision},
+      : MeasurerTime<Subject, Geometry>{subject,
+                                        geometry,
+                                        directories,
+                                        std::string{"position_second_moment"} +
+                                            (periodic ? "_periodic" : ""),
+                                        identifier,
+                                        precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(
@@ -346,12 +468,22 @@ struct MeasurerTime_position_second_moment final
     _output << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_second_moment(Subject const &subject,
+                                      Geometry const &geometry,
+                                      Directories const &directories,
+                                      std::string const &identifier,
+                                      meta::Selector<bool, periodic_v>,
+                                      int precision = 8)
+      : MeasurerTime_position_second_moment<Subject, Geometry, periodic_v>{
+            subject, geometry, directories, identifier, precision} {}
+
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(
-        _output,
-        position_second_moment<false, false>(_subject, time, this->_geometry),
-        _column_widths[1]);
+    io::print(_output,
+              position_second_moment<false, periodic>(_subject, time,
+                                                      this->_geometry),
+              _column_widths[1]);
     _output << "\n";
   }
 
@@ -365,10 +497,13 @@ private:
    \class MeasurerTime_position_nth_moment PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output time and nth moment of position (weighted by mass).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_nth_moment final
-    : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_nth_moment final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_nth_moment(Subject const &subject, double nn,
                                    Geometry const &geometry,
                                    Directories const &directories,
@@ -389,11 +524,21 @@ struct MeasurerTime_position_nth_moment final
     _output << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_nth_moment(Subject const &subject, double nn,
+                                   Geometry const &geometry,
+                                   Directories const &directories,
+                                   std::string const &identifier,
+                                   meta::Selector<bool, periodic_v>,
+                                   int precision = 8)
+      : MeasurerTime_position_nth_moment<Subject, Geometry, periodic_v>{
+            subject, geometry, directories, identifier, precision} {}
+
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(
         _output,
-        position_moment<false, false>(_subject, _nn, time, this->_geometry),
+        position_moment<false, periodic>(_subject, _nn, time, this->_geometry),
         _column_widths[1]);
     _output << "\n";
   }
@@ -403,7 +548,8 @@ private:
     std::stringstream stream;
     stream << std::scientific << std::setprecision(2);
     stream << "_" << nn;
-    return std::string{"position_moment_"} + stream.str();
+    return std::string{"position_moment_"} + stream.str() +
+           (periodic ? "_periodic" : "");
   }
 
   using MeasurerTime<Subject, Geometry>::_output;
@@ -413,70 +559,17 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_moment_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and moment of position with specified exponents for each
-   coordinate (weighted by mass), with position accounting for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_moment_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_moment_periodic(Subject const &subject,
-                                        std::vector<double> exponents,
-                                        Geometry const &geometry,
-                                        Directories const &directories,
-                                        std::string const &identifier,
-                                        int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, make_name(exponents),
-                                        identifier,  precision},
-        _exponents{exponents},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(9 + precision,
-                     int(2 + std::string{"Position_moment_"}.length()))} {
-    throw std::runtime_error{
-        "Number of moment exponents is not the same as spatial dimension"};
-    _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_moment_" + std::to_string(dd);
-    }
-    _output << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_moment<false, true>(_subject, _exponents, time,
-                                          this->_geometry),
-              _column_widths[1]);
-    _output << "\n";
-  }
-
-private:
-  static std::string make_name(std::vector<double> const &exponents) {
-    std::stringstream stream;
-    stream << std::scientific << std::setprecision(2);
-    for (auto exp : exponents)
-      stream << "_" << exp;
-    return std::string{"position_moment_periodic"} + stream.str();
-  }
-
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::vector<double> _exponents;
-  std::array<int, 2> _column_widths;
-};
-
-/**
    \class MeasurerTime_position_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
    \brief  Output time and moment of position with specified exponents for each
    coordinate (weighted by mass).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
+
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_moment final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_moment(Subject const &subject,
                                std::vector<double> exponents,
                                Geometry const &geometry,
@@ -502,11 +595,22 @@ struct MeasurerTime_position_moment final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_moment(Subject const &subject,
+                               std::vector<double> exponents,
+                               Geometry const &geometry,
+                               Directories const &directories,
+                               std::string const &identifier,
+                               meta::Selector<bool, periodic_v>,
+                               int precision = 8)
+      : MeasurerTime_position_moment<Subject, Geometry, periodic_v>{
+            subject, geometry, directories, identifier, precision} {}
+
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
     io::print(_output,
-              position_moment<false, false>(_subject, _exponents, time,
-                                           this->_geometry),
+              position_moment<false, periodic>(_subject, _exponents, time,
+                                               this->_geometry),
               _column_widths[1]);
     _output << "\n";
   }
@@ -518,7 +622,8 @@ private:
     for (auto exp : exponents) {
       stream << "_" << exp;
     }
-    return std::string{"position_moment"} + stream.str();
+    return std::string{"position_moment"} + stream.str() +
+           (periodic ? "_periodic" : "");
   }
 
   using MeasurerTime<Subject, Geometry>::_output;
@@ -531,17 +636,26 @@ private:
    \class MeasurerTime_position_variance PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output time and position variance (weighted by mass).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_variance final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_variance(Subject const &subject,
                                  Geometry const &geometry,
                                  Directories const &directories,
                                  std::string const &identifier,
                                  int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_variance",
-                                        identifier,  precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"position_variance"} + (periodic ? "_periodic" : ""),
+                      identifier,
+                      precision},
         _column_widths{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision,
@@ -554,11 +668,27 @@ struct MeasurerTime_position_variance final : MeasurerTime<Subject, Geometry> {
     _output << "\n";
   }
 
+  template <bool periodic_v>
+  MeasurerTime_position_variance(Subject const &subject,
+                                 Geometry const &geometry,
+                                 Directories const &directories,
+                                 std::string const &identifier,
+                                 meta::Selector<bool, periodic_v>,
+                                 int precision = 8)
+      : MeasurerTime_position_variance<Subject, Geometry, periodic_v>{
+            subject,
+            geometry,
+            directories,
+            std::string{"position_variance"} + (periodic ? "_periodic" : ""),
+            identifier,
+            precision} {}
+
   void operator()(double time) override {
     _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_variance<false, false>(_subject, time, this->_geometry),
-              _column_widths[1]);
+    io::print(
+        _output,
+        position_variance<false, periodic>(_subject, time, this->_geometry),
+        _column_widths[1]);
     _output << "\n";
   }
 
@@ -571,7 +701,8 @@ private:
 /** \class MeasurerTime_mass PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and total mass. */
 template <typename Subject, typename Geometry>
-struct MeasurerTime_mass final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_mass final : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_mass(Subject const &subject, Geometry const &geometry,
                     Directories const &directories,
                     std::string const &identifier, int precision = 8)
@@ -581,7 +712,8 @@ struct MeasurerTime_mass final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -598,7 +730,9 @@ private:
 /** \class MeasurerTime_mass_adsorbed PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief Output time and total absorbed mass. */
 template <typename Subject, typename Geometry>
-struct MeasurerTime_mass_absorbed final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_mass_absorbed final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_mass_absorbed(Subject const &subject, Geometry const &geometry,
                              Directories const &directories,
                              std::string const &identifier, int precision = 8)
@@ -609,7 +743,8 @@ struct MeasurerTime_mass_absorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -627,7 +762,9 @@ private:
 /** \class MeasurerTime_mass_adsorbed PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
  *  \brief  Output time and total adsorbed mass. */
 template <typename Subject, typename Geometry>
-struct MeasurerTime_mass_adsorbed final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_mass_adsorbed final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_mass_adsorbed(Subject const &subject, Geometry const &geometry,
                              Directories const &directories,
                              std::string const &identifier, int precision = 8)
@@ -638,7 +775,8 @@ struct MeasurerTime_mass_adsorbed final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -657,7 +795,9 @@ private:
  * "PTOF/MeasurerTime.h" \brief  Output time and total mass in regions specified
  * by maks. */
 template <typename Subject, typename Geometry, typename Mask>
-struct MeasurerTime_mass_in_regions final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_mass_in_regions final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_mass_in_regions(
       Subject const &subject, Geometry const &geometry,
       Directories const &directories, std::string const &identifier,
@@ -697,14 +837,17 @@ private:
 };
 
 /**
-\class MeasurerTime_scalar_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-\brief Output time, tags, and scalar field values.
+   \class MeasurerTime_scalar_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief Output tags, and scalar field values, as well as times and number of
+   particles output per time to a separate file (with \t _times added to output
+   name).
 */
 template <typename Subject, typename Geometry,
           typename Field = ScalarField_Interpolation<
               Foam::volScalarField, typename Geometry::Locator const &,
               InterpolationTypes::Linear, CheckOptions::Check>>
-struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_scalar_field final : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_scalar_field(Subject const &subject, Field &&field,
                             Geometry const &geometry,
                             Directories const &directories,
@@ -719,16 +862,21 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
                                precision},
         _field_name{field_name}, _field{std::forward<Field>(field)},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + (field_name + "_").length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << field_name
-            << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(9 + precision, int(1 + field_name.length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Tag"
+            << std::setw(_column_widths[1]) << "Mass"
+            << std::setw(_column_widths[2]) << field_name << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_particles"
+                  << "\n";
   }
 
   MeasurerTime_scalar_field(Subject const &subject, Geometry const &geometry,
@@ -752,20 +900,26 @@ struct MeasurerTime_scalar_field final : MeasurerTime<Subject, Geometry> {
             precision} {}
 
   void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
+    std::size_t nr_particles = 0;
     for (auto const &part : _subject) {
       auto const &state_old = part.state_old();
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
+      ++nr_particles;
+
       auto const &state_new = part.state_new();
-      _output << std::setw(_column_widths[1]) << state_old.tag
+      _output << std::setw(_column_widths[0]) << state_old.tag
+              << std::setw(_column_widths[1])
+              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old)
               << std::setw(_column_widths[2])
               << ctrw::Get_interp{time, ctrw::Get_property{_field}}(state_new,
-                                                                    state_old)
-              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+                                                                    state_old);
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
   void update(double time = 0.,
@@ -786,7 +940,9 @@ private:
   using MeasurerTime<Subject, Geometry>::_geometry;
   std::string _field_name;
   Field _field;
-  std::array<int, 4> _column_widths;
+  std::array<int, 3> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 template <typename Subject, typename Geometry, typename Field>
 MeasurerTime_scalar_field(Subject const &, Field &&, Geometry const &,
@@ -817,13 +973,19 @@ MeasurerTime_scalar_field(Subject const &, Geometry const &,
             Foam::volScalarField, typename Geometry::Locator const &,
             InterpolationTypes::Linear, CheckOptions::Check>>;
 
-/** \class MeasurerTime_vector_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time, tags, and vector field values. */
+/**
+   \class MeasurerTime_vector_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief Output tags, and vector field values, as well as times and number of
+   particles output per time to a separate file (with \t _times added to output
+   name).
+
+*/
 template <typename Subject, typename Geometry,
           typename Field = VectorField_Interpolation<
               Foam::volVectorField, typename Geometry::Locator const &,
               InterpolationTypes::Linear, CheckOptions::Check>>
-struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_vector_field final : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_vector_field(Subject const &subject, Field &&field,
                             Geometry const &geometry,
                             Directories const &directories,
@@ -838,19 +1000,25 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
                                precision},
         _field{std::forward<Field>(field)},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + (field_name + "_").length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(9 + precision, int(2 + (field_name + "_").length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Tag"
+            << std::setw(_column_widths[1]) << "Mass";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << field_name + "_" + std::to_string(dd);
     }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+    _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_particles"
+                  << "\n";
   }
 
   MeasurerTime_vector_field(Subject const &subject, Geometry const &geometry,
@@ -874,21 +1042,27 @@ struct MeasurerTime_vector_field final : MeasurerTime<Subject, Geometry> {
             precision} {}
 
   void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
+    std::size_t nr_particles = 0;
     for (auto const &part : _subject) {
       auto const &state_old = part.state_old();
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
+      ++nr_particles;
+
       auto const &state_new = part.state_new();
-      _output << std::setw(_column_widths[1]) << state_old.tag;
+      _output << std::setw(_column_widths[0]) << state_old.tag
+              << std::setw(_column_widths[1])
+              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
       io::print(_output,
                 ctrw::Get_interp{time, ctrw::Get_property{_field}}(state_new,
                                                                    state_old),
                 _column_widths[2]);
-      _output << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
   void update(double time = 0.,
@@ -909,7 +1083,9 @@ private:
   using MeasurerTime<Subject, Geometry>::_geometry;
   std::string _field_name;
   Field _field;
-  std::array<int, 4> _column_widths;
+  std::array<int, 3> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 template <typename Subject, typename Geometry, typename Field>
 MeasurerTime_vector_field(Subject const &, Field &&, Geometry const &,
@@ -940,11 +1116,16 @@ MeasurerTime_vector_field(Subject const &, Geometry const &,
             Foam::volVectorField, typename Geometry::Locator const &,
             InterpolationTypes::Linear, CheckOptions::Check>>;
 
-/** \class MeasurerTime_tensor_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time, tag, and tensor field values. */
+/**
+   \class MeasurerTime_tensor_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
+   \brief Output tags, and tensor field values, as well as times and number of
+   particles output per time to a separate file (with \t _times added to output
+   name).
+*/
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
-struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_tensor_field final : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_tensor_field(Subject const &subject, Field &&field,
                             Geometry const &geometry,
                             Directories const &directories,
@@ -959,21 +1140,26 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
                                precision},
         _field{std::forward<Field>(field)},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(3 + (field_name + "_").length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(9 + precision, int(3 + (field_name + "_").length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Tag"
+            << std::setw(_column_widths[1]) << "Mass";
     for (std::size_t dd1 = 0; dd1 < Geometry::dim; ++dd1) {
       for (std::size_t dd2 = 0; dd2 < Geometry::dim; ++dd2) {
         _output << std::setw(_column_widths[2])
                 << field_name + "_" + std::to_string(dd1) + std::to_string(dd2);
       }
     }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_particles"
+                  << "\n";
   }
 
   MeasurerTime_tensor_field(Subject const &subject, Geometry const &geometry,
@@ -994,14 +1180,18 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
             precision} {}
 
   void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
+    std::size_t nr_particles = 0;
     for (auto const &part : _subject) {
       auto const &state_old = part.state_old();
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
+      ++nr_particles;
+
       auto const &state_new = part.state_new();
-      _output << std::setw(_column_widths[1]) << state_old.tag;
+      _output << std::setw(_column_widths[0]) << state_old.tag
+              << std::setw(_column_widths[1])
+              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
       if (outside(state_new.cell) || outside(state_old.cell)) {
         for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
           io::print(_output, std::vector<double>(Geometry::dim, 0.),
@@ -1018,9 +1208,11 @@ struct MeasurerTime_tensor_field final : MeasurerTime<Subject, Geometry> {
           }
         }
       }
-      _output << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
   void update(double time = 0.,
@@ -1040,7 +1232,9 @@ private:
   using MeasurerTime<Subject, Geometry>::_geometry;
   std::string _field_name;
   Field _field;
-  std::array<int, 4> _column_widths;
+  std::array<int, 3> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 template <typename Subject, typename Geometry, typename Field>
 MeasurerTime_tensor_field(Subject const &, Field &&, Geometry const &,
@@ -1072,7 +1266,9 @@ template <typename Subject, typename Geometry,
           typename Field = ScalarField_Interpolation<
               Foam::volScalarField, typename Geometry::Locator const &,
               InterpolationTypes::Linear, CheckOptions::Check>>
-struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_scalar_field_mean final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_scalar_field_mean(Subject const &subject, Field &&field,
                                  Geometry const &geometry,
                                  Directories const &directories,
@@ -1091,7 +1287,8 @@ struct MeasurerTime_scalar_field_mean final : MeasurerTime<Subject, Geometry> {
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_mean").length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << field_name + "_mean" << "\n";
+            << std::setw(_column_widths[1]) << field_name + "_mean"
+            << "\n";
   }
 
   MeasurerTime_scalar_field_mean(Subject const &subject,
@@ -1178,7 +1375,9 @@ template <typename Subject, typename Geometry,
           typename Field = VectorField_Interpolation<
               Foam::volVectorField, typename Geometry::Locator const &,
               InterpolationTypes::Linear, CheckOptions::Check>>
-struct MeasurerTime_vector_field_mean final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_vector_field_mean final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_vector_field_mean(Subject const &subject, Field &&field,
                                  Geometry const &geometry,
                                  Directories const &directories,
@@ -1288,7 +1487,9 @@ MeasurerTime_vector_field_mean(Subject const &, Geometry const &,
 */
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
-struct MeasurerTime_tensor_field_mean final : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_tensor_field_mean final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_tensor_field_mean(Subject const &subject, Field &&field,
                                  Geometry const &geometry,
                                  Directories const &directories,
@@ -1392,397 +1593,14 @@ MeasurerTime_tensor_field_mean(Subject const &, Geometry const &,
     -> MeasurerTime_tensor_field_mean<Subject, Geometry, Foam::volTensorField>;
 
 /**
-   \class MeasurerTime_position_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time, tags, positions, and masses, with positions accounting
-   for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_periodic final : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_periodic(Subject const &subject,
-                                 Geometry const &geometry,
-                                 Directories const &directories,
-                                 std::string const &identifier,
-                                 int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_periodic",
-                                        identifier,  precision},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(3 + std::string{"Position_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
-              << "Position_" + std::to_string(dd);
-    }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject) {
-      auto const &state_old = part.state_old();
-      if (adsorbed(state_old) || !brackets_time(part, time)) {
-        continue;
-      }
-      auto const &state_new = part.state_new();
-      _output << std::setw(_column_widths[1]) << state_old.tag;
-      io::print(_output,
-                position_interpolated<true, true>(part, time, this->_geometry),
-                _column_widths[2]);
-      _output << std::setw(_column_widths[3])
-              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
-    }
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::array<int, 4> _column_widths;
-};
-
-/**
-   \class MeasurerTime_position_in_regions_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time, tags, positions, and masses within
-   regions specified by masks.
-*/
-template <typename Subject, typename Geometry, typename Mask>
-struct MeasurerTime_position_in_regions_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_in_regions_periodic(
-      Subject const &subject, Geometry const &geometry,
-      Directories const &directories, std::string const &identifier,
-      std::vector<std::reference_wrapper<const Mask>> masks,
-      std::vector<double> thresholds = {}, int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_in_regions_periodic",
-                                        identifier,
-                                        precision},
-        _masks{masks}, _thresholds{thresholds},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
-            std::max(2, int(4 + std::string{"In_region_"}.length()))} {
-    _thresholds.resize(masks.size(), 0.);
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
-              << "Position_" + std::to_string(dd);
-    }
-    _output << std::setw(_column_widths[3]) << "Mass";
-    if (_masks.size() > 1) {
-      for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
-        _output << std::setw(_column_widths[4])
-                << "In_region_" + std::to_string(ii);
-      }
-    }
-    _output << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject) {
-      auto const &state_old = part.state_old();
-      if (adsorbed(state_old) || !brackets_time(part, time)) {
-        continue;
-      }
-      auto const &state_new = part.state_new();
-      if (outside(state_new.cell) || outside(state_new.cell)) {
-        continue;
-      }
-      std::vector<int> in_region(_masks.size(), 0);
-      for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
-        if (evaluate(_masks[ii].get(), state_new) >= _thresholds[ii] &&
-            evaluate(_masks[ii].get(), state_old) >= _thresholds[ii]) {
-          in_region[ii] = 1;
-        }
-        if (std::any_of(in_region.begin(), in_region.end(),
-                        [](int ii) { return ii > 0; })) {
-          _output << std::setw(_column_widths[1]) << state_old.tag;
-          io::print(
-              _output,
-              position_interpolated<true, true>(part, time, this->_geometry),
-              _column_widths[2]);
-          _output << std::setw(_column_widths[3])
-                  << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new,
-                                                              state_old);
-          if (_masks.size() > 1)
-            io::print(_output, in_region, _column_widths[4]);
-        }
-      }
-    }
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::vector<std::reference_wrapper<const Mask>> _masks;
-  std::vector<double> _thresholds;
-  std::array<int, 5> _column_widths;
-};
-
-/**
-   \class MeasurerTime_position_mean_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and mean position (weighted by mass), with positions
-   accounting for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_mean_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_mean_periodic(Subject const &subject,
-                                      Geometry const &geometry,
-                                      Directories const &directories,
-                                      std::string const &identifier,
-                                      int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_mean_periodic",
-                                        identifier,  precision},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(2 + std::string{"Position_mean_"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_mean_" + std::to_string(dd);
-    }
-    _output << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_mean<false, true>(_subject, time, this->_geometry),
-              _column_widths[1]);
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::array<int, 2> _column_widths;
-};
-
-/**
-   \class MeasurerTime_position_mean_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and mean position (weighted by mass), with positions
-   accounting for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_abs_mean_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_abs_mean_periodic(Subject const &subject,
-                                          Geometry const &geometry,
-                                          Directories const &directories,
-                                          std::string const &identifier,
-                                          int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_abs_mean_periodic",
-                                        identifier,
-                                        precision},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(1 + std::string{"Position_abs_mean"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    _output << std::setw(_column_widths[1]) << "Position_abs_mean";
-    _output << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_mean<false, true>(
-                  _subject, time, this->_geometry,
-                  [](auto const &position) { return op::abs(position); }),
-              _column_widths[1]);
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::array<int, 2> _column_widths;
-};
-
-/**
-   \class MeasurerTime_position_second_moment_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and second moment of position (weighted by mass), with
-   position accounting for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_second_moment_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_second_moment_periodic(Subject const &subject,
-                                               Geometry const &geometry,
-                                               Directories const &directories,
-                                               std::string const &identifier,
-                                               int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_second_moment_periodic",
-                                        identifier,
-                                        precision},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(
-                9 + precision,
-                int(2 + std::string{"Position_second_moment_"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_second_moment_" + std::to_string(dd);
-    }
-    _output << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(
-        _output,
-        position_second_moment<false, true>(_subject, time, this->_geometry),
-        _column_widths[1]);
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::array<int, 2> _column_widths;
-};
-
-/**
-   \class MeasurerTime_position_nth_moment_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and nth moment of position (weighted by mass), with
-   position accounting for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_nth_moment_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_nth_moment_periodic(Subject const &subject, double nn,
-                                            Geometry const &geometry,
-                                            Directories const &directories,
-                                            std::string const &identifier,
-                                            int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,       geometry,   directories,
-                                        make_name(nn), identifier, precision},
-        _nn{nn},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(9 + precision,
-                     int(2 + std::string{"Position_nth_moment_"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_nth_moment_" + std::to_string(dd);
-    }
-    _output << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_moment<false, true>(_subject, _nn, time, this->_geometry),
-              _column_widths[1]);
-    _output << "\n";
-  }
-
-private:
-  static std::string make_name(double nn) {
-    std::stringstream stream;
-    stream << std::scientific << std::setprecision(2);
-    stream << "_" << nn;
-    return std::string{"position_nth_moment_"
-                       "periodic_"} +
-           stream.str();
-  }
-
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  double _nn;
-  std::array<int, 2> _column_widths;
-};
-
-/**
-   \class MeasurerTime_position_variance_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and position variance (weighted by mass), with position
-   accounting for periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_variance_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_variance_periodic(Subject const &subject,
-                                          Geometry const &geometry,
-                                          Directories const &directories,
-                                          std::string const &identifier,
-                                          int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_variance_periodic",
-                                        identifier,
-                                        precision},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(9 + precision,
-                     int(2 + std::string{"Position_variance_"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[1])
-              << "Position_variance_" + std::to_string(dd);
-    }
-    _output << "\n";
-  }
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    io::print(_output,
-              position_variance<false, true>(_subject, time, this->_geometry),
-              _column_widths[1]);
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  std::array<int, 2> _column_widths;
-};
-
-/**
    \class MeasurerTime_first_crossing_time PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Time and net reacted mass at each boundary face.
 */
 template <typename Subject, typename Geometry>
-struct MeasurerTime_first_crossing_time final
-    : MeasurerTime<Subject, Geometry> {
+class MeasurerTime_first_crossing_time final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_first_crossing_time(Subject const &subject,
                                    Geometry const &geometry,
                                    Directories const &directories,
@@ -1804,7 +1622,8 @@ struct MeasurerTime_first_crossing_time final
         dimension{dimension}, position{position} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass" << "\n";
+            << std::setw(_column_widths[2]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1855,163 +1674,185 @@ private:
 /**
    \class MeasurerTime_position_adsorbed PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
-   \brief Output time, tag, position, and mass of adsorbed particles.
+   \brief Output tags, masses, and positions of adsorbed particles, as well as
+   times and number of particles output per time to a separate file (with \t
+   _times added to output name).
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry, bool print_face = false,
-          bool periodic_position = false>
-struct MeasurerTime_position_adsorbed final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_position_adsorbed final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_position_adsorbed(Subject const &subject,
                                  Geometry const &geometry,
                                  Directories const &directories,
                                  std::string const &identifier,
                                  int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "position_adsorbed",
-                                        identifier,  precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"position_adsorbed"} + (periodic ? "_periodic" : ""),
+                      identifier,
+                      precision},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(9 + precision,
+                     int(2 + std::string{"Position_"}.length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Tag"
+            << std::setw(_column_widths[1]) << "Mass";
     for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
       _output << std::setw(_column_widths[2])
               << "Position_" + std::to_string(dd);
     }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_particles"
+                  << "\n";
   }
 
   void operator()(double time) override {
+    std::size_t nr_particles = 0;
     for (auto const &part : _subject) {
       auto const &state_old = part.state_old();
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
+      ++nr_particles;
+
       auto const &state_new = part.state_old();
-      _output << std::setw(_column_widths[0]) << time
-              << std::setw(_column_widths[1]) << state_old.tag;
-      io::print(_output, state_old.position, _column_widths[2]);
-      _output << std::setw(_column_widths[3])
-              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old)
-              << "\n";
+      _output << std::setw(_column_widths[0]) << state_old.tag
+              << std::setw(_column_widths[1])
+              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      io::print(
+          _output,
+          ctrw::getter_position(boundary_periodic(this->_geometry))(state_old),
+          _column_widths[2]);
+      _output << "\n";
+
+      _output_times << std::setw(_column_widths_times[0]) << time
+                    << std::setw(_column_widths_times[1]) << nr_particles
+                    << "\n";
     }
   }
 
 private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
-  std::array<int, 4> _column_widths;
+  std::array<int, 3> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 
 /**
-   \class MeasurerTime_position_adsorbed_periodic PTOF/MeasurerTime.h
+   \class MeasurerTime_mass_reacted_face PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
-   \brief Output time, tag, position accounting for periodicity, and mass of
-   adsorbed particles.
+   \brief Output boundary faces and corresponding net reacted masses, as well as
+   times and number of particles output per time to a separate file (with \t
+   _times added to output name).
+   \tparam periodic If true, give face accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_position_adsorbed_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_position_adsorbed_periodic(Subject const &subject,
-                                          Geometry const &geometry,
-                                          Directories const &directories,
-                                          std::string const &identifier,
-                                          int precision = 8)
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_mass_reacted_face final
+    : public MeasurerTime<Subject, Geometry> {
+public:
+  using BoundaryInfo =
+      std::conditional_t<periodic,
+                         BoundaryInfo_Record_surface_reacted_mass_periodic<
+                             typename Subject::Particle::State>,
+                         BoundaryInfo_Record_surface_reacted_mass<
+                             typename Subject::Particle::State>>;
+
+  MeasurerTime_mass_reacted_face(Subject const &subject,
+                                 Geometry const &geometry,
+                                 Directories const &directories,
+                                 std::string const &identifier,
+                                 BoundaryInfo const &boundary_info,
+                                 int precision = 8)
       : MeasurerTime<Subject, Geometry>{subject,
                                         geometry,
                                         directories,
-                                        "position_adsorbed_periodic",
-                                        identifier,
-                                        precision},
-        _getter_position{geometry.boundary_periodic},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(1 + std::string{"Tag"}.length())),
-            std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Tag";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
-              << "Position_" + std::to_string(dd);
-    }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
-
-  void operator()(double time) override {
-    for (auto const &part : _subject) {
-      auto const &state_old = part.state_old();
-      if (!adsorbed(state_old) || !brackets_time(part, time)) {
-        continue;
-      }
-      auto const &state_new = part.state_new();
-      _output << std::setw(_column_widths[0]) << time
-              << std::setw(_column_widths[1]) << state_old.tag;
-      io::print(_output, _getter_position(state_old), _column_widths[2]);
-      _output << std::setw(_column_widths[3])
-              << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old)
-              << "\n";
-    }
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  using Boundary = std::decay_t<typename Geometry::BoundaryPeriodic>;
-  ctrw::Get_position_periodic<Boundary const &> _getter_position;
-  std::array<int, 4> _column_widths;
-};
-
-/** \class MeasurerTime_surface_reacted_mass PTOF/MeasurerTime.h
-    "PTOF/MeasurerTime.h"
-    \brief Time and net reacted mass at each boundary face.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_surface_reacted_mass final
-    : MeasurerTime<Subject, Geometry> {
-  using BoundaryInfo = BoundaryInfo_Record_surface_reacted_mass<
-      typename Subject::Particle::State>;
-  MeasurerTime_surface_reacted_mass(Subject const &subject,
-                                    Geometry const &geometry,
-                                    Directories const &directories,
-                                    std::string const &identifier,
-                                    BoundaryInfo const &boundary_info,
-                                    int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_variance_periodic",
+                                        std::string{"surface_reacted_mass"} +
+                                            (periodic ? "_periodic" : ""),
                                         identifier,
                                         precision},
         _boundary_info{boundary_info},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Face"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "Mass"
-            << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
-
-  MeasurerTime_surface_reacted_mass(Subject const &, Geometry const &,
-                                    Directories const &, std::string const &,
-                                    BoundaryInfo &&,
-                                    int precision = 8) = delete;
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    for (auto const &face_mass : _boundary_info.masses()) {
-      _output << std::setw(_column_widths[1]) << face_mass.first
-              << std::setw(_column_widths[2]) << face_mass.second;
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(12, int(2 + std::string{"Periodicity_"}.length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_faces"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Face"
+            << std::setw(_column_widths[0]) << "Mass";
+    if constexpr (periodic) {
+      for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
+        _output << std::setw(_column_widths[2])
+                << "Periodicity_" + std::to_string(dd);
+      }
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_faces"
+                  << "\n";
+  }
+
+  template <bool periodicity_v>
+  MeasurerTime_mass_reacted_face(Subject const &subject,
+                                 Geometry const &geometry,
+                                 Directories const &directories,
+                                 std::string const &identifier,
+                                 BoundaryInfo const &boundary_info,
+                                 meta::Selector<bool, periodicity_v>,
+                                 int precision = 8)
+      : MeasurerTime_mass_reacted_face<Subject, Geometry, periodicity_v>{
+            subject, geometry, directories, identifier, precision} {}
+
+  MeasurerTime_mass_reacted_face(Subject const &, Geometry const &,
+                                 Directories const &, std::string const &,
+                                 BoundaryInfo &&, int precision = 8) = delete;
+
+  template <bool periodicity_v>
+  MeasurerTime_mass_reacted_face(Subject const &, Geometry const &,
+                                 Directories const &, std::string const &,
+                                 BoundaryInfo &&,
+                                 meta::Selector<bool, periodicity_v>,
+                                 int precision = 8) = delete;
+
+  void operator()(double time) override {
+    if constexpr (periodic) {
+      for (auto const &faceperiodicity_mass : _boundary_info.masses()) {
+        _output << std::setw(_column_widths[0])
+                << faceperiodicity_mass.first.first // Face
+                << std::setw(_column_widths[1])
+                << faceperiodicity_mass.second; // Face mass
+        io::print(_output, faceperiodicity_mass.first.second,
+                  _column_widths[2]);
+      }
+    } else {
+      for (auto const &face_mass : _boundary_info.masses()) {
+        _output << std::setw(_column_widths[0]) << face_mass.first
+                << std::setw(_column_widths[1]) << face_mass.second;
+      }
+    }
+    _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1])
+                  << _boundary_info.masses().size() << "\n";
   }
 
 private:
@@ -2019,82 +1860,23 @@ private:
   using MeasurerTime<Subject, Geometry>::_subject;
   BoundaryInfo const &_boundary_info;
   std::array<int, 3> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
 };
 
 /**
-   \class MeasurerTime_surface_reacted_mass_periodic PTOF/MeasurerTime.h
+   \class MeasurerTime_face_mass_adsorbed PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
-   \brief Time and net reacted mass at each boundary face, accouting for
-   periodicity.
+   \brief Output boundary faces and corresponding net adsorbed masses, as well
+   as times and number of particles output per time to a separate file (with \t
+   _times added to output name).
+   \tparam periodic If true, give face accounting for periodicity (possibly
+   outside domain).
 */
-template <typename Subject, typename Geometry>
-struct MeasurerTime_surface_reacted_mass_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  using BoundaryInfo = BoundaryInfo_Record_surface_reacted_mass_periodic<
-      typename Subject::Particle::State>;
-  MeasurerTime_surface_reacted_mass_periodic(Subject const &subject,
-                                             Geometry const &geometry,
-                                             Directories const &directories,
-                                             std::string const &identifier,
-                                             BoundaryInfo const &boundary_info,
-                                             int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_variance_periodic",
-                                        identifier,
-                                        precision},
-        _boundary_info{boundary_info},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(1 + std::string{"Face"}.length())),
-            std::max(12, int(2 + std::string{"Periodicity_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    _output << std::setw(_column_widths[1]) << "Face";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
-              << "Periodicity_" + std::to_string(dd);
-    }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
-
-  MeasurerTime_surface_reacted_mass_periodic(Subject const &, Geometry const &,
-                                             Directories const &,
-                                             std::string const &,
-                                             BoundaryInfo &&,
-                                             int precision = 8) = delete;
-
-  void operator()(double time) override {
-    _output << std::setw(_column_widths[0]) << time;
-    for (auto const &faceperiodicity_mass : _boundary_info.masses()) {
-      _output << std::setw(_column_widths[1])
-              << faceperiodicity_mass.first.first;
-      for (auto const &val : faceperiodicity_mass.first.second) {
-        _output << val;
-      }
-      io::print(_output, faceperiodicity_mass.first.second, _column_widths[2]);
-      _output << std::setw(_column_widths[3]) << faceperiodicity_mass.second;
-    }
-    _output << "\n";
-  }
-
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  BoundaryInfo const &_boundary_info;
-  std::array<int, 4> _column_widths;
-};
-
-/**
-   \class MeasurerTime_mass_adsorbed_face PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Time and adsorbed mass at each boundary face.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_mass_adsorbed_face final : MeasurerTime<Subject, Geometry> {
+template <typename Subject, typename Geometry, bool periodic = false>
+class MeasurerTime_mass_adsorbed_face final
+    : public MeasurerTime<Subject, Geometry> {
+public:
   MeasurerTime_mass_adsorbed_face(Subject const &subject,
                                   Geometry const &geometry,
                                   Directories const &directories,
@@ -2103,140 +1885,128 @@ struct MeasurerTime_mass_adsorbed_face final : MeasurerTime<Subject, Geometry> {
       : MeasurerTime<Subject, Geometry>{subject,
                                         geometry,
                                         directories,
-                                        "position_variance_periodic",
+                                        std::string{"mass_adsorbed_face"} +
+                                            (periodic ? "_periodi"
+                                                        "c"
+                                                      : ""),
                                         identifier,
                                         precision},
         _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Face"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "Mass"
-            << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
-
-  void operator()(double time) override {
-    std::unordered_map<Foam::label, double> masses;
-
-    _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject) {
-      auto const &state_old = part.state_old();
-      if (!adsorbed(state_old) || !brackets_time(part, time)) {
-        continue;
+            std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
+            std::max(12, int(2 + std::string{"Periodicity_"}.length()))},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
+        _column_widths_times{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(12, int(1 + std::string{"Nr_faces"}.length()))} {
+    _output << std::setw(_column_widths[0]) << "Face"
+            << std::setw(_column_widths[0]) << "Mass";
+    if constexpr (periodic) {
+      for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
+        _output << std::setw(_column_widths[2])
+                << "Periodicity_" + std::to_string(dd);
       }
-      auto const &state_new = part.state_new();
-      Foam::label face;
-      if constexpr (meta::has_boundary_face_v<
-                        typename Subject::Particle::State::Info>) {
-        face = state_old.info.boundary_face;
-      } else {
-        face = this->_geometry.mesh_search().findNearestBoundaryFace(
-            make_point(state_old.position));
-      }
-      double mass_change =
-          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
-      auto it_inserted = masses.insert({face, mass_change});
-      if (it_inserted.second) {
-        it_inserted.first->second += mass_change;
-      }
-    }
-
-    for (auto const &face_mass : masses) {
-      _output << std::setw(_column_widths[1]) << face_mass.first
-              << std::setw(_column_widths[2]) << face_mass.second;
     }
     _output << "\n";
+
+    _output_times << std::setw(_column_widths_times[0]) << "Time"
+                  << std::setw(_column_widths_times[1]) << "Nr_faces"
+                  << "\n";
   }
 
-private:
-  using MeasurerTime<Subject, Geometry>::_output;
-  using MeasurerTime<Subject, Geometry>::_subject;
-  std::array<int, 3> _column_widths;
-};
-
-/**
-   \class MeasurerTime_mass_adsorbed_face_periodic PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Time and adsorbed mass at each boundary face, accounting for
-   periodicity.
-*/
-template <typename Subject, typename Geometry>
-struct MeasurerTime_mass_adsorbed_face_periodic final
-    : MeasurerTime<Subject, Geometry> {
-  MeasurerTime_mass_adsorbed_face_periodic(Subject const &subject,
-                                           Geometry const &geometry,
-                                           Directories const &directories,
-                                           std::string const &identifier,
-                                           int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        "position_variance_periodic",
-                                        identifier,
-                                        precision},
-        _column_widths{
-            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
-            std::max(12, int(1 + std::string{"Face"}.length())),
-            std::max(12, int(2 + std::string{"Periodicity_"}.length())),
-            std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
-    _output << std::setw(_column_widths[0]) << "Time";
-    _output << std::setw(_column_widths[1]) << "Face";
-    for (std::size_t dd = 0; dd < Geometry::dim; ++dd) {
-      _output << std::setw(_column_widths[2])
-              << "Periodicity_" + std::to_string(dd);
-    }
-    _output << std::setw(_column_widths[3]) << "Mass"
-            << std::setw(_column_widths[1]) << "Face"
-            << std::setw(_column_widths[2]) << "..." << "\n";
-  }
+  template <bool periodicity_v>
+  MeasurerTime_mass_adsorbed_face(Subject const &subject,
+                                  Geometry const &geometry,
+                                  Directories const &directories,
+                                  std::string const &identifier,
+                                  meta::Selector<bool, periodicity_v>,
+                                  int precision = 8)
+      : MeasurerTime_mass_adsorbed_face<Subject, Geometry, periodicity_v>{
+            subject, geometry, directories, identifier, precision} {}
 
   void operator()(double time) override {
-    using Periodicity = typename Subject::Particle::State::Periodicity;
-    std::unordered_map<std::pair<Foam::label, Periodicity>, double,
-                       useful::Hash_pair<Foam::label, Periodicity>>
-        masses;
-
-    _output << std::setw(_column_widths[0]) << time;
-    for (auto const &part : _subject) {
-      auto const &state_old = part.state_old();
-      if (!adsorbed(state_old) || !brackets_time(part, time)) {
-        continue;
+    auto masses = adsorbed_masses(time);
+    if constexpr (periodic) {
+      for (auto const &faceperiodicity_mass : masses) {
+        _output << std::setw(_column_widths[0])
+                << faceperiodicity_mass.first.first // Face
+                << std::setw(_column_widths[1])
+                << faceperiodicity_mass.second; // Mass
+        // Face periodicity
+        io::print(_output, faceperiodicity_mass.first.second,
+                  _column_widths[2]);
       }
-      auto const &state_new = part.state_new();
-      Foam::label face;
-      if constexpr (meta::has_boundary_face_v<
-                        typename Subject::Particle::State::Info>) {
-        face = state_old.info.boundary_face;
-      } else {
-        face = this->_geometry.mesh_search().findNearestBoundaryFace(
-            make_point(state_old.position));
-      }
-      double mass_change =
-          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
-      auto it_inserted =
-          masses.insert({{face, state_old.periodicity}, mass_change});
-      if (it_inserted.second) {
-        it_inserted.first->second += mass_change;
+    } else {
+      for (auto const &face_mass : masses) {
+        _output << std::setw(_column_widths[1]) << face_mass.first
+                << std::setw(_column_widths[2]) << face_mass.second;
       }
     }
+    _output << "\n";
 
-    for (auto const &faceperiodicity_mass : masses) {
-      _output << std::setw(_column_widths[1])
-              << faceperiodicity_mass.first.first;
-      for (auto const &val : faceperiodicity_mass.first.second) {
-        _output << val;
-      }
-      io::print(_output, faceperiodicity_mass.first.second, _column_widths[2]);
-      _output << std::setw(_column_widths[3]) << faceperiodicity_mass.second;
-    }
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << masses.size()
+                  << "\n";
   }
 
 private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
   std::array<int, 4> _column_widths;
+  std::ofstream _output_times;
+  std::array<int, 2> _column_widths_times;
+
+  using State = typename Subject::Particle::State;
+  template <typename TT, bool periodic_v> struct PeriodicityOrEmpty {
+    using type = meta::Empty;
+  };
+  template <typename TT> struct PeriodicityOrEmpty<TT, true> {
+    using type = typename TT::Periodicity;
+  };
+  using Masses = std::conditional_t<
+      periodic,
+      std::unordered_map<
+          std::pair<Foam::label, PeriodicityOrEmpty<State, periodic>>, double,
+          useful::Hash_pair<Foam::label, PeriodicityOrEmpty<State, periodic>>>,
+      std::unordered_map<Foam::label, double>>;
+
+  auto insert(Masses &masses, Foam::label face, State const &state,
+              double mass_change) const {
+    if constexpr (periodic) {
+      return masses.insert({{face, state.periodicity}, mass_change});
+    } else {
+      return masses.insert({face, mass_change});
+    }
+  }
+
+  auto adsorbed_masses(double time) const {
+    Masses masses;
+
+    for (auto const &part : _subject) {
+      auto const &state_old = part.state_old();
+      if (!adsorbed(state_old) || !brackets_time(part, time)) {
+        continue;
+      }
+      auto const &state_new = part.state_new();
+      Foam::label face;
+      if constexpr (meta::has_boundary_face_v<
+                        typename Subject::Particle::State::Info>) {
+        face = state_old.info.boundary_face;
+      } else {
+        face = this->_geometry.mesh_search().findNearestBoundaryFace(
+            make_point(state_old.position));
+      }
+      double mass_change =
+          ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      auto it_inserted = insert(masses, face, state_old, mass_change);
+      if (it_inserted.second) {
+        it_inserted.first->second += mass_change;
+      }
+    }
+
+    return masses;
+  }
 };
 } // namespace ptof
 

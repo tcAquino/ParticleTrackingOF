@@ -1299,8 +1299,10 @@ auto position_interpolated(State const &state_new, State const &state_old,
 
 /**
    \brief Interpolate position between two particle states.
-   \details If interpolated position would be outside mesh, use nearest
-   position between new state and old state.
+   \tparam ensure_inside If true, if interpolated position would be outside
+   mesh, use nearest position between new state and old state.
+   \tparam periodic If true, give position accounting for periodicity (possibly
+   outside domain).
    \param state_new New particle state.
    \param state_old Old particle state.
    \param time Time (between state times) to interpolate to.
@@ -1311,30 +1313,42 @@ auto position_interpolated(State const &state_new, State const &state_old,
    - \c time
    - \c cell
 */
-template <typename State, typename Geometry>
+template <bool ensure_inside, bool periodic, typename State, typename Geometry>
 auto position_interpolated_with_cell(State const &state_new,
                                      State const &state_old, double time,
                                      Geometry const &geometry) {
   auto const &locator = geometry.locator;
   auto const &boundary = boundary_periodic(geometry);
   using Boundary = useful::remove_cvref_t<decltype(boundary)>;
+  bool constexpr periodic_boundary = !std::is_same_v<Boundary, meta::Empty>;
 
   auto get_position = ctrw::getter_position(boundary);
   auto position = ctrw::Get_interp{time, get_position}(state_new, state_old);
 
-  auto cell_id =
-      std::is_same_v<Boundary, meta::Empty>
-          ? locator(position, state_new.cell)
-          : locator(boundary.position_in_unit_cell(position), state_new.cell);
-  if (outside(cell_id)) {
-    auto position_new = get_position(state_new);
-    auto position_old = get_position(state_old);
-    auto distance_sq_new = op::dist_sq(position, position_new);
-    auto distance_sq_old = op::dist_sq(position, position_old);
-    position = distance_sq_new < distance_sq_old ? position_new : position_old;
+  Foam::label cell_id;
+  if constexpr (periodic_boundary) {
+    cell_id = locator(boundary.position_in_unit_cell(position), state_new.cell);
+  } else {
+    cell_id = locator(position, state_new.cell);
   }
 
-  if constexpr (!std::is_same_v<Boundary, meta::Empty>) {
+  if constexpr (ensure_inside) {
+    if (outside(cell_id)) {
+      auto position_new = get_position(state_new);
+      auto position_old = get_position(state_old);
+      auto distance_sq_new = op::dist_sq(position, position_new);
+      auto distance_sq_old = op::dist_sq(position, position_old);
+      if (distance_sq_new < distance_sq_old) {
+        position = position_new;
+        cell_id = state_new.cell;
+      } else {
+        position =  position_old;
+        cell_id = state_old.cell;
+      }
+    }
+  }
+
+  if constexpr (!periodic && periodic_boundary) {
     boundary.place_in_unit_cell(position);
   }
 

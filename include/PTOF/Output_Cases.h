@@ -484,8 +484,7 @@ private:
       case MeasurementList::Type::position_periodic: {
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
-              std::make_unique<
-                  MeasurerTime_position_periodic<Subject, Geometry>>(
+              std::make_unique<MeasurerTime_position<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
@@ -499,10 +498,10 @@ private:
         if constexpr (meta::has_periodicity_v<State> &&
                       !std::is_same_v<Mask, meta::Empty>) {
           _output_time.emplace_back(
-              std::make_unique<MeasurerTime_position_in_regions_periodic<
-                  Subject, Geometry, Mask>>(subject, geometry, directories,
-                                            identifier, masks, thresholds,
-                                            measurement->precision));
+              std::make_unique<MeasurerTime_position_in_regions<
+                  Subject, Geometry, Mask, true>>(
+                  subject, geometry, directories, identifier, masks, thresholds,
+                  measurement->precision));
         } else {
           if constexpr (!meta::has_periodicity_v<State>) {
             throw std::runtime_error{
@@ -518,7 +517,7 @@ private:
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_position_mean_periodic<Subject, Geometry>>(
+                  MeasurerTime_position_mean<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
@@ -532,7 +531,7 @@ private:
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_position_abs_mean_periodic<Subject, Geometry>>(
+                  MeasurerTime_position_abs_mean<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
@@ -545,9 +544,10 @@ private:
       case MeasurementList::Type::position_second_moment_periodic: {
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
-              std::make_unique<MeasurerTime_position_second_moment_periodic<
-                  Subject, Geometry>>(subject, geometry, directories,
-                                      identifier, measurement->precision));
+              std::make_unique<
+                  MeasurerTime_position_second_moment<Subject, Geometry, true>>(
+                  subject, geometry, directories, identifier,
+                  measurement->precision));
         } else {
           throw std::runtime_error{
               for_measurement_type +
@@ -559,7 +559,7 @@ private:
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_position_variance_periodic<Subject, Geometry>>(
+                  MeasurerTime_position_variance<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
@@ -576,7 +576,7 @@ private:
           Measurement &measurement_derived = cast<Measurement>(measurement);
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_position_nth_moment_periodic<Subject, Geometry>>(
+                  MeasurerTime_position_nth_moment<Subject, Geometry, true>>(
                   subject, measurement_derived.order, geometry, directories,
                   identifier, measurement->precision));
         } else {
@@ -593,7 +593,7 @@ private:
           Measurement &measurement_derived = cast<Measurement>(measurement);
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_position_moment_periodic<Subject, Geometry>>(
+                  MeasurerTime_position_moment<Subject, Geometry, true>>(
                   subject, measurement_derived.orders, geometry, directories,
                   identifier, measurement->precision));
         } else {
@@ -626,7 +626,7 @@ private:
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_position_adsorbed<Subject, Geometry>>(
+                  MeasurerTime_position_adsorbed<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
@@ -648,7 +648,7 @@ private:
         if constexpr (meta::has_periodicity_v<State>) {
           _output_time.emplace_back(
               std::make_unique<
-                  MeasurerTime_mass_adsorbed_face_periodic<Subject, Geometry>>(
+                  MeasurerTime_mass_adsorbed_face<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
                   measurement->precision));
         } else {
@@ -663,8 +663,7 @@ private:
         boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
             std::make_unique<BoundaryInfo>()));
         _output_time.emplace_back(
-            std::make_unique<
-                MeasurerTime_surface_reacted_mass<Subject, Geometry>>(
+            std::make_unique<MeasurerTime_mass_reacted_face<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
                 dynamic_cast<BoundaryInfo const &>(
                     boundary.boundary_info_back()),
@@ -678,12 +677,12 @@ private:
           boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
               std::make_unique<BoundaryInfo>()));
           _output_time.emplace_back(
-              std::make_unique<MeasurerTime_surface_reacted_mass_periodic<
-                  Subject, Geometry>>(subject, geometry, directories,
-                                      identifier,
-                                      dynamic_cast<BoundaryInfo const &>(
-                                          boundary.boundary_info_back()),
-                                      measurement->precision));
+              std::make_unique<
+                  MeasurerTime_mass_reacted_face<Subject, Geometry, true>>(
+                  subject, geometry, directories, identifier,
+                  dynamic_cast<BoundaryInfo const &>(
+                      boundary.boundary_info_back()),
+                  measurement->precision));
         } else {
           throw std::runtime_error{
               for_measurement_type +
@@ -847,11 +846,12 @@ private:
 };
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(
-    Subject const &, VelocityField const &, Geometry const &, Boundary &,
-    Directories const &, Parameters &&, std::string const &,
-    std::vector<std::reference_wrapper<const Mask>>,
-    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
+             std::vector<std::reference_wrapper<const Mask>>,
+             std::vector<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
@@ -890,11 +890,12 @@ Output_Cases(Subject const &, VelocityField const &, Geometry const &,
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(
-    Subject const &, VelocityField const &, Geometry const &, Boundary &,
-    Directories const &, Parameters &&, std::string const &,
-    std::initializer_list<std::reference_wrapper<const Mask>>,
-    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
+             std::initializer_list<std::reference_wrapper<const Mask>>,
+             std::vector<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
 } // namespace ptof
 
 #endif /* PTOF_OUTPUT_CASES_H */
