@@ -34,9 +34,10 @@ struct Model {
   struct advection_diffusion_2d {
     inline static const std::string name{"advection_diffusion_2d"};
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport in 2D.
+)" << io::line();
       return output;
     }
 
@@ -61,9 +62,10 @@ struct Model {
     inline static const std::string name{"advection_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective transport in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective transport in 2D.
+)" << io::line();
       return output;
     }
 
@@ -87,9 +89,10 @@ struct Model {
   struct diffusion_2d {
     inline static const std::string name{"diffusion_2d"};
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport in 2D.
+)" << io::line();
       return output;
     }
 
@@ -114,10 +117,9 @@ struct Model {
     inline static const std::string name{"advection_diffusion_fpt_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: First passage times under advective-diffusive\n"
-                "             transport in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: First passage times under advective-diffusive transport in 2D.
+)" << io::line();
       return output;
     }
 
@@ -143,11 +145,10 @@ struct Model {
     inline static const std::string name{"advection_fpt_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First passage times under advective transport in\n"
-             "             2D\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First passage times under advective transport in 2D.
+)" << io::line();
       return output;
     }
 
@@ -173,11 +174,9 @@ struct Model {
     inline static const std::string name{"diffusion_fpt_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First passage times under diffusive transport in\n"
-             "             2D\n"
-          << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: First passage times under diffusive transport in 2D.
+)" << io::line();
       return output;
     }
 
@@ -204,10 +203,11 @@ struct Model {
         "advection_diffusion_surface_decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 2D.
+)" << io::line();
       return output;
     }
 
@@ -233,10 +233,10 @@ struct Model {
     inline static const std::string name{"diffusion_surface_decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in 2D.
+)" << io::line();
       return output;
     }
 
@@ -263,10 +263,11 @@ struct Model {
         "advection_diffusion_surface_adsorption_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with linear\n"
-                "             reversible surface adsorption in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name <<
+          R"(
+Description: Advective-diffusive transport with linear reversible surface
+             adsorption in 2D.
+)" << io::line();
       return output;
     }
 
@@ -293,10 +294,11 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Diffusive transport with linear reversible surface\n"
-             "             adsorption in 2D\n"
-          << io::line();
+          << banner() << "Name: " << name
+          << R"(
+Description: Diffusive transport with linear reversible surface adsorption in
+             2D.
+)" << io::line();
       return output;
     }
 
@@ -323,10 +325,11 @@ struct Model {
         "advection_diffusion_surface_order2decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> Nothing in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             Nothing in 2D.
+)" << io::line();
       return output;
     }
 
@@ -352,10 +355,11 @@ struct Model {
     inline static const std::string name{"diffusion_surface_order2decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> Nothing in 2D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> Nothing in
+             2D.
+)" << io::line();
       return output;
     }
 
@@ -382,11 +386,11 @@ struct Model {
         "periodic_cartesian_advection_diffusion_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport in 2D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport in 2D, with some periodic boundaries
+             aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -411,10 +415,11 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_advection_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Name: " << name << "\n"
-             << "Description: Advective transport in 2D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes\n"
-             << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Advective transport in 2D, with some periodic boundaries aligned
+             with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -439,10 +444,11 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_diffusion_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Name: " << name << "\n"
-             << "Description: Diffusive transport in 2D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes\n"
-             << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Diffusive transport in 2D, with some periodic boundaries aligned
+             with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -468,11 +474,10 @@ struct Model {
         "periodic_cartesian_advection_diffusion_fpt_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Name: " << name << "\n"
-             << "Description: First-passage times under advective-diffusive\n"
-                "             transport in 2D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes\n"
-             << io::line();
+      output << io::line() << "Name: " << name << R"(
+Description: First-passage times under advective-diffusive transport in 2D, with
+             some periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -499,12 +504,10 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_advection_fpt_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << io::line() << "Name: " << name << "\n"
-          << "Description: First-passage times under advective transport in\n"
-             "             2D, with some periodic boundaries aligned with\n"
-             "             the Cartesian axes\n"
-          << io::line();
+      output << io::line() << "Name: " << name << R"(
+Description: First-passage times under advective transport in 2D, with some
+             periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -531,12 +534,11 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_diffusion_fpt_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << io::line() << "Name: " << name << "\n"
-          << "Description: First-passage times under diffusive transport in\n"
-             "             2D, with some periodic boundaries aligned with\n"
-             "             the Cartesian axes\n"
-          << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: First-passage times under diffusive transport in 2D, with some
+             periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -564,12 +566,12 @@ struct Model {
         "periodic_cartesian_advection_diffusion_surface_decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 2D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 2D, with some periodic boundaries aligned with the Cartesian
+             axes.
+)" << io::line();
       return output;
     }
 
@@ -596,11 +598,11 @@ struct Model {
         "periodic_cartesian_diffusion_surface_decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in 2D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in 2D,
+             with some periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -627,12 +629,12 @@ struct Model {
         "periodic_cartesian_advection_diffusion_surface_adsorption_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 2D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 2D, with some periodic boundaries aligned with the Cartesian
+             axes.
+)" << io::line();
       return output;
     }
 
@@ -659,11 +661,11 @@ struct Model {
         "periodic_cartesian_diffusion_surface_adsorption_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F+\n"
-                "             B_S->B_S in 2D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F+ B_S->B_S in 2D, with
+             some periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -690,12 +692,12 @@ struct Model {
         "periodic_cartesian_advection_diffusion_surface_order2decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> Nothing in 2D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             Nothing in 2D, with some periodic boundaries aligned with the
+             Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -722,11 +724,10 @@ struct Model {
         "periodic_cartesian_diffusion_surface_order2decay_2d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> Nothing in 2D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> Nothing in
+             2D, with some periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -752,9 +753,9 @@ struct Model {
     inline static const std::string name{"advection_diffusion_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: Advective-diffusive transport in 3D.
+)" << io::line();
       return output;
     }
 
@@ -779,9 +780,9 @@ struct Model {
     inline static const std::string name{"advection_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective transport in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: Advective transport in 3D.
+)" << io::line();
       return output;
     }
 
@@ -806,9 +807,9 @@ struct Model {
     inline static const std::string name{"diffusion_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: Diffusive transport in 3D.
+)" << io::line();
       return output;
     }
 
@@ -833,10 +834,9 @@ struct Model {
     inline static const std::string name{"advection_diffusion_fpt_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: First-passage times under advective-diffusive\n"
-                "             transport in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: First-passage times under advective-diffusive transport in 3D.
+)" << io::line();
       return output;
     }
 
@@ -862,10 +862,9 @@ struct Model {
     inline static const std::string name{"advection_fpt_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under advective transport 3D\n"
-          << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: First-passage times under advective transport 3D.
+)" << io::line();
       return output;
     }
 
@@ -891,11 +890,9 @@ struct Model {
     inline static const std::string name{"diffusion_fpt_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under diffusive transport in\n"
-             "             3D\n"
-          << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: First-passage times under diffusive transport in 3D.
+)" << io::line();
       return output;
     }
 
@@ -922,10 +919,11 @@ struct Model {
         "advection_diffusion_surface_decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 3D.
+)" << io::line();
       return output;
     }
 
@@ -951,10 +949,10 @@ struct Model {
     inline static const std::string name{"diffusion_surface_decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in 3D.
+)" << io::line();
       return output;
     }
 
@@ -981,10 +979,11 @@ struct Model {
         "advection_diffusion_surface_adsorption_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 3D.
+)" << io::line();
       return output;
     }
 
@@ -1010,10 +1009,10 @@ struct Model {
     inline static const std::string name{"diffusion_surface_adsorption_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in 3D.
+)" << io::line();
       return output;
     }
 
@@ -1040,10 +1039,11 @@ struct Model {
         "advection_diffusion_surface_order2decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> Nothing in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             Nothing in 3D.
+)" << io::line();
       return output;
     }
 
@@ -1069,10 +1069,11 @@ struct Model {
     inline static const std::string name{"diffusion_surface_order2decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> Nothing in 3D\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> Nothing in
+             3D.
+)" << io::line();
       return output;
     }
 
@@ -1099,11 +1100,11 @@ struct Model {
         "periodic_cartesian_advection_diffusion_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport in 3D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport in 3D, with some periodic boundaries
+             aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1128,10 +1129,11 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_advection_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective transport in 3D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective transport in 3D, with some periodic boundaries aligned
+             with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1156,10 +1158,10 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_diffusion_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport in 3D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name << R"(
+Description: Diffusive transport in 3D, with some periodic boundaries aligned
+             with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1185,11 +1187,11 @@ struct Model {
         "periodic_cartesian_advection_diffusion_fpt_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: First-passage times under advective-diffusive\n"
-                "             transport in 3D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First-passage times under advective-diffusive transport in 3D, with
+             some periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1216,12 +1218,11 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_advection_fpt_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under advective transport in\n"
-             "             3D, with some periodic boundaries aligned with the\n"
-             "             Cartesian axes\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First-passage times under advective transport in 3D, with some
+             periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1248,12 +1249,11 @@ struct Model {
     inline static const std::string name{"periodic_cartesian_diffusion_fpt_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under diffusive transport in\n"
-             "             3D, with some periodic boundaries aligned with the\n"
-             "             Cartesian axes\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First-passage times under diffusive transport in 3D, with some
+             periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1281,12 +1281,12 @@ struct Model {
         "periodic_cartesian_advection_diffusion_surface_decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 3D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 3D, with some periodic boundaries aligned with the Cartesian
+             axes.
+)" << io::line();
       return output;
     }
 
@@ -1313,10 +1313,11 @@ struct Model {
         "periodic_cartesian_diffusion_surface_decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in 3D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes\n"
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in 3D,
+             with some periodic boundaries aligned with the Cartesian axes.
+)"
              << io::line();
       return output;
     }
@@ -1344,12 +1345,12 @@ struct Model {
         "periodic_cartesian_advection_diffusion_surface_adsorption_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> B_S in 3D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in 3D, with some periodic boundaries aligned with the Cartesian
+             axes.
+)" << io::line();
       return output;
     }
 
@@ -1376,11 +1377,11 @@ struct Model {
         "periodic_cartesian_diffusion_surface_adsorption_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in 3D, with some periodic boundaries\n"
-                "             aligned with the Cartesian axes\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in 3D,
+             with some periodic boundaries aligned with the Cartesian axes.
+)" << io::line();
       return output;
     }
 
@@ -1407,11 +1408,11 @@ struct Model {
         "periodic_cartesian_advection_diffusion_surface_order2decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective-diffusive transport with surface\n"
-                "             reaction A_F + B_S -> Nothing in 3D, with some\n"
-                "             periodic boundaries aligned with the Cartesian\n"
-                "             axes\n"
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             Nothing in 3D, with some periodic boundaries aligned with the
+             Cartesian axes.)"
              << io::line();
       return output;
     }
@@ -1439,10 +1440,11 @@ struct Model {
         "periodic_cartesian_diffusion_surface_order2decay_3d"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> Nothing in 3D, with some periodic\n"
-                "             boundaries aligned with the Cartesian axes\n"
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> Nothing in
+             3D, with some periodic boundaries aligned with the Cartesian axes.
+)"
              << io::line();
       return output;
     }
@@ -1469,11 +1471,11 @@ struct Model {
     inline static const std::string name{"bcc_cartesian_advection_diffusion"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Advective-diffusive transport in a body centered\n"
-             "             cubic beadpack, based on the primitive unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport in a body centered cubic beadpack,
+             based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1498,10 +1500,11 @@ struct Model {
     inline static const std::string name{"bcc_cartesian_advection"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective transport in a body centered cubic\n"
-                "             beadpack, based on the primitive unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective transport in a body centered cubic beadpack, based on the
+             primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1526,10 +1529,11 @@ struct Model {
     inline static const std::string name{"bcc_cartesian_diffusion"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport in a body centered cubic\n"
-                "             beadpack, based on the primitive unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport in a body centered cubic beadpack, based on the
+             primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1555,11 +1559,11 @@ struct Model {
         "bcc_cartesian_advection_diffusion_fpt"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: First-passage times under advective-diffusive\n"
-                "             transport in a body centered cubic beadpack,\n"
-                "             based on the primitive unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First-passage times under advective-diffusive transport in a body
+             centered cubic beadpack, based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1587,11 +1591,11 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under advective transport in a\n"
-             "             body centered cubic beadpack, based on the\n"
-             "             primitive unit cell\n"
-          << io::line();
+          << banner() << "Name: " << name
+          << R"(
+Description: First-passage times under advective transport in a body centered
+             cubic beadpack, based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1618,12 +1622,11 @@ struct Model {
     inline static const std::string name{"bcc_cartesian_diffusion_fpt"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under diffusive transport in\n"
-             "             body centered cubic beadpack, based on the\n"
-             "             primitive unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First-passage times under diffusive transport in body centered
+             cubic beadpack, based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1651,12 +1654,12 @@ struct Model {
         "bcc_cartesian_advection_diffusion_surface_decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Advection-diffusive transport with surface\n"
-             "             reaction A_F + B_S -> B_S in a body centered cubic\n"
-             "             beadpack, based on the primitive unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advection-diffusive transport with surface reaction A_F + B_S ->
+             B_S in a body centered cubic beadpack, based on the primitive unit
+             cell.
+)" << io::line();
       return output;
     }
 
@@ -1683,11 +1686,11 @@ struct Model {
         "bcc_cartesian_diffusion_surface_decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in a body centered cubic beadpack,\n"
-                "             based on the primitive unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in a
+             body centered cubic beadpack, based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1714,12 +1717,12 @@ struct Model {
         "bcc_cartesian_advection_diffusion_surface_adsorption"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Advection-diffusive transport with surface\n"
-             "             reaction A_F + B_S -> B_S in a body centered cubic\n"
-             "             beadpack, based on the primitive unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advection-diffusive transport with surface reaction A_F + B_S ->
+             B_S in a body centered cubic beadpack, based on the primitive unit
+             cell.
+)" << io::line();
       return output;
     }
 
@@ -1746,11 +1749,11 @@ struct Model {
         "bcc_cartesian_diffusion_surface_adsorption"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in a body centered cubic beadpack,\n"
-                "             based on the primitive unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in a
+             body centered cubic beadpack, based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1777,12 +1780,12 @@ struct Model {
         "bcc_cartesian_advection_diffusion_surface_order2decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Advective-diffusive transport with surface\n"
-             "             reaction A_F + B_S -> Nothing in a body centered\n"
-             "             cubic beadpack, based on the primitive unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             Nothing in a body centered cubic beadpack, based on the primitive
+             unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1809,12 +1812,11 @@ struct Model {
         "bcc_cartesian_diffusion_surface_order2decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Diffusive transport with surface reaction A_F +\n"
-             "             B_S -> Nothing in a body centered cubic beadpack,\n"
-             "             based on the primitive unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> Nothing in a
+             body centered cubic beadpack, based on the primitive unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1841,11 +1843,11 @@ struct Model {
         "bcc_symmetryplanes_advection_diffusion"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Advective-diffusive transport in a body centered\n"
-             "             cubic beadpack, based on the minimal unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport in a body centered cubic beadpack,
+             based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1871,10 +1873,11 @@ struct Model {
     inline static const std::string name{"bcc_symmetryplanes_advection"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Advective transport in a body centered cubic\n"
-                "             beadpack, based on the minimal unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective transport in a body centered cubic beadpack, based on the
+             minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1900,10 +1903,11 @@ struct Model {
     inline static const std::string name{"bcc_symmetryplanes_diffusion"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: Diffusive transport in a body centered cubic\n"
-                "             beadpack, based on the minimal unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport in a body centered cubic beadpack, based on the
+             minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1930,11 +1934,11 @@ struct Model {
         "bcc_cartesian_advection_diffusion_fpt"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << banner() << "Name: " << name << "\n"
-             << "Description: First-passage times under advective-diffusive\n"
-                "             transport in a body centered cubic beadpack,\n"
-                "             based on the minimal unit cell\n"
-             << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: First-passage times under advective-diffusive transport in a body
+             centered cubic beadpack, based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1962,11 +1966,11 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under advective transport in a\n"
-             "             body centered cubic beadpack, based on the minimal\n"
-             "             unit cell\n"
-          << io::line();
+          << banner() << "Name: " << name
+          << R"(
+Description: First-passage times under advective transport in a body centered
+             cubic beadpack, based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -1994,11 +1998,11 @@ struct Model {
 
     inline static std::ostream &info(std::ostream &output) {
       output
-          << banner() << "Name: " << name << "\n"
-          << "Description: First-passage times under advective transport in a\n"
-             "             body centered cubic beadpack, based on the minimal\n"
-             "             unit cell\n"
-          << io::line();
+          << banner() << "Name: " << name
+          << R"(
+Description: First-passage times under advective transport in a body centered
+             cubic beadpack, based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -2026,12 +2030,12 @@ struct Model {
         "bcc_symmetryplanes_advection_diffusion_surface_decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << io::line() << "Name: " << name << "\n"
-          << "Description: Advective-diffusive transport with surface\n"
-             "             reaction A_F + B_S -> B_S in a body centered cubic\n"
-             "             beadpack, based on the minimal unit cell\n"
-          << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in a body centered cubic beadpack, based on the minimal unit
+             cell.
+)" << io::line();
       return output;
     }
 
@@ -2059,11 +2063,11 @@ struct Model {
         "bcc_symmetryplanes_diffusion_surface_decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in a body centered cubic beadpack,\n"
-                "             based on the minimal unit cell\n"
-             << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in a
+             body centered cubic beadpack, based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -2091,12 +2095,12 @@ struct Model {
         "bcc_symmetryplanes_advection_diffusion_surface_adsorption"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << io::line() << "Name: " << name << "\n"
-          << "Description: Advective-diffusive transport with surface\n"
-             "             reaction A_F + B_S -> B_S in a body centered cubic\n"
-             "             beadpack, based on the minimal unit cell\n"
-          << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             B_S in a body centered cubic beadpack, based on the minimal unit
+             cell.
+)" << io::line();
       return output;
     }
 
@@ -2124,11 +2128,11 @@ struct Model {
         "bcc_symmetryplanes_diffusion_surface_adsorption"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output << io::line() << "Name: " << name << "\n"
-             << "Description: Diffusive transport with surface reaction A_F +\n"
-                "             B_S -> B_S in a body centered cubic beadpack,\n"
-                "             based on the minimal unit cell\n"
-             << io::line();
+      output << io::line() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> B_S in a
+             body centered cubic beadpack, based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 
@@ -2156,12 +2160,12 @@ struct Model {
         "bcc_symmetryplanes_advection_diffusion_surface_order2decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Advective-diffusive transport with surface\n"
-             "             reaction A_F + B_S -> Nothing in a body centered\n"
-             "             cubic beadpack, based on the minimal unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Advective-diffusive transport with surface reaction A_F + B_S ->
+             Nothing in a body centered cubic beadpack, based on the minimal
+             unit cell.
+)" << io::line();
       return output;
     }
 
@@ -2189,12 +2193,11 @@ struct Model {
         "bcc_symmetryplanes_diffusion_surface_order2decay"};
 
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << banner() << "Name: " << name << "\n"
-          << "Description: Diffusive transport with surface reaction A_F +\n"
-             "             B_S -> Nothing in a body centered cubic beadpack,\n"
-             "             based on the minimal unit cell\n"
-          << io::line();
+      output << banner() << "Name: " << name
+             << R"(
+Description: Diffusive transport with surface reaction A_F + B_S -> Nothing in a
+             body centered cubic beadpack, based on the minimal unit cell.
+)" << io::line();
       return output;
     }
 

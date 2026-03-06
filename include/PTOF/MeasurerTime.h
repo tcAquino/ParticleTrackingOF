@@ -110,9 +110,9 @@ protected:
 
 /**
    \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Output tags, masses, cells, and positions, as well as times and number
-   of particles output per time to a separate file (with \t _times added to
-   output name).
+   \brief Particle tags, masses, cells, and positions, as well as times and
+   number of particles output per time to a separate file (with \t _times added
+   to output name).
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
 */
@@ -1866,8 +1866,8 @@ private:
 /**
    \class MeasurerTime_face_mass_adsorbed PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
-   \brief Output boundary faces and corresponding net adsorbed masses, as well
-   as times and number of particles output per time to a separate file (with \t
+   \brief Output boundary faces and corresponding adsorbed masses, as well as
+   times and number of particles output per time to a separate file (with \t
    _times added to output name).
    \tparam periodic If true, give face accounting for periodicity (possibly
    outside domain).

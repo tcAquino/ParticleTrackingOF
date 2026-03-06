@@ -127,55 +127,49 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Transport parameters\n"
-        << io::line()
-        << "(Note:\n"
-           "  - Diffusion time is defined as <lengthscale>^2 / (2 *\n"
-           "    <diffusion coefficient>)\n"
-           "  - Advection time is defined as <lengthscale> / <mean velocity>\n"
-           "  - Mean velocity is defined as the absolute value of mean\n"
-           "    velocity vector\n"
-           "  - Peclet number is defined as <lengthscale> * <mean velocity>\n"
-           "    / <diffusion coefficient>)\n"
-           "- Reference lengthscale\n"
-           "- How to set the Peclet number:\n"
-           "  (Note:\n"
-           "    - Options that involve rescaling the velocity field are\n"
-           "      expensive for simulations with time-dependent flow fields\n"
-           "      because they require recomputing the interpolator)\n"
-           "  - compute_from_diffusion_coefficient\n"
-           "    - Compute from given diffusion coefficient (do not\n"
-           "      rescale velocity field)\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion coefficient\n"
-           "  - compute_diffusion_coefficient\n"
-           "    - Compute diffusion coefficient to impose given Peclet number\n"
-           "      (do not rescale velocity field)\n"
-           "    - Pass on same line:\n"
-           "      - Peclet number\n"
-           "  - compute_from_diffusion_time\n"
-           "    - Compute from given diffusion time (do not rescale\n"
-           "      velocity field)\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion coefficient\n"
-           "  - rescale_velocity_to_peclet\n"
-           "    - Rescale velocity field according to given peclet number\n"
-           "    - Pass on same line:\n"
-           "      - Peclet number\n"
-           "      - Diffusion coefficient\n"
-           "  - rescale_velocity_to_mean\n"
-           "    - Rescale according to given mean flow velocity\n"
-           "    - Pass on same line:\n"
-           "      - Absolute value of mean velocity vector\n"
-           "      - Diffusion coefficient\n"
-           "  - rescale_velocity_to_advection_time\n"
-           "    - Rescale according to given advection time\n"
-           "    - Pass on same line:\n"
-           "      - Advection time, based on absolute value of mean\n"
-           "        velocity vector\n"
-           "      - Diffusion coefficient\n"
-        << io::line();
+    output << io::line() << "Transport parameters\n"
+           << io::line() << R"((Note:
+  - Diffusion time is defined as <lengthscale>^2 / (2 * <diffusion
+    coefficient>).
+  - Advection time is defined as <lengthscale> / <mean velocity>.
+  - Mean velocity is defined as the absolute value of mean velocity vector.
+  - Peclet number is defined as <lengthscale> * <mean velocity> / <diffusion
+    coefficient>.
+- Reference lengthscale.
+- How to set the Peclet number:
+  (Note:
+    - Options that involve rescaling the velocity field are expensive for
+      simulations with time-dependent flow fields because they require
+      recomputing the interpolator.)
+  - compute_from_diffusion_coefficient
+    - Compute from given diffusion coefficient (do not rescale velocity field).
+    - Pass on same line:
+      - Diffusion coefficient.
+  - compute_diffusion_coefficient
+    - Compute diffusion coefficient to impose given Peclet number (do not
+      rescale velocity field).
+    - Pass on same line:
+      - Peclet number.
+  - compute_from_diffusion_time
+    - Compute from given diffusion time (do not rescale velocity field).
+    - Pass on same line:
+      - Diffusion coefficient.
+  - rescale_velocity_to_peclet
+    - Rescale velocity field according to given peclet number.
+    - Pass on same line:
+      - Peclet number.
+      - Diffusion coefficient.
+  - rescale_velocity_to_mean
+    - Rescale according to given mean flow velocity.
+    - Pass on same line:
+      - Absolute value of mean velocity vector.
+      - Diffusion coefficient.
+  - rescale_velocity_to_advection_time
+    - Rescale according to given advection time.
+    - Pass on same line:
+      - Advection time, based on absolute value of mean velocity vector.
+      - Diffusion coefficient.
+)" << io::line();
     return output;
   }
 };
@@ -262,31 +256,27 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Transport parameters\n"
-        << io::line()
-        << "(Note:\n"
-           "  - Advection time is defined as <lengthscale> / <mean velocity>\n"
-           "  - Mean velocity is defined as the absolute value of mean\n"
-           "    velocity vector)\n"
-           "- Reference lengthscale\n"
-           "- Whether and how to rescale velocity field:\n"
-           "  (Note:\n"
-           "    - Options that involve rescaling the velocity field are\n"
-           "      expensive for simulations with time-dependent flow fields\n"
-           "      because they require recomputing the interpolator)\n"
-           "  - rescale_velocity_to_mean\n"
-           "    - Rescale according to given mean\n"
-           "    - Pass on same line:\n"
-           "      - Absolute value of mean velocity vector\n"
-           "  - rescale_velocity_to_advection_time\n"
-           "    - Rescale according to given advection time\n"
-           "    - Pass on same line:\n"
-           "      - Advection time, based on absolute value of mean\n"
-           "        velocity vector\n"
-           "  - no_rescale_velocity\n"
-           "    - Do not rescale\n"
-        << io::line();
+    output << io::line() << "Transport parameters\n"
+           << io::line() << R"((Note:
+  - Advection time is defined as <lengthscale> / <mean velocity>.
+  - Mean velocity is defined as the absolute value of mean velocity vector.)
+- Reference lengthscale.
+- Whether and how to rescale velocity field:
+  (Note:
+    - Options that involve rescaling the velocity field are expensive for
+      simulations with time-dependent flow fields because they require
+      recomputing the interpolator.)
+  - rescale_velocity_to_mean
+    - Rescale according to given mean.
+    - Pass on same line:
+      - Absolute value of mean velocity vector.
+  - rescale_velocity_to_advection_time
+    - Rescale according to given advection time.
+    - Pass on same line:
+      - Advection time, based on absolute value of mean velocity vector.
+  - no_rescale_velocity
+    - Do not rescale.
+)" << io::line();
     return output;
   }
 };
@@ -347,21 +337,20 @@ public:
   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
-           << io::line()
-           << "(Note:\n"
-              "  - Diffusion time is defined as <lengthscale>^2 / (2 *\n"
-              "    <diffusion coefficient>))\n"
-              "- Reference lengthscale\n"
-              "- How to set the diffusion coefficient:\n"
-              "  - set_value\n"
-              "    - Set given value\n"
-              "    - Pass on same line:\n"
-              "      - Diffusion coefficient\n"
-              "  - compute_from_diffusion_time\n"
-              "    - Compute from given diffusion time\n"
-              "    - Pass on same line:\n"
-              "      - Diffusion time\n"
-           << io::line();
+           << io::line() << R"((Note:
+  - Diffusion time is defined as <lengthscale>^2 / (2 * <diffusion
+    coefficient>).)
+- Reference lengthscale.
+- How to set the diffusion coefficient:
+  - set_value
+    - Set given value.
+    - Pass on same line:
+      - Diffusion coefficient.
+  - compute_from_diffusion_time
+    - Compute from given diffusion time.
+    - Pass on same line:
+      - Diffusion time.
+)" << io::line();
     return output;
   }
 };
@@ -503,65 +492,59 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Transport parameters\n"
-        << io::line()
-        << "(Note:\n"
-           "  - Diffusion time is defined as <lengthscale>^2 / (2 *\n"
-           "    <diffusion coefficient>)\n"
-           "  - Advection time is defined as <lengthscale> / <mean velocity>\n"
-           "  - Mean velocity is defined as the absolute value of mean\n"
-           "    velocity vector\n"
-           "  - Peclet number is defined as <lengthscale> * <mean velocity>\n"
-           "    / <diffusion coefficient>\n"
-           "- How to set the reference lengthscale:\n"
-           "  - radius\n"
-           "    - Equal to bead radius\n"
-           "  - diameter\n"
-           "    - Equal to bead diameter\n"
-           "  - cell_side\n"
-           "    - Equal to primitive cell side\n"
-           "  - custom\n"
-           "    - Equal to specified value\n"
-           "    - Pass on same line:\n"
-           "      - Reference lengthscale value\n"
-           "- How to set the Peclet number:\n"
-           "  (Note:\n"
-           "    - Options that involve rescaling the velocity field are\n"
-           "      expensive for simulations with time-dependent flow fields\n"
-           "      because they require recomputing the interpolator)\n"
-           "  - compute_from_diffusion_coefficient\n"
-           "    - Compute from given diffusion coefficient (do not\n"
-           "      rescale velocity field)\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion coefficient\n"
-           "  - compute_diffusion_coefficient\n"
-           "    - Compute diffusion coefficient to impose given Peclet number\n"
-           "      (do not rescale velocity field)\n"
-           "    - Pass on same line:\n"
-           "      - Peclet number\n"
-           "  - compute_from_diffusion_time\n"
-           "    - Compute from given diffusion time (do not rescale\n"
-           "      velocity field)\n"
-           "    - Pass on same line:\n"
-           "      - Diffusion coefficient\n"
-           "  - rescale_velocity_to_peclet\n"
-           "    - Rescale velocity field according to given peclet number\n"
-           "    - Pass on same line:\n"
-           "      - Peclet number\n"
-           "      - Diffusion coefficient\n"
-           "  - rescale_velocity_to_mean\n"
-           "    - Rescale according to given mean flow velocity\n"
-           "    - Pass on same line:\n"
-           "      - Absolute value of mean velocity vector\n"
-           "      - Diffusion coefficient\n"
-           "  - rescale_velocity_to_advection_time\n"
-           "    - Rescale according to given advection time\n"
-           "    - Pass on same line:\n"
-           "      - Advection time, based on absolute value of mean\n"
-           "        velocity vector\n"
-           "      - Diffusion coefficient\n"
-        << io::line();
+    output << io::line() << "Transport parameters\n"
+           << io::line() << R"((Note:
+  - Diffusion time is defined as <lengthscale>^2 / (2 * <diffusion
+    coefficient>).
+  - Advection time is defined as <lengthscale> / <mean velocity>.
+  - Mean velocity is defined as the absolute value of mean velocity vector.
+  - Peclet number is defined as <lengthscale> * <mean velocity> / <diffusion
+    coefficient>.)
+- How to set the reference lengthscale:
+  - radius
+    - Equal to bead radius.
+  - diameter
+    - Equal to bead diameter.
+  - cell_side
+    - Equal to primitive cell side.
+  - custom
+    - Equal to specified value.
+    - Pass on same line:
+      - Reference lengthscale value.
+- How to set the Peclet number:
+  (Note:
+    - Options that involve rescaling the velocity field are expensive for
+      simulations with time-dependent flow fields because they require
+      recomputing the interpolator.)
+  - compute_from_diffusion_coefficient
+    - Compute from given diffusion coefficient (do not rescale velocity field).
+    - Pass on same line:
+      - Diffusion coefficient.
+  - compute_diffusion_coefficient
+    - Compute diffusion coefficient to impose given Peclet number (do not
+      rescale velocity field).
+    - Pass on same line:
+      - Peclet number.
+  - compute_from_diffusion_time
+    - Compute from given diffusion time (do not rescale velocity field).
+    - Pass on same line:
+      - Diffusion coefficient.
+  - rescale_velocity_to_peclet
+    - Rescale velocity field according to given peclet number.
+    - Pass on same line:
+      - Peclet number.
+      - Diffusion coefficient.
+  - rescale_velocity_to_mean
+    - Rescale according to given mean flow velocity.
+    - Pass on same line:
+      - Absolute value of mean velocity vector.
+      - Diffusion coefficient.
+  - rescale_velocity_to_advection_time
+    - Rescale according to given advection time.
+    - Pass on same line:
+      - Advection time, based on absolute value of mean velocity vector.
+      - Diffusion coefficient.
+)" << io::line();
     return output;
   }
 };
@@ -674,41 +657,37 @@ public:
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Transport parameters\n"
-        << io::line()
-        << "(Note:\n"
-           "  - Advection time is defined as <lenghtscale> / <mean velocity>\n"
-           "  - Mean velocity is defined as the absolute value of mean\n"
-           "    velocity vector)\n"
-           "- How to set the reference lengthscale:\n"
-           "  - radius\n"
-           "    - Equal to bead radius\n"
-           "  - diameter\n"
-           "    - Equal to bead diameter\n"
-           "  - cell_side\n"
-           "    - Equal to primitive cell side\n"
-           "  - custom\n"
-           "    - Equal to specified value\n"
-           "    - Pass on same line:\n"
-           "      - Reference lengthscale value\n"
-           "- Whether and how to rescale velocity field:\n"
-           "  (Note:\n"
-           "    - Options that involve rescaling the velocity field are\n"
-           "      expensive for simulations with time-dependent flow fields\n"
-           "      because they require recomputing the interpolator)\n"
-           "  - rescale_velocity_to_mean\n"
-           "    - Rescale according to given mean\n"
-           "    - Pass on same line:\n"
-           "      - Absolute value of mean velocity vector\n"
-           "  - rescale_velocity_to_advection_time\n"
-           "    - Rescale according to given advection time\n"
-           "    - Pass on same line:\n"
-           "      - Advection time, based on absolute value of mean "
-           "        velocity vector\n"
-           "  - no_rescale_velocity\n"
-           "    - Do not rescale\n"
-        << io::line();
+    output << io::line() << "Transport parameters\n"
+           << io::line() << R"((Note:
+  - Advection time is defined as <lenghtscale> / <mean velocity>.
+  - Mean velocity is defined as the absolute value of mean velocity vector.)
+- How to set the reference lengthscale:
+  - radius
+    - Equal to bead radius.
+  - diameter
+    - Equal to bead diameter.
+  - cell_side
+    - Equal to primitive cell side.
+  - custom
+    - Equal to specified value.
+    - Pass on same line:
+      - Reference lengthscale value.
+- Whether and how to rescale velocity field:
+  (Note:
+    - Options that involve rescaling the velocity field are expensive for
+      simulations with time-dependent flow fields because they require
+      recomputing the interpolator.)
+  - rescale_velocity_to_mean
+    - Rescale according to given mean.
+    - Pass on same line:
+      - Absolute value of mean velocity vector.
+  - rescale_velocity_to_advection_time
+    - Rescale according to given advection time.
+    - Pass on same line:
+      - Advection time, based on absolute value of mean velocity vector.
+  - no_rescale_velocity
+    - Do not rescale.
+)" << io::line();
     return output;
   }
 };
@@ -794,31 +773,30 @@ public:
   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
-           << io::line()
-           << "(Note:\n"
-              "  - Diffusion time is defined as <lengthscale>^2 / (2 *\n"
-              "    <diffusion coefficient>))\n"
-              "- How to set the reference lengthscale:\n"
-              "  - radius\n"
-              "    - Equal to bead radius\n"
-              "  - diameter\n"
-              "    - Equal to bead diameter\n"
-              "  - cell_side\n"
-              "    - Equal to primitive cell side\n"
-              "  - custom\n"
-              "    - Equal to specified value\n"
-              "    - Pass on same line:\n"
-              "      - Reference lengthscale value\n"
-              "- How to set the diffusion coefficient:\n"
-              "  - set_value\n"
-              "    - Set given value\n"
-              "    - Pass on same line:\n"
-              "      - Diffusion coefficient\n"
-              "  - compute_from_diffusion_time\n"
-              "    - Compute from given diffusion time\n"
-              "    - Pass on same line:\n"
-              "      - Diffusion time\n"
-           << io::line();
+           << io::line() << R"((Note:
+  - Diffusion time is defined as <lengthscale>^2 / (2 * <diffusion
+    coefficient>).)
+- How to set the reference lengthscale:
+  - radius
+    - Equal to bead radius.
+  - diameter
+    - Equal to bead diameter.
+  - cell_side
+    - Equal to primitive cell side.
+  - custom
+    - Equal to specified value.
+    - Pass on same line:
+      - Reference lengthscale value.
+- How to set the diffusion coefficient:
+  - set_value
+    - Set given value.
+    - Pass on same line:
+      - Diffusion coefficient.
+  - compute_from_diffusion_time
+    - Compute from given diffusion time.
+    - Pass on same line:
+      - Diffusion time.
+)" << io::line();
     return output;
   }
 };

@@ -239,46 +239,43 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << io::line() << "Reaction parameters:\n"
-          << io::line()
-          << "- Solid reactant initial distribution type:\n"
-             "  - uniform_patch\n"
-             "    - Homogeneous in each specified boundary patch\n"
-             "    - Pass on same line:\n"
-             "      - Pairs of boundary patch names and surface\n"
-             "        concentrations\n"
-             "  - prescribed_faces\n"
-             "    - Prescribed values in specified boundary faces\n"
-             "    - Pass on same line:\n"
-             "      - Name of file with faces and surface concentration\n"
-             "        values (one face per line)\n"
-             "      - Path to file [Parameters directory]\n"
-             "- Rate distribution type:\n"
-             "  - uniform\n"
-             "    - Homogeneous and the same in all boundary patches\n"
-             "    - Pass on same line:\n"
-             "      - Rate specification format:\n"
-             "        - damkohler\n"
-             "          - Pass on same line:\n"
-             "            - Damkohler number (<diffusion time> * <average\n"
-             "              surface concentration> * <surface rate constant>\n"
-             "              / <lengthscale>)\n";
+      output << io::line() << "Reaction parameters:\n"
+             << io::line() << R"(- Solid reactant initial distribution type:
+  - uniform_patch
+    - Homogeneous in each specified boundary patch.
+    - Pass on same line:
+      - Pairs of boundary patch names and surface concentrations.
+  - prescribed_faces
+    - Prescribed values in specified boundary faces.
+    - Pass on same line:
+      - Name of file with faces and surface concentration values (one face per
+        line).
+      - Path to file [Parameters directory].
+- Rate distribution type:
+  - uniform
+    - Homogeneous and the same in all boundary patches.
+    - Pass on same line:
+      - Rate specification format:
+        - damkohler
+          - Pass on same line:
+            - Damkohler number (<diffusion time> * <average surface
+              concentration> * <surface rate constant> / <lengthscale>).)";
       if constexpr (solid_decay) {
-        output << "            - Ratio of solid to fluid rate constants\n";
+        output << R"(
+            - Ratio of solid to fluid rate constants.)";
       }
-      output
-          << "            (Note:\n"
-             "              - Diffusion time is as defined in transport\n"
-             "                parameters)\n"
-             "        - rate_constant\n"
-             "          - Pass on same line:\n"
-             "            - Surface rate constant (units length per surface\n"
-             "              concentration per time)\n";
+      output << R"(
+            (Note:
+              - Diffusion time is as defined in transport parameters.)
+        - rate_constant
+          - Pass on same line:
+            - Surface rate constant (units length per surface concentration per
+              time).)";
       if constexpr (solid_decay) {
-        output << "            - Ratio of solid to fluid rate constants\n";
+        output << R"(
+            - Ratio of solid to fluid rate constants.)";
       }
-      output << io::line();
+      output << "\n" << io::line();
       return output;
     }
   };
@@ -517,42 +514,37 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
        \param output Output stream.
     */
     inline static std::ostream &info(std::ostream &output) {
-      output
-          << io::line() << "Reaction parameters:\n"
-          << io::line()
-          << "- Solid reactant initial distribution type:\n"
-             "  - uniform_patch\n"
-             "    - Homogeneous in each specified boundary patch\n"
-             "    - Pass on same line:\n"
-             "      - Pairs of boundary patch names and surface\n"
-             "        concentrations\n"
-             "  - prescribed_faces\n"
-             "    - Prescribed values in specified boundary faces\n"
-             "    - Pass on same line:\n"
-             "      - Name of file with faces and surface concentration\n"
-             "        values (one face per line)\n"
-             "      - Path to file [Parameters directory]\n"
-             "- Rate distribution type:\n"
-             "  - uniform\n"
-             "    - Homogeneous and the same in all boundary patches\n"
-             "    - Pass on same line:\n"
-             "      - Rate specification format:\n"
-             "        - damkohler\n"
-             "          - Pass on same line:\n"
-             "            - Damkohler number (<diffusion time> * <average\n"
-             "              surface concentration> * <surface rate constant>\n"
-             "              / <lengthscale>)\n"
-             "            - Desorption Damkohler number (<diffusion time> *\n"
-             "              <desorption rate>)\n"
-             "            (Note:\n"
-             "              - Diffusion time is as defined in transport\n"
-             "                parameters)\n"
-             "        - rate_constant\n"
-             "          - Pass on same line:\n"
-             "            - Surface rate constant (units length per surface\n"
-             "              concentration per time)\n"
-             "            - Desorption rate\n"
-          << io::line();
+      output << io::line() << "Reaction parameters:\n"
+             << io::line() << R"(- Solid reactant initial distribution type:
+  - uniform_patch
+    - Homogeneous in each specified boundary patch.
+    - Pass on same line:
+      - Pairs of boundary patch names and surface concentrations.
+  - prescribed_faces
+    - Prescribed values in specified boundary faces.
+    - Pass on same line:
+      - Name of file with faces and surface concentration values (one face per
+        line).
+      - Path to file [Parameters directory].
+- Rate distribution type:
+  - uniform
+    - Homogeneous and the same in all boundary patches.
+    - Pass on same line:
+      - Rate specification format:
+        - damkohler
+          - Pass on same line:
+            - Damkohler number (<diffusion time> * <average surface
+              concentration> * <surface rate constant> / <lengthscale>).
+            - Desorption Damkohler number (<diffusion time> * <desorption
+              rate>).
+            (Note:
+              - Diffusion time is as defined in transport parameters.)
+        - rate_constant
+          - Pass on same line:
+            - Surface rate constant (units length per surface concentration per
+              time).
+            - Desorption rate.
+)" << io::line();
       return output;
     }
   };

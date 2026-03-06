@@ -103,19 +103,18 @@ public:
   */
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "OpenFOAM directories (pass '' for default in [])\n"
-           << io::line()
-           << "- OpenFOAM cases directory [${FOAM_RUN}]\n"
-              "- OpenFOAM case name\n"
-              "- OpenFOAM case time:\n"
-              "  - last\n"
-              "    - Use OpenFOAM case last available time\n"
-              "  - start\n"
-              "    - Use OpenFOAM case start time\n"
-              "  - end\n"
-              "    - Use OpenFOAM case end time\n"
-              "  - Numeric value\n"
-              "    - Use given numeric value as start time name\n"
-           << io::line();
+           << io::line() << R"(- OpenFOAM cases directory [${FOAM_RUN}].
+- OpenFOAM case name.
+- OpenFOAM case time:
+  - last
+    - Use OpenFOAM case last available time.
+  - start
+    - Use OpenFOAM case start time.
+  - end
+    - Use OpenFOAM case end time.
+  - Numeric value
+    - Use given numeric value as start time name.
+)" << io::line();
     return output;
   }
 

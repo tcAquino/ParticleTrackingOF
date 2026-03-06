@@ -171,202 +171,199 @@ public:
 
   /** \brief Output generic information about object. */
   static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Output parameters\n"
-        << io::line()
-        << "- Time units for measurement times:\n"
-           "  - advection\n"
-           "    - Advection time units (valid only if there is advection)\n"
-           "  - diffusion\n"
-           "    - Diffusion time units (valid only if there is diffusion)\n"
-           "  - reaction\n"
-           "    - Reaction time units (valid only if there is reaction)\n"
-           "  - arbitrary\n"
-           "    - Arbitary units (no rescaling)\n"
-           "- End criterion to finish dynamics:\n"
-           "  (Note:\n"
-           "    - To combine criteria pass 'and' or 'or', followed by the\n"
-           "      number of criteria to combine on the same line, then\n"
-           "      specify one criterion per subsequent line)\n"
-           "  - time\n"
-           "    - Specified time\n"
-           "    - Pass on same line:\n"
-           "      - End time\n"
-           "  - time_max\n"
-           "    - Maximum output time\n"
-           "  - mass_below\n"
-           "    - Total mass below or equal to value\n"
-           "    - Pass on same line:\n"
-           "      - Threshold mass\n"
-           "  - mass_above\n"
-           "    - Total mass above or equal to value\n"
-           "    - Pass on same line:\n"
-           "      - Threshold mass\n"
-           "  - all_absorbed\n"
-           "    - All particles absorbed\n"
-           "  - one_absorbed\n"
-           "    - One particle absorbed\n"
-           "  - fraction_not_absorbed\n"
-           "    - Fraction of particles not absorbed below or equal to value\n"
-           "    - Pass on same line:\n"
-           "      - Threshold fraction\n"
-           "- Measurement spacing:\n"
-           "  - linear\n"
-           "    - Linear spacing, specified maximum time and number of\n"
-           "      measurements\n"
-           "    - Pass on same line:\n"
-           "      - Minimum measurement time\n"
-           "      - Maximum measurement time\n"
-           "      - Number of measurements\n"
-           "  - linear_step\n"
-           "    - Linear spacing, specified time step (no maximum time)\n"
-           "    - Pass on same line:\n"
-           "      - Minimum measurement time\n"
-           "      - Measurement time step\n"
-           "  - log\n"
-           "    - Log spacing, specified maximum time and number of\n"
-           "      measurements\n"
-           "    - Pass on same line:\n"
-           "      - Minimum measurement time\n"
-           "      - Maximum measurement time\n"
-           "      - Number of measurements\n"
-           "  - log_step\n"
-           "    - Log spacing, specified time step factor (no maximum time)\n"
-           "    - Pass on same line:\n"
-           "      - Minimum measurement time\n"
-           "      - Measurement time step factor\n"
-           "- Measurement types:\n"
-           "  (Note:\n"
-           "    - Pass any number, one per line\n"
-           "    - Precision [8] can be passed at end of line\n"
-           "    - Masks are passed on construction of output handler; the\n"
-           "      same masks are used for all measurements involving masks)\n"
-           "  - position\n"
-           "    - Time, particle tags, particle positions, and particle\n"
-           "      masses\n"
-           "  - position_in_regions\n"
-           "    - Time, particle tags, particle positions, and particle\n"
-           "      masses within regions specified by masks\n"
-           "  - position_mean\n"
-           "    - Time and mean position\n"
-           "  - position_abs_mean\n"
-           "    - Time and mean of absolute value of position\n"
-           "  - position_second_moment\n"
-           "    - Time and position second moment\n"
-           "  - position_nth_moment\n"
-           "    - Time and position nth moment\n"
-           "  - position_moment\n"
-           "    - Time and position moment with orders specified along each\n"
-           "      dimension\n"
-           "  - position_variance\n"
-           "    - Time and position variance\n"
-           "  - mass\n"
-           "    - Time and total mass\n"
-           "  - mass_absorbed\n"
-           "    - Time and total absorbed mass\n"
-           "  - mass_adsorbed\n"
-           "    - Time and total adsorbed mass\n"
-           "  - mass_in_regions\n"
-           "    - Time and total mass within regions specified by masks\n"
-           "  - velocity\n"
-           "    - Time, particle tags, local velocities, and particle masses\n"
-           "  - velocity_mean\n"
-           "    - Time and mean of velocity field over particles\n"
-           "  - scalar_field\n"
-           "    - Time, particle tags, local scalar field values, and\n"
-           "      particle masses\n"
-           "    - Pass on same line:\n"
-           "      - Name of field to be read from OF file\n"
-           "  - scalar_field_mean\n"
-           "    - Time and mean of scalar field over particles\n"
-           "    - Pass on same line:\n"
-           "      - Name of field to be read from OF file\n"
-           "  - vector_field\n"
-           "    - Time, particle tags, local vector field value, and particle\n"
-           "      masses\n"
-           "    - Pass on same line:\n"
-           "      - Name of field to be read from OF file\n"
-           "  - vector_field_mean\n"
-           "    - Time and mean of vector field over particles\n"
-           "    - Pass on same line:\n"
-           "      - Name of field to be read from OF file\n"
-           "  - tensor_field\n"
-           "    - Time, particle tags, local tensor field values, and\n"
-           "      particle masses\n"
-           "    - Pass on same line:\n"
-           "      - Name of field to be read from OF file\n"
-           "  - tensor_field_mean\n"
-           "    - Time and mean of tensor field over particles\n"
-           "    - Pass on same line:\n"
-           "      - Name of field to be read from OF file\n"
-           "  - position_periodic\n"
-           "    - Time, particle tags, true positions accounting for\n"
-           "      periodicity, and masses\n"
-           "  - position_in_regions_periodic\n"
-           "    - Time, particle tags, true positions accounting for\n"
-           "      periodicity, and masses, in regions specified by masks\n"
-           "  - position_mean_periodic\n"
-           "    - Time and true mean position accounting for periodicity\n"
-           "  - position_abs_mean_periodic\n"
-           "    - Time and true mean of absolute value of position accounting\n"
-           "      for periodicity\n"
-           "  - position_second_moment_periodic\n"
-           "    - Time and true position second moment accounting for\n"
-           "      periodicity\n"
-           "  - position_nth_moment_periodic\n"
-           "    - Time and true position nth moment accounting for\n"
-           "      periodicity\n"
-           "  - position_moment_periodic\n"
-           "    - Time and true position moment with orders specified along\n"
-           "      each dimension accountin for periodicity\n"
-           "  - position_variance_periodic\n"
-           "    - Time and true position variance accounting for periodicity\n"
-           "  - first_crossing_time\n"
-           "    - Crossing times, particle tags, and particle masses at end\n"
-           "      of dynamics\n"
-           "    - Pass on same line:\n"
-           "      - Dimension\n"
-           "      - Crossing position along dimension\n"
-           "  - position_adsorbed\n"
-           "    - Time, tag, position, and mass of adsorbed particles\n"
-           "  - position_adsorbed_periodic\n"
-           "    - Time, tag, position accouting for periodicity, and mass\n"
-           "      of adsorbed particles\n"
-           "  - mass_adsorbed_face\n"
-           "    - Time and adsorbed mass at each boundary face.\n"
-           "  - mass_adsorbed_face_periodic\n"
-           "    - Time and adsorbed mass at each boundary face, accounting\n"
-           "      for periodicity\n"
-           "  - surface_reacted_mass\n"
-           "    - Time and net reacted mass at each boundary face\n"
-           "  - surface_reacted_mass_periodic\n"
-           "    -  Time and net reacted mass at each boundary face with\n"
-           "       periodicity info\n"
-           "  - absorption_time\n"
-           "    - Particle absorption times, tags, and masses at end of\n"
-           "      dynamics\n"
-           "  - absorption_time_patch\n"
-           "    (Note: Patch info is not guaranteed accurate unless particle\n"
-           "           states store boundary face)\n"
-           "    - Particle absorption times, tags, particle masses, and\n"
-           "      absorption patch at end of dynamics\n"
-           "  - absorption_time_position\n"
-           "    - Particle absorption times, tags, particle masses, and\n"
-           "      positions at end of dynamics\n"
-           "  - absorption_time_patch_position\n"
-           "    (Note: Patch info is not guaranteed accurate unless particle\n"
-           "           states store boundary face)\n"
-           "    - Particle absorption times, tags, masses, absorption patch,\n"
-           "      and positions at end of dynamics\n"
-           "  - absorption_time_position_periodic\n"
-           "    - Particle absorption times, tags, masses, and positions\n"
-           "      accounting for periodicity at end of dynamics\n"
-           "  - absorption_time_patch_position_periodic\n"
-           "    (Note: Patch info is not guaranteed accurate unless particle\n"
-           "           states store boundary face)\n"
-           "    - Particle absorption times, tags, masses, absorption patch,\n"
-           "      and positions accounting for periodicity at end of dynamics\n"
-        << io::line();
+    output << io::line() << "Output parameters\n"
+           << io::line() << R"(- Time units for measurement times:
+  - advection
+    - Advection time units (valid only if there is advection).
+  - diffusion
+    - Diffusion time units (valid only if there is diffusion).
+  - reaction
+    - Reaction time units (valid only if there is reaction).
+  - arbitrary
+    - Arbitary units (no rescaling).
+- End criterion to finish dynamics:
+  (Note:
+    - To combine criteria pass 'and' or 'or', followed by the number of criteria
+      to combine on the same line, then specify one criterion per subsequent
+      line.)
+  - time
+    - Specified time.
+    - Pass on same line:
+      - End time.
+  - time_max
+    - Maximum output time.
+  - mass_below
+    - Total mass below or equal to value.
+    - Pass on same line:
+      - Threshold mass.
+  - mass_above
+    - Total mass above or equal to value.
+    - Pass on same line:
+      - Threshold mass.
+  - all_absorbed
+    - All particles absorbed.
+  - one_absorbed
+    - One particle absorbed.
+  - fraction_not_absorbed
+    - Fraction of particles not absorbed below or equal to value.
+    - Pass on same line:
+      - Threshold fraction.
+- Measurement spacing:
+  - linear
+    - Linear spacing, specified maximum time and number of measurements.
+    - Pass on same line:
+      - Minimum measurement time.
+      - Maximum measurement time.
+      - Number of measurements.
+  - linear_step
+    - Linear spacing, specified time step (no maximum time).
+    - Pass on same line:
+      - Minimum measurement time.
+      - Measurement time step.
+  - log
+    - Log spacing, specified maximum time and number of measurements
+    - Pass on same line:
+      - Minimum measurement time.
+      - Maximum measurement time.
+      - Number of measurements.
+  - log_step
+    - Log spacing, specified time step factor (no maximum time).
+    - Pass on same line:
+      - Minimum measurement time.
+      - Measurement time step factor.
+- Measurement types:
+  (Note:
+    - Pass any number, one per line.
+    - Precision [8] can be passed at end of line.
+    - Masks are passed on construction of output handler; the same masks are
+      used for all measurements involving masks.)
+  - position
+    - Particle tags, masses, cells, and positions, as well as times and number
+      of particles output per time.
+  - position_in_regions
+    - Particle tags, masses, cells, and positions within regions specified by
+      masks, as well as times and number of particles output per time,
+  - position_mean
+    - Time and mean position.
+  - position_abs_mean
+    - Time and mean of absolute value of position.
+  - position_second_moment
+    - Time and position second moment.
+  - position_nth_moment
+    - Time and position nth moment.
+  - position_moment
+    - Time and position moment with orders specified along each dimension.
+  - position_variance
+    - Time and position variance.
+  - mass
+    - Time and total mass.
+  - mass_absorbed
+    - Time and total absorbed mass.
+  - mass_adsorbed
+    - Time and total adsorbed mass.
+  - mass_in_regions
+    - Time and total mass within regions specified by masks.
+  - velocity
+    - Particle tags, masses, and velocities, as well as times and number of
+      particles output per time to a separate file.
+  - velocity_mean
+    - Time and mean of velocity field over particles.
+  - scalar_field
+    - Particle tags, masses, and scalar field values, as well as times and
+      number of particles output per time to a separate file.
+    - Pass on same line:
+      - Name of field to be read from OF file.
+  - scalar_field_mean
+    - Time and mean of scalar field over particles.
+    - Pass on same line:
+      - Name of field to be read from OF file.
+  - vector_field
+    - Particle tags, masses, and vector field values, as well as times and
+      number of particles output per time to a separate file.
+    - Pass on same line:
+      - Name of field to be read from OF file.
+  - vector_field_mean
+    - Time and mean of vector field over particles.
+    - Pass on same line:
+      - Name of field to be read from OF file.
+  - tensor_field
+    - Particle tags, masses, and tensor field values, as well as times and
+      number of particles output per time to a separate file.
+    - Pass on same line:
+      - Name of field to be read from OF file.
+  - tensor_field_mean
+    - Time and mean of tensor field over particles.
+    - Pass on same line:
+      - Name of field to be read from OF file.
+  - position_periodic
+    - Particle tags, masses, cells, and true positions accounting for
+      periodicity, as well as times and number of particles output per time to a
+      separate file.
+  - position_in_regions_periodic
+    - Particle tags, masses, cells, and true positions accounting for
+      periodicity in regions specified by masks.
+  - position_mean_periodic
+    - Time and true mean position accounting for periodicity.
+  - position_abs_mean_periodic
+    - Time and true mean of absolute value of position accounting for
+      periodicity.
+  - position_second_moment_periodic
+    - Time and true position second moment accounting for periodicity.
+  - position_nth_moment_periodic
+    - Time and true position nth moment accounting periodicity.
+  - position_moment_periodic
+    - Time and true position moment with orders specified along each dimension
+      accounting for periodicity.
+  - position_variance_periodic
+    - Time and true position variance accounting for periodicity.
+  - first_crossing_time
+    - Particle crossing times, tags, and masses at end of dynamics.
+    - Pass on same line:
+      - Dimension.
+      - Crossing position along dimension.
+  - position_adsorbed
+    - Time, tag, position, and mass of adsorbed particles.
+  - position_adsorbed_periodic
+    - Time, tag, position accounting for periodicity, and mass of adsorbed
+      particles.
+  - mass_adsorbed_face
+    - Boundary faces and corresponding adsorbed masses, as well as times and
+      number of faces output per time to a separate file.
+  - mass_adsorbed_face_periodic
+    - Boundary faces and corresponding adsorbed masses accouting for
+      periodicity, as well as times and number of faces output per time to a
+      separate file.
+  - mass_reacted_face
+    - Boundary faces and corresponding net reacted masses, as well as times and
+      number of faces output per time to a separate file.
+  - mass_reacted_face_periodic
+    - Boundary faces and corresponding net reacted masses accouting for
+      periodicity, as well as times and number of faces output per time to a
+      separate file.
+  - absorption_time
+    - Particle absorption times, tags, and masses at end of dynamics.
+  - absorption_time_patch
+    (Note: Patch info is not guaranteed accurate unless particle states store
+           boundary face.)
+    - Particle absorption times, tags, particle masses, and absorption patch at
+      end of dynamics.
+  - absorption_time_position
+    - Particle absorption times, tags, particle masses, and positions at end of
+      dynamics.
+  - absorption_time_patch_position
+    (Note: Patch info is not guaranteed accurate unless particle
+           states store boundary face.)
+    - Particle absorption times, tags, masses, absorption patch, and positions
+      at end of dynamics.
+  - absorption_time_position_periodic
+    - Particle absorption times, tags, masses, and positions accounting for
+      periodicity at end of dynamics.
+  - absorption_time_patch_position_periodic
+    (Note: Patch info is not guaranteed accurate unless particle states store
+           boundary face.)
+    - Particle absorption times, tags, masses, absorption patch, and positions
+      accounting for periodicity at end of dynamics.
+)" << io::line();
     return output;
   }
 

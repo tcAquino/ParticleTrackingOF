@@ -156,28 +156,27 @@ public:
     /** \brief Output general information about object. */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "Phase parameters\n"
-             << io::line()
-             << "- Name of phase to be read from file\n"
-                "- Pass on same line:\n"
-                "  - Whether named phase is carrier or excluded phase (in the\n"
-                "    limit of steep chemical potential gradient)\n"
-                "    - carrier\n"
-                "      - Transport in this phase\n"
-                "    - excluded\n"
-                "      - No transport in this phase\n"
-                "- How to compute gradient of carrier phase:\n"
-                "  - read\n"
-                "    - Based on reading gradient of named phase\n"
-                "  - compute\n"
-                "    - Computed from named phase data\n";
+             << io::line() << R"(- Name of phase to be read from file.
+- Pass on same line:
+  - Whether named phase is carrier or excluded phase (in the limit of steep
+    chemical potential gradient).
+    - carrier
+      - Transport in this phase.
+    - excluded
+      - No transport in this phase.
+- How to compute gradient of carrier phase:
+  - read
+    - Based on reading gradient of named phase.
+  - compute
+    - Computed from named phase data.)";
       if constexpr (!std::is_same_v<ChemicalPotentialModel,
                                     ChemicalPotentialModels::None>) {
-        output
-            << "- Equilibrium ratio of concentrations between excluded phase\n"
-               "  and carrier phase\n";
+        output << R"(
+- Equilibrium ratio of concentrations between excluded phase and carrier phase.)";
       }
-      output << "- Phase field tolerance to consider pure phase\n"
-             << io::line();
+      output << R"(
+- Phase field tolerance to consider pure phase.
+)" << io::line();
       return output;
     }
   };

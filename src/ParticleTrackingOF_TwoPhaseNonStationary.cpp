@@ -39,18 +39,19 @@ template <typename ParallelOption> struct ExecutableInfo {
   inline static std::ostream &info(std::ostream &output) {
     output << io::line()
            << "Executable parameters (pass '' for default in []):\n"
-           << io::line() << "Number of parameters: " << nr_parameters << "\n"
-           << "- Cases directory [../cases]\n"
-              "- Name of case\n"
-              "- Name of transport parameter set\n"
-              "- Name of phase parameter set\n"
-              "- Name of reaction parameter set\n"
-              "- Name of solver parameter set\n"
-              "- Name of initial condition parameter set\n"
-              "- Name of output parameter set\n"
-              "- Output directory [<Case directory>/output]\n"
-              "- Output file identifier [Based on parameter set names]\n"
-              "- Run number (nonnegative integer to index output) [None]\n";
+           << io::line() << "Number of parameters: " << nr_parameters << R"(
+- Cases directory [../cases].
+- Name of case.
+- Name of transport parameter set.
+- Name of phase parameter set.
+- Name of reaction parameter set.
+- Name of solver parameter set.
+- Name of initial condition parameter set.
+- Name of output parameter set.
+- Output directory [<Case directory>/output].
+- Output file identifier [Based on parameter set names].
+- Run number (nonnegative integer to index output) [None].
+)";
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Parallel>) {
       output << "- Number of parallel threads\n";
@@ -61,19 +62,19 @@ template <typename ParallelOption> struct ExecutableInfo {
 
   inline static std::ostream &help(std::ostream &output) {
     output << io::line()
-           << "Help options (pass any number after -h or --help):\n"
-           << io::line()
-           << "-a / --all : All available info\n"
-              "-e / --executable : Main executable info\n"
-              "-g / --geometry : Geometry info\n"
-              "-d / --directories-of : OpenFOAM directories info\n"
-              "-t / --transport : Transport info\n"
-              "-p / --phase : Phase info\n"
-              "-r / --reaction : Reaction info\n"
-              "-s / --solvers : Solver info\n"
-              "-i / --initial-condition : Initial condition info\n"
-              "-o / --output : Output info\n"
-           << io::line();
+           << "Help options (pass any number after -h / --help):\n"
+           << io::line(80, false) << R"(
+-a / --all : All available info.
+-e / --executable : Main executable info.
+-g / --geometry : Geometry info.
+-d / --directories-of : OpenFOAM directories info.
+-t / --transport : Transport info.
+-p / --phase : Phase info.
+-r / --reaction : Reaction info.
+-s / --solvers : Solver info.
+-i / --initial-condition : Initial condition info.
+-o / --output : Output info.
+)" << io::line();
     return output;
   }
 
@@ -82,7 +83,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_diffusion_2d;
+  using Model = ptof::Model::advection_diffusion_surface_decay_2d;
   using ChemicalPotentialModel = ptof::ChemicalPotentialModels::AGG;
   using TimeInterpolationType = ptof::InterpolationTypes::Linear;
 

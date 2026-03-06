@@ -218,69 +218,69 @@ struct SolverParameters_Generic {
      \param output Output stream.
   */
   inline static std::ostream &info(std::ostream &output) {
-    output
-        << io::line() << "Solver parameters\n"
-        << io::line()
-        << "- Number of Lagrangian particles in each injection step\n"
-           "- How to combine local and global time step constraints\n"
-           "  - min\n"
-           "    - Use minimum of local and global constraints\n"
-           "  - max\n"
-           "    - Use maximum of local and global constraints\n"
-           "- Local step accuracy:\n"
-           "  (Note:\n"
-           "    - Pass inf to deactivate specific constraints; pass at least\n"
-           "      one 0 to deactivate all local constraints with maximum)\n"
-           "  - Pass on same line:\n";
+    output << io::line() << "Solver parameters\n"
+           << io::line()
+           << R"(- Number of Lagrangian particles in each injection step.
+- How to combine local and global time step constraints:
+  - min
+    - Use minimum of local and global constraints.
+  - max
+    - Use maximum of local and global constraints.
+- Local step accuracy:
+  (Note:
+    - Pass inf to deactivate specific constraints; pass at least one 0 to
+      deactivate all local constraints with maximum.)
+  - Pass on same line:)";
     if constexpr (advection) {
-      output << "    - Local step accuracy factor with respect to advection\n"
-                "      [inf]\n";
+      output << R"(
+    - Local step accuracy factor with respect to advection [inf].)";
     }
     if constexpr (diffusion) {
-      output << "    - Local step accuracy factor with respect to diffusion\n"
-                "      [inf]\n";
+      output << R"(
+    - Local step accuracy factor with respect to diffusion [inf].)";
     }
     if constexpr (reaction) {
-      output << "    - Local step accuracy factor with respect to reaction\n"
-                "      [inf]\n";
+      output << R"(
+    - Local step accuracy factor with respect to reaction [inf].)";
     }
-    output << "    - Local step accuracy with respect to temporal advection\n"
-              "      variability (ignored if advection is not time-variable)\n"
-              "      [inf]\n"
-              "- Global step accuracy:\n"
-              "  (Note:\n"
-              "    - Initial values, e.g., of flow are used\n"
-              "    - Pass inf to deactivate specific constraints; pass at\n"
-              "      least one 0 to deactivate all global constraints with\n"
-              "      maximum)\n"
-              "  - Pass on same line:\n";
+    output << R"(
+    - Local step accuracy with respect to temporal advection variability (ignored
+      if advection is not time-variable) [inf].
+- Global step accuracy:
+  (Note:
+    - Initial values, e.g., of flow are used.
+    - Pass inf to deactivate specific constraints; pass at least one 0 to
+      deactivate all global constraints with maximum).
+  - Pass on same line:)";
     if constexpr (advection) {
-      output << "    - Global step accuracy factor with respect to advection\n"
-                "      [inf]\n";
+      output << R"(
+    - Global step accuracy factor with respect to advection [inf].)";
     }
     if constexpr (diffusion) {
-      output << "    - Global step accuracy factor with respect to diffusion\n"
-                "      [inf]\n";
+      output << R"(
+    - Global step accuracy factor with respect to diffusion [inf].)";
     }
     if constexpr (reaction) {
-      output << "    - Global step accuracy factor with respect to reaction\n"
-                "      [inf]\n";
+      output << R"(
+    - Global step accuracy factor with respect to reaction [inf].)";
     }
-    output << "    - Global time step constraint in arbitrary units [inf]\n";
+    output << R"(
+    - Global time step constraint in arbitrary units [inf].)";
     if constexpr (std::is_same_v<Stepper_CTRW, CTRWSteppers::TimeStep>) {
-      output << "- Time units for CTRW synchronization time step:\n"
-                "  - advection\n"
-                "    - Advection time units (valid if there is advection)\n"
-                "  - diffusion\n"
-                "    - Diffusion time units (valid if there is diffusion)\n"
-                "  - reaction\n"
-                "    - Reaction time units (valid if there is reaction)\n"
-                "  - arbitrary\n"
-                "    - Arbitary units (no rescaling)\n"
-                "  - Pass on same line:\n"
-                "    - Time step for synchronizing CTRW\n";
+      output << R"(
+- Time units for CTRW synchronization time step:
+  - advection
+    - Advection time units (valid if there is advection).
+  - diffusion
+    - Diffusion time units (valid if there is diffusion).
+  - reaction
+    - Reaction time units (valid if there is reaction).
+  - arbitrary
+    - Arbitary units (no rescaling).
+  - Pass on same line:
+    - Time step for synchronizing CTRW.)";
     }
-    output << io::line();
+    output << "\n" << io::line();
     return output;
   }
 };

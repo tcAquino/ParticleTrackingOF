@@ -60,8 +60,7 @@ struct Geometry_Generic {
   Geometry_Generic(DirectoriesOF const &directories_of,
                    Directories const &directories,
                    io::Logger &&logger = io::NullLogger{})
-      : _mesh(make_mesh(directories_of)),
-        _mesh_search{_mesh} {
+      : _mesh(make_mesh(directories_of)), _mesh_search{_mesh} {
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Parallel>) {
       logger("Precomputing demand-driven mesh data...");
@@ -151,27 +150,28 @@ struct Geometry_Generic {
     output << io::line() << "Geometry\n"
            << io::line()
            << "Spatial dimension: " + std::to_string(dim) +
-                  "\n"
-                  "Boundary conditions for: " +
+                  R"(
+Boundary conditions for: )" +
                   DynamicsList::name(dynamics) +
-                  "\n"
-                  "Boundary condition types:\n"
-                  "  - reflecting\n"
-                  "    - Reflecting\n"
-                  "  - reacting\n"
-                  "    - Reflection and surface reaction\n"
-                  "  - absorbing\n"
-                  "    - Absorbing\n"
-                  "  - inlet\n"
-                  "    - Absorbing for outward flow velocities,\n"
-                  "      reflecting otherwise\n";
+                  R"(
+Boundary condition types:
+  - reflecting
+    - Reflecting.
+  - reacting
+    - Reflection and surface reaction.
+  - absorbing
+    - Absorbing.
+  - inlet
+    - Absorbing for outward flow velocities, reflecting otherwise.)";
     if constexpr (dynamics != DynamicsList::Type::firstpassage) {
-      output << "  - custom\n"
-                "    - Reinject according to initial condition\n";
+      output << R"(
+  - custom
+    - Reinject according to initial condition.)";
     }
-    output << "  - empty\n"
-              "    - No effect (default for unspecified patches in mesh)\n"
-           << io::line();
+    output << R"(
+  - empty
+    - No effect (default for unspecified patches in mesh).
+)" << io::line();
     return output;
   }
 
@@ -321,26 +321,29 @@ struct Geometry_Periodic_Cartesian {
     output << io::line() << "Geometry\n"
            << io::line()
            << "Spatial dimension: " + std::to_string(dim) +
-                  "\n"
-                  "Boundary conditions for: " +
+                  R"(
+Boundary conditions for:)" +
                   DynamicsList::name(dynamics) +
-                  "\n"
-                  "Boundary condition types:\n"
-                  "  - reflecting\n"
-                  "    - Reflecting\n"
-                  "  - reacting\n"
-                  "    - Reflection and surface reaction\n"
-                  "  - periodic\n"
-                  "    - Cartesian periodic, position extracted from mesh\n";
-    output << "  - absorbing\n"
-              "    - Absorbing\n";
+                  R"(
+Boundary condition types:
+  - reflecting
+    - Reflecting.
+  - reacting
+    - Reflection and surface reaction.
+  - periodic
+    - Cartesian periodic (pairs extracted from mesh geometry).
+  - absorbing
+    - Absorbing.)";
     if constexpr (dynamics == DynamicsList::Type::firstpassage) {
-      output << "  - custom\n"
-                "    - Reinject according to initial condition\n";
+      output << R"(
+  - custom
+    - Reinject according to initial condition.
+)";
     }
-    output << "  - empty\n"
-              "    - No effect (default for unspecified patches in mesh)\n"
-           << io::line();
+    output << R"(
+  - empty
+    - No effect (default for unspecified patches in mesh).
+)" << io::line();
     return output;
   }
 
@@ -433,8 +436,7 @@ struct Geometry_Bcc {
   Geometry_Bcc(DirectoriesOF const &directories_of,
                Directories const &directories,
                io::Logger &&logger = io::NullLogger{})
-      : _mesh(make_mesh(directories_of)),
-        _mesh_search{_mesh},
+      : _mesh(make_mesh(directories_of)), _mesh_search{_mesh},
         radius{periodicity == PeriodicityList::Type::cartesian
                    ? std::pow(sum(mesh().cellVolumes()) /
                                   (1. - std::sqrt(3.) * cnst::pi / 8.),
@@ -526,31 +528,34 @@ struct Geometry_Bcc {
     output << io::line() << "Geometry\n"
            << io::line()
            << "Spatial dimension: " + std::to_string(dim) +
-                  "\n"
-                  "Boundary conditions for: " +
+                  R"(
+Boundary conditions for: )" +
                   DynamicsList::name(dynamics) +
-                  "\n"
-                  "Boundary condition types:\n"
-                  "  - reflecting:\n"
-                  "    - Reflecting\n"
-                  "  - reacting\n"
-                  "    - Reflection and surface reaction\n"
-                  "  - periodic\n"
-           << (PeriodicityList::name(periodicity) == "cartesian"
-                   ? "    - Periodic in the primitive unit cell\n"
-                   : "    - Periodic in the minimal unit cell\n")
-           << "  - absorbing\n"
-              "    - Absorbing\n"
-              "  - inlet\n"
-              "    - Absorbing for outward flow velocities,\n"
-              "      reflecting otherwise\n";
+                  R"(
+Boundary condition types:
+  - reflecting:
+    - Reflecting.
+  - reacting
+    - Reflection and surface reaction.
+  - periodic)"
+           << (PeriodicityList::name(periodicity) == "cartesian" ? R"(
+    - Periodic in the primitive unit cell.)"
+                                                                 : R"(
+    - Periodic in the minimal unit cell.)")
+           << R"(
+  - absorbing
+    - Absorbing
+  - inlet
+    - Absorbing for outward flow velocities, reflecting otherwise.)";
     if constexpr (dynamics == DynamicsList::Type::firstpassage) {
-      output << "  - custom\n"
-                "    - Reinject according to initial condition\n";
+      output << R"(
+  - custom
+    - Reinject according to initial condition.)";
     }
-    output << "  - empty\n"
-              "    - No effect (default for unspecified patches in mesh)\n"
-           << io::line();
+    output << R"(
+  - empty
+    - No effect (default for unspecified patches in mesh).
+)" << io::line();
     return output;
   }
 
