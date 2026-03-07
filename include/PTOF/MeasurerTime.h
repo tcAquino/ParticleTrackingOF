@@ -111,7 +111,7 @@ protected:
 /**
    \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
    \brief Particle tags, masses, cells, and positions, as well as times and
-   number of particles output per time to a separate file (with \t _times added
+   number of particles output per time to a separate file (with \c _times added
    to output name).
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
@@ -200,7 +200,7 @@ private:
   "PTOF/MeasurerTime.h"
   \brief Output tags, masses, cells, and positions within regions specified by
   masks, as well as times and number of particles output per time to a separate
-  file (with \t _times added to output name).
+  file (with \c _times added to output name).
   \tparam periodic If true, give position accounting for periodicity (possibly
   outside domain).
 */
@@ -838,7 +838,7 @@ private:
 /**
    \class MeasurerTime_scalar_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
    \brief Output tags, and scalar field values, as well as times and number of
-   particles output per time to a separate file (with \t _times added to output
+   particles output per time to a separate file (with \c _times added to output
    name).
 */
 template <typename Subject, typename Geometry,
@@ -975,7 +975,7 @@ MeasurerTime_scalar_field(Subject const &, Geometry const &,
 /**
    \class MeasurerTime_vector_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
    \brief Output tags, and vector field values, as well as times and number of
-   particles output per time to a separate file (with \t _times added to output
+   particles output per time to a separate file (with \c _times added to output
    name).
 
 */
@@ -1118,7 +1118,7 @@ MeasurerTime_vector_field(Subject const &, Geometry const &,
 /**
    \class MeasurerTime_tensor_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
    \brief Output tags, and tensor field values, as well as times and number of
-   particles output per time to a separate file (with \t _times added to output
+   particles output per time to a separate file (with \c _times added to output
    name).
 */
 template <typename Subject, typename Geometry,
@@ -1674,7 +1674,7 @@ private:
    \class MeasurerTime_position_adsorbed PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output tags, masses, and positions of adsorbed particles, as well as
-   times and number of particles output per time to a separate file (with \t
+   times and number of particles output per time to a separate file (with \c
    _times added to output name).
    \tparam periodic If true, give position accounting for periodicity (possibly
    outside domain).
@@ -1755,7 +1755,7 @@ private:
    \class MeasurerTime_mass_reacted_face PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output boundary faces and corresponding net reacted masses, as well as
-   times and number of particles output per time to a separate file (with \t
+   times and number of particles output per time to a separate file (with \c
    _times added to output name).
    \tparam periodic If true, give face accounting for periodicity (possibly
    outside domain).
@@ -1867,7 +1867,7 @@ private:
    \class MeasurerTime_face_mass_adsorbed PTOF/MeasurerTime.h
    "PTOF/MeasurerTime.h"
    \brief Output boundary faces and corresponding adsorbed masses, as well as
-   times and number of particles output per time to a separate file (with \t
+   times and number of particles output per time to a separate file (with \c
    _times added to output name).
    \tparam periodic If true, give face accounting for periodicity (possibly
    outside domain).
