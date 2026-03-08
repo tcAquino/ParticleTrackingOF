@@ -1,10 +1,11 @@
 /**
-   \file PTOF/Steppers.h
-   \author Tomas Aquino
-   \date 09/03/2022
-   \brief Objects and utilities to handle time stepping along advective and
-   diffusive trajectories.
-*/
+ * @file   Steppers.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Mar  9 00:00:00 2022
+ *
+ * @brief Objects and utilities to handle time stepping along advective and
+ *        diffusive trajectories.
+ */
 
 #ifndef PTOF_STEPPERS_H
 #define PTOF_STEPPERS_H
@@ -19,17 +20,9 @@
 #include <utility>
 
 namespace ptof {
-/**
-   \struct CTRWStepper PTOF/Steppers.h
-   "PTOF/Steppers.h"
-   \brief Types to choose options of CTRW stepping mode.
-*/
+/** @brief Types to choose options of CTRW stepping mode. */
 struct CTRWSteppers {
-  /**
-     \struct Asynchronous PTOF/Steppers.h
-     "PTOF/Steppers.h"
-     \brief Step particles independtly
-  */
+  /** @brief Step particles independtly. */
   struct Asynchronous {
     template <typename CTRW, typename Transitions, typename SolverParameters,
               typename Time, typename Update = meta::DoNothing>
@@ -46,9 +39,10 @@ struct CTRWSteppers {
     }
 
     /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+     * @brief Output generic information about object.
+     *
+     * @param output Output stream.
+     */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "CTRW Stepper\n"
              << io::line() << method << "\n"
@@ -60,11 +54,7 @@ struct CTRWSteppers {
         "Asynchronous stepping"; /**< Name or description of stepping method. */
   };
 
-  /**
-     \struct ParticleStep PTOF/Steppers.h
-     "PTOF/Steppers.h"
-     \brief Evolve CTRW particles with synchronization over particle steps.
-  */
+  /** @brief Evolve CTRW particles with synchronization over particle steps. */
   struct ParticleStep {
     template <typename CTRW, typename Transitions, typename SolverParameters,
               typename Time, typename Update = meta::DoNothing>
@@ -84,9 +74,10 @@ struct CTRWSteppers {
     }
 
     /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+     * @brief Output generic information about object.
+     *
+     * @param output Output stream.
+     */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "CTRW Stepper\n"
              << io::line() << method << "\n"
@@ -96,16 +87,13 @@ struct CTRWSteppers {
 
     inline static std::string method =
         "Particle step synchronization"; /**< Name or description of stepping
-                                          * method.
-                                          */
+                                          * method. */
   };
 
   /**
-     \struct ParticleTime PTOF/Steppers.h
-     "PTOF/Steppers.h"
-     \brief Evolve CTRW particles by stepping earliest-time particles first and
-     synchronizing after at most one particle per thread has stepped.
-  */
+   * @brief Evolve CTRW particles by stepping earliest-time particles first and
+   *        synchronizing after at most one particle per thread has stepped.
+   */
   struct ParticleTime {
     template <typename CTRW, typename Transitions, typename SolverParameters,
               typename Time, typename Update = meta::DoNothing>
@@ -121,9 +109,10 @@ struct CTRWSteppers {
     }
 
     /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+     * @brief Output generic information about object.
+     *
+     * @param output Output stream.
+     */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "CTRW Stepper\n"
              << io::line() << method << "\n"
@@ -172,11 +161,9 @@ struct CTRWSteppers {
   };
 
   /**
-     \struct TimeStep PTOF/Steppers.h
-     "PTOF/Steppers.h"
-     \brief Evolve CTRW particles with synchronization over prescribed time
-     step.
-  */
+   * @brief Evolve CTRW particles with synchronization over prescribed time
+   *        step.
+   */
   struct TimeStep {
     template <typename CTRW, typename Transitions, typename SolverParameters,
               typename Time, typename Update = meta::DoNothing>
@@ -198,9 +185,10 @@ struct CTRWSteppers {
   };
 
   /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "CTRW Stepper\n"
            << io::line() << method << "\n"
@@ -221,24 +209,29 @@ struct Steppers {
 };
 
 /**
-   \struct Steppers_Advection_Euler_Diffusion_Euler PTOF/Steppers.h
-   "PTOF/Steppers.h"
-   \brief Time steppers for forward Euler advection and stochastic forward
-   Euler diffusion.
-*/
+ * @brief Time steppers for forward Euler advection and stochastic forward Euler
+ *        diffusion.
+ */
 struct Steppers_Advection_Euler_Diffusion_Euler {
   Steppers_Advection_Euler_Diffusion_Euler() = delete;
 
   /**
-     \brief Adaptive time step generator.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \return Adaptive time step TimeGenerator.
-  */
+   * @brief Adaptive time step generator.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @return Adaptive time step TimeGenerator.
+   */
   template <typename Geometry, typename VelocityField, typename Boundary,
             typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
@@ -254,17 +247,26 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Advection--diffusion JumpGenerator.
-     \note
-     - \p params_transport must define:
-         - \c diff_coeff
-     - If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Advection--diffusion \c JumpGenerator.
+   *
+   * @note
+   *
+   * - \p params_transport must define:
+   *
+   * -# \c diff_coeff
+   *
+   * - If \p params_solvers does not define \c time_step, the time step is
+   *   initially set to zero.
    */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
@@ -283,15 +285,21 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure advection JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure advection JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Advection(
@@ -308,14 +316,19 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
   }
 
   /**
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure diffusion JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure diffusion JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Diffusion(
@@ -331,9 +344,10 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Steppers\n"
            << io::line() << "Advection: " << advection_method << "\n"
@@ -349,24 +363,29 @@ struct Steppers_Advection_Euler_Diffusion_Euler {
 };
 
 /**
-   \struct Steppers_Advection_RK2_Diffusion_Euler PTOF/Steppers.h
-   "PTOF/Steppers.h"
-   \brief Time steppers for RK2 advection and stochastic forward Euler
-   diffusion.
-*/
+ * @brief Time steppers for RK2 advection and stochastic forward Euler
+ *        diffusion.
+ */
 struct Steppers_Advection_RK2_Diffusion_Euler {
   Steppers_Advection_RK2_Diffusion_Euler() = delete;
 
   /**
-     \brief Adaptive time step generator.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \return Adaptive time step TimeGenerator.
-  */
+   * @brief Adaptive time step generator.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @return Adaptive time step TimeGenerator.
+   */
   template <typename Geometry, typename VelocityField, typename Boundary,
             typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
@@ -382,17 +401,26 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Advection--diffusion JumpGenerator.
-     \note
-     - \p params_transport must define:
-         - \c diff_coeff
-     - If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Advection--diffusion JumpGenerator.
+   *
+   * @note
+   *
+   * - \p params_transport must define:
+   *
+   * -# \c diff_coeff
+   *
+   * - If \p params_solvers does not define \c time_step, the time step is
+   *   initially set to zero.
    */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
@@ -411,15 +439,21 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure advection JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure advection JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Advection(
@@ -437,14 +471,19 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
   }
 
   /**
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure diffusion JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure diffusion JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Diffusion(
@@ -460,9 +499,10 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Steppers\n"
            << io::line() << "Advection: " << advection_method << "\n"
@@ -478,24 +518,29 @@ struct Steppers_Advection_RK2_Diffusion_Euler {
 };
 
 /**
-   \struct Steppers_Advection_RK4_Diffusion_Euler PTOF/Steppers.h
-   "PTOF/Steppers.h"
-   \brief Time steppers for RK4 advection and stochastic forward Euler
-   diffusion.
-*/
+ * @brief Time steppers for RK4 advection and stochastic forward Euler
+ *        diffusion.
+ */
 struct Steppers_Advection_RK4_Diffusion_Euler {
   Steppers_Advection_RK4_Diffusion_Euler() = delete;
 
   /**
-     \brief Adaptive time step generator.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \return Adaptive time step TimeGenerator.
-  */
+   * @brief Adaptive time step generator.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @return Adaptive time step TimeGenerator.
+   */
   template <typename Geometry, typename VelocityField, typename Boundary,
             typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
@@ -511,17 +556,26 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Advection--diffusion JumpGenerator.
-     \note
-     - \p params_transport must define:
-         - \c diff_coeff
-     - If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Advection--diffusion JumpGenerator.
+   *
+   * @note
+   *
+   * - \p params_transport must define:
+   *
+   * -# \c diff_coeff
+   *
+   * - If \p params_solvers does not define \c time_step, the time step is
+   *   initially set to zero.
    */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
@@ -540,15 +594,21 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure advection JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure advection JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Advection(
@@ -566,14 +626,19 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
   }
 
   /**
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure diffusion JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure diffusion JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Diffusion(
@@ -589,9 +654,10 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Steppers\n"
            << io::line() << "Advection: " << advection_method << "\n"
@@ -607,24 +673,29 @@ struct Steppers_Advection_RK4_Diffusion_Euler {
 };
 
 /**
-   \struct Steppers_Advection_Heun_Diffusion_Euler PTOF/Steppers.h
-   "PTOF/Steppers.h"
-   \brief Time steppers for Heun advection and stochastic forward Euler
-   diffusion.
-*/
+ * @brief Time steppers for Heun advection and stochastic forward Euler
+ *        diffusion.
+ */
 struct Steppers_Advection_Heun_Diffusion_Euler {
   Steppers_Advection_Heun_Diffusion_Euler() = delete;
 
   /**
-     \brief Adaptive time step generator.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \return Adaptive time step TimeGenerator.
-  */
+   * @brief Adaptive time step generator.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @return Adaptive time step TimeGenerator.
+   */
   template <typename Geometry, typename VelocityField, typename Boundary,
             typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
@@ -640,17 +711,26 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters.
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Advection--diffusion JumpGenerator.
-     \note
-     - \p params_transport must define:
-         - \c diff_coeff
-     - If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Advection--diffusion JumpGenerator.
+   *
+   * @note
+   *
+   * - \p params_transport must define:
+   *
+   * -# \c diff_coeff
+   *
+   * - If \p params_solvers does not define \c time_step, the time step is
+   *   initially set to zero.
    */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
@@ -669,15 +749,21 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
   }
 
   /**
-     \param velocity_field Velocity field as a function of state.
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure advection JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure advection JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename VelocityField, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Advection(
@@ -695,14 +781,19 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
   }
 
   /**
-     \param boundary Boundary condition enforcer.
-     \param params_transport Transport parameters (unused).
-     \param params_solvers Solver parameters.
-     \param dim Spatial dimension.
-     \return Pure diffusion JumpGenerator.
-     \note If \p params_solvers does not define \c time_step, the time step is
-     initially set to zero.
-  */
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param params_transport Transport parameters (unused).
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param dim Spatial dimension.
+   *
+   * @return Pure diffusion JumpGenerator.
+   *
+   * @note If \p params_solvers does not define \c time_step, the time step is
+   *       initially set to zero.
+   */
   template <typename ParallelOption, typename Boundary,
             typename TransportParameters, typename SolverParameters>
   static auto makeJumpGenerator_Diffusion(
@@ -718,9 +809,10 @@ struct Steppers_Advection_Heun_Diffusion_Euler {
   }
 
   /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Steppers\n"
            << io::line() << "Advection: " << advection_method << "\n"

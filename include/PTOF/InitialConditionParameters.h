@@ -1,9 +1,10 @@
 /**
-   \file PTOF/InitialConditionParameters.h
-   \author Tomas Aquino
-   \date 08/05/2025
-   \brief Parameters for initial condition.
-*/
+ * @file   InitialConditionParameters.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu May  8 00:00:00 2025
+ *
+ * @brief Parameters for initial condition.
+ */
 
 #ifndef PTOF_INITIALCONDITIONPARAMETERS_H
 #define PTOF_INITIALCONDITIONPARAMETERS_H
@@ -20,11 +21,9 @@
 
 namespace ptof {
 /**
- \class InitialConditionParameters_Cases PTOF/InitialCondition.h
- "PTOF/InitialCondition.h"
- \brief Initial condition condition parameters to handle all initial condition
- types in \c InitialCondition_Cases.
-*/
+ * @brief Initial condition condition parameters to handle all initial condition
+ *        types in ptof::InitialCondition_Cases.
+ */
 struct InitialConditionParameters_Cases {
   std::string name;
   InitialConditionList::Type type;
@@ -342,9 +341,10 @@ struct InitialConditionParameters_Cases {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   static std::ostream &info(std::ostream &output) {
     output
         << io::line() << "Initial condition parameters\n"
@@ -487,7 +487,7 @@ struct InitialConditionParameters_Cases {
   }
 
 private:
-  /** \brief Read initial condition type and specific parameters. */
+  /** @brief Read initial condition type and specific parameters. */
   template <typename Geometry, typename TransportParameters,
             typename ReactionParameters>
   std::unique_ptr<SpecificParameters>
@@ -643,7 +643,7 @@ private:
     }
   }
 
-  /** \brief Read initial condition info from input stream. */
+  /** @brief Read initial condition info from input stream. */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
   std::unique_ptr<InjectionParameters>

@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Boundary_Cases.h
-   \author Tomas Aquino
-   \date 17/02/2022
-   \brief Enforce different types of boundary condition depending on patch.
-*/
+ * @file   Boundary_Cases.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Feb 17 00:00:00 2022
+ *
+ * @brief Enforce different types of boundary condition depending on patch.
+ */
 
 #ifndef PTOF_BOUNDARY_CASES_H
 #define PTOF_BOUNDARY_CASES_H
@@ -31,10 +32,7 @@
 #include <vector>
 
 namespace ptof {
-/**
-   \class Boundary_Cases PTOF/Boundary_Cases.h "PTOF/Boundary_Cases.h"
-   \brief Boundary object to handle implemented boundary types.
-*/
+/** @brief Boundary object to handle implemented boundary types. */
 template <typename State, typename Locator, typename VelocityField,
           typename Boundary_Periodic, typename Boundary_Custom,
           typename SurfaceReaction>
@@ -51,8 +49,7 @@ public:
   using BCs =
       std::unordered_map<std::string,
                          std::string>; /**< Container type to hold patch names
-                                        * and associated bc type names.
-                                        */
+                                        * and associated bc type names. */
   const BCs
       boundary_conditions; /**< Patch names and associated bc type names. */
 
@@ -64,14 +61,14 @@ public:
   };
 
   /**
-     \brief Constructor
-     \param boundary_conditions Patch names and associated boundary condition
+   * @brief Constructor
+   * @param boundary_conditions Patch names and associated boundary condition
      types.
-     \param locator Object to locate positions in mesh.
-     \param velocity_field Velocity field as a function of state.
-     \param boundary_periodic Periodic boundary condition enforcer.
-     \param boundary_custom Custom boundary condition enforcer.
-     \param surface_reaction Surface Reaction.
+   * @param locator Object to locate positions in mesh.
+   * @param velocity_field Velocity field as a function of state.
+   * @param boundary_periodic Periodic boundary condition enforcer.
+   * @param boundary_custom Custom boundary condition enforcer.
+   * @param surface_reaction Surface Reaction.
   */
   Boundary_Cases(
       BCs boundary_conditions, Locator &&locator,
@@ -91,7 +88,7 @@ public:
                                BoundaryConditionList{});
   }
 
-  /** \brief Constructor. */
+  /** @brief Constructor. */
   Boundary_Cases(
       meta::Selector_t<State>, BCs boundary_conditions, Locator &&locator,
       VelocityField &&velocity_field,
@@ -111,10 +108,12 @@ public:
   }
 
   /**
-     \brief Check if position is out of bounds.
-     \param position Position to check.
-     \return \c true if out of bounds, \c false otherwise.
-  */
+   * @brief Check if position is out of bounds.
+   *
+   * @param position Position to check.
+   *
+   * @return \c true if out of bounds, \c false otherwise.
+   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     Foam::label cell = _locator(make_point(position));
@@ -122,13 +121,16 @@ public:
   }
 
   /**
-     \brief Enforce boundary conditions if necessary by choosing appropriate
-     types.
-     \param state Current particle state to apply BCs if needed (possibly out of
-     bounds)
-     \param state_old Previous particle state (should be in bounds).
-     \return \c true if some boundary had an effect, \c false otherwise.
-  */
+   * @brief Enforce boundary conditions if necessary by choosing appropriate
+   *        types.
+   *
+   * @param state Current particle state to apply BCs if needed (possibly out of
+   *              bounds)
+   *
+   * @param state_old Previous particle state (should be in bounds).
+   *
+   * @return \c true if some boundary had an effect, \c false otherwise.
+   */
   auto operator()(State &state, State const &state_old) {
     // Note: The code flow is chosen to avoid trying to locate particles which
     // are outside as much as possible, because it is expensive
@@ -347,9 +349,10 @@ public:
   }
 
   /**
-     \brief Output information about current object.
-     \param output Output stream.
-  */
+   * @brief Output information about current object.
+   *
+   * @param output Output stream.
+   */
   std::ostream &info_runtime(std::ostream &output) const {
     io::StreamScopeFormat guard{output};
     output << io::line() << "Boundary conditions\n" << io::line();
@@ -417,27 +420,33 @@ public:
 
 private:
   /**
-     \param patch Index of patch in mesh.
-     \return Name of patch.
-  */
+   * @param patch Index of patch in mesh.
+   *
+   * @return Name of patch.
+   */
   auto patch_name(std::size_t patch) const { return _patch_names[patch]; }
 
   /**
-     \param face Face index.
-     \return Inward normal to face (used for reflection).
-  */
+   * @param face Face index.
+   *
+   * @return Inward normal to face (used for reflection).
+   */
   auto reflection_normal(Foam::label face) const {
     return unit_normal_inward(face, _locator.mesh());
   }
 
   /**
-     \brief Find next intersection with a boundary.
-     \details Find the next intersection, if any, along straight line from
-     previous intersection to endpoint.
-     \param intersection Previous intersection.
-     \param end Endpoint.
-     \return Next intersection.
-  */
+   * @brief Find next intersection with a boundary.
+   *
+   * @details Find the next intersection, if any, along straight line from
+   *          previous intersection to endpoint.
+   *
+   * @param intersection Previous intersection.
+   *
+   * @param end Endpoint.
+   *
+   * @return Next intersection.
+   */
   template <typename Intersection>
   auto next_intersection(Intersection const &intersection,
                          Foam::point const &end) const {
@@ -449,14 +458,19 @@ private:
   }
 
   /**
-     \brief Check if next intersection is beyond final position.
-     \details Find the next intersection, if any, along straight line from
-     previous intersection to endpoint.
-     \param next_intersection Next intersection.
-     \param old_intersection_point Position of previous intersection.
-     \param state Final state before new intersection.
-     \return \c true if beyond final position, \c false otherwise.
-  */
+   * @brief Check if next intersection is beyond final position.
+   *
+   * @details Find the next intersection, if any, along straight line from
+   *          previous intersection to endpoint.
+   *
+   * @param next_intersection Next intersection.
+   *
+   * @param old_intersection_point Position of previous intersection.
+   *
+   * @param state Final state before new intersection.
+   *
+   * @return \c true if beyond final position, \c false otherwise.
+   */
   auto next_intersection_is_beyond_final_point(
       Intersection const &next_intersection,
       Foam::point const &old_intersection_point, State const &state) const {

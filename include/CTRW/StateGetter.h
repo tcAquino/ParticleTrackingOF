@@ -1,9 +1,11 @@
 /**
-   \file CTRW/StateGetter.h
-   \author Tomas Aquino
-   \date 17/05/2020
-   \brief Handlers to extract information from particles and particle states.
-*/
+ * @file   StateGetter.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun May 17 00:00:00 2020
+ *
+ * @brief Handlers to extract information from CTRW particles and particle
+ *        states.
+ */
 
 #ifndef CTRW_STATEGETTER_H
 #define CTRW_STATEGETTER_H
@@ -15,10 +17,10 @@
 
 namespace ctrw {
 /**
-   \class Get_new_from_particle CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get info given particle.
-   \tparam Getter Object to extract quantity from particle's new state.
-*/
+ * @brief Get info given particle.
+ *
+ * @tparam Getter Object to extract quantity from particle's new state.
+ */
 template <typename Getter> struct Get_new_from_particle {
   Getter get;
 
@@ -32,10 +34,10 @@ template <typename Getter>
 Get_new_from_particle(Getter &&) -> Get_new_from_particle<Getter>;
 
 /**
-   \class Get_old_from_particle CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get info given particle.
-   \tparam Getter Object to extract quantity from particle's old state.
-*/
+ * @brief Get info given particle.
+ *
+ * @tparam Getter Object to extract quantity from particle's old state.
+ */
 template <typename Getter> struct Get_old_from_particle {
   Getter get;
 
@@ -49,10 +51,10 @@ template <typename Getter>
 Get_old_from_particle(Getter &&) -> Get_old_from_particle<Getter>;
 
 /**
-   \class Get_from_particle CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get info given particle.
-   \tparam Getter Object to extract quantity from particle's new and old state.
-*/
+ * @brief Get info given particle.
+ *
+ * @tparam Getter Object to extract quantity from particle's new and old state.
+ */
 template <typename Getter> struct Get_from_particle {
   Getter get;
 
@@ -65,9 +67,8 @@ template <typename Getter>
 Get_from_particle(Getter &&) -> Get_from_particle<Getter>;
 
 /**
-   \struct Get_position CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get position given state.
-*/
+ * @brief Get position given state.
+ */
 struct Get_position {
   template <typename State> auto operator()(State const &state) const {
     return state.position;
@@ -75,11 +76,12 @@ struct Get_position {
 };
 
 /**
-   \class Get_position_component CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get component of position given state.
-   \details Component chosen at compile time.
-   \tparam dd Component to extract.
-*/
+ * @brief Get component of position given state.
+ *
+ * @details Component chosen at compile time.
+ *
+ * @tparam dd Component to extract.
+ */
 template <std::size_t dd> struct Get_position_component {
   template <typename State> auto operator()(State const &state) const {
     return op::project<dd>(state.position);
@@ -87,10 +89,10 @@ template <std::size_t dd> struct Get_position_component {
 };
 
 /**
-   \struct Get_position_component_arg CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get component of position given state.
-   \details Component chosen at runtime when instantiating object.
-*/
+ * @brief Get component of position given state.
+ *
+ * @details Component chosen at runtime when instantiating object.
+ */
 struct Get_position_component_arg {
   std::size_t dd;
 
@@ -102,10 +104,10 @@ struct Get_position_component_arg {
 };
 
 /**
-   \struct Get_position_projection CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get projection of position along direction given state.
-   \note Direction vector is normalized upon instatiation.
-*/
+ * @brief Get projection of position along direction given state.
+ *
+ * @note Direction vector is normalized upon instatiation.
+ */
 struct Get_position_projection {
   std::vector<double> direction{};
 
@@ -118,10 +120,10 @@ struct Get_position_projection {
 };
 
 /**
-   \class Get_position_component_sq CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get component squared of state.position given state.
-   \tparam dd Component to extract.
-*/
+ * @brief Get component squared of state.position given state.
+ *
+ * @tparam dd Component to extract.
+ */
 template <std::size_t dd> struct Get_position_component_sq {
   template <typename State> auto operator()(State const &state) const {
     double comp = op::project<dd>(state.position);
@@ -129,40 +131,28 @@ template <std::size_t dd> struct Get_position_component_sq {
   }
 };
 
-/**
-   \struct Get_dist_sq CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get absolute value squared of position given state.
-*/
+/** @brief Get absolute value squared of position given state. */
 struct Get_dist_sq {
   template <typename State> auto operator()(State const &state) const {
     return op::abs_sq(state.position);
   }
 };
 
-/**
-   \struct Get_time CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get time given state.
-*/
+/** @brief Get time given state. */
 struct Get_time {
   template <typename State> auto operator()(State const &state) const {
     return state.time;
   }
 };
 
-/**
-   \struct Get_mass CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get mass given state.
-*/
+/** @brief Get mass given state. */
 struct Get_mass {
   template <typename State> auto operator()(State const &state) const {
     return state.mass;
   }
 };
 
-/**
-   \struct Get_velocity CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get velocity given state.
-*/
+/** @brief Get velocity given state. */
 struct Get_velocity {
   template <typename State> auto operator()(State const &state) const {
     return state.velocity;
@@ -170,10 +160,10 @@ struct Get_velocity {
 };
 
 /**
-   \class Get_velocity_component CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get component of velocity given state.
-   \tparam dd Component to extract.
-*/
+ * @brief Get component of velocity given state.
+ *
+ * @tparam dd Component to extract.
+ */
 template <std::size_t dd> struct Get_velocity_component {
   template <typename State> auto operator()(State const &state) const {
     return op::project<dd>(state.velocity);
@@ -181,10 +171,10 @@ template <std::size_t dd> struct Get_velocity_component {
 };
 
 /**
-   \class Get_property CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get function of state given state.
-   \tparam Property Object to return property given state.
-*/
+ * @brief Get function of state given state.
+ *
+ * @tparam Property Object to return property given state.
+ */
 template <typename Property> struct Get_property {
   Property property;
 
@@ -199,10 +189,10 @@ template <typename Property>
 Get_property(Property &&) -> Get_property<Property>;
 
 /**
-   \class Get_cell_property CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get function of cell given state.
-   \tparam Property Object to return property given cell.
-*/
+ * @brief Get function of cell given state.
+ *
+ * @tparam Property Object to return property given cell.
+ */
 template <typename Property> struct Get_cell_property {
   Property property;
 
@@ -217,10 +207,10 @@ template <typename Property>
 Get_cell_property(Property &&) -> Get_cell_property<Property>;
 
 /**
-   \class Get_cell_property_arrayop CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get function of cell given state.
-   \tparam Property Object to return property given cell through operator[].
-*/
+ * @brief Get function of cell given state.
+ *
+ * @tparam Property Object to return property given cell through \c operator[].
+ */
 template <typename Property> struct Get_cell_arraystyleproperty {
   Property property;
 
@@ -236,10 +226,10 @@ Get_cell_arraystyleproperty(Property &&)
     -> Get_cell_arraystyleproperty<Property>;
 
 /**
-   \class Get_position_property CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get function of position given state.
-   \tparam Property Object to return property given state.
-*/
+ * @brief Get function of position given state.
+ *
+ * @tparam Property Object to return property given state.
+ */
 template <typename Property> struct Get_position_property {
   Property property;
 
@@ -254,10 +244,10 @@ template <typename Property>
 Get_position_property(Property &&) -> Get_position_property<Property>;
 
 /**
-   \class Get_velocity_property CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get function of velocity given state.
-   \tparam Property Object to return property given velocity.
-*/
+ * @brief Get function of velocity given state.
+ *
+ * @tparam Property Object to return property given velocity.
+ */
 template <typename Property> struct Get_velocity_property {
   Property property;
 
@@ -272,13 +262,13 @@ template <typename Property>
 Get_velocity_property(Property &&) -> Get_velocity_property<Property>;
 
 /**
-   \struct Get_position_periodic_cartesian CTRW/StateGetter.h
-   "CTRW/StateGetter.h"
-   \brief Get absolute position given state from position and periodicity.
-   \details <tt>state.periodicity</tt> should hold the (directional) integer
-   number of times unit cell has been traversed.
-   \note Direction vector is normalized upon construction.
-*/
+ * @brief Get absolute position given state from position and periodicity.
+ *
+ * @details <tt>state.periodicity</tt> should hold the (directional) integer
+ *          number of times unit cell has been traversed.
+ *
+ * @note Direction vector is normalized upon construction.
+ */
 struct Get_position_periodic_cartesian {
   std::vector<double> domain_dimensions;
 
@@ -292,15 +282,16 @@ struct Get_position_periodic_cartesian {
 };
 
 /**
-   \class Get_position_periodic_cartesian_component CTRW/StateGetter.h
-   "CTRW/StateGetter.h"
-   \brief Get component of absolute position given state from position and
-   periodicity
-   \details <tt>state.periodicity</tt> should hold the (directional) integer
-   number of times unit cell has been traversed.
-   \tparam dd Component to extract.
-   \note Unit cell faces must be perpendicular to (cartesian) coordinate axes.
-*/
+ * @brief Get component of absolute position given state from position and
+ *        periodicity.
+ *
+ * @details <tt>state.periodicity</tt> should hold the (directional) integer
+ *          number of times unit cell has been traversed.
+ *
+ * @tparam dd Component to extract.
+ *
+ * @note Unit cell faces must be perpendicular to (cartesian) coordinate axes.
+ */
 template <std::size_t dd> struct Get_position_periodic_cartesian_component {
   Get_position_periodic_cartesian get_position;
 
@@ -314,22 +305,24 @@ template <std::size_t dd> struct Get_position_periodic_cartesian_component {
 };
 
 /**
-   \struct Get_position_periodic_cartesian_projection CTRW/StateGetter.h
-   "CTRW/StateGetter.h"
-   \brief Get projection of absolute position along given direction, given state
-   from position and periodicity.
-   \details <tt>state.periodicity</tt> should hold the (directional) integer
-   number of times unit cell has been traversed.
-   \note
-   - Unit cell faces must be perpendicular to (cartesian) coordinate axes.
-   - Direction vector is normalized upon construction.
-*/
+ * @brief Get projection of absolute position along given direction, given state
+ *        from position and periodicity.
+ *
+ * @details <tt>state.periodicity</tt> should hold the (directional) integer
+ *          number of times unit cell has been traversed.
+ *
+ * @note
+ *
+ * - Unit cell faces must be perpendicular to (cartesian) coordinate axes.
+ *
+ * - Direction vector is normalized upon construction.
+ */
 struct Get_position_periodic_cartesian_projection {
   Get_position_periodic_cartesian_projection(
       std::vector<double> domain_dimensions,
       std::vector<double> const &direction)
-      : _get_position{domain_dimensions},
-        direction{op::div_scalar(direction, op::abs(direction))} {}
+      : _get_position{domain_dimensions}, direction{op::div_scalar(
+                                              direction, op::abs(direction))} {}
 
   template <typename State> auto operator()(State const &state) const {
     return op::dot(_get_position(state), direction);
@@ -343,11 +336,11 @@ public:
 };
 
 /**
-   \class Get_position_periodic CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get absolute position given state from position and periodicity
-   \tparam Boundary Object that must define \c translate method given position
-   and periodicity, which changes the first according to the latter.
-*/
+ * @brief Get absolute position given state from position and periodicity
+ *
+ * @tparam Boundary Object that must define \c translate method given position
+ *         and periodicity, which changes the first according to the latter.
+ */
 template <typename Boundary> struct Get_position_periodic {
   Get_position_periodic(Boundary &&boundary)
       : _boundary{std::forward<Boundary>(boundary)} {}
@@ -365,11 +358,12 @@ template <typename Boundary>
 Get_position_periodic(Boundary &&) -> Get_position_periodic<Boundary>;
 
 /**
-   \class Get_projection CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get projection of property along direction.
-   \tparam Getter Object to extract quantity to project from state.
-   \note Direction vector is normalized upon construction.
-*/
+ * @brief Get projection of property along direction.
+ *
+ * @tparam Getter Object to extract quantity to project from state.
+ *
+ * @note Direction vector is normalized upon construction.
+ */
 template <typename Getter> struct Get_projection {
   Get_projection(Getter &&get, std::vector<double> const &direction)
       : _get{std::forward<Getter>(get)}, direction{op::div_scalar(
@@ -389,20 +383,14 @@ template <typename Getter>
 Get_projection(Getter &&, std::vector<double> const &)
     -> Get_projection<Getter>;
 
-/**
-   \struct Get_tag CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get tag given state.
-*/
+/** @brief Get tag given state. */
 struct Get_tag {
   template <typename State> auto operator()(State const &state) const {
     return state.tag;
   }
 };
 
-/**
-   \class Get_new CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get new state given new and old state.
-*/
+/** @brief Get new state given new and old state. */
 template <typename Getter> struct Get_new {
   Getter get;
 
@@ -415,10 +403,7 @@ template <typename Getter> struct Get_new {
 };
 template <typename Getter> Get_new(Getter &&) -> Get_new<Getter>;
 
-/**
-   \class Get_old CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get old state given new and old state.
-*/
+/** @brief Get old state given new and old state. */
 template <typename Getter> struct Get_old {
   Getter get;
 
@@ -432,10 +417,10 @@ template <typename Getter> struct Get_old {
 template <typename Getter> Get_old(Getter &&) -> Get_old<Getter>;
 
 /**
-   \class Get_interp CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get linearly interpolated quantity given new state and old state.
-   \tparam Getter Object to extract quantity given state.
-*/
+ * @brief Get linearly interpolated quantity given new state and old state.
+ *
+ * @tparam Getter Object to extract quantity given state.
+ */
 template <typename Getter> struct Get_interp {
   double time;
   Getter get;
@@ -461,12 +446,13 @@ template <typename Getter> struct Get_interp {
 template <typename Getter> Get_interp(double, Getter &&) -> Get_interp<Getter>;
 
 /**
-   \class Get_position_interp_velocity CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get linearly interpolated position according to velocity in old state
-   given new state and old state.
-   \tparam Getter Object to extract position given state.
-   \tparam Getter_velocity Object to extract velocity given state.
-*/
+ * @brief Get linearly interpolated position according to velocity in old state
+ *        given new state and old state.
+ *
+ * @tparam Getter Object to extract position given state.
+ *
+ * @tparam Getter_velocity Object to extract velocity given state.
+ */
 template <typename Getter = Get_position,
           typename Getter_velocity = Get_velocity>
 struct Get_position_interp_velocity {
@@ -491,12 +477,13 @@ Get_position_interp_velocity(double, Getter &&, Getter_velocity &&)
     -> Get_position_interp_velocity<Getter, Getter_velocity>;
 
 /**
-   \class Get_time_interp_velocity CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get linearly interpolated time according to velocity in old state
-   given new state and old state.
-   \tparam Getter_velocity Object to extract velocity given state.
-   \tparam Getter_position Object to extract position given state.
-*/
+ * @brief Get linearly interpolated time according to velocity in old state
+ *        given new state and old state.
+ *
+ * @tparam Getter_velocity Object to extract velocity given state.
+ *
+ * @tparam Getter_position Object to extract position given state.
+ */
 template <typename Getter_velocity = Get_velocity,
           typename Getter_position = Get_position>
 struct Get_time_interp_velocity {
@@ -522,10 +509,10 @@ Get_time_interp_velocity(double, Getter_velocity &&, Getter_position &&)
     -> Get_time_interp_velocity<Getter_velocity, Getter_position>;
 
 /**
-   \class Get_time_interp CTRW/StateGetter.h "CTRW/StateGetter.h"
-   \brief Get linearly interpolated time.
-   \tparam Getter_position Object to extract position given state.
-*/
+ * @brief Get linearly interpolated time.
+ *
+ * @tparam Getter_position Object to extract position given state.
+ */
 template <typename Getter_position = Get_position> struct Get_time_interp {
   double position;
   Getter_position get_position;
@@ -550,10 +537,12 @@ template <typename Getter_position>
 Get_time_interp(double, Getter_position &&) -> Get_time_interp<Getter_position>;
 
 /**
-   \return Getter for true position accounting for periodicity if
-   \tparam Boundary is not meta::Empty, otherwise getter for regular position.
-   \param boundary Boundary object.
-*/
+ * @return Getter for true position accounting for periodicity if
+ *
+ * @tparam Boundary is not meta::Empty, otherwise getter for regular position.
+ *
+ * @param boundary Boundary object.
+ */
 template <typename Boundary = meta::Empty>
 auto getter_position(Boundary &&boundary = {}) {
   if constexpr (std::is_same_v<useful::remove_cvref_t<Boundary>, meta::Empty>) {

@@ -1,9 +1,10 @@
 /**
-   \file PTOF/TransportParameters.h
-   \author Tomas Aquino
-   \date 19/01/2025
-   \brief Transport parameters and utilities.
-*/
+ * @file   TransportParameters.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Jan 19 00:00:00 2025
+ *
+ * @brief  Transport parameters and utilities.
+ */
 
 #ifndef PTOF_TRANSPORTPARAMETERS_H
 #define PTOF_TRANSPORTPARAMETERS_H
@@ -16,6 +17,7 @@
 #include <utility>
 
 namespace ptof {
+/** @brief Transport parameters for advective-diffusive transport. */
 struct TransportParameters_AdvectionDiffusion {
 public:
   std::string peclet_option;
@@ -123,9 +125,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
            << io::line() << R"((Note:
@@ -174,6 +177,7 @@ public:
   }
 };
 
+/** @brief Transport parameters for advective transport. */
 struct TransportParameters_Advection {
 public:
   std::string rescale_velocity_option;
@@ -252,9 +256,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
            << io::line() << R"((Note:
@@ -281,6 +286,7 @@ public:
   }
 };
 
+/** @brief Transport parameters for diffusive transport. */
 struct TransportParameters_Diffusion {
 public:
   double lengthscale;
@@ -332,9 +338,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
            << io::line() << R"((Note:
@@ -355,6 +362,10 @@ public:
   }
 };
 
+/**
+ * @brief Transport parameters for advective-diffusive transport in the
+ *        primitive cell of a body centered cubic packing.
+ */
 struct TransportParameters_AdvectionDiffusion_Bcc {
 public:
   std::string lengthscale_option;
@@ -488,9 +499,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
            << io::line() << R"((Note:
@@ -549,6 +561,10 @@ public:
   }
 };
 
+/**
+ * @brief Transport parameters for advective transport in the primitive cell of
+ *        a body centered cubic packing.
+ */
 struct TransportParameters_Advection_Bcc {
 public:
   std::string lengthscale_option;
@@ -653,9 +669,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
            << io::line() << R"((Note:
@@ -692,6 +709,10 @@ public:
   }
 };
 
+/**
+ * @brief Transport parameters for diffusive transport in the primitive cell of
+ *        a body centered cubic packing.
+ */
 struct TransportParameters_Diffusion_Bcc {
 public:
   std::string lengthscale_option;
@@ -768,9 +789,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport parameters\n"
            << io::line() << R"((Note:

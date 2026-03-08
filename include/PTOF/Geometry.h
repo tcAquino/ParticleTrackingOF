@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Geometry.h
-   \author Tomas Aquino
-   \date 09/03/2022
-   \brief Objects to handle domain geometry and boundaries.
-*/
+ * @file   Geometry.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Mar  9 00:00:00 2022
+ *
+ * @brief Objects to handle domain geometry and boundaries.
+ */
 #ifndef PTOF_GEOMETRY_H
 #define PTOF_GEOMETRY_H
 
@@ -33,10 +34,10 @@
 
 namespace ptof {
 /**
-   \class Geometry_Generic PTOF/Geometry.h "PTOF/Geometry.h"
-   \brief Generic geometry class.
-   \note Does not handle periodic boundaries.
-*/
+ * @brief Generic geometry class.
+ *
+ * @note Does not handle periodic boundaries.
+ */
 template <std::size_t dim_val,
           typename ParallelOption_t = par::ParallelOptions::Serial,
           DynamicsList::Type dynamics = DynamicsList::Type::transport,
@@ -48,15 +49,19 @@ struct Geometry_Generic {
   using Mesh = Foam::fvMesh; /**< Mesh. */
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator = Locator_Cell<Geometry_Generic,
-                               SearchOption>; /**< Locate positions in mesh.*/
+                               SearchOption>; /**< Locate positions in mesh. */
 
   /**
-     \brief Constructor.
-     \details Use mesh from specified OpenFOAM case time.
-     \param directories_of OpenFOAM case directory information.
-     \param directories Current case directory information.
-     \param logger Logger object for optional construction information.
-  */
+   * @brief Constructor.
+   *
+   * @details Use mesh from specified OpenFOAM case time.
+   *
+   * @param directories_of OpenFOAM case directory information.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param logger Logger object for optional construction information.
+   */
   Geometry_Generic(DirectoriesOF const &directories_of,
                    Directories const &directories,
                    io::Logger &&logger = io::NullLogger{})
@@ -73,22 +78,34 @@ struct Geometry_Generic {
   }
 
   /**
-     \brief Make a Boundary object for the \tparam dynamics type.
-     \details
-     - transport: No parameters, custom boundary is not supported.
-     - firstpassage: Parameters should hold InitialCondition object, custom
-     boundary reinjects particles.
-     \note Periodic boundaries are not supported.
-     \param directories Current case directory information.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \param velocity_field Velocity field as a function of state.
-     \param surface_reaction Surface reaction.
-     \param initial_condition Initial condition object for reinjection (for FPT
-     dynamics).
-     \return Boundary object.
-  */
+   * @brief Make a Boundary object for the \c dynamics type.
+   *
+   * @details
+   *
+   * - transport: No parameters, custom boundary is not supported.
+   *
+   * - firstpassage: Parameters should hold InitialCondition object, custom
+   *                 boundary reinjects particles.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param surface_reaction Surface reaction.
+   *
+   * @param initial_condition Initial condition object for reinjection (for FPT
+   *                          dynamics).
+   *
+   * @return Boundary object.
+   *
+   * @note Periodic boundaries are not supported.
+   */
   template <typename State, typename TransportParameters,
             typename ReactionParameters, typename SolverParameters,
             typename VelocityField, typename SurfaceReaction,
@@ -143,9 +160,10 @@ struct Geometry_Generic {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "Geometry\n"
            << io::line()
@@ -175,7 +193,7 @@ Boundary condition types:
     return output;
   }
 
-  /** \brief Output information about current object. */
+  /** @brief Output information about current object. */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Mesh\n"
            << io::line() << "Cells: " << mesh().nCells() << "\n"
@@ -185,10 +203,10 @@ Boundary condition types:
     return output;
   }
 
-  /** \return Mesh. */
+  /** @return Mesh. */
   auto const &mesh() const { return _mesh; }
 
-  /** \return Mesh search tools. */
+  /** @return Mesh search tools. */
   auto const &mesh_search() const { return _mesh_search; }
 
 private:
@@ -196,9 +214,10 @@ private:
   MeshSearch _mesh_search; /**< Mesh searching tools. */
 
   /**
-     \param directories_of OpenFOAM case directory information.
-     \return Mesh.
-  */
+   * @param directories_of OpenFOAM case directory information.
+   *
+   * @return Mesh.
+   */
   Mesh make_mesh(DirectoriesOF const &directories_of) const {
     return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
                                directories_of.time.timeName(),
@@ -206,14 +225,13 @@ private:
   }
 
 public:
-  Locator locator{*this}; /**< To locate positions in mesh.*/
+  Locator locator{*this}; /**< To locate positions in mesh. */
 };
 
 /**
-   \class Geometry_Periodic_Cartesian PTOF/Geometry.h "PTOF/Geometry.h"
-   \brief Geometry class for geometry to handle periodic BCs along any number
-   of Cartesian dimensions.
-*/
+ * @brief Geometry class for geometry with periodic BCs along any number of
+ *        Cartesian dimensions.
+ */
 template <std::size_t dim_val, typename ParallelOption_t,
           DynamicsList::Type dynamics = DynamicsList::Type::transport,
           typename SearchOption = SearchOptions::SecondNeighborPrecheck>
@@ -224,22 +242,25 @@ struct Geometry_Periodic_Cartesian {
   using Mesh = Foam::fvMesh; /**< Mesh. */
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator = Locator_Cell<Geometry_Periodic_Cartesian,
-                               SearchOption>; /**< Locate positions in mesh.*/
+                               SearchOption>; /**< Locate positions in mesh. */
   using BoundaryPeriodic =
       geom::Boundary_Periodic_WithOutsideInfo; /**< Periodic boundary. */
 
   /**
-     \brief Constructor.
-     \details Use mesh from specified OpenFOAM case time.
-     \param directories_of OpenFOAM case directory information.
-     \param directories Current case directory information.
-     \param logger Logger object for optional construction information.
-  */
+   * @brief Constructor.
+   *
+   * @details Use mesh from specified OpenFOAM case time.
+   *
+   * @param directories_of OpenFOAM case directory information.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param logger Logger object for optional construction information.
+   */
   Geometry_Periodic_Cartesian(DirectoriesOF const &directories_of,
                               Directories const &directories,
                               io::Logger &&logger = io::NullLogger{})
-      : _mesh(make_mesh(directories_of)),
-        _mesh_search{_mesh},
+      : _mesh(make_mesh(directories_of)), _mesh_search{_mesh},
         boundary_periodic{extract_cartesian_periodic_boundaries(
             get_boundary_conditions<dynamics>(directories), mesh(), dim)} {
     if constexpr (std::is_same_v<ParallelOption,
@@ -254,22 +275,32 @@ struct Geometry_Periodic_Cartesian {
   }
 
   /**
-     \brief Make a Boundary object for the \tparam dynamics type with Cartesian
-     periodicity along periodic boundary pairs.
-     \details
-     - transport: No parameters, custom boundary is not supported.
-     - firstpassage: Parameters should hold InitialCondition object, custom
-     boundary reinjects particles.
-     \param directories Current case directory information.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \param velocity_field Velocity field as a function of state.
-     \param surface_reaction Surface reaction.
-     \param initial_condition Initial condition object for reinjection (for FPT
-     dynamics).
-     \return Boundary object.
-  */
+   * @brief Make a Boundary object for the \c dynamics type with Cartesian
+   *        periodicity along periodic boundary pairs.
+   *
+   * @details
+   *
+   * - transport : No parameters, custom boundary is not supported.
+   *
+   * - firstpassage : Parameters should hold InitialCondition object, custom
+   *                  boundary reinjects particles.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param surface_reaction Surface reaction.
+   *
+   * @param initial_condition Initial condition object for reinjection (for FPT
+   *                          dynamics).
+   * @return Boundary object.
+   */
   template <typename State, typename TransportParameters,
             typename ReactionParameters, typename SolverParameters,
             typename VelocityField, typename SurfaceReaction,
@@ -316,7 +347,7 @@ struct Geometry_Periodic_Cartesian {
                              DynamicsList::name(dynamics) + " not supported"};
   }
 
-  /** \brief Output generic information about object. */
+  /** @brief Output generic information about object. */
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "Geometry\n"
            << io::line()
@@ -347,7 +378,7 @@ Boundary condition types:
     return output;
   }
 
-  /** \brief Output information about current object. */
+  /** @brief Output information about current object. */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Mesh\n"
            << io::line() << "Cells: " << mesh().nCells() << "\n"
@@ -374,10 +405,10 @@ Boundary condition types:
     return output;
   }
 
-  /** \return Mesh. */
+  /** @return Mesh. */
   auto const &mesh() const { return _mesh; }
 
-  /** \return Mesh search tools. */
+  /** @return Mesh search tools. */
   auto const &mesh_search() const { return _mesh_search; }
 
 private:
@@ -385,9 +416,10 @@ private:
   MeshSearch _mesh_search; /**< Mesh searching tools. */
 
   /**
-     \param directories_of OpenFOAM case directory information.
-     \return Mesh.
-  */
+   * @param directories_of OpenFOAM case directory information.
+   *
+   * @return Mesh.
+   */
   Mesh make_mesh(DirectoriesOF const &directories_of) {
     return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
                                directories_of.time.timeName(),
@@ -395,18 +427,18 @@ private:
   }
 
 public:
-  Locator locator{*this}; /**< To locate positions in mesh.*/
+  Locator locator{*this}; /**< To locate positions in mesh. */
   BoundaryPeriodic
-      boundary_periodic; /**< Boundary object to enforce periodicity.*/
+      boundary_periodic; /**< Boundary object to enforce periodicity. */
 };
 
 /**
-   \class Geometry_Bcc PTOF/Geometry.h "PTOF/Geometry.h"
-   \brief Geometry class for periodic representation of a body centered cubic
-   beadpack.
-   \details Holds spatial dimension info, mesh, mesh search objects, and
-   periodic boundary to enforce periodicity.
-*/
+ * @brief Geometry class for periodic representation of a body centered cubic
+ *        beadpack.
+ *
+ * @details Holds spatial dimension info, mesh, mesh search objects, and
+ *          periodic boundary to enforce periodicity.
+ */
 template <typename ParallelOption_t,
           PeriodicityList::Type periodicity = PeriodicityList::Type::cartesian,
           DynamicsList::Type dynamics = DynamicsList::Type::transport,
@@ -418,7 +450,7 @@ struct Geometry_Bcc {
   using Mesh = Foam::fvMesh; /**< Mesh. */
   using MeshSearch = Foam::meshSearch; /**< Mesh searching tools. */
   using Locator =
-      Locator_Cell<Geometry_Bcc, SearchOption>; /**< Locate positions in mesh.*/
+      Locator_Cell<Geometry_Bcc, SearchOption>; /**< Locate positions in mesh. */
   using BoundaryPeriodic =
       std::conditional_t<periodicity == PeriodicityList::Type::cartesian,
                          geom::Boundary_Periodic_WithOutsideInfo,
@@ -427,12 +459,16 @@ struct Geometry_Bcc {
                                                             type. */
 
   /**
-     \brief Constructor.
-     \details Use mesh from specified OpenFOAM case time.
-     \param directories_of OpenFOAM case directory information.
-     \param directories Current case directory information.
-     \param logger Logger object for optional construction information.
-  */
+   * @brief Constructor.
+   *
+   * @details Use mesh from specified OpenFOAM case time.
+   *
+   * @param directories_of OpenFOAM case directory information.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param logger Logger object for optional construction information.
+   */
   Geometry_Bcc(DirectoriesOF const &directories_of,
                Directories const &directories,
                io::Logger &&logger = io::NullLogger{})
@@ -458,25 +494,39 @@ struct Geometry_Bcc {
   }
 
   /**
-     \brief Make a Boundary object for the \tparam dynamics and \tparam
-     periodicity types.
-     \details
-     - Dynamics types:
-         - transport: No parameters, custom boundary does nothing.
-         - firstpassage: Parameters should hold InitialCondition object,
-         custom boundary reinjects particles.
-     - Periodicity types:
-         - cartesian: Cartesian periodicity.
-         - symmetryplanes: Periodicity according to symmetry planes.
-     \param directories Current case directory information.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \param velocity_field Velocity field as a function of state.
-     \param surface_reaction Surface reaction.
-     \param initial_condition Initial condition object for reinjection (for
-     FPT dynamics).
-  */
+   * @brief Make a Boundary object for the \tparam dynamics and \tparam
+   *        periodicity types.
+   *
+   * @details
+   *
+   * - Dynamics types:
+   *
+   * -# transport : No parameters, custom boundary does nothing.
+   *
+   * -# firstpassage : Parameters should hold InitialCondition object, custom
+   *                   boundary reinjects particles.
+   *
+   * - Periodicity types:
+   *
+   * -# cartesian : Cartesian periodicity.
+   *
+   * -# symmetryplanes : Periodicity according to symmetry planes.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param surface_reaction Surface reaction.
+   *
+   * @param initial_condition Initial condition object for reinjection (for
+   *        FPT dynamics).
+   */
   template <typename State, typename TransportParameters,
             typename ReactionParameters, typename SolverParameters,
             typename VelocityField, typename SurfaceReaction,
@@ -523,7 +573,7 @@ struct Geometry_Bcc {
                              DynamicsList::name(dynamics) + " not supported"};
   }
 
-  /** \brief Output generic information about object. */
+  /** @brief Output generic information about object. */
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "Geometry\n"
            << io::line()
@@ -559,7 +609,7 @@ Boundary condition types:
     return output;
   }
 
-  /** \brief Output information about current object. */
+  /** @brief Output information about current object. */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Mesh\n"
            << io::line() << "Cells: " << mesh().nCells() << "\n"
@@ -569,10 +619,10 @@ Boundary condition types:
     return output;
   }
 
-  /** \return Mesh. */
+  /** @return Mesh. */
   auto const &mesh() const { return _mesh; }
 
-  /** \return Mesh search tools. */
+  /** @return Mesh search tools. */
   auto const &mesh_search() const { return _mesh_search; }
 
 private:
@@ -580,9 +630,10 @@ private:
   MeshSearch _mesh_search; /**< Mesh searching tools. */
 
   /**
-     \param directories_of OpenFOAM case directory information.
-     \return Mesh.
-  */
+   * @param directories_of OpenFOAM case directory information.
+   *
+   * @return Mesh.
+   */
   Mesh make_mesh(DirectoriesOF const &directories_of) const {
     return Mesh{Foam::IOobject{Foam::fvMesh::defaultRegion,
                                directories_of.time.timeName(),
@@ -590,16 +641,17 @@ private:
   }
 
 public:
-  Locator locator{*this}; /**< To locate positions in mesh.*/
+  Locator locator{*this}; /**< To locate positions in mesh. */
   const double radius;    /**< Bead radius. */
   BoundaryPeriodic
       boundary_periodic; /**< Boundary object to enforce periodicity. */
 
 private:
   /**
-     \brief Make a boundary object to enforce cartesian periodicity.
-     \return Periodic boundary object.
-  */
+   * @brief Make a boundary object to enforce cartesian periodicity.
+   *
+   * @return Periodic boundary object.
+   */
   BoundaryPeriodic make_boundary_periodic(
       meta::Selector<PeriodicityList::Type, PeriodicityList::Type::cartesian>,
       Directories const &directories) {
@@ -608,10 +660,11 @@ private:
   };
 
   /**
-     \brief Make a boundary object to enforce periodicity based on symmetry
-     planes.
-     \return Periodic boundary object.
-  */
+   * @brief Make a boundary object to enforce periodicity based on symmetry
+   *        planes.
+   *
+   * @return Periodic boundary object.
+   */
   BoundaryPeriodic
   make_boundary_periodic(meta::Selector<PeriodicityList::Type,
                                         PeriodicityList::Type::symmetryplanes>,

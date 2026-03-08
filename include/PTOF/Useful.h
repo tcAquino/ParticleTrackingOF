@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Useful.h
-   \author Tomas Aquino
-   \date 2022/02/17
-   \brief Miscelaneous objects and utilities.
-*/
+ * @file   Useful.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Feb 17 00:00:00 2022
+ *
+ * @brief Miscelaneous objects and utilities.
+ */
 
 #ifndef PTOF_USEFUL_H
 #define PTOF_USEFUL_H
@@ -29,10 +30,7 @@
 #include <type_traits>
 
 namespace ptof {
-/**
-   \class PositionAndCell PTOF/Useful.h "PTOF/Useful.h"
-   \brief Object to hold a position and a cell for its location in the mesh.
-*/
+/** @brief Object to hold a position and a cell for its location in the mesh. */
 template <typename Position> struct PositionAndCell {
   PositionAndCell(Position position, Foam::label cell = -1)
       : position{position}, cell{cell} {}
@@ -42,14 +40,18 @@ template <typename Position> struct PositionAndCell {
 };
 
 /**
-   \brief Print static info for \tparam Class and <tt>Class::Parameters</tt>,
-   if defined.
-   \param output Output stream to print info.
-   \param notify_if_no_info Print notification if no info is available.
-   \param help_option Information about requested info, to print if info is not
-   available if notification is requested.
-   \return \c true if there is available info, \c false otherwise.
-*/
+ * @brief Print static info for \tparam Class and <tt>Class::Parameters</tt>, if
+ *        defined.
+ *
+ * @param output Output stream to print info.
+ *
+ * @param notify_if_no_info Print notification if no info is available.
+ *
+ * @param help_option Information about requested info, to print if info is not
+ *                    available if notification is requested.
+ *
+ * @return \c true if there is available info, \c false otherwise.
+ */
 template <typename Class>
 bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
                        std::string const &help_option = {}) {
@@ -83,12 +85,14 @@ bool print_static_info(std::ostream &output, bool notify_if_no_info = false,
 }
 
 /**
-   \brief Handle help options for main executable.
-   \return \c true if help flag was passed as first argument, \c false otherwise
-   \note meta::Empty can be passed for non-existent templated types, except
-   \c ExecutableInfo, which must define a static <tt>help(std::ostream&)</tt>
-   method.
-*/
+ * @brief Handle help options for main executable.
+ *
+ * @return \c true if help flag was passed as first argument, \c false otherwise
+ *
+ * @note meta::Empty can be passed for non-existent templated types, except \c
+ *       ExecutableInfo, which must define a static <tt>help(std::ostream&)</tt>
+ *       method.
+ */
 template <typename ExecutableInfo, typename Geometry, typename DirectoriesOF,
           typename TransportHandler, typename Phase, typename ReactionHandler,
           typename Solvers, typename InitialCondition, typename Output>
@@ -149,11 +153,13 @@ bool options_help(std::ostream &output, int argc, const char *const *argv) {
 }
 
 /**
-   \brief Return whether cell is outside mesh.
-   \return true if outside, false otherwise.
-   \note \p cell is the actual index of the cell position is in, determined
-   elsewhere, not a hint.
-*/
+ * @brief Return whether cell is outside mesh.
+ *
+ * @return true if outside, false otherwise.
+ *
+ * @note \p cell is the actual index of the cell position is in, determined
+ *        elsewhere, not a hint.
+ */
 bool outside(Foam::label cell) {
   if (cell < 0) {
     return 1;
@@ -162,15 +168,21 @@ bool outside(Foam::label cell) {
 }
 
 /**
-   \brief Check whether cell index is outside mesh.
-   \tparam warn_if_outside Output warning if true, do not if false.
-   \param position Position to check.
-   \param cell Mesh index of cell position is in.
-   \param extra_warning_info Additional info if warning is issued.
-   \return true if outside, false otherwise.
-   \note \p cell is the actual index of the cell position is in, determined
-   elsewhere, not a hint.
-*/
+ * @brief Check whether cell index is outside mesh.
+ *
+ * @tparam warn_if_outside Output warning if true, do not if false.
+ *
+ * @param position Position to check.
+ *
+ * @param cell Mesh index of cell position is in.
+ *
+ * @param extra_warning_info Additional info if warning is issued.
+ *
+ * @return true if outside, false otherwise.
+ *
+ * @note \p cell is the actual index of the cell position is in, determined
+ *       elsewhere, not a hint.
+ */
 template <bool warn_if_outside>
 bool outside(Foam::label cell, Foam::point const &position,
              std::string const &extra_warning_info = {}) {
@@ -190,32 +202,46 @@ bool outside(Foam::label cell, Foam::point const &position,
 }
 
 /**
-   \brief Check if \c time is between the two particle state times.
-   \param particle Particle to check.
-   \param time Time to check.
-   \return \c true if \c time is between two states, \c false otherwise.
-   \note Particle states must define:
-   - \c time
-*/
+ * @brief Check if \c time is between the two particle state times.
+ *
+ * @param particle Particle to check.
+ *
+ * @param time Time to check.
+ *
+ * @return \c true if \c time is between two states, \c false otherwise.
+ *
+ * @note Particle states must define:
+ *
+ * - \c time
+ */
 template <typename Particle>
 bool brackets_time(Particle const &particle, double time) {
   return particle.state_new().time >= time && particle.state_old().time <= time;
 }
 
 /**
-   \brief Check if a particle is absorbed at time \c time
-   \details Checks Particle::State::Info for \c absorbed, returns \c false if it
-   does not exist.
-   \param particle Particle to interpolate between old and new state.
-   \param time Time to check.
-   \return \c true if \c absorbed is true, \c false otherwise.
-   \note
-   - The absorbed state is considered special and meant to be irreversible;
-   otherwise, the adsorbed state should be used.
-   - Particle states must define:
-   -# <tt>Info info</tt>
-   -# \c time
-*/
+ * @brief Check if a particle is absorbed at time \c time
+ *
+ * @details Checks Particle::State::Info for \c absorbed, returns \c false if it
+ *          does not exist.
+ *
+ * @param particle Particle to interpolate between old and new state.
+ *
+ * @param time Time to check.
+ *
+ * @return \c true if \c absorbed is true, \c false otherwise.
+ *
+ * @note
+ *
+ * - The absorbed state is considered special and meant to be irreversible;
+ *   otherwise, the adsorbed state should be used.
+ *
+ * - Particle states must define:
+ *
+ * -# <tt>Info info</tt>
+ *
+ * -# \c time
+ */
 template <typename Particle>
 bool absorbed(Particle const &particle, double time) {
   using Info = typename Particle::State::Info;
@@ -229,13 +255,17 @@ bool absorbed(Particle const &particle, double time) {
 }
 
 /**
-   \brief Check if a state is adsorbed.
-   \details Checks Particle::State::Info for \c absorbed, returns \c false if
-   it does not exist.
-   \return \c true if \c absorbed is true, \c false otherwise.
-   \note State must define:
-   - \c Info
-*/
+ * @brief Check if a state is adsorbed.
+ *
+ * @details Checks Particle::State::Info for \c absorbed, returns \c false if it
+ *          does not exist.
+ *
+ * @return \c true if \c absorbed is true, \c false otherwise.
+ *
+ * @note State must define:
+ *
+ * - \c Info
+ */
 template <typename State> bool adsorbed(State const &state) {
   using Info = typename State::Info;
   if constexpr (meta::has_adsorbed_v<Info>) {
@@ -246,18 +276,18 @@ template <typename State> bool adsorbed(State const &state) {
   return false;
 }
 
-/** \brief Make 3D point from 2D point. */
+/** @brief Make 3D point from 2D point. */
 auto make_point(Foam::Vector2D<Foam::scalar> const &point) {
   return Foam::point{point[0], point[1], 0.};
 }
 
-/** \brief Make 3D point from 1D point. */
+/** @brief Make 3D point from 1D point. */
 auto make_point(Foam::scalar point) { return Foam::point{point, 0., 0.}; }
 
-/** \brief Make 3D point from 3D point (simple copy). */
+/** @brief Make 3D point from 3D point (simple copy). */
 auto make_point(Foam::point const &point) { return point; }
 
-/** \brief Make point from vector. */
+/** @brief Make point from vector. */
 Foam::point make_point(std::vector<double> const &point) {
   if (point.size() >= 3) {
     return {point[0], point[1], point[2]};
@@ -272,60 +302,60 @@ Foam::point make_point(std::vector<double> const &point) {
 }
 
 /**
-   \brief Oriented area at boundary face, using right-hand-rule (outward for
-    boundary faces).
-*/
+ * @brief Oriented area at boundary face, using right-hand-rule (outward for
+ *        boundary faces).
+ */
 template <typename Mesh> auto area_outward(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].areaNormal(mesh.points());
 }
 
 /**
-   \brief Oriented area at boundary face, using left-hand-rule (inward for
-   boundary faces).
-*/
+ * @brief Oriented area at boundary face, using left-hand-rule (inward for
+ *        boundary faces).
+ */
 template <typename Mesh> auto area_inward(Foam::label face, Mesh const &mesh) {
   return -area_outward(face, mesh);
 }
 
 /**
-   \brief Unit normal at boundary face, using right-hand-rule (outward for
-   boundary faces).
-*/
+ * @brief Unit normal at boundary face, using right-hand-rule (outward for
+ *        boundary faces).
+ */
 template <typename Mesh>
 auto unit_normal_outward(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].unitNormal(mesh.points());
 }
 
 /**
-   \brief Unit normal at boundary face, using left-hand-rule (inward for
-   boundary faces).
-*/
+ * @brief Unit normal at boundary face, using left-hand-rule (inward for
+ *        boundary faces).
+ */
 template <typename Mesh>
 auto unit_normal_inward(Foam::label face, Mesh const &mesh) {
   return -unit_normal_outward(face, mesh);
 }
 
-/** \brief Area (magnitude) of a face. */
+/** @brief Area (magnitude) of a face. */
 template <typename Mesh> auto face_area(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].mag(mesh.points());
 }
 
-/** \brief Center of a face. */
+/** @brief Center of a face. */
 template <typename Mesh> auto face_center(Foam::label face, Mesh const &mesh) {
   return mesh.faces()[face].centre(mesh.points());
 }
 
-/** \brief Volume of a cell. */
+/** @brief Volume of a cell. */
 template <typename Mesh> auto cell_volume(Foam::label cell, Mesh const &mesh) {
   return mesh.cellVolumes()[cell];
 }
 
-/** \brief Center of a cell. */
+/** @brief Center of a cell. */
 template <typename Mesh> auto cell_center(Foam::label cell, Mesh const &mesh) {
   return mesh.cellCentres()[cell];
 }
 
-/** \brief Cell volumes. */
+/** @brief Cell volumes. */
 template <typename Container, typename Mesh>
 auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
   std::vector<double> volumes;
@@ -336,18 +366,18 @@ auto cell_volumes(Container const &cell_ids, Mesh const &mesh) {
   return volumes;
 }
 
-/** \brief Find patch id in mesh for a face known to be in a boundary patch. */
+/** @brief Find patch id in mesh for a face known to be in a boundary patch. */
 template <typename Mesh> auto patch_id(Foam::label face, Mesh const &mesh) {
   return mesh.boundaryMesh().whichPatch(face);
 }
 
-/** \brief Find patch id in mesh for a patch name. */
+/** @brief Find patch id in mesh for a patch name. */
 template <typename Mesh>
 auto patch_id(Foam::word patch_name, Mesh const &mesh) {
   return mesh.boundary().findPatchID(patch_name);
 }
 
-/** \brief Face areas (magnitudes). */
+/** @brief Face areas (magnitudes). */
 template <typename Container, typename Mesh>
 auto face_areas(Container const &face_ids, Mesh const &mesh) {
   std::vector<double> areas;
@@ -358,7 +388,7 @@ auto face_areas(Container const &face_ids, Mesh const &mesh) {
   return areas;
 }
 
-/** \brief Total area of faces. */
+/** @brief Total area of faces. */
 template <typename Container, typename Mesh>
 auto face_area(std::vector<Foam::label> const &face_ids, Mesh const &mesh) {
   double area = 0.;
@@ -368,7 +398,7 @@ auto face_area(std::vector<Foam::label> const &face_ids, Mesh const &mesh) {
   return area;
 }
 
-/** \brief Total area of faces in patch. */
+/** @brief Total area of faces in patch. */
 template <typename Mesh>
 auto patch_area(std::string const &patch_name, Mesh const &mesh) {
   double area = 0.;
@@ -382,7 +412,7 @@ auto patch_area(std::string const &patch_name, Mesh const &mesh) {
   return area;
 }
 
-/** \brief Total area of faces in patches. */
+/** @brief Total area of faces in patches. */
 template <typename Mesh>
 auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
   double area = 0.;
@@ -392,7 +422,7 @@ auto patch_area(std::vector<std::string> const &patch_names, Mesh const &mesh) {
   return area;
 }
 
-/** \brief Total areas of faces in each patch. */
+/** @brief Total areas of faces in each patch. */
 template <typename Mesh>
 auto patch_areas(std::vector<std::string> const &patch_names,
                  Mesh const &mesh) {
@@ -404,9 +434,9 @@ auto patch_areas(std::vector<std::string> const &patch_names,
 }
 
 /**
-   \brief Cell volume weighted by magnitude of vector field value at cell
-   center.
-*/
+ * @brief Cell volume weighted by magnitude of vector field value at cell
+ *        center.
+ */
 template <typename VectorField, typename Mesh>
 auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
                Mesh const &mesh, Foam::scalar time) {
@@ -415,9 +445,9 @@ auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
 }
 
 /**
-   \brief Cell volume weighted by magnitude of vector field value at cell
-   center.
-*/
+ * @brief Cell volume weighted by magnitude of vector field value at cell
+ *        center.
+ */
 template <typename VectorField, typename Mesh>
 auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
                Mesh const &mesh) {
@@ -425,9 +455,9 @@ auto cell_flux(Foam::label cell_id, VectorField const &vector_field,
 }
 
 /**
-   \brief Face area weighted by outward-normal component of vector field at face
-   center.
-*/
+ * @brief Face area weighted by outward-normal component of vector field at face
+ *        center.
+ */
 template <typename VectorField, typename Locator>
 auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
                        Locator const &locator, Foam::scalar time) {
@@ -441,9 +471,9 @@ auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
 }
 
 /**
-   \brief Face area weighted by outward-normal component of vector field at face
-   center.
-*/
+ * @brief Face area weighted by outward-normal component of vector field at face
+ *        center.
+ */
 template <typename VectorField, typename Locator>
 auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
                        Locator const &locator) {
@@ -452,9 +482,9 @@ auto face_flux_outward(Foam::label face_id, VectorField const &vector_field,
 }
 
 /**
-   \brief Face area weighted by inward-normal component of vector field at face
-   center.
-*/
+ * @brief Face area weighted by inward-normal component of vector field at face
+ *        center.
+ */
 template <typename VectorField, typename Locator>
 auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
                       Locator const &locator, Foam::scalar time) {
@@ -462,9 +492,9 @@ auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
 }
 
 /**
-   \brief Face area weighted by inward-normal component of vector field at face
-   center.
-*/
+ * @brief Face area weighted by inward-normal component of vector field at face
+ *        center.
+ */
 template <typename VectorField, typename Locator>
 auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
                       Locator const &locator) {
@@ -473,9 +503,9 @@ auto face_flux_inward(Foam::label face_id, VectorField const &vector_field,
 }
 
 /**
-   \brief Cell volumes weighted by magnitude of vector field value at cell
-   centers.
-*/
+ * @brief Cell volumes weighted by magnitude of vector field value at cell
+ *        centers.
+ */
 template <typename Container, typename VectorField, typename Mesh>
 auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
                  Mesh const &mesh, Foam::scalar time) {
@@ -488,9 +518,9 @@ auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
 }
 
 /**
-   \brief Cell volumes weighted by magnitude of vector field value at cell
-   centers.
-*/
+ * @brief Cell volumes weighted by magnitude of vector field value at cell
+ *        centers.
+ */
 template <typename Container, typename VectorField, typename Mesh>
 auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
                  Mesh const &mesh) {
@@ -498,8 +528,9 @@ auto cell_fluxes(Container const &cell_ids, VectorField const &vector_field,
 }
 
 /**
-   \brief Face areas weighted by outward-normal component of vector field at
-   face center. */
+ * @brief Face areas weighted by outward-normal component of vector field at
+ *        face center.
+ */
 template <typename Container, typename VectorField, typename Locator>
 auto face_fluxes_outward(Container const &face_ids,
                          VectorField const &vector_field,
@@ -513,8 +544,9 @@ auto face_fluxes_outward(Container const &face_ids,
 }
 
 /**
-   \brief Face areas weighted by outward-normal component of vector field at
-   face center. */
+ * @brief Face areas weighted by outward-normal component of vector field at
+ *        face center.
+ */
 template <typename Container, typename VectorField, typename Locator>
 auto face_fluxes_outward(Container const &face_ids,
                          VectorField const &vector_field,
@@ -524,8 +556,9 @@ auto face_fluxes_outward(Container const &face_ids,
 }
 
 /**
-   \brief Face areas weighted by inward-normal component of vector field at
-   face center. */
+ * @brief Face areas weighted by inward-normal component of vector field at face
+ *        center.
+ */
 template <typename Container, typename VectorField, typename Locator>
 auto face_fluxes_inward(Container const &face_ids,
                         VectorField const &vector_field, Locator const &locator,
@@ -539,8 +572,9 @@ auto face_fluxes_inward(Container const &face_ids,
 }
 
 /**
-   \brief Face areas weighted by inward-normal component of vector field at
-   face center. */
+ * @brief Face areas weighted by inward-normal component of vector field at face
+ *        center.
+ */
 template <typename Container, typename VectorField, typename Locator>
 auto face_fluxes_inward(Container const &face_ids,
                         VectorField const &vector_field,
@@ -550,12 +584,15 @@ auto face_fluxes_inward(Container const &face_ids,
 }
 
 /**
-   \brief Sometimes the face center associated with a mesh face is not
-   considered within the cell and may be outside the mesh. Verify this.
-   \param face Mesh face index.
-   \param locator Object to locate positions in mesh.
-   \return \c true if face center is in mesh, \c false otherwise.
-*/
+ * @brief Sometimes the face center associated with a mesh face is not
+ *        considered within the cell and may be outside the mesh. Verify this.
+ *
+ * @param face Mesh face index.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return \c true if face center is in mesh, \c false otherwise.
+ */
 template <typename Locator>
 bool face_center_is_in_mesh(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
@@ -563,12 +600,15 @@ bool face_center_is_in_mesh(Foam::label face, Locator const &locator) {
 }
 
 /**
-   \brief Sometimes the face center associated with a mesh face is not
-   considered within the owner cell. Verify this.
-   \param face Mesh face index.
-   \param locator Object to locate positions in mesh.
-   \return \c true if face center is in owner cell, \c false otherwise.
-*/
+ * @brief Sometimes the face center associated with a mesh face is not
+ *        considered within the owner cell. Verify this.
+ *
+ * @param face Mesh face index.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return \c true if face center is in owner cell, \c false otherwise.
+ */
 template <typename Locator>
 bool face_center_is_in_cell(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
@@ -578,12 +618,15 @@ bool face_center_is_in_cell(Foam::label face, Locator const &locator) {
 }
 
 /**
-   \brief Compute face center's position if face center is in owner cell, owner
-   cell center otherwise.
-   \param face Mesh face index.
-   \param locator Object to locate positions in mesh.
-   \return Position.
-*/
+ * @brief Compute face center's position if face center is in owner cell, owner
+ *        cell center otherwise.
+ *
+ * @param face Mesh face index.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Position.
+ */
 template <typename Locator>
 auto adjusted_face_center(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
@@ -600,7 +643,7 @@ auto adjusted_face_center(Foam::label face, Locator const &locator) {
   }
 }
 
-/** \brief Small offset forward given current face and direction. */
+/** @brief Small offset forward given current face and direction. */
 template <typename Locator>
 Foam::vector offset_face(Foam::label face, Foam::vector const &direction,
                          Locator const &locator) {
@@ -613,11 +656,14 @@ Foam::vector offset_face(Foam::label face, Foam::vector const &direction,
 }
 
 /**
-   \brief Small offset along face normal (outward).
-   \param face Mesh face index to use face center as beginning point.
-   \param locator Object to locate positions in mesh.
-   \return Offset vector.
-*/
+ * @brief Small offset along face normal (outward).
+ *
+ * @param face Mesh face index to use face center as beginning point.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset vector.
+ */
 template <typename Locator>
 Foam::vector offset_face(Foam::label face, Locator const &locator) {
   auto const &mesh = locator.mesh();
@@ -625,13 +671,18 @@ Foam::vector offset_face(Foam::label face, Locator const &locator) {
 }
 
 /**
-   \brief Small offset forward from a point on a face.
-   \param begin Starting point (on a face).
-   \param face Mesh face index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset forward from a point on a face.
+ *
+ * @param begin Starting point (on a face).
+ *
+ * @param face Mesh face index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_forward_face(Foam::point const &begin, Foam::label face,
                                 Foam::vector const &direction,
@@ -640,15 +691,20 @@ Foam::point offset_forward_face(Foam::point const &begin, Foam::label face,
 }
 
 /**
-   \brief Small offset forward from a point on a face.
-   \details If begin point is in mesh, guarantee offset point in same cell.
-   \param begin Starting point (on a face).
-   \param face Mesh face index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
-
+ * @brief Small offset forward from a point on a face.
+ *
+ * @details If begin point is in mesh, guarantee offset point in same cell.
+ *
+ * @param begin Starting point (on a face).
+ *
+ * @param face Mesh face index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
                                             Foam::label face,
@@ -669,13 +725,18 @@ Foam::point offset_forward_face_keep_inside(Foam::point const &begin,
 }
 
 /**
-   \brief Small offset backward from a point on a face.
-   \param begin Starting point (on a face).
-   \param face Mesh face index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset backward from a point on a face.
+ *
+ * @param begin Starting point (on a face).
+ *
+ * @param face Mesh face index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_backward_face(Foam::point const &begin, Foam::label face,
                                  Foam::vector const &direction,
@@ -684,14 +745,20 @@ Foam::point offset_backward_face(Foam::point const &begin, Foam::label face,
 }
 
 /**
-   \brief Small offset backward from a point on a face.
-   \details If begin point is in mesh, guarantee offset point in same cell.
-   \param begin Starting point (on a face).
-   \param face Mesh face index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset backward from a point on a face.
+ *
+ * @details If begin point is in mesh, guarantee offset point in same cell.
+ *
+ * @param begin Starting point (on a face).
+ *
+ * @param face Mesh face index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
                                              Foam::label face,
@@ -712,38 +779,52 @@ Foam::point offset_backward_face_keep_inside(Foam::point const &begin,
 }
 
 /**
-   \brief Small offset outward along face normal starting from face center.
-   \details If begin point is in mesh, guarantee offset point in mesh.
-   \param face Mesh face index.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset outward along face normal starting from face center.
+ *
+ * @details If begin point is in mesh, guarantee offset point in mesh.
+ *
+ * @param face Mesh face index.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_outward_face(Foam::label face, Locator const &locator) {
   return face_center(face, locator.mesh()) + offset_face(face, locator);
 }
 
 /**
-   \brief Small offset inward along face normal starting from face center.
-   \details If begin point is in mesh, guarantee offset point in mesh.
-   \param face Mesh face index.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset inward along face normal starting from face center.
+ *
+ * @details If begin point is in mesh, guarantee offset point in mesh.
+ *
+ * @param face Mesh face index.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_inward_face(Foam::label face, Locator const &locator) {
   return face_center(face, locator.mesh()) - offset_face(face, locator);
 }
 
 /**
-   \brief Small offset outward along face normal starting from face center.
-   \details If begin point is in mesh, guarantee offset point in mesh.
-   \param begin Starting point in cell.
-   \param cell Mesh cell index.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset outward along face normal starting from face center.
+ *
+ * @details If begin point is in mesh, guarantee offset point in mesh.
+ *
+ * @param begin Starting point in cell.
+ *
+ * @param cell Mesh cell index.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::vector offset_cell(Foam::point const &begin, Foam::label cell,
                          Foam::vector const &direction,
@@ -755,13 +836,18 @@ Foam::vector offset_cell(Foam::point const &begin, Foam::label cell,
 }
 
 /**
-   \brief Small offset forward.
-   \param begin Starting point in cell.
-   \param cell Hint for cell index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset forward.
+ *
+ * @param begin Starting point in cell.
+ *
+ * @param cell Hint for cell index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_forward_cell(Foam::point const &begin, Foam::label cell,
                                 Foam::vector const &direction,
@@ -770,14 +856,20 @@ Foam::point offset_forward_cell(Foam::point const &begin, Foam::label cell,
 }
 
 /**
-   \brief Small offset forward.
-   \details If begin point is in mesh, guarantee offset point in same cell.
-   \param begin Starting point in cell.
-   \param cell Hint for cell index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset forward.
+ *
+ * @details If begin point is in mesh, guarantee offset point in same cell.
+ *
+ * @param begin Starting point in cell.
+ *
+ * @param cell Hint for cell index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_forward_cell_keep_inside(Foam::point const &begin,
                                             Foam::label cell,
@@ -796,13 +888,18 @@ Foam::point offset_forward_cell_keep_inside(Foam::point const &begin,
 }
 
 /**
-   \brief Small offset backward.
-   \param begin Starting point in cell.
-   \param cell Hint for cell index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset backward.
+ *
+ * @param begin Starting point in cell.
+ *
+ * @param cell Hint for cell index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_backward_cell(Foam::point const &begin, Foam::label cell,
                                  Foam::vector const &direction,
@@ -811,14 +908,20 @@ Foam::point offset_backward_cell(Foam::point const &begin, Foam::label cell,
 }
 
 /**
-   \brief Small offset backward.
-   \details If begin point is in mesh, guarantee offset point in same cell.
-   \param begin Starting point in cell.
-   \param cell Hint for cell index where \p begin is located.
-   \param direction Direction of offset.
-   \param locator Object to locate positions in mesh.
-   \return Offset point.
-*/
+ * @brief Small offset backward.
+ *
+ * @details If begin point is in mesh, guarantee offset point in same cell.
+ *
+ * @param begin Starting point in cell.
+ *
+ * @param cell Hint for cell index where \p begin is located.
+ *
+ * @param direction Direction of offset.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Offset point.
+ */
 template <typename Locator>
 Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
                                              Foam::label cell,
@@ -837,19 +940,23 @@ Foam::point offset_backward_cell_keep_inside(Foam::point const &begin,
 }
 
 /**
-   \param mesh Mesh object.
-   \return All mesh cell indices.
-*/
+ * @param mesh Mesh object.
+ *
+ * @return All mesh cell indices.
+ */
 template <typename Mesh> auto all_cell_ids(Mesh const &mesh) {
   return range::range<std::vector>(0, mesh.nCells());
 }
 
 /**
-   \brief Append mesh face indices of faces in patch to container.
-   \param patch_name Name of patch.
-   \param mesh Mesh object.
-   \param face_ids Face index container to append to.
-*/
+ * @brief Append mesh face indices of faces in patch to container.
+ *
+ * @param patch_name Name of patch.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param face_ids Face index container to append to.
+ */
 template <typename Mesh>
 void patch_face_ids(std::string const &patch_name, Mesh const &mesh,
                     std::vector<Foam::label> &face_ids) {
@@ -864,10 +971,12 @@ void patch_face_ids(std::string const &patch_name, Mesh const &mesh,
 }
 
 /**
- \param patch_names Names of patches.
- \param mesh Mesh object.
- \return Mesh face indices of faces in patchs.
-*/
+ * @param patch_names Names of patches.
+ *
+ * @param mesh Mesh object.
+ *
+ * @return Mesh face indices of faces in patchs.
+ */
 template <typename Mesh>
 auto patch_face_ids(std::vector<std::string> const &patch_names,
                     Mesh const &mesh) {
@@ -879,11 +988,13 @@ auto patch_face_ids(std::vector<std::string> const &patch_names,
 }
 
 /**
-   \param boundaries Container of pairs of lower and upper boundary locations
-   along each dimension.
-   \param locator Object to locate positions in mesh.
-   \return Mesh cell indices within boundaries.
-*/
+ * @param boundaries Container of pairs of lower and upper boundary locations
+ *                   along each dimension.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Mesh cell indices within boundaries.
+ */
 template <typename Locator>
 auto cell_ids_region_cartesian(
     std::vector<std::pair<double, double>> const &boundaries,
@@ -939,11 +1050,14 @@ auto cell_ids_region_cartesian(
 }
 
 /**
-   \brief Remove cell indices if mask is below threshold.
-   \param cell_ids Container with mesh cell indices.
-   \param mask Scalar field.
-   \param threshold Threshold.
-*/
+ * @brief Remove cell indices if mask is below threshold.
+ *
+ * @param cell_ids Container with mesh cell indices.
+ *
+ * @param mask Scalar field.
+ *
+ * @param threshold Threshold.
+ */
 template <typename Container, typename Mask>
 void apply_mask_cells_inplace(Container &cell_ids, Mask const &mask,
                               double threshold = 0.) {
@@ -953,13 +1067,17 @@ void apply_mask_cells_inplace(Container &cell_ids, Mask const &mask,
 }
 
 /**
-   \brief Remove face indices if mask is below threshold.
-   \param cell_ids Container with mesh cell indices.
-   \param mask Scalar field.
-   \param threshold Threshold.
-   \return \p Container with indices of elements where mask is below threshold
-   removed.
-*/
+ * @brief Remove face indices if mask is below threshold.
+ *
+ * @param cell_ids Container with mesh cell indices.
+ *
+ * @param mask Scalar field.
+ *
+ * @param threshold Threshold.
+ *
+ * @return \p Container with indices of elements where mask is below threshold
+ *         removed.
+ */
 template <typename Container, typename Mask>
 auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
                       double threshold = 0.) {
@@ -969,12 +1087,16 @@ auto apply_mask_cells(Container const &cell_ids, Mask const &mask,
 }
 
 /**
-   \brief Remove face indices if mask is below threshold.
-   \param face_ids Container with mesh boundary face indices.
-   \param mesh Mesh object.
-   \param mask Scalar field.
-   \param threshold Threshold.
-*/
+ * @brief Remove face indices if mask is below threshold.
+ *
+ * @param face_ids Container with mesh boundary face indices.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param mask Scalar field.
+ *
+ * @param threshold Threshold.
+ */
 template <typename Container, typename Mesh, typename Mask>
 void apply_mask_patch_faces_inplace(Container &face_ids, Mesh const &mesh,
                                     Mask const &mask, double threshold = 0.) {
@@ -988,14 +1110,19 @@ void apply_mask_patch_faces_inplace(Container &face_ids, Mesh const &mesh,
 }
 
 /**
-   \brief Remove face indices if mask is below threshold.
-   \param face_ids Container with mesh face indices.
-   \param mesh Mesh object.
-   \param mask Scalar field.
-   \param threshold Threshold.
-   \return \p Container with indices of elements where mask is below threshold
-   removed.
-*/
+ * @brief Remove face indices if mask is below threshold.
+ *
+ * @param face_ids Container with mesh face indices.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param mask Scalar field.
+ *
+ * @param threshold Threshold.
+ *
+ * @return \p Container with indices of elements where mask is below threshold
+ *         removed.
+ */
 template <typename Container, typename Mesh, typename Mask>
 auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
                             Mask const &mask, double threshold = 0.) {
@@ -1005,11 +1132,13 @@ auto apply_mask_patch_faces(Container const &face_ids, Mesh const &mesh,
 }
 
 /**
-   \brief Distribution for random number generation of cell indices weighted by
-   cell volumes.
-   \param cell_ids Container with mesh cell indices.
-   \param mesh Mesh object.
-*/
+ * @brief Distribution for random number generation of cell indices weighted by
+ *        cell volumes.
+ *
+ * @param cell_ids Container with mesh cell indices.
+ *
+ * @param mesh Mesh object.
+ */
 template <typename Container, typename Mesh>
 auto uniform_cell_distribution(Container const &cell_ids, Mesh const &mesh) {
   auto weights = cell_volumes(cell_ids, mesh);
@@ -1017,11 +1146,13 @@ auto uniform_cell_distribution(Container const &cell_ids, Mesh const &mesh) {
                                                  weights.end()};
 }
 /**
-   \brief Distribution for random number generation of face indices weighted by
-   face areas.
-   \param face_ids Container with mesh face indices.
-   \param mesh Mesh object.
-*/
+ * @brief Distribution for random number generation of face indices weighted by
+ *        face areas.
+ *
+ * @param face_ids Container with mesh face indices.
+ *
+ * @param mesh Mesh object.
+ */
 template <typename Container, typename Mesh>
 auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
   auto weights = face_areas(face_ids, mesh);
@@ -1030,13 +1161,17 @@ auto uniform_face_distribution(Container const &face_ids, Mesh const &mesh) {
 }
 
 /**
-   \brief Distribution for random number generation of cell indices weighted by
-   cell volumes multiplied by vector field magnitude at cell center.
-   \param cell_ids Container with mesh cell indices.
-   \param vector_field Vector field.
-   \param mesh Mesh object.
-   \param time Time
-*/
+ * @brief Distribution for random number generation of cell indices weighted by
+ *        cell volumes multiplied by vector field magnitude at cell center.
+ *
+ * @param cell_ids Container with mesh cell indices.
+ *
+ * @param vector_field Vector field.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param time Time
+ */
 template <typename Container, typename VectorField, typename Mesh>
 auto fluxweighted_cell_distribution(Container const &cell_ids,
                                     VectorField const &vector_field,
@@ -1051,12 +1186,15 @@ auto fluxweighted_cell_distribution(Container const &cell_ids,
 }
 
 /**
-   \brief Distribution for random number generation of cell indices weighted by
-   cell volumes multiplied by vector field magnitude at cell center.
-   \param cell_ids Container with mesh cell indices.
-   \param vector_field Vector field.
-   \param mesh Mesh object.
-*/
+ * @brief Distribution for random number generation of cell indices weighted by
+ *        cell volumes multiplied by vector field magnitude at cell center.
+ *
+ * @param cell_ids Container with mesh cell indices.
+ *
+ * @param vector_field Vector field.
+ *
+ * @param mesh Mesh object.
+ */
 template <typename Container, typename VectorField, typename Mesh>
 auto fluxweighted_cell_distribution(Container const &cell_ids,
                                     VectorField const &vector_field,
@@ -1066,10 +1204,11 @@ auto fluxweighted_cell_distribution(Container const &cell_ids,
 }
 
 /**
-   \brief Distribution for random number generation of face indices weighted by
-   face areas multiplied by vector field component along inward normal.
-   \note Faces with vector field pointing outward have weight zero.
-*/
+ * @brief Distribution for random number generation of face indices weighted by
+ *        face areas multiplied by vector field component along inward normal.
+ *
+ * @note Faces with vector field pointing outward have weight zero.
+ */
 template <typename Container, typename VectorField, typename Locator>
 auto fluxweighted_face_distribution(Container const &face_ids,
                                     VectorField const &vector_field,
@@ -1085,10 +1224,11 @@ auto fluxweighted_face_distribution(Container const &face_ids,
 }
 
 /**
-   \brief Distribution for random number generation of face indices weighted by
-   face areas multiplied by vector field component along inward normal.
-   \note Faces with vector field pointing outward have weight zero.
-*/
+ * @brief Distribution for random number generation of face indices weighted by
+ *        face areas multiplied by vector field component along inward normal.
+ *
+ * @note Faces with vector field pointing outward have weight zero.
+ */
 template <typename Container, typename VectorField, typename Locator>
 auto fluxweighted_face_distribution(Container const &face_ids,
                                     VectorField const &vector_field,
@@ -1097,18 +1237,14 @@ auto fluxweighted_face_distribution(Container const &face_ids,
                                         locator.mesh().time().value());
 }
 
-/**
-   \return Periodic boundary in geometry.
-*/
+/** @return Periodic boundary in geometry. */
 template <typename Geometry,
           typename = std::enable_if_t<meta::has_boundary_periodic_v<Geometry>>>
 auto const &boundary_periodic(Geometry const &geometry) {
   return geometry.boundary_periodic;
 }
 
-/**
-   \return Empty periodic boundary, for when geometry does not define one.
-*/
+/** @return Empty periodic boundary, for when geometry does not define one. */
 template <typename Geometry,
           typename = std::enable_if_t<!meta::has_boundary_periodic_v<Geometry>>>
 auto boundary_periodic(Geometry const &geometry) {
@@ -1116,13 +1252,18 @@ auto boundary_periodic(Geometry const &geometry) {
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \return Number of absorbed particles.
-   \note Particle states must define:
-   - <tt>Info info</tt>
-   - \c time
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @return Number of absorbed particles.
+ *
+ * @note Particle states must define:
+ *
+ * - <tt>Info info</tt>
+ *
+ * - \c time
+ */
 template <typename Subject>
 std::size_t nr_absorbed(Subject const &subject, double time) {
   std::size_t absorbed = 0;
@@ -1135,13 +1276,18 @@ std::size_t nr_absorbed(Subject const &subject, double time) {
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \return Number of adsorbed particles.
-   \note Particle states must define:
-   - <tt>Info info</tt>
-   - \c time
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @return Number of adsorbed particles.
+ *
+ * @note Particle states must define:
+ *
+ * - <tt>Info info</tt>
+ *
+ * - \c time
+ */
 template <typename Subject>
 std::size_t nr_adsorbed(Subject const &subject, double time) {
   std::size_t adsorbed = 0;
@@ -1154,13 +1300,18 @@ std::size_t nr_adsorbed(Subject const &subject, double time) {
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \return Total mass.
-   \note Particle states must define:
-   - \c mass
-   - \c time
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @return Total mass.
+ *
+ * @note Particle states must define:
+ *
+ * - \c mass
+ *
+ * - \c time
+ */
 template <typename Subject> auto mass(Subject const &subject, double time) {
   double mass = 0.;
   for (auto const &part : subject) {
@@ -1173,13 +1324,18 @@ template <typename Subject> auto mass(Subject const &subject, double time) {
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \return Total adsorbed mass.
-   \note Particle states must define:
-   - \c mass
-   - \c time
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @return Total adsorbed mass.
+ *
+ * @note Particle states must define:
+ *
+ * - \c mass
+ *
+ * - \c time
+ */
 template <typename Subject>
 auto mass_adsorbed(Subject const &subject, double time) {
   double mass = 0.;
@@ -1193,13 +1349,18 @@ auto mass_adsorbed(Subject const &subject, double time) {
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \return Total absorbed mass.
-   \note Particle states must define:
-   - \c mass
-   - \c time
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @return Total absorbed mass.
+ *
+ * @note Particle states must define:
+ *
+ * - \c mass
+ *
+ * - \c time
+ */
 template <typename Subject>
 auto mass_absorbed(Subject const &subject, double time) {
   double mass = 0.;
@@ -1212,18 +1373,28 @@ auto mass_absorbed(Subject const &subject, double time) {
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \param masks Scalar fields.
-   \param thresholds Thresholds for each mask.
-   \return Total masses in regions where mask is above or equal to threshold.
-   \note
-   -Particle states must define:
-       - mass
-       - time
-       - cell
-   - \c thresholds must have at least the same size as \c masks
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @param masks Scalar fields.
+ *
+ * @param thresholds Thresholds for each mask.
+ *
+ * @return Total masses in regions where mask is above or equal to threshold.
+ *
+ * @note
+ *
+ * -Particle states must define:
+ *
+ * -# mass
+ *
+ * -# time
+ *
+ * -# cell
+ *
+ * - \c thresholds must have at least the same size as \c masks
+ */
 template <typename Subject, typename Mask>
 auto mass(Subject const &subject, double time,
           std::vector<std::reference_wrapper<const Mask>> const &masks,
@@ -1250,21 +1421,33 @@ auto mass(Subject const &subject, double time,
 }
 
 /**
-   \brief Interpolate position between two particle states.
-   \tparam ensure_inside If true, if interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param state_new New particle state.
-   \param state_old Old particle state.
-   \param time Time (between state times) to interpolate to.
-   \param geometry Domain geometry info and utilities.
-   \return Interpolated position.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
+ * @brief Interpolate position between two particle states.
+ *
+ * @tparam ensure_inside If true, if interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param state_new New particle state.
+ *
+ * @param state_old Old particle state.
+ *
+ * @param time Time (between state times) to interpolate to.
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @return Interpolated position.
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ *
+ * - \c cell
+ */
 template <bool ensure_inside, bool periodic, typename State, typename Geometry>
 auto position_interpolated(State const &state_new, State const &state_old,
                            double time, Geometry const &geometry) {
@@ -1302,21 +1485,33 @@ auto position_interpolated(State const &state_new, State const &state_old,
 }
 
 /**
-   \brief Interpolate position between two particle states.
-   \tparam ensure_inside If true, if interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param state_new New particle state.
-   \param state_old Old particle state.
-   \param time Time (between state times) to interpolate to.
-   \param geometry Domain geometry info and utilities.
-   \return Interpolated position and corresponding cell in mesh.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
+ * @brief Interpolate position between two particle states.
+ *
+ * @tparam ensure_inside If true, if interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param state_new New particle state.
+ *
+ * @param state_old Old particle state.
+ *
+ * @param time Time (between state times) to interpolate to.
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @return Interpolated position and corresponding cell in mesh.
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ *
+ * - \c cell
+ */
 template <bool ensure_inside, bool periodic, typename State, typename Geometry>
 auto position_interpolated_with_cell(State const &state_new,
                                      State const &state_old, double time,
@@ -1360,20 +1555,31 @@ auto position_interpolated_with_cell(State const &state_new,
 };
 
 /**
-   \brief Interpolate position between two particle states.
-   \tparam ensure_inside If true, if interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param particle Particle to interpolate between old and new state.
-   \param time Time (between state times) to interpolate to
-   \param geometry Domain geometry info and utilities.
-   \return Interpolated position.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
+ * @brief Interpolate position between two particle states.
+ *
+ * @tparam ensure_inside If true, if interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param particle Particle to interpolate between old and new state.
+ *
+ * @param time Time (between state times) to interpolate to
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @return Interpolated position.
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ *
+ * - \c cell
+ */
 template <bool ensure_inside, bool periodic, typename Particle,
           typename Geometry>
 auto position_interpolated(Particle const &particle, double time,
@@ -1383,20 +1589,31 @@ auto position_interpolated(Particle const &particle, double time,
 }
 
 /**
-   \brief Interpolate position between two particle states.
-   \tparam ensure_inside If true, if interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param particle Particle to interpolate between old and new state.
-   \param time Time (between state times) to interpolate to.
-   \param geometry Domain geometry info and utilities.
-   \return Interpolated position and corresponding cell in mesh.
-   \note Particle states must define:
-   - \c position
-   - \c time
-   - \c cell
-*/
+ * @brief Interpolate position between two particle states.
+ *
+ * @tparam ensure_inside If true, if interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param particle Particle to interpolate between old and new state.
+ *
+ * @param time Time (between state times) to interpolate to.
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @return Interpolated position and corresponding cell in mesh.
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ *
+ * - \c cell
+ */
 template <bool ensure_inside, bool periodic, typename Particle,
           typename Geometry>
 auto position_interpolated_with_cell(Particle const &particle, double time,
@@ -1406,21 +1623,32 @@ auto position_interpolated_with_cell(Particle const &particle, double time,
 };
 
 /**
-   \tparam ensure_inside If true, if each interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param subject CTRW object.
-   \param time Current time.
-   \param geometry Domain geometry info and utilities.
-   \param transform Transformation to apply to each position (identity by
-   default).
-   \return Mean position (weighted by mass).
-   \note Particle states must define:
-   - \c position
-   - \c mass
-   - \c time
-*/
+ * @tparam ensure_inside If true, if each interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @param transform Transformation to apply to each position (identity by
+ *                  default).
+ *
+ * @return Mean position (weighted by mass).
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c mass
+ *
+ * - \c time
+ */
 template <
     bool ensure_inside, bool periodic, typename Subject, typename Geometry,
     typename Transform = useful::Forward<typename Subject::State::Position>>
@@ -1442,18 +1670,27 @@ auto position_mean(Subject const &subject, double time,
 }
 
 /**
-   \tparam ensure_inside If true, if each interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param subject CTRW object.
-   \param time Current time.
-   \param geometry Domain geometry info and utilities.
-   \return Second moment of position (weighted by mass).
-   \note Particle states must define:
-   - \c position
-   - \c mass
-*/
+ * @tparam ensure_inside If true, if each interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @return Second moment of position (weighted by mass).
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c mass
+ */
 template <bool ensure_inside, bool periodic, typename Subject,
           typename Geometry>
 auto position_second_moment(Subject const &subject, double time,
@@ -1464,19 +1701,29 @@ auto position_second_moment(Subject const &subject, double time,
 }
 
 /**
-   \tparam ensure_inside If true, if each interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param subject CTRW object.
-   \param exponents Order of moment or vector with order for each dimension.
-   \param time Current time.
-   \param geometry Domain geometry info and utilities.
-   \return Nth moment of position (weighted by mass). \note
-   Particle states must define:
-   - \c position
-   - \c mass
-*/
+ * @tparam ensure_inside If true, if each interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param subject CTRW object.
+ *
+ * @param exponents Order of moment or vector with order for each dimension.
+ *
+ * @param time Current time.
+ *
+ * @param geometry Domain geometry info and utilities.
+ *
+ * @return Nth moment of position (weighted by mass).
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c mass
+ */
 template <bool ensure_inside, bool periodic, typename Subject,
           typename Exponents, typename Geometry>
 auto position_moment(Subject const &subject, Exponents const &exponents,
@@ -1488,18 +1735,27 @@ auto position_moment(Subject const &subject, Exponents const &exponents,
 }
 
 /**
-   \tparam ensure_inside If true, if each interpolated position would be outside
-   mesh, use nearest position between new state and old state.
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-   \param subject CTRW object.
-   \param time Current time.
-   \param geometry Domain geometry info and utilities
-   \return Position variance (weighted by mass).
-   \note Particle states must define:
-   - \c position
-   - \c mass
-*/
+ * @tparam ensure_inside If true, if each interpolated position would be outside
+ *                       mesh, use nearest position between new state and old
+ *                       state.
+ *
+ * @tparam periodic If true, give position accounting for periodicity (possibly
+ *                  outside domain).
+ *
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @param geometry Domain geometry info and utilities
+ *
+ * @return Position variance (weighted by mass).
+ *
+ * @note Particle states must define:
+ *
+ * - \c position
+ *
+ * - \c mass
+ */
 template <bool ensure_inside, bool periodic, typename Subject,
           typename Geometry>
 auto position_variance(Subject const &subject, double time,
@@ -1511,14 +1767,20 @@ auto position_variance(Subject const &subject, double time,
 }
 
 /**
-   \param subject CTRW object.
-   \param time Current time.
-   \param field Field to evaluate at particle positions.
-   \return Mean field value (weighted by mass).
-   \note Particle states must define:
-   - \c mass
-   - \c time
-*/
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @param field Field to evaluate at particle positions.
+ *
+ * @return Mean field value (weighted by mass).
+ *
+ * @note Particle states must define:
+ *
+ * - \c mass
+ *
+ * - \c time
+ */
 template <typename Subject, typename Field>
 auto mean(Subject const &subject, double time, Field const &field) {
   decltype(field(subject.particles(0).state_new())) field_mean = Foam::zero{};
@@ -1536,10 +1798,12 @@ auto mean(Subject const &subject, double time, Field const &field) {
 }
 
 /**
-   \param position Spatial position.
-   \param locator Object to locate positions in mesh.
-   \return Nearest boundary face index.
-*/
+ * @param position Spatial position.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Nearest boundary face index.
+ */
 template <typename Position, typename Locator>
 auto nearest_boundary_face(Position const &position, Locator const &locator) {
   // Do not use hint because this can get stuck in local minima
@@ -1547,10 +1811,12 @@ auto nearest_boundary_face(Position const &position, Locator const &locator) {
 }
 
 /**
-   \param position Spatial position.
-   \param locator Object to locate positions in mesh.
-   \return Pair of nearest boundary face index and distance to it.
-*/
+ * @param position Spatial position.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Pair of nearest boundary face index and distance to it.
+ */
 template <typename Locator>
 std::pair<Foam::label, double>
 nearest_boundary_face_dist(Foam::vector const &position,
@@ -1562,19 +1828,25 @@ nearest_boundary_face_dist(Foam::vector const &position,
 }
 
 /**
-   \brief Compute demand-drived mesh data.
-   \note
-   - For parallel runs where each thread has access to the whole mesh,
-   demand-driven mesh data must be pre-computed, otherwise there can be
-   synchronization problems.
-   - The cell tree used in searching is not precomputed. Mesh search tools
-   should be used for searching instead.
-   - Global mesh data is not precomputed. It assumed that the mesh is
-   global (not decomposed).
-   - Mesh-movement related quantities are not precomputed.
-   - Not all mesh connectivity quantities are precomputed (only faceEdges and
-   cellCells).
-*/
+ * @brief Compute demand-drived mesh data.
+ *
+ * @note
+ *
+ * - For parallel runs where each thread has access to the whole mesh,
+ *   demand-driven mesh data must be pre-computed, otherwise there can be
+ *   synchronization problems.
+ *
+ * - The cell tree used in searching is not precomputed. Mesh search tools
+ *   should be used for searching instead.
+ *
+ *  - Global mesh data is not precomputed. It assumed that the mesh is global
+ *    (not decomposed).
+ *
+ *  - Mesh-movement related quantities are not precomputed.
+ *
+ *  - Not all mesh connectivity quantities are precomputed (only faceEdges and
+ *    cellCells).
+ */
 template <typename Mesh> void compute_demand_driven_mesh_data(Mesh &mesh) {
   (void)mesh.V();
   (void)mesh.magSf();
@@ -1585,13 +1857,16 @@ template <typename Mesh> void compute_demand_driven_mesh_data(Mesh &mesh) {
 }
 
 /**
-   \brief Compute demand-drived meshSearch data.
-   \note
-   - For parallel runs where each thread has access to the whole mesh,
-   demand-driven mesh data must be pre-computed, otherwise there can be
-   synchronization problems.
-   - Non-coupled boundary tree is not precomputed.
-*/
+ * @brief Compute demand-drived meshSearch data.
+ *
+ * @note
+ *
+ * - For parallel runs where each thread has access to the whole mesh,
+ *   demand-driven mesh data must be pre-computed, otherwise there can be
+ *   synchronization problems.
+ *
+ * - Non-coupled boundary tree is not precomputed.
+ */
 template <typename MeshSearch>
 void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
   (void)mesh_search.cellTree();
@@ -1599,10 +1874,13 @@ void compute_demand_driven_meshSearch_data(MeshSearch &mesh_search) {
 }
 
 /**
-   \brief Output time information.
-   \param output Output stream.
-   \param params Output parameters, holding time_unit_factor to rescale \p
-   time. \param time Current time.
+ * @brief Output time information.
+ *
+ * @param output Output stream.
+ *
+ * @param params Output parameters, holding time_unit_factor to rescale \p time.
+ *
+ * @param time Current time.
  */
 template <typename ParametersOutput>
 void info_time(std::ostream &output, ParametersOutput const &params,
@@ -1613,14 +1891,19 @@ void info_time(std::ostream &output, ParametersOutput const &params,
 }
 
 /**
-   \brief Output information about fraction of particles that have not been
-   absorbed.
-   \param output Output stream.
-   \param subject CTRW object.
-   \param time Current time.
-   \note Particle states must define:
-   - <tt>info.absorbed</tt> [std::size_t]
-*/
+ * @brief Output information about fraction of particles that have not been
+ *        absorbed.
+ *
+ * @param output Output stream.
+ *
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @note Particle states must define:
+ *
+ * - <tt>std::size_t info.absorbed</tt>
+ */
 template <typename Subject>
 void info_fraction_not_absorbed(std::ostream &output, Subject const &subject,
                                 double time) {
@@ -1628,7 +1911,7 @@ void info_fraction_not_absorbed(std::ostream &output, Subject const &subject,
          << 1. - double(nr_absorbed(subject, time)) / subject.size() << "\n";
 }
 
-/** \return Identifier string for output file names. */
+/** @return Identifier string for output file names. */
 inline std::string identifier(std::string const &model_name,
                               std::string const &case_name,
                               std::string const &of_case_name,
@@ -1643,7 +1926,7 @@ inline std::string identifier(std::string const &model_name,
          params_output_name;
 }
 
-/** \return Identifier string for output file names. */
+/** @return Identifier string for output file names. */
 inline std::string identifier(std::string const &model_name,
                               std::string const &case_name,
                               std::string const &of_case_name,
@@ -1659,7 +1942,7 @@ inline std::string identifier(std::string const &model_name,
          "_RUN_" + std::to_string(run_nr);
 }
 
-/** \return Identifier string for output file names. */
+/** @return Identifier string for output file names. */
 inline std::string identifier(std::string const &model_name,
                               std::string const &case_name,
                               std::string const &of_case_name,
@@ -1675,7 +1958,7 @@ inline std::string identifier(std::string const &model_name,
          params_initial_condition_name + "_O_" + params_output_name;
 }
 
-/** \return Identifier string for output file names. */
+/** @return Identifier string for output file names. */
 inline std::string identifier(std::string const &model_name,
                               std::string const &case_name,
                               std::string const &of_case_name,
@@ -1778,9 +2061,9 @@ auto evaluate_boundary_field(Field const &field, Foam::label patch_id,
 }
 
 /**
-   \brief Compute magnitude of average of volumetric field (set of
-   values associated with mesh cells).
-*/
+ * @brief Compute magnitude of average of volumetric field (set of values
+ *        associated with mesh cells).
+ */
 template <typename Field, typename Mesh>
 auto magnitude_of_average(Field &field, Mesh const &mesh) {
   Foam::scalar mesh_volume = Foam::sum(mesh.cellVolumes());
@@ -1789,9 +2072,9 @@ auto magnitude_of_average(Field &field, Mesh const &mesh) {
 }
 
 /**
-   \brief Rescale field by a given factor, including boundary values
-   if applicable.
-*/
+ * @brief Rescale field by a given factor, including boundary values if
+ *        applicable.
+ */
 template <typename Field>
 bool rescale(Field &field, Foam::scalar rescaling_factor) {
   if constexpr (!std::is_same_v<Field, meta::Empty>) {
@@ -1807,9 +2090,9 @@ bool rescale(Field &field, Foam::scalar rescaling_factor) {
 }
 
 /**
-   \brief Rescale a volumetric field (set of values associated with
-   mesh cells) to a given average value.
-*/
+ * @brief Rescale a volumetric field (set of values associated with mesh cells)
+ *        to a given average value.
+ */
 template <typename Field, typename Mesh>
 void rescale_to_average(Field &field, Mesh const &mesh, double average) {
   if constexpr (!std::is_same_v<Field, meta::Empty>) {
@@ -1817,10 +2100,7 @@ void rescale_to_average(Field &field, Mesh const &mesh, double average) {
   }
 }
 
-/**
-   \class MeshTools PTOF/Useful.h "PTOF/Useful.h"
-   \brief Helper to handle mesh and mesh search tools.
-*/
+/** @brief Helper to handle mesh and mesh search tools. */
 template <typename Mesh_t> struct MeshTools {
   using Mesh = Mesh_t;
   using MeshSearch = Foam::meshSearch;

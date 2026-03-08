@@ -1,9 +1,10 @@
 /**
-   \file PTOF/ReactionHandler.h
-   \author Tomas Aquino
-   \date 10/03/2022
-   \brief Objects for handling surface and bulk reactions.
-*/
+ * @file   ReactionHandler.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Mar 10 00:00:00 2022
+ *
+ * @brief Objects for handling surface and bulk reactions.
+ */
 
 #ifndef PTOF_REACTIONHANDLER_H
 #define PTOF_REACTIONHANDLER_H
@@ -22,12 +23,14 @@
 #include <vector>
 
 namespace ptof {
+/** @brief Handler for no reaction. */
 struct ReactionHandler_NoBulk_NoSurface {
   ReactionHandler_NoBulk_NoSurface() = delete;
 
   using BulkReaction = BulkReaction_DoNothing;
   using SurfaceReaction = SurfaceReaction_DoNothing;
 
+  /** @brief Reaction parameters for no reaction. */
   struct Parameters {
     double damkohler{0.};
     double rate_constant{0.};
@@ -41,9 +44,10 @@ struct ReactionHandler_NoBulk_NoSurface {
                TransportParameters const &params_transport) {}
 
     /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+     * @brief Output generic information about object.
+     *
+     * @param output Output stream.
+     */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "Reaction parameters\n"
              << io::line() << "None\n"
@@ -71,9 +75,10 @@ struct ReactionHandler_NoBulk_NoSurface {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     BulkReaction::info(output) << "\n";
     SurfaceReaction::info(output);
@@ -85,6 +90,7 @@ struct ReactionHandler_NoBulk_NoSurface {
                      typename CTRW::State::Time, typename CTRW::State::Time) {}
 };
 
+/** @brief Handler for no bulk reaction and linear surface decay reaction. */
 template <typename Geometry, bool solid_decay, typename ParallelOption>
 struct ReactionHandler_NoBulk_SurfaceDecay {
   ReactionHandler_NoBulk_SurfaceDecay() = delete;
@@ -97,6 +103,10 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                              Locator const &, ParallelOption>,
                          SurfaceReaction_AFluidPlusASolidtoASolid>;
 
+  /**
+   * @brief Reaction parameters for no bulk reaction and linear surface decay
+   *        reaction.
+   */
   struct Parameters {
   public:
     double damkohler;                           /**< Damkohler number. */
@@ -119,7 +129,7 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
     double reaction_time;      /**< Characteristic reaction
                                 * time. */
     double rate_constant_ratio_solid_to_fluid = 0.; /**< Ratio of solid to fluid
-                                                     * rate constantes.*/
+                                                     * rate constantes. */
 
     template <typename TransportParameters>
     Parameters(Directories const &directories,
@@ -235,9 +245,10 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
     }
 
     /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+     * @brief Output generic information about object.
+     *
+     * @param output Output stream.
+     */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "Reaction parameters:\n"
              << io::line() << R"(- Solid reactant initial distribution type:
@@ -311,9 +322,10 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     BulkReaction::info(output) << "\n";
     SurfaceReaction::info(output);
@@ -357,6 +369,10 @@ private:
   }
 };
 
+/**
+ * @brief Handler for no bulk reaction and linear reversible surface
+ *        adsorption.
+ */
 template <typename Geometry, typename ParallelOption>
 struct ReactionHandler_NoBulk_SurfaceAdsorption {
   ReactionHandler_NoBulk_SurfaceAdsorption() = delete;
@@ -368,6 +384,10 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
       ctrw::TimeGenerator_Dist<std::exponential_distribution<double>,
                                ParallelOption>>;
 
+  /**
+   * @brief Reaction parameters for no bulk reaction and linear reversible
+   *        surface adsorption.
+   */
   struct Parameters {
   public:
     double damkohler;                           /**< Damkohler number. */
@@ -510,9 +530,10 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
     }
 
     /**
-       \brief Output generic information about object.
-       \param output Output stream.
-    */
+     * @brief Output generic information about object.
+     *
+     * @param output Output stream.
+     */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "Reaction parameters:\n"
              << io::line() << R"(- Solid reactant initial distribution type:
@@ -569,9 +590,10 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     BulkReaction::info(output) << "\n";
     SurfaceReaction::info(output);

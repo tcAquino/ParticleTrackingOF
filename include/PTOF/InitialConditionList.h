@@ -1,9 +1,10 @@
 /**
-   \file PTOF/InitialConditionList.h
-   \author Tomas Aquino
-   \date 29/09/2024
-   \brief Initial condition types.
-*/
+ * @file   InitialConditionList.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Sep 29 00:00:00 2024
+ *
+ * @brief Initial condition types.
+ */
 
 #ifndef PTOF_INITIALCONDITIONLIST_H
 #define PTOF_INITIALCONDITIONLIST_H
@@ -12,16 +13,9 @@
 #include <string>
 
 namespace ptof {
-/**
-   \struct InitialConditionList PTOF/InitialConditionList.h
-   "PTOF/InitialConditionList.h"
-   \brief Keep track of names and types of initial conditions.
-*/
+/** @brief Keep track of names and types of initial conditions. */
 struct InitialConditionList {
-  /**
-     \enum Type
-     \brief Implemented types.
-  */
+  /** @brief Implemented types. */
   enum class Type {
     point,                    /**< At specified position. */
     uniform_all_cells,        /**< Homogeneous throughout the domain. */
@@ -48,29 +42,35 @@ struct InitialConditionList {
   };
 
   /**
-     \brief Type from name.
-     \param name Boundary condition name.
-     \return Boundary condition type.
-  */
+   * @brief Type from name.
+   *
+   * @param name Boundary condition name.
+   *
+   * @return Boundary condition type.
+   */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
   /**
-     \brief Name from type.
-     \param type Boundary condition type.
-     \return Boundary condition name.
-  */
+   * @brief Name from type.
+   *
+   * @param type Boundary condition type.
+   *
+   * @return Boundary condition name.
+   */
   static auto name(Type type) { return type_to_name.at(type); }
 
   /**
-     \brief Check if name exists.
-     \param name condition name.
-     \return \c true if name exists, \c false otherwise.
-  */
+   * @brief Check if name exists.
+   *
+   * @param name condition name.
+   *
+   * @return \c true if name exists, \c false otherwise.
+   */
   static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }
 
-  /** Map names to types. */
+  /** Map of names to types. */
   inline static const std::map<std::string, Type> name_to_type{
       {"point", Type::point},
       {"uniform_all_cells", Type::uniform_all_cells},
@@ -88,7 +88,7 @@ struct InitialConditionList {
       {"prescribed_positions_masses_tags_times",
        Type::prescribed_positions_masses_tags_times}};
 
-  /** Map types to names. */
+  /** Map of types to names. */
   inline static const std::map<Type, std::string> type_to_name{
       {Type::point, "point"},
       {Type::uniform_all_cells, "uniform_all_cells"},

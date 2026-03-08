@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Info.h
-   \author Tomas Aquino
-   \date 03/09/2022
-   \brief Objects and utilities to store information in particle states.
-*/
+ * @file   Info.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sat Sep  3 00:00:00 2022
+ *
+ * @brief Objects and utilities to store information in particle states.
+ */
 
 #ifndef PTOF_INFO_H
 #define PTOF_INFO_H
@@ -13,68 +14,50 @@
 #include <point.H>
 
 namespace ptof {
-/**
-   \struct Info_absorbed PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption.
-*/
+/** @brief Information about absorption. */
 struct Info_absorbed {
   bool absorbed;
 };
 
-/**
-   \struct Info_absorbed_adsorbed PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption and adsorption.
-*/
+/** @brief Information about absorption and adsorption. */
 struct Info_absorbed_adsorbed {
   bool absorbed;
   bool adsorbed;
 };
 
 /**
-   \struct Info_absorbed_boundary_face PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption and boundary face where absorption
-   happened.
-*/
+ * @brief Information about absorption and boundary face where absorption
+ *        happened.
+ */
 struct Info_absorbed_boundary_face {
   bool absorbed;
   Foam::label boundary_face;
 };
 
 /**
-   \struct Info_absorbed_adsorbed_boundary_face PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption and boundary face where absorption
-   happened.
-*/
+ * @brief Information about absorption and boundary face where absorption
+ *        happened.
+ */
 struct Info_absorbed_adsorbed_boundary_face {
   bool absorbed;
   bool adsorbed;
   Foam::label boundary_face;
 };
 
-/**
-   \struct Info_absorbed_reinjections PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption and number of reinjections.
-*/
+/** @brief Information about absorption and number of reinjections. */
 struct Info_absorbed_reinjections {
   bool absorbed;
   std::size_t reinjections;
 };
 
-/**
-   \struct Info_absorbed_boundary_face_reinjections PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption and number of reinjections.
-*/
+/** @brief Information about absorption and number of reinjections. */
 struct Info_absorbed_boundary_face_reinjections {
   bool absorbed;
   Foam::label boundary_face;
   std::size_t reinjections;
 };
 
-/**
-   \struct Info_absorbed_adsorbed_boundary_face_reinjections PTOF/Info.h
-   "PTOF/Info.h"
-   \brief Information about absorption and number of reinjections.
-*/
+/** @brief Information about absorption and number of reinjections. */
 struct Info_absorbed_adsorbed_boundary_face_reinjections {
   bool absorbed;
   bool adsorbed;
@@ -83,28 +66,21 @@ struct Info_absorbed_adsorbed_boundary_face_reinjections {
 };
 
 /**
-   \struct Info_absorbed_adsorbed_reinjections PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption, adsorption, and number of reinjections.
-*/
+ * @brief Information about absorption, adsorption, and number of reinjections.
+ */
 struct Info_absorbed_adsorbed_reinjections {
   bool absorbed;
   bool adsorbed;
   std::size_t reinjections;
 };
 
-/**
-   \struct Info_absorbed_contact_point PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption and contact point.
-*/
+/** @brief Information about absorption and contact point. */
 struct Info_absorbed_contact_point {
   bool absorbed;
   Foam::point contact_point;
 };
 
-/**
-   \struct Info_absorbed_adsorbed_contact_point PTOF/Info.h "PTOF/Info.h"
-   \brief Information about absorption, adsorption, and contact point.
-*/
+/** @brief Information about absorption, adsorption, and contact point. */
 struct Info_absorbed_adsorbed_contact_point {
   bool absorbed;
   bool adsorbed;

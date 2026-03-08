@@ -1,15 +1,18 @@
 /**
-   \file General/Operation.h
-   \author Tomas Aquino
-   \date 08/06/2019
-
-   \brief  Miscelaneous operations on containers.
-
-   \note
-   - Many methods assume containers with consistent sizes are passed in.
-   - Some methods require random access with operator[].
-   - In most cases, the return value type is the type of the first container.
-*/
+ * @file   Operation.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sat Jun  8 00:00:00 2019
+ *
+ * @brief Miscelaneous operations on containers.
+ *
+ * @note
+ *
+ * - Many methods assume containers with consistent sizes are passed in.
+ *
+ * - Some methods require random access with \c operator[].
+ *
+ * - In most cases, the return value type is the type of the first container.
+ */
 
 #ifndef GENERAL_OPERATION_H
 #define GENERAL_OPERATION_H
@@ -23,9 +26,9 @@
 #include <type_traits>
 #include <vector>
 
-/** \namespace op Uniform interface for operations on PODs and containers. */
+/** @namespace op Uniform interface for operations on PODs and containers. */
 namespace op {
-/** \brief Sum of elements. */
+/** @brief Sum of elements. */
 template <typename Container> auto sum(Container const &input) {
   if constexpr (meta::has_begin_v<Container>) {
     std::decay_t<decltype(*input.begin())> output{0};
@@ -42,16 +45,16 @@ template <typename Container> auto sum(Container const &input) {
   }
 }
 
-/** \brief Sum of elements. */
+/** @brief Sum of elements. */
 inline auto sum(double input) { return input; }
 
-/** \brief Sum of elements. */
+/** @brief Sum of elements. */
 inline auto sum(int input) { return input; }
 
-/** \brief Sum of elements. */
+/** @brief Sum of elements. */
 inline auto sum(std::size_t input) { return input; }
 
-/** \brief Product of elements. */
+/** @brief Product of elements. */
 template <typename Container> auto prod(Container const &input) {
   if constexpr (meta::has_begin_v<Container>) {
     std::decay_t<decltype(*input.begin())> output{1};
@@ -68,16 +71,16 @@ template <typename Container> auto prod(Container const &input) {
   }
 }
 
-/** \brief Product of elements. */
+/** @brief Product of elements. */
 inline auto prod(double input) { return input; }
 
-/** \brief Product of elements. */
+/** @brief Product of elements. */
 inline auto prod(int input) { return input; }
 
-/** \brief Product of elements. */
+/** @brief Product of elements. */
 inline auto prod(std::size_t input) { return input; }
 
-/** \brief Element-wise sum of scalar. */
+/** @brief Element-wise sum of scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 auto &plus_scalar(Container const &input, Scalar cc, Container_out &output) {
   if constexpr (meta::is_convertible_from_plus_v<Container, Scalar,
@@ -91,7 +94,7 @@ auto &plus_scalar(Container const &input, Scalar cc, Container_out &output) {
   return output;
 }
 
-/** \brief Element-wise sum of scalar. */
+/** @brief Element-wise sum of scalar. */
 template <typename Container, typename Scalar>
 auto plus_scalar(Container const &input, Scalar cc) {
   if constexpr (meta::is_convertible_from_plus_v<Container, Scalar,
@@ -109,13 +112,13 @@ auto plus_scalar(Container const &input, Scalar cc) {
   }
 }
 
-/** \brief Element-wise sum of scalar. */
+/** @brief Element-wise sum of scalar. */
 template <typename Container, typename Scalar>
 auto &plus_scalar_inplace(Container &input, Scalar cc) {
   return plus_scalar(input, cc, input);
 }
 
-/** \brief Element-wise sum. */
+/** @brief Element-wise sum. */
 template <typename Container_1, typename Container_2, typename Container_out>
 auto &plus(Container_1 const &input_1, Container_2 const &input_2,
            Container_out &output) {
@@ -130,7 +133,7 @@ auto &plus(Container_1 const &input_1, Container_2 const &input_2,
   return output;
 }
 
-/** \brief Element-wise sum. */
+/** @brief Element-wise sum. */
 template <typename Container_1, typename Container_2>
 auto plus(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
@@ -149,13 +152,13 @@ auto plus(Container_1 const &input_1, Container_2 const &input_2) {
   }
 }
 
-/** \brief Element-wise sum. */
+/** @brief Element-wise sum. */
 template <typename Container_1, typename Container_2>
 auto &plus_inplace(Container_1 &input_1, Container_2 const &input_2) {
   return plus(input_1, input_2, input_1);
 }
 
-/** \brief Element-wise subtraction of scalar. */
+/** @brief Element-wise subtraction of scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 auto &minus_scalar(Container const &input, Scalar cc, Container_out &output) {
   if constexpr (meta::is_convertible_from_minus_v<Container, Scalar,
@@ -169,7 +172,7 @@ auto &minus_scalar(Container const &input, Scalar cc, Container_out &output) {
   return output;
 }
 
-/** \brief Element-wise subtraction of scalar. */
+/** @brief Element-wise subtraction of scalar. */
 template <typename Container, typename Scalar>
 auto minus_scalar(Container const &input, Scalar cc) {
   if constexpr (meta::is_convertible_from_minus_v<Container, Scalar,
@@ -188,13 +191,13 @@ auto minus_scalar(Container const &input, Scalar cc) {
   }
 }
 
-/** \brief Element-wise subtraction of scalar. */
+/** @brief Element-wise subtraction of scalar. */
 template <typename Container, typename Scalar>
 auto &minus_scalar_inplace(Container &input, Scalar cc) {
   return minus_scalar(input, cc, input);
 }
 
-/** \brief Element-wise subtraction from scalar. */
+/** @brief Element-wise subtraction from scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 auto &scalar_minus(Scalar cc, Container const &input, Container_out &output) {
   if constexpr (meta::is_convertible_from_minus_v<Scalar, Container,
@@ -208,7 +211,7 @@ auto &scalar_minus(Scalar cc, Container const &input, Container_out &output) {
   return output;
 }
 
-/** \brief Element-wise subtraction from scalar. */
+/** @brief Element-wise subtraction from scalar. */
 template <typename Container, typename Scalar>
 auto scalar_minus(Scalar cc, Container const &input) {
   if constexpr (meta::is_convertible_from_minus_v<Scalar, Container,
@@ -227,13 +230,13 @@ auto scalar_minus(Scalar cc, Container const &input) {
   }
 }
 
-/** \brief Element-wise subtraction from scalar. */
+/** @brief Element-wise subtraction from scalar. */
 template <typename Container, typename Scalar>
 auto &scalar_minus_inplace(Scalar cc, Container &input) {
   return scalar_minus(cc, input, input);
 }
 
-/** \brief Element-wise subtraction. */
+/** @brief Element-wise subtraction. */
 template <typename Container_1, typename Container_2, typename Container_out>
 auto &minus(Container_1 const &input_1, Container_2 const &input_2,
             Container_out &output) {
@@ -248,7 +251,7 @@ auto &minus(Container_1 const &input_1, Container_2 const &input_2,
   return output;
 }
 
-/** \brief Element-wise subtraction. */
+/** @brief Element-wise subtraction. */
 template <typename Container_1, typename Container_2>
 auto minus(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_minus_v<Container_1, Container_2,
@@ -261,13 +264,13 @@ auto minus(Container_1 const &input_1, Container_2 const &input_2) {
   }
 }
 
-/** \brief Element-wise subtraction. */
+/** @brief Element-wise subtraction. */
 template <typename Container_1, typename Container_2>
 auto &minus_inplace(Container_1 &input_1, Container_2 const &input_2) {
   return minus(input_1, input_2, input_1);
 }
 
-/** \brief Element-wise multiplication by scalar. */
+/** @brief Element-wise multiplication by scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 auto &times_scalar(Scalar lambda, Container const &input,
                    Container_out &output) {
@@ -282,7 +285,7 @@ auto &times_scalar(Scalar lambda, Container const &input,
   return output;
 }
 
-/** \brief Element-wise multiplication by scalar. */
+/** @brief Element-wise multiplication by scalar. */
 template <typename Container, typename Scalar>
 auto times_scalar(Scalar lambda, Container const &input) {
   if constexpr (meta::is_convertible_from_multiplies_v<Scalar, Container,
@@ -299,13 +302,13 @@ auto times_scalar(Scalar lambda, Container const &input) {
   }
 }
 
-/** \brief Element-wise multiplication by scalar. */
+/** @brief Element-wise multiplication by scalar. */
 template <typename Container, typename Scalar>
 auto &times_scalar_inplace(Scalar lambda, Container &input) {
   return times_scalar(lambda, input, input);
 }
 
-/** \brief Element-wise multiplication. */
+/** @brief Element-wise multiplication. */
 template <typename Container_1, typename Container_2, typename Container_out>
 auto &times(Container_1 const &input_1, Container_2 const &input_2,
             Container_out &output) {
@@ -320,7 +323,7 @@ auto &times(Container_1 const &input_1, Container_2 const &input_2,
   return output;
 }
 
-/** \brief Element-wise multiplication. */
+/** @brief Element-wise multiplication. */
 template <typename Container_1, typename Container_2>
 auto times(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container_1, Container_2,
@@ -339,13 +342,13 @@ auto times(Container_1 const &input_1, Container_2 const &input_2) {
   }
 }
 
-/** \brief Element-wise multiplication. */
+/** @brief Element-wise multiplication. */
 template <typename Container_1, typename Container_2>
 auto &times_inplace(Container_1 &input_1, Container_2 const &input_2) {
   return times(input_1, input_2, input_1);
 }
 
-/** \brief Element-wise division by scalar. */
+/** @brief Element-wise division by scalar. */
 template <typename Container, typename Scalar, typename Container_out>
 auto &div_scalar(Container const &input, Scalar lambda, Container_out &output) {
   if constexpr (meta::is_convertible_from_divides_v<Container, Scalar,
@@ -359,7 +362,7 @@ auto &div_scalar(Container const &input, Scalar lambda, Container_out &output) {
   return output;
 }
 
-/** \brief Element-wise division by scalar. */
+/** @brief Element-wise division by scalar. */
 template <typename Container, typename Scalar>
 auto div_scalar(Container const &input, Scalar lambda) {
   if constexpr (meta::is_convertible_from_divides_v<Container, Scalar,
@@ -378,13 +381,13 @@ auto div_scalar(Container const &input, Scalar lambda) {
   }
 }
 
-/** \brief Element-wise division by scalar. */
+/** @brief Element-wise division by scalar. */
 template <typename Container, typename Scalar>
 auto &div_scalar_inplace(Container &input, Scalar lambda) {
   return div_scalar(input, lambda, input);
 }
 
-/** \brief Element-wise division. */
+/** @brief Element-wise division. */
 template <typename Container_1, typename Container_2, typename Container_out>
 auto &div(Container_1 const &input_1, Container_2 const &input_2,
           Container_out &output) {
@@ -399,7 +402,7 @@ auto &div(Container_1 const &input_1, Container_2 const &input_2,
   return output;
 }
 
-/** \brief Element-wise division. */
+/** @brief Element-wise division. */
 template <typename Container_1, typename Container_2>
 auto div(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_divides_v<Container_1, Container_2,
@@ -418,13 +421,13 @@ auto div(Container_1 const &input_1, Container_2 const &input_2) {
   }
 }
 
-/** \brief Element-wise division. */
+/** @brief Element-wise division. */
 template <typename Container_1, typename Container_2>
 auto &div_inplace(Container_1 &input_1, Container_2 const &input_2) {
   return div(input_1, input_2, input_1);
 }
 
-/** \brief \c lambda_1*input_1+lambda_2*input2. */
+/** @brief <tt>lambda_1 * input_1 + lambda_2 * input_2</tt>. */
 template <typename Container_1, typename Scalar_1, typename Container_2,
           typename Scalar_2, typename Container_out>
 auto &linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
@@ -444,7 +447,7 @@ auto &linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
   return output;
 }
 
-/** \brief \c lambda_1*input_1+lambda_2*input2. */
+/** @brief <tt>lambda_1 * input_1 + lambda_2 * input_2.</tt> */
 template <typename Container_1, typename Scalar_1, typename Container_2,
           typename Scalar_2>
 auto linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
@@ -469,7 +472,7 @@ auto linearop(Scalar_1 lambda_1, Container_1 const &input_1, Scalar_2 lambda_2,
   }
 }
 
-/** \brief \c lambda_1*input_1+lambda_2*input2. */
+/** @brief <tt>lambda_1 * input_1 + lambda_2 * input)2.</tt> */
 template <typename Container_1, typename Scalar_1, typename Container_2,
           typename Scalar_2>
 auto &linearop_inplace(Scalar_1 lambda_1, Container_1 &input_1,
@@ -477,7 +480,7 @@ auto &linearop_inplace(Scalar_1 lambda_1, Container_1 &input_1,
   return linearop(lambda_1, input_1, lambda_2, input_2, input_1);
 }
 
-/** \brief \c lambda*input_1+input2. */
+/** @brief <tt>lambda * input_1 + input_2.</tt> */
 template <typename Container_1, typename Scalar, typename Container_2,
           typename Container_out>
 auto &linearop(Scalar lambda, Container_1 const &input_1,
@@ -495,7 +498,7 @@ auto &linearop(Scalar lambda, Container_1 const &input_1,
   return output;
 }
 
-/** \brief \c lambda*input_1+input2. */
+/** @brief <tt>lambda * input_1 + input_2</tt>. */
 template <typename Container_1, typename Type, typename Container_2>
 auto linearop(Type lambda, Container_1 const &input_1,
               Container_2 const &input_2) {
@@ -515,14 +518,14 @@ auto linearop(Type lambda, Container_1 const &input_1,
   }
 }
 
-/** \brief \c lambda*input_1+input2. */
+/** @brief <tt>lambda * input_1 + input_2</tt>. */
 template <typename Container_1, typename Type, typename Container_2>
 auto &linearop_inplace(Type lambda, Container_1 &input_1,
                        Container_2 const &input_2) {
   return linearop(lambda, input_1, input_2, input_1);
 }
 
-/** \brief Element-wise square. */
+/** @brief Element-wise square. */
 template <typename Container, typename Container_out>
 auto &square(Container const &input, Container_out &output) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
@@ -536,7 +539,7 @@ auto &square(Container const &input, Container_out &output) {
   return output;
 }
 
-/** \brief Element-wise square. */
+/** @brief Element-wise square. */
 template <typename Container> auto square(Container const &input) {
   if constexpr (meta::is_convertible_from_multiplies_v<Container, Container,
                                                        Container>) {
@@ -554,12 +557,12 @@ template <typename Container> auto square(Container const &input) {
   }
 }
 
-/** \brief Element-wise square. */
+/** @brief Element-wise square. */
 template <typename Container> auto &square_inplace(Container &input) {
   return square(input, input);
 }
 
-/** \brief Element-wise power. */
+/** @brief Element-wise power. */
 template <typename Container, typename Container2, typename Container_out>
 auto &pow(Container const &input, Container2 const &exponents,
           Container_out &output) {
@@ -580,7 +583,7 @@ auto &pow(Container const &input, Container2 const &exponents,
   return output;
 }
 
-/** \brief Element-wise power. */
+/** @brief Element-wise power. */
 template <typename Container, typename Container2>
 auto pow(Container const &input, Container2 const &exponents) {
   if constexpr (meta::is_convertible_from_pow_v<Container, Container2,
@@ -599,13 +602,13 @@ auto pow(Container const &input, Container2 const &exponents) {
   }
 }
 
-/** \brief Element-wise power. */
+/** @brief Element-wise power. */
 template <typename Container, typename Container2>
 auto &pow_inplace(Container &input, Container2 const &exponents) {
   return pow(input, exponents, input);
 }
 
-/** \brief Element-wise square root. */
+/** @brief Element-wise square root. */
 template <typename Container, typename Container_out>
 auto &sqrt(Container const &input, Container_out &output) {
   if constexpr (meta::is_convertible_from_sqrt_v<Container, Container_out>) {
@@ -618,7 +621,7 @@ auto &sqrt(Container const &input, Container_out &output) {
   return output;
 }
 
-/** \brief Element-wise square root. */
+/** @brief Element-wise square root. */
 template <typename Container> auto sqrt(Container const &input) {
   if constexpr (meta::is_convertible_from_sqrt_v<Container, Container>) {
     return std::sqrt(input);
@@ -635,12 +638,12 @@ template <typename Container> auto sqrt(Container const &input) {
   }
 }
 
-/** \brief Element-wise square root. */
+/** @brief Element-wise square root. */
 template <typename Container> auto &sqrt_inplace(Container &input) {
   return sqrt(input, input);
 }
 
-/** \brief Element-wise mean of two containers. */
+/** @brief Element-wise mean of two containers. */
 template <typename Container_1, typename Container_2, typename Container_out>
 auto &mean(Container_1 const &input_1, Container_2 const &input_2,
            Container_out &output) {
@@ -657,7 +660,7 @@ auto &mean(Container_1 const &input_1, Container_2 const &input_2,
   return output;
 }
 
-/** \brief Element-wise mean of two containers. */
+/** @brief Element-wise mean of two containers. */
 template <typename Container_1, typename Container_2>
 auto mean(Container_1 const &input_1, Container_2 const &input_2) {
   if constexpr (meta::is_convertible_from_plus_v<Container_1, Container_2,
@@ -677,13 +680,13 @@ auto mean(Container_1 const &input_1, Container_2 const &input_2) {
     }
   }
 }
-/** \brief Element-wise mean of two containers. */
+/** @brief Element-wise mean of two containers. */
 template <typename Container>
 auto &mean_inplace(Container &input_1, Container const &input_2) {
   return mean(input_1, input_2, input_1);
 }
 
-/** \brief Euclidean norm squared. */
+/** @brief Euclidean norm squared. */
 template <typename Container> auto abs_sq(Container const &input) {
   if constexpr (meta::is_convertible_from_abs_v<Container, double>) {
     auto abs = std::abs(input);
@@ -703,7 +706,7 @@ template <typename Container> auto abs_sq(Container const &input) {
   }
 }
 
-/** \brief Euclidean norm. */
+/** @brief Euclidean norm. */
 template <typename Container> auto abs(Container const &input) {
   if constexpr (meta::is_convertible_from_abs_v<Container, double>) {
     return std::abs(input);
@@ -731,7 +734,7 @@ template <typename Container> auto &normalize_inplace(Container &input) {
                     : times_scalar_inplace(0., input);
 }
 
-/** \brief Like \c std::adjacent_difference but without the first element. */
+/** @brief Like \c std::adjacent_difference but without the first element. */
 template <class InputIterator, class OutputIterator, class BinaryOperation>
 OutputIterator
 adjacent_difference(InputIterator first, InputIterator last,
@@ -749,7 +752,7 @@ adjacent_difference(InputIterator first, InputIterator last,
   return result;
 }
 
-/** \brief Averages of adjacent elements. */
+/** @brief Averages of adjacent elements. */
 template <typename Container>
 auto &midpoints(Container const &input, Container &output) {
   for (size_t ii = 0; ii < output.size() - 1; ++ii) {
@@ -758,7 +761,7 @@ auto &midpoints(Container const &input, Container &output) {
   return output;
 }
 
-/** \brief Averages of adjacent elements. */
+/** @brief Averages of adjacent elements. */
 template <typename Container> auto midpoints(Container const &input) {
   if constexpr (meta::is_constructible_from_size_v<Container>) {
     Container output(input.size() - 1);
@@ -771,7 +774,7 @@ template <typename Container> auto midpoints(Container const &input) {
   }
 }
 
-/** \brief Differences of adjacent elements. */
+/** @brief Differences of adjacent elements. */
 template <typename Container>
 auto &diff(Container const &input, Container &output) {
   for (size_t ii = 0; ii < output.size() - 1; ++ii) {
@@ -780,7 +783,7 @@ auto &diff(Container const &input, Container &output) {
   return output;
 }
 
-/** \brief Differences of adjacent elements. */
+/** @brief Differences of adjacent elements. */
 template <typename Container> auto diff(Container const &input) {
   Container output(input.size() - 1);
   diff(input, output);
@@ -788,11 +791,11 @@ template <typename Container> auto diff(Container const &input) {
 }
 
 /**
-   \brief Compute widths of bins having given \p values as midpoints and given
-   \p minimum (left edge).
-   \details Widths are computed sequentially as twice the distance between the
-   next midpoint and the current left edge.
-*/
+ * @brief Compute widths of bins having given \p values as midpoints and given
+ *        \p minimum (left edge).
+ * @details Widths are computed sequentially as twice the distance between the
+ *          next midpoint and the current left edge.
+ */
 template <template <typename...> typename Container = std::vector,
           typename Scalar = double, typename... Args>
 auto bin_widths(Container<Scalar, Args...> const &values, Scalar minimum) {
@@ -827,13 +830,16 @@ auto bin_widths(Container<Scalar, Args...> const &values, Scalar minimum) {
 }
 
 /**
-   \brief Compute widths of bins having given \p values as midpoints.
-   \details
-   - Leftmost bin edge is the minimum value minus half the width of the
-   first bin.
-   - Widths are computed sequentially as twice the distance between the next
-   midpoint and the current left edge.
-*/
+ * @brief Compute widths of bins having given \p values as midpoints.
+ *
+ * @details
+ *
+ * - Leftmost bin edge is the minimum value minus half the width of the
+ *   first bin.
+ *
+ * - Widths are computed sequentially as twice the distance between the next
+ *   midpoint and the current left edge.
+ */
 template <typename Container = std::vector<double>>
 auto bin_widths(Container const &values) {
   if (values.size() < 2) {
@@ -844,7 +850,7 @@ auto bin_widths(Container const &values) {
   return get_bin_widths(values, values[0] - (midpoint - values[0]));
 }
 
-/** \brief Dot product. */
+/** @brief Dot product. */
 template <typename Container>
 auto dot(Container const &input_1, Container const &input_2) {
   typename std::decay_t<decltype(input_1[0])> result{};
@@ -854,21 +860,21 @@ auto dot(Container const &input_1, Container const &input_2) {
   return result;
 }
 
-/** \brief Dot product. */
+/** @brief Dot product. */
 inline auto dot(double input_1, double input_2) { return input_1 * input_2; }
 
-/** \brief Dot product. */
+/** @brief Dot product. */
 inline auto dot(int input_1, int input_2) { return input_1 * input_2; }
 
-/** \brief Dot product. */
+/** @brief Dot product. */
 inline auto dot(std::size_t input_1, std::size_t input_2) {
   return input_1 * input_2;
 }
 
 /**
-   \brief Container of containers dotted into container, <tt> output_i =
-   sum_j(input_1)_{ij}(input_2)_j. </tt>.
-*/
+ * @brief Container of containers dotted into container, <tt> output_i =
+ *        sum_j(input_1)_{ij}(input_2)_j</tt>.
+ */
 template <typename Container_outer, typename Container_inner>
 auto &dot(Container_outer const &input_1, Container_inner const &input_2,
           Container_inner &output) {
@@ -880,8 +886,8 @@ auto &dot(Container_outer const &input_1, Container_inner const &input_2,
 }
 
 /**
-   \brief Container of containers dotted into container, <tt> output_i =
-   sum_j(input_1)_{ij}(input_2)_j. </tt>.
+ * @brief Container of containers dotted into container, <tt> output_i =
+ *        sum_j(input_1)_{ij}(input_2)_j</tt>.
 */
 template <typename Container_outer, typename Container_inner>
 auto dot(Container_outer const &input_1, Container_inner const &input_2) {
@@ -898,7 +904,7 @@ auto dot(Container_outer const &input_1, Container_inner const &input_2) {
   }
 }
 
-/** \brief Rotate 2d vector by angle. */
+/** @brief Rotate 2d vector by angle. */
 template <typename Container>
 auto &rotate(Container const &input, double theta, Container &output) {
   double cos = std::cos(theta);
@@ -908,7 +914,7 @@ auto &rotate(Container const &input, double theta, Container &output) {
   return output;
 }
 
-/** \brief Rotate 2d vector by angle. */
+/** @brief Rotate 2d vector by angle. */
 template <typename Container>
 auto rotate(Container const &input, double theta) {
   Container output(input.size());
@@ -916,13 +922,13 @@ auto rotate(Container const &input, double theta) {
   return output;
 }
 
-/** \brief Rotate 2d vector by angle. */
+/** @brief Rotate 2d vector by angle. */
 template <typename Container>
 auto &rotate_inplace(Container &input, double theta) {
   return rotate(input, theta, input);
 }
 
-/** \brief Total number of elements in a container of containers. */
+/** @brief Total number of elements in a container of containers. */
 template <template <class> class Container_outer, typename Container_inner>
 std::size_t nr_elements(Container_outer<Container_inner> const &vv) {
   std::size_t nr_elements = 0;
@@ -938,7 +944,7 @@ std::size_t nr_elements(Container_outer<Container_inner> const &vv) {
   return nr_elements;
 }
 
-/** \brief Convolution sum. */
+/** @brief Convolution sum. */
 template <typename Container>
 auto convolution(Container const &cont_1, Container const &cont_2,
                  std::size_t idx_start, std::size_t idx_end) {
@@ -949,7 +955,7 @@ auto convolution(Container const &cont_1, Container const &cont_2,
   return res;
 }
 
-/** \brief Convolution integral using trapezoidal rule. */
+/** @brief Convolution integral using trapezoidal rule. */
 template <typename Container>
 auto convolution_trap(Container const &cont_1, Container const &cont_2,
                       std::size_t idx_start, std::size_t idx_end) {
@@ -962,7 +968,7 @@ auto convolution_trap(Container const &cont_1, Container const &cont_2,
   return res;
 }
 
-/** \brief Hamming distance. */
+/** @brief Hamming distance. */
 template <typename Container>
 auto hamming(Container const &vec, Container const &other_vec) {
   typename std::decay_t<decltype(vec[0])> hamming{};
@@ -974,67 +980,67 @@ auto hamming(Container const &vec, Container const &other_vec) {
   return hamming;
 }
 
-/** \brief Euclidean distance squared. */
+/** @brief Euclidean distance squared. */
 template <typename Container>
 double dist_sq(Container const &vec, Container const &other_vec) {
   return abs_sq(minus(vec, other_vec));
 }
 
-/** \brief Euclidean distance. */
+/** @brief Euclidean distance. */
 template <typename Container>
 double dist(Container const &vec, Container const &other_vec) {
   return abs(minus(vec, other_vec));
 }
 
-/** \brief Get component. */
+/** @brief Get component. */
 template <std::size_t dd, typename Container>
 auto project(Container const &container) {
   return container[dd];
 }
 
-/** \brief Get component overload to get number itself from a \c double. */
+/** @brief Get component overload to get number itself from a \c double. */
 template <> inline auto project<0, double>(double const &val) { return val; }
 
-/** \brief Get component overload to get number itself from an \c int. */
+/** @brief Get component overload to get number itself from an \c int. */
 template <> inline auto project<0, int>(int const &val) { return val; }
 
-/** \brief Get component overload to get number itself from an \c std::size_t.
+/** @brief Get component overload to get number itself from an \c std::size_t.
  */
 template <> inline auto project<0, std::size_t>(std::size_t const &val) {
   return val;
 }
 
-/** \brief Get component. */
+/** @brief Get component. */
 template <typename Container, typename Index = std::size_t>
 auto project(Container const &container, Index dd) {
   return container[dd];
 }
 
-/** \brief Get component overload to get number itself from a \c double. */
+/** @brief Get component overload to get number itself from a \c double. */
 template <> inline auto project<double>(double const &val, std::size_t) {
   return val;
 }
 
-/** \brief Get component overload to get number itself from an \c int. */
+/** @brief Get component overload to get number itself from an \c int. */
 template <> inline auto project<int>(int const &val, std::size_t) {
   return val;
 }
 
-/** \brief Get component overload to get number itself from an \c std::size_t.
+/** @brief Get component overload to get number itself from an \c std::size_t.
  */
 template <>
 inline auto project<std::size_t>(std::size_t const &val, std::size_t) {
   return val;
 }
 
-/** \return Factorial of \c nn. */
+/** @return Factorial of \c nn. */
 inline std::size_t factorial(std::size_t nn) {
   if (nn == 0)
     return 1;
   return nn * factorial(nn - 1);
 }
 
-/** \return <tt>nn(nn-1)...(nn-mm)</tt>. */
+/** @return <tt>nn(nn-1)...(nn-mm)</tt>. */
 inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
   std::size_t result = 1.;
   ++nn;
@@ -1044,11 +1050,11 @@ inline std::size_t factorial_incomplete(std::size_t nn, std::size_t mm) {
   return result;
 }
 
-/** \return Sign of \c val. */
+/** @return Sign of \c val. */
 template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
 /**
-   \return Cartesian power of \c set, <tt>set^{power} = set x ... x set</tt>.
+ * @return Cartesian power of \c set, <tt>set^{power} = set x ... x set</tt>.
  */
 template <typename Set>
 std::vector<std::vector<typename Set::value_type>>
@@ -1070,7 +1076,7 @@ cartesian_power(Set const &set, std::size_t power) {
   return result;
 };
 
-/** \return Outer product, <tt>output_{ij} = (input_1)_i (input_2)_j</tt>. */
+/** @return Outer product, <tt>output_{ij} = (input_1)_i (input_2)_j</tt>. */
 template <typename Container1, typename Container2>
 std::vector<std::vector<double>> outer_product(Container1 const &input_1,
                                                Container2 const &input_2) {
@@ -1087,7 +1093,7 @@ std::vector<std::vector<double>> outer_product(Container1 const &input_1,
   return output;
 }
 
-/** \brief Apply element-wise unary operation. */
+/** @brief Apply element-wise unary operation. */
 template <typename Op, typename Container1, typename Container2>
 Container2 &apply(Op &&operation, Container1 const &input, Container2 &output) {
   if constexpr (meta::has_begin_v<Container1> &&
@@ -1112,7 +1118,7 @@ Container2 &apply(Op &&operation, Container1 const &input, Container2 &output) {
   return output;
 }
 
-/** \brief Apply element-wise unary operation. */
+/** @brief Apply element-wise unary operation. */
 template <typename Op, typename Container>
 Container &apply_inplace(Op &&operation, Container &input) {
   if constexpr (meta::has_begin_v<Container>) {
@@ -1123,7 +1129,7 @@ Container &apply_inplace(Op &&operation, Container &input) {
   }
 }
 
-/** \brief Apply element-wise unary operation. */
+/** @brief Apply element-wise unary operation. */
 template <typename Op, typename Container>
 Container apply(Op &&operation, Container &input) {
   if constexpr (meta::is_constructible_from_size_v<Container>) {

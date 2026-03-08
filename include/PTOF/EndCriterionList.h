@@ -1,9 +1,10 @@
 /**
-   \file PTOF/EndCriterionList.h
-   \author Tomas Aquino
-   \date 08/05/2025
-   \brief Criteria to stop dynamics.
-*/
+ * @file   EndCriterionList.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu May  8 00:00:00 2025
+ *
+ * @brief Criteria to stop dynamics.
+ */
 
 #include <map>
 #include <string>
@@ -13,12 +14,10 @@
 
 namespace ptof {
 /**
-   \struct EndCriterionList PTOF/EndCriterionList.h "PTOF/EndCriterionList.h"
-   \brief Keep track of names and types of end criteria.
-*/
+ * @brief Keep track of names and types of end criteria.
+ */
 struct EndCriterionList {
-  /** \enum Type
-   *  \brief Implemented types. */
+  /** @brief Implemented types. */
   enum class Type {
     time,                 /**< Specified time. */
     time_max,             /**< Maximum output time. */
@@ -29,13 +28,13 @@ struct EndCriterionList {
     fraction_not_absorbed /**< Particle fraction not absorbed. */
   };
 
-  /** \return Type from name. */
+  /** @return Type from name. */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
-  /** \return Name from type. */
+  /** @return Name from type. */
   static auto name(Type type) { return type_to_name.at(type); }
 
-  /** \return \c true if name exists, \c false otherwise. */
+  /** @return \c true if name exists, \c false otherwise. */
   static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }

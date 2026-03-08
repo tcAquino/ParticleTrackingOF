@@ -1,9 +1,10 @@
 /**
-   \file PTOF/InitialCondition_Cases.h
-   \author Tomas Aquino
-   \date 24/02/2022
-   \brief Create particles according to different initial conditions.
-*/
+ * @file   InitialCondition_Cases.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Feb 24 00:00:00 2022
+ *
+ * @brief Create particles according to different initial conditions.
+ */
 
 #ifndef PTOF_INITIALCONDITION_CASES_H
 #define PTOF_INITIALCONDITION_CASES_H
@@ -32,29 +33,33 @@
 
 namespace ptof {
 /**
-   \class InitialCondition_Cases PTOF/InitialCondition_Cases.h
-   "PTOF/InitialCondition_Cases.h"
-   \brief InitialCondition object to handle implemented initial condition types.
-*/
+ * @brief InitialCondition object to handle implemented initial condition types.
+ */
 template <typename Particle, typename Geometry> class InitialCondition_Cases {
 public:
   using Parameters =
-      InitialConditionParameters_Cases; /**< Initial condition parameters.*/
+      InitialConditionParameters_Cases; /**< Initial condition parameters. */
 
   std::size_t const
       nr_particles; /**< Number of particles per injection step. */
   InitialConditionList::Type type; /**< Type of initial condition. */
 
   /**
-     \brief Constructor.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field as a function of state.
-     \param nr_particles Number of particles to make.
-     \param parameters Output parameters.
-     \param mask Scalar field.
-     \param threshold Threshold for the mask, such that cells where the mask is
-     above or equal to the threshold are considered.
-  */
+   * @brief Constructor.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param nr_particles Number of particles to make.
+   *
+   * @param parameters Output parameters.
+   *
+   * @param mask Scalar field.
+   *
+   * @param threshold Threshold for the mask, such that cells where the mask is
+   *                  above or equal to the threshold are considered.
+   */
   template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   InitialCondition_Cases(Geometry const &geometry,
                          VelocityField const &velocity_field,
@@ -68,9 +73,10 @@ public:
             set_type(geometry, velocity_field, parameters, mask, threshold)} {}
 
   /**
-     \brief Constructor.
-     \note Specifies \c Particle type.
-  */
+   * @brief Constructor.
+   *
+   * @note Specifies \c Particle type.
+   */
   template <typename VelocityField = meta::Empty, typename Mask = meta::Empty>
   InitialCondition_Cases(meta::Selector_t<Particle>, Geometry const &geometry,
                          VelocityField const &velocity_field,
@@ -110,64 +116,75 @@ public:
                          Mask const & = {}, double = 0.) = delete;
 
   /**
-     \brief Make particles according to prescribed initial condition and
-     particle maker, with \c nr_particles particles as specified in \c
-     parameters.
-     \return Container with particles.
-  */
+   * @brief Make particles according to prescribed initial condition and
+   *        particle maker, with \c nr_particles particles as specified in \c
+   *        parameters.
+   *
+   * @return Container with particles.
+   */
   auto operator()() { return make_particles(nr_particles); }
 
   /**
-     \brief Make particles.
-     \param nr_particles Number of particles to make.
-     \return Container with particles.
-  */
+   * @brief Make particles.
+   *
+   * @param nr_particles Number of particles to make.
+   *
+   * @return Container with particles.
+   */
   auto operator()(std::size_t nr_particles) {
     return make_particles(nr_particles);
   }
 
   /**
-     \brief Make a single particle.
-     \return One particle.
-  */
+   * @brief Make a single particle.
+   *
+   * @return One particle.
+   */
   auto make_particle() { return _initial_condition->make_particle(); }
 
   /**
-     \brief Make a single position.
-     \return Position.
-  */
+   * @brief Make a single position.
+   *
+   * @return Position.
+   */
   auto make_position() { return _initial_condition->make_position(); }
 
   /**
-     \brief Make a single position along with location cell.
-     \return Position and cell.
-  */
+   * @brief Make a single position along with location cell.
+   *
+   * @return Position and cell.
+   */
   auto make_position_and_cell() {
     return _initial_condition->make_position_and_cell();
   }
 
   /**
-     \brief Make particles.
-     \param nr_particles Number of particles to make.
-     \return Container with particles.
-  */
+   * @brief Make particles.
+   *
+   * @param nr_particles Number of particles to make.
+   *
+   * @return Container with particles.
+   */
   auto make_particles(std::size_t nr_particles) {
     return _initial_condition->make_particles(nr_particles);
   };
 
   /**
-     \brief Make positions.
-     \param nr_positions Number of positions to make.
-     \return Container with positions.
-  */
+   * @brief Make positions.
+   *
+   * @param nr_positions Number of positions to make.
+   *
+   * @return Container with positions.
+   */
   auto make_positions(std::size_t nr_positions) {
     return _initial_condition->make_positions(nr_particles);
   };
 
   /**
-     \brief Output information about current object.
-     \param output Output stream.
-  */
+   * @brief Output information about current object.
+   *
+   * @param output Output stream.
+   */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Initial condition\n"
            << io::line() << "Type: " << InitialConditionList::name(type)

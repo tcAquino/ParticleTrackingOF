@@ -1,10 +1,10 @@
 /**
- \file General/Ranges.h
- \author Tomas Aquino
- \date 08/06/2016
-*/
-
-// Initialize and set containers to ranges
+ * @file   Ranges.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Jun  8 00:00:00 2016
+ *
+ * @brief Range-related container utilities.
+ */
 
 #ifndef GENERAL_RANGES_H
 #define GENERAL_RANGES_H
@@ -16,10 +16,10 @@
 #include <vector>
 
 /**
-   \namespace range Numerical sequences with different inter-element spacings.
-*/
+ * @namespace range Numerical sequences with different inter-element spacings.
+ */
 namespace range {
-/** \return Linear partition of [\p xx1, \p xx2] with \p nr_points points. */
+/** @return Linear partition of (\p xx1, \p xx2) with \p nr_points points. */
 template <template <typename...> typename Container = std::vector,
           typename Scalar, typename... Args>
 Container<Scalar, Args...> linspace(Scalar xx1, Scalar xx2,
@@ -53,7 +53,7 @@ Container<Scalar, Args...> linspace(Scalar xx1, Scalar xx2,
   }
 }
 
-/** \return log partition of [\p xx1, \p xx2] with \p nr_points points. **/
+/** @return log partition of (\p xx1, \p xx2) with \p nr_points points. **/
 template <template <typename...> typename Container = std::vector,
           typename Scalar, typename... Args>
 Container<Scalar, Args...> logspace(Scalar xx1, Scalar xx2,
@@ -87,10 +87,11 @@ Container<Scalar, Args...> logspace(Scalar xx1, Scalar xx2,
 }
 
 /**
-   \return Linear partition of \c xx1 up to \c xx2 (excluded), with spacing
-   given by \p increment.
-   \note For signed \c Scalar types, the last element can be smaller than the
-   first. The sign of the increment is adjusted automatically.
+ * @return Linear partition of \c xx1 up to \c xx2 (excluded), with spacing
+ *         given by \p increment.
+ *
+ * @note For signed \c Scalar types, the last element can be smaller than the
+ *       first. The sign of the increment is adjusted automatically.
  */
 template <template <typename...> typename Container = std::vector,
           typename Scalar, typename... Args>
@@ -127,7 +128,7 @@ Container<Scalar, Args...> range(Scalar xx1, Scalar increment, Scalar xx2) {
   }
 }
 
-/** \return Linear partition of [\p xx1, \p xx2] with unit spacing. */
+/** @return Linear partition of (\c xx1, \c xx2) with unit spacing. */
 template <template <typename...> typename Container = std::vector,
           typename Scalar, typename... Args>
 Container<Scalar, Args...> range(Scalar xx1, Scalar xx2) {

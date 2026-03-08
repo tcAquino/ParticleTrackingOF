@@ -1,9 +1,10 @@
 /**
-   \file Roots/Roots.h
-   \author Tomas Aquino
-   \date 09/03/2022
-   \brief Root-finding algorithms.
-*/
+ * @file   Roots.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Mar  9 00:00:00 2022
+ *
+ * @brief Root-finding algorithms.
+ */
 
 #ifndef PTOF_ROOTS_H
 #define PTOF_ROOTS_H
@@ -11,6 +12,7 @@
 #include <cmath>
 #include <cstddef>
 
+/** @brief Newton-Raphson algorithm to find roots. */
 namespace roots {
 class NewtonRaphson {
 public:
@@ -35,6 +37,7 @@ private:
   double _func_val;
 };
 
+/** @brief Bisection algorithm to find roots. */
 class Bisection {
 public:
   template <typename Func>

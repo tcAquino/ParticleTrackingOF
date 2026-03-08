@@ -1,9 +1,10 @@
 /**
-   \file PTOF/SolverParameters.h
-   \author Tomas Aquino
-   \date 19/01/2025
-   \brief Solver parameters and utilities.
-*/
+ * @file   SolverParameters.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Jan 19 00:00:00 2025
+ *
+ * @brief Solver parameters and utilities.
+ */
 
 #ifndef PTOF_SOLVERPARAMETERS_H
 #define PTOF_SOLVERPARAMETERS_H
@@ -22,6 +23,9 @@
 namespace ptof {
 template <typename Stepper_Advection, typename Stepper_Diffusion,
           bool reaction_v, typename Stepper_CTRW>
+/**
+ * @brief Generic parameters for dynamical evolution (time integrators, etc.).
+ */
 struct SolverParameters_Generic {
   static constexpr bool advection =
       !std::is_same_v<Stepper_Advection, meta::Empty>;
@@ -214,9 +218,10 @@ struct SolverParameters_Generic {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Solver parameters\n"
            << io::line()

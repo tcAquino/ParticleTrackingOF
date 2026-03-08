@@ -1,8 +1,9 @@
 /**
-   \file PTOF/SurfaceReaction.h
-   \author Tomas Aquino
-   \date 10/03/2022
-   \brief Objects and utilities for surface and bulk reactions.
+ * @file   SurfaceReaction.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Mar 10 00:00:00 2022
+
+ * @brief Objects and utilities for surface and bulk reactions.
 */
 
 #ifndef PTOF_SURFACEREACTION_H
@@ -28,13 +29,17 @@
 
 namespace ptof {
 /**
-   \brief Append homogeneous surface concentrations over patch faces to map.
-   \param face_ids Mesh face indices where to assign concentration.
-   \param surface_concentration Homogeneous surface concentration value.
-   \param mesh Mesh object.
-   \param surface_concentrations Map of surface concentrations over given face
-   indices, to append result.
-*/
+ * @brief Append homogeneous surface concentrations over patch faces to map.
+ *
+ * @param face_ids Mesh face indices where to assign concentration.
+ *
+ * @param surface_concentration Homogeneous surface concentration value.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param surface_concentrations Map of surface concentrations over given face
+ *                               indices, to append result.
+ */
 template <typename Container, typename Mesh>
 void uniform_solid_reactant(
     Container const &face_ids, double surface_concentration, Mesh const &mesh,
@@ -45,12 +50,15 @@ void uniform_solid_reactant(
 }
 
 /**
-   \param patch_names Mesh patch names where to assign concentration.
-   \param surface_concentration_values Surface concentration value in each
-   patch.
-   \param mesh Mesh object.
-   \return Map of homogeneous surface concentrations over patch face indices.
-*/
+ * @param patch_names Mesh patch names where to assign concentration.
+ *
+ * @param surface_concentration_values Surface concentration value in each
+ *                                     patch.
+ *
+ * @param mesh Mesh object.
+ *
+ * @return Map of homogeneous surface concentrations over patch face indices.
+ */
 template <typename Mesh>
 auto uniform_solid_reactant(
     std::vector<std::string> const &patch_names,
@@ -65,12 +73,15 @@ auto uniform_solid_reactant(
 }
 
 /**
-   \brief Append surface concentrations over face ids to map.
-   \param face_ids Mesh face indices where to assign concentration.
-   \param surface_concentration_values Surface concentration values.
-   \param surface_concentrations Map of surface concentrations over given face
-   indices, to append result.
-*/
+ * @brief Append surface concentrations over face ids to map.
+ *
+ * @param face_ids Mesh face indices where to assign concentration.
+ *
+ * @param surface_concentration_values Surface concentration values.
+ *
+ * @param surface_concentrations Map of surface concentrations over given face
+ *                               indices, to append result.
+ */
 template <typename Container>
 void solid_reactant(
     Container const &face_ids,
@@ -83,10 +94,12 @@ void solid_reactant(
 }
 
 /**
-   \param face_ids Mesh face indices where to assign concentration.
-   \param surface_concentration_values Surface concentration values.
-   \return Map of homogeneous surface concentrations over patch face indices.
-*/
+ * @param face_ids Mesh face indices where to assign concentration.
+ *
+ * @param surface_concentration_values Surface concentration values.
+ *
+ * @return Map of homogeneous surface concentrations over patch face indices.
+ */
 template <typename Container>
 auto solid_reactant(Container const &face_ids,
                     std::vector<double> const &surface_concentration_values) {
@@ -96,23 +109,22 @@ auto solid_reactant(Container const &face_ids,
   return surface_concentrations;
 }
 
-/**
-   \class SurfaceReaction_AFluidPlusASolidtoASolid PTOF/SurfaceReaction.h
-   "PTOF/SurfaceReaction.h"
-   \brief \f$A_F + A_S \to A_S\f$ surface reaction.
-*/
+/** @brief \f$A_F + A_S \to A_S\f$ surface reaction. */
 class SurfaceReaction_AFluidPlusASolidtoASolid {
 public:
   /** Container to hold reactant surface concentrations. */
   using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
 
   /**
-     \brief Constructor.
-     \param rate_constant Surface reaction rate per solid concentration.
-     \param diff_coeff Diffusion coefficient.
-     \param surface_concentrations Map of initial reactive surface
-     concentrations over mesh faces.
-  */
+   * @brief Constructor.
+   *
+   * @param rate_constant Surface reaction rate per solid concentration.
+   *
+   * @param diff_coeff Diffusion coefficient.
+   *
+   * @param surface_concentrations Map of initial reactive surface
+   *                               concentrations over mesh faces.
+   */
   SurfaceReaction_AFluidPlusASolidtoASolid(
       double rate_constant, double diff_coeff,
       SurfaceConcentrations surface_concentrations)
@@ -120,11 +132,14 @@ public:
         surface_concentrations{surface_concentrations} {}
 
   /**
-     \brief React over exposure time.
-     \param state State of particle to react.
-     \param state_old Previous state of particle.
-     \param face Mesh face index where reaction occurs.
-  */
+   * @brief React over exposure time.
+   *
+   * @param state State of particle to react.
+   *
+   * @param state_old Previous state of particle.
+   *
+   * @param face Mesh face index where reaction occurs.
+   */
   template <typename State>
   void operator()(State &state, State const &state_old, Foam::label face) {
     double exposure_time = state.time - state_old.time;
@@ -136,9 +151,10 @@ public:
   }
 
   /**
-     \param face Mesh face index.
-     \return Surface reaction rate at face.
-  */
+   * @param face Mesh face index.
+   *
+   * @return Surface reaction rate at face.
+   */
   double rate(Foam::label face) const {
     if (surface_concentrations.count(face)) {
       return rate_constant * surface_concentrations.at(face);
@@ -147,9 +163,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     return output << io::line() << "Surface reaction\n"
                   << io::line() << "A_Fluid + A_Solid -> A_Solid\n"
@@ -163,11 +180,9 @@ public:
 };
 
 /**
-   \class SurfaceReaction_LinearSorption PTOF/SurfaceReaction.h
-   "PTOF/SurfaceReaction.h"
-   \brief \f$A_F + A_S \leftrightarrow A_S\f$ surface reaction with distributed
-   desorption (back-reaction) time.
-*/
+ * @brief \f$A_F + A_S \leftrightarrow A_S\f$ surface reaction with distributed
+ *        desorption (back-reaction) time.
+ */
 template <typename ParallelOption, typename TimeGenerator_Desorption,
           typename Engine = std::mt19937>
 class SurfaceReaction_LinearSorption {
@@ -176,13 +191,17 @@ public:
   using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
 
   /**
-     \brief Constructor.
-     \param rate_constant Surface reaction rate per solid concentration.
-     \param diff_coeff Diffusion coefficient.
-     \param surface_concentrations Map of initial reactive surface
-     concentrations over mesh faces.
-     \param desorption_time Time generator object for desorption times.
-  */
+   * @brief Constructor.
+   *
+   * @param rate_constant Surface reaction rate per solid concentration.
+   *
+   * @param diff_coeff Diffusion coefficient.
+   *
+   * @param surface_concentrations Map of initial reactive surface
+   *                               concentrations over mesh faces.
+   *
+   * @param desorption_time Time generator object for desorption times.
+   */
   SurfaceReaction_LinearSorption(double rate_constant, double diff_coeff,
                                  SurfaceConcentrations surface_concentrations,
                                  TimeGenerator_Desorption &&desorption_time)
@@ -192,13 +211,17 @@ public:
             std::forward<TimeGenerator_Desorption>(desorption_time)} {}
 
   /**
-     \brief Constructor.
-     \param rate_constant Surface reaction rate per solid concentration.
-     \param diff_coeff Diffusion coefficient.
-     \param surface_concentrations Map of initial reactive surface
-     concentrations over mesh faces.
-     \param desorption_rate Exponential desorption time rate./
-  */
+   * @brief Constructor.
+   *
+   * @param rate_constant Surface reaction rate per solid concentration.
+   *
+   * @param diff_coeff Diffusion coefficient.
+   *
+   * @param surface_concentrations Map of initial reactive surface
+   *                               concentrations over mesh faces.
+   *
+   * @param desorption_rate Exponential desorption time rate.
+   */
   SurfaceReaction_LinearSorption(double rate_constant, double diff_coeff,
                                  SurfaceConcentrations surface_concentrations,
                                  double desorption_rate)
@@ -224,11 +247,14 @@ public:
                                        desorption_rate} {}
 
   /**
-     \brief React over exposure time.
-     \param state State of particle to react.
-     \param state_old Previous state of particle.
-     \param face Mesh face index where reaction occurs.
-  */
+   * @brief React over exposure time.
+   *
+   * @param state State of particle to react.
+   *
+   * @param state_old Previous state of particle.
+   *
+   * @param face Mesh face index where reaction occurs.
+   */
   template <typename State>
   void operator()(State &state, State const &state_old, Foam::label face) {
     double exposure_time = state.time - state_old.time;
@@ -241,18 +267,17 @@ public:
     }
   }
 
-  /**
-     \brief Desorb after distributed time.
-  */
+  /** @brief Desorb after distributed time. */
   template <typename State> void desorb(State &state) {
     state.time += _desorption_time(state);
     state.info.adsorbed = false;
   }
 
   /**
-     \param face Mesh face index.
-     \return Surface reaction rate at face.
-  */
+   * @param face Mesh face index.
+   *
+   * @return Surface reaction rate at face.
+   */
   double rate(Foam::label face) const {
     if (surface_concentrations.count(face)) {
       return rate_constant * surface_concentrations.at(face);
@@ -261,9 +286,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     return output << io::line() << "Surface reaction\n"
                   << io::line() << "A_Fluid + A_Solid -> A_Solid\n"
@@ -293,11 +319,7 @@ SurfaceReaction_LinearSorption(double, double,
     -> SurfaceReaction_LinearSorption<ParallelOption, TimeGenerator_Desorption,
                                       std::mt19937>;
 
-/**
-   \class SurfaceReaction_AFluidPlusASolidtoNothing PTOF/SurfaceReaction.h
-   "PTOF/SurfaceReaction.h"
-   \brief \f$A_F + A_S \to \emptyset\f$ surface reaction.
-*/
+/** @brief \f$A_F + A_S \to \emptyset\f$ surface reaction. */
 template <typename Locator, typename ParallelOption>
 class SurfaceReaction_AFluidPlusASolidtoNothing {
 public:
@@ -305,16 +327,21 @@ public:
   using SurfaceConcentrations = std::unordered_map<Foam::label, double>;
 
   /**
-     \brief Constructor.
-     \param rate_constant Surface reaction rate per solid concentration
-     for fluid phase.
-     \param rate_constant_ratio_solid_to_fluid Ratio of reactions for solid and
-     fluid phase concentrations.
-     \param diff_coeff Diffusion coefficient.
-     \param surface_concentrations Map of initial reactive surface
-     concentrations over mesh faces.
-     \param locator Object to locate points in mesh.
-  */
+   * @brief Constructor.
+   *
+   * @param rate_constant Surface reaction rate per solid concentration
+   *                      for fluid phase.
+   *
+   * @param rate_constant_ratio_solid_to_fluid Ratio of reactions for solid and
+   *                                           fluid phase concentrations.
+   *
+   * @param diff_coeff Diffusion coefficient.
+   *
+   * @param surface_concentrations Map of initial reactive surface
+   *                               concentrations over mesh faces.
+   *
+   * @param locator Object to locate points in mesh.
+   */
   SurfaceReaction_AFluidPlusASolidtoNothing(
       double rate_constant, double rate_constant_ratio_solid_to_fluid,
       double diff_coeff, SurfaceConcentrations surface_concentrations,
@@ -327,11 +354,14 @@ public:
         _face_to_tags_times(par::get_num_threads(ParallelOption{})) {}
 
   /**
-     \brief React over exposure time.
-     \param state State of particle to react.
-     \param state_old Previous state of particle.
-     \param face Mesh face index where reaction occurs.
-  */
+   * @brief React over exposure time.
+   *
+   * @param state State of particle to react.
+   *
+   * @param state_old Previous state of particle.
+   *
+   * @param face Mesh face index where reaction occurs.
+   */
   template <typename State>
   void operator()(State &state, State const &state_old, Foam::label face) {
     if (!surface_concentrations.count(face)) {
@@ -347,9 +377,10 @@ public:
   }
 
   /**
-     \param face Mesh face index.
-     \return Surface reaction rate for fluid phase at face.
-  */
+   * @param face Mesh face index.
+   *
+   * @return Surface reaction rate for fluid phase at face.
+   */
   double rate(Foam::label face) const {
     if (surface_concentrations.count(face)) {
       return rate_constant * surface_concentrations.at(face);
@@ -358,9 +389,10 @@ public:
   }
 
   /**
-     \param face Mesh face index.
-     \return Surface reaction rate for solid phase at face.
-  */
+   * @param face Mesh face index.
+   *
+   * @return Surface reaction rate for solid phase at face.
+   */
   double solid_rate(Foam::label face) const {
     if (surface_concentrations.count(face)) {
       return solid_rate_constant * surface_concentrations.at(face);
@@ -369,9 +401,10 @@ public:
   }
 
   /**
-     \param face Mesh face index.
-     \return Surface reaction rate for fluid and solid phases at face.
-  */
+   * @param face Mesh face index.
+   *
+   * @return Surface reaction rate for fluid and solid phases at face.
+   */
   std::vector<double> rates(Foam::label face) const {
     if (surface_concentrations.count(face)) {
       double fluid_rate = solid_rate_constant * surface_concentrations.at(face);
@@ -381,9 +414,10 @@ public:
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     return output << io::line() << "Surface reaction\n"
                   << io::line() << "A_Fluid + A_Solid -> Nothing\n"
@@ -391,9 +425,9 @@ public:
   }
 
   /**
-     \brief Update masses and surfaces concentrations according to stored
-     particle-boundary collisions.
-  **/
+   * @brief Update masses and surfaces concentrations according to stored
+   *        particle-boundary collisions.
+   **/
   template <typename CTRW>
   void update(CTRW &ctrw, typename CTRW::State::Time time_new,
               typename CTRW::State::Time time_old) {
@@ -438,7 +472,7 @@ public:
       surface_concentrations; /**< Map of concentrations over reactive faces. */
 
 private:
-  Locator _locator; /**< To locate positions in mesh.*/
+  Locator _locator; /**< To locate positions in mesh. */
 
   struct TagTime {
     std::size_t tag;
@@ -446,10 +480,9 @@ private:
   }; /**< Particle tag and time to record face hits. */
 
   /**
-     \struct TagTime_SetComparator
-     \brief When used as a comparator function with std::set, this orders by
-     times but considers elements equal if they have equal tags.
-  */
+   * @brief When used as a comparator function with std::set, this orders by
+   *        times but considers elements equal if they have equal tags.
+   */
   struct TagTime_SetComparator {
     bool operator()(TagTime const &v1, TagTime const &v2) const {
       return (v1.time < v2.time) & (v1.tag != v2.tag);
@@ -465,10 +498,12 @@ private:
                               times of hitting faces, one per thread. */
 
   /**
-     \brief Merge collision data across threads.
-     \note Merge maps, but keep only one face hit per particle for
-     parallelization reasons. This is fine in the limit of small time step.
-  */
+   * @brief Merge collision data across threads.
+   *
+   * @note Merge maps, but keep only one face hit per particle for
+   *       parallelization reasons. This is fine in the limit of small time
+   *       step.
+   */
   auto merge_and_clear_hits() {
     FaceTagTimeContainer merged_face_to_tags_times;
     for (auto &container : _face_to_tags_times) {
@@ -490,11 +525,14 @@ private:
   }
 
   /**
-     \brief Update particle masses and surface concentration at face.
-     \param state State of particle to react.
-     \param state_old Previous state of particle.
-     \param face Mesh face index where reaction occurs.
-  */
+   * @brief Update particle masses and surface concentration at face.
+   *
+   * @param state State of particle to react.
+   *
+   * @param state_old Previous state of particle.
+   *
+   * @param face Mesh face index where reaction occurs.
+   */
   template <typename State>
   void update_mass_and_surface_concentration(State state,
                                              State const &state_old,
@@ -528,31 +566,35 @@ SurfaceReaction_AFluidPlusASolidtoNothing(
     -> SurfaceReaction_AFluidPlusASolidtoNothing<Locator, ParallelOption>;
 
 /**
-   \class SurfaceReaction_DoNothing PTOF/SurfaceReaction.h
    "PTOF/SurfaceReaction.h" \brief Surface reaction that does nothing.
 */
 class SurfaceReaction_DoNothing {
 public:
   /**
-     \param state State of particle to react (unused).
-     \param state_old Previous state of particle (unused).
-     \param face Mesh face index where reaction occurs (unused).
-     \brief React over exposure time (do nothing).
-  */
+   * @param state State of particle to react (unused).
+   *
+   * @param state_old Previous state of particle (unused).
+   *
+   * @param face Mesh face index where reaction occurs (unused).
+   *
+   * @brief React over exposure time (do nothing).
+   */
   template <typename State>
   void operator()(State &state, State const &state_old,
                   Foam::label face) const {}
 
   /**
-     \param face Mesh face index (unused).
-     \return Surface reaction rate at face (always 0.).
-  */
+   * @param face Mesh face index (unused).
+   *
+   * @return Surface reaction rate at face (always 0.).
+   */
   double rate(Foam::label face) const { return 0.; }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   inline static std::ostream &info(std::ostream &output) {
     return output << io::line() << "Surface reaction\n"
                   << io::line() << "None\n"

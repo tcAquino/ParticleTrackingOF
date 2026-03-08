@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Transitions.h
-   \author Tomas Aquino
-   \date 09/03/2022
-   \brief Objects to handle particle dynamics.
-*/
+ * @file   Transitions.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Mar  9 00:00:00 2022
+ *
+ * @brief Objects to handle particle dynamics.
+ */
 
 #ifndef PTOF_TRANSITIONS_H
 #define PTOF_TRANSITIONS_H
@@ -52,7 +53,7 @@ Transitions_Transport_Reaction(Transitions_Transport &&, BulkReaction &&,
     -> Transitions_Transport_Reaction<Transitions_Transport, BulkReaction,
                                       SurfaceReaction>;
 
-/** \brief Make Transitions object to handle transport. */
+/** @brief Make Transitions object to handle transport. */
 template <typename Solvers, typename Geometry, typename VelocityField,
           typename Boundary, typename TransportParameters,
           typename ReactionParameters>
@@ -72,12 +73,14 @@ auto makeTransportTransitions(
 }
 
 /**
-   \brief Make Transitions object to handle transport and reaction.
-   \details Conservative transitions and reaction are determined from template
-   parameters that must be explicitly specified:
-   - \tparam TransportHandler Conservative transport information.
-   - \tparam ReactionHandler Reaction information.
-*/
+ * @brief Make Transitions object to handle transport and reaction.
+ *
+ * @details Conservative transitions and reaction are determined from template
+ *          parameters that must be explicitly specified.
+ *
+ * \tparam TransportHandler Conservative transport information.
+ * \tparam ReactionHandler Reaction information.
+ */
 template <typename TransportHandler, typename Solvers, typename ReactionHandler,
           typename VelocityField, typename Geometry, typename Boundary>
 auto makeTransitions(
@@ -97,11 +100,13 @@ auto makeTransitions(
 }
 
 /**
-   \brief Make Transitions object to handle transport and reaction.
-   \details Conservative transitions are determined from template parameters
-   that must be explicitly specified:
-   - \tparam TransportHandler Conservative transport information.
-*/
+ * @brief Make Transitions object to handle transport and reaction.
+ *
+ * @details Conservative transitions are determined from template parameters
+ *          that must be explicitly specified.
+ *
+ * \tparam TransportHandler Conservative transport information.
+ */
 template <typename TransportHandler, typename Solvers, typename VelocityField,
           typename Geometry, typename Boundary, typename ReactionParameters,
           typename BulkReaction>

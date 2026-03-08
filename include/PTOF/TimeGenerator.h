@@ -1,9 +1,10 @@
 /**
-   \file PTOF/TimeGenerator.h
-   \author Tomas Aquino
-   \date 09/26/2017
-   \brief Objects time increment generation.
-*/
+ * @file   TimeGenerator.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sat Feb  9 00:00:00 2019
+ *
+ * @brief Objects time increment generation.
+ */
 
 #ifndef PTOF_TIMEGENERATOR_H
 #define PTOF_TIMEGENERATOR_H
@@ -23,13 +24,13 @@
 
 namespace ptof {
 /**
-   \class TimeGenerator_Adaptive PTOF/TimeGenerator.h
-   "PTOF/TimeGenerator.h"
-   \brief Adaptive time step control based on local cell size.
-   \details Takes reaction limitations to time step only if close to reactive
-   boundary.
-   \note See CheckOptions class for bounds checking options.
-*/
+ * @brief Adaptive time step control based on local cell size.
+ *
+ * @details Takes reaction limitations to time step only if close to reactive
+ *          boundary.
+ *
+ * @note See CheckOptions class for bounds checking options.
+ */
 template <typename Geometry, typename VelocityField, typename SurfaceReaction,
           typename CheckOption = CheckOptions::Check>
 class TimeGenerator_Adaptive {
@@ -43,14 +44,20 @@ public:
       std::is_same_v<CheckOption, CheckOptions::Warn>;
 
   /**
-     \brief Constructor.
-     \param geometry Domain geometry info and utilities.
-     \param velocity_field Velocity field as a function of state.
-     \param surface_reaction Surface reaction handler.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-  */
+   * @brief Constructor.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param surface_reaction Surface reaction handler.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
   TimeGenerator_Adaptive(Geometry const &geometry,
@@ -87,14 +94,20 @@ public:
   }
 
   /**
-   \brief Constructor.
-   \param geometry Domain geometry info and utilities.
-   \param velocity_field Velocity field as a function of state.
-   \param surface_reaction Surface reaction handler.
-   \param params_transport Transport parameters.
-   \param params_reaction Reaction parameters.
-   \param params_solvers Solver parameters.
-*/
+   * @brief Constructor.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param surface_reaction Surface reaction handler.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
   TimeGenerator_Adaptive(Geometry const &geometry,
@@ -163,10 +176,12 @@ public:
                          CheckOption) = delete;
 
   /**
-     \brief Compute adaptive time step.
-     \param state Particle state.
-     \return New time step.
-  */
+   * @brief Compute adaptive time step.
+   *
+   * @param state Particle state.
+   *
+   * @return New time step.
+   */
   template <typename State> double operator()(State const &state) const {
     double local_time_step = local_time_step_constraint(state);
     double time_step = _min_global_local
@@ -181,12 +196,16 @@ public:
 
 private:
   /**
-     \brief Compute global time step constraint.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-     \note Deals with edge cases where constraint values are zero or infinity.
-  */
+   * @brief Compute global time step constraint.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   *
+   * @note Deals with edge cases where constraint values are zero or infinity.
+   */
   template <typename TransportParameters, typename ReactionParameters,
             typename SolverParameters>
   double
@@ -229,7 +248,7 @@ private:
                      params_solvers.global_time_step});
   }
 
-  /** \brief Compute local time step constraint for state \c state. */
+  /** @brief Compute local time step constraint for state \c state. */
   template <typename State>
   double local_time_step_constraint(State const &state) const {
     auto cell_id = state.cell;
@@ -281,21 +300,21 @@ private:
     return local_time_step;
   }
 
-  /** \brief Compute local advection time. */
+  /** @brief Compute local advection time. */
   template <typename State>
   double advection_time(State const &state, double cell_side) const {
     return _constrain_local_adv ? cell_side / Foam::mag(_velocity_field(state))
                                 : 1.;
   }
 
-  /** \brief Compute local diffusion time. */
+  /** @brief Compute local diffusion time. */
   template <typename State>
   double diffusion_time(State const &state, double cell_side) const {
     return _constrain_local_diff ? cell_side * cell_side / (2. * _diff_coeff)
                                  : 1.;
   }
 
-  /** \brief Compute local temporal advection variabiliy time. */
+  /** @brief Compute local temporal advection variabiliy time. */
   template <typename State>
   double temporal_advection_time(State state, double cell_side) const {
     if (_constrain_local_temporal_adv) {

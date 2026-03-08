@@ -1,9 +1,10 @@
 /**
-   \file PTOF/State.h
-   \author Tomas Aquino
-   \date 21/02/2022
-   \brief Particle states.
-*/
+ * @file   State.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Mon Feb 21 00:00:00 2022
+ *
+ * @brief Particle states.
+ */
 
 #ifndef PTOF_STATE_H
 #define PTOF_STATE_H
@@ -20,16 +21,22 @@
 
 namespace ptof {
 /**
-   \class State1D PTOF/State.h "PTOF/State.h"
-   \brief State for 1D positions.
-   \details Defines:
-   - \c position
-   - \c cell
-   - \c time
-   - \c mass
-   - \c tag
-   - \c info
-*/
+ * @brief State for 1D positions.
+ *
+ * @details Defines:
+ *
+ * - \c position
+ *
+ * - \c cell
+ *
+ * - \c time
+ *
+ * - \c mass
+ *
+ * - \c tag
+ *
+ * - \c info
+ */
 template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
           typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State1D {
@@ -47,28 +54,28 @@ struct State1D {
   Mass mass{};
   Tag tag{};
 
-  /** \brief Set position from 3D point. */
+  /** @brief Set position from 3D point. */
   void set_position(Foam::point const &point) { position = point[0]; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   void set_position(Position const &position) { this->position = position; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   template <typename Position> void set_position(Position const &position) {
     set_position(make_position(position));
   }
 
-  /** \brief Set position and cell. */
+  /** @brief Set position and cell. */
   template <typename Position>
   void set_position(Position const &position, Cell cell) {
     set_position(position);
     this->cell = cell;
   }
 
-  /** \brief Make position from 3D point. */
+  /** @brief Make position from 3D point. */
   static Position make_position(Foam::point const &point) { return point[0]; }
 
-  /** \brief Make position. */
+  /** @brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
     if (position.size() > 0)
@@ -79,16 +86,22 @@ struct State1D {
 };
 
 /**
-   \class State2D PTOF/State.h "PTOF/State.h"
-   \brief State for 2D positions.
-   \details Defines:
-   - \c position
-   - \c cell
-   - \c time
-   - \c mass
-   - \c tag
-   - \c info
-*/
+ * @brief State for 2D positions.
+ *
+ * @details Defines:
+ *
+ * - \c position
+ *
+ * - \c cell
+ *
+ * - \c time
+ *
+ * - \c mass
+ *
+ * - \c tag
+ *
+ * - \c info
+ */
 template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
           typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State2D {
@@ -106,32 +119,32 @@ struct State2D {
   Mass mass{};
   Tag tag{};
 
-  /** \brief Set position from 3D point. */
+  /** @brief Set position from 3D point. */
   void set_position(Foam::point const &point) {
     position[0] = point[0];
     position[1] = point[1];
   }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   void set_position(Position const &position) { this->position = position; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   template <typename Position> void set_position(Position const &position) {
     set_position(make_position(position));
   }
 
-  /** \brief Set position and cell. */
+  /** @brief Set position and cell. */
   template <typename Position>
   void set_position(Position const &position, Cell cell) {
     set_position(position);
     this->cell = cell;
   }
-  /** \return Position from 3D point. */
+  /** @return Position from 3D point. */
   static Position make_position(Foam::point const &point) {
     return Position{point[0], point[1]};
   }
 
-  /** \brief Make position. */
+  /** @brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
     if (position.size() > 1) {
@@ -145,16 +158,22 @@ struct State2D {
 };
 
 /**
-   \class State3D PTOF/State.h "PTOF/State.h"
-   \brief State for 3D positions.
-   \details Defines:
-   - \c position
-   - \c cell
-   - \c time
-   - \c mass
-   - \c tag
-   - \c info
-*/
+ * @brief State for 3D positions.
+ *
+ * @details Defines:
+ *
+ * - \c position
+ *
+ * - \c cell
+ *
+ * - \c time
+ *
+ * - \c mass
+ *
+ * - \c tag
+ *
+ * - \c info
+ */
 template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
           typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State3D {
@@ -172,24 +191,24 @@ struct State3D {
   Mass mass{};
   Tag tag{};
 
-  /** \brief Set position from 3D point. */
+  /** @brief Set position from 3D point. */
   void set_position(Foam::point const &point) { position = point; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   template <typename Position> void set_position(Position const &position) {
     set_position(make_position(position));
   }
 
-  /** \brief Set position and cell. */
+  /** @brief Set position and cell. */
   template <typename Position>
   void set_position(Position const &position, Cell cell) {
     set_position(position);
     this->cell = cell;
   }
-  /** \return Position from 3D point. */
+  /** @return Position from 3D point. */
   static Position make_position(Foam::point const &point) { return point; }
 
-  /** \brief Make position. */
+  /** @brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
     if (position.size() > 2) {
@@ -203,9 +222,10 @@ struct State3D {
 };
 
 /**
-   \return State for 1D positions.
-   \details Locate mesh cell using \c Locator object.
-*/
+ * @return State for 1D positions.
+ *
+ * @details Locate mesh cell using \c Locator object.
+ */
 template <typename Info, typename Locator, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D<Info, Time, Mass, Tag>
@@ -220,9 +240,10 @@ make_state(Foam::scalar position, Info const &info, Locator const &locator,
 }
 
 /**
-   \return State for 2D positions.
-   \details Locate initial mesh cell using \c Locator object.
-*/
+ * @return State for 2D positions.
+ *
+ * @details Locate initial mesh cell using \c Locator object.
+ */
 template <typename Info, typename Locator, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D<Info, Time, Mass, Tag>
@@ -237,9 +258,10 @@ make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
 }
 
 /**
-   \return State for 3D positions.
-   \details Locate initial mesh cell using \c Locator object.
-*/
+ * @return State for 3D positions.
+ *
+ * @details Locate initial mesh cell using \c Locator object.
+ */
 template <typename Info, typename Locator, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D<Info, Time, Mass, Tag>
@@ -254,9 +276,10 @@ make_state(Foam::vector const &position, Info const &info,
 }
 
 /**
-   \return State for 1D positions.
-   \details Initial cell index to be provided.
-*/
+ * @return State for 1D positions.
+ *
+ * @details Initial cell index to be provided.
+ */
 template <typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D<Info, Time, Mass, Tag> make_state(Foam::scalar position, Info info,
@@ -266,9 +289,10 @@ State1D<Info, Time, Mass, Tag> make_state(Foam::scalar position, Info info,
 }
 
 /**
-   \return State for 2D positions.
-   \details Initial cell index to be provided.
-*/
+ * @return State for 2D positions.
+ *
+ * @details Initial cell index to be provided.
+ */
 template <typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D<Info, Time, Mass, Tag>
@@ -279,9 +303,10 @@ make_state(Foam::Vector2D<Foam::scalar> const &position, Info const &info,
 }
 
 /**
-   \return State for 3D positions.
-   \details Initial cell index to be provided.
-*/
+ * @return State for 3D positions.
+ *
+ * @details Initial cell index to be provided.
+ */
 template <typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D<Info, Time, Mass, Tag>
@@ -290,7 +315,7 @@ make_state(Foam::vector const &position, Info const &info, Foam::label cell_id,
   return {position, cell_id, info, time, mass, tag};
 }
 
-/** \brief Generic state type templated on spatial dimension. */
+/** @brief Generic state type templated on spatial dimension. */
 template <std::size_t dim, typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 using State_Generic = typename std::conditional_t<
@@ -299,18 +324,25 @@ using State_Generic = typename std::conditional_t<
                        State1D<Info, Time, Mass, Tag>>>;
 
 /**
-   \class State1D_Periodic PTOF/State.h "PTOF/State.h"
-   \brief State for 1D positions with periodicity info.
-   \details State periodicity holds signed number of cells away from unit cell
-   along each basis direction. Defines:
-   - \c position
-   - \c periodicity
-   - \c cell
-   - \c time
-   - \c mass
-   - \c tag
-   - \c info
-*/
+ * @brief State for 1D positions with periodicity info.
+ *
+ * @details State periodicity holds signed number of cells away from unit cell
+ *          along each basis direction. Defines:
+ *
+ * - \c position
+ *
+ * - \c periodicity
+ *
+ * - \c cell
+ *
+ * - \c time
+ *
+ * - \c mass
+ *
+ * - \c tag
+ *
+ * - \c info
+ */
 template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
           typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State1D_Periodic {
@@ -330,28 +362,28 @@ struct State1D_Periodic {
   Mass mass{};
   Tag tag{};
 
-  /** \brief Set position from 3D point. */
+  /** @brief Set position from 3D point. */
   void set_position(Foam::point const &point) { position = point[0]; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   void set_position(Position const &position) { this->position = position; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   template <typename Position> void set_position(Position const &position) {
     set_position(make_position(position));
   }
 
-  /** \brief Set position and cell. */
+  /** @brief Set position and cell. */
   template <typename Position>
   void set_position(Position const &position, Cell cell) {
     set_position(position);
     this->cell = cell;
   }
 
-  /** \brief Make position from 3D point. */
+  /** @brief Make position from 3D point. */
   static Position make_position(Foam::point const &point) { return point[0]; }
 
-  /** \brief Make position. */
+  /** @brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
     if (position.size() > 0) {
@@ -363,19 +395,27 @@ struct State1D_Periodic {
 };
 
 /**
-   \class State2D_Periodic PTOF/State.h "PTOF/State.h"
-   \brief State for 2D positions with periodicity info.
-   \details State periodicity holds signed number of cells away from unit cell
-   along each basis direction.
-   \details Defines:
-   - \c position
-   - \c periodicity
-   - \c cell
-   - \c time
-   - \c mass
-   - \c tag
-   - \c info
-*/
+ * @brief State for 2D positions with periodicity info.
+ *
+ * @details State periodicity holds signed number of cells away from unit cell
+ *          along each basis direction.
+ *
+ * @details Defines:
+ *
+ * - \c position
+ *
+ * - \c periodicity
+ *
+ * - \c cell
+ *
+ * - \c time
+ *
+ * - \c mass
+ *
+ * - \c tag
+ *
+ * - \c info
+ */
 template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
           typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State2D_Periodic {
@@ -395,32 +435,32 @@ struct State2D_Periodic {
   Mass mass{};
   Tag tag{};
 
-  /** \brief Set position from 3D point. */
+  /** @brief Set position from 3D point. */
   void set_position(Foam::point const &point) {
     position[0] = point[0];
     position[1] = point[1];
   }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   void set_position(Position const &position) { this->position = position; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   template <typename Position> void set_position(Position const &position) {
     set_position(make_position(position));
   }
 
-  /** \brief Set position and cell. */
+  /** @brief Set position and cell. */
   template <typename Position>
   void set_position(Position const &position, Cell cell) {
     set_position(position);
     this->cell = cell;
   }
-  /** \return Position from 3D point. */
+  /** @return Position from 3D point. */
   static Position make_position(Foam::point const &point) {
     return Position{point[0], point[1]};
   }
 
-  /** \brief Make position. */
+  /** @brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
     if (position.size() > 1) {
@@ -434,19 +474,27 @@ struct State2D_Periodic {
 };
 
 /**
-   \class State3D_Periodic PTOF/State.h "PTOF/State.h"
-   \brief State for 3D positions with periodicity info
-   \details State periodicity holds signed number of cells away from unit cell
-   along each basis direction.
-   \details Defines:
-   - \c position
-   - \c periodicity
-   - \c cell
-   - \c time
-   - \c mass
-   - \c tag
-   - \c info
-*/
+ * @brief State for 3D positions with periodicity info
+ *
+ * @details State periodicity holds signed number of cells away from unit cell
+ *          along each basis direction.
+ *
+ * @details Defines:
+ *
+ * - \c position
+ *
+ * - \c periodicity
+ *
+ * - \c cell
+ *
+ * - \c time
+ *
+ * - \c mass
+ *
+ * - \c tag
+ *
+ * - \c info
+ */
 template <typename Info_t = meta::Empty, typename Time_t = meta::Empty,
           typename Mass_t = meta::Empty, typename Tag_t = meta::Empty>
 struct State3D_Periodic {
@@ -466,24 +514,24 @@ struct State3D_Periodic {
   Mass mass{};
   Tag tag{};
 
-  /** \brief Set position from 3D point. */
+  /** @brief Set position from 3D point. */
   void set_position(Foam::point const &point) { position = point; }
 
-  /** \brief Set position. */
+  /** @brief Set position. */
   template <typename Position> void set_position(Position const &position) {
     set_position(make_position(position));
   }
 
-  /** \brief Set position and cell. */
+  /** @brief Set position and cell. */
   template <typename Position>
   void set_position(Position const &position, Cell cell) {
     set_position(position);
     this->cell = cell;
   }
-  /** \return Position from 3D point. */
+  /** @return Position from 3D point. */
   static Position make_position(Foam::point const &point) { return point; }
 
-  /** \brief Make position. */
+  /** @brief Make position. */
   template <typename PositionType>
   static Position make_position(PositionType const &position) {
     if (position.size() > 2) {
@@ -497,9 +545,10 @@ struct State3D_Periodic {
 };
 
 /**
-   \return State for 1D positions.
-   \details Locate mesh cell using \c Locator object.
-*/
+ * @return State for 1D positions.
+ *
+ * @details Locate mesh cell using \c Locator object.
+ */
 template <typename Info, typename Locator, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D_Periodic<Info, Time, Mass, Tag>
@@ -514,9 +563,10 @@ make_state(Foam::scalar position, int periodicity, Info const &info,
 }
 
 /**
-   \return State for 2D positions.
-   \details Locate mesh cell using \c Locator object.
-*/
+ * @return State for 2D positions.
+ *
+ * @details Locate mesh cell using \c Locator object.
+ */
 template <typename Info, typename Locator, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D_Periodic<Info, Time, Mass, Tag>
@@ -532,9 +582,10 @@ make_state(Foam::Vector2D<Foam::scalar> const &position,
 }
 
 /**
-   \return State for 3D positions.
-   \details Locate mesh cell using \c Locator object.
-*/
+ * @return State for 3D positions.
+ *
+ * @details Locate mesh cell using \c Locator object.
+ */
 template <typename Info, typename Locator, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D_Periodic<Info, Time, Mass, Tag>
@@ -549,9 +600,10 @@ make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
 }
 
 /**
-   \return State for 1D positions with periodicity info
-   \details Initial cell index to be provided.
-*/
+ * @return State for 1D positions with periodicity info
+ *
+ * @details Initial cell index to be provided.
+ */
 template <typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State1D_Periodic<Info, Time, Mass, Tag>
@@ -562,9 +614,10 @@ make_state(Foam::scalar position, int periodicity, Info const &info,
 }
 
 /**
-   \return State for 2D positions with periodicity info
-   \details Initial cell index to be provided.
-*/
+ * @return State for 2D positions with periodicity info
+ *
+ * @details Initial cell index to be provided.
+ */
 template <typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State2D_Periodic<Info, Time, Mass, Tag>
@@ -576,9 +629,10 @@ make_state(Foam::Vector2D<Foam::scalar> const &position,
 }
 
 /**
-   \return State for 3D positions with periodicity info
-   \details Initial cell index to be provided.
-*/
+ * @return State for 3D positions with periodicity info
+ *
+ * @details Initial cell index to be provided.
+ */
 template <typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 State3D_Periodic<Info, Time, Mass, Tag>
@@ -588,7 +642,7 @@ make_state(Foam::vector const &position, std::array<int, 3> const &periodicity,
   return {position, periodicity, cell_id, info, time, mass, tag};
 }
 
-/** \brief Periodic state type templated on spatial dimension. */
+/** @brief Periodic state type templated on spatial dimension. */
 template <std::size_t dim, typename Info, typename Time = meta::Empty,
           typename Mass = meta::Empty, typename Tag = meta::Empty>
 using State_Periodic = typename std::conditional_t<

@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Directories.h
-   \author Tomas Aquino
-   \date 22/02/2022
-   \brief Handle input and output directories.
-*/
+ * @file   Directories.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Tue Feb 22 00:00:00 2022
+ *
+ * @brief Handle input and output directories.
+ */
 
 #ifndef PTOF_DIRECTORIES_H
 #define PTOF_DIRECTORIES_H
@@ -17,22 +18,22 @@
 
 namespace ptof {
 
-/**
-   \struct Directories PTOF/Directories.h "PTOF/Directories.h"
-   \brief Object to handle simulation case directories.
-*/
+/** @brief Object to handle simulation case directories. */
 struct Directories {
-  std::string dir_case;               /**< Case directory.                */
-  std::string dir_output;             /**<  Output directory.              */
-  std::string dir_parameters;         /**< Parameters directory.          */
+  std::string dir_case;               /**< Case directory. */
+  std::string dir_output;             /**< Output directory. */
+  std::string dir_parameters;         /**< Parameters directory. */
   std::string dir_boundaryconditions; /**< Boundary conditions directory. */
 
   /**
-     \brief Constructor.
-     \param dir Path to current case directory.
-     \param case_name Current case directory relative to \p dir.
-     \param dir_output Output directory relative to \p dir.
-  */
+   * @brief Constructor.
+   *
+   * @param dir Path to current case directory.
+   *
+   * @param case_name Current case directory relative to \p dir.
+   *
+   * @param dir_output Output directory relative to \p dir.
+   */
   Directories(std::string const &dir, std::string const &case_name,
               std::string const &dir_output)
       : dir_case{io::expand_env(io::expand_home_dir(
@@ -43,7 +44,7 @@ struct Directories {
         dir_parameters{dir_case + "/parameters"},
         dir_boundaryconditions{dir_case + "/boundary_conditions"} {}
 
-  /** \brief Output information about current object. */
+  /** @brief Output information about current object. */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Directories\n"
            << io::line()
@@ -62,23 +63,21 @@ struct Directories {
   }
 };
 
-/**
-   \struct DirectoriesOF PTOF/Directories.h "PTOF/Directories.h"
-   \brief Object to handle OpenFOAM case directories.
-*/
+/** @brief Object to handle OpenFOAM case directories. */
 struct DirectoriesOF {
 private:
   std::string _start_time_name;
 
 public:
-  std::string case_name; /**< OpenFOAM case name.       */
-  std::string dir_case;  /**< OpenFOAM case directory.  */
-  Foam::Time time;       /**< OpenFOAM case time.       */
+  std::string case_name; /**< OpenFOAM case name. */
+  std::string dir_case;  /**< OpenFOAM case directory. */
+  Foam::Time time;       /**< OpenFOAM case time. */
 
   /**
-     \brief Constructor.
-     \param directories Current case directory information.
-  */
+   * @brief Constructor.
+   *
+   * @param directories Current case directory information.
+   */
   DirectoriesOF(Directories const &directories)
       : time{makeRunTime(directories)} {
     if (time.times().size() == 0) {
@@ -94,13 +93,14 @@ public:
     }
   }
 
-  /** \brief Deleted copy constructor. */
+  /** @brief Deleted copy constructor. */
   DirectoriesOF(DirectoriesOF const &) = delete;
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "OpenFOAM directories (pass '' for default in [])\n"
            << io::line() << R"(- OpenFOAM cases directory [${FOAM_RUN}].
@@ -119,9 +119,10 @@ public:
   }
 
   /**
-     \brief Output information about current object.
-     \param output Output stream.
-  */
+   * @brief Output information about current object.
+   *
+   * @param output Output stream.
+   */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "OpenFOAM directories\n"
            << io::line()
@@ -135,9 +136,10 @@ public:
 
 private:
   /**
-     \param directories Current case directory information.
-     \return OpenFOAM runTime instance given Directories information.
-  */
+   * @param directories Current case directory information.
+   *
+   * @return OpenFOAM runTime instance given Directories information.
+   */
   Foam::Time makeRunTime(Directories const &directories) {
     // openFOAM makes modifications to std::cout when a runTime object is
     // constructed; this restricts them to the local scope

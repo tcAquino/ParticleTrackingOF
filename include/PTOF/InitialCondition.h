@@ -1,9 +1,10 @@
 /**
-   \file PTOF/InitialCondition.h
-   \author Tomas Aquino
-   \date 29/09/2024
-   \brief Objects to create particles according to initial condition.
-*/
+ * @file   InitialCondition.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Sep 29 00:00:00 2024
+ *
+ * @brief Objects to create particles according to initial condition.
+ */
 
 #ifndef PTOF_INITIALCONDITION_H
 #define PTOF_INITIALCONDITION_H
@@ -28,11 +29,12 @@
 namespace ptof {
 
 /**
-   \class InitialCondition PTOF/InitialCondition.h "CTRW/InitialCondition.h"
-   \brief Make particles and positions according to prescribed rules.
-   \tparam ParticleMaker Abstract object to make a particle given a position.
-   \tparam Geometry Object handling domain geometry information.
-*/
+ * @brief Make particles and positions according to prescribed rules.
+ *
+ * @tparam ParticleMaker Abstract object to make a particle given a position.
+ *
+ * @tparam Geometry Object handling domain geometry information.
+ */
 template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   using Particle = typename std::remove_reference_t<ParticleMaker>::Particle;
   using Position = typename Particle::State::Position;
@@ -47,40 +49,47 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   virtual ~InitialCondition() = default;
 
   /**
-     \brief Make particles.
-     \param nr_particles Number of particles to make.
-     \return Container with particles.
-  */
+   * @brief Make particles.
+   *
+   * @param nr_particles Number of particles to make.
+   *
+   * @return Container with particles.
+   */
   ParticleContainer operator()(std::size_t nr_particles) {
     return make_particles(nr_particles);
   }
 
   /**
-     \brief Make a single particle.
-     \return Particle.
-  */
+   * @brief Make a single particle.
+   *
+   * @return Particle.
+   */
   virtual Particle make_particle() {
     auto [position, cell] = make_position_and_cell();
     return _particle_maker(position, cell);
   }
 
   /**
-     \brief Make a single position.
-     \return Position.
-  */
+   * @brief Make a single position.
+   *
+   * @return Position.
+   */
   virtual Position make_position() { return make_position_and_cell().position; }
 
   /**
-     \brief Make a single position along with location cell.
-     \return Position and cell.
-  */
+   * @brief Make a single position along with location cell.
+   *
+   * @return Position and cell.
+   */
   virtual PositionAndCell make_position_and_cell() = 0;
 
   /**
-     \brief Make particles.
-     \param nr_particles Number of particles to make.
-     \return Container with particles.
-  */
+   * @brief Make particles.
+   *
+   * @param nr_particles Number of particles to make.
+   *
+   * @return Container with particles.
+   */
   virtual ParticleContainer make_particles(std::size_t nr_particles) {
     ParticleContainer particles;
     particles.reserve(nr_particles);
@@ -91,10 +100,12 @@ template <typename ParticleMaker, typename Geometry> struct InitialCondition {
   };
 
   /**
-     \brief Make positions.
-     \param nr_positions Number of positions to make.
-     \return Container with positions.
-  */
+   * @brief Make positions.
+   *
+   * @param nr_positions Number of positions to make.
+   *
+   * @return Container with positions.
+   */
   virtual PositionContainer make_positions(std::size_t nr_positions) {
     PositionContainer positions;
     positions.reserve(nr_positions);
@@ -113,10 +124,10 @@ InitialCondition(ParticleMaker &&, Geometry &&)
     -> InitialCondition<ParticleMaker, Geometry>;
 
 /**
-   \class InitialCondition_Continuous PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h" \brief Continuous injection from a series of
-   pulses. \tparam InitialCondition InitalCondition object to handle each pulse.
-*/
+ * @brief Continuous injection from a series of pulses.
+ *
+ * @tparam InitialCondition InitalCondition object to handle each pulse.
+ */
 template <typename InitialCondition>
 struct InitialCondition_Continuous : public InitialCondition {
 private:
@@ -172,11 +183,7 @@ template <typename InitialCondition>
 InitialCondition_Continuous(InitialCondition &&, double, double, double)
     -> InitialCondition_Continuous<InitialCondition>;
 
-/**
-   \class InitialCondition_Point PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at a point.
-*/
+/** @brief Initial condition at a point. */
 template <typename ParticleMaker, typename Geometry>
 struct InitialCondition_Point
     : public InitialCondition<ParticleMaker, Geometry> {
@@ -215,11 +222,10 @@ InitialCondition_Point(
     -> InitialCondition_Point<ParticleMaker, Geometry>;
 
 /**
-   \class InitialCondition_DistributedPosition PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition with randomly distributed positions.
-   \tparam Distribution Object that takes an RNG and produces a (random)
-   position.
+ * @brief Initial condition with randomly distributed positions.
+ *
+ * @tparam Distribution Object that takes an RNG and produces a (random)
+                        position.
 */
 template <typename ParticleMaker, typename Geometry, typename Distribution>
 struct InitialCondition_DistributedPosition
@@ -261,13 +267,13 @@ InitialCondition_DistributedPosition(ParticleMaker &&, Geometry &&,
                                             Distribution>;
 
 /**
-   \class InitialCondition_DistributedCellCenters PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at randomly distributed cell centers.
-   \tparam CellIdContainer Container of cell indices.
-   \tparam Distribution Object that takes an RNG and produces a (random)
-   cell index.
-*/
+ * @brief Initial condition at randomly distributed cell centers.
+ *
+ * @tparam CellIdContainer Container of cell indices.
+ *
+ * @tparam Distribution Object that takes an RNG and produces a (random) cell
+ *                      index.
+ */
 template <typename ParticleMaker, typename Geometry, typename CellIdContainer,
           typename Distribution>
 struct InitialCondition_DistributedCellCenters
@@ -311,13 +317,13 @@ InitialCondition_DistributedCellCenters(ParticleMaker &&, Geometry &&,
                                                CellIdContainer, Distribution>;
 
 /**
-   \class InitialCondition_DistributedFaceCenters PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at randomly distributed face centers.
-   \tparam CellIdContainer Container of face indices.
-   \tparam Distribution Object that takes an RNG and produces a (random)
-   face index.
-*/
+ * @brief Initial condition at randomly distributed face centers.
+ *
+ * @tparam CellIdContainer Container of face indices.
+ *
+ * @tparam Distribution Object that takes an RNG and produces a (random)
+ *                      face index.
+ */
 template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
           typename Distribution>
 struct InitialCondition_DistributedFaceCenters
@@ -340,10 +346,11 @@ public:
   }
 
   /**
-     \brief Make a single position along with location cell.
-     \note If face center is not in owner cell, position is placed at cell
-     center.
-  */
+   * @brief Make a single position along with location cell.
+   *
+   * @note If face center is not in owner cell, position is placed at cell
+   *       center.
+   */
   typename IC::PositionAndCell make_position_and_cell() override {
     auto const &mesh = this->_geometry.mesh();
     auto face_id = _face_ids[_dist(_rng)];
@@ -367,12 +374,11 @@ InitialCondition_DistributedFaceCenters(ParticleMaker &&, Geometry &&,
                                                FaceIdContainer, Distribution>;
 
 /**
-   \class InitialCondition_UniformCellCenters PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at uniformly randomly distributed cell centers
-   (weighted by cell volume).
-   \tparam CellIdContainer Container of cell indices.
-*/
+ * @brief Initial condition at uniformly randomly distributed cell centers
+ *        (weighted by cell volume).
+ *
+ * @tparam CellIdContainer Container of cell indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
 struct InitialCondition_UniformCellCenters
     : public InitialCondition_DistributedCellCenters<
@@ -399,12 +405,11 @@ InitialCondition_UniformCellCenters(ParticleMaker &&, Geometry &&,
                                            CellIdContainer>;
 
 /**
-   \class InitialCondition_UniformFaceCenters PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at uniformly randomly distributed face centers
-   (weighted by face area).
-   \tparam FaceIdContainer Container of face indices.
-*/
+ * @brief Initial condition at uniformly randomly distributed face centers
+ *        (weighted by face area).
+ *
+ * @tparam FaceIdContainer Container of face indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
 struct InitialCondition_UniformFaceCenters
     : public InitialCondition_DistributedFaceCenters<
@@ -431,11 +436,10 @@ InitialCondition_UniformFaceCenters(ParticleMaker &&, Geometry &&,
                                            CellIdContainer>;
 
 /**
-   \class InitialCondition_FluxweightedCellCenters PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at flux-weighted randomly distributed cell centers.
-   \tparam CellIdContainer Container of cell indices.
-*/
+ * @brief Initial condition at flux-weighted randomly distributed cell centers.
+ *
+ * @tparam CellIdContainer Container of cell indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename CellIdContainer>
 struct InitialCondition_FluxweightedCellCenters
     : public InitialCondition_DistributedCellCenters<
@@ -467,11 +471,10 @@ InitialCondition_FluxweightedCellCenters(ParticleMaker &&, Geometry &&,
                                                 CellIdContainer>;
 
 /**
-   \class InitialCondition_FluxweightedCellCenters PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at flux-weighted randomly distributed face centers.
-   \tparam FaceIdContainer Container of face indices.
-*/
+ * @brief Initial condition at flux-weighted randomly distributed face centers.
+ *
+ * @tparam FaceIdContainer Container of face indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
 struct InitialCondition_FluxweightedFaceCenters
     : public InitialCondition_DistributedFaceCenters<
@@ -503,11 +506,10 @@ InitialCondition_FluxweightedFaceCenters(ParticleMaker &&, Geometry &&,
                                                 FaceIdContainer>;
 
 /**
-   \class InitialCondition_PrescribedPositions PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at prescribed positions read from a file.
-   \details File should contain particle positions, one particle per line.
-*/
+ * @brief Initial condition at prescribed positions read from a file.
+ *
+ * @details File should contain particle positions, one particle per line.
+ */
 template <typename ParticleMaker, typename Geometry,
           typename CheckOption = CheckOptions::Warn>
 struct InitialCondition_PrescribedPositions
@@ -572,12 +574,11 @@ InitialCondition_PrescribedPositions(ParticleMaker &&, Geometry &&, std::string,
                                             CheckOption>;
 
 /**
-   \class InitialCondition_PrescribedPositionsMasses PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at prescribed positions and masses read from a file.
-   \details File should contain particle positions and masses, one particle per
-   line.
-*/
+ * @brief Initial condition at prescribed positions and masses read from a file.
+ *
+ * @details File should contain particle positions and masses, one particle per
+ *          line.
+ */
 template <typename ParticleMaker, typename Geometry,
           typename CheckOption = CheckOptions::Warn>
 struct InitialCondition_PrescribedPositionsMasses
@@ -645,13 +646,12 @@ InitialCondition_PrescribedPositionsMasses(ParticleMaker &&, Geometry &&,
                                                   CheckOption>;
 
 /**
-   \class InitialCondition_PrescribedPositionsMassesTags PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition at prescribed positions, masses, and tags, read from
-   a file.
-   \details File should contain particle positions, masses, and tags, one
-   particle per line.
-*/
+ * @brief Initial condition at prescribed positions, masses, and tags, read from
+ *        a file.
+ *
+ * @details File should contain particle positions, masses, and tags, one
+ *          particle per line.
+ */
 template <typename ParticleMaker, typename Geometry,
           typename CheckOption = CheckOptions::Warn>
 struct InitialCondition_PrescribedPositionsMassesTags
@@ -721,13 +721,12 @@ InitialCondition_PrescribedPositionsMassesTags(ParticleMaker &&, Geometry &&,
     -> InitialCondition_PrescribedPositionsMassesTags<ParticleMaker, Geometry,
                                                       CheckOption>;
 /**
-   \class InitialCondition_PrescribedPositionsMassesTagsTimes
-   PTOF/InitialCondition.h "CTRW/InitialCondition.h"
-   \brief Initial condition at
-   prescribed positions, masses, tags, and times, read from a file.
-   \details File should contain particle positions, masses, tags, and times, one
-   particle per line.
-*/
+ * @brief Initial condition at prescribed positions, masses, tags, and times,
+ *        read from a file.
+ *
+ * @details File should contain particle positions, masses, tags, and times, one
+ *          particle per line.
+ */
 template <typename ParticleMaker, typename Geometry>
 struct InitialCondition_PrescribedPositionsMassesTagsTimes
     : public InitialCondition<ParticleMaker, Geometry> {
@@ -771,11 +770,10 @@ InitialCondition_PrescribedPositionsMassesTagsTimes(ParticleMaker &&,
                                                            Geometry>;
 
 /**
-   \class InitialCondition_DistributedNearFaces PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition randomly distributed near boundary faces.
-   \tparam FaceIdContainer Container of face indices.
-*/
+ * @brief Initial condition randomly distributed near boundary faces.
+ *
+ * @tparam FaceIdContainer Container of face indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename FaceIdContainer,
           typename Distribution>
 struct InitialCondition_DistributedNearFaces
@@ -840,11 +838,10 @@ InitialCondition_DistributedNearFaces(ParticleMaker &&, Geometry &&,
                                              FaceIdContainer, Distribution>;
 
 /**
-   \class InitialCondition_DistributedNearFaces PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition uniformly randomly distributed near boundary faces.
-   \tparam FaceIdContainer Container of face indices.
-*/
+ * @brief Initial condition uniformly randomly distributed near boundary faces.
+ *
+ * @tparam FaceIdContainer Container of face indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
 struct InitialCondition_UniformNearFaces
     : public InitialCondition_DistributedNearFaces<
@@ -874,12 +871,11 @@ InitialCondition_UniformNearFaces(ParticleMaker &&, Geometry &&,
                                          CellIdContainer>;
 
 /**
-   \class InitialCondition_DistributedNearFaces PTOF/InitialCondition.h
-   "CTRW/InitialCondition.h"
-   \brief Initial condition flux-weighted randomly distributed near boundary
-   faces.
-   \tparam FaceIdContainer Container of face indices.
-*/
+ * @brief Initial condition flux-weighted randomly distributed near boundary
+ *        faces.
+ *
+ * @tparam FaceIdContainer Container of face indices.
+ */
 template <typename ParticleMaker, typename Geometry, typename FaceIdContainer>
 struct InitialCondition_FluxweightedNearFaces
     : public InitialCondition_DistributedNearFaces<

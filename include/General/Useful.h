@@ -1,9 +1,10 @@
 /**
- \file General/Useful.h
- \author Tomas Aquino
- \date 03/15/2011
- \brief Miscelaneous collection of useful objects and algorithms.
-*/
+ * @file   Useful.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Tue Mar 15 00:00:00 2011
+ *
+ * @brief Miscelaneous collection of useful objects and algorithms.
+ */
 
 #ifndef GENERAL_USEFUL_H
 #define GENERAL_USEFUL_H
@@ -19,14 +20,15 @@
 #include <vector>
 
 /**
-   \namespace useful Miscelaneous collection of useful objects and algorithms.
-*/
+ * @namespace useful Miscelaneous collection of useful objects and algorithms.
+ */
 namespace useful {
 
 /**
-   \brief Check if sorted \p container contains \p val.
-   \note: Container must be sorted.
-*/
+ * @brief Check if sorted \p container contains \p val.
+ *
+ * @note Container must be sorted.
+ */
 template <typename T, typename U>
 bool contains(const std::vector<T> &container, U const &val) {
   auto it =
@@ -37,10 +39,11 @@ bool contains(const std::vector<T> &container, U const &val) {
 }
 
 /**
-   \brief Check whether \p container contains \p value.
-   \details Container must be sorted according to \p comp_less, equality is
-   checked using \p comp_eq.
-*/
+ * @brief Check whether \p container contains \p value.
+ *
+ * @details Container must be sorted according to \p comp_less, equality is
+ *          checked using \p comp_eq.
+ */
 template <typename T, typename U, typename Comp_less, typename Comp_eq>
 bool contains(std::vector<T> const &container, U const &val,
               Comp_less comp_less = std::less<void>{},
@@ -51,16 +54,13 @@ bool contains(std::vector<T> const &container, U const &val,
   return it != container.end() && comp_eq(*it, val);
 }
 
-/** \brief Check if \p string ends with \p suffix. */
+/** @brief Check if \p string ends with \p suffix. */
 inline bool ends_with(const std::string &string, const std::string &suffix) {
   return string.size() >= suffix.size() &&
          string.substr(string.size() - suffix.size()) == suffix;
 }
 
-/**
-   \class StoreConst General/Useful.h "General/Useful.h"
-   \brief Class holding const object.
-*/
+/** @brief Class holding const object. */
 template <typename Object_Type, typename Return_Type = Object_Type>
 struct StoreConst {
   using value_type = Return_Type;
@@ -69,10 +69,7 @@ struct StoreConst {
   const Object_Type obj;
 };
 
-/**
-   \class Store General/Useful.h "General/Useful.h"
-   \brief Class holding object.
-*/
+/** @brief Class holding object. */
 template <typename Object_Type, typename Return_Type = Object_Type>
 struct Store {
   using value_type = Return_Type;
@@ -82,10 +79,12 @@ struct Store {
 };
 
 /**
-   \brief Make an object and initialize it given \p parameters.
-   \note Object must implement:
-   - initialize(Params const&).
-*/
+ * @brief Make an object and initialize it given \p parameters.
+ *
+ * @note Object must implement:
+ *
+ * - <tt>initialize(Params const&)</tt>.
+ */
 template <typename Object, typename Params>
 Object create(Params const &parameters = meta::Empty{}) {
   Object object;
@@ -95,9 +94,8 @@ Object create(Params const &parameters = meta::Empty{}) {
 }
 
 /**
-   \class Maker General/Useful.h "General/Useful.h"
-   \brief Functor to make objects of given type, passing arbitrary parameters.
-*/
+ * @brief Functor to make objects of given type, passing arbitrary parameters.
+ */
 template <typename Object> struct Maker {
   template <typename... Args> Object operator()(Args... args) const {
     return Object{args...};
@@ -105,9 +103,8 @@ template <typename Object> struct Maker {
 };
 
 /**
-   \class Creator General/Useful.h "General/Useful.h"
-   \brief Functor to make an object on the heap, passing arbitrary parameters.
-*/
+ * @brief Functor to make an object on the heap, passing arbitrary parameters.
+ */
 template <typename T> struct Creator {
   using value_type = T;
   using pointer = T *;
@@ -117,29 +114,19 @@ template <typename T> struct Creator {
   }
 };
 
-/**
-   \class Forward General/Useful.h "General/Useful.h"
-   \brief Functor to forward an argument.
-*/
+/** @brief Functor to forward an argument. */
 template <typename Object> struct Forward {
   Object &&operator()(Object &&object) const {
     return std::forward<Object>(object);
   }
-};		
-		
+};
 
-/**
-   \class Forward_ref General/Useful.h "General/Useful.h"
-   \brief Functor to forward a const reference.
-*/
+/** @brief Functor to forward a const reference. */
 template <typename Object> struct Forward_ref {
   Object const &operator()(Object const &object) const { return object; }
 };
 
-/**
-   \class SquareBracketsToRoundBrackets General/Useful.h "General/Useful.h"
-   \brief Convert <tt>()</tt> to <tt>[]</tt>.
-*/
+/** @brief Convert <tt>()</tt> to <tt>[]</tt>. */
 template <typename Object> struct SquareBracketsToRoundBrackets {
   SquareBracketsToRoundBrackets(Object &&object)
       : _object{std::forward<Object>(object)} {}
@@ -152,10 +139,7 @@ private:
 template <typename Object>
 SquareBracketsToRoundBrackets(Object) -> SquareBracketsToRoundBrackets<Object>;
 
-/**
-   \class SquareBracketsToRoundBracketsConst General/Useful.h "General/Useful.h"
-   \brief Convert <tt>() const</tt> to <tt>[] const</tt>.
-*/
+/** @brief Convert <tt>() const</tt> to <tt>[] const</tt>. */
 template <typename Object> struct SquareBracketsToRoundBracketsConst {
   SquareBracketsToRoundBracketsConst(Object &&object)
       : _object{std::forward<Object>(object)} {}
@@ -169,10 +153,7 @@ template <typename Object>
 SquareBracketsToRoundBracketsConst(Object)
     -> SquareBracketsToRoundBracketsConst<Object>;
 
-/**
-   \class SquareBracketsToRoundBrackets General/Useful.h "General/Useful.h"
-   \brief Convert <tt>()</tt> to <tt>[]</tt>.
-*/
+/** @brief Convert <tt>()</tt> to <tt>[]</tt>. */
 template <typename Object> struct RoundBracketsToSquareBrackets {
   RoundBracketsToSquareBrackets(Object &&object)
       : _object{std::forward<Object>(object)} {}
@@ -185,10 +166,7 @@ private:
 template <typename Object>
 RoundBracketsToSquareBrackets(Object) -> RoundBracketsToSquareBrackets<Object>;
 
-/**
-   \class SquareBracketsToRoundBrackets General/Useful.h "General/Useful.h"
-   \brief Convert <tt>() const</tt> to <tt>[] const</tt>.
-*/
+/** @brief Convert <tt>() const</tt> to <tt>[] const</tt>. */
 template <typename Object> struct RoundBracketsToSquareBracketsConst {
   RoundBracketsToSquareBracketsConst(Object &&object)
       : _object{std::forward<Object>(object)} {}
@@ -202,10 +180,7 @@ template <typename Object>
 RoundBracketsToSquareBracketsConst(Object)
     -> RoundBracketsToSquareBracketsConst<Object>;
 
-/**
-   \class hash_container General/Useful.h "General/Useful.h"
-   \brief Simple hash for a container by combining element hashes.
-*/
+/** @brief Simple hash for a container by combining element hashes. */
 template <typename Container> struct hash_container {
   std::size_t operator()(Container const &container) const {
     using value_type = typename Container::value_type;
@@ -221,18 +196,15 @@ template <typename Container> struct hash_container {
   }
 };
 
-/**
-   \class remove_cvref General/Useful.h "General/Useful.h"
-   \brief Same as std::remo_cvref (only available from C++20).
-*/
+/** @brief Same as \c std::remove_cvref (only available from C++20). */
 template <class T> struct remove_cvref {
   using type = std::remove_cv_t<std::remove_reference_t<T>>;
 };
 
-/** \brief Same as std::remove_cvref_t (only available from C++20). */
+/** @brief Same as \c std::remove_cvref_t (only available from C++20). */
 template <class T> using remove_cvref_t = typename remove_cvref<T>::type;
 
-/** \brief Combine \p seed with the hash of an object \p v. */
+/** @brief Combine \p seed with the hash of an object \p v. */
 template <typename T> void hash_combine(std::size_t &seed, T const &vv) {
   if constexpr (meta::has_begin_v<T>) {
     std::hash<typename T::value_type> hasher;
@@ -245,17 +217,14 @@ template <typename T> void hash_combine(std::size_t &seed, T const &vv) {
   }
 }
 
-/** \brief Combine \p seed with the hash of an object \p v. */
+/** @brief Combine \p seed with the hash of an object \p v. */
 template <typename T1, typename T2>
 void hash_combine(std::size_t &seed, std::pair<T1, T2> const &vv) {
   hash_combine(seed, vv.first);
   hash_combine(seed, vv.second);
 }
 
-/**
-   \class Hash_pair General/Useful.h "General/Useful.h"
-   \brief Hash for std::pair.
-*/
+/** @brief Hash for \c std::pair. */
 template <typename S, typename T> struct Hash_pair {
   std::size_t operator()(std::pair<S, T> const &vv) const {
     std::size_t seed = 0;
@@ -264,10 +233,7 @@ template <typename S, typename T> struct Hash_pair {
   }
 };
 
-/**
-   \class Hash_container General/Useful.h "General/Useful.h"
-   \brief Hash for a container
-*/
+/** @brief Hash for containers. */
 template <typename Container> struct Hash_container {
   std::size_t operator()(Container const &vv) const {
     std::size_t seed = 0;
@@ -278,10 +244,7 @@ template <typename Container> struct Hash_container {
   }
 };
 
-/**
-   \class Hash_combine General/Useful.h "General/Useful.h"
-   \brief Hash for combining types.
-*/
+/** @brief Hash for combining types. */
 template <typename... T> struct Hash_combine {
   std::size_t operator()(T... args) const {
     std::size_t seed = 0;
@@ -290,10 +253,10 @@ template <typename... T> struct Hash_combine {
   }
 };
 
-/** \return Sign of \p val. */
+/** @return Sign of \p val. */
 template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
-/** \brief If \p to_replace is NaN, replace it with \p replace_with. */
+/** @brief If \p to_replace is \c NaN, replace it with \p replace_with. */
 template <typename T> T &deNaN(T &to_replace, T replace_with = T()) {
   if constexpr (meta::has_begin_v<T>) {
     for (auto const &val : to_replace) {
@@ -308,9 +271,9 @@ template <typename T> T &deNaN(T &to_replace, T replace_with = T()) {
 }
 
 /**
-   \brief If \p to_chop is smaller than \p tolerance, replace it with \p
-   replace_with.
-*/
+ * @brief If \p to_chop is smaller than \p tolerance, replace it with \p
+ *        replace_with.
+ */
 template <typename T> T &chop(T &to_chop, T tolerance, T replace_with = T()) {
   if constexpr (meta::has_begin_v<T>) {
     for (auto const &val : to_chop) {
@@ -325,9 +288,9 @@ template <typename T> T &chop(T &to_chop, T tolerance, T replace_with = T()) {
 }
 
 /**
-   \brief Copy end element of \p container to index \p idx, then erase end
-   element.
-*/
+ * @brief Copy end element of \p container to index \p idx, then erase end
+ *        element.
+ */
 template <typename Container>
 Container &swap_erase(Container &container, std::size_t idx) {
   if (idx != container.size() - 1) {
@@ -338,10 +301,11 @@ Container &swap_erase(Container &container, std::size_t idx) {
 }
 
 /**
-   \brief Swap-erase elements in \p container at indices \p indices.
-   \note \p positions will be sorted, and must implement <tt>
-   %sort(std::greater<std::size_t>)</tt>.
-*/
+ * @brief Swap-erase elements in \p container at indices \p indices.
+ *
+ * @note \p positions will be sorted, and must implement \c
+ *       sort(std::greater<std::size_t>).
+ */
 template <typename Container, typename List>
 Container &swap_erase(Container &container, List &&indices) {
   indices.sort(std::greater<std::size_t>{});
@@ -351,7 +315,7 @@ Container &swap_erase(Container &container, List &&indices) {
   return container;
 }
 
-/** \brief Swap-erase elements of \p container satisfying \p criterion. */
+/** @brief Swap-erase elements of \p container satisfying \p criterion. */
 template <typename Container, typename Criterion>
 Container &swap_erase_if(Container &container, Criterion &&criterion) {
   for (std::size_t ii = container.size(); ii-- > 0;) {
@@ -363,9 +327,9 @@ Container &swap_erase_if(Container &container, Criterion &&criterion) {
 }
 
 /**
-   \brief Like swap_erase(), but call \c delete on the
-   removed element.
-*/
+ * @brief Like swap_erase(), but call \c delete on the
+ *        removed element.
+ */
 template <typename Container>
 Container &swap_delete(Container &container, std::size_t idx) {
   if (idx != container.size() - 1) {
@@ -376,7 +340,7 @@ Container &swap_delete(Container &container, std::size_t idx) {
   return container;
 }
 
-/** \brief Swap-delete elements in \p container at positions \p positions. */
+/** @brief Swap-delete elements in \p container at positions \p positions. */
 template <typename Container, typename List>
 Container &swap_delete(Container &container, List &indices) {
   indices.sort(std::greater<std::size_t>{});
@@ -387,7 +351,7 @@ Container &swap_delete(Container &container, List &indices) {
   return container;
 }
 
-/** \brief Swap-delete elements of \p container satisfying \p criterion. */
+/** @brief Swap-delete elements of \p container satisfying \p criterion. */
 template <typename Container, typename Criterion>
 Container &swap_delete_if(Container &container, Criterion &&criterion) {
   for (std::size_t ii = container.size(); ii-- > 0;) {
@@ -398,7 +362,7 @@ Container &swap_delete_if(Container &container, Criterion &&criterion) {
   return container;
 }
 
-/** \brief Check if string represents a number. */
+/** @brief Check if string represents a number. */
 bool is_numeric(std::string const &str) {
   double result{};
   auto val = std::istringstream(str);
@@ -407,14 +371,50 @@ bool is_numeric(std::string const &str) {
 }
 
 /**
-   \brief Throw if container \c container does not have \c nr_after_index
-   elements after and including \c index.
-*/
+ * @brief Throw if container \c container does not have \c nr_after_index
+ *        elements after and including \c index.
+ */
 template <typename Container>
 void check_size(Container const &container, std::size_t index,
                 std::size_t nr_after_index) {
   if (container.size() < index + nr_after_index) {
     throw std::runtime_error{"check_size : Not enough elements"};
+  }
+}
+
+/**
+ * @brief Left shift operator.
+ */
+struct left_shift {
+  template <typename L, typename R>
+  constexpr auto operator()(L &&l, R &&r) const
+      noexcept(noexcept(std::forward<L>(l) << std::forward<R>(r)))
+          -> decltype(std::forward<L>(l) << std::forward<R>(r)) {
+    return std::forward<L>(l) << std::forward<R>(r);
+  }
+};
+
+/**
+ * @brief Right shift operator.
+ */
+struct right_shift {
+  template <typename L, typename R>
+  constexpr auto operator()(L &&l, R &&r) const
+      noexcept(noexcept(std::forward<L>(l) >> std::forward<R>(r)))
+          -> decltype(std::forward<L>(l) >> std::forward<R>(r)) {
+    return std::forward<L>(l) >> std::forward<R>(r);
+  }
+};
+
+/**
+ * @brief And operator.
+ */
+struct operator_and {
+  template <typename L, typename R>
+  constexpr auto operator()(L &&l, R &&r) const
+      noexcept(noexcept(std::forward<L>(l) & std::forward<R>(r)))
+          -> decltype(std::forward<L>(l) & std::forward<R>(r)) {
+    return std::forward<L>(l) & std::forward<R>(r);
   }
 };
 } // namespace useful

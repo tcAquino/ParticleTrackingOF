@@ -1,9 +1,10 @@
 /**
-   \file PTOF/BoundaryConditionList.h
-   \author Tomas Aquino
-   \date 29/09/2024
-   \brief Boundary condition types.
-*/
+ * @file   BoundaryConditionList.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Sep 29 00:00:00 2024
+ *
+ * @brief Boundary condition types.
+ */
 
 #ifndef PTOF_BOUNDARYCONDITIONLIST_H
 #define PTOF_BOUNDARYCONDITIONLIST_H
@@ -12,16 +13,9 @@
 #include <string>
 
 namespace ptof {
-/**
-   \struct BoundaryConditionList PTOF/BoundaryConditionList.h
-   "PTOF/BoundaryConditionList.h"
-   \brief Names and types of boundary conditions.
-*/
+/** @brief Names and types of boundary conditions. */
 struct BoundaryConditionList {
-  /**
-     \enum Type
-     \brief Implemented types.
-  */
+  /** @brief Implemented types. */
   enum class Type {
     reflecting, /**< Reflecting. */
     reacting,   /**< Reacting. */
@@ -34,29 +28,35 @@ struct BoundaryConditionList {
   };
 
   /**
-     \brief Type from name.
-     \param name Boundary condition name.
-     \return Boundary condition type.
-  */
+   * @brief Type from name.
+   *
+   * @param name Boundary condition name.
+   *
+   * @return Boundary condition type.
+   */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
   /**
-     \brief Name from type.
-     \param type Boundary condition type.
-     \return Boundary condition name.
-  */
+   * @brief Name from type.
+   *
+   * @param type Boundary condition type.
+   *
+   * @return Boundary condition name.
+   */
   static auto name(Type type) { return type_to_name.at(type); }
 
   /**
-     \brief Check if name exists.
-     \param name condition name.
-     \return \c true if name exists, \c false otherwise.
-  */
+   * @brief Check if name exists.
+   *
+   * @param name condition name.
+   *
+   * @return \c true if name exists, \c false otherwise.
+   */
   static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }
 
-  /** \brief Map names to types. */
+  /** Map of names to types. */
   inline static const std::map<std::string, Type> name_to_type{
       {"reflecting", Type::reflecting},
       {"reacting", Type::reacting},
@@ -66,7 +66,7 @@ struct BoundaryConditionList {
       {"custom", Type::custom},
       {"empty", Type::empty}};
 
-  /** \brief Map types to names. */
+  /** Map of types to names. */
   inline static const std::map<Type, std::string> type_to_name{
       {Type::reflecting, "reflecting"},
       {Type::reacting, "reacting"},

@@ -1,9 +1,10 @@
 /**
-   \file Algebra/Algebra.h
-   \author Tomas Aquino
-   \date 08/06/2019
-   \brief Linear algebra algorithms
-*/
+ * @file   Algebra.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sat Jun  8 00:00:00 2019
+ *
+ * @brief Linear algebra algorithms.
+ */
 
 #ifndef ALGEBRA_ALGEBRA_H
 #define ALGEBRA_ALGEBRA_H
@@ -12,12 +13,14 @@
 #include <cmath>
 #include <vector>
 
-/** \namespace useful Linear algebra algorithms. */
+/** @namespace useful Linear algebra algorithms. */
 namespace algebra {
 /**
-   \brief Orthogonal basis from Gram-schmidt decomposition, given complete set
-   of linearly-independent vectors. First vector is kept after normalization.
-*/
+ * @brief Orthogonal basis from Gram-schmidt decomposition, given complete set
+ *        of linearly-independent vectors.
+ *
+ * @details First original vector is normalized and then kept.
+ */
 inline std::vector<std::vector<double>>
 gram_schmidt(std::vector<std::vector<double>> const &input) {
   std::size_t nr_vectors = input.size();
@@ -40,11 +43,12 @@ gram_schmidt(std::vector<std::vector<double>> const &input) {
 }
 
 /**
-   \brief Orthogonal basis from Gram-Schmidt decomposition, preserving given
-   direction.
-   \note Currently does not work for direction aligned with a Cartesian plane
-   but not with a Cartesian direction.
-*/
+ * @brief Orthogonal basis from Gram-Schmidt decomposition, preserving given
+ *        direction.
+ *
+ * @note Currently does not work for direction aligned with a Cartesian plane
+ *       but not with a Cartesian direction.
+ */
 inline std::vector<std::vector<double>>
 gram_schmidt(std::vector<double> const &input) {
   std::size_t dim = input.size();
@@ -66,9 +70,9 @@ gram_schmidt(std::vector<double> const &input) {
 }
 
 /**
-   \return Rotation matrix (non-unique) that aligns \p to_align with \p
-   align_with.
-*/
+ * @return Rotation matrix (non-unique) that aligns \p to_align with \p
+ *         align_with.
+ */
 template <typename Container1 = std::vector<double>,
           typename Container2 = Container1>
 std::vector<std::vector<double>>
@@ -87,7 +91,7 @@ rotation_matrix_align(Container1 const &to_align,
   return rotation;
 }
 
-/** \brief Thomas Algorithm for tridiagonal systems. */
+/** @brief Thomas Algorithm for tridiagonal systems. */
 inline void solve_tridiag(std::vector<double> const &l_diag,
                           std::vector<double> const &diag,
                           std::vector<double> const &u_diag,
@@ -117,10 +121,10 @@ inline void solve_tridiag(std::vector<double> const &l_diag,
 }
 
 /**
-   \brief Uses Sherman-Morrison and the Thomas Algorithm (see solve_tridiag())
-   to solve a cyclic tridiagonal system <tt>Ax = ind</tt>, with
-   <tt>alpha = A_{ n-1, 0 }, beta = A_{ 0, n-1 }</tt>.
-*/
+ * @brief Uses Sherman-Morrison and the Thomas Algorithm to solve a cyclic
+ *        tridiagonal system <tt>Ax = ind</tt>, with <tt>alpha = A_{ n-1, 0
+ *        }</tt>, <tt>beta = A_{ 0, n-1 }</tt>.
+ */
 inline void solve_cyclic_tridiag(double alpha, double beta,
                                  std::vector<double> const &l_diag,
                                  std::vector<double> const &diag,
@@ -150,9 +154,9 @@ inline void solve_cyclic_tridiag(double alpha, double beta,
 }
 
 /**
-   \brief Find the determinant of a tridiagonal matrix using the continuant
-   recurrence relation.
-*/
+ * @brief Find the determinant of a tridiagonal matrix using the continuant
+ *        recurrence relation.
+ */
 inline double det_tridiag(std::vector<double> const &l_diag,
                           std::vector<double> const &diag,
                           std::vector<double> const &u_diag) {

@@ -1,9 +1,10 @@
 /**
-   \file PTOF/TimeUnitsList.h
-   \author Tomas Aquino
-   \date 30/09/2024
-   \brief Time unit types.
-*/
+ * @file   TimeUnitsList.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Mon Sep 30 00:00:00 2024
+ *
+ * @brief Time unit types.
+ */
 
 #ifndef PTOF_TIMEUNITS_H
 #define PTOF_TIMEUNITS_H
@@ -14,41 +15,41 @@
 #include <string>
 
 namespace ptof {
-/**
-   \struct TimeUnitsList PTOF/TimeUnitsList.h "PTOF/TimeUnitsList.h"
-   \brief Keep track of names and types of time units.
-*/
+/** @brief Keep track of names and types of time units. */
 struct TimeUnitsList {
-  /**
-     \enum Type
-     \brief Implemented types.
-  */
+  /** @brief Implemented types. */
   enum class Type {
-    diffusion, /**< Units of diffusion scale */
-    advection, /**< Units of advection scale */
-    reaction,  /**<  Units of reaction scale*/
-    arbitrary  /**< Arbitrary units*/
+    diffusion, /**< Units of diffusion scale. */
+    advection, /**< Units of advection scale. */
+    reaction,  /**< Units of reaction scale. */
+    arbitrary  /**< Arbitrary units. */
   };
 
   /**
-     \brief Type from name.
-     \param name Boundary condition name.
-     \return Boundary condition type.
-  */
+   * @brief Type from name.
+   *
+   * @param name Boundary condition name.
+   *
+   * @return Boundary condition type.
+   */
   static auto type(std::string const &name) { return name_to_type.at(name); }
 
   /**
-     \brief Name from type.
-     \param type Boundary condition type.
-     \return Boundary condition name.
-  */
+   * @brief Name from type.
+   *
+   * @param type Boundary condition type.
+   *
+   * @return Boundary condition name.
+   */
   static auto name(Type type) { return type_to_name.at(type); }
 
   /**
-     \brief Check if name exists.
-     \param name condition name.
-     \return \c true if name exists, \c false otherwise.
-  */
+   * @brief Check if name exists.
+   *
+   * @param name condition name.
+   *
+   * @return \c true if name exists, \c false otherwise.
+   */
   static bool contains(std::string const &name) {
     return name_to_type.count(name);
   }
@@ -68,7 +69,7 @@ struct TimeUnitsList {
       {Type::arbitrary, "arbitrary"}};
 };
 
-/** \brief Get time units factor. */
+/** @brief Get time units factor. */
 template <typename TransportParameters, typename ReactionParameters>
 double time_unit_factor(std::string const &time_units,
                         TransportParameters const &params_transport,

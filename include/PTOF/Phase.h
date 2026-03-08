@@ -1,10 +1,11 @@
 /**
-   \file PTOF/Phase.h
-   \author Tomas Aquino
-   \date 08/02/2024
-   \brief Definitions and utilities to handle VOF-type phase fields (saturation)
-   and transport in two-phase flow.
-*/
+ * @file   Phase.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Feb  8 00:00:00 2024
+ *
+ * @brief Definitions and utilities to handle VOF-type phase fields (saturation)
+ *        and transport in two-phase flow.
+ */
 
 #ifndef PTOF_PHASE_H
 #define PTOF_PHASE_H
@@ -35,32 +36,23 @@
 #include <volFields.H>
 
 namespace ptof {
-/**
-   \struct ChemicalPotentialModels PTOF/Phase.h "PTOF/Phase.h"
-   \brief Choice of interface chemical potential model.
-*/
+/** @brief Choice of interface chemical potential model. */
 struct ChemicalPotentialModels {
   struct AGG;
   struct JM;
   struct None;
 };
 
-/**
-   \class Phase PTOF/Phase.h "PTOF/Phase.h"
-   \brief Phase field information.
-*/
+/** @brief Phase field information. */
 template <typename ChemicalPotentialModel,
           typename TimeInterpolationType = InterpolationTypes::Linear,
           bool hard_reflection = false>
 class Phase {
 public:
-  /** \brief Deleted constructor. */
+  /** @brief Deleted constructor. */
   Phase() = delete;
 
-  /**
-     \struct Phase::Parameters PTOF/Phase.h "PTOF/Phase.h"
-     \brief Parameters for phase-related quantities.
-  */
+  /** @brief Parameters for phase-related quantities. */
   struct Parameters {
   public:
     std::string
@@ -81,11 +73,14 @@ public:
                                         consider pure phase. */
 
     /**
-       \brief Constructor.
-       \param directories Current case directory information.
-       \param name Name of phase parameters set.
-       \param geometry Domain geometry info and utilities.
-    */
+     * @brief Constructor.
+     *
+     * @param directories Current case directory information.
+     *
+     * @param name Name of phase parameters set.
+     *
+     * @param geometry Domain geometry info and utilities.
+     */
     template <typename Geometry>
     Parameters(Directories const &directories, std::string const &name,
                Geometry const &geometry) {
@@ -153,7 +148,7 @@ public:
       }
     }
 
-    /** \brief Output general information about object. */
+    /** @brief Output general information about object. */
     inline static std::ostream &info(std::ostream &output) {
       output << io::line() << "Phase parameters\n"
              << io::line() << R"(- Name of phase to be read from file.
@@ -182,10 +177,11 @@ public:
   };
 
   /**
-     \return Carrier phase saturation field.
-     \details Obtained from OpenFOAM file data for either the carrier phase or
-     the carrier phase.
-  */
+   * @return Carrier phase saturation field.
+   *
+   * @details Obtained from OpenFOAM file data for either the carrier phase or
+   *          the carrier phase.
+   */
   template <typename Mesh>
   static auto get_carrier_phase_data(Mesh const &mesh,
                                      Foam::word const &timeName,
@@ -208,10 +204,11 @@ public:
   }
 
   /**
-     \return Carrier phase saturation field.
-     \details Obtained from OpenFOAM file data for either the carrier phase or
-     the carrier phase.
-  */
+   * @return Carrier phase saturation field.
+   *
+   * @details Obtained from OpenFOAM file data for either the carrier phase or
+   *          the carrier phase.
+   */
   template <typename Mesh>
   static auto get_carrier_phase_data(Mesh const &mesh, Foam::scalar time,
                                      Parameters const &params_phase) {
@@ -220,10 +217,11 @@ public:
   }
 
   /**
-     \return Carrier phase saturation field.
-     \details Obtained from OpenFOAM file data for either the carrier phase or
-     the carrier phase.
-  */
+   * @return Carrier phase saturation field.
+   *
+   * @details Obtained from OpenFOAM file data for either the carrier phase or
+   *          the carrier phase.
+   */
   template <typename Mesh>
   static auto get_carrier_phase_data(Mesh const &mesh,
                                      Parameters const &params_phase) {
@@ -231,9 +229,10 @@ public:
   }
 
   /**
-     \return Carrier phase field gradient.
-     \details Based on OpenFOAM file data.
-  */
+   * @return Carrier phase field gradient.
+   *
+   * @details Based on OpenFOAM file data.
+   */
   template <typename Mesh>
   static auto get_grad_carrier_phase_data(Mesh const &mesh,
                                           Foam::word const &timeName,
@@ -254,9 +253,10 @@ public:
   }
 
   /**
-     \return Carrier phase field gradient.
-     \details Based on OpenFOAM file data.
-  */
+   * @return Carrier phase field gradient.
+   *
+   * @details Based on OpenFOAM file data.
+   */
   template <typename Mesh>
   static auto get_grad_carrier_phase_data(Mesh const &mesh,
                                           Parameters const &params_phase) {
@@ -265,9 +265,10 @@ public:
   }
 
   /**
-     \return Carrier phase field gradient.
-     \details Based on OpenFOAM file data.
-  */
+   * @return Carrier phase field gradient.
+   *
+   * @details Based on OpenFOAM file data.
+   */
   template <typename Mesh>
   static auto get_grad_carrier_phase_data(Mesh const &mesh, Foam::scalar time,
                                           Parameters const &params_phase) {
@@ -276,10 +277,11 @@ public:
   }
 
   /**
-     \return Carrier phase field gradient.
-     \details Based on OpenFOAM file data or computed from carrier phase
-     saturation field.
-  */
+   * @return Carrier phase field gradient.
+   *
+   * @details Based on OpenFOAM file data or computed from carrier phase
+   *          saturation field.
+   */
   template <typename Mesh>
   static auto
   grad_carrier_phase(Mesh const &mesh,
@@ -294,10 +296,11 @@ public:
   }
 
   /**
-     \return Carrier phase field gradient.
-     \details Based on OpenFOAM file data or computed from carrier phase
-     saturation field.
-  */
+   * @return Carrier phase field gradient.
+   *
+   * @details Based on OpenFOAM file data or computed from carrier phase
+   *          saturation field.
+   */
   template <typename Mesh>
   static auto
   grad_carrier_phase(Mesh const &mesh, Foam::word const &timeName,
@@ -312,10 +315,11 @@ public:
   }
 
   /**
-     \return Carrier phase field gradient.
-     \details Based on OpenFOAM file data or computed from carrier phase
-     saturation field.
-  */
+   * @return Carrier phase field gradient.
+   *
+   * @details Based on OpenFOAM file data or computed from carrier phase
+   *          saturation field.
+   */
   template <typename Mesh>
   static auto
   grad_carrier_phase(Mesh const &mesh, Foam::scalar time,
@@ -330,9 +334,7 @@ public:
     }
   }
 
-  /**
-     \brief Make phase field.
-  */
+  /** @brief Make phase field. */
   template <typename Geometry, typename PhaseFieldData>
   static auto makeCarrierPhase(Geometry const &geometry,
                                PhaseFieldData &&carrier_phase_data) {
@@ -429,12 +431,16 @@ public:
               TimeInterpolationType{}}} {}
 
     /**
-       \brief Evaluate field.n
-       \param position Position.
-       \param cell Mesh cell index position is in.
-       \param time Interpolation time.
-       \return Field value.
-    */
+     * @brief Evaluate field.n
+     *
+     * @param position Position.
+     *
+     * @param cell Mesh cell index position is in.
+     *
+     * @param time Interpolation time.
+     *
+     * @return Field value.
+     */
     template <typename Position>
     auto operator()(Position const &position, Index cell, Time time) const {
       if constexpr (has_base_velocity && has_chemical_potential) {
@@ -448,44 +454,54 @@ public:
     }
 
     /**
-       \brief Field value.
-       \param state Particle state to interpolate.
-    */
+     * @brief Field value.
+     *
+     * @param state Particle state to interpolate.
+     */
     template <typename State> auto operator()(State const &state) const {
       return (*this)(state.position, state.cell, state.time);
     }
 
     /**
-       \brief Evaluate field.
-       \param position 3D position.
-       \param time Interpolation time.
-       \return Field value.
-    */
+     * @brief Evaluate field.
+     *
+     * @param position 3D position.
+     *
+     * @param time Interpolation time.
+     *
+     * @return Field value.
+     */
     auto operator()(Point const &position, Time time) const {
       return (*this)(position, locate(position), time);
     }
 
     /**
-       \brief Interpolate field.
-       \param position 2D position.
-       \param time Interpolation time.
-       \return Field value.
-    */
+     * @brief Interpolate field.
+     *
+     * @param position 2D position.
+     *
+     * @param time Interpolation time.
+     *
+     * @return Field value.
+     */
     auto operator()(Point2D const &position, Time time) const {
       return (*this)(position, locate(position), time);
     }
 
     /**
-       \brief Evaluate field.
-       \param position 1D position.
-       \param time Interpolation time.
-       \return Field value.
-    */
+     * @brief Evaluate field.
+     *
+     * @param position 1D position.
+     *
+     * @param time Interpolation time.
+     *
+     * @return Field value.
+     */
     auto operator()(Scalar const &position, Time time) const {
       return (*this)(position, locate(position), time);
     }
 
-    /** \brief Field at cell center. */
+    /** @brief Field at cell center. */
     auto operator()(Foam::label cell_id, Time time) {
       if constexpr (has_base_velocity && has_chemical_potential) {
         return _velocity_field(cell_id, time) + _effective_drift(cell_id, time);
@@ -497,18 +513,20 @@ public:
     }
 
     /**
-       \brief Locate a state in the mesh.
-       \param state Particle state to locate.
-       \return Mesh cell index.
-    */
+     * @brief Locate a state in the mesh.
+     *
+     * @param state Particle state to locate.
+     *
+     * @return Mesh cell index.
+     */
     template <typename State> auto locate(State const &state) const {
       return _carrier_phase_field.locate(state);
     }
 
-    /** \return Locator object to find positions in mesh. */
+    /** @return Locator object to find positions in mesh. */
     auto const &locator() const { return _carrier_phase_field->locator(); }
 
-    /** \return Full field of underlying field type. */
+    /** @return Full field of underlying field type. */
     auto field(Time time) const {
       if constexpr (has_base_velocity && has_chemical_potential) {
         return static_cast<Foam::volVectorField>(_velocity_field.field(time) +
@@ -520,7 +538,7 @@ public:
       return _effective_drift.field(time);
     }
 
-    /** \return Underlying boundary field. */
+    /** @return Underlying boundary field. */
     auto boundaryField(Time time) const {
       using BoundaryField = decltype(_effective_drift.boundaryField(time));
       if constexpr (has_base_velocity && has_chemical_potential) {
@@ -533,7 +551,7 @@ public:
       return _effective_drift.boundaryField(time);
     }
 
-    /** \return Underlying boundary field at patch. */
+    /** @return Underlying boundary field at patch. */
     auto boundaryField(Foam::label patch_id, Time time) const {
       using BoundaryField =
           decltype(_effective_drift.boundaryField(patch_id, time));
@@ -549,10 +567,11 @@ public:
     }
 
     /**
-       \return Underlying boundary field value at face of patch.
-       \note Face id in patch is numbered relative to the patch, starting from
-       0.
-    */
+     * @return Underlying boundary field value at face of patch.
+     *
+     * @note Face id in patch is numbered relative to the patch, starting from
+     *       0.
+     */
     auto boundaryField(Foam::label patch_id, Foam::label face_in_patch,
                        Time time) const {
       using BoundaryField = decltype(_effective_drift.boundaryField(
@@ -589,10 +608,10 @@ public:
           instant.value());
     }
 
-    /** \return Time of new field. */
+    /** @return Time of new field. */
     auto time_new() const { return _carrier_phase_field.time_new(); }
 
-    /** \return Time of old field. */
+    /** @return Time of old field. */
     auto time_old() const { return _carrier_phase_field.time_old(); }
 
   private:
@@ -626,8 +645,11 @@ public:
       }
     }
 
-    /** \brief Compute chemical potential force field.
-        \note Returns a scalar if constant. */
+    /**
+     * @brief Compute chemical potential force field.
+     *
+     * @note Returns a scalar if constant.
+     */
     auto chemical_force_coeff_field(Foam::scalar time,
                                     Parameters const &params_phase) {
       // Avoid computing carrier phase field at given time if not needed
@@ -761,7 +783,7 @@ public:
     SurfaceReaction &surface_reaction{_boundary.surface_reaction};
 
   private:
-    /** \note Does not explicitly handle multiple interface collisions. */
+    /** @note Does not explicitly handle multiple interface collisions. */
     template <typename State, typename Position>
     auto phase_hard_reflect(State &state, State const &state_old,
                             Position const &last_contact_point,

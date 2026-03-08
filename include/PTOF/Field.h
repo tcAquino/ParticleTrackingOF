@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Field.h
-   \author Tomas Aquino
-   \date 16/02/2022
-   \brief Field objects with interpolation and other utilities.
-*/
+ * @file   Field.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Feb 16 00:00:00 2022
+ *
+ * @brief Field objects with interpolation and other utilities.
+ */
 
 #ifndef PTOF_FIELD_H
 #define PTOF_FIELD_H
@@ -22,34 +23,21 @@
 #include <vector.H>
 
 namespace ptof {
-/**
-   \struct InterpolationType PTOF/Field.h "PTOF/Field.h"
-   \brief Types to choose interpolation scheme.
-*/
+/** @brief Types to choose interpolation scheme. */
 struct InterpolationTypes {
-  /**
-     \struct Cell PTOF/Field.h "PTOF/Field.h"
-     \brief Use local cell value (do not interpolate).
-  */
+  /** @brief Use local cell value (do not interpolate). */
   struct Cell {};
 
-  /**
-     \struct Linear PTOF/Field.h "PTOF/Field.h"
-     \brief Linear interpolation.
-  */
+  /** @brief Linear interpolation. */
   struct Linear {};
 
-  /**
-     \struct PreviousTime PTOF/Field.h "PTOF/Field.h"
-     \brief Use value at previous time.
-  */
+  /** @brief Use value at previous time. */
   struct OldTime {};
 };
 
 /**
-   \class VectorField_Interpolation PTOF/Field.h "PTOF/Field.h"
-   \brief Interpolation of vector field cell data based on OpenFOAM routines.
-*/
+ * @brief Interpolation of vector field cell data based on OpenFOAM routines.
+ */
 template <typename Field_t, typename Locator_t, typename InterpolationType,
           typename CheckOption>
 class VectorField_Interpolation {
@@ -86,36 +74,43 @@ public:
       std::is_same_v<CheckOption, CheckOptions::Warn>;
 
   /**
-   \brief Constructor.
-   \param field Vector field cell data to interpolate.
-   \param locator Mesh locator.
- */
+   * @brief Constructor.
+   *
+   * @param field Vector field cell data to interpolate.
+   *
+   * @param locator Mesh locator.
+   */
   VectorField_Interpolation(Field &&field, Locator &&locator)
       : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
                                                 locator)} {}
 
   /**
-     \brief Constructor.
-     \param field Vector field cell data to interpolate.
-     \param locator Mesh locator.
-  */
+   * @brief Constructor.
+   *
+   * @param field Vector field cell data to interpolate.
+   *
+   * @param locator Mesh locator.
+   */
   VectorField_Interpolation(Field &&field, Locator &&locator, InterpolationType,
                             CheckOption)
       : VectorField_Interpolation{std::forward<Field>(field),
                                   std::forward<Locator>(locator)} {}
 
-  /** \brief Deleted copy constructor. */
+  /** @brief Deleted copy constructor. */
   VectorField_Interpolation(VectorField_Interpolation const &) = delete;
 
-  /** \brief Move constructor. */
+  /** @brief Move constructor. */
   VectorField_Interpolation(VectorField_Interpolation &&) = default;
 
   /**
-     \brief Interpolate field.
-     \param position 3D position.
-     \param cell Mesh cell index position is in.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 3D position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point const &position, Index cell) const {
     if constexpr (check_if_outside) {
       if (outside<warn_if_outside>(
@@ -129,100 +124,116 @@ public:
   }
 
   /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \param cell Mesh cell index position is in.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 2D position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point2D const &position, Index cell) const {
     auto interp = (*this)(make_point(position), cell);
     return Vector2D{interp[0], interp[1]};
   }
 
   /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \param cell Mesh cell index position is in.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 1D position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Scalar position, Index cell) const {
     return (*this)(make_point(position), cell)[0];
   }
 
   /**
-     \brief Interpolate field.
-     \param state Particle state to interpolate.
-  */
+   * @brief Interpolate field.
+   *
+   * @param state Particle state to interpolate.
+   */
   template <typename State> auto operator()(State const &state) const {
     return (*this)(state.position, state.cell);
   }
 
   /**
-     \brief Interpolate field.
-     \param position 3D position.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 3D position.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point const &position) const {
     return (*this)(position, _locator(position));
   }
 
   /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 2D position.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point2D const &position) const {
     return (*this)(position, _locator(position));
   }
 
   /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 1D position.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Scalar const &position) const {
     return (*this)(position, _locator(position));
   }
 
-  /** \brief Field at cell center. */
+  /** @brief Field at cell center. */
   auto operator[](Foam::label cell_id) const { return _field[cell_id]; }
 
-  /** \brief Field at cell center. */
+  /** @brief Field at cell center. */
   auto operator()(Foam::label cell_id) const { return _field[cell_id]; }
 
   /**
-     \brief Locate a state in the mesh.
-     \param state Particle state to locate.
-     \return Mesh cell index.
-  */
+   * @brief Locate a state in the mesh.
+   *
+   * @param state Particle state to locate.
+   *
+   * @return Mesh cell index.
+   */
   template <typename State> auto locate(State const &state) const {
     return _locator(state);
   }
 
-  /** \return Underlying field data. */
+  /** @return Underlying field data. */
   auto const &field() const { return _field; }
 
-  /** \return Locator object to find positions in mesh. */
+  /** @return Locator object to find positions in mesh. */
   auto const &locator() const { return _locator; }
 
-  /** \return Underlying boundary field. */
+  /** @return Underlying boundary field. */
   auto const &boundaryField() const { return _field.boundaryField(); }
 
-  /** \return Underlying boundary field at patch. */
+  /** @return Underlying boundary field at patch. */
   auto const &boundaryField(Foam::label patch_id) const {
     return _field.boundaryField()[patch_id];
   }
 
   /**
-     \return Underlying boundary field value at face of patch.
-     \note Face id in patch is numbered relative to the patch, starting from 0.
-  */
+   * @return Underlying boundary field value at face of patch.
+   *
+   * @note Face id in patch is numbered relative to the patch, starting from 0.
+   */
   auto const &boundaryField(Foam::label patch_id,
                             Foam::label face_in_patch) const {
     return _field.boundaryField()[patch_id][face_in_patch];
   }
 
-  /** \brief Update interpolator. */
+  /** @brief Update interpolator. */
   void update_interpolator() {
     // Note: Not free, but OpenFOAM interpolators usually cash relevant data
     // like weights.
@@ -230,9 +241,10 @@ public:
   }
 
   /**
-     \brief Rescale underlying field.
-     \param factor Scaling factor.
-  */
+   * @brief Rescale underlying field.
+   *
+   * @param factor Scaling factor.
+   */
   void rescale(double factor) {
     if (ptof::rescale(_field, factor)) {
       update_interpolator();
@@ -240,18 +252,20 @@ public:
   }
 
   /**
-     \brief Sum to underlying field.
-     \param field Field to sum.
-  */
+   * @brief Sum to underlying field.
+   *
+   * @param field Field to sum.
+   */
   void sum(Field field) {
     _field += field;
     update_interpolator();
   }
 
   /**
-     \brief Change underlying field data.
-     \param field Set field data to this field.
-  */
+   * @brief Change underlying field data.
+   *
+   * @param field Set field data to this field.
+   */
   void set(Field field) {
     _field = field;
     update_interpolator();
@@ -278,11 +292,11 @@ VectorField_Interpolation(Field &&, Locator &&, InterpolationType, CheckOption)
                                  CheckOption>;
 
 /**
-   \class ScalarField_Interpolation PTOF/Field.h "PTOF/Field.h"
-   \brief Interpolation of scalar field cell data based on OpenFOAM routines.
-   \note See InterpolationTypes class for interpolation options and CheckOptions
-   class for bounds checking options.
-*/
+ * @brief Interpolation of scalar field cell data based on OpenFOAM routines.
+ *
+ * @note See ptof::InterpolationTypes class for interpolation options and
+ *       ptof::CheckOptions class for bounds checking options.
+ */
 template <typename Field_t, typename Locator_t, typename InterpolationType,
           typename CheckOption>
 class ScalarField_Interpolation {
@@ -317,36 +331,43 @@ public:
       std::is_same_v<CheckOption, CheckOptions::Warn>;
 
   /**
-     \brief Constructor.
-     \param field Scalar field cell data to interpolate.
-     \param locator Mesh locator.
+   * @brief Constructor.
+   *
+   * @param field Scalar field cell data to interpolate.
+   *
+   * @param locator Mesh locator.
    */
   ScalarField_Interpolation(Field &&field, Locator &&locator)
-      : _field{std::forward<Field>(field)},
-        _locator{std::forward<Locator>(locator)} {}
+      : _field{std::forward<Field>(field)}, _locator{std::forward<Locator>(
+                                                locator)} {}
 
   /**
-     \brief Constructor.
-     \param field Scalar field cell data to interpolate.
-     \param locator Mesh locator.
-  */
+   * @brief Constructor.
+   *
+   * @param field Scalar field cell data to interpolate.
+   *
+   * @param locator Mesh locator.
+   */
   ScalarField_Interpolation(Field &&field, Locator &&locator, InterpolationType,
                             CheckOption)
       : ScalarField_Interpolation{std::forward<Field>(field),
                                   std::forward<Locator>(locator)} {}
 
-  /** \brief Deleted copy constructor. */
+  /** @brief Deleted copy constructor. */
   ScalarField_Interpolation(ScalarField_Interpolation const &) = delete;
 
-  /** \brief Move constructor. */
+  /** @brief Move constructor. */
   ScalarField_Interpolation(ScalarField_Interpolation &&field) = default;
 
   /**
-     \brief Interpolate field.
-     \param position 3D position.
-     \param cell Mesh cell index position is in.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 3D position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point const &position, Index cell) const {
     if constexpr (check_if_outside) {
       if (outside<warn_if_outside>(
@@ -360,99 +381,115 @@ public:
   }
 
   /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \param cell Mesh cell index position is in.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 2D position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point2D const &position, Index cell) const {
     return (*this)(make_point(position), cell);
   }
 
   /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \param cell Mesh cell index position is in.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 1D position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Scalar position, Index cell) const {
     return (*this)(make_point(position), cell);
   }
 
   /**
-     \brief Interpolate field.
-     \param state Particle state to interpolate.
-  */
+   * @brief Interpolate field.
+   *
+   * @param state Particle state to interpolate.
+   */
   template <typename State> auto operator()(State const &state) const {
     return (*this)(state.position, state.cell);
   }
 
   /**
-     \brief Interpolate field.
-     \param position 3D position.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 3D position.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point const &position) const {
     return (*this)(position, _locator(position));
   }
 
   /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 2D position.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point2D const &position) const {
     return (*this)(position, _locator(position));
   }
 
   /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 1D position.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Scalar const &position) const {
     return (*this)(position, _locator(position));
   }
 
-  /** \brief Field at cell center. */
+  /** @brief Field at cell center. */
   auto operator[](Foam::label cell_id) const { return _field[cell_id]; }
 
-  /** \brief Field at cell center. */
+  /** @brief Field at cell center. */
   auto operator()(Foam::label cell_id) const { return _field[cell_id]; }
 
   /**
-     \brief Locate a state in the mesh.
-     \param state Particle state to locate.
-     \return Mesh cell index.
-  */
+   * @brief Locate a state in the mesh.
+   *
+   * @param state Particle state to locate.
+   *
+   * @return Mesh cell index.
+   */
   template <typename State> auto locate(State const &state) const {
     return _locator(state);
   }
 
-  /** \return Underlying field data. */
+  /** @return Underlying field data. */
   auto const &field() const { return _field; }
 
-  /** \return Locator object to find positions in mesh. */
+  /** @return Locator object to find positions in mesh. */
   auto const &locator() const { return _locator; }
 
-  /** \return Underlying boundary field. */
+  /** @return Underlying boundary field. */
   auto const &boundaryField() const { return _field.boundaryField(); }
 
-  /** \return Underlying boundary field at patch. */
+  /** @return Underlying boundary field at patch. */
   auto const &boundaryField(Foam::label patch_id) const {
     return _field.boundaryField()[patch_id];
   }
 
   /**
-     \return Underlying boundary field value at face of patch.
-     \note Face id in patch is numbered relative to the patch, starting from 0.
-  */
+   * @return Underlying boundary field value at face of patch.
+   *
+   * @note Face id in patch is numbered relative to the patch, starting from 0.
+   */
   auto const &boundaryField(Foam::label patch_id,
                             Foam::label face_in_patch) const {
     return _field.boundaryField()[patch_id][face_in_patch];
   }
 
-  /** \brief Update interpolator. */
+  /** @brief Update interpolator. */
   void update_interpolator() {
     // Note: Not free, but OpenFOAM interpolators usually cash relevant data
     // like weights.
@@ -460,9 +497,10 @@ public:
   }
 
   /**
-     \brief Rescale underlying field.
-     \param factor Scaling factor.
-  */
+   * @brief Rescale underlying field.
+   *
+   * @param factor Scaling factor.
+   */
   void rescale(double factor) {
     if (ptof::rescale(_field, factor)) {
       update_interpolator();
@@ -470,25 +508,27 @@ public:
   }
 
   /**
-     \brief Sum to underlying field.
-     \param field field to sum
-  */
+   * @brief Sum to underlying field.
+   *
+   * @param field field to sum
+   */
   void sum(Field field) {
     _field += field;
     update_interpolator();
   }
 
   /**
-     \brief Change underlying field data.
-     \param field Set field data to this field.
-  */
+   * @brief Change underlying field data.
+   *
+   * @param field Set field data to this field.
+   */
   void set(Field field) {
     _field = field;
     update_interpolator();
   }
 
 private:
-  Field _field;     /**< Scalar field cell data to interpolate.         */
+  Field _field;     /**< Scalar field cell data to interpolate. */
   Locator _locator; /**< Locator to find positions in mesh. */
 
   using Interpolator = std::conditional_t<
@@ -508,9 +548,8 @@ ScalarField_Interpolation(Field &&, Locator &&, InterpolationType, CheckOption)
                                  CheckOption>;
 
 /**
-   \class VectorField_Interpolation PTOF/Field.h "PTOF/Field.h"
-   \brief Interpolation of vector field cell data based on OpenFOAM routines.
-*/
+ * @brief Interpolation of vector field cell data based on OpenFOAM routines.
+ */
 template <typename Field_t, typename TimeInterpolationType>
 class Field_TimeInterpolation {
 public:
@@ -533,24 +572,32 @@ public:
       "InterpolationTypes::OldTime");
 
   /**
-     \brief Constructor.
-     \param field_new Field at new time.
-     \param field_old Field at old time.
-     \param time_new Time of new field.
-     \param time_old Time of old field.
-  */
+   * @brief Constructor.
+   *
+   * @param field_new Field at new time.
+   *
+   * @param field_old Field at old time.
+   *
+   * @param time_new Time of new field.
+   *
+   * @param time_old Time of old field.
+   */
   Field_TimeInterpolation(FieldPtr field_new, FieldPtr field_old,
                           double time_new, double time_old)
       : _field_new{std::move(field_new)}, _field_old{std::move(field_old)},
         _time_new{time_new}, _time_old{time_old} {}
 
   /**
-     \brief Constructor.
-     \param field_new Field at new time.
-     \param field_old Field at old time.
-     \param time_new Time of new field.
-     \param time_old Time of old field.
-  */
+   * @brief Constructor.
+   *
+   * @param field_new Field at new time.
+   *
+   * @param field_old Field at old time.
+   *
+   * @param time_new Time of new field.
+   *
+   * @param time_old Time of old field.
+   */
   Field_TimeInterpolation(FieldPtr field_new, FieldPtr field_old,
                           double time_new, double time_old,
                           TimeInterpolationType)
@@ -558,12 +605,16 @@ public:
         _time_new{time_new}, _time_old{time_old} {}
 
   /**
-     \brief Interpolate field.
-     \param position Position.
-     \param cell Mesh cell index position is in.
-     \param time Interpolation time.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position Position.
+   *
+   * @param cell Mesh cell index position is in.
+   *
+   * @param time Interpolation time.
+   *
+   * @return interpolated field value.
+   */
   template <typename Position>
   auto operator()(Position const &position, Index cell, Time time) const {
     return interpolate((*_field_new)(position, cell),
@@ -571,82 +622,94 @@ public:
   }
 
   /**
-     \brief Interpolate field.
-     \param state Particle state to interpolate.
-  */
+   * @brief Interpolate field.
+   *
+   * @param state Particle state to interpolate.
+   */
   template <typename State> auto operator()(State const &state) const {
     return (*this)(state.position, state.cell, state.time);
   }
 
   /**
-     \brief Interpolate field.
-     \param position 3D position.
-     \param time Interpolation time.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 3D position.
+   *
+   * @param time Interpolation time.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point const &position, Time time) const {
     return (*this)(position, locate(position), time);
   }
 
   /**
-     \brief Interpolate field.
-     \param position 2D position.
-     \param time Interpolation time.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 2D position.
+   *
+   * @param time Interpolation time.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Point2D const &position, Time time) const {
     return (*this)(position, locate(position), time);
   }
 
   /**
-     \brief Interpolate field.
-     \param position 1D position.
-     \param time Interpolation time.
-     \return interpolated field value.
-  */
+   * @brief Interpolate field.
+   *
+   * @param position 1D position.
+   *
+   * @param time Interpolation time.
+   *
+   * @return interpolated field value.
+   */
   auto operator()(Scalar position, Time time) const {
     return (*this)(position, locate(position), time);
   }
 
-  /** \brief Field at cell center. */
+  /** @brief Field at cell center. */
   auto operator()(Foam::label cell_id, Time time) const {
     return interpolate((*_field_new)(cell_id), (*_field_old)(cell_id), time);
   }
 
   /**
-     \brief Locate a state in the mesh.
-     \param state Particle state to locate.
-     \return Mesh cell index.
-  */
+   * @brief Locate a state in the mesh.
+   *
+   * @param state Particle state to locate.
+   *
+   * @return Mesh cell index.
+   */
   template <typename State> auto locate(State const &state) const {
     return _field_old->locate(state);
   }
 
-  /** \return Locator object to find positions in mesh. */
+  /** @return Locator object to find positions in mesh. */
   auto const &locator() const { return _field_old->locator(); }
 
-  /** \return Full field of underlying field type. */
+  /** @return Full field of underlying field type. */
   auto field(Time time) const {
     return interpolate(_field_new->field(), _field_old->field(), time);
   }
 
-  /** \return Underlying boundary field. */
+  /** @return Underlying boundary field. */
   auto boundaryField(Time time) const {
     return interpolate(_field_new->boundaryField(), _field_old->boundaryField(),
                        time);
   }
 
-  /** \return Underlying boundary field at patch. */
+  /** @return Underlying boundary field at patch. */
   auto boundaryField(Foam::label patch_id, Time time) const {
     return interpolate(_field_new->boundaryField(patch_id),
                        _field_old->boundaryField(patch_id), time);
   }
 
   /**
-     \return Underlying boundary field value at face of patch.
-     \note Face id in patch is numbered relative to the patch, starting from
-     0.
-  */
+   * @return Underlying boundary field value at face of patch.
+   *
+   * @note Face id in patch is numbered relative to the patch, starting from 0.
+   */
   auto boundaryField(Foam::label patch_id, Foam::label face_in_patch,
                      Time time) const {
     return interpolate(_field_new->boundaryField(patch_id, face_in_patch),
@@ -654,37 +717,39 @@ public:
                        time);
   }
 
-  /** \return New field. */
+  /** @return New field. */
   auto const &field_new() const { return *_field_new; }
 
-  /** \return Old field. */
+  /** @return Old field. */
   auto const &field_old() const { return *_field_old; }
 
-  /** \return Time of new field. */
+  /** @return Time of new field. */
   auto time_new() const { return _time_new; }
 
-  /** \return Time of old field. */
+  /** @return Time of old field. */
   auto time_old() const { return _time_old; }
 
   /**
-     \brief Set new field data.
-  */
+   * @brief Set new field data.
+   */
   template <typename Field> void set_old(Field field) {
     _field_old->set(field);
   }
 
   /**
-     \brief Set old field data.
-  */
+   * @brief Set old field data.
+   */
   template <typename Field> void set_new(Field field) {
     _field_new->set(field);
   }
 
   /**
-     \brief Update underlying field by updating the underlying data.
-     \param field Set new underlying field data to this field.
-     \param time_new Time of new field.
-  */
+   * @brief Update underlying field by updating the underlying data.
+   *
+   * @param field Set new underlying field data to this field.
+   *
+   * @param time_new Time of new field.
+   */
   template <typename Field> void update(Field field, Time time_new) {
     _field_new.swap(_field_old);
     set_new(field);
@@ -693,10 +758,12 @@ public:
   }
 
   /**
-     \brief Update underlying field.
-     \param field Set new field to this field.
-     \param time_new Time of new field.
-  */
+   * @brief Update underlying field.
+   *
+   * @param field Set new field to this field.
+   *
+   * @param time_new Time of new field.
+   */
   void update(FieldPtr field, Time time_new) {
     _field_old = std::move(_field_new);
     _field_new = std::move(field);
@@ -705,24 +772,27 @@ public:
   }
 
   /**
-     \brief Rescale underlying field.
-     \param factor Scaling factor.
-  */
+   * @brief Rescale underlying field.
+   *
+   * @param factor Scaling factor.
+   */
   void rescale(double factor) {
     rescale_new(factor);
     rescale_old(factor);
   }
 
   /**
-       \brief Rescale underlying field.
-       \param factor Scaling factor.
-    */
+   * @brief Rescale underlying field.
+   *
+   * @param factor Scaling factor.
+   */
   void rescale_new(double factor) { _field_new->rescale(factor); }
 
   /**
-         \brief Rescale underlying field.
-         \param factor Scaling factor.
-      */
+   * @brief Rescale underlying field.
+   *
+   * @param factor Scaling factor.
+   */
   void rescale_old(double factor) { _field_old->rescale(factor); }
 
 private:

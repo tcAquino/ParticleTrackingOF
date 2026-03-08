@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Output_Cases.h
-   \author Tomas Aquino
-   \date 07/03/2022
-   \brief Handle different types of output measurements.
-*/
+ * @file   Output_Cases.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Mon Mar  7 00:00:00 2022
+ *
+ * @brief Handle different types of output measurements.
+ */
 
 #ifndef PTOF_OUTPUT_CASES_H
 #define PTOF_OUTPUT_CASES_H
@@ -35,28 +36,34 @@
 #include <vector>
 
 namespace ptof {
-/**
-   \class Output_Cases PTOF/Output_Cases.h "PTOF/Output_Cases.h"
-   \brief Output object to handle implemented output options.
-*/
+/** @brief Output object to handle implemented output options. */
 template <typename Subject, typename Geometry, typename Parameters>
 class Output_Cases {
 public:
-  Parameters parameters; /**< Output parameters .*/
+  Parameters parameters; /**< Output parameters. */
 
   /**
-     \brief Constructor.
-     \param subject CTRW object to measure.
-     \param velocity_field Velocity field as a function of state.
-     \param geometry Domain geometry info and utilities.
-     \param boundary Boundary condition enforcer.
-     \param directories Current case directory information.
-     \param params_output Output parameters.
-     \param identifier String to include in names of output files.
-     \param masks Scalar fields reference wrappers.
-     \param thresholds Thresholds for each mask, such that cells where a mask is
-     above or equal to the threshold are considered.
-  */
+   * @brief Constructor.
+   *
+   * @param subject CTRW object to measure.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param params_output Output parameters.
+   *
+   * @param identifier String to include in names of output files.
+   *
+   * @param masks Scalar fields reference wrappers.
+   *
+   * @param thresholds Thresholds for each mask, such that cells where a mask is
+   *                   above or equal to the threshold are considered.
+   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask = meta::Empty>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
@@ -77,9 +84,10 @@ public:
   }
 
   /**
-     \brief Constructor.
-     \details Overload for initializer list arguments.
-  */
+   * @brief Constructor.
+   *
+   * @details Overload for initializer list arguments.
+   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
@@ -94,9 +102,10 @@ public:
                      std::vector<double>{thresholds}) {}
 
   /**
-     \brief Constructor.
-     \details Overload for initializer list arguments.
-  */
+   * @brief Constructor.
+   *
+   * @details Overload for initializer list arguments.
+   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
@@ -110,9 +119,10 @@ public:
                      std::vector<double>{thresholds}) {}
 
   /**
-     \brief Constructor.
-     \details Overload for initializer list arguments.
-  */
+   * @brief Constructor.
+   *
+   * @details Overload for initializer list arguments.
+   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask>
   Output_Cases(Subject const &subject, VelocityField &&velocity_field,
@@ -126,12 +136,12 @@ public:
                      std::vector<double>{thresholds}) {}
 
   /**
-     \return \c true  if end simulation criterion is satisfied, \c false
-     otherwise.
-  */
+   * @return \c true if end simulation criterion is satisfied, \c false
+   *         otherwise.
+   */
   bool done(double time) const { return _end_criterion->operator()(time); }
 
-  /** \brief Set time of next measurement. */
+  /** @brief Set time of next measurement. */
   void set_next_measurement_time() {
     switch (MeasurementSpacingList::type(parameters.measurement_spacing)) {
     case MeasurementSpacingList::Type::linear_step: {
@@ -166,13 +176,13 @@ public:
     }
   }
 
-  /** \return Time of next measurement. */
+  /** @return Time of next measurement. */
   double next_measurement_time() const { return _next_measurement->time(); }
 
   /**
-     \brief Output requested measurements at given time and advance to next
-     measurement.
-  */
+   * @brief Output requested measurements at given time and advance to next
+   *        measurement.
+   */
   void operator()(double time) {
     for (auto const &output : _output_time) {
       (*output)(time);
@@ -180,7 +190,7 @@ public:
     _next_measurement->advance();
   }
 
-  /** \brief Output current information. */
+  /** @brief Output current information. */
   void operator()() {
     for (auto const &output : _output) {
       output->print();
@@ -190,7 +200,7 @@ public:
     }
   }
 
-  /** \brief Update internal state. */
+  /** @brief Update internal state. */
   void update(double time, Foam::instant const &previous_time_of_change,
               Foam::instant const &next_time_of_change) {
     for (auto const &output : _output_time) {
@@ -198,7 +208,7 @@ public:
     }
   }
 
-  /** \brief Output information about current object. */
+  /** @brief Output information about current object. */
   std::ostream &info_runtime(std::ostream &output) const {
     output << io::line() << "Output\n"
 
@@ -252,7 +262,7 @@ public:
   }
 
 private:
-  /** \brief Output information about measurement types. */
+  /** @brief Output information about measurement types. */
   std::ostream &info_runtime_measurements(std::ostream &output) const {
     if (parameters.measurements.empty()) {
       return output << "  None\n";
@@ -264,17 +274,25 @@ private:
   }
 
   /**
-     \brief Set up output streams for requested output types.
-     \param subject CTRW object to measure.
-     \param directories Current case directory information.
-     \param geometry Domain geometry info and utilities.
-     \param boundary Boundary condition enforcer.
-     \param identifier String to include in names of output files.
-     \param velocity_field Velocity field as a function of state.
-     \param masks Scalar field reference wrappers.
-     \param thresholds Thresholds for each mask, such that cells where a mask
-     is above or equal to the threshold are considered.
-  */
+   * @brief Set up output streams for requested output types.
+   *
+   * @param subject CTRW object to measure.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param boundary Boundary condition enforcer.
+   *
+   * @param identifier String to include in names of output files.
+   *
+   * @param velocity_field Velocity field as a function of state.
+   *
+   * @param masks Scalar field reference wrappers.
+   *
+   * @param thresholds Thresholds for each mask, such that cells where a mask is
+   *                   above or equal to the threshold are considered.
+   */
   template <typename Boundary, typename VelocityField = meta::Empty,
             typename Mask = meta::Empty>
   void set_measurement_types(
@@ -755,7 +773,7 @@ private:
     }
   }
 
-  /** \brief Set end criterion. */
+  /** @brief Set end criterion. */
   void set_end_criterion(Subject const &subject) {
     // Note: The non-standard control flow structure of the if statements is
     // needed to deal with the quirks of if constexpr

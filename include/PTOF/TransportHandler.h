@@ -1,9 +1,10 @@
 /**
-   \file PTOF/TransportHandler.h
-   \author Tomas Aquino
-   \date 19/01/2025
-   \brief Transport parameters and utilities.
-*/
+ * @file   TransportHandler.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Jan 19 00:00:00 2025
+ *
+ * @brief Transport parameters and utilities.
+ */
 
 #ifndef PTOF_TRANSPORTHANDLER_H
 #define PTOF_TRANSPORTHANDLER_H
@@ -17,6 +18,7 @@
 #include <utility>
 
 namespace ptof {
+/** @brief Handler for transport with linear spatial interpolation. */
 template <typename Parameters_t> struct TransportHandler_LinearInterp {
   TransportHandler_LinearInterp() = delete;
 
@@ -68,9 +70,10 @@ template <typename Parameters_t> struct TransportHandler_LinearInterp {
   }
 
   /**
-     \brief Output generic information about object.
-     \param output Output stream.
-  */
+   * @brief Output generic information about object.
+   *
+   * @param output Output stream.
+   */
   template <typename Solvers>
   inline static std::ostream &info(std::ostream &output) {
     output << io::line() << "Transport\n" << io::line() << "Advection: ";

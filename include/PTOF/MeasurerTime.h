@@ -1,9 +1,10 @@
 /**
-   \file PTOF/MeasurerTime.h
-   \author Tomas Aquino
-   \date 07/03/2022
-   \brief Objects to measure and output quantities given a measurement time.
-*/
+ * @file   MeasurerTime.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Mon Mar  7 00:00:00 2022
+ *
+ * @brief  Objects to measure and output quantities given a measurement time.
+ */
 
 #ifndef PTOF_MEASURERTIME_H
 #define PTOF_MEASURERTIME_H
@@ -35,38 +36,43 @@
 
 namespace ptof {
 /**
-   \class MeasurerTime PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Abstract polymorphic output handler for outputting time and some
-   quantity.
-*/
+ * @brief Abstract polymorphic output handler for outputting time and some
+ *        quantity.
+ */
 template <typename Subject, typename Geometry> class MeasurerTime {
 public:
-  /** \brief Destructor. */
+  /** @brief Destructor. */
   virtual ~MeasurerTime() = default;
 
   /**
-     \brief Make measurement and output or store, given current time \c time.
-  */
+   * @brief Make measurement and output or store, given current time \c time.
+   */
   virtual void operator()(double time) = 0;
 
-  /** \brief Output stored information (do nothing if not overriden). */
+  /** @brief Output stored information (do nothing if not overriden). */
   virtual void print(){};
 
-  /** \brief Update internal state. */
+  /** @brief Update internal state. */
   virtual void update(double time, Foam::instant const &previous_time_of_change,
                       Foam::instant const &next_time_of_change) {}
 
 protected:
   /**
-     \brief Set up output streams for requested output types.
-     \param subject CTRW object to measure.
-     \param geometry Domain geometry info and utilities.
-     \param directories Current case directory information.
-     \param output_name Name of output type.
-     \param identifier String to include in names of output files.
-     \param precision Number of digits after decimal point in output, in
-     scientific notation.
-  */
+   * @brief Set up output streams for requested output types.
+   *
+   * @param subject CTRW object to measure.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param output_name Name of output type.
+   *
+   * @param identifier String to include in names of output files.
+   *
+   * @param precision Number of digits after decimal point in output, in
+   *                  scientific notation.
+   */
   MeasurerTime(Subject const &subject, Geometry const &geometry,
                Directories const &directories, std::string output_name,
                std::string const &identifier, int precision = 8)
@@ -93,12 +99,16 @@ protected:
   std::ofstream _output; /**< Output stream. */
 
   /**
-     \brief Open output file for a given output type.
-     \param directories Current case directory information.
-     \param output_name Name of output type.
-     \param identifier String to include in names of output files.
-     \return Output stream.
-  */
+   * @brief Open output file for a given output type.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param output_name Name of output type.
+   *
+   * @param identifier String to include in names of output files.
+   *
+   * @return Output stream.
+   */
   std::ofstream open_write(Directories const &directories,
                            std::string const &output_name,
                            std::string const &identifier) {
@@ -109,13 +119,13 @@ protected:
 };
 
 /**
-   \class MeasurerTime_position PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Particle tags, masses, cells, and positions, as well as times and
-   number of particles output per time to a separate file (with \c _times added
-   to output name).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Particle tags, masses, cells, and positions, as well as times and
+ *        number of particles output per time to a separate file (with \c _times
+ *        added to output name).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position final : public MeasurerTime<Subject, Geometry> {
 public:
@@ -196,14 +206,13 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_in_regions PTOF/MeasurerTime.h
-  "PTOF/MeasurerTime.h"
-  \brief Output tags, masses, cells, and positions within regions specified by
-  masks, as well as times and number of particles output per time to a separate
-  file (with \c _times added to output name).
-  \tparam periodic If true, give position accounting for periodicity (possibly
-  outside domain).
-*/
+ * @brief Output tags, masses, cells, and positions within regions specified by
+ *        masks, as well as times and number of particles output per time to a
+ *        separate file (with \c _times added to output name).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, typename Mask,
           bool periodic = false>
 class MeasurerTime_position_in_regions final
@@ -319,11 +328,11 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_mean PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Output time and mean position (weighted by mass).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output time and mean position (weighted by mass).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_mean final
     : public MeasurerTime<Subject, Geometry> {
@@ -374,12 +383,11 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_abs_mean PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and mean of absolute value of position (weighted by mass).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output time and mean of absolute value of position (weighted by mass).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_abs_mean final
     : public MeasurerTime<Subject, Geometry> {
@@ -432,12 +440,11 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_second_moment PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and second moment of position (weighted by mass).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output time and second moment of position (weighted by mass).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_second_moment final
     : public MeasurerTime<Subject, Geometry> {
@@ -493,12 +500,11 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_nth_moment PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and nth moment of position (weighted by mass).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output time and nth moment of position (weighted by mass).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_nth_moment final
     : public MeasurerTime<Subject, Geometry> {
@@ -558,13 +564,12 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_moment PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief  Output time and moment of position with specified exponents for each
-   coordinate (weighted by mass).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-
-*/
+ * @brief Output time and moment of position with specified exponents for each
+ *        coordinate (weighted by mass).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_moment final
     : public MeasurerTime<Subject, Geometry> {
@@ -632,12 +637,11 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_variance PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and position variance (weighted by mass).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output time and position variance (weighted by mass).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_variance final
     : public MeasurerTime<Subject, Geometry> {
@@ -697,8 +701,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and total mass. */
+/** @brief Output time and total mass. */
 template <typename Subject, typename Geometry>
 class MeasurerTime_mass final : public MeasurerTime<Subject, Geometry> {
 public:
@@ -726,8 +729,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass_adsorbed PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief Output time and total absorbed mass. */
+/** @brief Output time and total absorbed mass. */
 template <typename Subject, typename Geometry>
 class MeasurerTime_mass_absorbed final
     : public MeasurerTime<Subject, Geometry> {
@@ -758,8 +760,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass_adsorbed PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
- *  \brief  Output time and total adsorbed mass. */
+/** @brief Output time and total adsorbed mass. */
 template <typename Subject, typename Geometry>
 class MeasurerTime_mass_adsorbed final
     : public MeasurerTime<Subject, Geometry> {
@@ -790,9 +791,7 @@ private:
   std::array<int, 2> _column_widths;
 };
 
-/** \class MeasurerTime_mass_in_regions PTOF/MeasurerTime.h
- * "PTOF/MeasurerTime.h" \brief  Output time and total mass in regions specified
- * by maks. */
+/** @brief Output time and total mass in regions specified by maks. */
 template <typename Subject, typename Geometry, typename Mask>
 class MeasurerTime_mass_in_regions final
     : public MeasurerTime<Subject, Geometry> {
@@ -836,11 +835,10 @@ private:
 };
 
 /**
-   \class MeasurerTime_scalar_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Output tags, and scalar field values, as well as times and number of
-   particles output per time to a separate file (with \c _times added to output
-   name).
-*/
+ * @brief Output tags, and scalar field values, as well as times and number of
+ *        particles output per time to a separate file (with \c _times added to
+ *        output name).
+ */
 template <typename Subject, typename Geometry,
           typename Field = ScalarField_Interpolation<
               Foam::volScalarField, typename Geometry::Locator const &,
@@ -973,12 +971,10 @@ MeasurerTime_scalar_field(Subject const &, Geometry const &,
             InterpolationTypes::Linear, CheckOptions::Check>>;
 
 /**
-   \class MeasurerTime_vector_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Output tags, and vector field values, as well as times and number of
-   particles output per time to a separate file (with \c _times added to output
-   name).
-
-*/
+ * @brief Output tags, and vector field values, as well as times and number of
+ *        particles output per time to a separate file (with \c _times added to
+ *        output name).
+ */
 template <typename Subject, typename Geometry,
           typename Field = VectorField_Interpolation<
               Foam::volVectorField, typename Geometry::Locator const &,
@@ -1116,11 +1112,10 @@ MeasurerTime_vector_field(Subject const &, Geometry const &,
             InterpolationTypes::Linear, CheckOptions::Check>>;
 
 /**
-   \class MeasurerTime_tensor_field PTOF/MeasurerTime.h "PTOF/MeasurerTime.h"
-   \brief Output tags, and tensor field values, as well as times and number of
-   particles output per time to a separate file (with \c _times added to output
-   name).
-*/
+ * @brief Output tags, and tensor field values, as well as times and number of
+ *        particles output per time to a separate file (with \c _times added to
+ *        output name).
+ */
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
 class MeasurerTime_tensor_field final : public MeasurerTime<Subject, Geometry> {
@@ -1256,11 +1251,7 @@ MeasurerTime_tensor_field(Subject const &, Geometry const &,
                           std::string const &)
     -> MeasurerTime_tensor_field<Subject, Geometry, Foam::volTensorField>;
 
-/**
-   \class MeasurerTime_scalar_field_mean PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and mean of scalar field over particles.
-*/
+/** @brief Output time and mean of scalar field over particles. */
 template <typename Subject, typename Geometry,
           typename Field = ScalarField_Interpolation<
               Foam::volScalarField, typename Geometry::Locator const &,
@@ -1367,9 +1358,7 @@ MeasurerTime_scalar_field_mean(Subject const &, Geometry const &,
             Foam::volScalarField, typename Geometry::Locator const &,
             InterpolationTypes::Linear, CheckOptions::Check>>;
 
-/** \class MeasurerTime_vector_field_mean PTOF/MeasurerTime.h
- * "PTOF/MeasurerTime.h" \brief  Output time and mean of vector field over
- * particles. */
+/** @brief  Output time and mean of vector field over particles. */
 template <typename Subject, typename Geometry,
           typename Field = VectorField_Interpolation<
               Foam::volVectorField, typename Geometry::Locator const &,
@@ -1479,11 +1468,7 @@ MeasurerTime_vector_field_mean(Subject const &, Geometry const &,
             Foam::volVectorField, typename Geometry::Locator const &,
             InterpolationTypes::Linear, CheckOptions::Check>>;
 
-/**
-   \class MeasurerTime_tensor_field_mean PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output time and mean of tensor field over particles.
-*/
+/** @brief Output time and mean of tensor field over particles. */
 template <typename Subject, typename Geometry,
           typename Field = Foam::volTensorField>
 class MeasurerTime_tensor_field_mean final
@@ -1591,11 +1576,7 @@ MeasurerTime_tensor_field_mean(Subject const &, Geometry const &,
                                std::string const &)
     -> MeasurerTime_tensor_field_mean<Subject, Geometry, Foam::volTensorField>;
 
-/**
-   \class MeasurerTime_first_crossing_time PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Time and net reacted mass at each boundary face.
-*/
+/** @brief Time and net reacted mass at each boundary face. */
 template <typename Subject, typename Geometry>
 class MeasurerTime_first_crossing_time final
     : public MeasurerTime<Subject, Geometry> {
@@ -1671,14 +1652,13 @@ private:
 };
 
 /**
-   \class MeasurerTime_position_adsorbed PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output tags, masses, and positions of adsorbed particles, as well as
-   times and number of particles output per time to a separate file (with \c
-   _times added to output name).
-   \tparam periodic If true, give position accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output tags, masses, and positions of adsorbed particles, as well as
+ *        times and number of particles output per time to a separate file (with
+ *        \c _times added to output name).
+ *
+ * @tparam periodic If \c true, give position accounting for periodicity
+ *                  (possibly outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_position_adsorbed final
     : public MeasurerTime<Subject, Geometry> {
@@ -1752,14 +1732,13 @@ private:
 };
 
 /**
-   \class MeasurerTime_mass_reacted_face PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output boundary faces and corresponding net reacted masses, as well as
-   times and number of particles output per time to a separate file (with \c
-   _times added to output name).
-   \tparam periodic If true, give face accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output boundary faces and corresponding net reacted masses, as well as
+ *        times and number of particles output per time to a separate file (with
+ *        \c _times added to output name).
+ *
+ * @tparam periodic If \c true, give face accounting for periodicity (possibly
+ *                  outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_mass_reacted_face final
     : public MeasurerTime<Subject, Geometry> {
@@ -1864,14 +1843,13 @@ private:
 };
 
 /**
-   \class MeasurerTime_face_mass_adsorbed PTOF/MeasurerTime.h
-   "PTOF/MeasurerTime.h"
-   \brief Output boundary faces and corresponding adsorbed masses, as well as
-   times and number of particles output per time to a separate file (with \c
-   _times added to output name).
-   \tparam periodic If true, give face accounting for periodicity (possibly
-   outside domain).
-*/
+ * @brief Output boundary faces and corresponding adsorbed masses, as well as
+ *        times and number of particles output per time to a separate file (with
+ *        \c _times added to output name).
+ *
+ * @tparam periodic If \c true, give face accounting for periodicity (possibly
+ *                  outside domain).
+ */
 template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_mass_adsorbed_face final
     : public MeasurerTime<Subject, Geometry> {

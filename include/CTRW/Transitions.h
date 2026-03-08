@@ -1,25 +1,21 @@
 /**
-   \file CTRW/Transitions.h
-   \author Tomas Aquino
-   \date 08/06/2018
-
-   \brief Objects to handle state transitions in particle tracking.
-
-   \details
-   Transitions objects should implement the following minimal functionality:
-
-   \code{.cpp}
-   class Transitions
-   {
-   public:
-   template <typename State>
-   void operator() (State& state)
-   {
-   // Update state for a single transition
-   }
-   };
-   \endcode
-*/
+ * @file   Transitions.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Mar  8 12:50:51 2026
+ *
+ * @brief Objects to handle CTRW state transitions.
+ *
+ * @details A Transitions class should implement the following functionality:
+ *
+ * @code{.cpp}
+ * class Transitions {
+ *   template <typename State>
+ *   auto operator() (State &) {
+ *   // Update state for a single transition.
+ *   }
+ * };
+ * @endcode
+ */
 
 #ifndef CTRW_TRANSITIONS_H
 #define CTRW_TRANSITIONS_H
@@ -38,17 +34,22 @@
 
 namespace ctrw {
 /**
-   \class Transition_Time_Position CTRW/Transitions.h "CTRW/Transitions.h"
-   \brief Update position and time according to specified jumps and time
-   increments.
-   \tparam JumpGenerator Object to return jump given state.
-   \tparam TimeGenerator Object to return time increment given state.
-   \tparam Boundary Object to enforce boundary condition on new state given new
-   state and old state.
-   \note State must define:
-   - \c position
-   - \c time
-*/
+ * @brief Update position and time according to specified jumps and time
+ *        increments.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam TimeGenerator Object to return time increment given state.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @note State must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ */
 template <typename TimeGenerator, typename JumpGenerator,
           typename Boundary = geom::Boundary_DoNothing>
 class Transitions_Time_Position {
@@ -97,14 +98,17 @@ Transitions_Time_Position(TimeGenerator &&, JumpGenerator &&, Boundary &&)
     -> Transitions_Time_Position<TimeGenerator, JumpGenerator, Boundary>;
 
 /**
-   \class Transitions_Positions CTRW/Transitions.h "CTRW/Transitions.h"
-   \brief Update position according to specified jump increments.
-   \tparam JumpGenerator Object to return jump given state.
-   \tparam Boundary Object to enforce boundary condition on new state given new
-   state and old state.
-   \note State must define:
-   - \c position
-*/
+ * @brief Update position according to specified jump increments.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @note State must define:
+ *
+ * - \c position
+ */
 template <typename JumpGenerator, typename Boundary = geom::Boundary_DoNothing>
 class Transitions_Position {
 public:
@@ -137,13 +141,14 @@ Transitions_Position(JumpGenerator &&, Boundary &&)
     -> Transitions_Position<JumpGenerator, Boundary>;
 
 /**
-   \class VelocityFromGenerator
-   \brief Helper class to return velocity value from JumpGenerator object given
-   state.
-   \tparam JumpGenerator Object to return jump given state.
-   \note \c JumpGenerator must define:
-   - <tt>velocity(State const&)</tt>
-*/
+ * @brief Helper class to return velocity value from JumpGenerator object given
+ *        state.
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @note \c JumpGenerator must define:
+ *
+ *  - <tt>velocity(State const &)</tt>
+ */
 template <typename JumpGenerator> struct VelocityFromGenerator {
   VelocityFromGenerator(JumpGenerator const &jump_generator)
       : _jump_generator{jump_generator} {}
@@ -157,24 +162,31 @@ private:
 };
 
 /**
-   \class Transitions_Position_VelocityStep CTRW/Transitions.h
-   "CTRW/Transitions.h"
-   \brief Update position according to velocity field with adapative time step
-   to fix jump increments.
-   \details Tiime step is determined according to jump sizes divided by local
-   velocity. Jump increments use forward Euler.
-   \tparam JumpGenerator Object to return jump given state.
-   \tparam VelocityField Object to return velocity value given state.
-   \tparam Boundary Object to enforce boundary condition on new state given new
-   state and old state.
-   \note
-   - State must define:
-       - \c position
-       - \c time
-   - Velocity field may be passed to constructor, or velocities may be obtained
-   from <tt>jump_generator</tt> if \c JumpGenerator defines:
-       - <tt>velocity(State const&)</tt>
-*/
+ * @brief Update position according to velocity field with adapative time step
+ *        to fix jump increments.
+ *
+ * @details Time step is determined according to jump sizes divided by local
+ *          velocity. Jump increments use forward Euler.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam VelocityField Object to return velocity value given state.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @note
+ *
+ * - State must define:
+ *
+ * -# \c position
+ *
+ * -# \c time
+ *
+ * - Velocity field may be passed to constructor, or velocities may be obtained
+ *   from <tt>jump_generator</tt> if \c JumpGenerator defines <tt>velocity(State
+ *   const&)</tt>.
+ */
 template <typename JumpGenerator, typename VelocityField,
           typename Boundary = geom::Boundary_DoNothing>
 class Transitions_Position_VelocityStep {
@@ -242,19 +254,25 @@ Transitions_Position_VelocityStep(double, JumpGenerator &&, Boundary &&)
         JumpGenerator, VelocityFromGenerator<JumpGenerator>, Boundary>;
 
 /**
-   \class Transitions_PTRW_FlowField_Diff CTRW/Transitions.h
-   "CTRW/Transitions.h"
-   \brief Update position according to prescribed flow field and time step.
-   \details Jump increments use forward Euler.
-   \tparam FlowField Object to return velocity value given position.
-   \tparam Boundary Object to enforce boundary condition on new state given new
-   state and old state.
-   \tparam ParallelOption Serial or parallel implementation.
-   \tparam RNG Random number generator.
-   \note State must define:
-   - \c position
-   - \c time
-*/
+ * @brief Update position according to prescribed flow field and time step.
+ *
+ * @details Jump increments use forward Euler.
+ *
+ * @tparam FlowField Object to return velocity value given position.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @tparam ParallelOption Serial or parallel implementation.
+ *
+ * @tparam RNG Random number generator.
+ *
+ * @note State must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ */
 template <typename FlowField, typename Boundary = geom::Boundary_DoNothing,
           typename ParallelOption = par::ParallelOptions::Serial,
           typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
@@ -377,18 +395,24 @@ Transitions_PTRW_FlowField_Diff(meta::Selector_t<ParallelOption>,
                                        ParallelOption, RNG>;
 
 /**
-   \class Transitions_PTRW_Diffusion_1d CTRW/Transitions.h "CTRW/Transitions.h"
-   \brief Update position according to diffusion in one dimension with
-   prescribed time step.
-   \details Jump increments use stochastic forward Euler.
-   \tparam Boundary Object to enforce boundary condition on new state given new
-   state and old state.
-   \tparam ParallelOption Choose serial or parallel implementation.
-   \tparam RNG Random number generator.
-   \note State must define:
-   - \c position
-   - \c time
-*/
+ * @brief Update position according to diffusion in one dimension with
+ *        prescribed time step.
+ *
+ * @details Jump increments use stochastic forward Euler.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @tparam ParallelOption Choose serial or parallel implementation.
+ *
+ * @tparam RNG Random number generator.
+ *
+ * @note State must define:
+ *
+ * - \c position
+ *
+ * - \c time
+ */
 template <typename Boundary = geom::Boundary_DoNothing,
           typename ParallelOption = par::ParallelOptions::Serial,
           typename RNG = stochastic::RNGThreaded<ParallelOption, std::mt19937>>
@@ -463,19 +487,21 @@ Transitions_PTRW_Diffusion_1d(meta::Selector_t<ParallelOption>,
                                      RNG>;
 
 /**
-   \class Transitions_PTRW_Transport_Reaction CTRW/Transitions.h
-   "CTRW/Transitions.h"
-   \brief Update state according to specified transport transitions followed by
-   reaction.
-   \tparam Transitions_Transport Update particle state according to transport.
-   \tparam Reaction Update particle state according to reaction, given state and
-   time increment.
-   \note
-   - \p transitions_transport should enforce any boundary conditions.
-   - Time step needed for reaction may be specified or extracted from transport
-   transitions if \c Transitions_Transport defines:
-       - \c %time_step()
-*/
+ * @brief Update state according to specified transport transitions followed by
+ *        reaction.
+ *
+ * @tparam Transitions_Transport Update particle state according to transport.
+ *
+ * @tparam Reaction Update particle state according to reaction, given state and
+ *                  time increment.
+ *
+ * @note
+ *
+ * - \p transitions_transport should enforce any boundary conditions.
+ *
+ * - Time step needed for reaction may be specified or extracted from transport
+ *   transitions if \c Transitions_Transport defines \c %time_step().
+ */
 template <typename Transitions_Transport, typename Reaction>
 class Transitions_PTRW_Transport_Reaction {
 public:
@@ -524,18 +550,23 @@ Transitions_PTRW_Transport_Reaction(Transitions_Transport &&, Reaction &&,
                                     double)
     -> Transitions_PTRW_Transport_Reaction<Transitions_Transport, Reaction>;
 
-/** \class Transitions_CTRW_Transport_Reaction CTRW/Transitions.h
-    "CTRW/Transitions.h"
-    \brief Update state according to specified transport transitions followed by
-   reaction.
-   \tparam Transitions_Transport Update particle state according to transport.
-   \tparam Reaction Update particle state according to reaction, given state and
-   time increment.
-   \note
-   - State must define:
-       - \c time
-   - \p transitions_transport should enforce any boundary conditions.
-*/
+/**
+ * @brief Update state according to specified transport transitions followed
+ *        by reaction.
+ *
+ * @tparam Transitions_Transport Update particle state according to transport.
+ *
+ * @tparam Reaction Update particle state according to reaction, given state and
+ *                  time increment.
+ *
+ * @note
+ *
+ * - State must define:
+ *
+ * -# \c time
+ *
+ * - \p transitions_transport should enforce any boundary conditions.
+ */
 template <typename Transitions_Transport, typename Reaction>
 class Transitions_CTRW_Transport_Reaction {
 public:
@@ -564,19 +595,26 @@ Transitions_CTRW_Transport_Reaction(Transitions_Transport &&, Reaction &&)
     -> Transitions_CTRW_Transport_Reaction<Transitions_Transport, Reaction>;
 
 /**
-   \class Transitions_Reaction_Position CTRW/Transitions.h "CTRW/Transitions.h"
-   \brief Update state according to reaction, followed by a position update,
-   followed by a time update.
-   \tparam TimeGenerator Object to return time increment given state.
-   \tparam JumpGenerator Object to return jump given state.
-   \tparam Reaction Update particle state according to reaction, given state and
-   time increment.
-   \note
-   - State must define:
-       - \c position
-       - \c time
-   - \p jump_generator should enforce any boundary conditions.
-*/
+ * @brief Update state according to reaction, followed by a position update,
+ *        followed by a time update.
+ *
+ * @tparam TimeGenerator Object to return time increment given state.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam Reaction Update particle state according to reaction, given state and
+ *         time increment.
+ *
+ * @note
+ *
+ * - State must define:
+ *
+ * -# \c position
+ *
+ * -# \c time
+ *
+ * -# \p jump_generator should enforce any boundary conditions.
+ */
 template <typename TimeGenerator, typename JumpGenerator, typename Reaction>
 class Transitions_Reaction_Position {
 public:
@@ -610,22 +648,29 @@ Transitions_Reaction_Position(TimeGenerator &&, JumpGenerator &&, Reaction &&)
     -> Transitions_Reaction_Position<TimeGenerator, JumpGenerator, Reaction>;
 
 /**
-   \class Transitions_Reaction_Position_Conditional CTRW/Transitions.h
-   "CTRW/Transitions.h"
-   \brief Update state according to reaction, followed by a position update,
-   followed by a time update
-   \tparam TimeGenerator Object to return time increment given state.
-   \tparam JumpGenerator Object to return jump given state.
-   \tparam Reaction Update particle state according to reaction, given state and
-   time increment.
-   \note
-   - \c reaction must return true when applied if reaction occurs and false
-otherwise.
-   - State must define:
-       - \c position
-       - \c time
-   - \p jump_generator should enforce any boundary conditions.
-*/
+ * @brief Update state according to reaction, followed by a position update,
+ *        followed by a time update.
+ *
+ * @tparam TimeGenerator Object to return time increment given state.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam Reaction Update particle state according to reaction, given state and
+ *         time increment.
+ *
+ * @note
+ *
+ * - \c reaction must return true when applied if reaction occurs and false
+ *      otherwise.
+ *
+ * - State must define:
+ *
+ * -# \c position
+ *
+ * -# \c time
+ *
+ * - \p jump_generator should enforce any boundary conditions.
+ */
 template <typename TimeGenerator, typename JumpGenerator, typename Reaction>
 class Transitions_Reaction_Position_Conditional {
 public:
@@ -663,27 +708,40 @@ Transitions_Reaction_Position_Conditional(TimeGenerator &&, JumpGenerator &&,
                                                  Reaction>;
 
 /**
-   \class Transitions_RunTumble CTRW/Transitions.h "CTRW/Transitions.h"
-   \brief Update position and time when in run state and orientation and time
-   when not in run state.
-   \details
-   - Flip run state at each update.
-   - Position and time are then update only if no reaction occured.
-   \tparam TimeGenerator_run Object to return time increment when in run mode,
-   given state.
-   \tparam TimeGenerator_tumble Object to return time increment when not run
-   mode, given state.
-   \tparam JumpGenerator Object to return jump given state.
-   \tparam OrientationGenerator Object to return orientation increments given
-   state.
-   \note
-   - State must define:
-       - \c position
-       - \c time
-       - \c orientation
-       - \c run
-   -\p jump_generator should enforce any boundary conditions.
-*/
+ * @brief Update position and time when in run state and orientation and time
+ *        when not in run state.
+ *
+ * @details
+ *
+ * - Flip run state at each update.
+ *
+ * - Position and time are then update only if no reaction occured.
+ *
+ * @tparam TimeGenerator_run Object to return time increment when in run mode,
+ *                           given state.
+ *
+ * @tparam TimeGenerator_tumble Object to return time increment when not run
+ *                              mode, given state.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam OrientationGenerator Object to return orientation increments given
+ *                              state.
+ *
+ * @note
+ *
+ * - State must define:
+ *
+ *     - \c position
+ *
+ *     - \c time
+ *
+ *     - \c orientation (angle)
+ *
+ *     - \c run
+ *
+ * -\p jump_generator should enforce any boundary conditions.
+ */
 template <typename TimeGenerator_run, typename TimeGenerator_tumble,
           typename JumpGenerator, typename OrientationGenerator>
 class Transitions_RunAndTumble {
@@ -733,43 +791,64 @@ Transitions_RunAndTumble(TimeGenerator_run &&, TimeGenerator_tumble &&,
                                 JumpGenerator, OrientationGenerator>;
 
 /**
-   \class Transitions_RunAndTumble_PTRW CTRW/Transitions.h "CTRW/Transitions.h"
-   \brief Update state according to current internal state.
-   \tparam Boundary Object to enforce boundary
-   condition on new state given new state and old state.
-   \tparam StateSwitcher
-   Object to return new internal state given state.
-   \tparam JumpGenerator Object
-   to return jump given state.
-   \tparam OrientationGenerator Object to return
-   orientation increments given state.
-   \tparam OrientationGenerator_Wall Object
-   to return orientation increments given state.
-   \note
-  - State must define:
-      - \c position
-      - \c orientation
-      - \c state
-  - \tparam StateSwitcher must define:
-      - <tt>int run(State const&)</tt>
-      - <tt>int tumble(State const&)</tt>
-      - <tt>int wall_tumble(State const&)</tt>
-      - \tparam Boundary object should set wall_tumble state when appropriate.
-   \details When internal state is:
-   - 0 (run):
-       - Update position as according to \c JumpGenerator object.
-       - Apply \p Boundary condition.
-       - If internal state has not been switched to wall-tumble, apply the \c
-       StateSwitcher run rule given state to obtain new internal state.
-   - 1 (tumble):
-       - Apply the \c StateSwitcher tumble rule given state to obtain new
-       internal state. If internal state has been switched to run, update
-       orientation according to \c OrientationGenerator.
-   - 2 (wall-tumble):
-       - Apply \c StateSwitcher wall_tumble rule to obtain new internal state.
-       If internal state has been switched to run, update orientation according
-       to \tparam OrientationGenerator_Wall.
-*/
+ * @brief Update state according to current internal state.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @tparam StateSwitcher Object to return new internal state given state.
+ *
+ * @tparam JumpGenerator Object to return jump given state.
+ *
+ * @tparam OrientationGenerator Object to return orientation increments given
+ *                              state.
+ *
+ * @tparam OrientationGenerator_Wall Object to return orientation increments
+ *                                   given state.
+ *
+ * @note
+ *
+ * - State must define:
+ *
+ * -# \c position
+ *
+ * -# \c orientation
+ *
+ * -# \c state
+ *
+ * - \tparam StateSwitcher must define:
+ *
+ * -# <tt>int run(State const&)</tt>
+ *
+ * -# <tt>int tumble(State const&)</tt>
+ *
+ * -# <tt>int wall_tumble(State const&)</tt>
+ *
+ * -# \tparam Boundary object should set wall_tumble state when appropriate.
+ *
+ * @details When internal state is:
+ *
+ * - 0 (run):
+ *
+ * -# Update position as according to \c JumpGenerator object.
+ *
+ * -# Apply \p Boundary condition.
+ *
+ * -# If internal state has not been switched to wall-tumble, apply the \c
+ *    StateSwitcher run rule given state to obtain new internal state.
+ *
+ * - 1 (tumble):
+ *
+ * -# Apply the \c StateSwitcher tumble rule given state to obtain new internal
+ *    state. If internal state has been switched to run, update orientation
+ *    according to \c OrientationGenerator.
+ *
+ * - 2 (wall-tumble):
+ *
+ * -# Apply \c StateSwitcher wall_tumble rule to obtain new internal state. If
+ *    internal state has been switched to run, update orientation according to
+ *    \tparam OrientationGenerator_Wall.
+ */
 template <typename Boundary, typename StateSwitcher, typename JumpGenerator,
           typename OrientationGenerator, typename OrientationGenerator_Wall>
 class Transitions_RunAndTumble_PTRW {
@@ -861,16 +940,19 @@ Transitions_RunAndTumble_PTRW(JumpGenerator &&, OrientationGenerator &&,
                                      OrientationGenerator>;
 
 /**
-   \class Transitions_Velocity_Acceleration CTRW/Transitions.h
-   "CTRW/Transitions.h"
-   \brief Update position and velocity according to imposed acceleration.
-   \tparam Acceleration Object to return acceleration given state.
-   \tparam Boundary Object to enforce boundary condition on new state given new
-   state and old state.
-   \note State must define:
-   - \c position
-   - \c velocity
-*/
+ * @brief Update position and velocity according to imposed acceleration.
+ *
+ * @tparam Acceleration Object to return acceleration given state.
+ *
+ * @tparam Boundary Object to enforce boundary condition on new state given new
+ *                  state and old state.
+ *
+ * @note State must define:
+ *
+ * - \c position
+ *
+ * - \c velocity
+ */
 template <typename Acceleration, typename Boundary = meta::Empty>
 class Transitions_Velocity_Acceleration {
 public:

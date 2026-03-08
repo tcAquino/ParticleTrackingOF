@@ -1,9 +1,10 @@
 /**
-   \file General/Chrono.h
-   \author Tomas Aquino
-   \date 18/02/2026
-   \brief Utilities related to clock time.
-*/
+ * @file   Chrono.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Feb 18 00:00:00 2026
+ *
+ * @brief Utilities related to clock time.
+ */
 
 #ifndef GENERAL_CHRONO_H
 #define GENERAL_CHRONO_H
@@ -13,10 +14,11 @@
 #include <cstdint>
 #include <iomanip>
 
+/** @namespace chrono Utilities related to clock time. */
 namespace chrono {
 // Adapted from Howard Hinnant's answer here:
 // https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time
-/** \brief Display execution time in human-readable format. */
+/** @brief Display execution time in human-readable format. */
 inline std::ostream &display_duration(std::ostream &stream,
                                       std::chrono::nanoseconds ns) {
   io::StreamScopeFormat guard{stream};
@@ -39,7 +41,7 @@ inline std::ostream &display_duration(std::ostream &stream,
   return stream;
 };
 
-/** \brief Display execution time in human-readable format. */
+/** @brief Display execution time in human-readable format. */
 template <typename Clock>
 std::ostream &display_duration(std::ostream &stream,
                                std::chrono::time_point<Clock> start_time,

@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Boundary.h
-   \author Tomas Aquino
-   \date 17/02/2022
-   \brief Objects and utilities to enforce boundary conditions.
-*/
+ * @file   Boundary.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu Feb 17 00:00:00 2022
+ *
+ * @brief Objects and utilities to enforce boundary conditions.
+ */
 
 #ifndef PTOF_BOUNDARY_H
 #define PTOF_BOUNDARY_H
@@ -27,11 +28,14 @@
 
 namespace ptof {
 /**
-   \brief Apply reflecting boundary condition.
-   \param state Particle state to update.
-   \param contact_point Contact point at boundary.
-   \param unit_normal Unit normal at the contact point, pointing inwards.
-*/
+ * @brief Apply reflecting boundary condition.
+ *
+ * @param state Particle state to update.
+ *
+ * @param contact_point Contact point at boundary.
+ *
+ * @param unit_normal Unit normal at the contact point, pointing inwards.
+ */
 template <typename State>
 void boundary_reflecting(State &state, Foam::point const &contact_point,
                          Foam::vector const &unit_normal) {
@@ -49,13 +53,15 @@ void boundary_reflecting(State &state, Foam::point const &contact_point,
 }
 
 /**
-   \brief Get the boundary conditions associated with a set of patches from
-   file.
-   \param filename Name of file holding a patch name followed by a boundary
-   condition type in each line.
-   \param delims Possible delimiters between patch names and boundary condition
-   types.
-*/
+ * @brief Get the boundary conditions associated with a set of patches from
+ *        file.
+ *
+ * @param filename Name of file holding a patch name followed by a boundary
+ *                 condition type in each line.
+ *
+ * @param delims Possible delimiters between patch names and boundary condition
+ *               types.
+ */
 inline auto get_boundary_conditions(std::string const &filename,
                                     std::string const &delims = "\t,| ") {
   std::unordered_map<std::string, std::string> boundary_conditions;
@@ -77,27 +83,30 @@ inline auto get_boundary_conditions(std::string const &filename,
 }
 
 /**
-   \brief Get boundary conditions for dynamics type.
-   \param directories Current case directory information.
-   \param delims Possible delimiters between patch names and boundary condition
-   types.
-*/
+ * @brief Get boundary conditions for dynamics type.
+ *
+ * @param directories Current case directory information.
+ *
+ * @param delims Possible delimiters between patch names and boundary condition
+ *               types.
+ */
 template <DynamicsList::Type dynamics>
 auto get_boundary_conditions(Directories const &directories,
                              std::string const &delims = "\t,| ") {
-  return get_boundary_conditions(directories.dir_boundaryconditions +
-                                     "/" +
+  return get_boundary_conditions(directories.dir_boundaryconditions + "/" +
                                      DynamicsList::name(dynamics) + ".bcs",
                                  delims);
 }
 
 /**
-   \brief Throw if any patch name does not exist in mesh or associated boundary
-   condition type is not implemented.
-   \param boundary_conditions Container of pairs of patch names and boundary
-   condition types.
-   \param mesh Mesh object.
-*/
+ * @brief Throw if any patch name does not exist in mesh or associated boundary
+ *        condition type is not implemented.
+ *
+ * @param boundary_conditions Container of pairs of patch names and boundary
+ *                            condition types.
+ *
+ * @param mesh Mesh object.
+ */
 template <typename BoundaryCondition, typename Mesh,
           typename BoundaryConditionList>
 void verify_boundary_conditions(BoundaryCondition const &boundary_conditions,
@@ -115,12 +124,14 @@ void verify_boundary_conditions(BoundaryCondition const &boundary_conditions,
 }
 
 /**
- \brief Add default type 'empty' to boundary conditions for unspecified patches.
- \param boundary_conditions Associative container of pairs of patch names and
- boundary condition types, to add to.
- \param patch_names Container with all
- patch names.
-*/
+ * @brief Add default type 'empty' to boundary conditions for unspecified
+ * patches.
+ *
+ * @param boundary_conditions Associative container of pairs of patch names and
+ *                            boundary condition types, to add to.
+ *
+ * @param patch_names Container with all patch names.
+ */
 template <typename BoundaryCondition, typename Container>
 void add_unspecified_patches(BoundaryCondition &boundary_conditions,
                              Container const &patch_names) {
@@ -132,40 +143,45 @@ void add_unspecified_patches(BoundaryCondition &boundary_conditions,
 }
 
 /**
-   \brief Add default type 'empty' to boundary conditions for unspecified
-   patches in mesh.
-   \param boundary_conditions Associative container of pairs of
-   patch names and boundary condition types, to add to.
-   \param mesh Mesh object.
-*/
+ * @brief Add default type 'empty' to boundary conditions for unspecified
+ *        patches in mesh.
+ *
+ * @param boundary_conditions Associative container of pairs of patch names and
+ *                            boundary condition types, to add to.
+ *
+ * @param mesh Mesh object.
+ */
 template <typename BoundaryCondition, typename Mesh>
 void add_unspecified_patches_in_mesh(BoundaryCondition &boundary_conditions,
                                      Mesh const &mesh) {
   add_unspecified_patches(boundary_conditions, mesh.boundaryMesh().names());
 }
 
-/**
-   \struct Boundary_DoNothing PTOF/Boundary.h "PTOF/Boundary.h"
-   \brief Boundary object with no effect.
-*/
+/** @brief Boundary object with no effect. */
 struct Boundary_DoNothing {
   /**
-     \brief Check if position is out of bounds.
-     \param position Position to check.
-     \return \c false (always in bounds).
-  */
+   * @brief Check if position is out of bounds.
+   *
+   * @param position Position to check.
+   *
+   * @return \c false (always in bounds).
+   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return false;
   }
 
   /**
-     \brief Apply boundary condition (do nothing).
-     \param state Current particle state.
-     \param state_old Previous particle state.
-     \param dummy Dummy argument (unused).
-     \return \c false (no effect).
-  */
+   * @brief Apply boundary condition (do nothing).
+   *
+   * @param state Current particle state.
+   *
+   * @param state_old Previous particle state.
+   *
+   * @param dummy Dummy argument (unused).
+   *
+   * @return \c false (no effect).
+   */
   template <typename State, typename Dummy>
   bool operator()(State const &state, State const &state_old,
                   Dummy const &dummy) const {
@@ -173,38 +189,49 @@ struct Boundary_DoNothing {
   }
 
   /**
-     \brief Apply boundary condition (do nothing).
-     \param state Current particle state.
-     \param dummy Dummy argument (unused).
-     \return \c false (no effect).
-  */
+   * @brief Apply boundary condition (do nothing).
+   *
+   * @param state Current particle state.
+   *
+   * @param dummy Dummy argument (unused).
+   *
+   * @return \c false (no effect).
+   */
   template <typename State, typename Dummy>
   bool operator()(State const &state, Dummy const &dummy) const {
     return false;
   }
 
   /**
-     \brief Apply boundary condition (do nothing).
-     \param state Current particle state.
-     \return \c false (no effect).
-  */
+   * @brief Apply boundary condition (do nothing).
+   *
+   * @param state Current particle state.
+   *
+   * @return \c false (no effect).
+   */
   template <typename State> bool operator()(State const &state) const {
     return false;
   }
 
-  /** \brief Name of boundary condition type. */
+  /** @brief Name of boundary condition type. */
   std::string name() const { return "empty"; }
 };
 
 /**
-   \brief Find periodic image of intersection point.
-   \param state_outside Out-of-bounds state.
-   \param state_image Periodic image of state, in bounds.
-   \param intersection Boundary intersection info.
-   \param boundary Periodic boundary enforcer.
-   \param locator Object to locate positions in mesh.
-   \return Periodic image of intersection.
-*/
+ * @brief Find periodic image of intersection point.
+ *
+ * @param state_outside Out-of-bounds state.
+ *
+ * @param state_image Periodic image of state, in bounds.
+ *
+ * @param intersection Boundary intersection info.
+ *
+ * @param boundary Periodic boundary enforcer.
+ *
+ * @param locator Object to locate positions in mesh.
+ *
+ * @return Periodic image of intersection.
+ */
 template <typename State, typename Intersection, typename Boundary,
           typename Locator>
 auto periodic_intersection(State state_outside, State const &state_image,
@@ -255,37 +282,41 @@ auto periodic_intersection(State state_outside, State const &state_image,
   return Intersection(true, face_center(face_id, locator.mesh()), face_id);
 }
 
-/**
-   \class Boundary_Periodic PTOF/Boundary.h "PTOF/Boundary.h"
-   \brief Interface for periodic boundary enforcer. */
+/** @brief Interface for periodic boundary enforcer. */
 template <typename Boundary, typename Locator> struct Boundary_Periodic {
   /**
-     \brief Constructor.
-     \param boundary Periodic boundary enforcer.
-     \param locator Object to locate positions in mesh.
-  */
+   * @brief Constructor.
+   *
+   * @param boundary Periodic boundary enforcer.
+   *
+   * @param locator Object to locate positions in mesh.
+   */
   Boundary_Periodic(Boundary &&boundary, Locator &&locator)
       : boundary_periodic{std::forward<Boundary>(boundary)},
         locator{std::forward<Locator>(locator)} {}
 
   /**
-     \brief Check if position is out of bounds.
-     \param position Position to check
-     \return \c true if out of bounds, \c false otherwise.
-  */
+   * @brief Check if position is out of bounds.
+   *
+   * @param position Position to check
+   *
+   * @return \c true if out of bounds, \c false otherwise.
+   */
   template <typename Position>
   bool out_of_bounds(Position const &position) const {
     return boundary_periodic.out_of_bounds(position);
   }
 
   /**
-     \brief Enforce boundary condition and place intersection at its periodic
-     image.
-     \param state Particle state to apply BC to.
-     \param intersection Boundary intersection info, to be replaced by periodic
-     image.
-     \return \c true
-  */
+   * @brief Enforce boundary condition and place intersection at its periodic
+   *        image.
+   *
+   * @param state Particle state to apply BC to.
+   *
+   * @param intersection Boundary intersection info, to be replaced by periodic
+   *                     image.
+   * @return \c true.
+   */
   template <typename State, typename Intersection>
   bool operator()(State &state, Intersection &intersection) const {
     auto state_outside = state;
@@ -307,25 +338,29 @@ Boundary_Periodic(Boundary &&, Locator &&)
     -> Boundary_Periodic<Boundary, Locator>;
 
 /**
-   \class Boundary_Reinject PTOF/Boundary.h "PTOF/Boundary.h"
-   \brief Boundary object that reinjects particles according to prescribed
-   initial condition.
-*/
+ * @brief Boundary object that reinjects particles according to prescribed
+ *        initial condition.
+ */
 template <typename InitialCondition> struct Boundary_Reinject {
   /**
-     \brief Constructor.
-     \param initial_condition Initial condition object.
-  */
+   * @brief Constructor.
+   *
+   * @param initial_condition Initial condition object.
+   */
   Boundary_Reinject(InitialCondition &&initial_condition)
       : initial_condition{std::forward<InitialCondition>(initial_condition)} {}
 
   /**
-     \brief Enforce boundary condition.
-     \param state Particle state to apply BC to.
-     \param state_old Old particle state (unused).
-     \param intersection Boundary intersection info (unused).
-     \return \c true
-  */
+   * @brief Enforce boundary condition.
+   *
+   * @param state Particle state to apply BC to.
+   *
+   * @param state_old Old particle state (unused).
+   *
+   * @param intersection Boundary intersection info (unused).
+   *
+   * @return \c true
+   */
   template <typename State, typename Intersection>
   bool operator()(State &state, State const &state_old,
                   Intersection const &intersection) const {
@@ -334,7 +369,7 @@ template <typename InitialCondition> struct Boundary_Reinject {
     return true;
   }
 
-  /** \brief Name of boundary condition type. */
+  /** @brief Name of boundary condition type. */
   std::string name() const { return "reinject"; }
 
   InitialCondition initial_condition; /**< Initial condition according to which
@@ -344,22 +379,29 @@ template <typename InitialCondition>
 Boundary_Reinject(InitialCondition &&) -> Boundary_Reinject<InitialCondition>;
 
 /**
-   \brief For boundary conditions indicated as type \c periodic, extract the
-   corresponding boundary positions.
-   \param boundary_conditions Associative container of patch names and
-   associated boundary condition types.
-   \param mesh Mesh object.
-   \param dim Spatial dimensionality.
-   \return Container of pairs of periodic boundary positions along each periodic
-   dimension.
-   \note
-   - Periodic boundaries are assumed to be perpendicular to the cartesian axes.
-   There must be an even number.
-   - Periodic conditions are checked in order across Cartesian dimensions. If
-   there are periodic BCs in all dimensions starting from 0 up to some
-   dimension, output only those boundaries. If there are gap dimensions between
-   periodic dimensions, add {-inf, inf} boundaries.
-*/
+ * @brief For boundary conditions indicated as type \c periodic, extract the
+ *        corresponding boundary positions.
+ *
+ * @param boundary_conditions Associative container of patch names and
+ *                            associated boundary condition types.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param dim Spatial dimensionality.
+ *
+ * @return Container of pairs of periodic boundary positions along each periodic
+ *         dimension.
+ *
+ * @note
+ *
+ * - Periodic boundaries are assumed to be perpendicular to the cartesian axes.
+ *   There must be an even number.
+ *
+ *  - Periodic conditions are checked in order across Cartesian dimensions. If
+ *    there are periodic BCs in all dimensions starting from 0 up to some
+ *    dimension, output only those boundaries. If there are gap dimensions
+ *    between periodic dimensions, add <tt>{-inf, inf}</tt> boundaries.
+ */
 template <typename BoundaryCondition, typename Mesh>
 auto extract_cartesian_periodic_boundaries(
     BoundaryCondition const &boundary_conditions, Mesh const &mesh,

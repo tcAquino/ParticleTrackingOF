@@ -1,9 +1,10 @@
 /**
-   \file PTOF/OutputParameters.h
-   \author Tomas Aquino
-   \date 08/05/2025
-   \brief Parameters for output.
-*/
+ * @file   OutputParameters.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Thu May  8 00:00:00 2025
+ *
+ * @brief Parameters for output.
+ */
 
 #ifndef PTOF_OUTPUTPARAMETERS_H
 #define PTOF_OUTPUTPARAMETERS_H
@@ -25,11 +26,7 @@
 #include <vector>
 
 namespace ptof {
-/**
-   \struct OutputParameters_Cases PTOF/OutputParameters.h
-   "PTOF/OutputParameters.h"
-   \brief Parameters for output.
-*/
+/** @brief Parameters for output. */
 struct OutputParameters_Cases {
 public:
   std::string time_units;
@@ -119,14 +116,20 @@ public:
   std::vector<std::unique_ptr<Measurement>> measurements;
 
   /**
-     \brief Constructor.
-     \param directories Current case directory information.
-     \param parameter_set_name Name of parameter set.
-     \param geometry Domain geometry info and utilities.
-     \param params_transport Transport parameters.
-     \param params_reaction Reaction parameters.
-     \param params_solvers Solver parameters.
-  */
+   * @brief Constructor.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param parameter_set_name Name of parameter set.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param params_transport Transport parameters.
+   *
+   * @param params_reaction Reaction parameters.
+   *
+   * @param params_solvers Solver parameters.
+   */
   template <typename Geometry, typename TransportParameters,
             typename ReactionParameters, typename SolverParameters>
   OutputParameters_Cases(Directories const &directories,
@@ -169,7 +172,7 @@ public:
     read_measurement_types(input, filename, geometry);
   }
 
-  /** \brief Output generic information about object. */
+  /** @brief Output generic information about object. */
   static std::ostream &info(std::ostream &output) {
     output << io::line() << "Output parameters\n"
            << io::line() << R"(- Time units for measurement times:
@@ -367,7 +370,7 @@ public:
     return output;
   }
 
-  /** \brief Read all end criteria from input stream. */
+  /** @brief Read all end criteria from input stream. */
   void read_end_criteria(std::ifstream &input, std::string const &filename) {
     std::string in_file = std::string{"In file "} + filename + " : ";
     auto split_line = io::split_line(input, "#", "\t,|\r()[]{} ");
@@ -410,7 +413,7 @@ public:
     }
   }
 
-  /** \brief Parse one end criterion's parameters from split line string. */
+  /** @brief Parse one end criterion's parameters from split line string. */
   void parse_end_criterion_parameters(
       std::vector<std::string> const &split_line, std::size_t &param_index,
       std::string const &end_criterion, std::string const &in_file = "") {
@@ -456,7 +459,7 @@ public:
     }
   }
 
-  /** \brief Read measurement spacing type from input stream. */
+  /** @brief Read measurement spacing type from input stream. */
   template <typename TransportParameters, typename ReactionParameters>
   void read_measurement_spacing(std::ifstream &input,
                                 std::string const &filename,
@@ -544,7 +547,7 @@ public:
     }
   }
 
-  /** \brief Read measurement type from input stream. */
+  /** @brief Read measurement type from input stream. */
   template <typename Geometry>
   void read_measurement_types(std::ifstream &input, std::string const &filename,
                               Geometry const &geometry) {

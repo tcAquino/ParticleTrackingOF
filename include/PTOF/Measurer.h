@@ -1,9 +1,10 @@
 /**
-   \file PTOF/Measurer.h
-   \author Tomas Aquino
-   \date 07/03/2022
-   \brief Objects to measure and output quantities.
-*/
+ * @file   Measurer.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Mon Mar  7 00:00:00 2022
+ *
+ * @brief Objects to measure and output quantities.
+ */
 
 #ifndef PTOF_MEASURER_H
 #define PTOF_MEASURER_H
@@ -24,27 +25,30 @@
 #include <type_traits>
 
 namespace ptof {
-/**
-   \class Measurer PTOF/Measurer.h "PTOF/Measurer.h"
-   \brief Abstract polymorphic output handler for outputting some quantity.
-*/
+/** @brief Abstract polymorphic output handler for outputting some quantity. */
 template <typename Subject, typename Geometry> struct Measurer {
   virtual ~Measurer() = default;
 
-  /** \brief Make measurement and output. */
+  /** @brief Make measurement and output. */
   virtual void print() = 0;
 
 protected:
   /**
-     \brief Constructor.
-     \param subject CTRW object to measure.
-     \param geometry Domain geometry info and utilities.
-     \param directories Current case directory information.
-     \param output_name Name of output type.
-     \param identifier String to include in names of output files.
-     \param precision Number of digits after decimal point in output, in
-     scientific notation.
-  */
+   * @brief Constructor.
+   *
+   * @param subject CTRW object to measure.
+   *
+   * @param geometry Domain geometry info and utilities.
+   *
+   * @param directories Current case directory information.
+   *
+   * @param output_name Name of output type.
+   *
+   * @param identifier String to include in names of output files.
+   *
+   * @param precision Number of digits after decimal point in output, in
+   *                  scientific notation.
+   */
   Measurer(Subject const &subject, Geometry const &geometry,
            Directories const &directories, std::string const &output_name,
            std::string const &identifier, int precision = 8)
@@ -69,11 +73,14 @@ protected:
   std::ofstream _output; /**< Output stream. */
 
   /**
-     \param directories Current case directory information.
-     \param output_name Name of output type.
-     \param identifier String to include in names of output files.
-     \return Output stream.
-  */
+   * @param directories Current case directory information.
+   *
+   * @param output_name Name of output type.
+   *
+   * @param identifier String to include in names of output files.
+   *
+   * @return Output stream.
+   */
   std::ofstream open_write(Directories const &directories,
                            std::string const &output_name,
                            std::string const &identifier) {
@@ -84,11 +91,10 @@ protected:
 };
 
 /**
-   \class Measurer_absorption_time PTOF/Measurer.h "PTOF/Measurer.h"
-   \brief Output absorption time, tag, mass, patch (optional), and
-   position (optional, optionally accounting for periodicity) of absorbed
-   particles.
-*/
+ * @brief Output absorption time, tag, mass, patch (optional), and position
+ *        (optional, optionally accounting for periodicity) of absorbed
+ *        particles.
+ */
 template <typename Subject, typename Geometry, bool print_patch = false,
           bool print_position = false, bool periodic = false>
 struct Measurer_absorption_time final : Measurer<Subject, Geometry> {
@@ -200,7 +206,7 @@ private:
       if constexpr (meta::has_boundary_face_v<typename State::Info>) {
         face = state.info.boundary_face;
       } else {
-        // Note: This does not always find the correct face or even patch.        
+        // Note: This does not always find the correct face or even patch.
         face = this->_geometry.mesh_search().findNearestBoundaryFace(
             make_point(state.position));
       }

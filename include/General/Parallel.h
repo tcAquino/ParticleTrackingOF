@@ -1,9 +1,10 @@
 /**
-   \file General/Parallel.h
-   \author Tomas Aquino
-   \date 14/05/2024
-   \brief Definitions and algorithms for serial and parallel implementations.
-*/
+ * @file   Parallel.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Tue May 14 00:00:00 2024
+ *
+ * @brief Definitions and algorithms for serial and parallel implementations.
+ */
 
 #ifndef GENERAL_PARALLEL_H
 #define GENERAL_PARALLEL_H
@@ -16,60 +17,59 @@
 #endif /* __has_include(<omp.h>) */
 
 /**
-   \namespace par Definitions and algorithms for serial and parallel
-   implementations.
-*/
+ * @namespace par Definitions and algorithms for serial and parallel
+ *                implementations.
+ */
 namespace par {
-/**
-   \struct ParallelOptions General/Parallel.h "General/Parallel.h"
-   \brief Options to choose between serial and parallel implementations.
-*/
+/** @brief Options to choose between serial and parallel implementations. */
 struct ParallelOptions {
-  /**
-     \struct ParallelOptions::Serial General/Parallel.h "General/Parallel.h"
-     \brief Serial implementations.
-  */
+  /** @brief To choose serial implementations. */
   struct Serial {};
 
-  /**
-     \struct ParallelOptions::Parallel General/Parallel.h "General/Parallel.h"
-     \brief Parallel implementations.
-  */
+  /** @brief To choose parallel implementations. */
   struct Parallel {};
 };
 
 /**
-   \brief Get number of current parallel thread.
-   \details Passing an empty object of type ParallelOptions::Serial
-   chooses this implementation (serial).
-   \return Current thread number, always \c 0.
-*/
+ * @brief Get number of current parallel thread.
+ *
+ * @details Passing an empty object of type ParallelOptions::Serial
+ *          chooses this implementation (serial).
+ *
+ * @return Current thread number, always 0.
+ */
 inline std::size_t get_thread_num(ParallelOptions::Serial) { return 0; }
 
 /**
-   \brief Get total number of parallel threads.
-   \details Passing an empty object of ParallelOptions::Serial
-   chooses this implementation (serial).
-   \return Number of threads, always \c 1.
-*/
+ * @brief Get total number of parallel threads.
+ *
+ * @details Passing an empty object of ParallelOptions::Serial
+ *          chooses this implementation (serial).
+ *
+ * @return Number of threads, always 1.
+ */
 inline std::size_t get_num_threads(ParallelOptions::Serial) { return 1; }
 
 /**
-   \brief Get number of current parallel thread.
-   \details Passing an empty object of type ParallelOptions::Parallel
-   chooses this implementation (parallel).
-   \return Current thread number.
-*/
+ * @brief Get number of current parallel thread.
+ *
+ * @details Passing an empty object of type ParallelOptions::Parallel
+ *          chooses this implementation (parallel).
+ *
+ * @return Current thread number.
+ */
 inline std::size_t get_thread_num(ParallelOptions::Parallel) {
   return omp_get_thread_num();
 }
 
 /**
-   \brief Get total number of parallel threads.
-   \details Passing an empty object of type ParallelOptions::Parallel
-   chooses this implementation (parallel).
-   \return Number of threads.
-*/
+ * @brief Get total number of parallel threads.
+ *
+ * @details Passing an empty object of type ParallelOptions::Parallel
+ *          chooses this implementation (parallel).
+ *
+ * @return Number of threads.
+ */
 inline std::size_t get_num_threads(ParallelOptions::Parallel) {
   std::size_t num_threads = 1;
 #ifdef _OPENMP
@@ -79,10 +79,7 @@ inline std::size_t get_num_threads(ParallelOptions::Parallel) {
   return num_threads;
 }
 
-/**
-   \class ThreatedType General/Parallel.h "General/Parallel.h"
-   \brief Set of values of type \c Type for separate thread use.
-*/
+/** @brief Set of values of type \c Type for separate thread use. */
 template <typename Type, typename ParallelOption> struct Threaded {
   Threaded(Type val) : _vals(get_num_threads(ParallelOption{}), val) {}
 
@@ -92,7 +89,7 @@ template <typename Type, typename ParallelOption> struct Threaded {
   Threaded() : _vals(get_num_threads(ParallelOption{})) {}
 
   Type operator()() const { return _vals[get_thread_num(ParallelOption{})]; }
-  
+
   Type &operator()() { return _vals[get_thread_num(ParallelOption{})]; }
 
 private:

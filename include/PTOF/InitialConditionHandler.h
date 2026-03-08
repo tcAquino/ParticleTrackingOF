@@ -1,9 +1,10 @@
 /**
-   \file PTOF/InitialConditionHandler.h
-   \author Tomas Aquino
-   \date 04/02/2025
-   \brief Initial condition helpers.
-*/
+ * @file   InitialConditionHandler.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Tue Feb  4 00:00:00 2025
+ *
+ * @brief Initial condition helpers.
+ */
 
 #ifndef PTOF_INITIALCONDITIONHANDLER_H
 #define PTOF_INITIALCONDITIONHANDLER_H
@@ -12,6 +13,7 @@
 #include "PTOF/InitialCondition_Cases.h"
 
 namespace ptof {
+/** @brief Generic initial condition handler. */
 struct InitialConditionHandler_Generic {
   InitialConditionHandler_Generic() = delete;
 

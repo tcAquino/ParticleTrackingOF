@@ -1,25 +1,22 @@
 /**
-   \file CTRW/TimeGenerator.h
-   \author Tomas Aquino
-   \date 10/23/2019
-
-   \brief Objects to generate time increments for particle tracking.
-
-   \details
-   A TimeGenerator should implement the following minimal functionality:
-
-   \code{.cpp}
-   class TimeGenerator
-   {
-   template <typename State>
-   val_type operator() (State const&)
-   {
-   // Return time increment, with val_type
-   // a scalar type (e.g. double)
-   }
-   };
-   \endcode
-*/
+ * @file   TimeGenerator.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Sun Mar  8 12:45:37 2026
+ *
+ * @brief Objects to generate time increments for CTRW.
+ *
+ * @details A \c TimeGenerator should implement the following functionality:
+ *
+ * @code{.cpp}
+ * class TimeGenerator {
+ * public:
+ *   template <typename State>
+ *   auto operator() (State const & state) {
+ *   // Return time increment of scalar type (typically double).
+ *   }
+ * };
+ * @endcode
+ */
 
 #ifndef CTRW_TIMEGENERATOR_H
 #define CTRW_TIMEGENERATOR_H
@@ -30,10 +27,7 @@
 #include <random>
 
 namespace ctrw {
-/**
-   \class TimeGenerator_Step CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
-   \brief Deterministic time step.
-*/
+/** @brief Deterministic time step. */
 template <typename ParallelOption = par::ParallelOptions::Serial,
           typename val_type = double>
 class TimeGenerator_Step {
@@ -54,10 +48,7 @@ public:
   }
 };
 
-/**
-   \class TimeGenerator_Dist CTRW/TimeGenerator.h "CTRW/TimeGenerator.h"
-   \brief Time step according to a given distribution.
-*/
+/** @brief Time step according to a given distribution. */
 template <typename Dist, typename ParallelOption = par::ParallelOptions::Serial,
           typename RNGEngine = std::mt19937>
 class TimeGenerator_Dist {

@@ -1,9 +1,10 @@
 /**
-   \file PTOF/ParticleMaker.h
-   \author Tomas Aquino
-   \date 06/03/2024
-   \brief Objects to make particles.
-*/
+ * @file   ParticleMaker.h
+ * @author Tomás Aquino <tomas.aquino@csic.es>
+ * @date   Wed Mar  6 00:00:00 2024
+ *
+ * @brief Objects to make particles.
+ */
 
 #ifndef PTOF_PARTICLEMAKER_H
 #define PTOF_PARTICLEMAKER_H
@@ -14,10 +15,7 @@
 #include <utility>
 
 namespace ptof {
-/**
-   \class ParticleMaker_Generic PTOF/ParticleMaker.h "PTOF/ParticleMaker.h"
-   \brief Functor to make particles given position.
-*/
+/** @brief Functor to make particles given position. */
 template <typename Particle_t, typename Locator> struct ParticleMaker_Generic {
   using Particle = Particle_t;
   using State = typename Particle::State;
@@ -43,11 +41,11 @@ template <typename Particle_t, typename Locator> struct ParticleMaker_Generic {
     return {make_state(position, info, locator, hint, time, mass, tag++)};
   }
 
-  Locator locator; /**< Locator to locate particle states in mesh.*/
-  Time time;       /**< Particle state time.                      */
-  Mass mass;       /**< Particle state mass.                      */
-  Tag tag;         /**< Particle state tag.                       */
-  Info info;       /**< Particle state info.                       */
+  Locator locator; /**< To locate particle states in mesh. */
+  Time time;       /**< Particle state time. */
+  Mass mass;       /**< Particle state mass. */
+  Tag tag;         /**< Particle state tag. */
+  Info info;       /**< Particle state info. */
 };
 template <typename Particle, typename Locator>
 ParticleMaker_Generic(meta::Selector_t<Particle>, Locator &&locator,
@@ -68,9 +66,10 @@ template <typename Particle, typename Locator>
 ParticleMaker_Generic(meta::Selector_t<Particle>, Locator &&locator)
     -> ParticleMaker_Generic<Particle, Locator>;
 
-/** \class ParticleMaker_Periodic PTOF/ParticleMaker.h "PTOF/ParticleMaker.h"
- *  \brief Functor to make particles given position, for states with periodicity
- * information. */
+/**
+ * @brief Functor to make particles given position, for states with periodicity
+ *        information.
+ */
 template <typename Particle_t, typename Locator, typename Boundary>
 struct ParticleMaker_Periodic {
   using Particle = Particle_t;
@@ -101,12 +100,12 @@ struct ParticleMaker_Periodic {
                    time, mass, tag++);
   }
 
-  Locator locator;   /**< Locator to locate particle states in mesh.  */
+  Locator locator;   /**< To locate particle states in mesh. */
   Boundary boundary; /**< Boundary to enforce periodicity given state */
-  Time time;         /**< Particle state time.                        */
-  Mass mass;         /**< Particle state mass.                        */
-  Tag tag;           /**< Particle state tag.                         */
-  Info info;         /**< Particle state info.                         */
+  Time time;         /**< Particle state time. */
+  Mass mass;         /**< Particle state mass. */
+  Tag tag;           /**< Particle state tag. */
+  Info info;         /**< Particle state info. */
 };
 template <typename Particle, typename Locator, typename Boundary>
 ParticleMaker_Periodic(meta::Selector_t<Particle>, Locator &&locator,
