@@ -44,7 +44,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 - Name of case.
 - Name of transport parameter set.
 - Name of phase parameter set.
-- Name of reaction parameter set.
+- Name of reaction parameter set ['none'].
 - Name of solver parameter set.
 - Name of initial condition parameter set.
 - Name of output parameter set.
@@ -129,7 +129,8 @@ int main(int argc, char *argv[]) {
   std::string case_name = argv[arg++];
   std::string params_transport_name = argv[arg++];
   std::string params_phase_name = argv[arg++];
-  std::string params_reaction_name = argv[arg++];
+  std::string params_reaction_name =
+      io::read_or_default(argv[arg++], "none", "");
   std::string params_solvers_name = argv[arg++];
   std::string params_initial_condition_name = argv[arg++];
   std::string params_output_name = argv[arg++];
