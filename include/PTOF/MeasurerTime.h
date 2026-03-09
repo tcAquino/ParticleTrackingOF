@@ -189,9 +189,8 @@ public:
       _output << std::setw(_column_widths[1])
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
       _output << std::setw(_column_widths[2]) << cell;
-      io::print(_output, position, _column_widths[3]);
+      io::print(_output, position, _column_widths[3]) << "\n";
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1]) << nr_particles << "\n";
@@ -283,12 +282,11 @@ public:
       if (adsorbed(state_old) || !brackets_time(part, time)) {
         continue;
       }
-      ++nr_particles;
-
       auto const &state_new = part.state_new();
       if (outside(state_new.cell) || outside(state_old.cell)) {
         continue;
       }
+
       std::vector<int> in_region(_masks.size(), 0);
       for (std::size_t ii = 0; ii < _masks.size(); ++ii) {
         if (evaluate(_masks[ii].get(), state_new) >= _thresholds[ii] &&
@@ -298,6 +296,7 @@ public:
       }
       if (std::any_of(in_region.begin(), in_region.end(),
                       [](int ii) { return ii > 0; })) {
+        ++nr_particles;
         auto [position, cell] = position_interpolated_with_cell<true, periodic>(
             part, time, this->_geometry);
         _output << std::setw(_column_widths[0]) << state_old.tag;
@@ -309,9 +308,9 @@ public:
         if (_masks.size() > 1) {
           io::print(_output, in_region, _column_widths[4]);
         }
+        _output << "\n";
       }
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1]) << nr_particles << "\n";
@@ -911,9 +910,9 @@ public:
               << ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old)
               << std::setw(_column_widths[2])
               << ctrw::Get_interp{time, ctrw::Get_property{_field}}(state_new,
-                                                                    state_old);
+                                                                    state_old)
+              << "\n";
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1]) << nr_particles << "\n";
@@ -1052,9 +1051,9 @@ public:
       io::print(_output,
                 ctrw::Get_interp{time, ctrw::Get_property{_field}}(state_new,
                                                                    state_old),
-                _column_widths[2]);
+                _column_widths[2])
+          << "\n";
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1]) << nr_particles << "\n";
@@ -1202,8 +1201,8 @@ public:
           }
         }
       }
+      _output << "\n";
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1]) << nr_particles << "\n";
@@ -1714,13 +1713,12 @@ public:
       io::print(
           _output,
           ctrw::getter_position(boundary_periodic(this->_geometry))(state_old),
-          _column_widths[2]);
-      _output << "\n";
-
-      _output_times << std::setw(_column_widths_times[0]) << time
-                    << std::setw(_column_widths_times[1]) << nr_particles
-                    << "\n";
+          _column_widths[2])
+          << "\n";
     }
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
 private:
@@ -1817,16 +1815,15 @@ public:
                 << faceperiodicity_mass.first.first // Face
                 << std::setw(_column_widths[1])
                 << faceperiodicity_mass.second; // Face mass
-        io::print(_output, faceperiodicity_mass.first.second,
-                  _column_widths[2]);
+        io::print(_output, faceperiodicity_mass.first.second, _column_widths[2])
+            << "\n";
       }
     } else {
       for (auto const &face_mass : _boundary_info.masses()) {
         _output << std::setw(_column_widths[0]) << face_mass.first
-                << std::setw(_column_widths[1]) << face_mass.second;
+                << std::setw(_column_widths[1]) << face_mass.second << "\n";
       }
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1])
@@ -1913,14 +1910,14 @@ public:
         // Face periodicity
         io::print(_output, faceperiodicity_mass.first.second,
                   _column_widths[2]);
+        _output << "\n";
       }
     } else {
       for (auto const &face_mass : masses) {
         _output << std::setw(_column_widths[1]) << face_mass.first
-                << std::setw(_column_widths[2]) << face_mass.second;
+                << std::setw(_column_widths[2]) << face_mass.second << "\n";
       }
     }
-    _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << time
                   << std::setw(_column_widths_times[1]) << masses.size()
