@@ -44,13 +44,13 @@ template <typename ParallelOption> struct ExecutableInfo {
 - Name of case.
 - Name of transport parameter set.
 - Name of phase parameter set.
-- Name of reaction parameter set ['none'].
+- Name of reaction parameter set [none].
 - Name of solver parameter set.
 - Name of initial condition parameter set.
 - Name of output parameter set.
 - Output directory [<Case directory>/output].
 - Output file identifier [Based on parameter set names].
-- Run number (nonnegative integer to index output) [None].
+- Run number (nonnegative integer to index output) [].
 )";
     if constexpr (std::is_same_v<ParallelOption,
                                  par::ParallelOptions::Parallel>) {
