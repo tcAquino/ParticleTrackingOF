@@ -812,18 +812,14 @@ private:
       if (time >= _time_new) {
         return field_new;
       }
-      return static_cast<FieldVal>(op::plus(
-          field_old,
-          op::times_scalar((time - _time_old) / (_time_new - _time_old),
-                           op::minus(field_new, field_old))));
+      return static_cast<FieldVal>(field_old + (time - _time_old) /
+                                                   (_time_new - _time_old) *
+                                                   (field_new - field_old));
     }
     if constexpr (std::is_same_v<TimeInterpolationType,
                                  InterpolationTypes::OldTime>) {
       return field_old;
     }
-    throw std::runtime_error{
-        "Field_TimeInterpolation : Interpolation type must be "
-        "InterpolationTypes::Linear or InterpolationType::OldTime"};
   }
 };
 } // namespace ptof

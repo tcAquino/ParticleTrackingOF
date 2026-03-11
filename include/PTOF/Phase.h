@@ -624,44 +624,28 @@ public:
         Field_TimeInterpolation<DriftVelocityField, TimeInterpolationType>;
     DriftField _effective_drift;
 
-    template <typename PhaseFieldValues>
-    auto chemical_force_coeff(PhaseFieldValues const &carrier_phase,
-                              Parameters const &params_phase) {
-      if constexpr (std::is_same_v<ChemicalPotentialModel,
-                                   ChemicalPotentialModels::AGG>) {
-        return params_phase.chemical_potential_difference;
-      }
-
-      if constexpr (std::is_same_v<ChemicalPotentialModel,
-                                   ChemicalPotentialModels::JM>) {
-        return (1. - params_phase.phase_concentration_ratio) / 2. /
-               (carrier_phase +
-                (1. - carrier_phase) * params_phase.phase_concentration_ratio);
-      }
-
-      if constexpr (std::is_same_v<ChemicalPotentialModel,
-                                   ChemicalPotentialModels::None>) {
-        return 0.;
-      }
-    }
-
     /**
      * @brief Compute chemical potential force field.
      *
      * @note Returns a scalar if constant.
      */
-    auto chemical_force_coeff_field(Foam::scalar time,
-                                    Parameters const &params_phase) {
+    auto chemical_force_coeff(Foam::scalar time,
+                              Parameters const &params_phase) {
       // Avoid computing carrier phase field at given time if not needed
       if constexpr (std::is_same_v<ChemicalPotentialModel,
-                                   ChemicalPotentialModels::AGG> ||
-                    std::is_same_v<ChemicalPotentialModel,
+                                   ChemicalPotentialModels::AGG>) {
+        return params_phase.chemical_potential_difference;
+      }
+      if constexpr (std::is_same_v<ChemicalPotentialModel,
+                                   ChemicalPotentialModels::JM>) {
+        return 0.5 * (1. - params_phase.phase_concentration_ratio) /
+               (params_phase.phase_concentration_ratio +
+                (1. - params_phase.phase_concentration_ratio) *
+                    _carrier_phase_field.field(time));
+      }
+      if constexpr (std::is_same_v<ChemicalPotentialModel,
                                    ChemicalPotentialModels::None>) {
-        return chemical_force_coeff(meta::Empty{}, params_phase);
-      } else {
-        // Otherwise compute field
-        return chemical_force_coeff(_carrier_phase_field.field(time),
-                                    params_phase);
+        return 0.;
       }
     }
 
@@ -674,7 +658,7 @@ public:
       return static_cast<Foam::volVectorField>(
           Foam::dimensionedScalar("", Foam::dimViscosity,
                                   params_transport.diff_coeff) *
-          chemical_force_coeff_field(instant.value(), params_phase) *
+          chemical_force_coeff(instant.value(), params_phase) *
           grad_carrier_phase(carrier_phase_field.locator().mesh(),
                              instant.name(), carrier_phase_field.field(),
                              params_phase));
@@ -747,7 +731,7 @@ public:
       if constexpr (hard_reflection) {
         return Field_TimeInterpolation{
             std::make_unique<GradPhaseFieldSpatial>(
-                grad_carrier_phase(carrier_phase_field.locator().mesh(),
+                grard_carrier_phase(carrier_phase_field.locator().mesh(),
                                    carrier_phase_field.time_new(),
                                    carrier_phase_field.field_new().field(),
                                    params_phase),
