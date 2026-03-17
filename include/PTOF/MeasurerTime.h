@@ -1938,11 +1938,16 @@ private:
   template <typename TT> struct PeriodicityOrEmpty<TT, true> {
     using type = typename TT::Periodicity;
   };
+  template <typename TT, bool periodic_v>
+  using PeriodicityOrEmpty_t =
+      typename PeriodicityOrEmpty<TT, periodic_v>::type;
+
   using Masses = std::conditional_t<
       periodic,
       std::unordered_map<
-          std::pair<Foam::label, PeriodicityOrEmpty<State, periodic>>, double,
-          useful::Hash_pair<Foam::label, PeriodicityOrEmpty<State, periodic>>>,
+          std::pair<Foam::label, PeriodicityOrEmpty_t<State, periodic>>, double,
+          useful::Hash_pair<Foam::label,
+                            PeriodicityOrEmpty_t<State, periodic>>>,
       std::unordered_map<Foam::label, double>>;
 
   auto insert(Masses &masses, Foam::label face, State const &state,
