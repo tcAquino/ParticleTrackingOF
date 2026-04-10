@@ -87,9 +87,8 @@ void solid_reactant(
     Container const &face_ids,
     std::vector<double> const &surface_concentration_values,
     std::unordered_map<Foam::label, double> &surface_concentrations) {
-  for (std::size_t face = 0; face < surface_concentration_values.size();
-       ++face) {
-    surface_concentrations[face] = surface_concentration_values[face];
+  for (std::size_t ii = 0; ii < surface_concentration_values.size(); ++ii) {
+    surface_concentrations[face_ids[ii]] = surface_concentration_values[ii];
   }
 }
 
