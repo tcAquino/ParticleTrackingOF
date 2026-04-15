@@ -282,7 +282,7 @@ struct BoundaryInfo_IfPresent_boundary_face_contact_point_reinjections final
 
 /** @brief Record info about net mass consumed at reactive boundaries. */
 template <typename State>
-struct BoundaryInfo_Record_surface_reacted_mass final
+struct BoundaryInfo_Record_mass_reacted_face final
     : public BoundaryInfo_Base<State> {
   using Intersection = typename BoundaryInfo_Base<State>::Intersection;
   void generic(State &state, State const &state_old,
@@ -311,7 +311,7 @@ private:
  *        for periodicity.
  */
 template <typename State>
-struct BoundaryInfo_Record_surface_reacted_mass_periodic final
+struct BoundaryInfo_Record_mass_reacted_face_periodic final
     : public BoundaryInfo_Base<State> {
   using Intersection = typename BoundaryInfo_Base<State>::Intersection;
   void generic(State &state, State const &state_old,

@@ -676,8 +676,8 @@ private:
         }
         break;
       }
-      case MeasurementList::Type::surface_reacted_mass: {
-        using BoundaryInfo = BoundaryInfo_Record_surface_reacted_mass<State>;
+      case MeasurementList::Type::mass_reacted_face: {
+        using BoundaryInfo = BoundaryInfo_Record_mass_reacted_face<State>;
         boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
             std::make_unique<BoundaryInfo>()));
         _output_time.emplace_back(
@@ -688,10 +688,10 @@ private:
                 measurement->precision));
         break;
       }
-      case MeasurementList::Type::surface_reacted_mass_periodic: {
+      case MeasurementList::Type::mass_reacted_face_periodic: {
         if constexpr (meta::has_periodicity_v<State>) {
           using BoundaryInfo =
-              BoundaryInfo_Record_surface_reacted_mass_periodic<State>;
+              BoundaryInfo_Record_mass_reacted_face_periodic<State>;
           boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
               std::make_unique<BoundaryInfo>()));
           _output_time.emplace_back(
@@ -864,12 +864,11 @@ private:
 };
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Boundary &, Directories const &, Parameters &&,
-             std::string const &,
-             std::vector<std::reference_wrapper<const Mask>>,
-             std::vector<double>)
-    -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(
+    Subject const &, VelocityField const &, Geometry const &, Boundary &,
+    Directories const &, Parameters &&, std::string const &,
+    std::vector<std::reference_wrapper<const Mask>>,
+    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
@@ -908,12 +907,11 @@ Output_Cases(Subject const &, VelocityField const &, Geometry const &,
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(Subject const &, VelocityField const &, Geometry const &,
-             Boundary &, Directories const &, Parameters &&,
-             std::string const &,
-             std::initializer_list<std::reference_wrapper<const Mask>>,
-             std::vector<double>)
-    -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(
+    Subject const &, VelocityField const &, Geometry const &, Boundary &,
+    Directories const &, Parameters &&, std::string const &,
+    std::initializer_list<std::reference_wrapper<const Mask>>,
+    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
 } // namespace ptof
 
 #endif /* PTOF_OUTPUT_CASES_H */

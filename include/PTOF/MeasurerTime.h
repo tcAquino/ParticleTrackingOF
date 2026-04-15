@@ -1743,9 +1743,9 @@ class MeasurerTime_mass_reacted_face final
 public:
   using BoundaryInfo =
       std::conditional_t<periodic,
-                         BoundaryInfo_Record_surface_reacted_mass_periodic<
+                         BoundaryInfo_Record_mass_reacted_face_periodic<
                              typename Subject::Particle::State>,
-                         BoundaryInfo_Record_surface_reacted_mass<
+                         BoundaryInfo_Record_mass_reacted_face<
                              typename Subject::Particle::State>>;
 
   MeasurerTime_mass_reacted_face(Subject const &subject,
@@ -1757,7 +1757,7 @@ public:
       : MeasurerTime<Subject, Geometry>{subject,
                                         geometry,
                                         directories,
-                                        std::string{"surface_reacted_mass"} +
+                                        std::string{"mass_reacted_face"} +
                                             (periodic ? "_periodic" : ""),
                                         identifier,
                                         precision},

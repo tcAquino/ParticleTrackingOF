@@ -68,9 +68,9 @@ struct MeasurementList {
     mass_adsorbed_face, /**< Time and adsorbed mass at each boundary face. */
     mass_adsorbed_face_periodic, /**< Time and adsorbed mass at each boundary
                                     face, accouting for periodicity. */
-    surface_reacted_mass, /**< Time and net reacted mass at each boundary face.
+    mass_reacted_face, /**< Time and net reacted mass at each boundary face.
                            */
-    surface_reacted_mass_periodic, /**< Time and net reacted mass at each
+    mass_reacted_face_periodic, /**< Time and net reacted mass at each
                                    boundary face with periodicity info. */
     absorption_time, /**< Particle absorption times, tags, and masses at end of
                        dynamics. */
@@ -156,8 +156,8 @@ struct MeasurementList {
       {"position_adsorbed_periodic", Type::position_adsorbed_periodic},
       {"mass_adsorbed_face", Type::mass_adsorbed_face},
       {"mass_adsorbed_face_periodic", Type::mass_adsorbed_face_periodic},
-      {"surface_reacted_mass", Type::surface_reacted_mass},
-      {"surface_reacted_mass_periodic", Type::surface_reacted_mass_periodic},
+      {"mass_reacted_face", Type::mass_reacted_face},
+      {"mass_reacted_face_periodic", Type::mass_reacted_face_periodic},
       {"absorption_time", Type::absorption_time},
       {"absorption_time_patch", Type::absorption_time_patch},
       {"absorption_time_position", Type::absorption_time_position},
@@ -205,8 +205,8 @@ struct MeasurementList {
       {Type::position_adsorbed_periodic, "position_adsorbed_periodic"},
       {Type::mass_adsorbed_face, "mass_adsorbed_face"},
       {Type::mass_adsorbed_face_periodic, "mass_adsorbed_face_periodic"},
-      {Type::surface_reacted_mass, "surface_reacted_mass"},
-      {Type::surface_reacted_mass_periodic, "surface_reacted_mass_periodic"},
+      {Type::mass_reacted_face, "mass_reacted_face"},
+      {Type::mass_reacted_face_periodic, "mass_reacted_face_periodic"},
       {Type::absorption_time, "absorption_time"},
       {Type::absorption_time_patch, "absorption_time_patch"},
       {Type::absorption_time_position, "absorption_time_position"},
