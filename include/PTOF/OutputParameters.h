@@ -354,8 +354,8 @@ public:
     - Particle absorption times, tags, particle masses, and positions at end of
       dynamics.
   - absorption_time_patch_position
-    (Note: Patch info is not guaranteed accurate unless particle
-           states store boundary face.)
+    (Note: Patch info is not guaranteed accurate unless particle states store
+           boundary face.)
     - Particle absorption times, tags, masses, absorption patch, and positions
       at end of dynamics.
   - absorption_time_position_periodic
