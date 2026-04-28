@@ -50,7 +50,7 @@ public:
   virtual void operator()(double time) = 0;
 
   /** @brief Output stored information (do nothing if not overriden). */
-  virtual void print(){};
+  virtual void print() {};
 
   /** @brief Update internal state. */
   virtual void update(double time, Foam::instant const &previous_time_of_change,
@@ -77,8 +77,8 @@ protected:
                Directories const &directories, std::string output_name,
                std::string const &identifier, int precision = 8)
       : _subject{subject}, _geometry{geometry}, _locator{geometry.locator},
-        _output_name{output_name}, _output{open_write(directories, _output_name,
-                                                      identifier)} {
+        _output_name{output_name},
+        _output{open_write(directories, _output_name, identifier)} {
     _output << std::setprecision(precision) << std::scientific;
   }
 
@@ -713,8 +713,7 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[1]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -743,8 +742,7 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[1]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -774,8 +772,7 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[1]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -1276,8 +1273,7 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_mean").length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << field_name + "_mean"
-            << "\n";
+            << std::setw(_column_widths[1]) << field_name + "_mean" << "\n";
   }
 
   MeasurerTime_scalar_field_mean(Subject const &subject,
@@ -1601,8 +1597,7 @@ public:
         dimension{dimension}, position{position} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass"
-            << "\n";
+            << std::setw(_column_widths[2]) << "Mass" << "\n";
   }
 
   void operator()(double time) override {
@@ -1741,12 +1736,11 @@ template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_mass_reacted_face final
     : public MeasurerTime<Subject, Geometry> {
 public:
-  using BoundaryInfo =
-      std::conditional_t<periodic,
-                         BoundaryInfo_Record_mass_reacted_face_periodic<
-                             typename Subject::Particle::State>,
-                         BoundaryInfo_Record_mass_reacted_face<
-                             typename Subject::Particle::State>>;
+  using BoundaryInfo = std::conditional_t<
+      periodic,
+      BoundaryInfo_Record_mass_reacted_face_periodic<
+          typename Subject::Particle::State>,
+      BoundaryInfo_Record_mass_reacted_face<typename Subject::Particle::State>>;
 
   MeasurerTime_mass_reacted_face(Subject const &subject,
                                  Geometry const &geometry,
@@ -1754,13 +1748,14 @@ public:
                                  std::string const &identifier,
                                  BoundaryInfo const &boundary_info,
                                  int precision = 8)
-      : MeasurerTime<Subject, Geometry>{subject,
-                                        geometry,
-                                        directories,
-                                        std::string{"mass_reacted_face"} +
-                                            (periodic ? "_periodic" : ""),
-                                        identifier,
-                                        precision},
+      : MeasurerTime<
+            Subject,
+            Geometry>{subject,
+                      geometry,
+                      directories,
+                      std::string{"mass_reacted_face"} + (periodic ? "_periodic" : ""),
+                      identifier,
+                      precision},
         _boundary_info{boundary_info},
         _column_widths{
             std::max(12, int(1 + std::string{"Face"}.length())),
@@ -1782,8 +1777,7 @@ public:
     _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << "Time"
-                  << std::setw(_column_widths_times[1]) << "Nr_faces"
-                  << "\n";
+                  << std::setw(_column_widths_times[1]) << "Nr_faces" << "\n";
   }
 
   template <bool periodicity_v>
@@ -1885,8 +1879,7 @@ public:
     _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << "Time"
-                  << std::setw(_column_widths_times[1]) << "Nr_faces"
-                  << "\n";
+                  << std::setw(_column_widths_times[1]) << "Nr_faces" << "\n";
   }
 
   template <bool periodicity_v>
