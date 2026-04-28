@@ -146,8 +146,8 @@ public:
             std::max(12 + precision, int(1 + std::string{"Cell"}.length())),
             std::max(9 + precision,
                      int(2 + std::string{"Position_"}.length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -238,8 +238,8 @@ public:
             std::max(12, int(1 + std::string{"Cell"}.length())),
             std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
             std::max(9, int(4 + std::string{"In_region_"}.length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -858,8 +858,8 @@ public:
             std::max(12, int(1 + std::string{"Tag"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision, int(1 + field_name.length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -994,8 +994,8 @@ public:
             std::max(12, int(1 + std::string{"Tag"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_").length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -1133,8 +1133,8 @@ public:
             std::max(12, int(1 + std::string{"Tag"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision, int(3 + (field_name + "_").length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -1675,8 +1675,8 @@ public:
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision,
                      int(2 + std::string{"Position_"}.length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -1761,8 +1761,8 @@ public:
             std::max(12, int(1 + std::string{"Face"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(12, int(2 + std::string{"Periodicity_"}.length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_faces"}.length()))} {
@@ -1863,8 +1863,8 @@ public:
             std::max(12, int(1 + std::string{"Face"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(12, int(2 + std::string{"Periodicity_"}.length()))},
-        _output_times{this->open_write(
-            directories, this->_output_name + "_times", identifier)},
+        _output_times{
+            open_write(directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_faces"}.length()))} {
