@@ -50,7 +50,7 @@ public:
   virtual void operator()(double time) = 0;
 
   /** @brief Output stored information (do nothing if not overriden). */
-  virtual void print() {};
+  virtual void print(){};
 
   /** @brief Update internal state. */
   virtual void update(double time, Foam::instant const &previous_time_of_change,
@@ -77,8 +77,8 @@ protected:
                Directories const &directories, std::string output_name,
                std::string const &identifier, int precision = 8)
       : _subject{subject}, _geometry{geometry}, _locator{geometry.locator},
-        _output_name{output_name},
-        _output{open_write(directories, _output_name, identifier)} {
+        _output_name{output_name}, _output{open_write(directories, _output_name,
+                                                      identifier)} {
     _output << std::setprecision(precision) << std::scientific;
   }
 
@@ -146,8 +146,8 @@ public:
             std::max(12 + precision, int(1 + std::string{"Cell"}.length())),
             std::max(9 + precision,
                      int(2 + std::string{"Position_"}.length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -238,8 +238,8 @@ public:
             std::max(12, int(1 + std::string{"Cell"}.length())),
             std::max(9 + precision, int(2 + std::string{"Position_"}.length())),
             std::max(9, int(4 + std::string{"In_region_"}.length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -713,7 +713,8 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -742,7 +743,8 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -772,7 +774,8 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << "Mass" << "\n";
+            << std::setw(_column_widths[1]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -858,8 +861,8 @@ public:
             std::max(12, int(1 + std::string{"Tag"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision, int(1 + field_name.length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -994,8 +997,8 @@ public:
             std::max(12, int(1 + std::string{"Tag"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_").length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -1133,8 +1136,8 @@ public:
             std::max(12, int(1 + std::string{"Tag"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision, int(3 + (field_name + "_").length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -1273,7 +1276,8 @@ public:
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(9 + precision, int(2 + (field_name + "_mean").length()))} {
     _output << std::setw(_column_widths[0]) << "Time"
-            << std::setw(_column_widths[1]) << field_name + "_mean" << "\n";
+            << std::setw(_column_widths[1]) << field_name + "_mean"
+            << "\n";
   }
 
   MeasurerTime_scalar_field_mean(Subject const &subject,
@@ -1597,7 +1601,8 @@ public:
         dimension{dimension}, position{position} {
     _output << std::setw(_column_widths[0]) << "Time"
             << std::setw(_column_widths[1]) << "Tag"
-            << std::setw(_column_widths[2]) << "Mass" << "\n";
+            << std::setw(_column_widths[2]) << "Mass"
+            << "\n";
   }
 
   void operator()(double time) override {
@@ -1675,8 +1680,8 @@ public:
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(9 + precision,
                      int(2 + std::string{"Position_"}.length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_particles"}.length()))} {
@@ -1761,8 +1766,8 @@ public:
             std::max(12, int(1 + std::string{"Face"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(12, int(2 + std::string{"Periodicity_"}.length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_faces"}.length()))} {
@@ -1777,7 +1782,8 @@ public:
     _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << "Time"
-                  << std::setw(_column_widths_times[1]) << "Nr_faces" << "\n";
+                  << std::setw(_column_widths_times[1]) << "Nr_faces"
+                  << "\n";
   }
 
   template <bool periodicity_v>
@@ -1863,8 +1869,8 @@ public:
             std::max(12, int(1 + std::string{"Face"}.length())),
             std::max(9 + precision, int(1 + std::string{"Mass"}.length())),
             std::max(12, int(2 + std::string{"Periodicity_"}.length()))},
-        _output_times{
-            open_write(directories, this->_output_name + "_times", identifier)},
+        _output_times{this->open_write(
+            directories, this->_output_name + "_times", identifier)},
         _column_widths_times{
             std::max(9 + precision, int(1 + std::string{"Time"}.length())),
             std::max(12, int(1 + std::string{"Nr_faces"}.length()))} {
@@ -1879,7 +1885,8 @@ public:
     _output << "\n";
 
     _output_times << std::setw(_column_widths_times[0]) << "Time"
-                  << std::setw(_column_widths_times[1]) << "Nr_faces" << "\n";
+                  << std::setw(_column_widths_times[1]) << "Nr_faces"
+                  << "\n";
   }
 
   template <bool periodicity_v>
