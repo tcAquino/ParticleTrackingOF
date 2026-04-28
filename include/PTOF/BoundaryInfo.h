@@ -295,7 +295,7 @@ struct BoundaryInfo_Record_mass_reacted_face final
                             BoundaryConditionList::Type::reacting>) override {
     double mass_change = state.mass - state_old.mass;
     auto it_inserted = _masses.insert({intersection.index(), mass_change});
-    if (it_inserted.second) {
+    if (!it_inserted.second) {
       it_inserted.first->second += mass_change;
     }
   }
@@ -325,7 +325,7 @@ struct BoundaryInfo_Record_mass_reacted_face_periodic final
     double mass_change = state.mass - state_old.mass;
     auto it_inserted = _masses.insert(
         {{intersection.index(), state.periodicity}, mass_change});
-    if (it_inserted.second) {
+    if (!it_inserted.second) {
       it_inserted.first->second += mass_change;
     }
   }

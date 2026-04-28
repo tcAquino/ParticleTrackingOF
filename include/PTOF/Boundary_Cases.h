@@ -485,7 +485,7 @@ private:
     for (auto &info : _boundary_infos) {
       (*info)(state, state_old, intersection,
               meta::Selector<BoundaryConditionList::Type,
-                             BoundaryConditionList::Type::custom>{});
+                             boundary_condition_type>{});
     }
   }
 
