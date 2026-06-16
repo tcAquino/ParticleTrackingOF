@@ -29,7 +29,7 @@ struct MeasurementList {
     mass,              /**< Time and total mass. */
     mass_absorbed,     /**< Time and total absorbed mass. */
     mass_adsorbed,     /**< Time and total adsorbed mass. */
-    mass_in_regions, /**< Time and total mass in regions speciefied by masks. */
+    mass_in_regions, /**< Time and total mass in regions specified by masks. */
     velocity,        /**< Time, particle tags, and local velocities. */
     velocity_mean,   /**< Time and mean of velocity field over particles. */
     velocity_gradient, /**< Time, particle tags, and local velocity gradients.
