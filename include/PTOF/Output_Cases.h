@@ -59,7 +59,7 @@ public:
    *
    * @param identifier String to include in names of output files.
    *
-   * @param masks Scalar fields reference wrappers.
+   * @param masks Scalar field reference wrappers.
    *
    * @param thresholds Thresholds for each mask, such that cells where a mask is
    *                   above or equal to the threshold are considered.
