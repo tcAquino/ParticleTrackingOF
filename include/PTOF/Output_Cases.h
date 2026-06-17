@@ -409,6 +409,19 @@ private:
         }
         break;
       }
+      case MeasurementList::Type::mass_in_out_regions: {
+        if constexpr (!std::is_same_v<Mask, meta::Empty>) {
+          _output_time.emplace_back(
+              std::make_unique<
+                  MeasurerTime_mass_in_out_regions<Subject, Geometry, Mask>>(
+                  subject, geometry, directories, identifier, masks, thresholds,
+                  measurement->precision));
+        } else {
+          throw std::runtime_error{for_measurement_type +
+                                   "Region masks not provided"};
+        }
+        break;
+      }
       case MeasurementList::Type::velocity: {
         if constexpr (!std::is_same_v<useful::remove_cvref_t<VelocityField>,
                                       meta::Empty>) {

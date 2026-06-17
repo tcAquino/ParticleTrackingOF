@@ -30,10 +30,12 @@ struct MeasurementList {
     mass_absorbed,     /**< Time and total absorbed mass. */
     mass_adsorbed,     /**< Time and total adsorbed mass. */
     mass_in_regions, /**< Time and total mass in regions specified by masks. */
-    velocity,        /**< Time, particle tags, and local velocities. */
-    velocity_mean,   /**< Time and mean of velocity field over particles. */
-    velocity_gradient, /**< Time, particle tags, and local velocity gradients.
-                        */
+    mass_in_out_regions, /**< Time and total mass in and out of regions
+                       specified by masks. */
+    velocity,            /**< Time, particle tags, and local velocities. */
+    velocity_mean,       /**< Time and mean of velocity field over particles. */
+    velocity_gradient,   /**< Time, particle tags, and local velocity gradients.
+                          */
     velocity_gradient_mean, /**< Time and mean of velocity gradient field over
                                particles. */
     scalar_field, /**< Time, particle tags, and local values of scalar field. */
@@ -69,7 +71,7 @@ struct MeasurementList {
     mass_adsorbed_face_periodic, /**< Time and adsorbed mass at each boundary
                                     face, accouting for periodicity. */
     mass_reacted_face, /**< Time and net reacted mass at each boundary face.
-                           */
+                        */
     mass_reacted_face_periodic, /**< Time and net reacted mass at each
                                    boundary face with periodicity info. */
     absorption_time, /**< Particle absorption times, tags, and masses at end of
@@ -132,6 +134,7 @@ struct MeasurementList {
       {"mass_absorbed", Type::mass_absorbed},
       {"mass_adsorbed", Type::mass_adsorbed},
       {"mass_in_regions", Type::mass_in_regions},
+      {"mass_in_out_regions", Type::mass_in_out_regions},
       {"velocity", Type::velocity},
       {"velocity_mean", Type::velocity_mean},
       {"velocity_gradient", Type::velocity_gradient},
@@ -181,6 +184,7 @@ struct MeasurementList {
       {Type::mass_absorbed, "mass_absorbed"},
       {Type::mass_adsorbed, "mass_adsorbed"},
       {Type::mass_in_regions, "mass_in_regions"},
+      {Type::mass_in_out_regions, "mass_in_out_regions"},
       {Type::velocity, "velocity"},
       {Type::velocity_mean, "velocity_mean"},
       {Type::velocity_gradient, "velocity_gradient"},

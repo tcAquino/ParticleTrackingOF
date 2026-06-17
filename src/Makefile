@@ -16,11 +16,11 @@ OPT.release = -DNDEBUG -O3
 OPT.debug = -DFULLDEBUG -g -O0
 OPT := $(OPT.$(BUILD))
 WFLAGS = -Wall -Wextra -Wno-unused-parameter
-LIB = -L$(PTHOFLIB) -L$(PTHOFLIB)/sys-openmpi 
+LIB = -L$(PTHOFLIB) -L$(PTHOFLIB)/sys-openmpi
 INC = -I/usr/local/include -I$(PTH) -I$(PTHOFINC)/finiteVolume/lnInclude -I$(PTHOFINC)/meshTools/lnInclude -I$(PTHOFINC)/OpenFOAM/lnInclude -I$(PTHOFINC)/OSspecific/POSIX/lnInclude
 
 CXXFLAGS = -std=c++17 -DOPENFOAM=$(WM_PROJECT_VERSION) -DWM_$(WM_PRECISION_OPTION) -DWM_LABEL_SIZE=$(WM_LABEL_SIZE) -DNoRepository $(OPT) $(WFLAGS)
-LFLAGS = -lPstream -lfiniteVolume -lmeshTools -lOpenFOAM -Wl,-undefined,dynamic_lookup
+LFLAGS = -ltbb -lPstream -lfiniteVolume -lmeshTools -lOpenFOAM -Wl,-undefined,dynamic_lookup
 LFLAGST = $(LFLAGS) -ltwoPhaseProperties
 
 DFLAGS.release =

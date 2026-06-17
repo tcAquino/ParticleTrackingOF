@@ -834,6 +834,62 @@ private:
 };
 
 /**
+ *  @brief Output time and total mass in and out of regions specified by maks.
+ *
+ *  @details For a set of masks and corresponding thresholds, find the mass with
+ *           a mask value within the threshold of 1., within the threshold of
+ *           0., and in between.
+ */
+template <typename Subject, typename Geometry, typename Mask>
+class MeasurerTime_mass_in_out_regions final
+    : public MeasurerTime<Subject, Geometry> {
+public:
+  MeasurerTime_mass_in_out_regions(
+      Subject const &subject, Geometry const &geometry,
+      Directories const &directories, std::string const &identifier,
+      std::vector<std::reference_wrapper<const Mask>> masks,
+      std::vector<double> thresholds = {}, int precision = 8)
+      : MeasurerTime<Subject, Geometry>{subject,     geometry,
+                                        directories, "mass_in_regions",
+                                        identifier,  precision},
+        _masks{masks}, _thresholds{thresholds},
+        _column_widths{
+            std::max(9 + precision, int(1 + std::string{"Time"}.length())),
+            std::max(9 + precision,
+                     int(4 + std::string{"Mass_region_between_"}.length()))} {
+    _thresholds.resize(masks.size(), 0.);
+    _output << std::setw(_column_widths[0]) << "Time";
+    for (std::size_t ii = 0; ii < masks.size(); ++ii) {
+      _output << std::setw(_column_widths[1])
+              << "Mass_region_in_" + std::to_string(ii);
+      _output << std::setw(_column_widths[1])
+              << "Mass_region_out_" + std::to_string(ii);
+      _output << std::setw(_column_widths[1])
+              << "Mass_region_between_" + std::to_string(ii);
+    }
+    _output << "\n";
+  }
+
+  void operator()(double time) override {
+    _output << std::setw(_column_widths[0]) << time;
+    auto masses = mass_in_out(_subject, time, _masks, _thresholds);
+    for (auto const& mass_mask : masses) {
+      io::print(_output, mass_mask, _column_widths[1]);
+    }
+    _output << "\n";
+  }
+
+private:
+  using MeasurerTime<Subject, Geometry>::_output;
+  using MeasurerTime<Subject, Geometry>::_subject;
+  using MeasurerTime<Subject, Geometry>::_locator;
+  std::vector<std::reference_wrapper<const Mask>> _masks;
+  std::vector<double> _thresholds;
+  std::array<int, 2> _column_widths;
+};
+
+
+/**
  * @brief Output tags, and scalar field values, as well as times and number of
  *        particles output per time to a separate file (with \c _times added to
  *        output name).

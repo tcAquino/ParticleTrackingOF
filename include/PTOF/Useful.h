@@ -1385,7 +1385,10 @@ auto mass_absorbed(Subject const &subject, double time) {
  *
  * @note
  *
- * -Particle states must define:
+ * - The criterion for the mask should apply to both the old and new particle
+ *   states.
+ *
+ * - Particle states must define:
  *
  * -# mass
  *
@@ -1393,7 +1396,7 @@ auto mass_absorbed(Subject const &subject, double time) {
  *
  * -# cell
  *
- * - \c thresholds must have at least the same size as \c masks
+ * - \c thresholds must have at least the same size as \c masks.
  */
 template <typename Subject, typename Mask>
 auto mass(Subject const &subject, double time,
@@ -1413,6 +1416,69 @@ auto mass(Subject const &subject, double time,
       if (evaluate(masks[ii].get(), state_new) >= thresholds[ii] &&
           evaluate(masks[ii].get(), state_old) >= thresholds[ii]) {
         masses[ii] +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      }
+    }
+  }
+  return masses;
+}
+
+/**
+ * @param subject CTRW object.
+ *
+ * @param time Current time.
+ *
+ * @param masks Scalar fields (in [0., 1.]).
+ *
+ * @param thresholds Thresholds for each mask.
+ *
+ * @return Container of containers of 3 mass values for each mask: total mass in
+ *         cells with a mask value within the threshold of 1., within the
+ *         threshold of 0., and in between.
+ *
+ * @note
+ *
+ * - Masks are assumed to take values in [0., 1.].
+ *
+ * - The criterion for the mask to should apply to both the old and new particle
+ *   states. Otherwise, the particle is considered in between.
+ *
+ * - Particle states must define:
+ *
+ * -# mass
+ *
+ * -# time
+ *
+ * -# cell
+ *
+ * - \c thresholds must have at least the same size as \c masks.
+ */
+template <typename Subject, typename Mask>
+auto mass_in_out(Subject const &subject, double time,
+                 std::vector<std::reference_wrapper<const Mask>> const &masks,
+                 std::vector<double> const &thresholds) {
+  std::vector<std::array<double, 3>> masses(masks.size(),
+                                            std::array<double, 3>{0., 0., 0.});
+  for (auto const &part : subject) {
+    auto const &state_old = part.state_old();
+    if (adsorbed(state_old) || !brackets_time(part, time)) {
+      continue;
+    }
+    auto const &state_new = part.state_new();
+    if (outside(state_new.cell) || outside(state_old.cell)) {
+      continue;
+    }
+    for (std::size_t ii = 0; ii < masks.size(); ++ii) {
+      if (evaluate(masks[ii].get(), state_new) >= 1. - thresholds[ii] &&
+          evaluate(masks[ii].get(), state_old) >= 1. - thresholds[ii]) {
+        masses[ii][0] +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      } else if (evaluate(masks[ii].get(), state_new) <= thresholds[ii] &&
+                 evaluate(masks[ii].get(), state_old) <= thresholds[ii]) {
+        masses[ii][1] +=
+            ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
+      } else {
+        masses[ii][2] +=
             ctrw::Get_interp{time, ctrw::Get_mass{}}(state_new, state_old);
       }
     }

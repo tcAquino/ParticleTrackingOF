@@ -266,6 +266,9 @@ public:
     - Time and total adsorbed mass.
   - mass_in_regions
     - Time and total mass within regions specified by masks.
+  - mass_in_out_regions
+    - Time and total mass within threshold of unity, below threshold, and in
+      between regions, given values specified by masks.
   - velocity
     - Particle tags, masses, and velocities, as well as times and number of
       particles output per time to a separate file.
