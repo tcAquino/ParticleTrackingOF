@@ -176,10 +176,10 @@ int main(int argc, char *argv[]) {
   auto const &flow_times = directories_of.time.times();
   Foam::label next_time_index =
       ptof::closest_time_index(flow_times, start_time_value) + 1;
-  Foam::instant next_flow_time{std::numeric_limits<double>::infinity()};
-  if (next_time_index < flow_times.size()) {
-    next_flow_time = flow_times[next_time_index];
-  }
+  Foam::instant next_flow_time{
+      next_time_index < flow_times.size()
+          ? flow_times[next_time_index]
+          : Foam::instant{std::numeric_limits<double>::infinity()}};
   auto velocity_data_new = ptof::get_velocity_data(
       geometry.mesh(),
       next_flow_time.value() < std::numeric_limits<double>::infinity()
@@ -394,23 +394,25 @@ int main(int argc, char *argv[]) {
   while (current_time < std::numeric_limits<double>::infinity() &&
          !output.done(current_time)) {
     bool fields_need_update = false;
-    while (next_time_index < flow_times.size() &&
-           current_time >= next_flow_time.value()) {
-      directories_of.time.setTime(next_flow_time, 0);
-      next_flow_time = flow_times[++next_time_index];
+    while (current_time >= next_flow_time.value() &&
+           next_time_index < flow_times.size()) {
+      ++next_time_index;
       fields_need_update = true;
     }
-    if (next_time_index == flow_times.size()) {
-      next_flow_time.value() = std::numeric_limits<double>::infinity();
-    }
     if (fields_need_update) {
-      std::cout << "Field updates required...\n";
+      next_flow_time =
+          next_time_index < flow_times.size()
+              ? flow_times[next_time_index]
+              : Foam::instant{std::numeric_limits<double>::infinity()};
+
+      auto previous_flow_time = flow_times[next_time_index - 1];
+      directories_of.time.setTime(previous_flow_time, 0);
       ptof::info_time(std::cout, params_output, current_time);
       Phase::update_effective_velocity_and_phase_field(
           velocity_field, carrier_phase_field,
-          next_flow_time.value() < std::numeric_limits<double>::infinity()
+          next_time_index < flow_times.size()
               ? next_flow_time
-              : flow_times[next_time_index - 1],
+              : previous_flow_time,
           params_transport, params_phase);
       output.update(current_time, flow_times[next_time_index - 1],
                     next_flow_time.value() <

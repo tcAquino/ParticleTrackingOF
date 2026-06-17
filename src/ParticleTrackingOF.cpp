@@ -74,7 +74,7 @@ template <typename ParallelOption> struct ExecutableInfo {
 
 int main(int argc, char *argv[]) {
   using ParallelOption = par::ParallelOptions::Parallel;
-  using Model = ptof::Model::advection_diffusion_2d;
+  using Model = ptof::Model::advection_diffusion_surface_decay_2d;
 
   using Definitions = Model::Definitions<ParallelOption>;
 

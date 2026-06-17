@@ -22,7 +22,7 @@
 namespace ptof {
 /** @brief Types to choose options of CTRW stepping mode. */
 struct CTRWSteppers {
-  /** @brief Step particles independtly. */
+  /** @brief Step particles independently. */
   struct Asynchronous {
     template <typename CTRW, typename Transitions, typename SolverParameters,
               typename Time, typename Update = meta::DoNothing>
