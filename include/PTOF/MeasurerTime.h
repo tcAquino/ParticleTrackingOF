@@ -850,7 +850,7 @@ public:
       std::vector<std::reference_wrapper<const Mask>> masks,
       std::vector<double> thresholds = {}, int precision = 8)
       : MeasurerTime<Subject, Geometry>{subject,     geometry,
-                                        directories, "mass_in_regions",
+                                        directories, "mass_in_out_regions",
                                         identifier,  precision},
         _masks{masks}, _thresholds{thresholds},
         _column_widths{
