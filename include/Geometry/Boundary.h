@@ -296,18 +296,22 @@ public:
    */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position)) {
-      return false;
-    }
+    bool out_of_bounds = false;
     if constexpr (std::is_same_v<typename State::Position, double>) {
-      state.position += boundary_periodic(state.position, boundaries[0]);
+      if (out_of_bounds(state.position)) {
+        out_of_bounds = true;
+        state.position += boundary_periodic(state.position, boundaries[0]);
+      }
     } else {
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-        state.position[dd] +=
-            boundary_periodic(state.position[dd], boundaries[dd]);
+        if (out_of_bounds_box(state.position[dd], boundaries[dd])) {
+          out_of_bounds = true;
+          state.position[dd] +=
+              boundary_periodic(state.position[dd], boundaries[dd]);
+        }
       }
+      return true;
     }
-    return true;
   }
 
   /**
@@ -317,14 +321,15 @@ public:
    */
   template <typename Position>
   void place_in_unit_cell(Position &position) const {
-    if (!out_of_bounds(position)) {
-      return;
-    }
     if constexpr (std::is_same_v<Position, double>) {
-      position += boundary_periodic(position, boundaries);
+      if (out_of_bounds(position)) {
+        position += boundary_periodic(position, boundaries[0]);
+      }
     } else {
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-        position[dd] += boundary_periodic(position[dd], boundaries[dd]);
+        if (out_of_bounds_box(position[dd], boundaries[dd])) {
+          position[dd] += boundary_periodic(position[dd], boundaries[dd]);
+        }
       }
     }
   }
@@ -336,16 +341,18 @@ public:
    */
   template <typename Position>
   Position position_in_unit_cell(Position position) const {
-    if (!out_of_bounds(position)) {
-      return position;
-    }
     if constexpr (std::is_same_v<Position, double>) {
-      position += boundary_periodic(position, boundaries);
+      if (out_of_bounds(position)) {
+        position += boundary_periodic(position, boundaries[0]);
+      }
     } else {
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-        position[dd] += boundary_periodic(position[dd], boundaries[dd]);
+        if (out_of_bounds_box(position[dd], boundaries[dd])) {
+          position[dd] += boundary_periodic(position[dd], boundaries[dd]);
+        }
       }
     }
+
     return position;
   }
 
@@ -574,15 +581,28 @@ public:
    */
   template <typename State>
   bool operator()(State &state, State const &state_old = {}) const {
-    if (!out_of_bounds(state.position)) {
-      return false;
+    bool out_of_bounds = false;
+
+    if constexpr (std::is_same_v<typename State::Position, double>) {
+      if (out_of_bounds(state.position)) {
+        out_of_bounds = true;
+        auto change_outside =
+            boundary_periodic_with_outside_info(state.position, boundaries[0]);
+        state.position += change_outside.first;
+        state.periodicity += change_outside.second;
+      }
+    } else {
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        if (out_of_bounds_box(state.position[dd], boundaries[dd])) {
+          out_of_bounds = true;
+          auto change_outside = boundary_periodic_with_outside_info(
+              state.position[dd], boundaries[dd]);
+          state.position[dd] += change_outside.first;
+          state.periodicity[dd] += change_outside.second;
+        }
+      }
     }
-    for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-      auto change_outside = boundary_periodic_with_outside_info(
-          state.position[dd], boundaries[dd]);
-      state.position[dd] += change_outside.first;
-      state.periodicity[dd] += change_outside.second;
-    }
+
     return true;
   }
 
@@ -595,26 +615,28 @@ public:
    */
   template <typename Position>
   auto place_in_unit_cell(Position &position) const {
-    if (!out_of_bounds(position)) {
-      if constexpr (std::is_same_v<Position, double>) {
-        return 0;
-      } else {
-        return std::vector<int>(0, position.size());
-      }
-    }
+    bool out_of_bounds = false;
+
     if constexpr (std::is_same_v<Position, double>) {
-      auto change_outside =
-          boundary_periodic_with_outside_info(position, boundaries[0]);
-      position += change_outside.first;
-      return change_outside.second;
+      if (out_of_bounds(position)) {
+        auto change_outside =
+            boundary_periodic_with_outside_info(position, boundaries[0]);
+        position += change_outside.first;
+        return change_outside.second;
+      }
+
+      return 0;
     } else {
       std::vector<int> periodicity(position.size(), 0);
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-        auto change_outside =
-            boundary_periodic_with_outside_info(position[dd], boundaries[dd]);
-        position[dd] += change_outside.first;
-        periodicity[dd] = change_outside.second;
+        if (out_of_bounds_box(position[dd], boundaries[dd])) {
+          auto change_outside =
+              boundary_periodic_with_outside_info(position[dd], boundaries[dd]);
+          position[dd] += change_outside.first;
+          periodicity[dd] = change_outside.second;
+        }
       }
+
       return periodicity;
     }
   }
@@ -626,18 +648,21 @@ public:
    */
   template <typename Position>
   auto position_in_unit_cell(Position position) const {
-    if (!out_of_bounds(position)) {
-      return position;
-    }
     if constexpr (std::is_same_v<Position, double>) {
-      position += boundary_periodic_with_outside_info(position, boundaries[0]);
+      if (out_of_bounds(position)) {
+        position +=
+            boundary_periodic_with_outside_info(position, boundaries[0]);
+      }
     } else {
       for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
-        position[dd] +=
-            boundary_periodic_with_outside_info(position[dd], boundaries[dd])
-                .second;
+        if (out_of_bounds_box(position[dd], boundaries[dd])) {
+          position[dd] +=
+              boundary_periodic_with_outside_info(position[dd], boundaries[dd])
+                  .second;
+        }
       }
     }
+
     return position;
   }
 

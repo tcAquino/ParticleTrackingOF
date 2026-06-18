@@ -279,6 +279,14 @@ auto periodic_intersection(State state_outside, State const &state_image,
 
   // If finding the intersection failed, take the closest boundary face center
   auto face_id = nearest_boundary_face(state_image.position, locator);
+
+  // This should not happen, but it can for bad position inputs and it can
+  // lead to bad memory access, so it is safer to check
+  if (face_id == -1) {
+    throw std::runtime_error{
+        "Could not find image of periodic boundary intersection"};
+  }
+
   return Intersection(true, face_center(face_id, locator.mesh()), face_id);
 }
 
@@ -323,10 +331,7 @@ template <typename Boundary, typename Locator> struct Boundary_Periodic {
     boundary_periodic(state);
     intersection = periodic_intersection(state_outside, state, intersection,
                                          boundary_periodic, locator);
-    if (!intersection.hit()) {
-      throw std::runtime_error{
-          "Could not find image of periodic boundary intersection"};
-    }
+
     return true;
   }
 
