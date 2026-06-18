@@ -234,7 +234,7 @@ public:
         throw std::runtime_error{
             "Last measurement time is lower than specified end time"};
       }
-      output << time_end;
+      output << time_end / parameters.time_unit_factor;
     }
     output << "\n"
            << "Measurement time increment: "
@@ -251,7 +251,9 @@ public:
       output << "End criterion: " << end_criterion << "\n";
       auto criterion_type = EndCriterionList::type(end_criterion);
       if (parameters.end_values.count(criterion_type)) {
-        output << "  - End value: " << parameters.end_values.at(criterion_type)
+        output << "  - End value: "
+               << parameters.end_values.at(criterion_type) /
+                      parameters.time_unit_factor
                << "\n";
       }
     }

@@ -436,8 +436,9 @@ public:
           time_unit_factor;
       break;
     }
-    case EndCriterionList::Type::time_max:
+    case EndCriterionList::Type::time_max: {
       break;
+    }
     case EndCriterionList::Type::mass_below:
     case EndCriterionList::Type::mass_above: {
       end_values[criterion_type] = io::read<double>(
@@ -445,10 +446,12 @@ public:
           in_file + for_end_criterion + "Could not parse mass threshold");
       break;
     }
-    case EndCriterionList::Type::all_absorbed:
+    case EndCriterionList::Type::all_absorbed: {
       break;
-    case EndCriterionList::Type::one_absorbed:
+    }
+    case EndCriterionList::Type::one_absorbed: {
       break;
+    }
     case EndCriterionList::Type::fraction_not_absorbed: {
       end_values[criterion_type] =
           io::read<double>(split_line, param_index,
@@ -491,9 +494,10 @@ public:
                time_increment);
       time_increment *= time_unit_factor;
       time_max = std::numeric_limits<double>::infinity();
-      if (!(time_increment > 0.))
+      if (!(time_increment > 0.)) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Non-positive time increment"};
+      }
       break;
     }
     case MeasurementSpacingList::Type::log_step: {
@@ -502,9 +506,10 @@ public:
                    "Could not parse time step factor",
                time_increment);
       time_max = std::numeric_limits<double>::infinity();
-      if (!(time_increment > 1.))
+      if (!(time_increment > 1.)) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Time increment factor not greater than one"};
+      }
       break;
     }
     case MeasurementSpacingList::Type::linear: {
@@ -514,33 +519,38 @@ public:
                    "Could not parse maximum time and number of measurements",
                time_max, nr_measurements);
       time_max *= time_unit_factor;
-      if (nr_measurements < 2)
+      if (nr_measurements < 2) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Number of measurements not greater than one"};
+      }
       time_increment = (time_max - time_min) / (nr_measurements - 1);
-      if (!(time_increment > 0.))
+      if (!(time_increment > 0.)) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Non-positive time increment"};
+      }
       break;
     }
     case MeasurementSpacingList::Type::log: {
-      if (!(time_min > 0.))
+      if (!(time_min > 0.)) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Non-positive minimum measurement time"};
+      }
       std::size_t nr_measurements;
       io::read(split_line, param_index,
                in_file + for_measurement_spacing +
                    "Could not parse maximum time and number of measurements",
                time_max, nr_measurements);
       time_max *= time_unit_factor;
-      if (nr_measurements < 2)
+      if (nr_measurements < 2) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Number of measurements not greater than one"};
+      }
       time_increment =
           std::pow(time_max / time_min, 1. / (nr_measurements - 1));
-      if (!(time_increment > 1.))
+      if (!(time_increment > 1.)) {
         throw std::runtime_error{in_file + for_measurement_spacing +
                                  "Time increment factor not greater than one"};
+      }
       break;
     }
     default: {
