@@ -383,6 +383,82 @@ void check_size(Container const &container, std::size_t index,
 }
 
 /**
+ * @return Longest prefix suffix array of \c pattern (for KMP).
+ */
+std::vector<std::size_t> build_lps(std::string const &pattern) {
+  std::vector<std::size_t> lps(pattern.size());
+  std::size_t len = 0;
+
+  lps[0] = 0;
+  for (std::size_t ii = 1; ii < pattern.length();) {
+    if (pattern[ii] == pattern[len]) {
+      ++len;
+      lps[ii++] = len;
+    } else {
+      if (len != 0) {
+        len = lps[len - 1];
+      } else {
+        lps[ii++] = 0;
+      }
+    }
+  }
+
+  return lps;
+}
+
+/**
+ * @return Starting indices of \c pattern matches in \c string (using KMP).
+ */
+std::vector<std::size_t> pattern_matches(std::string const &pattern,
+                                         std::string const &string) {
+  auto lps = build_lps(pattern);
+  std::vector<std::size_t> indices;
+
+  for (std::size_t ii = 0, jj = 0; ii < string.length();) {
+    if (string[ii] == pattern[jj]) {
+      ++ii;
+      ++jj;
+      if (jj == pattern.length()) {
+        indices.push_back(ii - jj);
+        jj = lps[jj - 1];
+      }
+    } else {
+      if (jj != 0)
+        jj = lps[jj - 1];
+      else
+        ++ii;
+    }
+  }
+  return indices;
+}
+
+/**
+ * @return Number of \c pattern matches in \c string (using KMP).
+ */
+std::size_t pattern_matches_count(std::string const &pattern,
+                                  std::string const &string) {
+  auto lps = build_lps(pattern);
+  std::size_t nr_matches = 0;
+
+  for (std::size_t ii = 0, jj = 0; ii < string.length();) {
+    if (string[ii] == pattern[jj]) {
+      ++ii;
+      ++jj;
+      if (jj == pattern.length()) {
+        ++nr_matches;
+        jj = lps[jj - 1];
+      }
+    } else {
+      if (jj != 0)
+        jj = lps[jj - 1];
+      else
+        ++ii;
+    }
+  }
+  return nr_matches;
+}
+
+/**
  * @brief Left shift operator.
  */
 struct left_shift {
