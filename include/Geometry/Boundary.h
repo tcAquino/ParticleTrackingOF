@@ -232,7 +232,9 @@ public:
    * @param projection Position within periodic cell.
    */
   void translate(double &position, double projection) const {
-    position += (boundaries.second - boundaries.first) * projection;
+    if (projection != 0) {
+      position += (boundaries.second - boundaries.first) * projection;
+    }
   }
 
   /**
@@ -244,7 +246,9 @@ public:
    * @param projection Position outside periodic cell.
    */
   void translate_back(double &position, double projection) const {
-    position -= (boundaries.second - boundaries.first) * projection;
+    if (projection != 0) {
+      position -= (boundaries.second - boundaries.first) * projection;
+    }
   }
 };
 
@@ -386,12 +390,15 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate_back(Position &position,
                       Projections const &projections) const {
-    auto increment = op::times(domain_dimensions, projections);
     if constexpr (std::is_same_v<Position, double>) {
-      position -= increment;
+      if (projections != 0) {
+        position -= domain_dimensions * projections;
+      }
     } else {
-      for (std::size_t dd = 0; dd < increment.size(); ++dd) {
-        position[dd] -= increment[dd];
+      for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+        if (projections[dd] != 0) {
+          position[dd] -= domain_dimensions[dd] * projections[dd];
+        }
       }
     }
   }
@@ -511,8 +518,10 @@ public:
    */
   template <typename Position>
   void translate(Position &position, double projection) const {
-    auto increment = (boundaries.second - boundaries.first) * projection;
-    position[dd] += increment;
+    if (projection != 0) {
+      auto increment = (boundaries.second - boundaries.first) * projection;
+      position[dd] += increment;
+    }
   }
 
   /**
@@ -525,8 +534,10 @@ public:
    */
   template <typename Position>
   void translate_back(Position &position, double projection) const {
-    auto increment = (boundaries.second - boundaries.first) * projection;
-    position[dd] -= increment;
+    if (projection != 0) {
+      auto increment = (boundaries.second - boundaries.first) * projection;
+      position[dd] -= increment;
+    }
   }
 };
 
@@ -675,9 +686,10 @@ public:
    */
   template <typename Position, typename Projections = std::vector<double>>
   void translate(Position &position, Projections const &projections) const {
-    auto increment = op::times(domain_dimensions, projections);
-    for (std::size_t dd = 0; dd < increment.size(); ++dd) {
-      position[dd] += increment[dd];
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+      if (projections[dd] != 0) {
+        position[dd] += domain_dimensions[dd] * projections[dd];
+      }
     }
   }
 
@@ -692,9 +704,10 @@ public:
   template <typename Position, typename Projections = std::vector<double>>
   void translate_back(Position &position,
                       Projections const &projections) const {
-    auto increment = op::times(domain_dimensions, projections);
-    for (std::size_t dd = 0; dd < increment.size(); ++dd) {
-      position[dd] -= increment[dd];
+    for (std::size_t dd = 0; dd < boundaries.size(); ++dd) {
+      if (projections[dd] != 0) {
+        position[dd] -= domain_dimensions[dd] * projections[dd];
+      }
     }
   }
 
@@ -1158,11 +1171,10 @@ public:
    */
   Boundary_Periodic_SymmetryPlanes(double scale = 1.,
                                    std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale}, origin{
-                                             origin.size() == 0.
-                                                 ? std::vector<double>(
-                                                       symmetry_planes.dim, 0.)
-                                                 : origin} {}
+      : symmetry_planes{}, scale{scale},
+        origin{origin.size() == 0.
+                   ? std::vector<double>(symmetry_planes.dim, 0.)
+                   : origin} {}
 
   /**
    * @brief Check if position is out of bounds.
@@ -1242,7 +1254,7 @@ public:
    * @param position Position to translate.
    *
    * @param projections Position outside periodic cell.
-  */
+   */
   template <typename Position, typename Projections = std::vector<double>>
   void translate_back(Position &position,
                       Projections const &projections) const {
@@ -1298,11 +1310,10 @@ public:
    */
   Boundary_Periodic_SymmetryPlanes_WithOutsideInfo(
       double scale = 1., std::vector<double> origin = {})
-      : symmetry_planes{}, scale{scale}, origin{
-                                             origin.size() == 0.
-                                                 ? std::vector<double>(
-                                                       symmetry_planes.dim, 0.)
-                                                 : origin} {}
+      : symmetry_planes{}, scale{scale},
+        origin{origin.size() == 0.
+                   ? std::vector<double>(symmetry_planes.dim, 0.)
+                   : origin} {}
 
   /**
    * @brief Check if position is out of bounds.

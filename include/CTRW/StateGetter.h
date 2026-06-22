@@ -438,6 +438,7 @@ template <typename Getter> struct Get_interp {
 
     auto delta_t = time - state_old.time;
     auto value_new = get(state_new);
+
     return op::plus(
         value_old,
         op::times_scalar(delta_t / dt_state, op::minus(value_new, value_old)));
