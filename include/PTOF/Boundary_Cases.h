@@ -250,6 +250,7 @@ public:
                                                      intersection);
         collision_time +=
             time_increment(intersection, old_intersection, average_velocity);
+        state.time = collision_time;
         break;
       }
       case BoundaryConditionList::Type::inlet: {
