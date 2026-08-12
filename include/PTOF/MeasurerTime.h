@@ -192,6 +192,9 @@ public:
       _output << std::setw(_column_widths[2]) << cell;
       io::print(_output, position, _column_widths[3]) << "\n";
     }
+
+    _output_times << std::setw(_column_widths_times[0]) << time
+                  << std::setw(_column_widths_times[1]) << nr_particles << "\n";
   }
 
 private:
