@@ -59,7 +59,12 @@ inline std::size_t get_num_threads(ParallelOptions::Serial) { return 1; }
  * @return Current thread number.
  */
 inline std::size_t get_thread_num(ParallelOptions::Parallel) {
-  return omp_get_thread_num();
+  std::size_t thread_num = 0;
+#ifdef _OPENMP
+#pragma omp parallel
+  thread_num = omp_get_thread_num();
+#endif /** _OPENMP */
+  return thread_num;
 }
 
 /**
@@ -74,8 +79,8 @@ inline std::size_t get_num_threads(ParallelOptions::Parallel) {
   std::size_t num_threads = 1;
 #ifdef _OPENMP
 #pragma omp parallel
-#endif /** _OPENMP */
   num_threads = omp_get_num_threads();
+#endif /** _OPENMP */
   return num_threads;
 }
 
@@ -102,6 +107,8 @@ template <typename Type> struct Threaded<Type, ParallelOptions::Serial> {
   Threaded(std::vector<Type> const &vals) : _val{vals[0]} {}
 
   Threaded() : _val{} {}
+
+  Type operator()() const { return _val; }
 
   Type &operator()() { return _val; }
 
