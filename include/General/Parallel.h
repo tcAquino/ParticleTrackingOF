@@ -51,6 +51,14 @@ inline std::size_t get_thread_num(ParallelOptions::Serial) { return 0; }
 inline std::size_t get_num_threads(ParallelOptions::Serial) { return 1; }
 
 /**
+ * @brief Set total number of parallel threads.
+ *
+ * @details Passing an empty object of type ParallelOptions::Serial
+ *          chooses this implementation (parallel), which does nothing.
+ */
+inline void set_num_threads(std::size_t num_threads, ParallelOptions::Serial) {}
+
+/**
  * @brief Get number of current parallel thread.
  *
  * @details Passing an empty object of type ParallelOptions::Parallel
@@ -82,6 +90,19 @@ inline std::size_t get_num_threads(ParallelOptions::Parallel) {
   num_threads = omp_get_num_threads();
 #endif /** _OPENMP */
   return num_threads;
+}
+
+/**
+ * @brief Set total number of parallel threads.
+ *
+ * @details Passing an empty object of type ParallelOptions::Parallel
+ *          chooses this implementation (parallel).
+ */
+inline void set_num_threads(std::size_t num_threads, ParallelOptions::Parallel) {
+#ifdef _OPENMP
+#pragma omp parallel
+  omp_set_num_threads(static_cast<int>(num_threads));
+#endif /** _OPENMP */
 }
 
 /** @brief Set of values of type \c Type for separate thread use. */

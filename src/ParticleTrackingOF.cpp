@@ -18,7 +18,6 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <omp.h>
 #include <string>
 
 template <typename ParallelOption> struct ExecutableInfo {
@@ -107,7 +106,7 @@ int main(int argc, char *argv[]) {
   std::string filename_output_identifier = argv[arg++];
   std::string run_nr = argv[arg++];
   if constexpr (!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>) {
-    omp_set_num_threads(atoi(argv[arg++]));
+    par::set_num_threads(std::stoul(argv[arg++]), ParallelOption{});
     std::cout << io::line()
               << "Number of threads: " << par::get_num_threads(ParallelOption{})
               << "\n"
