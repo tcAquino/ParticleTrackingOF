@@ -11,6 +11,7 @@
 
 #include "PTOF/SearchOptions.h"
 #include "PTOF/Useful.h"
+#include "polyMesh.H"
 #include <Vector2D.H>
 #include <fieldTypes.H>
 #include <point.H>
@@ -52,15 +53,22 @@ struct Locator_Cell {
    * @return Mesh cell index.
    */
   auto operator()(Point const &position, Index hint = -1) const {
+    // If neighbor searching is on, a quick cell decomposition scheme is used
+    // for approximate checking of current and neighboring cells before falling
+    // on a tree search
     if (!outside(hint)) {
       if constexpr (SearchOption::neighbor_check_level >= 0) {
-        if (mesh().pointInCell(position, hint)) {
+        if (mesh().pointInCell(
+                position, hint,
+                Foam::polyMesh::cellDecomposition::FACE_PLANES)) {
           return hint;
         }
       }
       if constexpr (SearchOption::neighbor_check_level >= 1) {
         for (auto cell_index : mesh().cellCells()[hint]) {
-          if (mesh().pointInCell(position, cell_index)) {
+          if (mesh().pointInCell(
+                  position, cell_index,
+                  Foam::polyMesh::cellDecomposition::FACE_PLANES)) {
             return cell_index;
           }
         }
@@ -77,7 +85,9 @@ struct Locator_Cell {
           }
         }
         for (auto cell_index : second_neighbors) {
-          if (mesh().pointInCell(position, cell_index)) {
+          if (mesh().pointInCell(
+                  position, cell_index,
+                  Foam::polyMesh::cellDecomposition::FACE_PLANES)) {
             return cell_index;
           }
         }
