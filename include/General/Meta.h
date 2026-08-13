@@ -17,8 +17,8 @@
 
 /** @namespace meta Template metamagic utilities. */
 namespace meta {
-// The following has_ methods and associated machinery are based on:
-// https://stackoverflow.com/questions/29772601/why-is-sfinae-causing-failure-when-there-are-two-functions-with-different-signat
+// The following has_ methods are based on
+// https://stackoverflow.com/a/29773152/5256479
 /** @brief Bundle of types. */
 template <typename...> struct types { using type = types; };
 
@@ -131,8 +131,8 @@ template <typename X>
 inline constexpr bool has_parameters_type_v = has_parameters_type<X>::value;
 
 
-// The following can_call methods are adapted from Passer By's answer here:
-// https://stackoverflow.com/questions/51404763/c-compile-time-check-that-an-overloaded-function-can-be-called-with-a-certain
+// The following can_call methods are adapted from
+// https://stackoverflow.com/a/51405352/5256479
 
 /** @brief Check whether std::sqrt() can be called on type. */
 template <typename = void, typename... Args>

@@ -16,8 +16,7 @@
 
 /** @namespace chrono Utilities related to clock time. */
 namespace chrono {
-// Adapted from Howard Hinnant's answer here:
-// https://stackoverflow.com/questions/22590821/convert-stdduration-to-human-readable-time
+// Adapted from https://stackoverflow.com/a/22593250/5256479
 /** @brief Display execution time in human-readable format. */
 inline std::ostream &display_duration(std::ostream &stream,
                                       std::chrono::nanoseconds ns) {

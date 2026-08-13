@@ -25,7 +25,7 @@
 
 /** @namespace Utilities for input and output. */
 namespace io {
-// From here:
+// From
 // https://github.com/gelldur/gcpp/blob/master/src/gcpp/stream/StreamScopeFormat.hpp
 /**
  * @brief Construct from stream object to restrict formatting to local scope.
@@ -118,8 +118,7 @@ template <bool check = true> std::string expand_home_dir(std::string dir) {
   return dir;
 }
 
-// Based on Toby Speight's answer here:
-// https://codereview.stackexchange.com/questions/172644/c-environment-variable-expansion
+// Based on https://codereview.stackexchange.com/a/172688
 /** @brief Expand environment variables. */
 template <bool check = true>
 std::string &expand_env_in_place(std::string &str) {
