@@ -3,7 +3,7 @@
 !ParticleTrackingOF.cpp
 !ParticleTrackingOF_TwoPhaseNonStationary.cpp
 !Makefile
-!make
-!make_all
-!set_model
+!ptof_make
+!ptof_make_all
+!ptof_set_model
 !models
