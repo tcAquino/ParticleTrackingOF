@@ -22,7 +22,7 @@ readarray -t models < "$SCRIPT_DIR/models"
 err=0
 for model in "${models[@]}"
 do
-    ./make.sh "${1}" "$model" "${2}" ${3}
+    ./make "${1}" "$model" "${2}" ${3}
     ((err+=$?))
 done
 

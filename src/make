@@ -27,7 +27,7 @@ if [[ "$#" -ne 3 ]] && [[ "$#" -ne 4 ]] ; then
 	exit 1
 fi
 
-./set_model.sh "${1}" "${2}" "${3}"  
+./set_model "${1}" "${2}" "${3}"
 model_set=$?
 if [[ "${model_set}" -ne 0 ]] ; then
 	exit 1
