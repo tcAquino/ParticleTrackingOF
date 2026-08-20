@@ -100,7 +100,6 @@ inline std::size_t get_num_threads(ParallelOptions::Parallel) {
  */
 inline void set_num_threads(std::size_t num_threads, ParallelOptions::Parallel) {
 #ifdef _OPENMP
-#pragma omp parallel
   omp_set_num_threads(static_cast<int>(num_threads));
 #endif /** _OPENMP */
 }
