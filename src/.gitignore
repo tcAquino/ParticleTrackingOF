@@ -7,3 +7,4 @@
 !ptof_make_all
 !ptof_set_model
 !models
+!bash_completion
