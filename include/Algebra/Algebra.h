@@ -10,7 +10,6 @@
 #define ALGEBRA_ALGEBRA_H
 
 #include "General/Operation.h"
-#include <cmath>
 #include <vector>
 
 /** @namespace useful Linear algebra algorithms. */
