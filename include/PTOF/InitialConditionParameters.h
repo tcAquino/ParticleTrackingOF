@@ -572,11 +572,10 @@ private:
       auto filename_data = io::read<std::string>(
           split_line, param_index,
           in_file + for_initial_condition_type + "Could not parse file name");
-      std::filesystem::path dir =
-          io::expand_env(io::expand_home_dir(io::read_or_default(
-              split_line, param_index, directories.dir_parameters,
-              in_file + for_initial_condition_type +
-                  "Could not parse file directory")));
+      std::filesystem::path dir = io::expand_home_and_env(io::read_or_default(
+          split_line, param_index, directories.dir_parameters,
+          in_file + for_initial_condition_type +
+              "Could not parse file directory"));
       return std::make_unique<SpecificParameters_Filename>(dir / filename_data);
     }
     case (InitialConditionList::Type::uniform_cylinder): {

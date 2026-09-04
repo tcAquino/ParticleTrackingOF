@@ -36,8 +36,7 @@ struct Directories {
    * @param dir_output Output directory relative to \p dir.
    */
   Directories(std::string const &dir)
-      : dir{std::filesystem::canonical(
-            io::expand_env(io::expand_home_dir(dir)))},
+      : dir{std::filesystem::canonical(io::expand_home_and_env(dir))},
         case_name{this->dir.filename()}, dir_output{this->dir / "output"},
         dir_parameters{this->dir / "parameters"},
         dir_boundaryconditions{this->dir / "boundary_conditions"} {}
@@ -147,9 +146,9 @@ private:
     auto split_line = io::split_line(input);
     std::size_t param_index = 0;
     dir = std::filesystem::canonical(
-        io::expand_env(io::expand_home_dir(io::read<std::string>(
+        io::expand_home_and_env(io::read<std::string>(
             split_line, param_index,
-            in_file + "Could not parse base case directory"))));
+            in_file + "Could not parse base case directory")));
     case_name = dir.filename();
 
     split_line = io::split_line(input);

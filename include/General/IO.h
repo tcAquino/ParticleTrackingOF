@@ -141,6 +141,18 @@ template <bool check = true> std::string expand_env(std::string str) {
   return str;
 }
 
+/** @brief Expand ~ and environment variables. */
+template <bool check = true>
+std::string expand_home_and_env(std::string const &dir) {
+  return io::expand_env(io::expand_home_dir(dir));
+}
+
+/** @brief Expand ~ and environment variables. */
+template <bool check = true>
+std::string &expand_home_and_env_in_place(std::string &dir) {
+  io::expand_home_dir_in_place(io::expand_env_in_place(dir));
+}
+
 /** @brief Remove comments after escape sequence. */
 inline std::string clear_escape(std::string const &str,
                                 std::string const &escape_sequence = "#") {
