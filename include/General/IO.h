@@ -119,39 +119,41 @@ template <bool check = true> std::string expand_home_dir(std::string dir) {
   return dir;
 }
 
-// Based on https://codereview.stackexchange.com/a/172688
-/**
- * @brief Expand environment variables.
- *
- * @note Environment variable names must be enclosed in {}, e.g. ${HOME}.
- */
+/** @brief Expand environment variables. */
 template <bool check = true>
 std::string &expand_env_in_place(std::string &str) {
-  static const std::regex env_re{R"--(\$\{([^}]+)\})--"};
+  std::regex re{R"--((?:\$\{([^}]+)\})|(?:\$([a-zA-Z0-9_]+)))--"};
+  std::size_t nr_matching_groups = 2;
   std::smatch match;
-  while (std::regex_search(str, match, env_re)) {
-    auto const from = match[0];
-    str.replace(from.first, from.second, getenv<check>(match[1].str()));
+  while (std::regex_search(str, match, re)) {
+    for (std::size_t ii = 1; ii <= nr_matching_groups; ++ii) {
+      if (match[ii].matched) {
+        str.replace(match[0].first, match[0].second,
+                    getenv<check>(match[ii].str()));
+        break;
+      }
+    }
   }
+
   return str;
 }
 
 /** @brief Expand environment variables. */
 template <bool check = true> std::string expand_env(std::string str) {
-  expand_env_in_place<true>(str);
+  expand_env_in_place<check>(str);
   return str;
 }
 
 /** @brief Expand ~ and environment variables. */
 template <bool check = true>
 std::string expand_home_and_env(std::string const &dir) {
-  return io::expand_env(io::expand_home_dir(dir));
+  return io::expand_env<check>(io::expand_home_dir<check>(dir));
 }
 
 /** @brief Expand ~ and environment variables. */
 template <bool check = true>
 std::string &expand_home_and_env_in_place(std::string &dir) {
-  io::expand_home_dir_in_place(io::expand_env_in_place(dir));
+  return io::expand_home_dir_in_place<check>(io::expand_env_in_place(dir));
 }
 
 /** @brief Remove comments after escape sequence. */
