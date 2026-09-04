@@ -93,8 +93,8 @@ inline auto get_boundary_conditions(std::string const &filename,
 template <DynamicsList::Type dynamics>
 auto get_boundary_conditions(Directories const &directories,
                              std::string const &delims = "\t,| ") {
-  return get_boundary_conditions(directories.dir_boundaryconditions + "/" +
-                                     DynamicsList::name(dynamics) + ".bcs",
+  return get_boundary_conditions(directories.dir_boundaryconditions /
+                                     (DynamicsList::name(dynamics) + ".bcs"),
                                  delims);
 }
 

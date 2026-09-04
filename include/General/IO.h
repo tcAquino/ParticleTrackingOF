@@ -119,7 +119,11 @@ template <bool check = true> std::string expand_home_dir(std::string dir) {
 }
 
 // Based on https://codereview.stackexchange.com/a/172688
-/** @brief Expand environment variables. */
+/**
+ * @brief Expand environment variables.
+ *
+ * @note Environment variable names must be enclosed in {}, e.g. ${HOME}.
+ */
 template <bool check = true>
 std::string &expand_env_in_place(std::string &str) {
   static const std::regex env_re{R"--(\$\{([^}]+)\})--"};

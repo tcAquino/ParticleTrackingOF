@@ -34,32 +34,33 @@ template <typename ParallelOption> struct ExecutableInfo {
            io::line();
   };
 
-  static int constexpr nr_parameters =
-      std::is_same_v<ParallelOption, par::ParallelOptions::Serial> ? 11 : 12;
-
-  inline static std::ostream &info(std::ostream &output) {
-    output << io::line()
-           << "Executable parameters (pass '' for default in []):\n"
-           << io::line() << "Number of parameters: " << nr_parameters << R"(
-- Cases directory [../cases].
-- Name of case.
+  inline static const std::string parameter_descriptions =
+      R"(
+- Case directory [.].
 - Name of transport parameter set.
 - Name of phase parameter set.
 - Name of reaction parameter set [none].
 - Name of solver parameter set.
 - Name of initial condition parameter set.
 - Name of output parameter set.
-- Output directory [<Case directory>/output].
 - Output file identifier [Based on parameter set names].
-- Run number (nonnegative integer to index output) [].
-)";
-    if constexpr (std::is_same_v<ParallelOption,
-                                 par::ParallelOptions::Parallel>) {
-      output << "- Number of parallel threads\n";
-    }
+- Run number (nonnegative integer to index output) [].)" +
+      std::string{(!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>
+                       ? "- Number of parallel threads\n"
+                       : "")};
+
+  inline static const int nr_parameters =
+      useful::pattern_matches_count("- ", parameter_descriptions);
+
+  inline static std::ostream &info(std::ostream &output) {
+    output << io::line()
+           << "Executable parameters (pass '' for default in []):\n"
+           << io::line() << "Number of parameters: " << nr_parameters
+           << parameter_descriptions;
     output << io::line();
     return output;
   }
+
 
   inline static std::ostream &help(std::ostream &output) {
     output << io::line()
@@ -126,8 +127,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::size_t arg = 1;
-  std::string dir = argv[arg++];
-  std::string case_name = argv[arg++];
+  std::string dir = io::read_or_default(argv[arg++], ".", "");
   std::string params_transport_name = argv[arg++];
   std::string params_phase_name = argv[arg++];
   std::string params_reaction_name =
@@ -135,7 +135,6 @@ int main(int argc, char *argv[]) {
   std::string params_solvers_name = argv[arg++];
   std::string params_initial_condition_name = argv[arg++];
   std::string params_output_name = argv[arg++];
-  std::string dir_output = argv[arg++];
   std::string filename_output_identifier = argv[arg++];
   std::string run_nr = argv[arg++];
   if constexpr (!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>) {
@@ -150,7 +149,7 @@ int main(int argc, char *argv[]) {
               << io::line();
   }
 
-  ptof::Directories directories{dir, case_name, dir_output};
+  ptof::Directories directories{dir};
   directories.info_runtime(std::cout);
 
   ptof::DirectoriesOF directories_of{directories};
@@ -290,7 +289,8 @@ int main(int argc, char *argv[]) {
             << "Importing initial condition parameters..." << std::endl;
   execution_begin = std::chrono::high_resolution_clock::now();
   Definitions::InitialConditionHandler::Parameters params_initial_condition{
-      directories, params_initial_condition_name, geometry, params_transport,
+      directories,     params_initial_condition_name,
+      geometry,        params_transport,
       params_reaction, params_solvers};
   execution_end = std::chrono::high_resolution_clock::now();
   std::cout << "Done!";
@@ -360,7 +360,7 @@ int main(int argc, char *argv[]) {
   execution_begin = std::chrono::high_resolution_clock::now();
   if (io::is_empty(filename_output_identifier)) {
     filename_output_identifier = ptof::identifier(
-        "TwoPhaseNonStationary_" + Model::name, case_name,
+        "TwoPhaseNonStationary_" + Model::name, directories.case_name,
         directories_of.case_name, params_transport_name, params_phase_name,
         params_reaction_name, params_solvers_name,
         params_initial_condition_name, params_output_name);

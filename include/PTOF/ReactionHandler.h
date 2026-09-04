@@ -135,8 +135,8 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
     Parameters(Directories const &directories,
                std::string const &parameter_set_name, Geometry const &geometry,
                TransportParameters const &params_transport) {
-      std::string filename = directories.dir_parameters + "/reaction_" +
-                             parameter_set_name + ".param";
+      std::string filename = directories.dir_parameters /
+                             ("reaction_" + parameter_set_name + ".param");
       auto input = io::open_read(filename);
       std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -180,11 +180,12 @@ struct ReactionHandler_NoBulk_SurfaceDecay {
                  in_file + for_initial_distribution +
                      "Could not parse file name",
                  filename_data);
-        auto dir = io::expand_env(io::expand_home_dir(io::read_or_default(
-            split_line, param_index, directories.dir_parameters,
-            in_file + for_initial_distribution +
-                "Could not parse file directory")));
-        filename_data = dir + "/" + filename_data;
+        std::filesystem::path dir =
+            io::expand_env(io::expand_home_dir(io::read_or_default(
+                split_line, param_index, directories.dir_parameters,
+                in_file + for_initial_distribution +
+                    "Could not parse file directory")));
+        filename_data = dir / filename_data;
         auto [faces, concentrations] = io::load_2(filename_data);
         auto areas = face_areas(faces, geometry.mesh());
         average_surface_concentration =
@@ -416,8 +417,8 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
     Parameters(Directories const &directories,
                std::string const &parameter_set_name, Geometry const &geometry,
                TransportParameters const &params_transport) {
-      std::string filename = directories.dir_parameters + "/reaction_" +
-                             parameter_set_name + ".param";
+      std::string filename = directories.dir_parameters /
+                             ("reaction_" + parameter_set_name + ".param");
       auto input = io::open_read(filename);
       std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -461,11 +462,12 @@ struct ReactionHandler_NoBulk_SurfaceAdsorption {
                  in_file + for_initial_distribution +
                      "Could not parse file name",
                  filename_data);
-        auto dir = io::expand_env(io::expand_home_dir(io::read_or_default(
-            split_line, param_index, directories.dir_parameters,
-            in_file + for_initial_distribution +
-                "Could not parse file directory")));
-        filename_data = dir + "/" + filename_data;
+        std::filesystem::path dir =
+            io::expand_env(io::expand_home_dir(io::read_or_default(
+                split_line, param_index, directories.dir_parameters,
+                in_file + for_initial_distribution +
+                    "Could not parse file directory")));
+        filename_data = dir / filename_data;
         auto input = io::open_read(filename_data);
         auto [faces, concentrations] = io::load_2(filename_data);
         auto areas = face_areas(faces, geometry.mesh());

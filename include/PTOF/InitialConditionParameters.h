@@ -13,6 +13,7 @@
 #include "PTOF/Directories.h"
 #include "PTOF/InitialConditionList.h"
 #include "PTOF/TimeUnitsList.h"
+#include <filesystem>
 #include <fstream>
 #include <ostream>
 #include <stdexcept>
@@ -90,9 +91,10 @@ struct InitialConditionParameters_Cases {
   };
 
   struct SpecificParameters_Filename : public SpecificParameters {
-    std::string filename;
+    std::filesystem::path filename;
 
-    SpecificParameters_Filename(std::string filename) : filename{filename} {}
+    template <typename Path>
+    SpecificParameters_Filename(Path filename) : filename{filename} {}
 
     std::ostream &info_runtime(std::ostream &output) const override {
       SpecificParameters::info_runtime(output);
@@ -330,8 +332,8 @@ struct InitialConditionParameters_Cases {
                                    TransportParameters const &params_transport,
                                    ReactionParameters const &params_reaction,
                                    SolverParameters const &params_solvers) {
-    std::string filename = directories.dir_parameters + "/initialcondition_" +
-                           parameter_set_name + ".param";
+    auto filename = directories.dir_parameters /
+                    ("initialcondition_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     specific_parameters =
         set_specific_parameters(input, filename, directories, geometry,
@@ -570,12 +572,12 @@ private:
       auto filename_data = io::read<std::string>(
           split_line, param_index,
           in_file + for_initial_condition_type + "Could not parse file name");
-      auto dir = io::expand_env(io::expand_home_dir(io::read_or_default(
-          split_line, param_index, directories.dir_parameters,
-          in_file + for_initial_condition_type +
-              "Could not parse file directory")));
-      return std::make_unique<SpecificParameters_Filename>(dir + "/" +
-                                                           filename_data);
+      std::filesystem::path dir =
+          io::expand_env(io::expand_home_dir(io::read_or_default(
+              split_line, param_index, directories.dir_parameters,
+              in_file + for_initial_condition_type +
+                  "Could not parse file directory")));
+      return std::make_unique<SpecificParameters_Filename>(dir / filename_data);
     }
     case (InitialConditionList::Type::uniform_cylinder): {
       auto nr_tries =

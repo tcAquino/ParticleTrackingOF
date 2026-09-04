@@ -85,7 +85,7 @@ public:
     Parameters(Directories const &directories, std::string const &name,
                Geometry const &geometry) {
       std::string filename =
-          directories.dir_parameters + "/phase_" + name + ".param";
+          directories.dir_parameters / ("phase_" + name + ".param");
       auto input = io::open_read(filename);
       std::string in_file = std::string{"In file "} + filename + " : ";
 

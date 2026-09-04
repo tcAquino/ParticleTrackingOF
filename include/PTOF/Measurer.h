@@ -84,9 +84,10 @@ protected:
   std::ofstream open_write(Directories const &directories,
                            std::string const &output_name,
                            std::string const &identifier) {
-    return io::open_write(directories.dir_output + "/Data_" + output_name +
-                          (identifier.empty() ? "" : "_" + identifier) +
-                          ".dat");
+    return io::open_write(directories.dir_output /
+                          ("Data_" + output_name +
+                           (identifier.empty() ? "" : "_" + identifier) +
+                           ".dat"));
   }
 };
 

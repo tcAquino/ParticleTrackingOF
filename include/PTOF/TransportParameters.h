@@ -34,8 +34,8 @@ public:
                                          std::string const &parameter_set_name,
                                          Geometry const &geometry,
                                          VelocityData &velocity_data) {
-    std::string filename = directories.dir_parameters + "/transport_" +
-                           parameter_set_name + ".param";
+    std::string filename = directories.dir_parameters /
+                           ("transport_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -194,8 +194,8 @@ public:
                                 std::string const &parameter_set_name,
                                 Geometry const &geometry,
                                 VelocityData &velocity_data) {
-    std::string filename = directories.dir_parameters + "/transport_" +
-                           parameter_set_name + ".param";
+    std::string filename = directories.dir_parameters /
+                           ("transport_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -302,8 +302,8 @@ public:
                                 std::string const &parameter_set_name,
                                 Geometry const &geometry,
                                 VelocityData &velocity_data) {
-    std::string filename = directories.dir_parameters + "/transport_" +
-                           parameter_set_name + ".param";
+    std::string filename = directories.dir_parameters /
+                           ("transport_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -384,8 +384,8 @@ public:
   TransportParameters_AdvectionDiffusion_Bcc(
       Directories const &directories, std::string const &parameter_set_name,
       Geometry const &geometry, VelocityData &velocity_data) {
-    std::string filename = directories.dir_parameters + "/transport_" +
-                           parameter_set_name + ".param";
+    std::string filename = directories.dir_parameters /
+                           ("transport_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -584,8 +584,8 @@ public:
                                     std::string const &parameter_set_name,
                                     Geometry const &geometry,
                                     VelocityData &velocity_data) {
-    std::string filename = directories.dir_parameters + "/transport_" +
-                           parameter_set_name + ".param";
+    std::string filename = directories.dir_parameters /
+                           ("transport_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
@@ -730,8 +730,8 @@ public:
   TransportParameters_Diffusion_Bcc(
       Directories const &directories, std::string const &parameter_set_name,
       Geometry const &geometry, VelocityData &&velocity_data = meta::Empty{}) {
-    std::string filename = directories.dir_parameters + "/transport_" +
-                           parameter_set_name + ".param";
+    std::string filename = directories.dir_parameters /
+                           ("transport_" + parameter_set_name + ".param");
     auto input = io::open_read(filename);
     std::string in_file = std::string{"In file "} + filename + " : ";
 
