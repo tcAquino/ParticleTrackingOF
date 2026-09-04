@@ -163,8 +163,7 @@ private:
           _start_time_name};
     }
 
-    return {Foam::Time::controlDictName, std::string{dir.parent_path()},
-            case_name};
+    return {Foam::Time::controlDictName, dir.parent_path().string(), case_name};
   }
 };
 } // namespace ptof
