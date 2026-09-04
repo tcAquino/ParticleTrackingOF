@@ -93,7 +93,8 @@ template <bool check = true> std::string getenv(std::string const &name) {
 template <> std::string getenv<true>(std::string const &name) {
   std::string env = getenv<false>(name);
   if (env.empty()) {
-    throw std::runtime_error{"$HOME environmental variable is undefined"};
+    throw std::runtime_error{"Environment variable ${" + name +
+                             "} is undefined"};
   }
   return env;
 }
