@@ -23,7 +23,6 @@ namespace algebra {
 inline std::vector<std::vector<double>>
 gram_schmidt(std::vector<std::vector<double>> const &input) {
   std::size_t nr_vectors = input.size();
-
   std::vector<std::vector<double>> output;
   output.reserve(nr_vectors);
   output.push_back(op::div_scalar(input[0], op::abs(input[0])));
@@ -121,8 +120,8 @@ inline void solve_tridiag(std::vector<double> const &l_diag,
 
 /**
  * @brief Uses Sherman-Morrison and the Thomas Algorithm to solve a cyclic
- *        tridiagonal system <tt>Ax = ind</tt>, with <tt>alpha = A_{ n-1, 0
- *        }</tt>, <tt>beta = A_{ 0, n-1 }</tt>.
+ *        tridiagonal system <tt>Ax = ind</tt>, with <tt>alpha = A_{n-1,
+ *        0}</tt>, <tt>beta = A_{0, n-1}</tt>.
  */
 inline void solve_cyclic_tridiag(double alpha, double beta,
                                  std::vector<double> const &l_diag,
