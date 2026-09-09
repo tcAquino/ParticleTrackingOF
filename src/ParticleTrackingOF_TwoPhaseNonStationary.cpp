@@ -46,7 +46,8 @@ template <typename ParallelOption> struct ExecutableInfo {
 - Output file identifier [Based on parameter set names].
 - Run number (nonnegative integer to index output) [].)" +
       std::string{(!std::is_same_v<ParallelOption, par::ParallelOptions::Serial>
-                       ? "- Number of parallel threads\n"
+                       ? "\n"
+                         "- Number of parallel threads.\n"
                        : "")};
 
   inline static const int nr_parameters =
