@@ -39,7 +39,10 @@ namespace ptof {
 template <typename Subject, typename Geometry, typename Parameters>
 class Output_Cases {
 public:
-  Parameters parameters; /**< Output parameters. */
+  using ParallelOption =
+      typename Geometry::ParallelOption; /**< Choose serial or parallel
+                                            implementations. */
+  Parameters parameters;                 /**< Output parameters. */
 
   /**
    * @brief Constructor.
@@ -691,29 +694,30 @@ private:
         break;
       }
       case MeasurementList::Type::mass_reacted_face: {
-        using BoundaryInfo = BoundaryInfo_Record_mass_reacted_face<State>;
+        using BoundaryInfo =
+            BoundaryInfo_Record_mass_reacted_face<State, ParallelOption>;
         boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
             std::make_unique<BoundaryInfo>()));
         _output_time.emplace_back(
             std::make_unique<MeasurerTime_mass_reacted_face<Subject, Geometry>>(
                 subject, geometry, directories, identifier,
-                dynamic_cast<BoundaryInfo const &>(
-                    boundary.boundary_info_back()),
+                dynamic_cast<BoundaryInfo &>(boundary.boundary_info_back()),
                 measurement->precision));
         break;
       }
       case MeasurementList::Type::mass_reacted_face_periodic: {
         if constexpr (meta::has_periodicity_v<State>) {
           using BoundaryInfo =
-              BoundaryInfo_Record_mass_reacted_face_periodic<State>;
-          boundary.add_boundary_info(std::unique_ptr<BoundaryInfo_Base<State>>(
-              std::make_unique<BoundaryInfo>()));
+              BoundaryInfo_Record_mass_reacted_face_periodic<State,
+                                                             ParallelOption>;
+          boundary.add_boundary_info(
+              std::unique_ptr<BoundaryInfo_Base<State>>(
+                  std::make_unique<BoundaryInfo>()));
           _output_time.emplace_back(
               std::make_unique<
                   MeasurerTime_mass_reacted_face<Subject, Geometry, true>>(
                   subject, geometry, directories, identifier,
-                  dynamic_cast<BoundaryInfo const &>(
-                      boundary.boundary_info_back()),
+                  dynamic_cast<BoundaryInfo &>(boundary.boundary_info_back()),
                   measurement->precision));
         } else {
           throw std::runtime_error{
@@ -878,11 +882,12 @@ private:
 };
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(
-    Subject const &, VelocityField const &, Geometry const &, Boundary &,
-    Directories const &, Parameters &&, std::string const &,
-    std::vector<std::reference_wrapper<const Mask>>,
-    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
+             std::vector<std::reference_wrapper<const Mask>>,
+             std::vector<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
 Output_Cases(Subject const &, VelocityField const &, Geometry const &,
@@ -921,11 +926,12 @@ Output_Cases(Subject const &, VelocityField const &, Geometry const &,
     -> Output_Cases<Subject, Geometry, Parameters>;
 template <typename Subject, typename Geometry, typename Parameters,
           typename Boundary, typename VelocityField, typename Mask>
-Output_Cases(
-    Subject const &, VelocityField const &, Geometry const &, Boundary &,
-    Directories const &, Parameters &&, std::string const &,
-    std::initializer_list<std::reference_wrapper<const Mask>>,
-    std::vector<double>) -> Output_Cases<Subject, Geometry, Parameters>;
+Output_Cases(Subject const &, VelocityField const &, Geometry const &,
+             Boundary &, Directories const &, Parameters &&,
+             std::string const &,
+             std::initializer_list<std::reference_wrapper<const Mask>>,
+             std::vector<double>)
+    -> Output_Cases<Subject, Geometry, Parameters>;
 } // namespace ptof
 
 #endif /* PTOF_OUTPUT_CASES_H */

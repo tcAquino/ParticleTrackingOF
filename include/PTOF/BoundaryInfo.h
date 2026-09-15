@@ -10,11 +10,12 @@
 #define PTOF_BOUNDARYINFO_H
 
 #include "General/Meta.h"
+#include "General/Parallel.h"
 #include "General/Useful.h"
+#include "PTOF/Boundary.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Meta.h"
 #include <pointIndexHit.H>
-#include <utility>
 
 namespace ptof {
 /**
@@ -181,18 +182,22 @@ struct BoundaryInfo_Base {
 };
 
 /** @brief Do not store any info. */
-template <typename State>
-struct BoundaryInfo_Nothing final : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+template <typename State, typename Intersection_t = Foam::pointIndexHit>
+struct BoundaryInfo_Nothing final
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
 
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {}
 };
 
 /** @brief Store info about latest boundary face. */
-template <typename State>
-struct BoundaryInfo_boundary_face final : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+template <typename State, typename Intersection_t = Foam::pointIndexHit>
+struct BoundaryInfo_boundary_face final
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
 
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {
@@ -201,9 +206,11 @@ struct BoundaryInfo_boundary_face final : public BoundaryInfo_Base<State> {
 };
 
 /** @brief Store info about latest contact point. */
-template <typename State>
-struct BoundaryInfo_contact_point final : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+template <typename State, typename Intersection_t = Foam::pointIndexHit>
+struct BoundaryInfo_contact_point final
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
 
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {
@@ -212,9 +219,11 @@ struct BoundaryInfo_contact_point final : public BoundaryInfo_Base<State> {
 };
 
 /** @brief Store info about number of reinjections. */
-template <typename State>
-struct BoundaryInfo_reinjections final : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+template <typename State, typename Intersection_t = Foam::pointIndexHit>
+struct BoundaryInfo_reinjections final
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
 
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {}
@@ -229,10 +238,11 @@ struct BoundaryInfo_reinjections final : public BoundaryInfo_Base<State> {
 };
 
 /** @brief Store info about face and number of reinjections. */
-template <typename State>
+template <typename State, typename Intersection_t = Foam::pointIndexHit>
 struct BoundaryInfo_boundary_face_reinjections final
-    : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
 
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {
@@ -253,10 +263,11 @@ struct BoundaryInfo_boundary_face_reinjections final
  * @brief Store each of face, contact point, and number of reinjections, if
  *        present in State::Info.
  */
-template <typename State>
+template <typename State, typename Intersection_t = Foam::pointIndexHit>
 struct BoundaryInfo_IfPresent_boundary_face_contact_point_reinjections final
-    : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
 
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {
@@ -281,10 +292,13 @@ struct BoundaryInfo_IfPresent_boundary_face_contact_point_reinjections final
 };
 
 /** @brief Record info about net mass consumed at reactive boundaries. */
-template <typename State>
+template <typename State,
+          typename ParallelOption = typename par::ParallelOptions::Serial,
+          typename Intersection_t = Foam::pointIndexHit>
 struct BoundaryInfo_Record_mass_reacted_face final
-    : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {}
 
@@ -294,26 +308,44 @@ struct BoundaryInfo_Record_mass_reacted_face final
              meta::Selector<BoundaryConditionList::Type,
                             BoundaryConditionList::Type::reacting>) override {
     double mass_change = state.mass - state_old.mass;
-    auto it_inserted = _masses.insert({intersection.index(), mass_change});
-    if (!it_inserted.second) {
-      it_inserted.first->second += mass_change;
+    auto [it, inserted] = _masses[par::get_thread_num(ParallelOption{})].insert(
+        {intersection.index(), mass_change});
+    if (!inserted) {
+      it->second += mass_change;
     }
   }
 
-  auto const &masses() const { return _masses; }
+  auto const &masses() {
+    for (std::size_t ii = 1; ii < _masses.size(); ++ii) {
+      for (auto const &face_to_mass : _masses[ii]) {
+        auto [it, inserted] = _masses[0].insert(face_to_mass);
+        if (!inserted) {
+          it->second += face_to_mass.second;
+        }
+      }
+      // Clear all except first container to make future merges more efficient
+      _masses[ii].clear();
+    }
+    // Return first container with merged data
+    return _masses[0];
+  }
 
 private:
-  std::unordered_map<Foam::label, double> _masses;
+  using FaceToMass = std::unordered_map<Foam::label, double>;
+  std::vector<FaceToMass> _masses;
 };
 
 /**
  * @brief Record info about net mass consumed at reactive boundaries, accounting
  *        for periodicity.
  */
-template <typename State>
+template <typename State,
+          typename ParallelOption = typename par::ParallelOptions::Serial,
+          typename Intersection_t = Foam::pointIndexHit>
 struct BoundaryInfo_Record_mass_reacted_face_periodic final
-    : public BoundaryInfo_Base<State> {
-  using Intersection = typename BoundaryInfo_Base<State>::Intersection;
+    : public BoundaryInfo_Base<State, Intersection_t> {
+  using Intersection =
+      typename BoundaryInfo_Base<State, Intersection_t>::Intersection;
   void generic(State &state, State const &state_old,
                Intersection const &intersection) override {}
 
@@ -323,20 +355,35 @@ struct BoundaryInfo_Record_mass_reacted_face_periodic final
              meta::Selector<BoundaryConditionList::Type,
                             BoundaryConditionList::Type::reacting>) override {
     double mass_change = state.mass - state_old.mass;
-    auto it_inserted = _masses.insert(
+    auto [it, inserted] = _masses[par::get_thread_num(ParallelOption{})].insert(
         {{intersection.index(), state.periodicity}, mass_change});
-    if (!it_inserted.second) {
-      it_inserted.first->second += mass_change;
+    if (!inserted) {
+      it->second += mass_change;
     }
   }
 
-  auto const &masses() const { return _masses; }
+  auto const &masses() {
+    for (std::size_t ii = 1; ii < _masses.size(); ++ii) {
+      for (auto const &face_periodicity_to_mass : _masses[ii]) {
+        auto [it, inserted] = _masses[0].insert(face_periodicity_to_mass);
+        if (!inserted) {
+          it->second += face_periodicity_to_mass.second;
+        }
+      }
+      // Clear all except first container to make future merges more efficient
+      _masses[ii].clear();
+    }
+    // Return first container with merged data
+    return _masses[0];
+  }
 
 private:
   using Periodicity = typename State::Periodicity;
-  std::unordered_map<std::pair<Foam::label, Periodicity>, double,
-                     useful::Hash_pair<Foam::label, Periodicity>>
-      _masses;
+  using FacePeriodicityToMass =
+      std::unordered_map<std::pair<Foam::label, Periodicity>, double,
+                         useful::Hash_pair<Foam::label, Periodicity>>;
+  std::vector<FacePeriodicityToMass> _masses{std::vector<FacePeriodicityToMass>(
+      par::get_num_threads(ParallelOption{}))};
 };
 } // namespace ptof
 

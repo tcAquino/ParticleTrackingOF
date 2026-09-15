@@ -18,6 +18,7 @@
 #include "PTOF/Meta.h"
 #include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
+#include "pointIndexHit.H"
 #include <algorithm>
 #include <cstddef>
 #include <fieldTypes.H>
@@ -38,10 +39,19 @@ template <typename State, typename Locator, typename VelocityField,
           typename SurfaceReaction>
 class Boundary_Cases {
 public:
-  using BoundaryInfo = BoundaryInfo_Base<State>; /**< Boundary-related info. */
-  using Intersection =
-      typename BoundaryInfo::Intersection; /**< Object to handle
-                 boundary point collision information. */
+  struct CollisionInfo {
+    using Intersection = Foam::pointIndexHit;
+
+    Intersection intersection{};
+    double time{};
+    double mass{};
+
+    operator bool() const { return intersection.hit(); }
+  };
+
+  using Intersection = typename CollisionInfo::Intersection;
+  using BoundaryInfo =
+      BoundaryInfo_Base<State, Intersection>; /**< Boundary-related info. */
   using BoundaryInfoContainer = std::vector<std::unique_ptr<
       BoundaryInfo>>; /**< To hold multiple boundary-related info handlers. */
   /**< Container type to hold patch names and associated bc type names.
@@ -53,23 +63,22 @@ public:
   const BCs
       boundary_conditions; /**< Patch names and associated bc type names. */
 
-  struct CollisionInfo {
-    Intersection intersection{};
-    double time{};
-
-    operator bool() const { return intersection.hit(); }
-  };
-
   /**
    * @brief Constructor
+   *
    * @param boundary_conditions Patch names and associated boundary condition
-     types.
+   *        types.
+   *
    * @param locator Object to locate positions in mesh.
+   *
    * @param velocity_field Velocity field as a function of state.
+   *
    * @param boundary_periodic Periodic boundary condition enforcer.
+   *
    * @param boundary_custom Custom boundary condition enforcer.
+   *
    * @param surface_reaction Surface Reaction.
-  */
+   */
   Boundary_Cases(
       BCs boundary_conditions, Locator &&locator,
       VelocityField &&velocity_field,
@@ -145,6 +154,8 @@ public:
     double average_velocity =
         displacement > 0. ? displacement / jump_duration : 0.;
 
+    CollisionInfo previous_collision_info{};
+
     // When the start point is on a cell face,
     // sometimes the intersection with it is not found, and sometimes it is
     if (!intersection.hit()) {
@@ -163,24 +174,26 @@ public:
         if (!intersection.hit()) {
           state.cell = _locator.nearest_cell(state.position);
           state.set_position(cell_center(state.cell, _locator.mesh()));
-          return CollisionInfo{};
+          return previous_collision_info;
         }
       }
     } else if (((make_point(state.position) - intersection.point()) &
                 unit_normal_outward(intersection.index(), _locator.mesh())) <
                0.) {
       // If the displacement is against the local face normal (into the domain
-      // at the boundary), ignore intersection and find
-      // the next intersection with a boundary patch
-      auto old_intersection = intersection;
+      // at the boundary), ignore intersection and find the next intersection
+      // with a boundary patch
+      previous_collision_info.intersection = intersection;
       intersection =
           next_intersection(intersection, make_point(state.position));
 
       // Ignore new intersection if offset went beyond final point or if there
       // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
-              intersection, old_intersection.point(), state) ||
-          intersection.index() == old_intersection.index()) {
+              intersection, previous_collision_info.intersection.point(),
+              state) ||
+          intersection.index() ==
+              previous_collision_info.intersection.index()) {
         intersection.setMiss();
       }
 
@@ -190,13 +203,19 @@ public:
       if (!intersection.hit() && outside(_locator(state))) {
         state.cell = _locator.nearest_cell(state.position);
         state.set_position(cell_center(state.cell, _locator.mesh()));
-        return CollisionInfo{};
+        return previous_collision_info;
       }
     }
 
-    auto old_intersection = intersection;
-    old_intersection.setPoint(make_point(state_old.position));
-    double collision_time = state_old.time;
+    // Initially set previous collision info to the old state for further
+    // calculations if needed
+    previous_collision_info.intersection.setMiss();
+    if (intersection.hit()) {
+      previous_collision_info.intersection.setPoint(
+          make_point(state_old.position));
+      previous_collision_info.time = state_old.time;
+      previous_collision_info.mass = state_old.mass;
+    }
 
     // While some patch is intersected
     while (intersection.hit()) {
@@ -211,46 +230,54 @@ public:
                             reflection_normal(intersection.index()));
         info<BoundaryConditionList::Type::reflecting>(state, state_old,
                                                       intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::reacting: {
-        surface_reaction(state, state_old, intersection.index());
+        // We keep the previous state time as the old state time, which is an
+        // approximation that is correct in the limit of small time steps, but
+        // we update the mass according to previous collisions in order to
+        // attempt to preserve mass conservation (although note the surface
+        // reaction itself may not)
+        auto state_previous = state_old;
+        state_previous.mass = previous_collision_info.mass;
+        surface_reaction(state, state_previous, intersection.index());
+        previous_collision_info.mass = state.mass;
+        bool adsorbed = false;
         if constexpr (meta::has_adsorbed_v<typename State::Info>) {
           if (state.info.adsorbed) {
+            adsorbed = true;
             state.set_position(intersection.point());
-            info<BoundaryConditionList::Type::reacting>(state, state_old,
-                                                        intersection);
-            collision_time += time_increment(intersection, old_intersection,
-                                             average_velocity);
-            break;
           }
         }
-        boundary_reflecting(state, intersection.point(),
-                            reflection_normal(intersection.index()));
+        if (!adsorbed) {
+          boundary_reflecting(state, intersection.point(),
+                              reflection_normal(intersection.index()));
+        }
         info<BoundaryConditionList::Type::reacting>(state, state_old,
                                                     intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::periodic: {
         _boundary_periodic(state, intersection);
         info<BoundaryConditionList::Type::periodic>(state, state_old,
                                                     intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::absorbing: {
-        state.info.absorbed = true;
+        if constexpr (meta::has_adsorbed_v<typename State::Info>) {
+          state.info.absorbed = true;
+        } else {
+          throw std::runtime_error{
+              "Attempted to enforce absorbing boundary bound but particle "
+              "state has no absorbed info."};
+        }
         state.set_position(intersection.point());
+        state.time =
+            previous_collision_info.time +
+            time_increment(intersection, previous_collision_info.intersection,
+                           average_velocity);
         info<BoundaryConditionList::Type::absorbing>(state, state_old,
                                                      intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
-        state.time = collision_time;
         break;
       }
       case BoundaryConditionList::Type::inlet: {
@@ -262,8 +289,6 @@ public:
             state.set_position(intersection.point());
             info<BoundaryConditionList::Type::absorbing>(state, state_old,
                                                          intersection);
-            collision_time += time_increment(intersection, old_intersection,
-                                             average_velocity);
             break;
           }
         }
@@ -271,23 +296,18 @@ public:
                             reflection_normal(intersection.index()));
         info<BoundaryConditionList::Type::reflecting>(state, state_old,
                                                       intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
+
         break;
       }
       case BoundaryConditionList::Type::custom: {
         _boundary_custom(state, state_old, intersection);
         info<BoundaryConditionList::Type::custom>(state, state_old,
                                                   intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       case BoundaryConditionList::Type::empty: {
         info<BoundaryConditionList::Type::empty>(state, state_old,
                                                  intersection);
-        collision_time +=
-            time_increment(intersection, old_intersection, average_velocity);
         break;
       }
       default: {
@@ -296,57 +316,54 @@ public:
       }
       }
 
+      // Set the previous collision data
+      previous_collision_info.time += time_increment(
+          intersection, previous_collision_info.intersection, average_velocity);
+      previous_collision_info.intersection = intersection;
+
       // Stop if right at the last intersection point
       // This avoids numerical issues for some edge cases
       if (make_point(state.position) == intersection.point()) {
-        state.cell = _locator(state);
-        // For some meshes, some intersections can be considered outside the
-        // mesh. If so, use the owner cell center instead.
-        if (outside(state.cell)) {
-          auto owner_cell = _locator.mesh().faceOwner()[intersection.index()];
-          state.set_position(cell_center(owner_cell, _locator.mesh()),
-                             owner_cell);
-          return CollisionInfo{intersection, collision_time};
-        }
         break;
       }
 
       // Find the next intersection with a boundary patch
-      old_intersection = intersection;
       intersection =
           next_intersection(intersection, make_point(state.position));
 
       // Ignore new intersection if offset went beyond final point or if there
       // is not enough precision to find a different intersection
       if (next_intersection_is_beyond_final_point(
-              intersection, old_intersection.point(), state) ||
-          intersection.index() == old_intersection.index()) {
+              intersection, previous_collision_info.intersection.point(),
+              state) ||
+          intersection.index() ==
+              previous_collision_info.intersection.index()) {
         intersection.setMiss();
-      }
-
-      if (!intersection.hit()) {
-        state.cell = _locator(state);
-        // Sometimes there is not enough precision to find the next
-        // intersection. Avoid particles leaving the domain by placing the final
-        // state at the last intersection.
-        if (outside(state.cell)) {
-          state.set_position(old_intersection.point());
-          state.cell = _locator(state);
-          // For some meshes, some intersections can be considered outside the
-          // mesh. If so, use the owner cell center instead.
-          if (outside(state.cell)) {
-            auto owner_cell =
-                _locator.mesh().faceOwner()[old_intersection.index()];
-            state.set_position(cell_center(owner_cell, _locator.mesh()),
-                               owner_cell);
-            return CollisionInfo{old_intersection, collision_time};
-          }
-        }
-        break;
       }
     }
 
-    return CollisionInfo{old_intersection, collision_time};
+    // If there was at least one intersection, wrap up
+    if (previous_collision_info) {
+      state.cell = _locator(state);
+      // Sometimes there was not enough precision to find the next intersection.
+      // Avoid particles leaving the domain by placing the final state at the
+      // last intersection.
+      if (outside(state.cell)) {
+        state.set_position(previous_collision_info.intersection.point());
+        state.cell = _locator(state);
+        // For some meshes, some intersections can be considered outside the
+        // mesh. If so, use the owner cell center instead.
+        if (outside(state.cell)) {
+          auto owner_cell =
+              _locator.mesh()
+                  .faceOwner()[previous_collision_info.intersection.index()];
+          state.set_position(cell_center(owner_cell, _locator.mesh()),
+                             owner_cell);
+        }
+      }
+    }
+
+    return previous_collision_info;
   }
 
   /**
@@ -390,13 +407,11 @@ public:
     return output;
   }
 
-  auto const &boundary_info(std::size_t ii) const {
+  auto &boundary_info(std::size_t ii) const {
     return *_boundary_infos[ii].get();
   }
 
-  auto const &boundary_info_back() const {
-    return *_boundary_infos.back().get();
-  }
+  auto &boundary_info_back() const { return *_boundary_infos.back().get(); }
 
   void add_boundary_info(std::unique_ptr<BoundaryInfo> boundary_info) {
     _boundary_infos.push_back(std::move(boundary_info));

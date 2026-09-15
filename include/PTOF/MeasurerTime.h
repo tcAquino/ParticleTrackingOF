@@ -1798,18 +1798,19 @@ template <typename Subject, typename Geometry, bool periodic = false>
 class MeasurerTime_mass_reacted_face final
     : public MeasurerTime<Subject, Geometry> {
 public:
+  using ParallelOption = typename Geometry::ParallelOption;
   using BoundaryInfo = std::conditional_t<
       periodic,
       BoundaryInfo_Record_mass_reacted_face_periodic<
-          typename Subject::Particle::State>,
-      BoundaryInfo_Record_mass_reacted_face<typename Subject::Particle::State>>;
+          typename Subject::Particle::State, ParallelOption>,
+      BoundaryInfo_Record_mass_reacted_face<typename Subject::Particle::State,
+                                            ParallelOption>>;
 
   MeasurerTime_mass_reacted_face(Subject const &subject,
                                  Geometry const &geometry,
                                  Directories const &directories,
                                  std::string const &identifier,
-                                 BoundaryInfo const &boundary_info,
-                                 int precision = 8)
+                                 BoundaryInfo &boundary_info, int precision = 8)
       : MeasurerTime<
             Subject,
             Geometry>{subject,
@@ -1848,22 +1849,11 @@ public:
                                  Geometry const &geometry,
                                  Directories const &directories,
                                  std::string const &identifier,
-                                 BoundaryInfo const &boundary_info,
+                                 BoundaryInfo &boundary_info,
                                  meta::Selector<bool, periodicity_v>,
                                  int precision = 8)
       : MeasurerTime_mass_reacted_face<Subject, Geometry, periodicity_v>{
             subject, geometry, directories, identifier, precision} {}
-
-  MeasurerTime_mass_reacted_face(Subject const &, Geometry const &,
-                                 Directories const &, std::string const &,
-                                 BoundaryInfo &&, int precision = 8) = delete;
-
-  template <bool periodicity_v>
-  MeasurerTime_mass_reacted_face(Subject const &, Geometry const &,
-                                 Directories const &, std::string const &,
-                                 BoundaryInfo &&,
-                                 meta::Selector<bool, periodicity_v>,
-                                 int precision = 8) = delete;
 
   void operator()(double time) override {
     if constexpr (periodic) {
@@ -1890,7 +1880,7 @@ public:
 private:
   using MeasurerTime<Subject, Geometry>::_output;
   using MeasurerTime<Subject, Geometry>::_subject;
-  BoundaryInfo const &_boundary_info;
+  BoundaryInfo &_boundary_info;
   std::array<int, 3> _column_widths;
   std::ofstream _output_times;
   std::array<int, 2> _column_widths_times;

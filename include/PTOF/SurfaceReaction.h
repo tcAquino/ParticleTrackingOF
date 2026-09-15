@@ -17,7 +17,6 @@
 #include "Stochastic/Random.h"
 #include <cmath>
 #include <fieldTypes.H>
-#include <list>
 #include <ostream>
 #include <random>
 #include <set>
@@ -350,7 +349,7 @@ public:
         solid_rate_constant{rate_constant_ratio_solid_to_fluid * rate_constant},
         diff_coeff{diff_coeff}, surface_concentrations{surface_concentrations},
         _locator{std::forward<Locator>(locator)},
-        _face_to_tags_times(par::get_num_threads(ParallelOption{})) {}
+        _face_to_tags(par::get_num_threads(ParallelOption{})) {}
 
   /**
    * @brief React over exposure time.
@@ -370,7 +369,7 @@ public:
                                  par::ParallelOptions::Serial>) {
       update_mass_and_surface_concentration(state, state_old, face);
     } else {
-      _face_to_tags_times[par::get_thread_num(ParallelOption{})][face].insert(
+      _face_to_tags[par::get_thread_num(ParallelOption{})][face].insert(
           {state.tag, state.time});
     }
   }
@@ -424,8 +423,18 @@ public:
   }
 
   /**
-   * @brief Update masses and surfaces concentrations according to stored
-   *        particle-boundary collisions.
+   * @brief Update masses and surface concentrations according to stored
+   *        particle-boundary collisions for parallel simulations.
+   *
+   * @details For serial simulations, this does nothing as updates are made
+   *          on-the-fly.
+   *
+   * @note
+   *
+   * - Requires particle tags to correspond to their position in the CTRW
+   *   container.
+   *
+   * - Requires limiting collisions to one collision per particle.
    **/
   template <typename CTRW>
   void update(CTRW &ctrw, typename CTRW::State::Time time_new,
@@ -435,17 +444,17 @@ public:
       return;
     }
 
-    auto merged_face_to_tags_times = merge_and_clear_hits();
+    auto merged_face_to_tags = merge_and_clear_hits();
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif /** _OPENMP */
-    for (std::size_t ii = 0; ii < merged_face_to_tags_times.size(); ++ii) {
+    for (std::size_t ii = 0; ii < merged_face_to_tags.size(); ++ii) {
       // Note: Must advance iterator manually each time due to current OMP
       // limitations on some platforms
-      auto it = merged_face_to_tags_times.begin();
+      auto it = merged_face_to_tags.begin();
       std::advance(it, ii);
-      auto const &[face, tags_times] = *it;
-      for (auto const &tag_time : tags_times) {
+      auto const &[face, tags] = *it;
+      for (auto const &tag_time : tags) {
         // Due to a limitation of the current language standard, lambdas
         // cannot capture elements of structured bindings
         auto const &face_to_capture = face;
@@ -473,54 +482,43 @@ public:
 private:
   Locator _locator; /**< To locate positions in mesh. */
 
-  struct TagTime {
-    std::size_t tag;
-    double time;
-  }; /**< Particle tag and time to record face hits. */
+  using TagContainer = std::vector<std::size_t>;
+  using FaceToTagContainer = std::unordered_map<Foam::label, TagContainer>;
 
-  /**
-   * @brief When used as a comparator function with std::set, this orders by
-   *        times but considers elements equal if they have equal tags.
-   */
-  struct TagTime_SetComparator {
-    bool operator()(TagTime const &v1, TagTime const &v2) const {
-      return (v1.time < v2.time) & (v1.tag != v2.tag);
-    }
-  };
-
-  using TagTimeContainer = std::set<TagTime, TagTime_SetComparator>;
-  using FaceTagTimeContainer =
-      std::unordered_map<Foam::label, TagTimeContainer>;
-
-  std::vector<FaceTagTimeContainer>
-      _face_to_tags_times; /**< Associative containers of particle tags and
+  std::vector<FaceToTagContainer>
+      _face_to_tags; /**< Associative containers of particle tags and
                               times of hitting faces, one per thread. */
 
   /**
-   * @brief Merge collision data across threads.
+   * @brief Merge collision data across threads and clear separate data.
    *
-   * @note Merge maps, but keep only one face hit per particle for
-   *       parallelization reasons. This is fine in the limit of small time
+   * @note Keep only one collision per particle for parallelization reasons.
+   *       This converges to the correct behavior in in the limit of small time
    *       step.
    */
   auto merge_and_clear_hits() {
-    FaceTagTimeContainer merged_face_to_tags_times;
-    for (auto &container : _face_to_tags_times) {
-      for (auto &face_tags_times : container) {
-        // Check if face is already in thread-merged container
-        auto it = merged_face_to_tags_times.find(face_tags_times.first);
-        if (it == std::end(merged_face_to_tags_times)) {
-          // If it isn't, insert it, copying in all hits
-          merged_face_to_tags_times.insert(it, face_tags_times);
-        } else {
-          // If it is, insert additional hits
-          it->second.merge(face_tags_times.second);
+    std::set<std::size_t> tags_collided;
+    FaceToTagContainer merged_face_to_tags;
+
+    for (auto &container : _face_to_tags) {
+      for (auto &[face, tags] : container) {
+        // Find collisions at face, or insert it with no collisions if no
+        // collisions have been recorded yet (note that it may remain empty)
+        auto [it_new_face, inserted_new_face] =
+            merged_face_to_tags.insert({face, {}});
+        for (auto tag : tags) {
+          // Check if this is the first collision identified for this particle,
+          // and if so record it
+          auto [it_new_tag, inserted_new_tag] = tags_collided.insert(tag);
+          if (inserted_new_tag) {
+            it_new_face->second.push_back(tag);
+          }
         }
       }
       container.clear();
     }
 
-    return merged_face_to_tags_times;
+    return merged_face_to_tags;
   }
 
   /**
