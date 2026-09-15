@@ -23,7 +23,6 @@
 #include "PTOF/NextMeasurement.h"
 #include "PTOF/OutputParameters.h"
 #include <algorithm>
-#include <cmath>
 #include <functional>
 #include <fvcGrad.H>
 #include <initializer_list>
