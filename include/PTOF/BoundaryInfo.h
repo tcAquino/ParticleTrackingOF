@@ -12,7 +12,6 @@
 #include "General/Meta.h"
 #include "General/Parallel.h"
 #include "General/Useful.h"
-#include "PTOF/Boundary.h"
 #include "PTOF/BoundaryConditionList.h"
 #include "PTOF/Meta.h"
 #include <pointIndexHit.H>
@@ -26,7 +25,7 @@ struct BoundaryInfo_Base {
   using State = State_t;
   using Intersection = Intersection_t;
 
-  virtual ~BoundaryInfo_Base(){};
+  virtual ~BoundaryInfo_Base() {};
 
   /**
    * @brief Generic operation to be applied for absorbing boundaries.
