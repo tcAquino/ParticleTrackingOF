@@ -14,6 +14,7 @@
 #include "PTOF/Directories.h"
 #include "PTOF/DynamicsList.h"
 #include "PTOF/Useful.h"
+#include "labelFwd.H"
 #include <algorithm>
 #include <cstddef>
 #include <fieldTypes.H>
@@ -384,6 +385,79 @@ template <typename InitialCondition>
 Boundary_Reinject(InitialCondition &&) -> Boundary_Reinject<InitialCondition>;
 
 /**
+ * @brief Extract the orientation and position of cartesian boundary patches.
+ *
+ * @details Assuming a boundary patch is (approximately) perpendicular to some
+ *          cartesian axis, identify that axis and the (mean) position of the
+ *          boundary along it.
+ *
+ * @param patch Boundary patch.
+ *
+ * @param mesh Mesh object.
+ *
+ * @param dim Spatial dimensionality.
+ *
+ * @return Pair of axis dimension and position.
+ *
+ * @note Dimensions that are one cell wide may be identified as the relevant
+ *       axis if they are not excluded by the value of \c dim.
+ */
+template <typename Patch, typename Mesh>
+std::pair<std::size_t, double>
+cartesian_boundary_position(Patch const &patch, Mesh const &mesh,
+                            std::size_t dim = 3) {
+  // Find average and variance of patch face centers.
+  auto face_start = patch.start();
+  Foam::point average_face_center = Foam::zero{};
+  std::vector<double> variance_face_center(dim, 0.);
+  Foam::scalar total_area = 0.;
+  for (auto face = face_start; face < face_start + patch.size(); ++face) {
+    auto area = face_area(face, mesh);
+    auto center = face_center(face, mesh);
+    auto weighted_center = area * center;
+    total_area += area;
+    average_face_center += weighted_center;
+    for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
+      variance_face_center[dd] += weighted_center[dd] * center[dd];
+    }
+  }
+  average_face_center /= total_area;
+  op::div_scalar_inplace(variance_face_center, total_area);
+
+  for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
+    variance_face_center[dd] -=
+        average_face_center[dd] * average_face_center[dd];
+  }
+
+  // Choose dimension with least variance.
+  auto it_min = std::min_element(variance_face_center.begin(),
+                                 variance_face_center.end());
+  std::size_t dd = std::distance(variance_face_center.begin(), it_min);
+
+  return {dd, average_face_center[dd]};
+}
+
+/**
+ * @brief Extract the orientation and position of cartesian boundary patches.
+ *
+ * @details Assuming a boundary patch is (approximately) perpendicular to some
+ *          cartesian axis, identify that axis and the (mean) position of the
+ *          boundary along it.
+ *
+ * @param patch_id Boundary patch id.
+ *
+ * @param dim Spatial dimensionality.
+ *
+ * @return Pair of axis dimension and position.
+ */
+template <typename Mesh>
+std::pair<std::size_t, double>
+cartesian_boundary_position(Foam::label patch_id, Mesh const &mesh,
+                            std::size_t dim = 3) {
+  return cartesian_boundary_position(mesh.boundaryMesh()[patch_id], mesh);
+}
+
+/**
  * @brief For boundary conditions indicated as type \c periodic, extract the
  *        corresponding boundary positions.
  *
@@ -402,10 +476,10 @@ Boundary_Reinject(InitialCondition &&) -> Boundary_Reinject<InitialCondition>;
  * - Periodic boundaries are assumed to be perpendicular to the cartesian axes.
  *   There must be an even number.
  *
- *  - Periodic conditions are checked in order across Cartesian dimensions. If
- *    there are periodic BCs in all dimensions starting from 0 up to some
- *    dimension, output only those boundaries. If there are gap dimensions
- *    between periodic dimensions, add <tt>{-inf, inf}</tt> boundaries.
+ * - Periodic conditions are checked in order across Cartesian dimensions. If
+ *   there are periodic BCs in all dimensions starting from 0 up to some
+ *   dimension, output only those boundaries. If there are gap dimensions
+ *   between periodic dimensions, add <tt>{-inf, inf}</tt> boundaries.
  */
 template <typename BoundaryCondition, typename Mesh>
 auto extract_cartesian_periodic_boundaries(
@@ -416,36 +490,9 @@ auto extract_cartesian_periodic_boundaries(
     if (bc.second != "periodic") {
       continue;
     }
-    // Find average and variance of patch face centers.
     auto patch_id = mesh.boundaryMesh().findPatchID(bc.first, false);
-    auto const &patch = mesh.boundaryMesh()[patch_id];
-    auto face_start = patch.start();
-    Foam::point average_face_center = Foam::zero{};
-    std::vector<double> variance_face_center(dim, 0.);
-    Foam::scalar total_area = 0.;
-    for (auto face = face_start; face < face_start + patch.size(); ++face) {
-      auto area = face_area(face, mesh);
-      auto center = face_center(face, mesh);
-      auto weighted_center = area * center;
-      total_area += area;
-      average_face_center += weighted_center;
-      for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
-        variance_face_center[dd] += weighted_center[dd] * center[dd];
-      }
-    }
-    average_face_center /= total_area;
-    op::div_scalar_inplace(variance_face_center, total_area);
-
-    for (std::size_t dd = 0; dd < variance_face_center.size(); ++dd) {
-      variance_face_center[dd] -=
-          average_face_center[dd] * average_face_center[dd];
-    }
-
-    // Choose dimension with least variance.
-    auto it_min = std::min_element(variance_face_center.begin(),
-                                   variance_face_center.end());
-    std::size_t dd = std::distance(variance_face_center.begin(), it_min);
-    boundaries_dim[dd].push_back(average_face_center[dd]);
+    auto [dd, position] = cartesian_boundary_position(patch_id, mesh, dim);
+    boundaries_dim[dd].push_back(position);
   }
 
   // Check which dimensions have periodic BCs.

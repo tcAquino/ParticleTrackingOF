@@ -12,11 +12,13 @@
 #include "CTRW/Meta.h"
 #include "General/Constant.h"
 #include "General/Meta.h"
+#include "PTOF/Boundary.h"
 #include "PTOF/CheckOptions.h"
 #include "PTOF/SurfaceReaction.h"
 #include "PTOF/Useful.h"
 #include <MinMax.H>
 #include <algorithm>
+#include <cstddef>
 #include <fieldTypes.H>
 #include <limits>
 #include <type_traits>
@@ -79,17 +81,28 @@ public:
             params_solvers.local_step_factor_temporal_adv},
         _global_time_step{global_time_step_constraint(
             params_transport, params_reaction, params_solvers)} {
-    for (std::size_t dd = 2; dd-- > Geometry::dim;) {
-      Foam::vector direction = Foam::zero{};
-      direction[dd] = 1.;
-      std::vector<double> max;
-      std::vector<double> min;
-      for (auto const &patch : _geometry.mesh().boundary()) {
-        max.push_back(Foam::max(patch.Cf() & direction));
-        min.push_back(Foam::min(patch.Cf() & direction));
+    std::size_t dim = Geometry::dim;
+    if (dim == 3) {
+      return;
+    }
+    std::size_t nr_empty_dims = 3 - Geometry::dim;
+    auto const &mesh = _geometry.mesh();
+
+    // The dimension dd is not necessarily correct due to not passing
+    // dimensionality to cartesian_boundary_positions, but it does not matter
+    // because the relevant patches are captured correctly
+    std::vector<std::vector<double>> boundary_positions(nr_empty_dims);
+    for (auto const &patch : mesh.boundaryMesh()) {
+      auto [dd, pos] = ptof::cartesian_boundary_position(patch, mesh);
+      if (dd >= dim) {
+        boundary_positions[dd - dim].push_back(pos);
       }
-      _volume_factor *= *std::max_element(max.begin(), max.end()) -
-                        *std::min_element(min.begin(), min.end());
+    }
+
+    for (std::size_t dd = 3; dd-- > dim;) {
+      auto const &positions = boundary_positions[dd - dim];
+      _volume_factor *= *std::max_element(positions.begin(), positions.end()) -
+                        *std::min_element(positions.begin(), positions.end());
     }
   }
 
