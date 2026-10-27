@@ -72,7 +72,7 @@ https://github.com/tcAquino/ParticleTrackingOF
 
 ## License
 
-License information can be found in the [License file](LICENSE.txt).
+License information can be found in the [license file](LICENSE.txt).
 
 ## About the author
 
