@@ -71,7 +71,7 @@ License information can be found in the file LICENSE.txt.
 ## About the author
 
 Tomás Aquino is a researcher at IDAEA-CSIC, Barcelona, Spain. He can be
-contacted at tomas.aquino@idaea.csic.es.
+contacted at tomas.aquino@csic.es.
 
 ## Contributors
 
