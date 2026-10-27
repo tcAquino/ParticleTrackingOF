@@ -13,22 +13,27 @@ Ubuntu v22.04. It is also expected to work on MacOS but is less tested there.
 Required external libraries (free and open-source):
 - OpenFOAM : CFD software (https://www.openfoam.com/)
 
-A version of the g++ or clang++ compiler compatible with C++17 and OpenMP v4.5
-are required. Note that the same compiler used for OpenFOAM should be used to
-avoid (dynamic) linking issues. For compilation of parallel implementations
-with clang++, llvm's OpenMP must be installed (to install from the terminal,
-run "brew install libomp" on MacOS or "sudo apt install libomp-dev" on Linux
-Debian/Ubuntu)
+A version of the `g++` or `clang++` compiler compatible with C++17 and OpenMP
+v4.5 are required. Note that the same compiler used for OpenFOAM should be used
+to avoid (dynamic) linking issues. For compilation of parallel implementations
+with `clang++`, LLVM's OpenMP must be installed (to install from the terminal,
+run `brew install libomp` on MacOS or `sudo apt install libomp-dev` on Linux
+Debian/Ubuntu).
 
 ## Documentation
 
 Basic information on code structure, compilation, and execution is given in
-doc/Manual/Manual.pdf. Doxygen documentation can be found in doc/Doxygen. The
-compiled doxygen documentation is not currently online. To compile and view it,
-make sure you have doxygen, graphviz, and latex (e.g., texlive-full) installed
-(all free and available in common repositories like apt), go to the doc folder,
-and execute doxygen Doxyfile. Then open the doc/html/index.html file to view it
-in a browser.
+`doc/Manual/Manual.pdf`. Doxygen documentation can be found in `doc/Doxygen`.
+The compiled doxygen documentation is not currently online. To compile and view
+it, make sure you have Doxygen, Graphviz, and Latex (e.g., `texlive-full`)
+installed (all free and available in common repositories like apt), go to the
+`doc` folder, and execute 
+
+```
+doxygen Doxyfile
+```
+
+Then open the `doc/html/index.html` file to view it in a browser.
 
 ## Notes and known issues
 
@@ -53,20 +58,21 @@ in a browser.
   nearest cell center if outside mesh. Still, it is possible that whether an
   output position is in the mesh depends on the precision of output. In
   practice, this is usually fine.
-- When using openFOAM's findCell, it is sometimes possible for a position to be
-  considered within the mesh when a hint is not used, but outside the mesh when
-  certain hints are used. This is handled carefully in PTOF as provided but
+- When using openFOAM's `findCell`, it is sometimes possible for a position to
+  be considered within the mesh when a hint is not used, but outside the mesh
+  when certain hints are used. This is handled carefully in as provided but
   should be kept in mind for developmment and postprocessing. Similarly, in
   some meshes, face centers may be considered outside the mesh.
 
 ## Citations
 
-Please link to this repository
-(https://github.com/tcAquino/ParticleTrackingOF).
+Please link to this repository:
+
+https://github.com/tcAquino/ParticleTrackingOF
 
 ## License
 
-License information can be found in the file LICENSE.txt.
+License information can be found in the [License file](LICENSE.txt).
 
 ## About the author
 
